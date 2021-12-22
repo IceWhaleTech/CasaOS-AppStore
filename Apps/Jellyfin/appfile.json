@@ -27,7 +27,7 @@
     "website": "https://www.casaos.io",
     "container": {
         "image": "linuxserver/jellyfin:latest",
-        "shell": "sh",
+        "shell": "bash",
         "privileged": false,
         "network_model": "bridge",
         "webui": {
@@ -59,7 +59,6 @@
                 "value": "$LAN_IP",
                 "configurable": "advanced",
                 "description": "The autodiscovery response domain or IP address."
-                
             }
         ],
         "ports": [
