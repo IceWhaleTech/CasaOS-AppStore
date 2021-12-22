@@ -16,7 +16,7 @@
         "Utilities",
         "Documents"
     ],
-    "author":{
+    "author": {
         "name": "CasaOS Team",
         "role": "Adaptor",
         "website": "https://www.casaos.io",
@@ -38,30 +38,29 @@
             {
                 "key": "TZ",
                 "value": "$TZ",
-                "description": "TimeZone",
-                "configurable": "no"
+                "configurable": "no",
+                "description": "TimeZone"
             },
             {
                 "key": "PUID",
                 "value": "$PUID",
-                "description": "Run FileBrowser as specified uid.",
-                "configurable": "no"
+                "configurable": "no",
+                "description": "Run FileBrowser as specified uid."
             },
             {
                 "key": "PGID",
                 "value": "$PGID",
-                "description": "Run FileBrowser as specified gid.",
-                "configurable": "no"
+                "configurable": "no",
+                "description": "Run FileBrowser as specified gid."
             }
         ],
         "ports": [
             {
                 "container": "80",
-                "host": "1080",
-                "description": "WebUI Port",
                 "type": "tcp",
                 "allocation": "automatic",
-                "configurable": "advanced"
+                "configurable": "advanced",
+                "description": "WebUI Port"
             }
         ],
         "volumes": [
@@ -69,7 +68,7 @@
                 "container": "/db",
                 "host": "$AppData/db",
                 "mode": "rw",
-                "allocation": "auto",
+                "allocation": "automatic",
                 "configurable": "no",
                 "description": "FileBrowser database directory."
             },
@@ -77,7 +76,7 @@
                 "container": "/srv",
                 "host": "$DATA",
                 "mode": "rw",
-                "allocation": "auto",
+                "allocation": "automatic",
                 "configurable": "advanced",
                 "description": "FileBrowser managed directory."
             }
@@ -100,9 +99,13 @@
         "upnp": false
     },
     "tips": {
-        "before_install": "Default Account</br>Username:<span style='color:red'>admin</span></br>Password:<span style='color:red'>admin</span>"
+        "before_install": {
+            "template": "DefaultAccount",
+            "username": "admin",
+            "password": "admin"
+        }
     },
-    "changelog":{
+    "changelog": {
         "latest_updates": "",
         "url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/changelog.txt"
     },
