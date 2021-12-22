@@ -1,0 +1,181 @@
+{
+    "version": "2.0",
+    "title": "Jellyfin",
+    "name": "jellyfin",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/icon.png",
+    "tagline": "Puts you in control of your media.",
+    "overview": "Jellyfin enables you to collect, manage, and stream your media. Run the Jellyfin server on your system and gain access to the leading free-software entertainment system, bells and whistles included.",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnaill.jpg",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/snapshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/snapshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/snapshot-3.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/snapshot-4.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/snapshot-5.png"
+    ],
+    "category": [
+        "Media"
+    ],
+    "author":{
+        "name": "CasaOS Team",
+        "role": "Adaptor",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "https://discord.gg/knqAbbBbeX",
+    "website": "https://www.casaos.io",
+    "container": {
+        "image": "linuxserver/jellyfin:latest",
+        "shell": "sh",
+        "privileged": false,
+        "network_model": "bridge",
+        "webui": {
+            "http": "8096",
+            "https": "8920",
+            "path": "/"
+        },
+        "envs": [
+            {
+                "key": "TZ",
+                "value": "$TZ",
+                "configurable": "no",
+                "description": "TimeZone"
+            },
+            {
+                "key": "PUID",
+                "value": "$PUID",
+                "configurable": "no",
+                "description": "Run Jellyfin as specified uid."
+            },
+            {
+                "key": "PGID",
+                "value": "$PGID",
+                "configurable": "no",
+                "description": "Run Jellyfin as specified gid."
+            },
+            {
+                "key": "JELLYFIN_PublishedServerUrl",
+                "value": "$LAN_IP",
+                "configurable": "advanced",
+                "description": "The autodiscovery response domain or IP address."
+                
+            }
+        ],
+        "ports": [
+            {
+                "container": "8096",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            },
+            {
+                "container": "8920",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTPS Port"
+            },
+            {
+                "container": "7359",
+                "type": "tcp",
+                "allocation": "optional",
+                "configurable": "no",
+                "description": "Jellyfin auto-discovery Port"
+            },
+            {
+                "container": "1900",
+                "type": "tcp",
+                "allocation": "optional",
+                "configurable": "no",
+                "description": "Jellyfin DLNA Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/config",
+                "host": "$AppData/config",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Jellyfin config directory."
+            },
+            {
+                "container": "/Media",
+                "host": "$Media",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "advanced",
+                "description": "Jellyfin Media directory."
+            },
+            {
+                "container": "/opt/vc/lib",
+                "host": "/opt/vc/lib",
+                "mode": "rw",
+                "allocation": "optional",
+                "configurable": "advanced",
+                "description": "OpenMax libs"
+            }
+        ],
+        "devices": [
+            {
+                "container": "/dev/dri",
+                "allocation": "optional",
+                "configurable": "advanced",
+                "description": "Hardware acceleration of AMD or Intel graphics device"
+            },
+            {
+                "container": "/dev/vcsm",
+                "allocation": "optional",
+                "configurable": "advanced",
+                "description": "Hardware acceleration of Raspberry Pi MMAL/OpenMAX "
+            },
+            {
+                "container": "/dev/vchiq",
+                "allocation": "optional",
+                "configurable": "advanced",
+                "description": "Hardware acceleration of Raspberry Pi MMAL/OpenMAX"
+            },
+            {
+                "container": "/dev/video10",
+                "allocation": "optional",
+                "configurable": "advanced",
+                "description": "Hardware acceleration of Raspberry Pi V4L2"
+            },
+            {
+                "container": "/dev/video11",
+                "allocation": "optional",
+                "configurable": "advanced",
+                "description": "Hardware acceleration of Raspberry Pi V4L2"
+            },
+            {
+                "container": "/dev/video12",
+                "allocation": "optional",
+                "configurable": "advanced",
+                "description": "Hardware acceleration of Raspberry Pi V4L2"
+            }
+        ],
+        "constraints": {
+            "min_memery": "256",
+            "min_storage": "1024"
+        },
+        "restart_policy": "always",
+        "sysctls": [],
+        "cap_add": {},
+        "labels": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {},
+    "changelog":{
+        "latest_updates": "",
+        "url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/changelog.txt"
+    },
+    "latest_update_date": "1640072737"
+}
