@@ -1,0 +1,110 @@
+{
+    "version": "2.0",
+    "title": "FileBrowser",
+    "name": "filebrowser",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/icon.png",
+    "tagline": "Upload, delete, preview, rename, edit and share your files.",
+    "overview": "File Browser - Webbased File Browser including sharing functions etc.",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/thumbnail.png",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/snapshot-1.gif",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/snapshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/snapshot-3.png"
+    ],
+    "category": [
+        "Cloud",
+        "Utilities",
+        "Documents"
+    ],
+    "author":{
+        "name": "CasaOS Team",
+        "role": "Adaptor",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "https://discord.gg/knqAbbBbeX",
+    "website": "https://www.casaos.io",
+    "container": {
+        "image": "filebrowser/filebrowser:latest",
+        "shell": "sh",
+        "privileged": false,
+        "network_model": "bridge",
+        "webui": {
+            "http": "80",
+            "path": "/"
+        },
+        "envs": [
+            {
+                "key": "TZ",
+                "value": "$TZ",
+                "description": "TimeZone",
+                "configurable": "no"
+            },
+            {
+                "key": "PUID",
+                "value": "$PUID",
+                "description": "Run FileBrowser as specified uid.",
+                "configurable": "no"
+            },
+            {
+                "key": "PGID",
+                "value": "$PGID",
+                "description": "Run FileBrowser as specified gid.",
+                "configurable": "no"
+            }
+        ],
+        "ports": [
+            {
+                "container": "80",
+                "host": "1080",
+                "description": "WebUI Port",
+                "type": "tcp",
+                "allocation": "automatic",
+                "configurable": "advanced"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/db",
+                "host": "$AppData/db",
+                "mode": "rw",
+                "allocation": "auto",
+                "configurable": "no",
+                "description": "FileBrowser database directory."
+            },
+            {
+                "container": "/srv",
+                "host": "$DATA",
+                "mode": "rw",
+                "allocation": "auto",
+                "configurable": "advanced",
+                "description": "FileBrowser managed directory."
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memery": "64",
+            "min_storage": "128"
+        },
+        "restart_policy": "always",
+        "sysctls": [],
+        "cap_add": {},
+        "labels": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": "Default Account</br>Username:<span style='color:red'>admin</span></br>Password:<span style='color:red'>admin</span>"
+    },
+    "changelog":{
+        "latest_updates": "",
+        "url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/changelog.txt"
+    },
+    "latest_update_date": "1640072737"
+}
