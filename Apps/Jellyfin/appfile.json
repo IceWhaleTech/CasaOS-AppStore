@@ -35,6 +35,7 @@
             "https": "8920",
             "path": "/"
         },
+        "health_check": "",
         "envs": [
             {
                 "key": "TZ",
@@ -166,8 +167,8 @@
             }
         ],
         "constraints": {
-            "min_memory": "256",
-            "min_storage": "1024"
+            "min_memory": 256,
+            "min_storage": 1024
         },
         "restart_policy": "unless-stopped",
         "sysctls": [],

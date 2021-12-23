@@ -33,6 +33,7 @@
             "http": "8989",
             "path": "/"
         },
+        "health_check": "",
         "envs": [
             {
                 "key": "TZ",
@@ -91,8 +92,8 @@
         ],
         "devices": [],
         "constraints": {
-            "min_memory": "256",
-            "min_storage": "1024"
+            "min_memory": 256,
+            "min_storage": 1024
         },
         "restart_policy": "unless-stopped",
         "sysctls": [],
