@@ -14,7 +14,7 @@
     "category": [
         "Media"
     ],
-    "author":{
+    "author": {
         "name": "CasaOS Team",
         "role": "Adaptor",
         "website": "https://www.casaos.io",
@@ -77,7 +77,7 @@
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "advanced",
-                "description": "PhotoPrism Gallery originals directory."
+                "description": "PhotoPrism originals directory."
             }
         ],
         "devices": [],
@@ -97,10 +97,16 @@
         "search": false,
         "upnp": false
     },
-    "tips": {},
-    "changelog":{
+    "tips": {
+        "before_install": {
+            "template": "DefaultAccount",
+            "username": "admin",
+            "password": "casaos"
+        }
+    },
+    "changelog": {
         "latest_updates": "",
         "url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/changelog.txt"
     },
-    "latest_update_date": "1640245715"
+    "latest_update_date": "1640245945"
 }
