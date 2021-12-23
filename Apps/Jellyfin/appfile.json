@@ -64,6 +64,7 @@
         "ports": [
             {
                 "container": "8096",
+                "host": "8096",
                 "type": "tcp",
                 "allocation": "preferred",
                 "configurable": "advanced",
@@ -71,6 +72,7 @@
             },
             {
                 "container": "8920",
+                "host": "8920",
                 "type": "tcp",
                 "allocation": "preferred",
                 "configurable": "advanced",
@@ -78,6 +80,7 @@
             },
             {
                 "container": "7359",
+                "host": "7359",
                 "type": "tcp",
                 "allocation": "optional",
                 "configurable": "no",
@@ -85,6 +88,7 @@
             },
             {
                 "container": "1900",
+                "host": "1900",
                 "type": "tcp",
                 "allocation": "optional",
                 "configurable": "no",
@@ -120,36 +124,42 @@
         "devices": [
             {
                 "container": "/dev/dri",
+                "host": "/dev/dri",
                 "allocation": "optional",
                 "configurable": "advanced",
                 "description": "Hardware acceleration of AMD or Intel graphics device"
             },
             {
                 "container": "/dev/vcsm",
+                "host": "/dev/vcsm",
                 "allocation": "optional",
                 "configurable": "advanced",
                 "description": "Hardware acceleration of Raspberry Pi MMAL/OpenMAX "
             },
             {
                 "container": "/dev/vchiq",
+                "host": "/dev/vchiq",
                 "allocation": "optional",
                 "configurable": "advanced",
                 "description": "Hardware acceleration of Raspberry Pi MMAL/OpenMAX"
             },
             {
                 "container": "/dev/video10",
+                "host": "/dev/video10",
                 "allocation": "optional",
                 "configurable": "advanced",
                 "description": "Hardware acceleration of Raspberry Pi V4L2"
             },
             {
                 "container": "/dev/video11",
+                "host": "/dev/video11",
                 "allocation": "optional",
                 "configurable": "advanced",
                 "description": "Hardware acceleration of Raspberry Pi V4L2"
             },
             {
                 "container": "/dev/video12",
+                "host": "/dev/video12",
                 "allocation": "optional",
                 "configurable": "advanced",
                 "description": "Hardware acceleration of Raspberry Pi V4L2"
@@ -176,5 +186,5 @@
         "latest_updates": "",
         "url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/changelog.txt"
     },
-    "latest_update_date": "1640072737"
+    "latest_update_date": "1640238467"
 }
