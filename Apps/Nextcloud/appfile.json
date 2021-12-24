@@ -1,0 +1,113 @@
+{
+    "version": "2.0",
+    "title": "Nextcloud",
+    "name": "nextcloud",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/icon.png",
+    "tagline": "The productivity platform that keeps you in control",
+    "overview": "Nextcloud puts your data at your fingertips, under your control. Store your documents, calendar, contacts and photos on a server at home, at one of our providers or in a data center you trust.",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/thumbnaill.jpg",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-3.png"
+    ],
+    "category": [
+        "Cloud"
+    ],
+    "author":{
+        "name": "CasaOS Team",
+        "role": "Adaptor",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "https://discord.gg/knqAbbBbeX",
+    "website": "https://www.casaos.io",
+    "container": {
+        "image": "nextcloud:latest",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "80",
+            "https": "443",
+            "path": "/"
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "80",
+                "host": "10080",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            },
+            {
+                "container": "443",
+                "host": "10443",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTPS Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/var/www/html",
+                "host": "$AppData/$AppName/var/www/html",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Nextcloud config directory."
+            },
+            {
+                "container": "/var/www/html/data",
+                "host": "$DATA/$AppName/data",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "advanced",
+                "description": "Nextcloud apps directory."
+            },
+            {
+                "container": "/var/www/html/custom_apps",
+                "host": "$DATA/$AppName/custom_apps",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "advanced",
+                "description": "Nextcloud custom_apps directory."
+            },
+            {
+                "container": "/var/www/html/themes",
+                "host": "$DATA/$AppName/themes",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "advanced",
+                "description": "Nextcloud themes directory."
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 512,
+            "min_storage": 2048
+        },
+        "restart_policy": "unless-stopped",
+        "sysctls": [],
+        "cap_add": {},
+        "labels": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {},
+    "changelog":{
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": "1640317389"
+}
