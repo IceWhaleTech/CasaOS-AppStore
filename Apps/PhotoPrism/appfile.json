@@ -66,7 +66,7 @@
         "volumes": [
             {
                 "container": "/photoprism/storage",
-                "host": "$AppData/$AppName/storage",
+                "host": "/DATA/AppData/$AppID/photoprism/storage",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
@@ -74,7 +74,7 @@
             },
             {
                 "container": "/photoprism/originals",
-                "host": "$Gallery",
+                "host": "/DATA/Gallery",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "advanced",
@@ -117,5 +117,5 @@
         "latest_updates": "",
         "url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/changelog.txt"
     },
-    "latest_update_date": "1640245945"
+    "latest_update_date": "1640592011"
 }

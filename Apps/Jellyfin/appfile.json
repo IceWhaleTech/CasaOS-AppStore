@@ -99,7 +99,7 @@
         "volumes": [
             {
                 "container": "/config",
-                "host": "$AppData/$AppName/config",
+                "host": "/DATA/AppData/$AppID/config",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
@@ -107,7 +107,7 @@
             },
             {
                 "container": "/Media",
-                "host": "$Media",
+                "host": "/DATA/Media",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "advanced",

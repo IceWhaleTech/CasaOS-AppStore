@@ -71,7 +71,7 @@
         "volumes": [
             {
                 "container": "/config",
-                "host": "$AppData/$AppName/config",
+                "host": "/DATA/AppData/$AppID/config",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
@@ -79,7 +79,7 @@
             },
             {
                 "container": "/DATA",
-                "host": "$DATA",
+                "host": "/DATA",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "advanced",
@@ -115,6 +115,30 @@
             {
                 "content": "Password: ",
                 "value": "adminadmin"
+            },
+            {
+                "content": ""
+            },
+            {
+                "content": "Default Accessible Path in qBittorrent"
+            },
+            {
+                "content": "DATA Path: ",
+                "value": "/DATA"
+            },
+            {
+                "content": "Downloads Path: ",
+                "value": "/DATA/Downloads"
+            },
+            {
+                "content": "Media Path: ",
+                "value": "/DATA/Media"
+            },
+            {
+                "content": "The paths of other DATA subdirectories in CasaOS are also similar."
+            },
+            {
+                "content": "Please make sure you use the correct path when using qBittorrent."
             }
         ]
     },
@@ -122,5 +146,5 @@
         "latest_updates": "",
         "url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/qBittorrent/changelog.txt"
     },
-    "latest_update_date": "1640250092"
+    "latest_update_date": "1640592195"
 }

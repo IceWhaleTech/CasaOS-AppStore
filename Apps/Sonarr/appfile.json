@@ -67,7 +67,7 @@
         "volumes": [
             {
                 "container": "/config",
-                "host": "$AppData/$AppName/config",
+                "host": "/DATA/AppData/$AppID/config",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
@@ -75,7 +75,7 @@
             },
             {
                 "container": "/tv",
-                "host": "$TV_Shows",
+                "host": "/DATA/Media/TV Shows",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "advanced",
@@ -83,7 +83,7 @@
             },
             {
                 "container": "/downloads",
-                "host": "$Downloads",
+                "host": "/DATA/Downloads",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "advanced",
@@ -112,5 +112,5 @@
         "latest_updates": "",
         "url": ""
     },
-    "latest_update_date": "1640251837"
+    "latest_update_date": "1640592382"
 }

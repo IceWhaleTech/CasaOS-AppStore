@@ -68,7 +68,7 @@
         "volumes": [
             {
                 "container": "/db",
-                "host": "$AppData/$AppName/db",
+                "host": "/DATA/AppData/$AppID/db",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
@@ -76,7 +76,7 @@
             },
             {
                 "container": "/srv",
-                "host": "$DATA",
+                "host": "/DATA",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "advanced",
@@ -119,5 +119,5 @@
         "latest_updates": "",
         "url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/changelog.txt"
     },
-    "latest_update_date": "1640243786"
+    "latest_update_date": "1640591843"
 }

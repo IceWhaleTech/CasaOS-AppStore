@@ -56,35 +56,11 @@
         "volumes": [
             {
                 "container": "/var/www/html",
-                "host": "$AppData/$AppName/var/www/html",
+                "host": "/DATA/AppData/$AppID/var/www/html",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
                 "description": "Nextcloud config directory."
-            },
-            {
-                "container": "/var/www/html/data",
-                "host": "$DATA/$AppName/data",
-                "mode": "rw",
-                "allocation": "automatic",
-                "configurable": "advanced",
-                "description": "Nextcloud apps directory."
-            },
-            {
-                "container": "/var/www/html/custom_apps",
-                "host": "$DATA/$AppName/custom_apps",
-                "mode": "rw",
-                "allocation": "automatic",
-                "configurable": "advanced",
-                "description": "Nextcloud custom_apps directory."
-            },
-            {
-                "container": "/var/www/html/themes",
-                "host": "$DATA/$AppName/themes",
-                "mode": "rw",
-                "allocation": "automatic",
-                "configurable": "advanced",
-                "description": "Nextcloud themes directory."
             }
         ],
         "devices": [],
@@ -109,5 +85,5 @@
         "latest_updates": "",
         "url": ""
     },
-    "latest_update_date": "1640317389"
+    "latest_update_date": "1640592011"
 }

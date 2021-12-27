@@ -86,7 +86,7 @@
         "volumes": [
             {
                 "container": "/config",
-                "host": "$AppData/$AppName/config",
+                "host": "/DATA/AppData/$AppID/config",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
@@ -94,7 +94,7 @@
             },
             {
                 "container": "/DATA",
-                "host": "$DATA",
+                "host": "/DATA",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "advanced",
@@ -123,5 +123,5 @@
         "latest_updates": "",
         "url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Syncthing/changelog.txt"
     },
-    "latest_update_date": "1640243786"
+    "latest_update_date": "1640592395"
 }
