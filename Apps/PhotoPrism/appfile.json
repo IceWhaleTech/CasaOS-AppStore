@@ -99,11 +99,19 @@
         "upnp": false
     },
     "tips": {
-        "before_install": {
-            "template": "DefaultAccount",
-            "username": "admin",
-            "password": "casaos"
-        }
+        "before_install": [
+            {
+                "content": "Default Account"
+            },
+            {
+                "content": "Username: ",
+                "value": "admin"
+            },
+            {
+                "content": "Password: ",
+                "value": "casaos"
+            }
+        ]
     },
     "changelog": {
         "latest_updates": "",

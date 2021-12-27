@@ -101,11 +101,19 @@
         "upnp": false
     },
     "tips": {
-        "before_install": {
-            "template": "DefaultAccount",
-            "username": "admin",
-            "password": "admin"
-        }
+        "before_install":[
+            {
+                "content": "Default Account"
+            },
+            {
+                "content": "Username: ",
+                "value": "admin"
+            },
+            {
+                "content": "Password: ",
+                "value": "admin"
+            }
+        ]
     },
     "changelog": {
         "latest_updates": "",
