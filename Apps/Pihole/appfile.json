@@ -103,7 +103,7 @@
         "volumes": [
             {
                 "container": "/etc/pihole",
-                "host": "$AppData/$AppName/etc-pihole/",
+                "host": "/DATA/AppData/$AppID/etc/pihole/",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
@@ -111,7 +111,7 @@
             },
             {
                 "container": "/etc/dnsmasq.d",
-                "host": "$AppData/$AppName/etc-dnsmasq.d/",
+                "host": "/DATA/AppData/$AppID/etc/dnsmasq.d/",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
