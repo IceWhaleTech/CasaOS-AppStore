@@ -2,7 +2,7 @@ apt install jq
 
 obj="{"
 for dir in Apps/*; do
-    result=$(curl https://raw.githubusercontent.com/IceWhaleTech/CasaOS-AppStore/main/$dir/appfile.json)
+    result=$(cat ./Apps/$dir/appfile.json)
     tagline=$(echo "$result" | jq .tagline)
     title=$(echo "$result" | jq .title)
     overview=$(echo "$result" | jq .overview)
