@@ -18,3 +18,17 @@ jobs:
         run: |
             chmod +x ./help/action.sh
             ./help/action.sh
+            cat en_us.json
+            git clone https://github.com/IceWhaleTech/CasaOS-i18n.git
+            ls
+      
+      # - name: Pushes to i18n repository
+      #   uses: cpina/github-action-push-to-another-repository@main
+      #   env:
+      #     API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      #   with:
+      #     source-directory: 'output'
+      #     destination-github-username: 'IceWhaleTech'
+      #     destination-repository-name: 'CasaOS-i18n'
+      #     user-email: a624669980@163.com
+      #     target-branch: main
