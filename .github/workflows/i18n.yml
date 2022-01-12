@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: write content to en_us.json
+      - name: Write content to en_us.json
         run: |
             git clone https://github.com/IceWhaleTech/CasaOS-i18n.git
             chmod +x ./help/action.sh
