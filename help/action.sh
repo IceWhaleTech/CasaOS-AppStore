@@ -1,4 +1,4 @@
-apt install jq
+sudo apt-get install jq
 
 obj="{"
 for dir in Apps/*; do
