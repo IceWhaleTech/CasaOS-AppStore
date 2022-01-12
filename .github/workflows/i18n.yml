@@ -10,17 +10,12 @@ on:
         default: 'false'
 
 jobs:
-  xgo:
-    strategy:
-      fail-fast: false
-      matrix:
-        go_version:
-          - 1.17.1
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-    - name: test
-      run: |
-        ls
+      - name: test
+        run: |
+          ls
