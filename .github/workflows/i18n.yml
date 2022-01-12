@@ -1,13 +1,12 @@
 name: update i18n repo
 
 on:
-  repository_dispatch:
-  workflow_dispatch:
-    inputs:
-      ssh:
-        description: 'SSH connection to Actions'
-        required: false
-        default: 'false'
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
 
 jobs:
   build:
@@ -19,8 +18,6 @@ jobs:
             git clone https://github.com/IceWhaleTech/CasaOS-i18n.git
             chmod +x ./help/action.sh
             ./help/action.sh
-            cat ./CasaOS-i18n/back-end/en_us.json
-            ls
       
       - name: Pushes to i18n repository
         uses: cpina/github-action-push-to-another-repository@main
