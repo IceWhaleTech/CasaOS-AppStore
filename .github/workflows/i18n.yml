@@ -18,5 +18,8 @@ jobs:
           fetch-depth: 0
       - name: test
         run: |
+          chmod +x ./help/action.sh
+          ./help/action.sh
           ls
-          pwd
+          cat en_us.json
+      shell: bash
