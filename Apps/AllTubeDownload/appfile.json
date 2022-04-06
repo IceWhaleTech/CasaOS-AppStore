@@ -1,0 +1,76 @@
+{
+	"version": "2.0",
+	"title": "AllTube Download",
+	"name": "AllTube Download",
+	"icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/AppIcon@main/all/alltube.png",
+	"tagline": "Web GUI for youtube-dl",
+	"overview": "Easily download videos from YouTube, Dailymotion, Vimeo and other websites.",
+	"thumbnail": "",
+	"screenshots": [],
+	"category": [
+		"Utilities"
+	],
+	"developer": {
+		"name": "Rudloff",
+		"website": "https://alltubedownload.net/",
+		"donate_text": "",
+		"donate_link": ""
+	},
+	"adaptor": {
+		"name": "CasaOS Team",
+		"website": "https://www.casaos.io",
+		"donate_text": "",
+		"donate_link": ""
+	},
+	"support": "https://discord.gg/knqAbbBbeX",
+	"website": "https://www.casaos.io",
+	"container": {
+		"image": "rudloff/alltube:latest",
+		"shell": "sh",
+		"privileged": false,
+		"network_model": "bridge",
+		"web_ui": {
+			"http": "80",
+			"path": "/"
+		},
+		"health_check": "",
+		"envs": [],
+		"ports": [
+			{
+				"container": "80",
+				"host": "80",
+				"type": "tcp",
+				"allocation": "automatic",
+				"configurable": "no",
+				"description": ""
+			}
+		],
+		"volumes": [],
+		"devices": [],
+		"constraints": {
+			"min_memory": 64,
+			"min_storage": 128
+		},
+		"restart_policy": "always",
+		"sysctls": [],
+		"cap_add": [],
+		"labels": [],
+		"host_name": "",
+		"cmd": []
+	},
+	"abilities": {
+		"notification": false,
+		"widgets": false,
+		"authentication": false,
+		"search": false,
+		"upnp": false
+	},
+	"tips": {
+		"before_install": []
+	},
+	"changelog": {
+		"latest_updates": "",
+		"url": ""
+	},
+	"latest_update_date": ""
+}
