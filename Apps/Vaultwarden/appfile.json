@@ -38,7 +38,16 @@
             "path": "/"
         },
         "envs": [],
-        "ports": [],
+        "ports": [
+            {
+                "container": "80",
+                "host": "80",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            }
+        ],
         "volumes": [
             {
                 "container": "/data",
