@@ -1,0 +1,62 @@
+{
+    "origin": "custom",
+    "network_model": "bridge",
+    "index": "/",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/AppIcon@main/all/ghost.png",
+    "image": "ghost:latest",
+    "envs": [
+      {
+        "container": " database__client",
+        "host": "mysql",
+        "desc": "",
+        "type": 0
+      },
+      {
+        "container": "atabase__connection__host",
+        "host": "casaosdb",
+        "desc": "",
+        "type": 0
+      },
+      {
+        "container": "database__connection__user",
+        "host": "root",
+        "desc": "",
+        "type": 0
+      },
+      {
+        "container": "database__connection__password",
+        "host": "casaos",
+        "desc": "",
+        "type": 0
+      },
+      {
+        "container": "database__connection__password",
+        "host": "casaos",
+        "desc": "",
+        "type": 0
+      }
+    ],
+    "ports": [
+      {
+        "container": "2368",
+        "host": "2368",
+        "protocol": "tcp",
+        "desc": "",
+        "type": 0
+      }
+    ],
+    "volumes": [],
+    "devices": [],
+    "port_map": "2368",
+    "cpu_shares": 10,
+    "restart": "always",
+    "enable_upnp": false,
+    "label": "Ghost",
+    "description": "Ghost is a free and open source blogging platform written in JavaScript",
+    "position": true,
+    "host_name": "",
+    "privileged": true,
+    "cap_add": [],
+    "cmd": [],
+    "version": "1.0"
+  }

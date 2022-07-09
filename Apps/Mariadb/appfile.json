@@ -1,0 +1,56 @@
+{
+    "origin": "custom",
+    "network_model": "bridge",
+    "index": "/",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/AppIcon@main/all/mariadb.png",
+    "image": "mariadb:latest",
+    "envs": [
+      {
+        "container": "MARIADB_ROOT_PASSWORD",
+        "host": "casaos",
+        "desc": "",
+        "type": 0
+      },
+      {
+        "container": "MARIADB_DATABASE",
+        "host": "casaosdb",
+        "desc": "",
+        "type": 0
+      },
+      {
+        "container": "MARIADB_USER",
+        "host": "casaos",
+        "desc": "",
+        "type": 0
+      },
+      {
+        "container": "MARIADB_PASSWORD",
+        "host": "casaos",
+        "desc": "",
+        "type": 0
+      }
+    ],
+    "ports": [
+      {
+        "container": "3306",
+        "host": "3307",
+        "protocol": "tcp",
+        "desc": "",
+        "type": 0
+      }
+    ],
+    "volumes": [],
+    "devices": [],
+    "port_map": "3307",
+    "cpu_shares": 10,
+    "restart": "always",
+    "enable_upnp": false,
+    "label": "MariaDB",
+    "description": "MariaDB Server is a high performing open source relational database, forked from MySQL.",
+    "position": true,
+    "host_name": "",
+    "privileged": true,
+    "cap_add": [],
+    "cmd": [],
+    "version": "1.0"
+  }
