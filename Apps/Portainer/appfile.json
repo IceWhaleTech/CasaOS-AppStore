@@ -1,0 +1,100 @@
+{
+    "version": "1.0",
+    "title": "Portainer",
+    "name": "Portainer",
+    "icon": "https://icon.casaos.io/main/all/porctainer-ce.png",
+    "tagline": "Container Management Made Easy!",
+    "overview": "Portainer is a Kubernetes management platform that also works with Docker/Swarm and Nomad. Easily deploy, configure and secure your container environments with Portainer.",
+    "thumbnail": "https://icon.casaos.io/main/all/portainer-ce.png",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-1.jpg",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-2.jpg",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-3.jpg",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-4.jpg",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-5.jpg"
+    ],
+    "category": [
+        "Utilities"
+    ],
+    "developer": {
+        "name": "portainer",
+        "website": "https://www.portainer.io/",
+        "donate_text": "", 
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "Hutch79",
+        "website": "",
+        "donate_text": "", 
+        "donate_link": ""
+    },
+    "support": "https://www.portainer.io/community_help",
+    "website": "https://www.portainer.io/",
+    "container": {
+        "image": "portainer/portainer-ce:latest",
+        "shell": "bash",
+        "privileged": true,
+        "network_model": "bridge",
+        "web_ui": {
+            "https": "9443",
+            "path": "/"
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "8000",
+                "host": "8000",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "TCP tunnel server"
+            },
+            {
+                "container": "9443",
+                "host": "9443",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTPS Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/var/run/docker.sock",
+                "host": "/var/run/docker.sock",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Jellyfin config directory."
+            },
+            {
+                "container": "/data",
+                "host": "/DATA/AppData/$AppID/data",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "advanced",
+                "description": "Jellyfin Media directory."
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 32,
+            "min_storage": 512
+        },
+        "restart_policy": "unless-stopped",
+        "sysctls": [],
+        "cap_add": {},
+        "labels": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": true,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {},
+    "changelog":{},
+    "latest_update_date": "1660310255"
+}
