@@ -1,0 +1,129 @@
+{
+    "version": "2.0",
+    "title": "Tailscale Daemon",
+    "name": "tailscale-daemon",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/icon.png",
+    "tagline": "Connect your devices and users together in your own secure virtual private network.",
+    "overview": "Tailscale lets you easily manage access to private resources, quickly SSH into devices on your network, and work securely from anywhere in the world.",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/thumbnail.jpg",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/screenshot-1.jpg",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/screenshot-2.jpg"
+    ],
+    "category": [
+        "Network"
+    ],
+    "developer": {
+        "name": "Tailscale",
+        "website": "https://tailscale.com/",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "EzyoStudio",
+        "website": "https://github.com/ezyostudio",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "https://tailscale.com/kb/",
+    "website": "https://tailscale.com/",
+    "container": {
+        "image": "tailscale/tailscale",
+        "shell": "sh",
+        "privileged": true,
+        "network_model": "host",
+        "web_ui": {
+			"http": "80",
+			"path": ""
+		},
+        "health_check": "",
+        "envs": [
+            {
+                "key": "TS_AUTH_ONCE",
+                "value": "true",
+                "configurable": "advanced",
+                "description": "if true, only attempt to log in if not already logged in. If false, forcibly log in every time the container starts."
+            },
+            {
+                "key": "TS_EXTRA_ARGS",
+                "value": "--hostname casaos",
+                "configurable": "advanced",
+                "description": "extra arguments to 'tailscale up'."
+            },
+            {
+                "key": "TS_STATE_DIR",
+                "value": "/var/lib/tailscale",
+                "configurable": "advanced",
+                "description": "the directory in which to store tailscaled state. The data should persist across container restarts."
+            }
+        ],
+        "ports": [],
+        "volumes": [
+            {
+                "container": "/dev/net/tun",
+                "host": "/dev/net/tun",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": ""
+            },
+            {
+                "container": "/var/lib",
+                "host": "/var/lib",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": ""
+            },
+            {
+                "container": "/var/lib/tailscale",
+                "host": "/DATA/AppData/$AppID/config",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": ""
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 64,
+            "min_storage": 128
+        },
+        "restart_policy": "unless-stopped",
+        "sysctls": [],
+        "cap_add": [
+            "net_admin",
+            "sys_module"
+        ],
+        "labels": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": [
+            {
+                "content": "Tailscale hostname: ",
+                "value": "casaos"
+            },
+            {
+                "content": ""
+            },
+            {
+                "content": "After install:"
+            },
+            {
+                "content": "Go to the container log and connect to your tailscale account using the link provided"
+            }
+        ]
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": "1670978851"
+}
