@@ -1,0 +1,82 @@
+name: filebrowser
+services:
+    filebrowser:
+        environment:
+            PGID: $PGID
+            PUID: $PUID
+            TZ: $TZ
+        image: filebrowser/filebrowser:latest
+        mem_reservation: "67108864"
+        network_mode: bridge
+        ports:
+            - target: 80
+              published: "80"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /DATA/AppData/$AppID/db
+              target: /db
+            - type: bind
+              source: /DATA
+              target: /srv
+        x-casaos:
+            author: CasaOS Team
+            category: Cloud
+            container:
+                envs:
+                    - configurable: "no"
+                      container: TZ
+                      description:
+                        en_US: TimeZone
+                    - configurable: "no"
+                      container: PUID
+                      description:
+                        en_US: Run FileBrowser as specified uid.
+                    - configurable: "no"
+                      container: PGID
+                      description:
+                        en_US: Run FileBrowser as specified gid.
+                index: /
+                port_map: "80"
+                ports:
+                    - configurable: advanced
+                      container: "80"
+                      description:
+                        en_US: WebUI Port
+                      protocol: tcp
+                shell: sh
+                volumes:
+                    - configurable: "no"
+                      container: /db
+                      description:
+                        en_US: FileBrowser database directory.
+                    - configurable: advanced
+                      container: /srv
+                      description:
+                        en_US: FileBrowser managed directory.
+            description:
+                en_US: File Browser - Webbased File Browser including sharing functions etc.
+            developer: File Browser
+            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/icon.png
+            screenshot_link:
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/screenshot-1.jpg
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/screenshot-2.jpg
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/screenshot-3.jpg
+            tagline:
+                en_US: Upload, delete, preview, rename, edit and share your files.
+            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/thumbnail.jpg
+            tips:
+                before_install:
+                    - content:
+                        en_US: Default Account
+                    - content:
+                        en_US: 'Username: '
+                      value: admin
+                    - content:
+                        en_US: 'Password: '
+                      value: admin
+            title:
+                en_US: FileBrowser
+x-casaos:
+    main_app: filebrowser

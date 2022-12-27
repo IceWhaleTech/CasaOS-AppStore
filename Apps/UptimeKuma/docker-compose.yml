@@ -1,0 +1,51 @@
+name: uptimekuma
+services:
+    uptimekuma:
+        image: louislam/uptime-kuma:1-alpine
+        mem_reservation: "134217728"
+        network_mode: bridge
+        ports:
+            - target: 3001
+              published: "3001"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /DATA/AppData/$AppID/app/data
+              target: /app/data
+        x-casaos:
+            author: CasaOS Team
+            category: Network
+            container:
+                index: /
+                port_map: "3001"
+                ports:
+                    - configurable: advanced
+                      container: "3001"
+                      description:
+                        en_US: WebUI Port
+                      protocol: tcp
+                shell: sh
+                volumes:
+                    - configurable: advanced
+                      container: /app/data
+                      description:
+                        en_US: Uptime Kuma data directory.
+            description:
+                en_US: It is a self-hosted monitoring tool like "Uptime Robot".
+            developer: Louis Lam
+            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/icon.png
+            screenshot_link:
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-1.jpg
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-2.jpg
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-3.jpg
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-4.jpg
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-5.jpg
+            tagline:
+                en_US: A fancy monitoring tool
+            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/thumbnail.png
+            tips: {}
+            title:
+                en_US: Uptime Kuma
+x-casaos:
+    main_app: uptimekuma

@@ -1,0 +1,40 @@
+name: openspeedtest
+services:
+    openspeedtest:
+        image: openspeedtest/latest:latest
+        mem_reservation: "67108864"
+        network_mode: bridge
+        ports:
+            - target: 3000
+              published: "3000"
+              protocol: tcp
+        restart: always
+        x-casaos:
+            author: OpenSpeedTest
+            category: Utilities
+            container:
+                index: /
+                port_map: "3000"
+                ports:
+                    - configurable: "no"
+                      container: "3000"
+                      description:
+                        en_US: ""
+                      protocol: tcp
+                shell: sh
+            description:
+                en_US: An application for launching HTML5 Network Speed Test Server. You can test download & upload speed from any device within your network with a web browser that is IE10 or new.
+            developer: OpenSpeedTest
+            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenSpeedTest/icon.png
+            screenshot_link:
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenSpeedTest/screenshot-1.png
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenSpeedTest/screenshot-2.png
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenSpeedTest/screenshot-3.png
+            tagline:
+                en_US: HTML5 Network Speed Test Server.
+            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenSpeedTest/thumbnail.png
+            tips: {}
+            title:
+                en_US: OpenSpeedTest
+x-casaos:
+    main_app: openspeedtest
