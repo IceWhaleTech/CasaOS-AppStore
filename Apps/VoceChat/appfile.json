@@ -36,7 +36,7 @@
     "privileged": false,
     "network_model": "bridge",
     "web_ui": {
-      "http": "3009",
+      "http": "3000",
       "path": "/"
     },
     "health_check": "",
@@ -60,12 +60,12 @@
     ],
     "volumes": [
       {
-        "container": "/db",
-        "host": "/DATA/AppData/$AppID/db",
+        "container": "/home/vocechat-server/data",
+        "host": "/DATA/AppData/$AppID/home/vocechat-server/data",
         "mode": "rw",
         "allocation": "automatic",
         "configurable": "no",
-        "description": "VoceChat DB"
+        "description": "VoceChat Data"
       }
     ],
     "devices": [],
