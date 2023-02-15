@@ -22,9 +22,9 @@ jobs:
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB2 }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           source-directory: './'
           destination-github-username: 'raller1028'
           destination-repository-name: 'appstore'
           user-email: q2676515970@163.com
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
