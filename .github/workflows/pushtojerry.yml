@@ -1,0 +1,24 @@
+name: build documentation and publish
+
+on:
+  push:
+    branches: [ api_v2 ]
+  pull_request:
+    branches: [ api_v2 ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: remove all images
+      - run: find . -name "*.png"  | xargs rm -f
+      - uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB1 }}
+        with:
+          source-directory: './'
+          destination-github-username: 'jerrykuku'
+          destination-repository-name: 'appstore'
+          user-email: jerrykuku@qq.com
+          target-branch: main
