@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GH_TOKEN }}
       - name: remove all images
         run:  sudo find . -name "*.png"  | xargs sudo rm -f
       - name: Pushes to another repository
