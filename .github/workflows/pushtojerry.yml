@@ -14,7 +14,7 @@ jobs:
       - name: remove all images
       - run: find . -name "*.png"  | xargs rm -f
       - name: Pushes to another repository
-      - uses: cpina/github-action-push-to-another-repository@main
+        uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB1 }}
         with:
