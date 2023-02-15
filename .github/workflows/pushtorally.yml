@@ -12,12 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: isntall git
-        run: sudo apt install --yes git
-      - name: git global
-        run: sudo git config --global --add safe.directory '*'
       - name: remove all images
-        run:  sudo find . -name "*.png"  | xargs sudo rm -f
+        run:  find . -name "*.png"  | xargs rm -f
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
@@ -25,6 +21,5 @@ jobs:
         with:
           source-directory: './Apps'
           destination-github-username: 'raller1028'
-          destination-repository-name: 'appstore/tree/main/Apps'
+          destination-repository-name: 'appstore'
           user-email: q2676515970@163.com
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
