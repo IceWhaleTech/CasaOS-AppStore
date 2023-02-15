@@ -14,8 +14,12 @@ jobs:
       - uses: actions/checkout@v2
       - name: remove all images
         run: (find . -name "*.jpg" && find . -name "*.png") | xargs rm -f
-      - name: remove workflows
-        run: rm -r .github/workflows
+      - name: remove file
+        run: |
+          rm -rf .github/workflows
+          rm -rf featured-apps.json
+          rm -rf category-list.json
+          rm -rf .gitignore
       - name: show file
         run: ls
       - name: Pushes to another repository
