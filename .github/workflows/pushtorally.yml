@@ -12,17 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: remove all png images
-        run:  find . -name "*.png"  | xargs rm -f
-      - name: remove all jpg images
-        run:  find . -name "*.jpg"  | xargs rm -f
+      - name: remove all images
+        run: (find . -name "*.jpg" && find . -name "*.png") | xargs rm -f
+      - name: remove workflows
+        run: rm -r .github/workflows
+      - name: show file
+        run: ls
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB2 }}
         with:
-          source-directory: './Apps'
-          source-directory1: './help'
+          source-directory: './'
           destination-github-username: 'raller1028'
           destination-repository-name: 'appstore'
           user-email: q2676515970@163.com
