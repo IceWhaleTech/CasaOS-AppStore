@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: remove all images
-        run:  find . -name "*.png"  | xargs rm -f
+        run:  sudo find . -name "*.png"  | xargs sudo rm -f
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
@@ -21,5 +21,4 @@ jobs:
           source-directory: './'
           destination-github-username: 'raller1028'
           destination-repository-name: 'appstore'
-          user-email: 2676515970@163.com
-          target-branch: main
+          user-email: q2676515970@163.com
