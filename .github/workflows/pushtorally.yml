@@ -20,6 +20,8 @@ jobs:
           rm -rf featured-apps.json
           rm -rf category-list.json
           rm -rf .gitignore
+          rm -rf README.md
+          rm -rf help
       - name: show file
         run: ls
       - name: Pushes to another repository
