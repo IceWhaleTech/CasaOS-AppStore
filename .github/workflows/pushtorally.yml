@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: remove all file except icon.png
-        run: find . -type f -not \( -name 'icon.png' -or -name '*.json'\) -delete
+        run: find . -type f -not \( -name 'icon.png' -or -name '*.json' \) -delete
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
