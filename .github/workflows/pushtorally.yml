@@ -12,18 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: remove all images
-        run: (find . -name "*.jpg" && find . -name "*.png") | xargs rm -f
-      - name: remove file
-        run: |
-          rm -rf .github/workflows
-          rm -rf featured-apps.json
-          rm -rf category-list.json
-          rm -rf .gitignore
-          rm -rf README.md
-          rm -rf help
-      - name: show file
-        run: ls
+      - name: remove all file except icon.png
+        run: find . -type f -not \( -name 'icon.png' \) -delete
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
