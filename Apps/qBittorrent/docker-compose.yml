@@ -1,0 +1,103 @@
+name: qbittorrent
+services:
+    qbittorrent:
+        environment:
+            PGID: $PGID
+            PUID: $PUID
+            TZ: $TZ
+            UMASK: "002"
+        image: hotio/qbittorrent:latest
+        mem_reservation: "268435456"
+        network_mode: bridge
+        ports:
+            - target: 8080
+              published: "8080"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /DATA/AppData/$AppID/config
+              target: /config
+            - type: bind
+              source: /DATA
+              target: /DATA
+        x-casaos:
+            author: CasaOS Team
+            category: Downloader
+            container:
+                envs:
+                    - configurable: "no"
+                      container: TZ
+                      description:
+                        en_US: TimeZone
+                    - configurable: "no"
+                      container: PUID
+                      description:
+                        en_US: Run qBittorrent as specified uid.
+                    - configurable: "no"
+                      container: PGID
+                      description:
+                        en_US: Run qBittorrent as specified gid.
+                    - configurable: "no"
+                      container: UMASK
+                      description:
+                        en_US: Run qBittorrent as specified UMASK.
+                index: /
+                port_map: "8080"
+                ports:
+                    - configurable: advanced
+                      container: "8080"
+                      description:
+                        en_US: WebUI HTTP Port
+                      protocol: tcp
+                shell: bash
+                volumes:
+                    - configurable: "no"
+                      container: /config
+                      description:
+                        en_US: qBittorrent config directory.
+                    - configurable: advanced
+                      container: /DATA
+                      description:
+                        en_US: qBittorrent Accessible directory.
+            description:
+                en_US: The qBittorrent project aims to provide an open-source software alternative to µTorrent.
+            developer: qBittorrent
+            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/qBittorrent/icon.png
+            screenshot_link:
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/qBittorrent/screenshot-1.jpg
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/qBittorrent/screenshot-2.jpg
+            tagline:
+                en_US: Free BitTorrent downloader
+            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/qBittorrent/thumbnail.jpg
+            tips:
+                before_install:
+                    - content:
+                        en_US: Default Account
+                    - content:
+                        en_US: 'Username: '
+                      value: admin
+                    - content:
+                        en_US: 'Password: '
+                      value: adminadmin
+                    - content:
+                        en_US: ""
+                    - content:
+                        en_US: Default Accessible Path in qBittorrent
+                    - content:
+                        en_US: 'DATA Path: '
+                      value: /DATA
+                    - content:
+                        en_US: 'Downloads Path: '
+                      value: /DATA/Downloads
+                    - content:
+                        en_US: 'Media Path: '
+                      value: /DATA/Media
+                    - content:
+                        en_US: The paths of other DATA subdirectories in CasaOS are also similar.
+                    - content:
+                        en_US: Please make sure you use the correct path when using qBittorrent.
+            title:
+                en_US: qBittorrent
+x-casaos:
+    main_app: qbittorrent

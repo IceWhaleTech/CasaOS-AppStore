@@ -1,0 +1,82 @@
+name: photoprism
+services:
+    photoprism:
+        environment:
+            PHOTOPRISM_ADMIN_PASSWORD: casaos
+            PHOTOPRISM_UPLOAD_NSFW: "true"
+            TZ: $TZ
+        image: photoprism/photoprism:latest
+        mem_reservation: "536870912"
+        network_mode: bridge
+        ports:
+            - target: 2342
+              published: "2342"
+              protocol: tcp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /DATA/AppData/$AppID/photoprism/storage
+              target: /photoprism/storage
+            - type: bind
+              source: /DATA/Gallery
+              target: /photoprism/originals
+        x-casaos:
+            author: CasaOS Team
+            category: Gallery
+            container:
+                envs:
+                    - configurable: "no"
+                      container: TZ
+                      description:
+                        en_US: TimeZone
+                    - configurable: basic
+                      container: PHOTOPRISM_UPLOAD_NSFW
+                      description:
+                        en_US: true or false, is it possible to upload NSFW
+                    - configurable: basic
+                      container: PHOTOPRISM_ADMIN_PASSWORD
+                      description:
+                        en_US: The password of admin
+                index: /
+                port_map: "2342"
+                ports:
+                    - configurable: advanced
+                      container: "2342"
+                      description:
+                        en_US: WebUI HTTP Port
+                      protocol: tcp
+                shell: bash
+                volumes:
+                    - configurable: "no"
+                      container: /photoprism/storage
+                      description:
+                        en_US: PhotoPrism storage directory.
+                    - configurable: advanced
+                      container: /photoprism/originals
+                      description:
+                        en_US: PhotoPrism originals directory.
+            description:
+                en_US: PhotoPrism® is an AI-powered app for browsing, organizing & sharing your photo collection. It makes use of the latest technologies to tag and find pictures automatically without getting in your way. You can run it at home, on a private server, or in the cloud.
+            developer: PhotoPrism
+            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/icon.png
+            screenshot_link:
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/screenshot-1.jpg
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/screenshot-2.jpg
+                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/screenshot-3.jpg
+            tagline:
+                en_US: Browsing, organizing & sharing your photo collection
+            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/thumbnail.png
+            tips:
+                before_install:
+                    - content:
+                        en_US: Default Account
+                    - content:
+                        en_US: 'Username: '
+                      value: admin
+                    - content:
+                        en_US: 'Password: '
+                      value: casaos
+            title:
+                en_US: PhotoPrism
+x-casaos:
+    main_app: photoprism

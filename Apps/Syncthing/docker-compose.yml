@@ -1,0 +1,93 @@
+name: syncthing
+services:
+    syncthing:
+        environment:
+            PGID: $PGID
+            PUID: $PUID
+            TZ: $TZ
+        image: linuxserver/syncthing:latest
+        mem_reservation: "268435456"
+        network_mode: bridge
+        ports:
+            - target: 8384
+              published: "8384"
+              protocol: tcp
+            - target: 22000
+              published: "22000"
+              protocol: tcp
+            - target: 22000
+              published: "22000"
+              protocol: udp
+            - target: 21027
+              published: "21027"
+              protocol: udp
+        restart: unless-stopped
+        volumes:
+            - type: bind
+              source: /DATA/AppData/$AppID/config
+              target: /config
+            - type: bind
+              source: /DATA
+              target: /DATA
+        x-casaos:
+            author: CasaOS Team
+            category: Backup
+            container:
+                envs:
+                    - configurable: "no"
+                      container: TZ
+                      description:
+                        en_US: TimeZone
+                    - configurable: "no"
+                      container: PUID
+                      description:
+                        en_US: Run Syncthing as specified uid.
+                    - configurable: "no"
+                      container: PGID
+                      description:
+                        en_US: Run Syncthing as specified gid.
+                index: /
+                port_map: "8384"
+                ports:
+                    - configurable: advanced
+                      container: "8384"
+                      description:
+                        en_US: WebUI HTTP Port
+                      protocol: tcp
+                    - configurable: "no"
+                      container: "22000"
+                      description:
+                        en_US: Syncthing listening Port (TCP)
+                      protocol: tcp
+                    - configurable: "no"
+                      container: "22000"
+                      description:
+                        en_US: Syncthing listening Port (UDP)
+                      protocol: udp
+                    - configurable: "no"
+                      container: "21027"
+                      description:
+                        en_US: Syncthing protocol discovery Port (TCP)
+                      protocol: udp
+                shell: bash
+                volumes:
+                    - configurable: "no"
+                      container: /config
+                      description:
+                        en_US: Syncthing config directory.
+                    - configurable: advanced
+                      container: /DATA
+                      description:
+                        en_US: Syncthing Accessible Directory.
+            description:
+                en_US: Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers in real time, safely protected from prying eyes. Your data is your data alone and you deserve to choose where it is stored, whether it is shared with some third party, and how it's transmitted over the internet.
+            developer: Syncthing
+            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Syncthing/icon.png
+            tagline:
+                en_US: Free, secure, and distributed file synchronisation tool.
+            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.jpg
+            tips: {}
+            title:
+                en_US: Syncthing
+x-casaos:
+    main_app: syncthing
