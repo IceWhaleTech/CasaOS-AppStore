@@ -24,6 +24,7 @@ jobs:
       - uses: softprops/action-gh-release@v1
         if: steps.build.outcome == 'success'
         with:
-          files: linux-all-appstore-${{ github.ref_name }}.tar.gz
+          files: /tmp/linux-all-appstore-${{ github.ref_name }}.tar.gz
           draft: true
           prerelease: true
+          fail_on_unmatched_files: true
