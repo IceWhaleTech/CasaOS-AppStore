@@ -1,0 +1,21 @@
+name: release
+
+on:
+  push:
+    tags:
+      - v*.*.*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: remove all screenshots
+        run: find . -name "screenshot*"  | xargs rm -f
+      - name: remove all thumbnails
+        run: find . -name "thumbnail*"  | xargs rm -f
+      - name: compress the entire directory
+        run: tar -zcvf appstore.tar.gz *
+      - uses: softprops/action-gh-release@v1
+        with:
+          files: appstore.tar.gz
