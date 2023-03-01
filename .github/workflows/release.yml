@@ -11,15 +11,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: remove all screenshots
-        run: find . -name "screenshot*"  | xargs rm -f
+        run: find . -name "screenshot*" | xargs rm -f
       - name: remove all thumbnails
-        run: find . -name "thumbnail*"  | xargs rm -f
+        run: find . -name "thumbnail*" | xargs rm -f
       - name: create a build with sysroot
+        id: build
         run: |
           mkdir -p build/sysroot/var/lib/casaos/appstore/default.new
           cp -rv * build/sysroot/var/lib/casaos/appstore/default.new
           tar zcvf linux-all-appstore-${{ github.ref_name }}.tar.gz build
       - uses: softprops/action-gh-release@v1
+        if: steps.build.outcome == 'success'
         with:
           files: linux-all-appstore-${{ github.ref_name }}.tar.gz
           draft: true
