@@ -14,8 +14,11 @@ jobs:
         run: find . -name "screenshot*"  | xargs rm -f
       - name: remove all thumbnails
         run: find . -name "thumbnail*"  | xargs rm -f
-      - name: compress the entire directory
-        run: tar -zcvf linux-all-appstore-${{ github.ref_name }}.tar.gz *
+      - name: create a build with sysroot
+        run: |
+          mkdir -p build/sysroot/var/lib/casaos/appstore/default.new
+          cp -rv * build/sysroot/var/lib/casaos/appstore/default.new
+          tar zcvf linux-all-appstore-${{ github.ref_name }}.tar.gz build
       - uses: softprops/action-gh-release@v1
         with:
           files: linux-all-appstore-${{ github.ref_name }}.tar.gz
