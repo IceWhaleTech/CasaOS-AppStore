@@ -15,9 +15,9 @@ jobs:
       - name: remove all thumbnails
         run: find . -name "thumbnail*"  | xargs rm -f
       - name: compress the entire directory
-        run: tar -zcvf linux-all-appstore-${{ github.ref }}.tar.gz *
+        run: tar -zcvf linux-all-appstore-${{ github.ref_name }}.tar.gz *
       - uses: softprops/action-gh-release@v1
         with:
-          files: linux-all-appstore-${{ github.ref }}.tar.gz
+          files: linux-all-appstore-${{ github.ref_name }}.tar.gz
           draft: true
           prerelease: true
