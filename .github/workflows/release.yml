@@ -17,8 +17,9 @@ jobs:
       - name: create a build with sysroot
         id: build
         run: |
-          mkdir -p build/sysroot/var/lib/casaos/appstore/default.new
-          cp -rv * build/sysroot/var/lib/casaos/appstore/default.new
+          mkdir -p /tmp/build/sysroot/var/lib/casaos/appstore/default.new
+          cp -rv * /tmp/build/sysroot/var/lib/casaos/appstore/default.new
+          pushd /tmp
           tar zcvf linux-all-appstore-${{ github.ref_name }}.tar.gz build
       - uses: softprops/action-gh-release@v1
         if: steps.build.outcome == 'success'
