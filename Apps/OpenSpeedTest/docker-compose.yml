@@ -37,4 +37,12 @@ services:
             title:
                 en_US: OpenSpeedTest
 x-casaos:
+    architectures:
+        - amd64
+        - arm64
+        - ppc64le
+        - s390x
+        - "386"
+        - arm
     main_app: openspeedtest
+    version: latest

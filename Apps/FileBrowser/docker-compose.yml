@@ -79,4 +79,9 @@ services:
             title:
                 en_US: FileBrowser
 x-casaos:
+    architectures:
+        - amd64
+        - arm64
+        - arm
     main_app: filebrowser
+    version: latest

@@ -88,4 +88,9 @@ services:
             title:
                 en_US: Nginx Proxy Manager
 x-casaos:
+    architectures:
+        - amd64
+        - arm64
+        - arm
     main_app: nginxproxymanager
+    version: latest

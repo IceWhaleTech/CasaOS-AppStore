@@ -81,4 +81,9 @@ services:
             title:
                 en_US: Lazylibrarian
 x-casaos:
+    architectures:
+        - amd64
+        - arm
+        - arm64
     main_app: lazylibrarian
+    version: latest

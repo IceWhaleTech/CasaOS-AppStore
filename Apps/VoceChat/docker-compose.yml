@@ -13,8 +13,8 @@ services:
         restart: unless-stopped
         volumes:
             - type: bind
-              source: /DATA/AppData/$AppID/db
-              target: /db
+              source: /DATA/AppData/$AppID/home/vocechat-server/data
+              target: /home/vocechat-server/data
         x-casaos:
             author: CasaOS Team
             category: Chat
@@ -25,7 +25,7 @@ services:
                       description:
                         en_US: TimeZone
                 index: /
-                port_map: "3009"
+                port_map: "3000"
                 ports:
                     - configurable: advanced
                       container: "3000"
@@ -35,9 +35,9 @@ services:
                 shell: bash
                 volumes:
                     - configurable: "no"
-                      container: /db
+                      container: /home/vocechat-server/data
                       description:
-                        en_US: VoceChat DB
+                        en_US: VoceChat Data
             description:
                 en_US: As a top alternative to centralized chat services, Voce chat is a superlight Rust powered open-core chat app that prioritizes private hosting.
             developer: Privoce
@@ -55,4 +55,7 @@ services:
             title:
                 en_US: VoceChat
 x-casaos:
+    architectures:
+        - amd64
     main_app: vocechat
+    version: TBD

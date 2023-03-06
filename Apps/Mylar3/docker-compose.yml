@@ -72,4 +72,9 @@ services:
             title:
                 en_US: Mylar3
 x-casaos:
+    architectures:
+        - amd64
+        - arm
+        - arm64
     main_app: mylar3
+    version: latest

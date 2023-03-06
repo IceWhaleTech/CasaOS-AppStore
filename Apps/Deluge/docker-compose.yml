@@ -113,4 +113,9 @@ services:
             title:
                 en_US: Deluge
 x-casaos:
+    architectures:
+        - amd64
+        - arm
+        - arm64
     main_app: deluge
+    version: latest

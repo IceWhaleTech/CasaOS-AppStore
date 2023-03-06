@@ -79,4 +79,8 @@ services:
             title:
                 en_US: PhotoPrism
 x-casaos:
+    architectures:
+        - amd64
+        - arm64
     main_app: photoprism
+    version: latest

@@ -72,9 +72,14 @@ services:
                 - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-4.png
             tagline:
                 en_US: Letter generators for Sonarr and Radarr
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/thumbnail.png
+            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/thumbnail.png
             tips: {}
             title:
                 en_US: Bazarr
 x-casaos:
+    architectures:
+        - amd64
+        - arm
+        - arm64
     main_app: bazarr
+    version: latest

@@ -72,4 +72,8 @@ services:
             title:
                 en_US: Gitea
 x-casaos:
+    architectures:
+        - amd64
+        - arm64
     main_app: gitea
+    version: "1"

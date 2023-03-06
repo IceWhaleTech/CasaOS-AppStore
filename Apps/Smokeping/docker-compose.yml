@@ -71,4 +71,9 @@ services:
             title:
                 en_US: Smokeping
 x-casaos:
+    architectures:
+        - amd64
+        - arm
+        - arm64
     main_app: smokeping
+    version: latest

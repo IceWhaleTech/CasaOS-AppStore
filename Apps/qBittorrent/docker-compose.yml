@@ -100,4 +100,8 @@ services:
             title:
                 en_US: qBittorrent
 x-casaos:
+    architectures:
+        - amd64
+        - arm64
     main_app: qbittorrent
+    version: latest

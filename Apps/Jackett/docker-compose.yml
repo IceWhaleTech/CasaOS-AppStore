@@ -75,4 +75,9 @@ services:
             title:
                 en_US: Jackett
 x-casaos:
+    architectures:
+        - amd64
+        - arm
+        - arm64
     main_app: jackett
+    version: 0.20.783

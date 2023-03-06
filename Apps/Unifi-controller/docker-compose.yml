@@ -6,7 +6,7 @@ services:
             MEM_STARTUP: "1024"
             PGID: "1000"
             PUID: "1000"
-        image: linuxserver/unifi-controller:7.0.25
+        image: linuxserver/unifi-controller:latest
         mem_reservation: "67108864"
         network_mode: bridge
         ports:
@@ -132,4 +132,8 @@ services:
             title:
                 en_US: Unifi-controller
 x-casaos:
+    architectures:
+        - amd64
+        - arm64
     main_app: unifi-controller
+    version: latest

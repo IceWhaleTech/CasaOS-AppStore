@@ -85,4 +85,11 @@ services:
             title:
                 en_US: AdGuard Home
 x-casaos:
+    architectures:
+        - "386"
+        - amd64
+        - arm
+        - arm64
+        - ppc64le
     main_app: adguard-home
+    version: v0.107.5

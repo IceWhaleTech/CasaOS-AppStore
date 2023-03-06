@@ -48,4 +48,9 @@ services:
             title:
                 en_US: Uptime Kuma
 x-casaos:
+    architectures:
+        - amd64
+        - arm64
+        - arm
     main_app: uptimekuma
+    version: 1-alpine

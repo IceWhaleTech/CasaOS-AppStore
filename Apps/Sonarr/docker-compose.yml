@@ -78,4 +78,8 @@ services:
             title:
                 en_US: Sonarr
 x-casaos:
+    architectures:
+        - amd64
+        - arm64
     main_app: sonarr
+    version: latest

@@ -46,4 +46,10 @@ services:
             title:
                 en_US: 2FAuth
 x-casaos:
+    architectures:
+        - amd64
+        - "386"
+        - arm64
+        - arm
     main_app: 2fauth
+    version: latest

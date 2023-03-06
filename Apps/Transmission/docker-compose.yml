@@ -120,4 +120,9 @@ services:
             title:
                 en_US: Transmission
 x-casaos:
+    architectures:
+        - amd64
+        - arm
+        - arm64
     main_app: transmission
+    version: version-3.00-r5

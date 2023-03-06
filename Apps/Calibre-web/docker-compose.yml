@@ -82,4 +82,9 @@ services:
             title:
                 en_US: Calibre-web
 x-casaos:
+    architectures:
+        - amd64
+        - arm
+        - arm64
     main_app: calibre-web
+    version: nightly-version-c0675497

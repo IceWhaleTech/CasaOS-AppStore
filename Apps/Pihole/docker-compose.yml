@@ -54,7 +54,7 @@ services:
                       container: PROXY_LOCATION
                       description:
                         en_US: Pi-hole PROXY_LOCATION
-                index: /
+                index: /admin
                 port_map: "80"
                 ports:
                     - configurable: advanced
@@ -111,4 +111,10 @@ services:
             title:
                 en_US: Pi-hole
 x-casaos:
+    architectures:
+        - amd64
+        - arm64
+        - "386"
+        - arm
     main_app: pihole
+    version: latest

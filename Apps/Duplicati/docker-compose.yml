@@ -77,4 +77,8 @@ services:
             title:
                 en_US: Duplicati
 x-casaos:
+    architectures:
+        - amd64
+        - arm64
     main_app: duplicati
+    version: latest

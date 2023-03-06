@@ -14,7 +14,7 @@ services:
         volumes:
             - type: bind
               source: /DATA/AppData/$AppID/.n8n
-              target: /.n8n
+              target: /home/node/.n8n
         x-casaos:
             author: YoussofKhawaja
             category: Utilities
@@ -35,7 +35,7 @@ services:
                 shell: bash
                 volumes:
                     - configurable: advanced
-                      container: /.n8n
+                      container: /home/node/.n8n
                       description:
                         en_US: n8n directory.
             description:
@@ -53,4 +53,9 @@ services:
             title:
                 en_US: n8n
 x-casaos:
+    architectures:
+        - amd64
+        - arm64
+        - arm
     main_app: n8n
+    version: latest

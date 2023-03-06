@@ -90,4 +90,9 @@ services:
             title:
                 en_US: Syncthing
 x-casaos:
+    architectures:
+        - amd64
+        - arm
+        - arm64
     main_app: syncthing
+    version: latest

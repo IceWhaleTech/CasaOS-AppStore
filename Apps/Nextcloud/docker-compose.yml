@@ -54,4 +54,13 @@ services:
             title:
                 en_US: Nextcloud
 x-casaos:
+    architectures:
+        - amd64
+        - arm
+        - arm64
+        - "386"
+        - mips64le
+        - ppc64le
+        - s390x
     main_app: nextcloud
+    version: latest
