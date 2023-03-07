@@ -1,42 +1,45 @@
 name: alltube-download
 services:
-    alltube-download:
-        image: rudloff/alltube:latest
-        mem_reservation: "67108864"
-        network_mode: bridge
+  alltube-download:
+    image: rudloff/alltube:latest
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+      - target: 80
+        published: "80"
+        protocol: tcp
+    restart: always
+    x-casaos:
+      author: CasaOS Team
+      category: Utilities
+      container:
+        index: /
+        port_map: "80"
         ports:
-            - target: 80
-              published: "80"
-              protocol: tcp
-        restart: always
-        x-casaos:
-            author: CasaOS Team
-            category: Utilities
-            container:
-                index: /
-                port_map: "80"
-                ports:
-                    - configurable: "no"
-                      container: "80"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                shell: sh
+          - configurable: "no"
+            container: "80"
             description:
-                en_US: Easily download videos from YouTube, Dailymotion, Vimeo and other websites.
-            developer: Rudloff
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/screenshot-3.png
-            tagline:
-                en_US: Web GUI for youtube-dl
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/thumbnail.png
-            tips: {}
-            title:
-                en_US: AllTube Download
+              en_US: ""
+            protocol: tcp
+        shell: sh
+      description:
+        en_US: Easily download videos from YouTube, Dailymotion, Vimeo and other websites.
+      developer: Rudloff
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/screenshot-3.png
+      tagline:
+        en_US: Web GUI for youtube-dl
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/thumbnail.png
+      tips: {}
+      title:
+        en_US: AllTube Download
 x-casaos:
-    architectures:
-        - amd64
-    main_app: alltube-download
+  architectures:
+    - amd64
+  main_app: alltube-download

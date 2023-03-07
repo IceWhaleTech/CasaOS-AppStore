@@ -2,7 +2,10 @@ name: 2fauth
 services:
   2fauth:
     image: 2fauth/2fauth:3.4.2
-    mem_reservation: "67108864"
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
     network_mode: bridge
     ports:
       - target: 8000

@@ -6,7 +6,10 @@ services:
       PUID: $PUID
       TZ: $TZ
     image: linuxserver/sonarr:3.0.10
-    mem_reservation: "268435456"
+    deploy:
+      resources:
+        reservations:
+          memory: "256M"
     network_mode: bridge
     ports:
       - target: 8989

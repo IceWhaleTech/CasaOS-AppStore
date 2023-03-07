@@ -6,7 +6,10 @@ services:
       PUID: "1000"
       TZ: $TZ
     image: linuxserver/couchpotato:version-7260c12f
-    mem_reservation: "67108864"
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
     network_mode: bridge
     ports:
       - target: 5050

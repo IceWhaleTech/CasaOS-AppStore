@@ -6,7 +6,10 @@ services:
       PUID: $PUID
       TZ: $TZ
     image: linuxserver/syncthing:1.23.1
-    mem_reservation: "268435456"
+    deploy:
+      resources:
+        reservations:
+          memory: "256M"
     network_mode: bridge
     ports:
       - target: 8384

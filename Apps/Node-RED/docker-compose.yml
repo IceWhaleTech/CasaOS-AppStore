@@ -1,54 +1,57 @@
 name: node-red
 services:
-    node-red:
-        image: nodered/node-red:2.2.2-12
-        mem_reservation: "67108864"
-        network_mode: bridge
+  node-red:
+    image: nodered/node-red:2.2.2-12
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+      - target: 1880
+        published: "1880"
+        protocol: tcp
+    restart: always
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      author: CasaOS Team
+      category: Developer
+      container:
+        index: /
+        port_map: "1880"
         ports:
-            - target: 1880
-              published: "1880"
-              protocol: tcp
-        restart: always
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID/data
-              target: /data
-        x-casaos:
-            author: CasaOS Team
-            category: Developer
-            container:
-                index: /
-                port_map: "1880"
-                ports:
-                    - configurable: "no"
-                      container: "1880"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                shell: sh
-                volumes:
-                    - configurable: "no"
-                      container: /data
-                      description:
-                        en_US: ""
+          - configurable: "no"
+            container: "1880"
             description:
-                en_US: Node-RED is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways.  It provides a browser-based editor that makes it easy to wire together flows using the wide range of nodes in the palette that can be deployed to its runtime in a single-click.
-            developer: Node-RED
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/screenshot-3.png
-            tagline:
-                en_US: Low-code programming for event-driven applications
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/thumbnail.png
-            tips: {}
-            title:
-                en_US: Node-RED
+              en_US: ""
+            protocol: tcp
+        shell: sh
+        volumes:
+          - configurable: "no"
+            container: /data
+            description:
+              en_US: ""
+      description:
+        en_US: Node-RED is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways.  It provides a browser-based editor that makes it easy to wire together flows using the wide range of nodes in the palette that can be deployed to its runtime in a single-click.
+      developer: Node-RED
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/screenshot-3.png
+      tagline:
+        en_US: Low-code programming for event-driven applications
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/thumbnail.png
+      tips: {}
+      title:
+        en_US: Node-RED
 x-casaos:
-    architectures:
-        - amd64
-        - arm64
-        - s390x
-        - arm
-    main_app: node-red
+  architectures:
+    - amd64
+    - arm64
+    - s390x
+    - arm
+  main_app: node-red

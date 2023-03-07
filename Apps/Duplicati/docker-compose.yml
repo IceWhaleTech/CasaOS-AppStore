@@ -6,7 +6,10 @@ services:
       PUID: "1000"
       TZ: Europe/London
     image: linuxserver/duplicati:2.0.6
-    mem_reservation: "67108864"
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
     network_mode: bridge
     ports:
       - target: 8200

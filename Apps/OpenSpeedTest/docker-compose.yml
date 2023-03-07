@@ -2,7 +2,10 @@ name: openspeedtest
 services:
   openspeedtest:
     image: openspeedtest/latest:v0.0.1
-    mem_reservation: "67108864"
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
     network_mode: bridge
     ports:
       - target: 3000

@@ -6,7 +6,10 @@ services:
       PUID: $PUID
       TZ: $TZ
     image: linuxserver/homeassistant:2023.3.1
-    mem_reservation: "268435456"
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
     network_mode: host
     restart: unless-stopped
     volumes:

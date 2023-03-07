@@ -2,7 +2,10 @@ name: nextcloud
 services:
   nextcloud:
     image: nextcloud:25.0.4
-    mem_reservation: "536870912"
+    deploy:
+      resources:
+        reservations:
+          memory: "512M"
     network_mode: bridge
     ports:
       - target: 80

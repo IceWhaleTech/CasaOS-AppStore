@@ -6,7 +6,10 @@ services:
       PHOTOPRISM_UPLOAD_NSFW: "true"
       TZ: $TZ
     image: photoprism/photoprism:221118-jammy
-    mem_reservation: "536870912"
+    deploy:
+      resources:
+        reservations:
+          memory: "512M"
     network_mode: bridge
     ports:
       - target: 2342

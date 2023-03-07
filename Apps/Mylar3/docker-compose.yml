@@ -5,7 +5,10 @@ services:
       PGID: "1000"
       PUID: "1000"
     image: linuxserver/mylar3:0.7.0
-    mem_reservation: "67108864"
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
     network_mode: bridge
     ports:
       - target: 8090
