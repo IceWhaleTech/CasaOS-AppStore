@@ -1,70 +1,69 @@
 name: embystat
 services:
-    embystat:
-        environment:
-            PGID: "1000"
-            PUID: "1000"
-            TZ: Europe/London
-        image: linuxserver/embystat:latest
-        mem_reservation: "67108864"
-        network_mode: bridge
-        ports:
-            - target: 6555
-              published: "6555"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/embystat/config
-              target: /config
-        x-casaos:
-            author: CasaOS Team
-            category: Media
-            container:
-                envs:
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: TZ
-                      description:
-                        en_US: ""
-                port_map: "6555"
-                ports:
-                    - configurable: "no"
-                      container: "6555"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                shell: sh
-                volumes:
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: ""
+  embystat:
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Europe/London
+    image: linuxserver/embystat:0.2.0
+    mem_reservation: "67108864"
+    network_mode: bridge
+    ports:
+      - target: 6555
+        published: "6555"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/embystat/config
+        target: /config
+    x-casaos:
+      author: CasaOS Team
+      category: Media
+      container:
+        envs:
+          - configurable: "no"
+            container: PUID
             description:
-                en_US: EmbyStat is a personal web server that can calculate all kinds of statistics from your (local) Emby or Jellyfin server. Just install this on your server and let him calculate all kinds of fun stuff. This project is still in Alpha phase, but feel free to pull in on your computer and test it out yourself. When the time is right I will host a full informational website/release for common platforms and Wiki pages.
-            developer: Embystart Team
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Embystat/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Embystat/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Embystat/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Embystat/screenshot-3.png
-            tagline:
-                en_US: Calculate all kinds of statistics from your (local) Emby or Jellyfin server
-            thumbnail: ""
-            tips: {}
-            title:
-                en_US: Embystat
+              en_US: ""
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: TZ
+            description:
+              en_US: ""
+        port_map: "6555"
+        ports:
+          - configurable: "no"
+            container: "6555"
+            description:
+              en_US: ""
+            protocol: tcp
+        shell: sh
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: ""
+      description:
+        en_US: EmbyStat is a personal web server that can calculate all kinds of statistics from your (local) Emby or Jellyfin server. Just install this on your server and let him calculate all kinds of fun stuff. This project is still in Alpha phase, but feel free to pull in on your computer and test it out yourself. When the time is right I will host a full informational website/release for common platforms and Wiki pages.
+      developer: Embystart Team
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Embystat/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Embystat/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Embystat/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Embystat/screenshot-3.png
+      tagline:
+        en_US: Calculate all kinds of statistics from your (local) Emby or Jellyfin server
+      thumbnail: ""
+      tips: {}
+      title:
+        en_US: Embystat
 x-casaos:
-    architectures:
-        - amd64
-        - arm
-        - arm64
-    main_app: embystat
-    version: latest
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: embystat

@@ -1,87 +1,86 @@
 name: couchpotato
 services:
-    couchpotato:
-        environment:
-            PGID: "1000"
-            PUID: "1000"
-            TZ: $TZ
-        image: linuxserver/couchpotato
-        mem_reservation: "67108864"
-        network_mode: bridge
-        ports:
-            - target: 5050
-              published: "5050"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID/config
-              target: /config
-            - type: bind
-              source: /DATA/Media/Movies
-              target: /movies
-            - type: bind
-              source: /DATA/Downloads
-              target: /downloads
-        x-casaos:
-            author: CasaOS Team
-            category: Media
-            container:
-                envs:
-                    - configurable: "yes"
-                      container: TZ
-                      description:
-                        en_US: TimeZone
-                    - configurable: "yes"
-                      container: PUID
-                      description:
-                        en_US: Run CouchPotato as specified uid.
-                    - configurable: "yes"
-                      container: PGID
-                      description:
-                        en_US: Run CouchPotato as specified gid.
-                index: /
-                port_map: "5050"
-                ports:
-                    - configurable: advanced
-                      container: "5050"
-                      description:
-                        en_US: WebUI HTTP Port
-                      protocol: tcp
-                shell: bash
-                volumes:
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: CouchPotato config directory.
-                    - configurable: advanced
-                      container: /movies
-                      description:
-                        en_US: CouchPotato movies directory.
-                    - configurable: advanced
-                      container: /downloads
-                      description:
-                        en_US: CouchPotato downloads directory.
+  couchpotato:
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: $TZ
+    image: linuxserver/couchpotato:version-7260c12f
+    mem_reservation: "67108864"
+    network_mode: bridge
+    ports:
+      - target: 5050
+        published: "5050"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Movies
+        target: /movies
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      author: CasaOS Team
+      category: Media
+      container:
+        envs:
+          - configurable: "yes"
+            container: TZ
             description:
-                en_US: Awesome PVR for usenet and torrents. Just fill in what you want to see and CouchPotato will add it to your want to watch-list. Every day it will search through multiple sources, looking for the best possible match. If available, it will send it using your favorite download software.
-            developer: CouchPotato
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/screenshot-1.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/screenshot-2.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/screenshot-3.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/screenshot-4.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/screenshot-5.jpg
-            tagline:
-                en_US: Automatically find movies you want to watch
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/thumbnail.jpg
-            tips: {}
-            title:
-                en_US: CouchPotato
+              en_US: TimeZone
+          - configurable: "yes"
+            container: PUID
+            description:
+              en_US: Run CouchPotato as specified uid.
+          - configurable: "yes"
+            container: PGID
+            description:
+              en_US: Run CouchPotato as specified gid.
+        index: /
+        port_map: "5050"
+        ports:
+          - configurable: advanced
+            container: "5050"
+            description:
+              en_US: WebUI HTTP Port
+            protocol: tcp
+        shell: bash
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: CouchPotato config directory.
+          - configurable: advanced
+            container: /movies
+            description:
+              en_US: CouchPotato movies directory.
+          - configurable: advanced
+            container: /downloads
+            description:
+              en_US: CouchPotato downloads directory.
+      description:
+        en_US: Awesome PVR for usenet and torrents. Just fill in what you want to see and CouchPotato will add it to your want to watch-list. Every day it will search through multiple sources, looking for the best possible match. If available, it will send it using your favorite download software.
+      developer: CouchPotato
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/screenshot-1.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/screenshot-2.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/screenshot-3.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/screenshot-4.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/screenshot-5.jpg
+      tagline:
+        en_US: Automatically find movies you want to watch
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/thumbnail.jpg
+      tips: {}
+      title:
+        en_US: CouchPotato
 x-casaos:
-    architectures:
-        - amd64
-        - arm
-        - arm64
-    main_app: couchpotato
-    version: TBD
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: couchpotato

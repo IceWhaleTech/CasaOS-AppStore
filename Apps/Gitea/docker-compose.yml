@@ -1,79 +1,78 @@
 name: gitea
 services:
-    gitea:
-        environment:
-            USER_GID: "1000"
-            USER_UID: "1000"
-        image: gitea/gitea:1
-        mem_reservation: "268435456"
-        network_mode: bridge
-        ports:
-            - target: 3000
-              published: "3000"
-              protocol: tcp
-            - target: 22
-              published: "222"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID/data
-              target: /data
-        x-casaos:
-            author: CasaOS Team
-            category: Developer
-            container:
-                envs:
-                    - configurable: advanced
-                      container: USER_UID
-                      description:
-                        en_US: The UID (Unix user ID) of the user that runs Gitea
-                    - configurable: advanced
-                      container: USER_GID
-                      description:
-                        en_US: The GID (Unix group ID) of the user that runs Gitea
-                index: /
-                port_map: "3000"
-                ports:
-                    - configurable: advanced
-                      container: "3000"
-                      description:
-                        en_US: WebUI Port
-                      protocol: tcp
-                    - configurable: advanced
-                      container: "22"
-                      description:
-                        en_US: SSH Port
-                      protocol: tcp
-                shell: sh
-                volumes:
-                    - configurable: advanced
-                      container: /data
-                      description:
-                        en_US: Gitea data directory.
+  gitea:
+    environment:
+      USER_GID: "1000"
+      USER_UID: "1000"
+    image: gitea/gitea:1.18.5
+    mem_reservation: "268435456"
+    network_mode: bridge
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+      - target: 22
+        published: "222"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      author: CasaOS Team
+      category: Developer
+      container:
+        envs:
+          - configurable: advanced
+            container: USER_UID
             description:
-                en_US: Gitea is a community managed lightweight code hosting solution written in Go.
-            developer: Gitea
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-1.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-2.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-3.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-4.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-5.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-6.jpg
-            tagline:
-                en_US: Git with a cup of tea
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/thumbnail.png
-            tips:
-                before_install:
-                    - content:
-                        en_US: When the App is installed, the first account registered will become the administrator account.
-            title:
-                en_US: Gitea
+              en_US: The UID (Unix user ID) of the user that runs Gitea
+          - configurable: advanced
+            container: USER_GID
+            description:
+              en_US: The GID (Unix group ID) of the user that runs Gitea
+        index: /
+        port_map: "3000"
+        ports:
+          - configurable: advanced
+            container: "3000"
+            description:
+              en_US: WebUI Port
+            protocol: tcp
+          - configurable: advanced
+            container: "22"
+            description:
+              en_US: SSH Port
+            protocol: tcp
+        shell: sh
+        volumes:
+          - configurable: advanced
+            container: /data
+            description:
+              en_US: Gitea data directory.
+      description:
+        en_US: Gitea is a community managed lightweight code hosting solution written in Go.
+      developer: Gitea
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-1.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-2.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-3.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-4.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-5.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-6.jpg
+      tagline:
+        en_US: Git with a cup of tea
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/thumbnail.png
+      tips:
+        before_install:
+          - content:
+              en_US: When the App is installed, the first account registered will become the administrator account.
+      title:
+        en_US: Gitea
 x-casaos:
-    architectures:
-        - amd64
-        - arm64
-    main_app: gitea
-    version: "1"
+  architectures:
+    - amd64
+    - arm64
+  main_app: gitea

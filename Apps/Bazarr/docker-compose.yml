@@ -1,85 +1,84 @@
 name: bazarr
 services:
-    bazarr:
-        environment:
-            PGID: "1000"
-            PUID: "1000"
-            TZ: Europe/London
-        image: linuxserver/bazarr:latest
-        mem_reservation: "67108864"
-        network_mode: bridge
-        ports:
-            - target: 6767
-              published: "6767"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/Media/Movies
-              target: /movies
-            - type: bind
-              source: /DATA/Media/TV Shows
-              target: /tv
-            - type: bind
-              source: /DATA/AppData/bazarr/config
-              target: /config
-        x-casaos:
-            author: CasaOS Team
-            category: Media
-            container:
-                envs:
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: TZ
-                      description:
-                        en_US: ""
-                port_map: "6767"
-                ports:
-                    - configurable: "no"
-                      container: "6767"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                shell: sh
-                volumes:
-                    - configurable: "no"
-                      container: /movies
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /tv
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: ""
+  bazarr:
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Europe/London
+    image: linuxserver/bazarr:1.2.0
+    mem_reservation: "67108864"
+    network_mode: bridge
+    ports:
+      - target: 6767
+        published: "6767"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/Media/Movies
+        target: /movies
+      - type: bind
+        source: /DATA/Media/TV Shows
+        target: /tv
+      - type: bind
+        source: /DATA/AppData/bazarr/config
+        target: /config
+    x-casaos:
+      author: CasaOS Team
+      category: Media
+      container:
+        envs:
+          - configurable: "no"
+            container: PUID
             description:
-                en_US: Bazarr is a companion application to Sonarr and Radarr. It can manage and download subtitles based on your requirements. You define your preferences by TV show or movie and Bazarr takes care of everything for you.
-            developer: Sabnzbd Team
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-3.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-4.png
-            tagline:
-                en_US: Letter generators for Sonarr and Radarr
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/thumbnail.png
-            tips: {}
-            title:
-                en_US: Bazarr
+              en_US: ""
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: TZ
+            description:
+              en_US: ""
+        port_map: "6767"
+        ports:
+          - configurable: "no"
+            container: "6767"
+            description:
+              en_US: ""
+            protocol: tcp
+        shell: sh
+        volumes:
+          - configurable: "no"
+            container: /movies
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /tv
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: ""
+      description:
+        en_US: Bazarr is a companion application to Sonarr and Radarr. It can manage and download subtitles based on your requirements. You define your preferences by TV show or movie and Bazarr takes care of everything for you.
+      developer: Sabnzbd Team
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-3.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-4.png
+      tagline:
+        en_US: Letter generators for Sonarr and Radarr
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/thumbnail.png
+      tips: {}
+      title:
+        en_US: Bazarr
 x-casaos:
-    architectures:
-        - amd64
-        - arm
-        - arm64
-    main_app: bazarr
-    version: latest
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: bazarr

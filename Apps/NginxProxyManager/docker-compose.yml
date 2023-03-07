@@ -1,96 +1,95 @@
 name: nginxproxymanager
 services:
-    nginxproxymanager:
-        image: jc21/nginx-proxy-manager:latest
-        mem_reservation: "134217728"
-        network_mode: bridge
+  nginxproxymanager:
+    image: jc21/nginx-proxy-manager:2.9.19
+    mem_reservation: "134217728"
+    network_mode: bridge
+    ports:
+      - target: 80
+        published: "80"
+        protocol: tcp
+      - target: 443
+        published: "443"
+        protocol: tcp
+      - target: 81
+        published: "81"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/etc/letsencrypt
+        target: /etc/letsencrypt
+    x-casaos:
+      author: CasaOS Team
+      category: Network
+      container:
+        index: /
+        port_map: "81"
         ports:
-            - target: 80
-              published: "80"
-              protocol: tcp
-            - target: 443
-              published: "443"
-              protocol: tcp
-            - target: 81
-              published: "81"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID/data
-              target: /data
-            - type: bind
-              source: /DATA/AppData/$AppID/etc/letsencrypt
-              target: /etc/letsencrypt
-        x-casaos:
-            author: CasaOS Team
-            category: Network
-            container:
-                index: /
-                port_map: "81"
-                ports:
-                    - configurable: advanced
-                      container: "80"
-                      description:
-                        en_US: Nginx HTTP Port
-                      protocol: tcp
-                    - configurable: advanced
-                      container: "443"
-                      description:
-                        en_US: Nginx HTTPS Port
-                      protocol: tcp
-                    - configurable: basic
-                      container: "81"
-                      description:
-                        en_US: WebUI Port
-                      protocol: tcp
-                shell: sh
-                volumes:
-                    - configurable: advanced
-                      container: /data
-                      description:
-                        en_US: Nginx Proxy Manager data directory.
-                    - configurable: advanced
-                      container: /etc/letsencrypt
-                      description:
-                        en_US: Nginx Proxy Manager letsencrypt directory.
+          - configurable: advanced
+            container: "80"
             description:
-                en_US: Managing Nginx proxy hosts with a simple, powerful interface.
-            developer: Nginx Proxy Manager
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/screenshot-1.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/screenshot-2.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/screenshot-3.jpg
-            tagline:
-                en_US: Just what the name says
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/thumbnail.png
-            tips:
-                before_install:
-                    - content:
-                        en_US: ⚠️ Warning!
-                    - content:
-                        en_US: This is a technical app, please make sure you know what you are doing.
-                    - content:
-                        en_US: Nginx Proxy Manager occupies ports 80 and 443 by default for built-in Nginx use. It occupies port 81 for the admin page.
-                    - content:
-                        en_US: Please change the CasaOS WebUI port to a port other than 80/81/443. And pay attention to whether the ports conflict with other apps. Otherwise, it may cause your CasaOS to run abnormally.
-                    - content:
-                        en_US: ""
-                    - content:
-                        en_US: Default Administrator User
-                    - content:
-                        en_US: 'Username: '
-                      value: admin@example.com
-                    - content:
-                        en_US: 'Password: '
-                      value: changeme
-            title:
-                en_US: Nginx Proxy Manager
+              en_US: Nginx HTTP Port
+            protocol: tcp
+          - configurable: advanced
+            container: "443"
+            description:
+              en_US: Nginx HTTPS Port
+            protocol: tcp
+          - configurable: basic
+            container: "81"
+            description:
+              en_US: WebUI Port
+            protocol: tcp
+        shell: sh
+        volumes:
+          - configurable: advanced
+            container: /data
+            description:
+              en_US: Nginx Proxy Manager data directory.
+          - configurable: advanced
+            container: /etc/letsencrypt
+            description:
+              en_US: Nginx Proxy Manager letsencrypt directory.
+      description:
+        en_US: Managing Nginx proxy hosts with a simple, powerful interface.
+      developer: Nginx Proxy Manager
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/screenshot-1.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/screenshot-2.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/screenshot-3.jpg
+      tagline:
+        en_US: Just what the name says
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/thumbnail.png
+      tips:
+        before_install:
+          - content:
+              en_US: ⚠️ Warning!
+          - content:
+              en_US: This is a technical app, please make sure you know what you are doing.
+          - content:
+              en_US: Nginx Proxy Manager occupies ports 80 and 443 by default for built-in Nginx use. It occupies port 81 for the admin page.
+          - content:
+              en_US: Please change the CasaOS WebUI port to a port other than 80/81/443. And pay attention to whether the ports conflict with other apps. Otherwise, it may cause your CasaOS to run abnormally.
+          - content:
+              en_US: ""
+          - content:
+              en_US: Default Administrator User
+          - content:
+              en_US: 'Username: '
+            value: admin@example.com
+          - content:
+              en_US: 'Password: '
+            value: changeme
+      title:
+        en_US: Nginx Proxy Manager
 x-casaos:
-    architectures:
-        - amd64
-        - arm64
-        - arm
-    main_app: nginxproxymanager
-    version: latest
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  main_app: nginxproxymanager

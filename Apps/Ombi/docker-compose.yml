@@ -1,75 +1,74 @@
 name: ombi
 services:
-    ombi:
-        environment:
-            BASE_URL: /ombi
-            PGID: "1000"
-            PUID: "1000"
-            TZ: Europe/London
-        image: linuxserver/ombi:latest
-        mem_reservation: "67108864"
-        network_mode: bridge
-        ports:
-            - target: 3579
-              published: "3579"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/ombi/config
-              target: /config
-        x-casaos:
-            author: CasaOS Team
-            category: Media
-            container:
-                envs:
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: TZ
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: BASE_URL
-                      description:
-                        en_US: ""
-                port_map: "3579"
-                ports:
-                    - configurable: "no"
-                      container: "3579"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                shell: sh
-                volumes:
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: ""
+  ombi:
+    environment:
+      BASE_URL: /ombi
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Europe/London
+    image: linuxserver/ombi:4.35.10
+    mem_reservation: "67108864"
+    network_mode: bridge
+    ports:
+      - target: 3579
+        published: "3579"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/ombi/config
+        target: /config
+    x-casaos:
+      author: CasaOS Team
+      category: Media
+      container:
+        envs:
+          - configurable: "no"
+            container: PUID
             description:
-                en_US: Ombi is a self-hosted web application that automatically gives your shared Plex or Emby users the ability to request content by themselves! Ombi can be linked to multiple TV Show and Movie DVR tools to create a seamless end-to-end experience for your users.
-            developer: Sabnzbd Team
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/screenshot-3.png
-            tagline:
-                en_US: 'Friendly media request tool, automatically syncs with your media servers! '
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/thumbnail.png
-            tips: {}
-            title:
-                en_US: Ombi
+              en_US: ""
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: TZ
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: BASE_URL
+            description:
+              en_US: ""
+        port_map: "3579"
+        ports:
+          - configurable: "no"
+            container: "3579"
+            description:
+              en_US: ""
+            protocol: tcp
+        shell: sh
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: ""
+      description:
+        en_US: Ombi is a self-hosted web application that automatically gives your shared Plex or Emby users the ability to request content by themselves! Ombi can be linked to multiple TV Show and Movie DVR tools to create a seamless end-to-end experience for your users.
+      developer: Sabnzbd Team
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/screenshot-3.png
+      tagline:
+        en_US: 'Friendly media request tool, automatically syncs with your media servers! '
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/thumbnail.png
+      tips: {}
+      title:
+        en_US: Ombi
 x-casaos:
-    architectures:
-        - amd64
-        - arm
-        - arm64
-    main_app: ombi
-    version: latest
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: ombi

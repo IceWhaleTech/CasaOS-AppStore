@@ -1,55 +1,54 @@
 name: 2fauth
 services:
-    2fauth:
-        image: 2fauth/2fauth:latest
-        mem_reservation: "67108864"
-        network_mode: bridge
+  2fauth:
+    image: 2fauth/2fauth:3.4.2
+    mem_reservation: "67108864"
+    network_mode: bridge
+    ports:
+      - target: 8000
+        published: "8000"
+        protocol: tcp
+    restart: always
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /2fauth
+    x-casaos:
+      author: CasaOS Team
+      category: Utilities
+      container:
+        index: /
+        port_map: "8000"
         ports:
-            - target: 8000
-              published: "8000"
-              protocol: tcp
-        restart: always
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID
-              target: /2fauth
-        x-casaos:
-            author: CasaOS Team
-            category: Utilities
-            container:
-                index: /
-                port_map: "8000"
-                ports:
-                    - configurable: "no"
-                      container: "8000"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                shell: sh
-                volumes:
-                    - configurable: "no"
-                      container: /2fauth
-                      description:
-                        en_US: ""
+          - configurable: "no"
+            container: "8000"
             description:
-                en_US: 2FAuth is a web based self-hosted alternative to One Time Passcode (OTP) generators like Google Authenticator, designed for both mobile and desktop.
-            developer: Bubka
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/screenshot-3.png
-            tagline:
-                en_US: A web app to manage your Two-Factor Authentication (2FA) accounts and generate their security codes
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/thumbnail.png
-            tips: {}
-            title:
-                en_US: 2FAuth
+              en_US: ""
+            protocol: tcp
+        shell: sh
+        volumes:
+          - configurable: "no"
+            container: /2fauth
+            description:
+              en_US: ""
+      description:
+        en_US: 2FAuth is a web based self-hosted alternative to One Time Passcode (OTP) generators like Google Authenticator, designed for both mobile and desktop.
+      developer: Bubka
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/screenshot-3.png
+      tagline:
+        en_US: A web app to manage your Two-Factor Authentication (2FA) accounts and generate their security codes
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/thumbnail.png
+      tips: {}
+      title:
+        en_US: 2FAuth
 x-casaos:
-    architectures:
-        - amd64
-        - "386"
-        - arm64
-        - arm
-    main_app: 2fauth
-    version: latest
+  architectures:
+    - amd64
+    - "386"
+    - arm64
+    - arm
+  main_app: 2fauth

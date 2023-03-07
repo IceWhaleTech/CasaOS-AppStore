@@ -1,121 +1,120 @@
 name: deluge
 services:
-    deluge:
-        environment:
-            DELUGE_LOGLEVEL: error
-            PGID: $PGID
-            PUID: $PUID
-            TZ: $TZ
-        image: linuxserver/deluge:latest
-        mem_reservation: "268435456"
-        network_mode: bridge
-        ports:
-            - target: 8112
-              published: "8112"
-              protocol: tcp
-            - target: 6881
-              published: "6881"
-              protocol: tcp
-            - target: 6881
-              published: "6881"
-              protocol: udp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID/config
-              target: /config
-            - type: bind
-              source: /DATA
-              target: /DATA
-        x-casaos:
-            author: CasaOS Team
-            category: Downloader
-            container:
-                envs:
-                    - configurable: "no"
-                      container: TZ
-                      description:
-                        en_US: TimeZone
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: Run Deluge as specified uid.
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: Run Deluge as specified gid.
-                    - configurable: "no"
-                      container: DELUGE_LOGLEVEL
-                      description:
-                        en_US: 'Deluge Log Level '
-                index: /
-                port_map: "8112"
-                ports:
-                    - configurable: advanced
-                      container: "8112"
-                      description:
-                        en_US: WebUI HTTP Port
-                      protocol: tcp
-                    - configurable: advanced
-                      container: "6881"
-                      description:
-                        en_US: Inbound torrent traffic (TCP)
-                      protocol: tcp
-                    - configurable: advanced
-                      container: "6881"
-                      description:
-                        en_US: Inbound torrent traffic (UDP)
-                      protocol: udp
-                shell: bash
-                volumes:
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: Deluge config directory.
-                    - configurable: advanced
-                      container: /DATA
-                      description:
-                        en_US: Deluge Accessible directory.
+  deluge:
+    environment:
+      DELUGE_LOGLEVEL: error
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: linuxserver/deluge:2.1.1
+    mem_reservation: "268435456"
+    network_mode: bridge
+    ports:
+      - target: 8112
+        published: "8112"
+        protocol: tcp
+      - target: 6881
+        published: "6881"
+        protocol: tcp
+      - target: 6881
+        published: "6881"
+        protocol: udp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA
+        target: /DATA
+    x-casaos:
+      author: CasaOS Team
+      category: Downloader
+      container:
+        envs:
+          - configurable: "no"
+            container: TZ
             description:
-                en_US: Deluge contains the common features to BitTorrent clients such as Protocol Encryption, DHT, Local Peer Discovery (LSD), Peer Exchange (PEX), UPnP, NAT-PMP, Proxy support, Web seeds, global and per-torrent speed limits. As Deluge heavily utilises the ​libtorrent library it has a comprehensive list of the ​features provided.
-            developer: Deluge Team
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Deluge/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Deluge/screenshot-1.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Deluge/screenshot-2.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Deluge/screenshot-3.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Deluge/screenshot-4.jpg
-            tagline:
-                en_US: A lightweight and free BitTorrent client.
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Deluge/thumbnail.jpg
-            tips:
-                before_install:
-                    - content:
-                        en_US: 'Default Password: '
-                      value: deluge
-                    - content:
-                        en_US: ""
-                    - content:
-                        en_US: Default Accessible Path in Deluge
-                    - content:
-                        en_US: 'DATA Path: '
-                      value: /DATA
-                    - content:
-                        en_US: 'Downloads Path: '
-                      value: /DATA/Downloads
-                    - content:
-                        en_US: 'Media Path: '
-                      value: /DATA/Media
-                    - content:
-                        en_US: The paths of other DATA subdirectories in CasaOS are also similar.
-                    - content:
-                        en_US: Please make sure you use the correct path when using Deluge.
-            title:
-                en_US: Deluge
+              en_US: TimeZone
+          - configurable: "no"
+            container: PUID
+            description:
+              en_US: Run Deluge as specified uid.
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: Run Deluge as specified gid.
+          - configurable: "no"
+            container: DELUGE_LOGLEVEL
+            description:
+              en_US: 'Deluge Log Level '
+        index: /
+        port_map: "8112"
+        ports:
+          - configurable: advanced
+            container: "8112"
+            description:
+              en_US: WebUI HTTP Port
+            protocol: tcp
+          - configurable: advanced
+            container: "6881"
+            description:
+              en_US: Inbound torrent traffic (TCP)
+            protocol: tcp
+          - configurable: advanced
+            container: "6881"
+            description:
+              en_US: Inbound torrent traffic (UDP)
+            protocol: udp
+        shell: bash
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: Deluge config directory.
+          - configurable: advanced
+            container: /DATA
+            description:
+              en_US: Deluge Accessible directory.
+      description:
+        en_US: Deluge contains the common features to BitTorrent clients such as Protocol Encryption, DHT, Local Peer Discovery (LSD), Peer Exchange (PEX), UPnP, NAT-PMP, Proxy support, Web seeds, global and per-torrent speed limits. As Deluge heavily utilises the ​libtorrent library it has a comprehensive list of the ​features provided.
+      developer: Deluge Team
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Deluge/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Deluge/screenshot-1.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Deluge/screenshot-2.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Deluge/screenshot-3.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Deluge/screenshot-4.jpg
+      tagline:
+        en_US: A lightweight and free BitTorrent client.
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Deluge/thumbnail.jpg
+      tips:
+        before_install:
+          - content:
+              en_US: 'Default Password: '
+            value: deluge
+          - content:
+              en_US: ""
+          - content:
+              en_US: Default Accessible Path in Deluge
+          - content:
+              en_US: 'DATA Path: '
+            value: /DATA
+          - content:
+              en_US: 'Downloads Path: '
+            value: /DATA/Downloads
+          - content:
+              en_US: 'Media Path: '
+            value: /DATA/Media
+          - content:
+              en_US: The paths of other DATA subdirectories in CasaOS are also similar.
+          - content:
+              en_US: Please make sure you use the correct path when using Deluge.
+      title:
+        en_US: Deluge
 x-casaos:
-    architectures:
-        - amd64
-        - arm
-        - arm64
-    main_app: deluge
-    version: latest
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: deluge

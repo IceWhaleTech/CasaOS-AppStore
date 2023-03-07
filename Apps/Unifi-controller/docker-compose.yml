@@ -1,139 +1,138 @@
 name: unifi-controller
 services:
-    unifi-controller:
-        environment:
-            MEM_LIMIT: "1024"
-            MEM_STARTUP: "1024"
-            PGID: "1000"
-            PUID: "1000"
-        image: linuxserver/unifi-controller:latest
-        mem_reservation: "67108864"
-        network_mode: bridge
-        ports:
-            - target: 3478
-              published: "3478"
-              protocol: udp
-            - target: 10001
-              published: "10001"
-              protocol: udp
-            - target: 8080
-              published: "8080"
-              protocol: tcp
-            - target: 8443
-              published: "8443"
-              protocol: tcp
-            - target: 1900
-              published: "1900"
-              protocol: udp
-            - target: 8843
-              published: "8843"
-              protocol: tcp
-            - target: 8880
-              published: "8880"
-              protocol: tcp
-            - target: 6789
-              published: "6789"
-              protocol: tcp
-            - target: 5514
-              published: "5514"
-              protocol: udp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID/config
-              target: /config
-        x-casaos:
-            author: CasaOS Team
-            category: Network
-            container:
-                envs:
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: MEM_LIMIT
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: MEM_STARTUP
-                      description:
-                        en_US: ""
-                index: /
-                port_map: "8080"
-                ports:
-                    - configurable: "no"
-                      container: "3478"
-                      description:
-                        en_US: ""
-                      protocol: udp
-                    - configurable: "no"
-                      container: "10001"
-                      description:
-                        en_US: ""
-                      protocol: udp
-                    - configurable: "no"
-                      container: "8080"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                    - configurable: "no"
-                      container: "8443"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                    - configurable: "no"
-                      container: "1900"
-                      description:
-                        en_US: ""
-                      protocol: udp
-                    - configurable: "no"
-                      container: "8843"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                    - configurable: "no"
-                      container: "8880"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                    - configurable: "no"
-                      container: "6789"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                    - configurable: "no"
-                      container: "5514"
-                      description:
-                        en_US: ""
-                      protocol: udp
-                shell: sh
-                volumes:
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: ""
+  unifi-controller:
+    environment:
+      MEM_LIMIT: "1024"
+      MEM_STARTUP: "1024"
+      PGID: "1000"
+      PUID: "1000"
+    image: linuxserver/unifi-controller:7.3.83
+    mem_reservation: "67108864"
+    network_mode: bridge
+    ports:
+      - target: 3478
+        published: "3478"
+        protocol: udp
+      - target: 10001
+        published: "10001"
+        protocol: udp
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+      - target: 8443
+        published: "8443"
+        protocol: tcp
+      - target: 1900
+        published: "1900"
+        protocol: udp
+      - target: 8843
+        published: "8843"
+        protocol: tcp
+      - target: 8880
+        published: "8880"
+        protocol: tcp
+      - target: 6789
+        published: "6789"
+        protocol: tcp
+      - target: 5514
+        published: "5514"
+        protocol: udp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+    x-casaos:
+      author: CasaOS Team
+      category: Network
+      container:
+        envs:
+          - configurable: "no"
+            container: PUID
             description:
-                en_US: For Unifi to adopt other devices, e.g. an Access Point, it is required to change the inform IP address. Because Unifi runs inside Docker by default it uses an IP address not accessible by other devices. To change this go to Settings > System Settings > Controller Configuration and set the Controller Hostname/IP to a hostname or IP address accessible by your devices. Additionally the checkbox "Override inform host with controller hostname/IP" has to be checked, so that devices can connect to the controller during adoption (devices use the inform-endpoint during adoption).
-            developer: LinuxServer.io
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-controller/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-controller/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-controller/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-controller/screenshot-3.png
-            tagline:
-                en_US: The Unifi-controller software is a powerful, enterprise wireless software engine ideal for high-density client deployments requiring low latency and high uptime performance.
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-controller/thumbnail.png
-            tips: {}
-            title:
-                en_US: Unifi-controller
+              en_US: ""
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: MEM_LIMIT
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: MEM_STARTUP
+            description:
+              en_US: ""
+        index: /
+        port_map: "8080"
+        ports:
+          - configurable: "no"
+            container: "3478"
+            description:
+              en_US: ""
+            protocol: udp
+          - configurable: "no"
+            container: "10001"
+            description:
+              en_US: ""
+            protocol: udp
+          - configurable: "no"
+            container: "8080"
+            description:
+              en_US: ""
+            protocol: tcp
+          - configurable: "no"
+            container: "8443"
+            description:
+              en_US: ""
+            protocol: tcp
+          - configurable: "no"
+            container: "1900"
+            description:
+              en_US: ""
+            protocol: udp
+          - configurable: "no"
+            container: "8843"
+            description:
+              en_US: ""
+            protocol: tcp
+          - configurable: "no"
+            container: "8880"
+            description:
+              en_US: ""
+            protocol: tcp
+          - configurable: "no"
+            container: "6789"
+            description:
+              en_US: ""
+            protocol: tcp
+          - configurable: "no"
+            container: "5514"
+            description:
+              en_US: ""
+            protocol: udp
+        shell: sh
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: ""
+      description:
+        en_US: For Unifi to adopt other devices, e.g. an Access Point, it is required to change the inform IP address. Because Unifi runs inside Docker by default it uses an IP address not accessible by other devices. To change this go to Settings > System Settings > Controller Configuration and set the Controller Hostname/IP to a hostname or IP address accessible by your devices. Additionally the checkbox "Override inform host with controller hostname/IP" has to be checked, so that devices can connect to the controller during adoption (devices use the inform-endpoint during adoption).
+      developer: LinuxServer.io
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-controller/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-controller/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-controller/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-controller/screenshot-3.png
+      tagline:
+        en_US: The Unifi-controller software is a powerful, enterprise wireless software engine ideal for high-density client deployments requiring low latency and high uptime performance.
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-controller/thumbnail.png
+      tips: {}
+      title:
+        en_US: Unifi-controller
 x-casaos:
-    architectures:
-        - amd64
-        - arm64
-    main_app: unifi-controller
-    version: latest
+  architectures:
+    - amd64
+    - arm64
+  main_app: unifi-controller

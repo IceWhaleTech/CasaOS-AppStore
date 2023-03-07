@@ -1,88 +1,87 @@
 name: tailscale-daemon
 services:
-    tailscale-daemon:
-        cap_add:
-            - net_admin
-            - sys_module
-        environment:
-            TS_AUTH_ONCE: "true"
-            TS_EXTRA_ARGS: --hostname casaos
-            TS_STATE_DIR: /var/lib/tailscale
-        image: tailscale/tailscale
-        mem_reservation: "67108864"
-        network_mode: host
-        privileged: true
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /dev/net/tun
-              target: /dev/net/tun
-            - type: bind
-              source: /var/lib
-              target: /var/lib
-            - type: bind
-              source: /DATA/AppData/$AppID/config
-              target: /var/lib/tailscale
-        x-casaos:
-            author: EzyoStudio
-            category: Network
-            container:
-                envs:
-                    - configurable: advanced
-                      container: TS_AUTH_ONCE
-                      description:
-                        en_US: if true, only attempt to log in if not already logged in. If false, forcibly log in every time the container starts.
-                    - configurable: advanced
-                      container: TS_EXTRA_ARGS
-                      description:
-                        en_US: extra arguments to 'tailscale up'.
-                    - configurable: advanced
-                      container: TS_STATE_DIR
-                      description:
-                        en_US: the directory in which to store tailscaled state. The data should persist across container restarts.
-                port_map: "80"
-                shell: sh
-                volumes:
-                    - configurable: "no"
-                      container: /dev/net/tun
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /var/lib
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /var/lib/tailscale
-                      description:
-                        en_US: ""
+  tailscale-daemon:
+    cap_add:
+      - net_admin
+      - sys_module
+    environment:
+      TS_AUTH_ONCE: "true"
+      TS_EXTRA_ARGS: --hostname casaos
+      TS_STATE_DIR: /var/lib/tailscale
+    image: tailscale/tailscale:v1.36.2
+    mem_reservation: "67108864"
+    network_mode: host
+    privileged: true
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /dev/net/tun
+        target: /dev/net/tun
+      - type: bind
+        source: /var/lib
+        target: /var/lib
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /var/lib/tailscale
+    x-casaos:
+      author: EzyoStudio
+      category: Network
+      container:
+        envs:
+          - configurable: advanced
+            container: TS_AUTH_ONCE
             description:
-                en_US: Tailscale lets you easily manage access to private resources, quickly SSH into devices on your network, and work securely from anywhere in the world.
-            developer: Tailscale
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/screenshot-1.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/screenshot-2.jpg
-            tagline:
-                en_US: Connect your devices and users together in your own secure virtual private network.
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/thumbnail.jpg
-            tips:
-                before_install:
-                    - content:
-                        en_US: 'Tailscale hostname: '
-                      value: casaos
-                    - content:
-                        en_US: ""
-                    - content:
-                        en_US: 'After install:'
-                    - content:
-                        en_US: Go to the container log and connect to your tailscale account using the link provided
-            title:
-                en_US: Tailscale Daemon
+              en_US: if true, only attempt to log in if not already logged in. If false, forcibly log in every time the container starts.
+          - configurable: advanced
+            container: TS_EXTRA_ARGS
+            description:
+              en_US: extra arguments to 'tailscale up'.
+          - configurable: advanced
+            container: TS_STATE_DIR
+            description:
+              en_US: the directory in which to store tailscaled state. The data should persist across container restarts.
+        port_map: "80"
+        shell: sh
+        volumes:
+          - configurable: "no"
+            container: /dev/net/tun
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /var/lib
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /var/lib/tailscale
+            description:
+              en_US: ""
+      description:
+        en_US: Tailscale lets you easily manage access to private resources, quickly SSH into devices on your network, and work securely from anywhere in the world.
+      developer: Tailscale
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/screenshot-1.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/screenshot-2.jpg
+      tagline:
+        en_US: Connect your devices and users together in your own secure virtual private network.
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/thumbnail.jpg
+      tips:
+        before_install:
+          - content:
+              en_US: 'Tailscale hostname: '
+            value: casaos
+          - content:
+              en_US: ""
+          - content:
+              en_US: 'After install:'
+          - content:
+              en_US: Go to the container log and connect to your tailscale account using the link provided
+      title:
+        en_US: Tailscale Daemon
 x-casaos:
-    architectures:
-        - arm64
-        - arm
-        - "386"
-        - amd64
-    main_app: tailscale-daemon
-    version: TBD
+  architectures:
+    - arm64
+    - arm
+    - "386"
+    - amd64
+  main_app: tailscale-daemon

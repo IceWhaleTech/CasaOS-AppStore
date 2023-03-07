@@ -1,123 +1,122 @@
 name: jellyfin
 services:
-    jellyfin:
-        devices:
-            - /dev/dri:/dev/dri
-            - /dev/vcsm:/dev/vcsm
-            - /dev/vchiq:/dev/vchiq
-            - /dev/video10:/dev/video10
-            - /dev/video11:/dev/video11
-            - /dev/video12:/dev/video12
-        environment:
-            JELLYFIN_PublishedServerUrl: $APP_IPV4
-            PGID: $PGID
-            PUID: $PUID
-            TZ: $TZ
-        image: linuxserver/jellyfin:latest
-        mem_reservation: "268435456"
-        network_mode: bridge
-        ports:
-            - target: 8096
-              published: "8096"
-              protocol: tcp
-            - target: 8920
-              published: "8920"
-              protocol: tcp
-            - target: 7359
-              published: "7359"
-              protocol: tcp
-            - target: 1900
-              published: "1900"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID/config
-              target: /config
-            - type: bind
-              source: /DATA/Media
-              target: /Media
-            - type: bind
-              source: /opt/vc/lib
-              target: /opt/vc/lib
-        x-casaos:
-            author: CasaOS Team
-            category: Media
-            container:
-                envs:
-                    - configurable: "no"
-                      container: TZ
-                      description:
-                        en_US: TimeZone
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: Run Jellyfin as specified uid.
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: Run Jellyfin as specified gid.
-                    - configurable: advanced
-                      container: JELLYFIN_PublishedServerUrl
-                      description:
-                        en_US: The autodiscovery response domain or IP address.
-                index: /
-                port_map: "8096"
-                ports:
-                    - configurable: advanced
-                      container: "8096"
-                      description:
-                        en_US: WebUI HTTP Port
-                      protocol: tcp
-                    - configurable: advanced
-                      container: "8920"
-                      description:
-                        en_US: WebUI HTTPS Port
-                      protocol: tcp
-                    - configurable: "no"
-                      container: "7359"
-                      description:
-                        en_US: Jellyfin auto-discovery Port
-                      protocol: tcp
-                    - configurable: "no"
-                      container: "1900"
-                      description:
-                        en_US: Jellyfin DLNA Port
-                      protocol: tcp
-                shell: bash
-                volumes:
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: Jellyfin config directory.
-                    - configurable: advanced
-                      container: /Media
-                      description:
-                        en_US: Jellyfin Media directory.
-                    - configurable: advanced
-                      container: /opt/vc/lib
-                      description:
-                        en_US: OpenMax libs
+  jellyfin:
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/vcsm:/dev/vcsm
+      - /dev/vchiq:/dev/vchiq
+      - /dev/video10:/dev/video10
+      - /dev/video11:/dev/video11
+      - /dev/video12:/dev/video12
+    environment:
+      JELLYFIN_PublishedServerUrl: $APP_IPV4
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: linuxserver/jellyfin:10.8.9
+    mem_reservation: "268435456"
+    network_mode: bridge
+    ports:
+      - target: 8096
+        published: "8096"
+        protocol: tcp
+      - target: 8920
+        published: "8920"
+        protocol: tcp
+      - target: 7359
+        published: "7359"
+        protocol: tcp
+      - target: 1900
+        published: "1900"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media
+        target: /Media
+      - type: bind
+        source: /opt/vc/lib
+        target: /opt/vc/lib
+    x-casaos:
+      author: CasaOS Team
+      category: Media
+      container:
+        envs:
+          - configurable: "no"
+            container: TZ
             description:
-                en_US: Jellyfin enables you to collect, manage, and stream your media. Run the Jellyfin server on your system and gain access to the leading free-software entertainment system, bells and whistles included.
-            developer: Jellyfin
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-1.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-2.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-3.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-4.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-5.jpg
-            tagline:
-                en_US: Puts you in control of your media.
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.png
-            tips: {}
-            title:
-                en_US: Jellyfin
+              en_US: TimeZone
+          - configurable: "no"
+            container: PUID
+            description:
+              en_US: Run Jellyfin as specified uid.
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: Run Jellyfin as specified gid.
+          - configurable: advanced
+            container: JELLYFIN_PublishedServerUrl
+            description:
+              en_US: The autodiscovery response domain or IP address.
+        index: /
+        port_map: "8096"
+        ports:
+          - configurable: advanced
+            container: "8096"
+            description:
+              en_US: WebUI HTTP Port
+            protocol: tcp
+          - configurable: advanced
+            container: "8920"
+            description:
+              en_US: WebUI HTTPS Port
+            protocol: tcp
+          - configurable: "no"
+            container: "7359"
+            description:
+              en_US: Jellyfin auto-discovery Port
+            protocol: tcp
+          - configurable: "no"
+            container: "1900"
+            description:
+              en_US: Jellyfin DLNA Port
+            protocol: tcp
+        shell: bash
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: Jellyfin config directory.
+          - configurable: advanced
+            container: /Media
+            description:
+              en_US: Jellyfin Media directory.
+          - configurable: advanced
+            container: /opt/vc/lib
+            description:
+              en_US: OpenMax libs
+      description:
+        en_US: Jellyfin enables you to collect, manage, and stream your media. Run the Jellyfin server on your system and gain access to the leading free-software entertainment system, bells and whistles included.
+      developer: Jellyfin
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-1.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-2.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-3.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-4.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-5.jpg
+      tagline:
+        en_US: Puts you in control of your media.
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.png
+      tips: {}
+      title:
+        en_US: Jellyfin
 x-casaos:
-    architectures:
-        - amd64
-        - arm
-        - arm64
-    main_app: jellyfin
-    version: latest
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: jellyfin

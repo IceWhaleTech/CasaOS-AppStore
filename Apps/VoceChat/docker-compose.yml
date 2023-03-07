@@ -1,61 +1,60 @@
 name: vocechat
 services:
-    vocechat:
-        environment:
-            TZ: $TZ
-        image: privoce/vocechat-server
-        mem_reservation: "67108864"
-        network_mode: bridge
-        ports:
-            - target: 3000
-              published: "3009"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID/home/vocechat-server/data
-              target: /home/vocechat-server/data
-        x-casaos:
-            author: CasaOS Team
-            category: Chat
-            container:
-                envs:
-                    - configurable: "yes"
-                      container: TZ
-                      description:
-                        en_US: TimeZone
-                index: /
-                port_map: "3000"
-                ports:
-                    - configurable: advanced
-                      container: "3000"
-                      description:
-                        en_US: WebUI HTTP Port
-                      protocol: tcp
-                shell: bash
-                volumes:
-                    - configurable: "no"
-                      container: /home/vocechat-server/data
-                      description:
-                        en_US: VoceChat Data
+  vocechat:
+    environment:
+      TZ: $TZ
+    image: privoce/vocechat-server:v0.3.23
+    mem_reservation: "67108864"
+    network_mode: bridge
+    ports:
+      - target: 3000
+        published: "3009"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/home/vocechat-server/data
+        target: /home/vocechat-server/data
+    x-casaos:
+      author: CasaOS Team
+      category: Chat
+      container:
+        envs:
+          - configurable: "yes"
+            container: TZ
             description:
-                en_US: As a top alternative to centralized chat services, Voce chat is a superlight Rust powered open-core chat app that prioritizes private hosting.
-            developer: Privoce
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/screenshot-1.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/screenshot-2.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/screenshot-3.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/screenshot-4.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/screenshot-5.jpg
-            tagline:
-                en_US: Have a Private Social Space Hosted on Your Site
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/thumbnail.jpg
-            tips: {}
-            title:
-                en_US: VoceChat
+              en_US: TimeZone
+        index: /
+        port_map: "3000"
+        ports:
+          - configurable: advanced
+            container: "3000"
+            description:
+              en_US: WebUI HTTP Port
+            protocol: tcp
+        shell: bash
+        volumes:
+          - configurable: "no"
+            container: /home/vocechat-server/data
+            description:
+              en_US: VoceChat Data
+      description:
+        en_US: As a top alternative to centralized chat services, Voce chat is a superlight Rust powered open-core chat app that prioritizes private hosting.
+      developer: Privoce
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/screenshot-1.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/screenshot-2.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/screenshot-3.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/screenshot-4.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/screenshot-5.jpg
+      tagline:
+        en_US: Have a Private Social Space Hosted on Your Site
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/thumbnail.jpg
+      tips: {}
+      title:
+        en_US: VoceChat
 x-casaos:
-    architectures:
-        - amd64
-    main_app: vocechat
-    version: TBD
+  architectures:
+    - amd64
+  main_app: vocechat

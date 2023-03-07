@@ -1,84 +1,83 @@
 name: duplicati
 services:
-    duplicati:
-        environment:
-            PGID: "1000"
-            PUID: "1000"
-            TZ: Europe/London
-        image: linuxserver/duplicati:latest
-        mem_reservation: "67108864"
-        network_mode: bridge
-        ports:
-            - target: 8200
-              published: "8200"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID/config
-              target: /config
-            - type: bind
-              source: /DATA/Duplicati/backups
-              target: /backups
-            - type: bind
-              source: /DATA/Duplicati/source
-              target: /source
-        x-casaos:
-            author: CasaOS Team
-            category: Cloud
-            container:
-                envs:
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: TZ
-                      description:
-                        en_US: ""
-                index: /
-                port_map: "8200"
-                ports:
-                    - configurable: "no"
-                      container: "8200"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                shell: sh
-                volumes:
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /backups
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /source
-                      description:
-                        en_US: ""
+  duplicati:
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Europe/London
+    image: linuxserver/duplicati:2.0.6
+    mem_reservation: "67108864"
+    network_mode: bridge
+    ports:
+      - target: 8200
+        published: "8200"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Duplicati/backups
+        target: /backups
+      - type: bind
+        source: /DATA/Duplicati/source
+        target: /source
+    x-casaos:
+      author: CasaOS Team
+      category: Cloud
+      container:
+        envs:
+          - configurable: "no"
+            container: PUID
             description:
-                en_US: Duplicati is a free, open source, backup client that securely stores encrypted, incremental, compressed backups on cloud storage services and remote file servers.
-            developer: duplicati
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/screenshot-3.png
-            tagline:
-                en_US: Store securely encrypted backups in the cloud!
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/thumbnail.png
-            tips: {}
-            title:
-                en_US: Duplicati
+              en_US: ""
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: TZ
+            description:
+              en_US: ""
+        index: /
+        port_map: "8200"
+        ports:
+          - configurable: "no"
+            container: "8200"
+            description:
+              en_US: ""
+            protocol: tcp
+        shell: sh
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /backups
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /source
+            description:
+              en_US: ""
+      description:
+        en_US: Duplicati is a free, open source, backup client that securely stores encrypted, incremental, compressed backups on cloud storage services and remote file servers.
+      developer: duplicati
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/screenshot-3.png
+      tagline:
+        en_US: Store securely encrypted backups in the cloud!
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/thumbnail.png
+      tips: {}
+      title:
+        en_US: Duplicati
 x-casaos:
-    architectures:
-        - amd64
-        - arm64
-    main_app: duplicati
-    version: latest
+  architectures:
+    - amd64
+    - arm64
+  main_app: duplicati
