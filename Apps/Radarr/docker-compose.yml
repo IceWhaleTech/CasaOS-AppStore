@@ -1,82 +1,86 @@
 name: radarr
 services:
-    radarr:
-        environment:
-            PGID: $PGID
-            PUID: $PUID
-            TZ: $TZ
-        image: linuxserver/radarr:latest
-        mem_reservation: "268435456"
-        network_mode: bridge
-        ports:
-            - target: 7878
-              published: "7878"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID/config
-              target: /config
-            - type: bind
-              source: /DATA/Media/Movies
-              target: /movies
-            - type: bind
-              source: /DATA/Downloads
-              target: /downloads
-        x-casaos:
-            author: CasaOS Team
-            category: Media
-            container:
-                envs:
-                    - configurable: "no"
-                      container: TZ
-                      description:
-                        en_US: TimeZone
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: Run Radarr as specified uid.
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: Run Radarr as specified gid.
-                index: /
-                port_map: "7878"
-                ports:
-                    - configurable: advanced
-                      container: "7878"
-                      description:
-                        en_US: WebUI HTTP Port
-                      protocol: tcp
-                shell: bash
-                volumes:
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: Radarr config directory.
-                    - configurable: advanced
-                      container: /movies
-                      description:
-                        en_US: Radarr movies directory.
-                    - configurable: advanced
-                      container: /downloads
-                      description:
-                        en_US: Radarr downloads directory.
+  radarr:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: linuxserver/radarr:4.3.2
+    mem_reservation: "268435456"
+    network_mode: bridge
+    ports:
+      - target: 7878
+        published: "7878"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Movies
+        target: /movies
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      author: CasaOS Team
+      category: Media
+      container:
+        envs:
+          - configurable: "no"
+            container: TZ
             description:
-                en_US: Radarr is a movie collection manager for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new movies and will interface with clients and indexers to grab, sort, and rename them. It can also be configured to automatically upgrade the quality of existing files in the library when a better quality format becomes available. Note that only one type of a given movie is supported. If you want both an 4k version and 1080p version of a given movie you will need multiple instances.
-            developer: Radarr
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/screenshot-1.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/screenshot-2.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/screenshot-3.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/screenshot-4.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/screenshot-5.jpg
-            tagline:
-                en_US: The movie collection manager for Usenet and BitTorrent users
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/thumbnail.jpg
-            tips: {}
-            title:
-                en_US: Radarr
+              en_US: TimeZone
+          - configurable: "no"
+            container: PUID
+            description:
+              en_US: Run Radarr as specified uid.
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: Run Radarr as specified gid.
+        index: /
+        port_map: "7878"
+        ports:
+          - configurable: advanced
+            container: "7878"
+            description:
+              en_US: WebUI HTTP Port
+            protocol: tcp
+        shell: bash
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: Radarr config directory.
+          - configurable: advanced
+            container: /movies
+            description:
+              en_US: Radarr movies directory.
+          - configurable: advanced
+            container: /downloads
+            description:
+              en_US: Radarr downloads directory.
+      description:
+        en_US: Radarr is a movie collection manager for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new movies and will interface with clients and indexers to grab, sort, and rename them. It can also be configured to automatically upgrade the quality of existing files in the library when a better quality format becomes available. Note that only one type of a given movie is supported. If you want both an 4k version and 1080p version of a given movie you will need multiple instances.
+      developer: Radarr
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/screenshot-1.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/screenshot-2.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/screenshot-3.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/screenshot-4.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/screenshot-5.jpg
+      tagline:
+        en_US: The movie collection manager for Usenet and BitTorrent users
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/thumbnail.jpg
+      tips: {}
+      title:
+        en_US: Radarr
 x-casaos:
-    main_app: radarr
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: radarr

@@ -1,0 +1,70 @@
+name: tautulli
+services:
+  tautulli:
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Europe/London
+    image: linuxserver/tautulli:2.11.1
+    mem_reservation: "67108864"
+    network_mode: bridge
+    ports:
+      - target: 8181
+        published: "8181"
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+    x-casaos:
+      author: Triskae
+      category: Media
+      container:
+        envs:
+          - configurable: "no"
+            container: PUID
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: TZ
+            description:
+              en_US: ""
+        index: /
+        port_map: "8181"
+        ports:
+          - configurable: "no"
+            container: "8181"
+            description:
+              en_US: ""
+            protocol: ""
+        shell: bash
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: ""
+      description:
+        en_US: Tautulli is a 3rd party application that you can run alongside your Plex Media Server to monitor activity and track various statistics.
+      developer: Tautulli Team
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tautulli/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tautulli/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tautulli/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tautulli/screenshot-3.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tautulli/screenshot-4.png
+      tagline:
+        en_US: Monitor your Plex Media Server and much more.
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tautulli/thumbnail.png
+      tips: {}
+      title:
+        en_US: Tautulli
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: tautulli

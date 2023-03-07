@@ -1,75 +1,79 @@
 name: mylar3
 services:
-    mylar3:
-        environment:
-            PGID: "1000"
-            PUID: "1000"
-        image: lscr.io/linuxserver/mylar3:latest
-        mem_reservation: "67108864"
-        network_mode: bridge
-        ports:
-            - target: 8090
-              published: "8090"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/mylar3/config
-              target: /config
-            - type: bind
-              source: /path/to/comics
-              target: /comics
-            - type: bind
-              source: /DATA/Downloads
-              target: /downloads
-        x-casaos:
-            author: CasaOS Team
-            category: Downloader
-            container:
-                envs:
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: ""
-                port_map: "8090"
-                ports:
-                    - configurable: "no"
-                      container: "8090"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                shell: sh
-                volumes:
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /comics
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /downloads
-                      description:
-                        en_US: ""
+  mylar3:
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+    image: linuxserver/mylar3:0.7.0
+    mem_reservation: "67108864"
+    network_mode: bridge
+    ports:
+      - target: 8090
+        published: "8090"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/mylar3/config
+        target: /config
+      - type: bind
+        source: /path/to/comics
+        target: /comics
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      author: CasaOS Team
+      category: Downloader
+      container:
+        envs:
+          - configurable: "no"
+            container: PUID
             description:
-                en_US: Mylar is an automated Comic Book (cbr/cbz) downloader program for use with NZB and torrents. Mylar allows you to create a watchlist of series that it monitors for various things (new issues, updated information, etc). It will grab, sort, and rename downloaded issues. It will also allow you to monitor weekly pull-lists for items belonging to said watchlisted series to download, as well as being able to monitor and maintain story-arcs.
-            developer: Mylar3 Team
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mylar3/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mylar3/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mylar3/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mylar3/screenshot-3.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mylar3/screenshot-4.png
-            tagline:
-                en_US: Automatic comic book (cbr/cbz) downloader
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mylar3/thumbnail.png
-            tips: {}
-            title:
-                en_US: Mylar3
+              en_US: ""
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: ""
+        port_map: "8090"
+        ports:
+          - configurable: "no"
+            container: "8090"
+            description:
+              en_US: ""
+            protocol: tcp
+        shell: sh
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /comics
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /downloads
+            description:
+              en_US: ""
+      description:
+        en_US: Mylar is an automated Comic Book (cbr/cbz) downloader program for use with NZB and torrents. Mylar allows you to create a watchlist of series that it monitors for various things (new issues, updated information, etc). It will grab, sort, and rename downloaded issues. It will also allow you to monitor weekly pull-lists for items belonging to said watchlisted series to download, as well as being able to monitor and maintain story-arcs.
+      developer: Mylar3 Team
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mylar3/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mylar3/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mylar3/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mylar3/screenshot-3.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mylar3/screenshot-4.png
+      tagline:
+        en_US: Automatic comic book (cbr/cbz) downloader
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mylar3/thumbnail.png
+      tips: {}
+      title:
+        en_US: Mylar3
 x-casaos:
-    main_app: mylar3
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: mylar3

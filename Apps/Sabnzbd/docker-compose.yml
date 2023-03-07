@@ -1,83 +1,87 @@
 name: sabnzbd
 services:
-    sabnzbd:
-        environment:
-            PGID: "1000"
-            PUID: "1000"
-            TZ: Europe/London
-        image: linuxserver/sabnzbd:latest
-        mem_reservation: "67108864"
-        network_mode: bridge
-        ports:
-            - target: 8080
-              published: "8080"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/Downloads
-              target: /incomplete-downloads
-            - type: bind
-              source: /DATA/AppData/sabnzbd/config
-              target: /config
-            - type: bind
-              source: /DATA/Downloads
-              target: /downloads
-        x-casaos:
-            author: CasaOS Team
-            category: Media
-            container:
-                envs:
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: TZ
-                      description:
-                        en_US: ""
-                port_map: "8080"
-                ports:
-                    - configurable: "no"
-                      container: "8080"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                shell: sh
-                volumes:
-                    - configurable: "no"
-                      container: /incomplete-downloads
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /downloads
-                      description:
-                        en_US: ""
+  sabnzbd:
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Europe/London
+    image: linuxserver/sabnzbd:3.7.2
+    mem_reservation: "67108864"
+    network_mode: bridge
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/Downloads
+        target: /incomplete-downloads
+      - type: bind
+        source: /DATA/AppData/sabnzbd/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      author: CasaOS Team
+      category: Media
+      container:
+        envs:
+          - configurable: "no"
+            container: PUID
             description:
-                en_US: SABnzbd is an Open Source Binary Newsreader written in Python. It's totally free, easy to use, and works practically everywhere. SABnzbd makes Usenet as simple and streamlined as possible by automating everything we can. All you have to do is add an .nzb. SABnzbd takes over from there, where it will be automatically downloaded, verified, repaired, extracted and filed away with zero human interaction. SABnzbd offers an easy setup wizard and has self-analysis tools to verify your setup.
-            developer: Sabnzbd Team
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-3.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-4.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-5.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-6.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-7.png
-            tagline:
-                en_US: Free and easy binary newsreader
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Readarr/thumbnail.png
-            tips: {}
-            title:
-                en_US: Sabnzbd
+              en_US: ""
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: TZ
+            description:
+              en_US: ""
+        port_map: "8080"
+        ports:
+          - configurable: "no"
+            container: "8080"
+            description:
+              en_US: ""
+            protocol: tcp
+        shell: sh
+        volumes:
+          - configurable: "no"
+            container: /incomplete-downloads
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /downloads
+            description:
+              en_US: ""
+      description:
+        en_US: SABnzbd is an Open Source Binary Newsreader written in Python. It's totally free, easy to use, and works practically everywhere. SABnzbd makes Usenet as simple and streamlined as possible by automating everything we can. All you have to do is add an .nzb. SABnzbd takes over from there, where it will be automatically downloaded, verified, repaired, extracted and filed away with zero human interaction. SABnzbd offers an easy setup wizard and has self-analysis tools to verify your setup.
+      developer: Sabnzbd Team
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-3.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-4.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-5.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-6.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-7.png
+      tagline:
+        en_US: Free and easy binary newsreader
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Readarr/thumbnail.png
+      tips: {}
+      title:
+        en_US: Sabnzbd
 x-casaos:
-    main_app: sabnzbd
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: sabnzbd

@@ -46,4 +46,9 @@ services:
             title:
                 en_US: Node-RED
 x-casaos:
+    architectures:
+        - amd64
+        - arm64
+        - s390x
+        - arm
     main_app: node-red

@@ -44,4 +44,8 @@ services:
             title:
                 en_US: Grafana
 x-casaos:
+    architectures:
+        - amd64
+        - arm64
+        - arm
     main_app: grafana

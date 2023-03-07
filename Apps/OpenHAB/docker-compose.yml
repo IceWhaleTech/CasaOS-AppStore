@@ -1,0 +1,91 @@
+name: openhab
+services:
+  openhab:
+    environment:
+      CRYPTO_POLICY: unlimited
+      PGID: $PGID
+      PUID: $PUID
+    image: openhab/openhab:3.4.2
+    mem_reservation: "268435456"
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+      - type: bind
+        source: /etc/timezone
+        target: /etc/timezone
+        read_only: true
+      - type: bind
+        source: /DATA/AppData/$AppID/addons
+        target: /opt/openhab/addons
+      - type: bind
+        source: /DATA/AppData/$AppID/conf
+        target: /opt/openhab/conf
+      - type: bind
+        source: /DATA/AppData/$AppID/userdata
+        target: /opt/openhab/userdata
+    x-casaos:
+      author: CasaOS Team
+      category: Home Automation
+      container:
+        envs:
+          - configurable: "no"
+            container: CRYPTO_POLICY
+            description:
+              en_US: Crypto Policy
+          - configurable: "no"
+            container: PUID
+            description:
+              en_US: Run OpenHAB as specified uid.
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: Run OpenHAB as specified gid.
+        index: /
+        port_map: "8080"
+        shell: bash
+        volumes:
+          - configurable: "no"
+            container: /etc/localtime
+            description:
+              en_US: Ties the time of the container to the host's time, read only so the container cannot change the host's time.
+          - configurable: "no"
+            container: /etc/timezone
+            description:
+              en_US: Ties the timezone of the container to the host's time zone, read only so the container cannot change the host's time zone.
+          - configurable: "no"
+            container: /opt/openhab/addons
+            description:
+              en_US: Only needed if installing addons unavailable via UI or the Karaf Console.
+          - configurable: "no"
+            container: /opt/openhab/conf
+            description:
+              en_US: 'Location of the conf folder for openHAB configurations (Note: you must create these folders on the host before running the container).'
+          - configurable: "no"
+            container: /opt/openhab/userdata
+            description:
+              en_US: Location for logs, cache, persistence databases, etc.
+      description:
+        en_US: The open Home Automation Bus (openHAB, pronounced ˈəʊpənˈhæb) is an open source, technology agnostic home automation platform which runs as the center of your smart home! Its ability to integrate a multitude of other devices and systems. openHAB includes other home automation systems, (smart) devices and other technologies into a single solution. To provide a uniform user interface and a common approach to automation rules across the entire system, regardless of the number of manufacturers and sub-systems involved. Giving you the most flexible tool available to make almost any home automation wish come true; if you can think it, odds are that you can implement it with openHAB.
+      developer: openHAB
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/screenshot-1.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/screenshot-2.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/screenshot-3.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/screenshot-4.jpg
+      tagline:
+        en_US: Empowering the smart home
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/thumbnail.png
+      tips: {}
+      title:
+        en_US: OpenHAB
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  main_app: openhab

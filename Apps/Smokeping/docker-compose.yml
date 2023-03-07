@@ -1,74 +1,78 @@
 name: smokeping
 services:
-    smokeping:
-        environment:
-            PGID: "1000"
-            PUID: "1000"
-            TZ: Europe/London
-        image: linuxserver/smokeping:latest
-        mem_reservation: "67108864"
-        network_mode: bridge
-        ports:
-            - target: 80
-              published: "80"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/smokeping/config
-              target: /config
-            - type: bind
-              source: /DATA/AppData/smokeping/data
-              target: /data
-        x-casaos:
-            author: asaOS Team
-            category: Network
-            container:
-                envs:
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: TZ
-                      description:
-                        en_US: ""
-                port_map: "80"
-                ports:
-                    - configurable: "no"
-                      container: "80"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                shell: sh
-                volumes:
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /data
-                      description:
-                        en_US: ""
+  smokeping:
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Europe/London
+    image: linuxserver/smokeping:2.7.3
+    mem_reservation: "67108864"
+    network_mode: bridge
+    ports:
+      - target: 80
+        published: "80"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/smokeping/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/smokeping/data
+        target: /data
+    x-casaos:
+      author: asaOS Team
+      category: Network
+      container:
+        envs:
+          - configurable: "no"
+            container: PUID
             description:
-                en_US: ' keeps track of your network latency.'
-            developer: Lazylibrarian Team
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-3.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-4.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-5.png
-            tagline:
-                en_US: Free open source network performance monitoring tool
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/thumbnail.png
-            tips: {}
-            title:
-                en_US: Smokeping
+              en_US: ""
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: TZ
+            description:
+              en_US: ""
+        port_map: "80"
+        ports:
+          - configurable: "no"
+            container: "80"
+            description:
+              en_US: ""
+            protocol: tcp
+        shell: sh
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /data
+            description:
+              en_US: ""
+      description:
+        en_US: ' keeps track of your network latency.'
+      developer: Lazylibrarian Team
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-3.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-4.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-5.png
+      tagline:
+        en_US: Free open source network performance monitoring tool
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/thumbnail.png
+      tips: {}
+      title:
+        en_US: Smokeping
 x-casaos:
-    main_app: smokeping
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: smokeping

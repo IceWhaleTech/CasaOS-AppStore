@@ -1,83 +1,87 @@
 name: nzbget
 services:
-    nzbget:
-        environment:
-            NZBGET_PASS: tegbzn6789
-            NZBGET_USER: nzbget
-            PGID: "1000"
-            PUID: "1000"
-            TZ: Europe/London
-        image: linuxserver/nzbget:latest
-        mem_reservation: "67108864"
-        network_mode: bridge
-        ports:
-            - target: 6789
-              published: "6789"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/nzbget/config
-              target: /config
-            - type: bind
-              source: /DATA/Downloads
-              target: /downloads
-        x-casaos:
-            author: CasaOS Team
-            category: Downloader
-            container:
-                envs:
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: TZ
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: NZBGET_USER
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: NZBGET_PASS
-                      description:
-                        en_US: ""
-                port_map: "6789"
-                ports:
-                    - configurable: "no"
-                      container: "6789"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                shell: sh
-                volumes:
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /downloads
-                      description:
-                        en_US: ""
+  nzbget:
+    environment:
+      NZBGET_PASS: tegbzn6789
+      NZBGET_USER: nzbget
+      PGID: "1000"
+      PUID: "1000"
+      TZ: Europe/London
+    image: linuxserver/nzbget:21.1.20230119
+    mem_reservation: "67108864"
+    network_mode: bridge
+    ports:
+      - target: 6789
+        published: "6789"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/nzbget/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      author: CasaOS Team
+      category: Downloader
+      container:
+        envs:
+          - configurable: "no"
+            container: PUID
             description:
-                en_US: NZBGet can run on almost any device - classic PC, NAS, media player, SAT-receiver, WLAN-router, etc. The download area provides precompiled binaries for Windows, macOS, Linux (compatible with many CPUs and platform variants), FreeBSD and Android. For other platforms the program can be compiled from sources.
-            developer: ' Nzbget Team'
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-3.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-4.png
-            tagline:
-                en_US: Efficient Usenet downloader
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/thumbnail.png
-            tips: {}
-            title:
-                en_US: Nzbget
+              en_US: ""
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: TZ
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: NZBGET_USER
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: NZBGET_PASS
+            description:
+              en_US: ""
+        port_map: "6789"
+        ports:
+          - configurable: "no"
+            container: "6789"
+            description:
+              en_US: ""
+            protocol: tcp
+        shell: sh
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /downloads
+            description:
+              en_US: ""
+      description:
+        en_US: NZBGet can run on almost any device - classic PC, NAS, media player, SAT-receiver, WLAN-router, etc. The download area provides precompiled binaries for Windows, macOS, Linux (compatible with many CPUs and platform variants), FreeBSD and Android. For other platforms the program can be compiled from sources.
+      developer: ' Nzbget Team'
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-3.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-4.png
+      tagline:
+        en_US: Efficient Usenet downloader
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/thumbnail.png
+      tips: {}
+      title:
+        en_US: Nzbget
 x-casaos:
-    main_app: nzbget
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: nzbget

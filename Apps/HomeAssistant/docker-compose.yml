@@ -1,57 +1,61 @@
 name: homeassistant
 services:
-    homeassistant:
-        environment:
-            PGID: $PGID
-            PUID: $PUID
-            TZ: $TZ
-        image: linuxserver/homeassistant:latest
-        mem_reservation: "268435456"
-        network_mode: host
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID/config
-              target: /config
-        x-casaos:
-            author: CasaOS Team
-            category: Home Automation
-            container:
-                envs:
-                    - configurable: "no"
-                      container: TZ
-                      description:
-                        en_US: TimeZone
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: Run HomeAssistant as specified uid.
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: Run HomeAssistant as specified gid.
-                index: /
-                port_map: "8123"
-                shell: bash
-                volumes:
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: HomeAssistant config directory.
+  homeassistant:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: linuxserver/homeassistant:2023.3.1
+    mem_reservation: "268435456"
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+    x-casaos:
+      author: CasaOS Team
+      category: Home Automation
+      container:
+        envs:
+          - configurable: "no"
+            container: TZ
             description:
-                en_US: Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server.
-            developer: Home Assistant
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-1.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-2.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-3.jpg
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-4.jpg
-            tagline:
-                en_US: Awaken your home
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/thumbnail.png
-            tips: {}
-            title:
-                en_US: Home Assistant
+              en_US: TimeZone
+          - configurable: "no"
+            container: PUID
+            description:
+              en_US: Run HomeAssistant as specified uid.
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: Run HomeAssistant as specified gid.
+        index: /
+        port_map: "8123"
+        shell: bash
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: HomeAssistant config directory.
+      description:
+        en_US: Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server.
+      developer: Home Assistant
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-1.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-2.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-3.jpg
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-4.jpg
+      tagline:
+        en_US: Awaken your home
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/thumbnail.png
+      tips: {}
+      title:
+        en_US: Home Assistant
 x-casaos:
-    main_app: homeassistant
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: homeassistant
