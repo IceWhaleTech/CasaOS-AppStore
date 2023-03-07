@@ -9,7 +9,10 @@ services:
       PUID: $PUID
       VERSION: docker
     image: linuxserver/plex:1.31.1
-    mem_reservation: "268435456"
+    deploy:
+      resources:
+        reservations:
+          memory: "256M"
     network_mode: host
     restart: unless-stopped
     volumes:

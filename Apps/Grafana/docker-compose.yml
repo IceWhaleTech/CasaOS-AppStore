@@ -1,51 +1,54 @@
 name: grafana
 services:
-    grafana:
-        image: grafana/grafana:8.4.5
-        mem_reservation: "67108864"
-        network_mode: bridge
+  grafana:
+    image: grafana/grafana:8.4.5
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+    restart: always
+    x-casaos:
+      author: CasaOS Team
+      category: Network
+      container:
+        index: /
+        port_map: "3000"
         ports:
-            - target: 3000
-              published: "3000"
-              protocol: tcp
-        restart: always
-        x-casaos:
-            author: CasaOS Team
-            category: Network
-            container:
-                index: /
-                port_map: "3000"
-                ports:
-                    - configurable: "no"
-                      container: "3000"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                shell: sh
+          - configurable: "no"
+            container: "3000"
             description:
-                en_US: 'Grafana open source is open source visualization and analytics software.Visualizations: Fast and flexible client side graphs with a multitude of options. Panel plugins offer many different ways to visualize metrics and logs. Dynamic Dashboards: Create dynamic & reusable dashboards with template variables that appear as dropdowns at the top of the dashboard. Explore Metrics: Explore your data through ad-hoc queries and dynamic drilldown. Split view and compare different time ranges, queries and data sources side by side. Explore Logs: Experience the magic of switching from metrics to logs with preserved label filters. Quickly search through all your logs or streaming them live. Alerting: Visually define alert rules for your most important metrics. Grafana will continuously evaluate and send notifications to systems like Slack, PagerDuty, VictorOps, OpsGenie. Mixed Data Sources: Mix different data sources in the same graph! You can specify a data source on a per-query basis. This works for even custom datasources.'
-            developer: grafana
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Grafana/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Grafana/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Grafana/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Grafana/screenshot-3.png
-            tagline:
-                en_US: 'Grafana is a complete observability stack that allows you to monitor and analyze metrics, logs and traces. It allows you to query, visualize, alert on and understand your data no matter where it is stored. '
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Grafana/thumbnail.png
-            tips:
-                before_install:
-                    - content:
-                        en_US: username
-                      value: admin
-                    - content:
-                        en_US: password
-                      value: admin
-            title:
-                en_US: Grafana
+              en_US: ""
+            protocol: tcp
+        shell: sh
+      description:
+        en_US: 'Grafana open source is open source visualization and analytics software.Visualizations: Fast and flexible client side graphs with a multitude of options. Panel plugins offer many different ways to visualize metrics and logs. Dynamic Dashboards: Create dynamic & reusable dashboards with template variables that appear as dropdowns at the top of the dashboard. Explore Metrics: Explore your data through ad-hoc queries and dynamic drilldown. Split view and compare different time ranges, queries and data sources side by side. Explore Logs: Experience the magic of switching from metrics to logs with preserved label filters. Quickly search through all your logs or streaming them live. Alerting: Visually define alert rules for your most important metrics. Grafana will continuously evaluate and send notifications to systems like Slack, PagerDuty, VictorOps, OpsGenie. Mixed Data Sources: Mix different data sources in the same graph! You can specify a data source on a per-query basis. This works for even custom datasources.'
+      developer: grafana
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Grafana/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Grafana/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Grafana/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Grafana/screenshot-3.png
+      tagline:
+        en_US: 'Grafana is a complete observability stack that allows you to monitor and analyze metrics, logs and traces. It allows you to query, visualize, alert on and understand your data no matter where it is stored. '
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Grafana/thumbnail.png
+      tips:
+        before_install:
+          - content:
+              en_US: username
+            value: admin
+          - content:
+              en_US: password
+            value: admin
+      title:
+        en_US: Grafana
 x-casaos:
-    architectures:
-        - amd64
-        - arm64
-        - arm
-    main_app: grafana
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  main_app: grafana

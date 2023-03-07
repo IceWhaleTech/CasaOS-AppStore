@@ -1,127 +1,130 @@
 name: transmission
 services:
-    transmission:
-        environment:
-            PASS: casaos
-            PEERPORT: "51413"
-            PGID: "1000"
-            PUID: "1000"
-            TRANSMISSION_WEB_HOME: /transmission-web-control/
-            TZ: Europe/London
-            USER: casaos
-        image: lscr.io/linuxserver/transmission:version-3.00-r5
-        mem_reservation: "67108864"
-        network_mode: bridge
-        ports:
-            - target: 9091
-              published: "9091"
-              protocol: tcp
-            - target: 51413
-              published: "51413"
-              protocol: tcp
-            - target: 51413
-              published: "51413"
-              protocol: UDP
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID/config
-              target: /config
-            - type: bind
-              source: /DATA/Downloads
-              target: /downloads
-            - type: bind
-              source: /DATA/Downloads/watch
-              target: /watch
-        x-casaos:
-            author: CasaOS Team
-            category: Network
-            container:
-                envs:
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: TZ
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: TRANSMISSION_WEB_HOME
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: USER
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: PASS
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: PEERPORT
-                      description:
-                        en_US: ""
-                index: /
-                port_map: "9091"
-                ports:
-                    - configurable: "no"
-                      container: "9091"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                    - configurable: "no"
-                      container: "51413"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                    - configurable: "no"
-                      container: "51413"
-                      description:
-                        en_US: ""
-                      protocol: udp
-                shell: sh
-                volumes:
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /downloads
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /watch
-                      description:
-                        en_US: ""
+  transmission:
+    environment:
+      PASS: casaos
+      PEERPORT: "51413"
+      PGID: "1000"
+      PUID: "1000"
+      TRANSMISSION_WEB_HOME: /transmission-web-control/
+      TZ: Europe/London
+      USER: casaos
+    image: lscr.io/linuxserver/transmission:version-3.00-r5
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+      - target: 9091
+        published: "9091"
+        protocol: tcp
+      - target: 51413
+        published: "51413"
+        protocol: tcp
+      - target: 51413
+        published: "51413"
+        protocol: UDP
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+      - type: bind
+        source: /DATA/Downloads/watch
+        target: /watch
+    x-casaos:
+      author: CasaOS Team
+      category: Network
+      container:
+        envs:
+          - configurable: "no"
+            container: PUID
             description:
-                en_US: 'Transmission is an open source, volunteer-based project. Unlike some BitTorrent clients, Transmission doesn''t play games with its users to make money:  Transmission doesn''t bundle toolbars, pop-up ads, flash ads, twitter tools, or anything else. It doesn''t hold some features back for a payware version. Its source code is available for anyone to review. We don''t track our users, and our website and forums have no third-party ads or analytics.'
-            developer: Transmission
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/screenshot-3.png
-            tagline:
-                en_US: 'Transmission is a cross-platform BitTorrent client '
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/thumbnail.png
-            tips:
-                before_install:
-                    - content:
-                        en_US: username
-                      value: casaos
-                    - content:
-                        en_US: password
-                      value: casaos
-            title:
-                en_US: Transmission
+              en_US: ""
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: TZ
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: TRANSMISSION_WEB_HOME
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: USER
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: PASS
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: PEERPORT
+            description:
+              en_US: ""
+        index: /
+        port_map: "9091"
+        ports:
+          - configurable: "no"
+            container: "9091"
+            description:
+              en_US: ""
+            protocol: tcp
+          - configurable: "no"
+            container: "51413"
+            description:
+              en_US: ""
+            protocol: tcp
+          - configurable: "no"
+            container: "51413"
+            description:
+              en_US: ""
+            protocol: udp
+        shell: sh
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /downloads
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /watch
+            description:
+              en_US: ""
+      description:
+        en_US: 'Transmission is an open source, volunteer-based project. Unlike some BitTorrent clients, Transmission doesn''t play games with its users to make money:  Transmission doesn''t bundle toolbars, pop-up ads, flash ads, twitter tools, or anything else. It doesn''t hold some features back for a payware version. Its source code is available for anyone to review. We don''t track our users, and our website and forums have no third-party ads or analytics.'
+      developer: Transmission
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/screenshot-3.png
+      tagline:
+        en_US: 'Transmission is a cross-platform BitTorrent client '
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/thumbnail.png
+      tips:
+        before_install:
+          - content:
+              en_US: username
+            value: casaos
+          - content:
+              en_US: password
+            value: casaos
+      title:
+        en_US: Transmission
 x-casaos:
-    architectures:
-        - amd64
-        - arm
-        - arm64
-    main_app: transmission
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: transmission

@@ -7,7 +7,10 @@ services:
       VIRTUAL_HOST: pi.hole
       WEBPASSWORD: casaos
     image: pihole/pihole:2023.02.2
-    mem_reservation: "268435456"
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
     network_mode: bridge
     ports:
       - target: 80

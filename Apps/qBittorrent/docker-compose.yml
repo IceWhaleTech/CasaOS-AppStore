@@ -7,7 +7,10 @@ services:
       TZ: $TZ
       UMASK: "002"
     image: hotio/qbittorrent:release-4.5.2
-    mem_reservation: "268435456"
+    deploy:
+      resources:
+        reservations:
+          memory: "256M"
     network_mode: bridge
     ports:
       - target: 8080

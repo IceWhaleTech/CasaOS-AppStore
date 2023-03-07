@@ -6,7 +6,10 @@ services:
       PGID: $PGID
       PUID: $PUID
     image: openhab/openhab:3.4.2
-    mem_reservation: "268435456"
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
     network_mode: host
     restart: unless-stopped
     volumes:

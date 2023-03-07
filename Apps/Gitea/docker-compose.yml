@@ -5,7 +5,10 @@ services:
       USER_GID: "1000"
       USER_UID: "1000"
     image: gitea/gitea:1.18.5
-    mem_reservation: "268435456"
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
     network_mode: bridge
     ports:
       - target: 3000

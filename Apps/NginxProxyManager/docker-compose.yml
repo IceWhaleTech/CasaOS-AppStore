@@ -2,7 +2,10 @@ name: nginxproxymanager
 services:
   nginxproxymanager:
     image: jc21/nginx-proxy-manager:2.9.19
-    mem_reservation: "134217728"
+    deploy:
+      resources:
+        reservations:
+          memory: "128M"
     network_mode: bridge
     ports:
       - target: 80

@@ -1,98 +1,101 @@
 name: emby
 services:
-    emby:
-        devices:
-            - /dev/dri:/dev/dri
-            - /dev/vchiq:/dev/vchiq
-            - /dev/video10:/dev/video10
-            - /dev/video11:/dev/video11
-            - /dev/video12:/dev/video12
-        environment:
-            PGID: "1000"
-            PUID: "1000"
-            TZ: $TZ
-        image: linuxserver/emby:4.6.7
-        mem_reservation: "67108864"
-        network_mode: bridge
-        ports:
-            - target: 8096
-              published: "8096"
-              protocol: tcp
-            - target: 8920
-              published: "8920"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID/config
-              target: /config
-            - type: bind
-              source: /DATA/Media/TV Shows
-              target: /data/tvshows
-            - type: bind
-              source: /DATA/Media/Movies
-              target: /data/movies
-        x-casaos:
-            author: CasaOS Team
-            category: Media
-            container:
-                envs:
-                    - configurable: "no"
-                      container: PUID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: PGID
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: TZ
-                      description:
-                        en_US: ""
-                index: /
-                port_map: "8096"
-                ports:
-                    - configurable: "no"
-                      container: "8096"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                    - configurable: "no"
-                      container: "8920"
-                      description:
-                        en_US: ""
-                      protocol: tcp
-                shell: sh
-                volumes:
-                    - configurable: "no"
-                      container: /config
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /data/tvshows
-                      description:
-                        en_US: ""
-                    - configurable: "no"
-                      container: /data/movies
-                      description:
-                        en_US: ""
+  emby:
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/vchiq:/dev/vchiq
+      - /dev/video10:/dev/video10
+      - /dev/video11:/dev/video11
+      - /dev/video12:/dev/video12
+    environment:
+      PGID: "1000"
+      PUID: "1000"
+      TZ: $TZ
+    image: linuxserver/emby:4.6.7
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+      - target: 8096
+        published: "8096"
+        protocol: tcp
+      - target: 8920
+        published: "8920"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/TV Shows
+        target: /data/tvshows
+      - type: bind
+        source: /DATA/Media/Movies
+        target: /data/movies
+    x-casaos:
+      author: CasaOS Team
+      category: Media
+      container:
+        envs:
+          - configurable: "no"
+            container: PUID
             description:
-                en_US: Bringing all of your home videos, music, and photos together into one place has never been easier. Your personal Emby Server automatically converts and streams your media on-the-fly to play on any device.
-            developer: linuxserver
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-3.png
-            tagline:
-                en_US: TAKE YOUR MEDIA ANYWHERE WITH EMBY
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/thumbnail.png
-            tips: {}
-            title:
-                en_US: Emby
+              en_US: ""
+          - configurable: "no"
+            container: PGID
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: TZ
+            description:
+              en_US: ""
+        index: /
+        port_map: "8096"
+        ports:
+          - configurable: "no"
+            container: "8096"
+            description:
+              en_US: ""
+            protocol: tcp
+          - configurable: "no"
+            container: "8920"
+            description:
+              en_US: ""
+            protocol: tcp
+        shell: sh
+        volumes:
+          - configurable: "no"
+            container: /config
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /data/tvshows
+            description:
+              en_US: ""
+          - configurable: "no"
+            container: /data/movies
+            description:
+              en_US: ""
+      description:
+        en_US: Bringing all of your home videos, music, and photos together into one place has never been easier. Your personal Emby Server automatically converts and streams your media on-the-fly to play on any device.
+      developer: linuxserver
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-3.png
+      tagline:
+        en_US: TAKE YOUR MEDIA ANYWHERE WITH EMBY
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/thumbnail.png
+      tips: {}
+      title:
+        en_US: Emby
 x-casaos:
-    architectures:
-        - amd64
-        - arm
-        - arm64
-    main_app: emby
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: emby

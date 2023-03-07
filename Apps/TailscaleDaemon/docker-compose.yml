@@ -9,7 +9,10 @@ services:
       TS_EXTRA_ARGS: --hostname casaos
       TS_STATE_DIR: /var/lib/tailscale
     image: tailscale/tailscale:v1.36.2
-    mem_reservation: "67108864"
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
     network_mode: host
     privileged: true
     restart: unless-stopped

@@ -6,7 +6,10 @@ services:
       PUID: $PUID
       TZ: $TZ
     image: filebrowser/filebrowser:v2.23.0
-    mem_reservation: "67108864"
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
     network_mode: bridge
     ports:
       - target: 80

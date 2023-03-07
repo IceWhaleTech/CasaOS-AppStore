@@ -7,7 +7,10 @@ services:
       PUID: "1000"
       TZ: Europe/London
     image: linuxserver/lazylibrarian:version-a7d5948a
-    mem_reservation: "67108864"
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
     network_mode: bridge
     ports:
       - target: 5299

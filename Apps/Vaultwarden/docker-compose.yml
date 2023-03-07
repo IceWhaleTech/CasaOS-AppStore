@@ -1,53 +1,56 @@
 name: vaultwarden
 services:
-    vaultwarden:
-        image: vaultwarden/server:1.24.0
-        mem_reservation: "268435456"
-        network_mode: bridge
+  vaultwarden:
+    image: vaultwarden/server:1.24.0
+    deploy:
+      resources:
+        reservations:
+          memory: "256M"
+    network_mode: bridge
+    ports:
+      - target: 80
+        published: "80"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      author: CasaOS Team
+      category: Utilities
+      container:
+        index: /
+        port_map: "80"
         ports:
-            - target: 80
-              published: "80"
-              protocol: tcp
-        restart: unless-stopped
-        volumes:
-            - type: bind
-              source: /DATA/AppData/$AppID/data
-              target: /data
-        x-casaos:
-            author: CasaOS Team
-            category: Utilities
-            container:
-                index: /
-                port_map: "80"
-                ports:
-                    - configurable: advanced
-                      container: "80"
-                      description:
-                        en_US: WebUI HTTP Port
-                      protocol: tcp
-                shell: bash
-                volumes:
-                    - configurable: "no"
-                      container: /data
-                      description:
-                        en_US: Vaultwarden data directory.
+          - configurable: advanced
+            container: "80"
             description:
-                en_US: Alternative implementation of the Bitwarden server API written in Rust and compatible with upstream Bitwarden clients*, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
-            developer: Daniel García
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/icon.png
-            screenshot_link:
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/screenshot-1.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/screenshot-2.png
-                - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/screenshot-3.png
-            tagline:
-                en_US: A self-hosted Bitwarden server
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/thumbnail.png
-            tips: {}
-            title:
-                en_US: Vaultwarden
+              en_US: WebUI HTTP Port
+            protocol: tcp
+        shell: bash
+        volumes:
+          - configurable: "no"
+            container: /data
+            description:
+              en_US: Vaultwarden data directory.
+      description:
+        en_US: Alternative implementation of the Bitwarden server API written in Rust and compatible with upstream Bitwarden clients*, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
+      developer: Daniel García
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/icon.png
+      screenshot_link:
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/screenshot-1.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/screenshot-2.png
+        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/screenshot-3.png
+      tagline:
+        en_US: A self-hosted Bitwarden server
+      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/thumbnail.png
+      tips: {}
+      title:
+        en_US: Vaultwarden
 x-casaos:
-    architectures:
-        - amd64
-        - arm
-        - arm64
-    main_app: vaultwarden
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main_app: vaultwarden
