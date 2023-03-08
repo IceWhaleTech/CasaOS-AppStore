@@ -71,22 +71,22 @@ services:
             container: "8096"
             description:
               en_US: WebUI HTTP Port
-            protocol: tcp
+
           - configurable: advanced
             container: "8920"
             description:
               en_US: WebUI HTTPS Port
-            protocol: tcp
+
           - configurable: "no"
             container: "7359"
             description:
               en_US: Jellyfin auto-discovery Port
-            protocol: tcp
+
           - configurable: "no"
             container: "1900"
             description:
               en_US: Jellyfin DLNA Port
-            protocol: tcp
+
         shell: bash
         volumes:
           - configurable: "no"

@@ -36,17 +36,17 @@ services:
             container: "80"
             description:
               en_US: Nginx HTTP Port
-            protocol: tcp
+
           - configurable: advanced
             container: "443"
             description:
               en_US: Nginx HTTPS Port
-            protocol: tcp
+
           - configurable: basic
             container: "81"
             description:
               en_US: WebUI Port
-            protocol: tcp
+
         shell: sh
         volumes:
           - configurable: advanced

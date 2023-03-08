@@ -42,12 +42,12 @@ services:
             container: "3000"
             description:
               en_US: WebUI Port
-            protocol: tcp
+
           - configurable: advanced
             container: "22"
             description:
               en_US: SSH Port
-            protocol: tcp
+
         shell: sh
         volumes:
           - configurable: advanced

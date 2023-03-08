@@ -30,12 +30,12 @@ services:
             container: "80"
             description:
               en_US: WebUI HTTP Port
-            protocol: tcp
+
           - configurable: advanced
             container: "443"
             description:
               en_US: WebUI HTTPS Port
-            protocol: tcp
+
         shell: bash
         volumes:
           - configurable: "no"
