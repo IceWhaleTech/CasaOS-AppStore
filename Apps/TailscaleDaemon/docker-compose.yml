@@ -44,7 +44,7 @@ services:
             description:
               en_US: the directory in which to store tailscaled state. The data should persist across container restarts.
         port_map: "80"
-        shell: sh
+        
         volumes:
           -
             container: /dev/net/tun
