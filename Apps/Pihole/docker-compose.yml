@@ -41,57 +41,57 @@ services:
       category: Network
       container:
         envs:
-          - configurable: "no"
+          -
             container: TZ
             description:
               en_US: TimeZone
-          - configurable: basic
+          -
             container: WEBPASSWORD
             description:
               en_US: Pi-hole admin password
-          - configurable: advanced
+          -
             container: VIRTUAL_HOST
             description:
               en_US: Pi-hole Custom Hostname
-          - configurable: advanced
+          -
             container: PROXY_LOCATION
             description:
               en_US: Pi-hole PROXY_LOCATION
         index: /admin
         port_map: "80"
         ports:
-          - configurable: advanced
+          -
             container: "80"
             description:
               en_US: WebUI HTTP Port
 
-          - configurable: "no"
+          -
             container: "53"
             description:
               en_US: Pihole DNS port
 
-          - configurable: "no"
+          -
             container: "53"
             description:
               en_US: Pihole DNS port
             protocol: udp
-          - configurable: "no"
+          -
             container: "67"
             description:
               en_US: Pihole DHCP IPv4 port
             protocol: udp
-          - configurable: "no"
+          -
             container: "547"
             description:
               en_US: Pihole DHCP IPv6 port
             protocol: udp
         shell: bash
         volumes:
-          - configurable: "no"
+          -
             container: /etc/pihole
             description:
               en_US: Pi-hole /etc/pihole directory.
-          - configurable: "no"
+          -
             container: /etc/dnsmasq.d
             description:
               en_US: Pi-hole /etc/dnsmasq.d directory.

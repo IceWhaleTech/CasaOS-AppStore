@@ -35,15 +35,15 @@ services:
       category: Home Automation
       container:
         envs:
-          - configurable: "no"
+          -
             container: CRYPTO_POLICY
             description:
               en_US: Crypto Policy
-          - configurable: "no"
+          -
             container: PUID
             description:
               en_US: Run OpenHAB as specified uid.
-          - configurable: "no"
+          -
             container: PGID
             description:
               en_US: Run OpenHAB as specified gid.
@@ -51,23 +51,23 @@ services:
         port_map: "8080"
         shell: bash
         volumes:
-          - configurable: "no"
+          -
             container: /etc/localtime
             description:
               en_US: Ties the time of the container to the host's time, read only so the container cannot change the host's time.
-          - configurable: "no"
+          -
             container: /etc/timezone
             description:
               en_US: Ties the timezone of the container to the host's time zone, read only so the container cannot change the host's time zone.
-          - configurable: "no"
+          -
             container: /opt/openhab/addons
             description:
               en_US: Only needed if installing addons unavailable via UI or the Karaf Console.
-          - configurable: "no"
+          -
             container: /opt/openhab/conf
             description:
               en_US: 'Location of the conf folder for openHAB configurations (Note: you must create these folders on the host before running the container).'
-          - configurable: "no"
+          -
             container: /opt/openhab/userdata
             description:
               en_US: Location for logs, cache, persistence databases, etc.

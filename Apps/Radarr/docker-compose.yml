@@ -31,37 +31,37 @@ services:
       category: Media
       container:
         envs:
-          - configurable: "no"
+          -
             container: TZ
             description:
               en_US: TimeZone
-          - configurable: "no"
+          -
             container: PUID
             description:
               en_US: Run Radarr as specified uid.
-          - configurable: "no"
+          -
             container: PGID
             description:
               en_US: Run Radarr as specified gid.
         index: /
         port_map: "7878"
         ports:
-          - configurable: advanced
+          -
             container: "7878"
             description:
               en_US: WebUI HTTP Port
 
         shell: bash
         volumes:
-          - configurable: "no"
+          -
             container: /config
             description:
               en_US: Radarr config directory.
-          - configurable: advanced
+          -
             container: /movies
             description:
               en_US: Radarr movies directory.
-          - configurable: advanced
+          -
             container: /downloads
             description:
               en_US: Radarr downloads directory.

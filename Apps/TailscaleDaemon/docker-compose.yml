@@ -31,30 +31,30 @@ services:
       category: Network
       container:
         envs:
-          - configurable: advanced
+          -
             container: TS_AUTH_ONCE
             description:
               en_US: if true, only attempt to log in if not already logged in. If false, forcibly log in every time the container starts.
-          - configurable: advanced
+          -
             container: TS_EXTRA_ARGS
             description:
               en_US: extra arguments to 'tailscale up'.
-          - configurable: advanced
+          -
             container: TS_STATE_DIR
             description:
               en_US: the directory in which to store tailscaled state. The data should persist across container restarts.
         port_map: "80"
         shell: sh
         volumes:
-          - configurable: "no"
+          -
             container: /dev/net/tun
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: /var/lib
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: /var/lib/tailscale
             description:
               en_US: ""

@@ -30,40 +30,40 @@ services:
       category: Downloader
       container:
         envs:
-          - configurable: "no"
+          -
             container: PUID
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: PGID
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: TZ
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: NZBGET_USER
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: NZBGET_PASS
             description:
               en_US: ""
         port_map: "6789"
         ports:
-          - configurable: "no"
+          -
             container: "6789"
             description:
               en_US: ""
 
         shell: sh
         volumes:
-          - configurable: "no"
+          -
             container: /config
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: /downloads
             description:
               en_US: ""

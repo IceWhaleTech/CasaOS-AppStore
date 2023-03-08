@@ -23,21 +23,21 @@ services:
       category: Utilities
       container:
         envs:
-          - configurable: "no"
+          -
             container: TZ
             description:
               en_US: TimeZone
         index: /
         port_map: "5678"
         ports:
-          - configurable: "no"
+          -
             container: "5678"
             description:
               en_US: web port
 
         shell: bash
         volumes:
-          - configurable: advanced
+          -
             container: /home/node/.n8n
             description:
               en_US: n8n directory.

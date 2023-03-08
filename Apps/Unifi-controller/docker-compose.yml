@@ -50,73 +50,73 @@ services:
       category: Network
       container:
         envs:
-          - configurable: "no"
+          -
             container: PUID
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: PGID
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: MEM_LIMIT
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: MEM_STARTUP
             description:
               en_US: ""
         index: /
         port_map: "8080"
         ports:
-          - configurable: "no"
+          -
             container: "3478"
             description:
               en_US: ""
             protocol: udp
-          - configurable: "no"
+          -
             container: "10001"
             description:
               en_US: ""
             protocol: udp
-          - configurable: "no"
+          -
             container: "8080"
             description:
               en_US: ""
 
-          - configurable: "no"
+          -
             container: "8443"
             description:
               en_US: ""
 
-          - configurable: "no"
+          -
             container: "1900"
             description:
               en_US: ""
             protocol: udp
-          - configurable: "no"
+          -
             container: "8843"
             description:
               en_US: ""
 
-          - configurable: "no"
+          -
             container: "8880"
             description:
               en_US: ""
 
-          - configurable: "no"
+          -
             container: "6789"
             description:
               en_US: ""
 
-          - configurable: "no"
+          -
             container: "5514"
             description:
               en_US: ""
             protocol: udp
         shell: sh
         volumes:
-          - configurable: "no"
+          -
             container: /config
             description:
               en_US: ""

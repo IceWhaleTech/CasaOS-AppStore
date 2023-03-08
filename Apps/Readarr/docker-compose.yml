@@ -31,36 +31,36 @@ services:
       category: Media
       container:
         envs:
-          - configurable: "no"
+          -
             container: PUID
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: PGID
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: TZ
             description:
               en_US: ""
         port_map: "8787"
         ports:
-          - configurable: "no"
+          -
             container: "8787"
             description:
               en_US: ""
 
         shell: sh
         volumes:
-          - configurable: "no"
+          -
             container: /config
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: /books
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: /downloads
             description:
               en_US: ""

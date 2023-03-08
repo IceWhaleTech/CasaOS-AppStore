@@ -28,33 +28,33 @@ services:
       category: Gallery
       container:
         envs:
-          - configurable: "no"
+          -
             container: TZ
             description:
               en_US: TimeZone
-          - configurable: basic
+          -
             container: PHOTOPRISM_UPLOAD_NSFW
             description:
               en_US: true or false, is it possible to upload NSFW
-          - configurable: basic
+          -
             container: PHOTOPRISM_ADMIN_PASSWORD
             description:
               en_US: The password of admin
         index: /
         port_map: "2342"
         ports:
-          - configurable: advanced
+          -
             container: "2342"
             description:
               en_US: WebUI HTTP Port
 
         shell: bash
         volumes:
-          - configurable: "no"
+          -
             container: /photoprism/storage
             description:
               en_US: PhotoPrism storage directory.
-          - configurable: advanced
+          -
             container: /photoprism/originals
             description:
               en_US: PhotoPrism originals directory.

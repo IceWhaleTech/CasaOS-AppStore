@@ -38,33 +38,33 @@ services:
         index: /
         port_map: "3000"
         ports:
-          - configurable: "no"
+          -
             container: "53"
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: "53"
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: "3000"
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: "853"
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: "784"
             description:
               en_US: ""
         shell: sh
         volumes:
-          - configurable: "no"
+          -
             container: /opt/adguardhome/work
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: /opt/adguardhome/conf
             description:
               en_US: ""

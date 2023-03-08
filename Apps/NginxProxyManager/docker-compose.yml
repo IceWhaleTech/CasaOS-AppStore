@@ -32,28 +32,28 @@ services:
         index: /
         port_map: "81"
         ports:
-          - configurable: advanced
+          -
             container: "80"
             description:
               en_US: Nginx HTTP Port
 
-          - configurable: advanced
+          -
             container: "443"
             description:
               en_US: Nginx HTTPS Port
 
-          - configurable: basic
+          -
             container: "81"
             description:
               en_US: WebUI Port
 
         shell: sh
         volumes:
-          - configurable: advanced
+          -
             container: /data
             description:
               en_US: Nginx Proxy Manager data directory.
-          - configurable: advanced
+          -
             container: /etc/letsencrypt
             description:
               en_US: Nginx Proxy Manager letsencrypt directory.

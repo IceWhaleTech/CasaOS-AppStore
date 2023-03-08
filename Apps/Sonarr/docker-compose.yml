@@ -31,37 +31,37 @@ services:
       category: Media
       container:
         envs:
-          - configurable: "no"
+          -
             container: TZ
             description:
               en_US: TimeZone
-          - configurable: "no"
+          -
             container: PUID
             description:
               en_US: Run Sonarr as specified uid.
-          - configurable: "no"
+          -
             container: PGID
             description:
               en_US: Run Sonarr as specified gid.
         index: /
         port_map: "8989"
         ports:
-          - configurable: advanced
+          -
             container: "8989"
             description:
               en_US: WebUI HTTP Port
 
         shell: bash
         volumes:
-          - configurable: "no"
+          -
             container: /config
             description:
               en_US: Sonarr config directory.
-          - configurable: advanced
+          -
             container: /tv
             description:
               en_US: Sonarr tv directory.
-          - configurable: advanced
+          -
             container: /downloads
             description:
               en_US: Sonarr downloads directory.

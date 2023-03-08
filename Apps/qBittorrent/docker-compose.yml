@@ -29,37 +29,37 @@ services:
       category: Downloader
       container:
         envs:
-          - configurable: "no"
+          -
             container: TZ
             description:
               en_US: TimeZone
-          - configurable: "no"
+          -
             container: PUID
             description:
               en_US: Run qBittorrent as specified uid.
-          - configurable: "no"
+          -
             container: PGID
             description:
               en_US: Run qBittorrent as specified gid.
-          - configurable: "no"
+          -
             container: UMASK
             description:
               en_US: Run qBittorrent as specified UMASK.
         index: /
         port_map: "8080"
         ports:
-          - configurable: advanced
+          -
             container: "8080"
             description:
               en_US: WebUI HTTP Port
 
         shell: bash
         volumes:
-          - configurable: "no"
+          -
             container: /config
             description:
               en_US: qBittorrent config directory.
-          - configurable: advanced
+          -
             container: /DATA
             description:
               en_US: qBittorrent Accessible directory.

@@ -34,16 +34,16 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
         x-casaos:
             author: CasaOS Team
             category: Backup
-            container: # see Container store info (`x-casaos.container`) below
+            container:   # see Container store info (`x-casaos.container`) below
                 ...
             description: # multiple locales are supported
                 en_US: Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers in real time, safely protected from prying eyes. Your data is your data alone and you deserve to choose where it is stored, whether it is shared with some third party, and how it's transmitted over the internet.
             developer: Syncthing
             icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Syncthing/icon.png
-            tagline: # multiple locales are supported
+            tagline:     # multiple locales are supported
                 en_US: Free, secure, and distributed file synchronisation tool.
             thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.jpg
-            title: # multiple locales are supported
+            title:       # multiple locales are supported
                 en_US: Syncthing
 
         ```
@@ -54,7 +54,7 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
 
         ```yaml
         x-casaos:
-            architectures: # a list of architectures that the app supports
+            architectures:      # a list of architectures that the app supports
                 - amd64
                 - arm
                 - arm64
@@ -67,26 +67,23 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
     x-casaos:
         ...
         container:
-            envs:
+            index: /         # the index page for web UI, e.g. index.html
+            port_map: "8384" # the port for web UI
+            envs:            # description of each environment variable
                 ...
               - container: PUID
                 description:
                     en_US: Run Syncthing as specified uid.
-            index: /
-            port_map: "8384"
-            ports:
+            ports:           # description of each port
               - container: "8384"
                 description:
-                en_US: WebUI HTTP Port
+                    en_US: WebUI HTTP Port
                 ...
-            shell: bash
-            volumes:
-                - configurable: "no"
-                    container: /config
-                    description:
-                    en_US: Syncthing config directory.
-                - configurable: advanced
-                    container: /DATA
-                    description:
+            volumes:        # description of each volume
+                - container: /config
+                  description:
+                     en_US: Syncthing config directory.
+                - container: /DATA
+                  description:
                     en_US: Syncthing Accessible Directory.
     ```

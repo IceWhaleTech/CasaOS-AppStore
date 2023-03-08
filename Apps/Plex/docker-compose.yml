@@ -27,15 +27,15 @@ services:
       category: Media
       container:
         envs:
-          - configurable: "no"
+          -
             container: PUID
             description:
               en_US: Run Plex as specified uid.
-          - configurable: "no"
+          -
             container: PGID
             description:
               en_US: Run Plex as specified gid.
-          - configurable: "no"
+          -
             container: VERSION
             description:
               en_US: Let Docker handle the Plex Version
@@ -43,11 +43,11 @@ services:
         port_map: "32400"
         shell: bash
         volumes:
-          - configurable: "no"
+          -
             container: /config
             description:
               en_US: Plex config directory.
-          - configurable: advanced
+          -
             container: /Media
             description:
               en_US: Plex Media directory.
