@@ -29,37 +29,37 @@ services:
       category: Network
       container:
         envs:
-          - configurable: "no"
+          -
             container: PUID
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: PGID
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: TZ
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: AUTO_UPDATE
             description:
               en_US: ""
         index: /
         port_map: "9117"
         ports:
-          - configurable: "no"
+          -
             container: "9117"
             description:
               en_US: ""
-            protocol: tcp
-        shell: sh
+
+        
         volumes:
-          - configurable: "no"
+          -
             container: /config
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: /downloads
             description:
               en_US: ""

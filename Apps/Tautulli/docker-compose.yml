@@ -24,29 +24,29 @@ services:
       category: Media
       container:
         envs:
-          - configurable: "no"
+          -
             container: PUID
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: PGID
             description:
               en_US: ""
-          - configurable: "no"
+          -
             container: TZ
             description:
               en_US: ""
         index: /
         port_map: "8181"
         ports:
-          - configurable: "no"
+          -
             container: "8181"
             description:
               en_US: ""
             protocol: ""
-        shell: bash
+        
         volumes:
-          - configurable: "no"
+          -
             container: /config
             description:
               en_US: ""

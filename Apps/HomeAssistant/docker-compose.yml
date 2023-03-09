@@ -21,23 +21,23 @@ services:
       category: Home Automation
       container:
         envs:
-          - configurable: "no"
+          -
             container: TZ
             description:
               en_US: TimeZone
-          - configurable: "no"
+          -
             container: PUID
             description:
               en_US: Run HomeAssistant as specified uid.
-          - configurable: "no"
+          -
             container: PGID
             description:
               en_US: Run HomeAssistant as specified gid.
         index: /
         port_map: "8123"
-        shell: bash
+        
         volumes:
-          - configurable: "no"
+          -
             container: /config
             description:
               en_US: HomeAssistant config directory.

@@ -48,56 +48,56 @@ services:
       category: Media
       container:
         envs:
-          - configurable: "no"
+          -
             container: TZ
             description:
               en_US: TimeZone
-          - configurable: "no"
+          -
             container: PUID
             description:
               en_US: Run Jellyfin as specified uid.
-          - configurable: "no"
+          -
             container: PGID
             description:
               en_US: Run Jellyfin as specified gid.
-          - configurable: advanced
+          -
             container: JELLYFIN_PublishedServerUrl
             description:
               en_US: The autodiscovery response domain or IP address.
         index: /
         port_map: "8096"
         ports:
-          - configurable: advanced
+          -
             container: "8096"
             description:
               en_US: WebUI HTTP Port
-            protocol: tcp
-          - configurable: advanced
+
+          -
             container: "8920"
             description:
               en_US: WebUI HTTPS Port
-            protocol: tcp
-          - configurable: "no"
+
+          -
             container: "7359"
             description:
               en_US: Jellyfin auto-discovery Port
-            protocol: tcp
-          - configurable: "no"
+
+          -
             container: "1900"
             description:
               en_US: Jellyfin DLNA Port
-            protocol: tcp
-        shell: bash
+
+        
         volumes:
-          - configurable: "no"
+          -
             container: /config
             description:
               en_US: Jellyfin config directory.
-          - configurable: advanced
+          -
             container: /Media
             description:
               en_US: Jellyfin Media directory.
-          - configurable: advanced
+          -
             container: /opt/vc/lib
             description:
               en_US: OpenMax libs

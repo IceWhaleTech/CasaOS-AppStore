@@ -28,33 +28,33 @@ services:
       category: Cloud
       container:
         envs:
-          - configurable: "no"
+          -
             container: TZ
             description:
               en_US: TimeZone
-          - configurable: "no"
+          -
             container: PUID
             description:
               en_US: Run FileBrowser as specified uid.
-          - configurable: "no"
+          -
             container: PGID
             description:
               en_US: Run FileBrowser as specified gid.
         index: /
         port_map: "80"
         ports:
-          - configurable: advanced
+          -
             container: "80"
             description:
               en_US: WebUI Port
-            protocol: tcp
-        shell: sh
+
+        
         volumes:
-          - configurable: "no"
+          -
             container: /db
             description:
               en_US: FileBrowser database directory.
-          - configurable: advanced
+          -
             container: /srv
             description:
               en_US: FileBrowser managed directory.

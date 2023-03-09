@@ -23,14 +23,14 @@ services:
         index: /
         port_map: "3001"
         ports:
-          - configurable: advanced
+          -
             container: "3001"
             description:
               en_US: WebUI Port
-            protocol: tcp
-        shell: sh
+
+        
         volumes:
-          - configurable: advanced
+          -
             container: /app/data
             description:
               en_US: Uptime Kuma data directory.

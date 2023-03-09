@@ -27,30 +27,30 @@ services:
       category: Developer
       container:
         envs:
-          - configurable: advanced
+          -
             container: USER_UID
             description:
               en_US: The UID (Unix user ID) of the user that runs Gitea
-          - configurable: advanced
+          -
             container: USER_GID
             description:
               en_US: The GID (Unix group ID) of the user that runs Gitea
         index: /
         port_map: "3000"
         ports:
-          - configurable: advanced
+          -
             container: "3000"
             description:
               en_US: WebUI Port
-            protocol: tcp
-          - configurable: advanced
+
+          -
             container: "22"
             description:
               en_US: SSH Port
-            protocol: tcp
-        shell: sh
+
+        
         volumes:
-          - configurable: advanced
+          -
             container: /data
             description:
               en_US: Gitea data directory.

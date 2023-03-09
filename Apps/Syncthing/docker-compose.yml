@@ -37,48 +37,48 @@ services:
       category: Backup
       container:
         envs:
-          - configurable: "no"
+          -
             container: TZ
             description:
               en_US: TimeZone
-          - configurable: "no"
+          -
             container: PUID
             description:
               en_US: Run Syncthing as specified uid.
-          - configurable: "no"
+          -
             container: PGID
             description:
               en_US: Run Syncthing as specified gid.
         index: /
         port_map: "8384"
         ports:
-          - configurable: advanced
+          -
             container: "8384"
             description:
               en_US: WebUI HTTP Port
-            protocol: tcp
-          - configurable: "no"
+
+          -
             container: "22000"
             description:
               en_US: Syncthing listening Port (TCP)
-            protocol: tcp
-          - configurable: "no"
+
+          -
             container: "22000"
             description:
               en_US: Syncthing listening Port (UDP)
             protocol: udp
-          - configurable: "no"
+          -
             container: "21027"
             description:
               en_US: Syncthing protocol discovery Port (TCP)
             protocol: udp
-        shell: bash
+        
         volumes:
-          - configurable: "no"
+          -
             container: /config
             description:
               en_US: Syncthing config directory.
-          - configurable: advanced
+          -
             container: /DATA
             description:
               en_US: Syncthing Accessible Directory.

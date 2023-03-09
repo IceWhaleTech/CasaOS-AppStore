@@ -19,12 +19,11 @@ services:
         index: /
         port_map: "80"
         ports:
-          - configurable: "no"
+          -
             container: "80"
             description:
               en_US: ""
-            protocol: tcp
-        shell: sh
+        
       description:
         en_US: Easily download videos from YouTube, Dailymotion, Vimeo and other websites.
       developer: Rudloff
