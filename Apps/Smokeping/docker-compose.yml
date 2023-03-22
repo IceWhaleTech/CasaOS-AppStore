@@ -24,37 +24,30 @@ services:
         source: /DATA/AppData/smokeping/data
         target: /data
     x-casaos:
-      author: asaOS Team
+      author: CasaOS Team
       category: Network
       container:
         envs:
-          -
-            container: PUID
+          - container: PUID
             description:
               en_US: ""
-          -
-            container: PGID
+          - container: PGID
             description:
               en_US: ""
-          -
-            container: TZ
+          - container: TZ
             description:
               en_US: ""
         port_map: "80"
         ports:
-          -
-            container: "80"
+          - container: "80"
             description:
               en_US: ""
 
-        
         volumes:
-          -
-            container: /config
+          - container: /config
             description:
               en_US: ""
-          -
-            container: /data
+          - container: /data
             description:
               en_US: ""
       description:

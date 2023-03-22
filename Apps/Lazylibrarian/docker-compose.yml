@@ -28,45 +28,36 @@ services:
         source: /DATA/AppData/lazylibrarian/config
         target: /config
     x-casaos:
-      author: asaOS Team
+      author: CasaOS Team
       category: Downloader
       container:
         envs:
-          -
-            container: PUID
+          - container: PUID
             description:
               en_US: ""
-          -
-            container: PGID
+          - container: PGID
             description:
               en_US: ""
-          -
-            container: TZ
+          - container: TZ
             description:
               en_US: ""
-          -
-            container: DOCKER_MODS
+          - container: DOCKER_MODS
             description:
               en_US: ""
         port_map: "5299"
         ports:
-          -
-            container: "5299"
+          - container: "5299"
             description:
               en_US: ""
 
-        
         volumes:
-          -
-            container: /downloads
+          - container: /downloads
             description:
               en_US: ""
-          -
-            container: /books
+          - container: /books
             description:
               en_US: ""
-          -
-            container: /config
+          - container: /config
             description:
               en_US: ""
       description:
