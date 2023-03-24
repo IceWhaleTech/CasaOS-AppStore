@@ -41,68 +41,58 @@ services:
       category: Network
       container:
         envs:
-          -
-            container: PUID
+          - container: PUID
             description:
               en_US: ""
-          -
-            container: PGID
+          - container: PGID
             description:
               en_US: ""
-          -
-            container: TZ
+          - container: TZ
             description:
               en_US: ""
-          -
-            container: TRANSMISSION_WEB_HOME
+          - container: TRANSMISSION_WEB_HOME
             description:
               en_US: ""
-          -
-            container: USER
+          - container: USER
             description:
               en_US: ""
-          -
-            container: PASS
+          - container: PASS
             description:
               en_US: ""
-          -
-            container: PEERPORT
+          - container: PEERPORT
             description:
               en_US: ""
         index: /
         port_map: "9091"
         ports:
-          -
-            container: "9091"
+          - container: "9091"
             description:
               en_US: ""
 
-          -
-            container: "51413"
+          - container: "51413"
             description:
               en_US: ""
 
-          -
-            container: "51413"
+          - container: "51413"
             description:
               en_US: ""
             protocol: udp
-        
+
         volumes:
-          -
-            container: /config
+          - container: /config
             description:
               en_US: ""
-          -
-            container: /downloads
+          - container: /downloads
             description:
               en_US: ""
-          -
-            container: /watch
+          - container: /watch
             description:
               en_US: ""
       description:
-        en_US: 'Transmission is an open source, volunteer-based project. Unlike some BitTorrent clients, Transmission doesn''t play games with its users to make money:  Transmission doesn''t bundle toolbars, pop-up ads, flash ads, twitter tools, or anything else. It doesn''t hold some features back for a payware version. Its source code is available for anyone to review. We don''t track our users, and our website and forums have no third-party ads or analytics.'
+        en_US: |
+          Transmission is an open source, volunteer-based project. Unlike some BitTorrent clients, Transmission doesn''t play games with its users to make money:  Transmission doesn''t bundle toolbars, pop-up ads, flash ads, twitter tools, or anything else. It doesn''t hold some features back for a payware version. Its source code is available for anyone to review. We don''t track our users, and our website and forums have no third-party ads or analytics.
+        zh_CN: |
+          Transmission 是一个开源的、志愿者驱动的项目。与某些 BitTorrent 客户端不同，Transmission 不会以赚钱为目的来玩弄用户：Transmission 不会捆绑工具栏、弹出广告、Flash 广告、Twitter 工具或其他任何东西。它不会将某些功能留给付费版本。它的源代码可供任何人查看。我们不会跟踪我们的用户，我们的网站和论坛没有第三方广告或分析。
       developer: Transmission
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/icon.png
       screenshot_link:
@@ -110,16 +100,19 @@ services:
         - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/screenshot-2.png
         - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/screenshot-3.png
       tagline:
-        en_US: 'Transmission is a cross-platform BitTorrent client '
+        en_US: Transmission is a cross-platform BitTorrent client
+        zh_CN: Transmission 是一个跨平台的 BitTorrent 客户端
       thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/thumbnail.png
       tips:
         before_install:
-          - content:
-              en_US: username
-            value: casaos
-          - content:
-              en_US: password
-            value: casaos
+          en_US: |
+            | username | password |
+            | -------- | -------- |
+            | `casaos` | `casaos` |
+          zh_CN: |
+            | 用户名 | 密码 |
+            | -------- | -------- |
+            | `casaos` | `casaos` |
       title:
         en_US: Transmission
 x-casaos:

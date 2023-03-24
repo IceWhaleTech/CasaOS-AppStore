@@ -50,78 +50,65 @@ services:
       category: Network
       container:
         envs:
-          -
-            container: PUID
+          - container: PUID
             description:
               en_US: ""
-          -
-            container: PGID
+          - container: PGID
             description:
               en_US: ""
-          -
-            container: MEM_LIMIT
+          - container: MEM_LIMIT
             description:
               en_US: ""
-          -
-            container: MEM_STARTUP
+          - container: MEM_STARTUP
             description:
               en_US: ""
         index: /
         port_map: "8080"
         ports:
-          -
-            container: "3478"
+          - container: "3478"
             description:
               en_US: ""
             protocol: udp
-          -
-            container: "10001"
+          - container: "10001"
             description:
               en_US: ""
             protocol: udp
-          -
-            container: "8080"
+          - container: "8080"
             description:
               en_US: ""
 
-          -
-            container: "8443"
+          - container: "8443"
             description:
               en_US: ""
 
-          -
-            container: "1900"
+          - container: "1900"
             description:
               en_US: ""
             protocol: udp
-          -
-            container: "8843"
+          - container: "8843"
             description:
               en_US: ""
 
-          -
-            container: "8880"
+          - container: "8880"
             description:
               en_US: ""
 
-          -
-            container: "6789"
+          - container: "6789"
             description:
               en_US: ""
 
-          -
-            container: "5514"
+          - container: "5514"
             description:
               en_US: ""
             protocol: udp
-        
+
         volumes:
-          -
-            container: /config
+          - container: /config
             description:
               en_US: ""
       description:
         en_US: For Unifi to adopt other devices, e.g. an Access Point, it is required to change the inform IP address. Because Unifi runs inside Docker by default it uses an IP address not accessible by other devices. To change this go to Settings > System Settings > Controller Configuration and set the Controller Hostname/IP to a hostname or IP address accessible by your devices. Additionally the checkbox "Override inform host with controller hostname/IP" has to be checked, so that devices can connect to the controller during adoption (devices use the inform-endpoint during adoption).
+        zh_CN: 为了让Unifi控制器能够管理其他设备，例如无线接入点，需要修改inform IP地址。因为Unifi控制器默认运行在Docker中，所以它使用的IP地址不可被其他设备访问。要修改这个设置，请前往设置>系统设置>控制器配置，将控制器主机名/ IP设置为可被您的设备访问的主机名或IP地址。此外，必须选中“使用控制器主机名/ IP覆盖inform主机”复选框，以便在采用期间设备可以连接到控制器（设备在采用期间使用inform-endpoint）。
       developer: LinuxServer.io
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-controller/icon.png
       screenshot_link:
@@ -130,10 +117,12 @@ services:
         - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-controller/screenshot-3.png
       tagline:
         en_US: The Unifi-controller software is a powerful, enterprise wireless software engine ideal for high-density client deployments requiring low latency and high uptime performance.
+        zh_CN: Unifi控制器软件是一种功能强大的企业级无线软件引擎，适用于需要低延迟和高可用性性能的高密度客户端部署。
       thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-controller/thumbnail.png
       tips: {}
       title:
         en_US: Unifi-controller
+        zh_CN: Unifi控制器
 x-casaos:
   architectures:
     - amd64

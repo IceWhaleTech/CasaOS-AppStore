@@ -48,61 +48,61 @@ services:
       category: Media
       container:
         envs:
-          -
-            container: TZ
+          - container: TZ
             description:
               en_US: TimeZone
-          -
-            container: PUID
+              zh_CN: 时区
+          - container: PUID
             description:
               en_US: Run Jellyfin as specified uid.
-          -
-            container: PGID
+              zh_CN: Jellyfin运行的用户ID
+          - container: PGID
             description:
               en_US: Run Jellyfin as specified gid.
-          -
-            container: JELLYFIN_PublishedServerUrl
+              zh_CN: Jellyfin运行的用户组ID
+          - container: JELLYFIN_PublishedServerUrl
             description:
               en_US: The autodiscovery response domain or IP address.
+              zh_CN: 自动发现响应域名或IP地址
         index: /
         port_map: "8096"
         ports:
-          -
-            container: "8096"
+          - container: "8096"
             description:
               en_US: WebUI HTTP Port
+              zh_CN: WebUI HTTP端口
 
-          -
-            container: "8920"
+          - container: "8920"
             description:
               en_US: WebUI HTTPS Port
+              zh_CN: WebUI HTTPS端口
 
-          -
-            container: "7359"
+          - container: "7359"
             description:
               en_US: Jellyfin auto-discovery Port
+              zh_CN: Jellyfin自动发现端口
 
-          -
-            container: "1900"
+          - container: "1900"
             description:
               en_US: Jellyfin DLNA Port
+              zh_CN: Jellyfin DLNA端口
 
-        
         volumes:
-          -
-            container: /config
+          - container: /config
             description:
               en_US: Jellyfin config directory.
-          -
-            container: /Media
+              zh_CN: Jellyfin配置目录
+          - container: /Media
             description:
               en_US: Jellyfin Media directory.
-          -
-            container: /opt/vc/lib
+              zh_CN: Jellyfin媒体目录
+          - container: /opt/vc/lib
             description:
               en_US: OpenMax libs
+              zh_CN: OpenMax库
       description:
         en_US: Jellyfin enables you to collect, manage, and stream your media. Run the Jellyfin server on your system and gain access to the leading free-software entertainment system, bells and whistles included.
+        zh_CN: Jellyfin让您可以收集、管理和流媒体。在您的系统上运行Jellyfin服务器，即可获得免费软件娱乐系统的领先功能，包括铃声和装饰。
       developer: Jellyfin
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/icon.png
       screenshot_link:
@@ -113,6 +113,7 @@ services:
         - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-5.jpg
       tagline:
         en_US: Puts you in control of your media.
+        zh_CN: 让您控制媒体。
       thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.png
       tips: {}
       title:

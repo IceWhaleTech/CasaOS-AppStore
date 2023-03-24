@@ -24,34 +24,30 @@ services:
       category: Media
       container:
         envs:
-          -
-            container: PUID
+          - container: PUID
             description:
               en_US: ""
-          -
-            container: PGID
+          - container: PGID
             description:
               en_US: ""
-          -
-            container: TZ
+          - container: TZ
             description:
               en_US: ""
         index: /
         port_map: "8181"
         ports:
-          -
-            container: "8181"
+          - container: "8181"
             description:
               en_US: ""
             protocol: ""
-        
+
         volumes:
-          -
-            container: /config
+          - container: /config
             description:
               en_US: ""
       description:
         en_US: Tautulli is a 3rd party application that you can run alongside your Plex Media Server to monitor activity and track various statistics.
+        zh_CN: Tautulli是您可以在Plex Media Server旁边运行的第三方应用程序，用于监视活动并跟踪各种统计信息。
       developer: Tautulli Team
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tautulli/icon.png
       screenshot_link:
@@ -61,6 +57,7 @@ services:
         - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tautulli/screenshot-4.png
       tagline:
         en_US: Monitor your Plex Media Server and much more.
+        zh_CN: 监视您的Plex Media Server以及更多内容。
       thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tautulli/thumbnail.png
       tips: {}
       title:

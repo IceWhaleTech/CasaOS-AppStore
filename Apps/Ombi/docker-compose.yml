@@ -26,37 +26,31 @@ services:
       category: Media
       container:
         envs:
-          -
-            container: PUID
+          - container: PUID
             description:
               en_US: ""
-          -
-            container: PGID
+          - container: PGID
             description:
               en_US: ""
-          -
-            container: TZ
+          - container: TZ
             description:
               en_US: ""
-          -
-            container: BASE_URL
+          - container: BASE_URL
             description:
               en_US: ""
         port_map: "3579"
         ports:
-          -
-            container: "3579"
+          - container: "3579"
             description:
               en_US: ""
 
-        
         volumes:
-          -
-            container: /config
+          - container: /config
             description:
               en_US: ""
       description:
         en_US: Ombi is a self-hosted web application that automatically gives your shared Plex or Emby users the ability to request content by themselves! Ombi can be linked to multiple TV Show and Movie DVR tools to create a seamless end-to-end experience for your users.
+        zh_CN: Ombi是一个自托管的Web应用程序，它可以自动为您的共享Plex或Emby用户提供自助请求内容的功能！ Ombi可以链接到多个电视节目和电影DVR工具，为用户提供无缝的端到端体验。
       developer: Sabnzbd Team
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/icon.png
       screenshot_link:
@@ -64,7 +58,8 @@ services:
         - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/screenshot-2.png
         - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/screenshot-3.png
       tagline:
-        en_US: 'Friendly media request tool, automatically syncs with your media servers! '
+        en_US: Friendly media request tool, automatically syncs with your media servers!
+        zh_CN: 友好的媒体请求工具，自动与您的媒体服务器同步！
       thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/thumbnail.png
       tips: {}
       title:
