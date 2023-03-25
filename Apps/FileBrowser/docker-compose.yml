@@ -28,38 +28,38 @@ services:
       category: Cloud
       container:
         envs:
-          -
-            container: TZ
+          - container: TZ
             description:
               en_US: TimeZone
-          -
-            container: PUID
+              zh_CN: 时区
+          - container: PUID
             description:
               en_US: Run FileBrowser as specified uid.
-          -
-            container: PGID
+              zh_CN: 以指定的用户ID运行FileBrowser
+          - container: PGID
             description:
               en_US: Run FileBrowser as specified gid.
+              zh_CN: 以指定的组ID运行FileBrowser
         index: /
         port_map: "80"
         ports:
-          -
-            container: "80"
+          - container: "80"
             description:
               en_US: WebUI Port
+              zh_CN: WebUI端口
 
-        
         volumes:
-          -
-            container: /db
+          - container: /db
             description:
               en_US: FileBrowser database directory.
-          -
-            container: /srv
+              zh_CN: FileBrowser数据库目录
+          - container: /srv
             description:
               en_US: FileBrowser managed directory.
+              zh_CN: FileBrowser管理的目录
       description:
         en_US: File Browser - Webbased File Browser including sharing functions etc.
+        zh_CN: File Browser - 包含分享功能等的Webbased文件浏览器
       developer: File Browser
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/icon.png
       screenshot_link:
@@ -68,17 +68,22 @@ services:
         - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/screenshot-3.jpg
       tagline:
         en_US: Upload, delete, preview, rename, edit and share your files.
+        zh_CN: 上传，删除，预览，重命名，编辑和共享您的文件。
       thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/thumbnail.jpg
       tips:
         before_install:
-          - content:
-              en_US: Default Account
-          - content:
-              en_US: 'Username: '
-            value: admin
-          - content:
-              en_US: 'Password: '
-            value: admin
+          en_US: |
+            Default Account
+
+            | Username | Password |
+            | -------- | -------- |
+            | `admin`    | `admin`    |
+          zh_CN: |
+            默认账号
+
+            | 用户名 | 密码 |
+            | -------- | -------- |
+            | `admin`    | `admin`    |
       title:
         en_US: FileBrowser
 x-casaos:

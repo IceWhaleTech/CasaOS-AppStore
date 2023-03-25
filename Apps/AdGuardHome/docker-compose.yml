@@ -38,38 +38,32 @@ services:
         index: /
         port_map: "3000"
         ports:
-          -
-            container: "53"
+          - container: "53"
             description:
               en_US: ""
-          -
-            container: "53"
+          - container: "53"
             description:
               en_US: ""
-          -
-            container: "3000"
+          - container: "3000"
             description:
               en_US: ""
-          -
-            container: "853"
+          - container: "853"
             description:
               en_US: ""
-          -
-            container: "784"
+          - container: "784"
             description:
               en_US: ""
-        
+
         volumes:
-          -
-            container: /opt/adguardhome/work
+          - container: /opt/adguardhome/work
             description:
               en_US: ""
-          -
-            container: /opt/adguardhome/conf
+          - container: /opt/adguardhome/conf
             description:
               en_US: ""
       description:
         en_US: AdGuard Home is a network-wide software for blocking ads and tracking. After you set it up, it'll cover all your home devices, and you won't need any client-side software for that. Learn more on our official Github repository.
+        zh_CN: AdGuard Home 是一个网络范围的软件，用于阻止广告和跟踪。设置完成后，它将覆盖您的所有家庭设备，您不需要任何客户端软件。在我们的官方Github存储库上了解更多信息。
       developer: AdguardTeam
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AdGuardHome/icon.png
       screenshot_link:
@@ -77,7 +71,8 @@ services:
         - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AdGuardHome/screenshot-2.png
         - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AdGuardHome/screenshot-3.png
       tagline:
-        en_US: 'Network-wide ads & trackers blocking DNS server '
+        en_US: Network-wide ads & trackers blocking DNS server
+        zh_CN: 网络范围的广告和跟踪阻止DNS服务器
       thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AdGuardHome/thumbnail.png
       tips: {}
       title:

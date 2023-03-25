@@ -41,62 +41,62 @@ services:
       category: Network
       container:
         envs:
-          -
-            container: TZ
+          - container: TZ
             description:
               en_US: TimeZone
-          -
-            container: WEBPASSWORD
+              zh_CN: 时区
+          - container: WEBPASSWORD
             description:
               en_US: Pi-hole admin password
-          -
-            container: VIRTUAL_HOST
+              zh_CN: Pi-hole 管理密码
+          - container: VIRTUAL_HOST
             description:
               en_US: Pi-hole Custom Hostname
-          -
-            container: PROXY_LOCATION
+              zh_CN: Pi-hole 自定义域名
+          - container: PROXY_LOCATION
             description:
               en_US: Pi-hole PROXY_LOCATION
         index: /admin
         port_map: "80"
         ports:
-          -
-            container: "80"
+          - container: "80"
             description:
               en_US: WebUI HTTP Port
+              zh_CN: WebUI HTTP 端口
 
-          -
-            container: "53"
+          - container: "53"
             description:
               en_US: Pihole DNS port
+              zh_CN: Pihole DNS 端口
 
-          -
-            container: "53"
+          - container: "53"
             description:
               en_US: Pihole DNS port
+              zh_CN: Pihole DNS 端口
             protocol: udp
-          -
-            container: "67"
+          - container: "67"
             description:
               en_US: Pihole DHCP IPv4 port
+              zh_CN: Pihole DHCP IPv4 端口
             protocol: udp
-          -
-            container: "547"
+          - container: "547"
             description:
               en_US: Pihole DHCP IPv6 port
+              zh_CN: Pihole DHCP IPv6 端口
             protocol: udp
-        
+
         volumes:
-          -
-            container: /etc/pihole
+          - container: /etc/pihole
             description:
               en_US: Pi-hole /etc/pihole directory.
-          -
-            container: /etc/dnsmasq.d
+              zh_CN: Pi-hole /etc/pihole 目录
+          - container: /etc/dnsmasq.d
             description:
               en_US: Pi-hole /etc/dnsmasq.d directory.
+              zh_CN: Pi-hole /etc/dnsmasq.d 目录
       description:
         en_US: Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server.
+        zh_CN: 开源家庭自动化系统，将本地控制和隐私放在首位。由全球 DIY 爱好者和 DIY 爱好者组成的社区提供支持。适合在树莓派或本地服务器上运行。
       developer: Pi-hole
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/icon.png
       screenshot_link:
@@ -105,12 +105,14 @@ services:
         - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/screenshot-3.jpg
       tagline:
         en_US: Network-wide Ad Blocking
+        zh_CN: 网络广告拦截
       thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/thumbnail.jpg
       tips:
         before_install:
-          - content:
-              en_US: 'Default password: '
-            value: casaos
+          en_US: |
+            Default password: `casaos`
+          zh_CN: |
+            默认密码：`casaos`
       title:
         en_US: Pi-hole
 x-casaos:
