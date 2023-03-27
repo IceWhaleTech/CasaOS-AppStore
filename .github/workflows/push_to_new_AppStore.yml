@@ -16,7 +16,7 @@ jobs:
         run: find . -type f -not \( -name 'icon.png' -or -name '*.json' -or -name '*.yml' \) -delete
       - name: remove .github
         run: |
-          rm -fr ./github
+          rm -fr ./.github
           rm -fr ./build
           rm -fr ./help
           rm ./.gitignore
