@@ -24,6 +24,9 @@ jobs:
           destination-repository-name: 'CasaOS-NewAppStore'
           user-email: q2676515970@163.com
           target-directory: './Apps'
+      - name: test
+        run: ls
+      - uses: actions/checkout@v3
       - name: Pushes to another repository1
         uses: cpina/github-action-push-to-another-repository@main
         env:
