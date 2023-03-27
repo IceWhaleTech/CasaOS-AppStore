@@ -21,7 +21,7 @@ jobs:
         with:
           source-directory: './Apps'
           destination-github-username: 'IceWhaleTech'
-          destination-repository-name: '_appstore'
+          destination-repository-name: 'CasaOS-NewAppStore'
           user-email: q2676515970@163.com
           target-directory: './Apps'
         
@@ -31,7 +31,7 @@ jobs:
           personal_token: ${{ secrets.GITHUB_TOKEN }}
           src_path: ./recommend-list.json
           dst_owner: IceWhaleTech
-          dst_repo_name: _appstore
+          dst_repo_name: CasaOS-NewAppStore
           email: q2676515970@163.com
           src_branch: main
           dst_branch: main
