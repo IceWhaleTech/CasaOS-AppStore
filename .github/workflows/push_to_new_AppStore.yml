@@ -19,9 +19,18 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB2 }}
         with:
-          source-directory: '.'
+          source-directory: './Apps'
           destination-github-username: 'IceWhaleTech'
           destination-repository-name: 'CasaOS-NewAppStore'
           user-email: q2676515970@163.com
-          target-directory: ''
-
+          target-directory: './Apps'
+      - name: Pushes to another repository1
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB2 }}
+        with:
+          source-directory: './recommend-list.json'
+          destination-github-username: 'IceWhaleTech'
+          destination-repository-name: 'CasaOS-NewAppStore'
+          user-email: q2676515970@163.com
+          target-directory: '.'
