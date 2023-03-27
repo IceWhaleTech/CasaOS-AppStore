@@ -17,10 +17,6 @@ jobs:
       - name: remove .github
         run: |
           rm -fr ./.github
-          rm -fr ./build
-          rm -fr ./help
-          rm ./CONTRIBUTING.md
-          rm ./README.md
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
