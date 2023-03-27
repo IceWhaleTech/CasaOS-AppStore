@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: remove all file except icon.png
         run: find . -type f -not \( -name 'icon.png' -or -name '*.json' -or -name '*.yml' \) -delete
       - name: Pushes to another repository
@@ -24,11 +24,10 @@ jobs:
           destination-repository-name: 'CasaOS-NewAppStore'
           user-email: q2676515970@163.com
           target-directory: './Apps'
-        
       - name: Copycat
         uses: andstor/copycat-action@v3
         with:
-          personal_token: ${{ secrets.GITHUB_TOKEN }}
+          personal_token: ${{ secrets.API_TOKEN_GITHUB2 }}
           src_path: ./recommend-list.json
           dst_owner: IceWhaleTech
           dst_repo_name: CasaOS-NewAppStore
