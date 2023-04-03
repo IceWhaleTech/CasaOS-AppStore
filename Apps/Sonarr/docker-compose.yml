@@ -27,62 +27,61 @@ services:
         source: /DATA/Downloads
         target: /downloads
     x-casaos:
-      author: CasaOS Team
-      category: Media
-      container:
-        envs:
-          - container: TZ
-            description:
-              en_US: TimeZone
-              zh_CN: 时区
-          - container: PUID
-            description:
-              en_US: Run Sonarr as specified uid.
-              zh_CN: 以指定的uid运行Sonarr
-          - container: PGID
-            description:
-              en_US: Run Sonarr as specified gid.
-              zh_CN: 以指定的gid运行Sonarr
-        index: /
-        port_map: "8989"
-        ports:
-          - container: "8989"
-            description:
-              en_US: WebUI HTTP Port
-              zh_CN: WebUI HTTP端口
+      envs:
+        - container: TZ
+          description:
+            en_US: TimeZone
+            zh_CN: 时区
+        - container: PUID
+          description:
+            en_US: Run Sonarr as specified uid.
+            zh_CN: 以指定的uid运行Sonarr
+        - container: PGID
+          description:
+            en_US: Run Sonarr as specified gid.
+            zh_CN: 以指定的gid运行Sonarr
+      index: /
+      port_map: "8989"
+      ports:
+        - container: "8989"
+          description:
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP端口
 
-        volumes:
-          - container: /config
-            description:
-              en_US: Sonarr config directory.
-              zh_CN: Sonarr配置目录
-          - container: /tv
-            description:
-              en_US: Sonarr tv directory.
-              zh_CN: Sonarr TV目录
-          - container: /downloads
-            description:
-              en_US: Sonarr downloads directory.
-              zh_CN: Sonarr下载目录
-      description:
-        en_US: Sonarr is a PVR for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. It can also be configured to automatically upgrade the quality of files already downloaded when a better quality format becomes available.
-        zh_CN: Sonarr是一个用于Usenet和BitTorrent用户的PVR。它可以监视多个RSS源以获取您最喜欢的节目的新剧集，并且可以抓取，排序和重命名它们。它还可以配置为在出现更好的质量格式时自动升级已下载文件的质量。
-      developer: Sonarr
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/screenshot-1.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/screenshot-2.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/screenshot-3.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/screenshot-4.jpg
-      tagline:
-        en_US: The PVR for Usenet and BitTorrent users
-        zh_CN: 用于Usenet和BitTorrent用户的PVR
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/thumbnail.jpg
-      tips: {}
-      title:
-        en_US: Sonarr
+      volumes:
+        - container: /config
+          description:
+            en_US: Sonarr config directory.
+            zh_CN: Sonarr配置目录
+        - container: /tv
+          description:
+            en_US: Sonarr tv directory.
+            zh_CN: Sonarr TV目录
+        - container: /downloads
+          description:
+            en_US: Sonarr downloads directory.
+            zh_CN: Sonarr下载目录
 x-casaos:
   architectures:
     - amd64
     - arm64
-  main_app: sonarr
+  main: sonarr
+  author: CasaOS Team
+  category: Media
+  description:
+    en_US: Sonarr is a PVR for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. It can also be configured to automatically upgrade the quality of files already downloaded when a better quality format becomes available.
+    zh_CN: Sonarr是一个用于Usenet和BitTorrent用户的PVR。它可以监视多个RSS源以获取您最喜欢的节目的新剧集，并且可以抓取，排序和重命名它们。它还可以配置为在出现更好的质量格式时自动升级已下载文件的质量。
+  developer: Sonarr
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/screenshot-3.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/screenshot-4.jpg
+  tagline:
+    en_US: The PVR for Usenet and BitTorrent users
+    zh_CN: 用于Usenet和BitTorrent用户的PVR
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/thumbnail.jpg
+  tips: {}
+  title:
+    en_US: Sonarr

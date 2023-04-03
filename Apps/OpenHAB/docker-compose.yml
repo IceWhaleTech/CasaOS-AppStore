@@ -31,68 +31,67 @@ services:
         source: /DATA/AppData/$AppID/userdata
         target: /opt/openhab/userdata
     x-casaos:
-      author: CasaOS Team
-      category: Home Automation
-      container:
-        envs:
-          - container: CRYPTO_POLICY
-            description:
-              en_US: Crypto Policy
-              zh_CN: 加密策略
-          - container: PUID
-            description:
-              en_US: Run OpenHAB as specified uid.
-              zh_CN: 以指定的uid运行OpenHAB。
-          - container: PGID
-            description:
-              en_US: Run OpenHAB as specified gid.
-              zh_CN: 以指定的gid运行OpenHAB。
-        index: /
-        port_map: "8080"
+      envs:
+        - container: CRYPTO_POLICY
+          description:
+            en_US: Crypto Policy
+            zh_CN: 加密策略
+        - container: PUID
+          description:
+            en_US: Run OpenHAB as specified uid.
+            zh_CN: 以指定的uid运行OpenHAB。
+        - container: PGID
+          description:
+            en_US: Run OpenHAB as specified gid.
+            zh_CN: 以指定的gid运行OpenHAB。
+      index: /
+      port_map: "8080"
 
-        volumes:
-          - container: /etc/localtime
-            description:
-              en_US: Ties the time of the container to the host's time, read only so the container cannot change the host's time.
-              zh_CN: 将容器的时间与主机的时间绑定，只读，因此容器无法更改主机的时间。
-          - container: /etc/timezone
-            description:
-              en_US: Ties the timezone of the container to the host's time zone, read only so the container cannot change the host's time zone.
-              zh_CN: 将容器的时区与主机的时区绑定，只读，因此容器无法更改主机的时区。
-          - container: /opt/openhab/addons
-            description:
-              en_US: Only needed if installing addons unavailable via UI or the Karaf Console.
-              zh_CN: 仅在通过UI或Karaf控制台无法安装插件时需要。
-          - container: /opt/openhab/conf
-            description:
-              en_US: |
-                Location of the conf folder for openHAB configurations (Note: you must create these folders on the host before running the container).
-              zh_CN: |
-                openHAB配置的conf文件夹位置（注意：在运行容器之前，您必须在主机上创建这些文件夹）。
-          - container: /opt/openhab/userdata
-            description:
-              en_US: Location for logs, cache, persistence databases, etc.
-              zh_CN: 用于日志，缓存，持久性数据库等的位置。
-      description:
-        en_US: The open Home Automation Bus (openHAB, pronounced ˈəʊpənˈhæb) is an open source, technology agnostic home automation platform which runs as the center of your smart home! Its ability to integrate a multitude of other devices and systems. openHAB includes other home automation systems, (smart) devices and other technologies into a single solution. To provide a uniform user interface and a common approach to automation rules across the entire system, regardless of the number of manufacturers and sub-systems involved. Giving you the most flexible tool available to make almost any home automation wish come true; if you can think it, odds are that you can implement it with openHAB.
-        zh_CN: 开放式家庭自动化总线（openHAB，发音为ˈəʊpənˈhæb）是一个开源的，技术不可知的家庭自动化平台，它作为智能家居的中心运行！ 它能够将多种其他设备和系统集成到一个单一的解决方案中。 为了在整个系统中提供统一的用户界面和通用的自动化规则方法，无论涉及的制造商和子系统的数量如何。 为您提供最灵活的工具，使几乎任何家庭自动化愿望成真; 如果您能想到，那么您可以用openHAB实现它。
-      developer: openHAB
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/screenshot-1.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/screenshot-2.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/screenshot-3.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/screenshot-4.jpg
-      tagline:
-        en_US: Empowering the smart home
-        zh_CN: 助力智能家居
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/thumbnail.png
-      tips: {}
-      title:
-        en_US: OpenHAB
+      volumes:
+        - container: /etc/localtime
+          description:
+            en_US: Ties the time of the container to the host's time, read only so the container cannot change the host's time.
+            zh_CN: 将容器的时间与主机的时间绑定，只读，因此容器无法更改主机的时间。
+        - container: /etc/timezone
+          description:
+            en_US: Ties the timezone of the container to the host's time zone, read only so the container cannot change the host's time zone.
+            zh_CN: 将容器的时区与主机的时区绑定，只读，因此容器无法更改主机的时区。
+        - container: /opt/openhab/addons
+          description:
+            en_US: Only needed if installing addons unavailable via UI or the Karaf Console.
+            zh_CN: 仅在通过UI或Karaf控制台无法安装插件时需要。
+        - container: /opt/openhab/conf
+          description:
+            en_US: |
+              Location of the conf folder for openHAB configurations (Note: you must create these folders on the host before running the container).
+            zh_CN: |
+              openHAB配置的conf文件夹位置（注意：在运行容器之前，您必须在主机上创建这些文件夹）。
+        - container: /opt/openhab/userdata
+          description:
+            en_US: Location for logs, cache, persistence databases, etc.
+            zh_CN: 用于日志，缓存，持久性数据库等的位置。
 x-casaos:
   architectures:
     - amd64
     - arm64
     - arm
-  main_app: openhab
+  main: openhab
+  author: CasaOS Team
+  category: Home Automation
+  description:
+    en_US: The open Home Automation Bus (openHAB, pronounced ˈəʊpənˈhæb) is an open source, technology agnostic home automation platform which runs as the center of your smart home! Its ability to integrate a multitude of other devices and systems. openHAB includes other home automation systems, (smart) devices and other technologies into a single solution. To provide a uniform user interface and a common approach to automation rules across the entire system, regardless of the number of manufacturers and sub-systems involved. Giving you the most flexible tool available to make almost any home automation wish come true; if you can think it, odds are that you can implement it with openHAB.
+    zh_CN: 开放式家庭自动化总线（openHAB，发音为ˈəʊpənˈhæb）是一个开源的，技术不可知的家庭自动化平台，它作为智能家居的中心运行！ 它能够将多种其他设备和系统集成到一个单一的解决方案中。 为了在整个系统中提供统一的用户界面和通用的自动化规则方法，无论涉及的制造商和子系统的数量如何。 为您提供最灵活的工具，使几乎任何家庭自动化愿望成真; 如果您能想到，那么您可以用openHAB实现它。
+  developer: openHAB
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/screenshot-3.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/screenshot-4.jpg
+  tagline:
+    en_US: Empowering the smart home
+    zh_CN: 助力智能家居
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHAB/thumbnail.png
+  tips: {}
+  title:
+    en_US: OpenHAB

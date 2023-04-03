@@ -26,58 +26,57 @@ services:
         source: /DATA/Downloads
         target: /downloads
     x-casaos:
-      author: CasaOS Team
-      category: Downloader
-      container:
-        envs:
-          - container: PUID
-            description:
-              en_US: ""
-          - container: PGID
-            description:
-              en_US: ""
-          - container: TZ
-            description:
-              en_US: ""
-          - container: NZBGET_USER
-            description:
-              en_US: ""
-          - container: NZBGET_PASS
-            description:
-              en_US: ""
-        port_map: "6789"
-        ports:
-          - container: "6789"
-            description:
-              en_US: ""
+      envs:
+        - container: PUID
+          description:
+            en_US: ""
+        - container: PGID
+          description:
+            en_US: ""
+        - container: TZ
+          description:
+            en_US: ""
+        - container: NZBGET_USER
+          description:
+            en_US: ""
+        - container: NZBGET_PASS
+          description:
+            en_US: ""
+      port_map: "6789"
+      ports:
+        - container: "6789"
+          description:
+            en_US: ""
 
-        volumes:
-          - container: /config
-            description:
-              en_US: ""
-          - container: /downloads
-            description:
-              en_US: ""
-      description:
-        en_US: NZBGet can run on almost any device - classic PC, NAS, media player, SAT-receiver, WLAN-router, etc. The download area provides precompiled binaries for Windows, macOS, Linux (compatible with many CPUs and platform variants), FreeBSD and Android. For other platforms the program can be compiled from sources.
-        zh_CN: NZBGet可以在几乎任何设备上运行-经典PC，NAS，媒体播放器，SAT接收器，WLAN路由器等。下载区提供了Windows，macOS，Linux（兼容许多CPU和平台变体），FreeBSD和Android的预编译二进制文件。对于其他平台，可以从源代码编译程序。
-      developer: ' Nzbget Team'
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-1.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-2.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-3.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-4.png
-      tagline:
-        en_US: Efficient Usenet downloader
-        zh_CN: 高效的Usenet下载器
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/thumbnail.png
-      tips: {}
-      title:
-        en_US: Nzbget
+      volumes:
+        - container: /config
+          description:
+            en_US: ""
+        - container: /downloads
+          description:
+            en_US: ""
 x-casaos:
   architectures:
     - amd64
     - arm
     - arm64
-  main_app: nzbget
+  main: nzbget
+  author: CasaOS Team
+  category: Downloader
+  description:
+    en_US: NZBGet can run on almost any device - classic PC, NAS, media player, SAT-receiver, WLAN-router, etc. The download area provides precompiled binaries for Windows, macOS, Linux (compatible with many CPUs and platform variants), FreeBSD and Android. For other platforms the program can be compiled from sources.
+    zh_CN: NZBGet可以在几乎任何设备上运行-经典PC，NAS，媒体播放器，SAT接收器，WLAN路由器等。下载区提供了Windows，macOS，Linux（兼容许多CPU和平台变体），FreeBSD和Android的预编译二进制文件。对于其他平台，可以从源代码编译程序。
+  developer: ' Nzbget Team'
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/screenshot-4.png
+  tagline:
+    en_US: Efficient Usenet downloader
+    zh_CN: 高效的Usenet下载器
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nzbget/thumbnail.png
+  tips: {}
+  title:
+    en_US: Nzbget

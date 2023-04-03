@@ -24,53 +24,52 @@ services:
         source: /DATA/AppData/smokeping/data
         target: /data
     x-casaos:
-      author: CasaOS Team
-      category: Network
-      container:
-        envs:
-          - container: PUID
-            description:
-              en_US: ""
-          - container: PGID
-            description:
-              en_US: ""
-          - container: TZ
-            description:
-              en_US: ""
-        port_map: "80"
-        ports:
-          - container: "80"
-            description:
-              en_US: ""
+      envs:
+        - container: PUID
+          description:
+            en_US: ""
+        - container: PGID
+          description:
+            en_US: ""
+        - container: TZ
+          description:
+            en_US: ""
+      port_map: "80"
+      ports:
+        - container: "80"
+          description:
+            en_US: ""
 
-        volumes:
-          - container: /config
-            description:
-              en_US: ""
-          - container: /data
-            description:
-              en_US: ""
-      description:
-        en_US: keeps track of your network latency.
-        zh_CN: 用于跟踪您的网络延迟。
-      developer: Lazylibrarian Team
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-1.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-2.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-3.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-4.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-5.png
-      tagline:
-        en_US: Free open source network performance monitoring tool
-        zh_CN: 免费开源的网络性能监控工具
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/thumbnail.png
-      tips: {}
-      title:
-        en_US: Smokeping
+      volumes:
+        - container: /config
+          description:
+            en_US: ""
+        - container: /data
+          description:
+            en_US: ""
 x-casaos:
   architectures:
     - amd64
     - arm
     - arm64
-  main_app: smokeping
+  main: smokeping
+  author: CasaOS Team
+  category: Network
+  description:
+    en_US: keeps track of your network latency.
+    zh_CN: 用于跟踪您的网络延迟。
+  developer: Lazylibrarian Team
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-5.png
+  tagline:
+    en_US: Free open source network performance monitoring tool
+    zh_CN: 免费开源的网络性能监控工具
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/thumbnail.png
+  tips: {}
+  title:
+    en_US: Smokeping

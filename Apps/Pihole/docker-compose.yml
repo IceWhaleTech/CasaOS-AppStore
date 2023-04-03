@@ -37,88 +37,87 @@ services:
         source: /DATA/AppData/$AppID/etc/dnsmasq.d/
         target: /etc/dnsmasq.d
     x-casaos:
-      author: CasaOS Team
-      category: Network
-      container:
-        envs:
-          - container: TZ
-            description:
-              en_US: TimeZone
-              zh_CN: 时区
-          - container: WEBPASSWORD
-            description:
-              en_US: Pi-hole admin password
-              zh_CN: Pi-hole 管理密码
-          - container: VIRTUAL_HOST
-            description:
-              en_US: Pi-hole Custom Hostname
-              zh_CN: Pi-hole 自定义域名
-          - container: PROXY_LOCATION
-            description:
-              en_US: Pi-hole PROXY_LOCATION
-        index: /admin
-        port_map: "80"
-        ports:
-          - container: "80"
-            description:
-              en_US: WebUI HTTP Port
-              zh_CN: WebUI HTTP 端口
+      envs:
+        - container: TZ
+          description:
+            en_US: TimeZone
+            zh_CN: 时区
+        - container: WEBPASSWORD
+          description:
+            en_US: Pi-hole admin password
+            zh_CN: Pi-hole 管理密码
+        - container: VIRTUAL_HOST
+          description:
+            en_US: Pi-hole Custom Hostname
+            zh_CN: Pi-hole 自定义域名
+        - container: PROXY_LOCATION
+          description:
+            en_US: Pi-hole PROXY_LOCATION
+      index: /admin
+      port_map: "80"
+      ports:
+        - container: "80"
+          description:
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP 端口
 
-          - container: "53"
-            description:
-              en_US: Pihole DNS port
-              zh_CN: Pihole DNS 端口
+        - container: "53"
+          description:
+            en_US: Pihole DNS port
+            zh_CN: Pihole DNS 端口
 
-          - container: "53"
-            description:
-              en_US: Pihole DNS port
-              zh_CN: Pihole DNS 端口
-            protocol: udp
-          - container: "67"
-            description:
-              en_US: Pihole DHCP IPv4 port
-              zh_CN: Pihole DHCP IPv4 端口
-            protocol: udp
-          - container: "547"
-            description:
-              en_US: Pihole DHCP IPv6 port
-              zh_CN: Pihole DHCP IPv6 端口
-            protocol: udp
+        - container: "53"
+          description:
+            en_US: Pihole DNS port
+            zh_CN: Pihole DNS 端口
+          protocol: udp
+        - container: "67"
+          description:
+            en_US: Pihole DHCP IPv4 port
+            zh_CN: Pihole DHCP IPv4 端口
+          protocol: udp
+        - container: "547"
+          description:
+            en_US: Pihole DHCP IPv6 port
+            zh_CN: Pihole DHCP IPv6 端口
+          protocol: udp
 
-        volumes:
-          - container: /etc/pihole
-            description:
-              en_US: Pi-hole /etc/pihole directory.
-              zh_CN: Pi-hole /etc/pihole 目录
-          - container: /etc/dnsmasq.d
-            description:
-              en_US: Pi-hole /etc/dnsmasq.d directory.
-              zh_CN: Pi-hole /etc/dnsmasq.d 目录
-      description:
-        en_US: Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server.
-        zh_CN: 开源家庭自动化系统，将本地控制和隐私放在首位。由全球 DIY 爱好者和 DIY 爱好者组成的社区提供支持。适合在树莓派或本地服务器上运行。
-      developer: Pi-hole
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/screenshot-1.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/screenshot-2.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/screenshot-3.jpg
-      tagline:
-        en_US: Network-wide Ad Blocking
-        zh_CN: 网络广告拦截
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/thumbnail.jpg
-      tips:
-        before_install:
-          en_US: |
-            Default password: `casaos`
-          zh_CN: |
-            默认密码：`casaos`
-      title:
-        en_US: Pi-hole
+      volumes:
+        - container: /etc/pihole
+          description:
+            en_US: Pi-hole /etc/pihole directory.
+            zh_CN: Pi-hole /etc/pihole 目录
+        - container: /etc/dnsmasq.d
+          description:
+            en_US: Pi-hole /etc/dnsmasq.d directory.
+            zh_CN: Pi-hole /etc/dnsmasq.d 目录
 x-casaos:
   architectures:
     - amd64
     - arm64
     - "386"
     - arm
-  main_app: pihole
+  main: pihole
+  author: CasaOS Team
+  category: Network
+  description:
+    en_US: Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server.
+    zh_CN: 开源家庭自动化系统，将本地控制和隐私放在首位。由全球 DIY 爱好者和 DIY 爱好者组成的社区提供支持。适合在树莓派或本地服务器上运行。
+  developer: Pi-hole
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/screenshot-3.jpg
+  tagline:
+    en_US: Network-wide Ad Blocking
+    zh_CN: 网络广告拦截
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/thumbnail.jpg
+  tips:
+    before_install:
+      en_US: |
+        Default password: `casaos`
+      zh_CN: |
+        默认密码：`casaos`
+  title:
+    en_US: Pi-hole

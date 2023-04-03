@@ -24,70 +24,69 @@ services:
         source: /DATA/Gallery
         target: /photoprism/originals
     x-casaos:
-      author: CasaOS Team
-      category: Gallery
-      container:
-        envs:
-          - container: TZ
-            description:
-              en_US: TimeZone
-              zh_CN: 时区
-          - container: PHOTOPRISM_UPLOAD_NSFW
-            description:
-              en_US: true or false, is it possible to upload NSFW
-              zh_CN: true 或 false，是否允许上传 NSFW
-          - container: PHOTOPRISM_ADMIN_PASSWORD
-            description:
-              en_US: The password of admin
-              zh_CN: 管理员密码
-        index: /
-        port_map: "2342"
-        ports:
-          - container: "2342"
-            description:
-              en_US: WebUI HTTP Port
-              zh_CN: WebUI HTTP 端口
+      envs:
+        - container: TZ
+          description:
+            en_US: TimeZone
+            zh_CN: 时区
+        - container: PHOTOPRISM_UPLOAD_NSFW
+          description:
+            en_US: true or false, is it possible to upload NSFW
+            zh_CN: true 或 false，是否允许上传 NSFW
+        - container: PHOTOPRISM_ADMIN_PASSWORD
+          description:
+            en_US: The password of admin
+            zh_CN: 管理员密码
+      index: /
+      port_map: "2342"
+      ports:
+        - container: "2342"
+          description:
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP 端口
 
-        volumes:
-          - container: /photoprism/storage
-            description:
-              en_US: PhotoPrism storage directory.
-              zh_CN: PhotoPrism 存储目录
-          - container: /photoprism/originals
-            description:
-              en_US: PhotoPrism originals directory.
-              zh_CN: PhotoPrism 原始文件目录
-      description:
-        en_US: PhotoPrism® is an AI-powered app for browsing, organizing & sharing your photo collection. It makes use of the latest technologies to tag and find pictures automatically without getting in your way. You can run it at home, on a private server, or in the cloud.
-        zh_CN: PhotoPrism® 是一个基于 AI 的应用程序，用于浏览、组织和共享您的照片集。它利用最新的技术自动标记和查找图片，而不会干扰您。您可以在家中、私人服务器或云中运行它。
-      developer: PhotoPrism
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/screenshot-1.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/screenshot-2.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/screenshot-3.jpg
-      tagline:
-        en_US: Browsing, organizing & sharing your photo collection
-        zh_CN: 浏览、组织和共享您的照片集
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/thumbnail.png
-      tips:
-        before_install:
-          en_US: |
-            Default Account
-
-            | Username | Password |
-            | -------- | -------- |
-            | `admin`    | `casaos`   |
-          zh_CN: |
-            默认账号
-
-            | 用户名 | 密码 |
-            | -------- | -------- |
-            | `admin`    | `casaos`   |
-      title:
-        en_US: PhotoPrism
+      volumes:
+        - container: /photoprism/storage
+          description:
+            en_US: PhotoPrism storage directory.
+            zh_CN: PhotoPrism 存储目录
+        - container: /photoprism/originals
+          description:
+            en_US: PhotoPrism originals directory.
+            zh_CN: PhotoPrism 原始文件目录
 x-casaos:
   architectures:
     - amd64
     - arm64
-  main_app: photoprism
+  main: photoprism
+  author: CasaOS Team
+  category: Gallery
+  description:
+    en_US: PhotoPrism® is an AI-powered app for browsing, organizing & sharing your photo collection. It makes use of the latest technologies to tag and find pictures automatically without getting in your way. You can run it at home, on a private server, or in the cloud.
+    zh_CN: PhotoPrism® 是一个基于 AI 的应用程序，用于浏览、组织和共享您的照片集。它利用最新的技术自动标记和查找图片，而不会干扰您。您可以在家中、私人服务器或云中运行它。
+  developer: PhotoPrism
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/screenshot-3.jpg
+  tagline:
+    en_US: Browsing, organizing & sharing your photo collection
+    zh_CN: 浏览、组织和共享您的照片集
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/thumbnail.png
+  tips:
+    before_install:
+      en_US: |
+        Default Account
+
+        | Username | Password |
+        | -------- | -------- |
+        | `admin`    | `casaos`   |
+      zh_CN: |
+        默认账号
+
+        | 用户名 | 密码 |
+        | -------- | -------- |
+        | `admin`    | `casaos`   |
+  title:
+    en_US: PhotoPrism

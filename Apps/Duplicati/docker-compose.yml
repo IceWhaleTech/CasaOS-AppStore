@@ -27,54 +27,53 @@ services:
         source: /DATA/Duplicati/source
         target: /source
     x-casaos:
-      author: CasaOS Team
-      category: Cloud
-      container:
-        envs:
-          - container: PUID
-            description:
-              en_US: ""
-          - container: PGID
-            description:
-              en_US: ""
-          - container: TZ
-            description:
-              en_US: ""
-        index: /
-        port_map: "8200"
-        ports:
-          - container: "8200"
-            description:
-              en_US: ""
+      envs:
+        - container: PUID
+          description:
+            en_US: ""
+        - container: PGID
+          description:
+            en_US: ""
+        - container: TZ
+          description:
+            en_US: ""
+      index: /
+      port_map: "8200"
+      ports:
+        - container: "8200"
+          description:
+            en_US: ""
 
-        volumes:
-          - container: /config
-            description:
-              en_US: ""
-          - container: /backups
-            description:
-              en_US: ""
-          - container: /source
-            description:
-              en_US: ""
-      description:
-        en_US: Duplicati is a free, open source, backup client that securely stores encrypted, incremental, compressed backups on cloud storage services and remote file servers.
-        zh_CN: Duplicati是一个免费的开源备份客户端，它可以安全地存储加密的、增量的、压缩的备份文件到云存储服务和远程文件服务器。
-      developer: duplicati
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/screenshot-1.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/screenshot-2.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/screenshot-3.png
-      tagline:
-        en_US: Store securely encrypted backups in the cloud!
-        zh_CN: 在云端存储安全加密的备份文件！
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/thumbnail.png
-      tips: {}
-      title:
-        en_US: Duplicati
+      volumes:
+        - container: /config
+          description:
+            en_US: ""
+        - container: /backups
+          description:
+            en_US: ""
+        - container: /source
+          description:
+            en_US: ""
 x-casaos:
   architectures:
     - amd64
     - arm64
-  main_app: duplicati
+  main: duplicati
+  author: CasaOS Team
+  category: Cloud
+  description:
+    en_US: Duplicati is a free, open source, backup client that securely stores encrypted, incremental, compressed backups on cloud storage services and remote file servers.
+    zh_CN: Duplicati是一个免费的开源备份客户端，它可以安全地存储加密的、增量的、压缩的备份文件到云存储服务和远程文件服务器。
+  developer: duplicati
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/screenshot-3.png
+  tagline:
+    en_US: Store securely encrypted backups in the cloud!
+    zh_CN: 在云端存储安全加密的备份文件！
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Duplicati/thumbnail.png
+  tips: {}
+  title:
+    en_US: Duplicati

@@ -27,55 +27,54 @@ services:
         source: /DATA/AppData/bazarr/config
         target: /config
     x-casaos:
-      author: CasaOS Team
-      category: Media
-      container:
-        envs:
-          - container: PUID
-            description:
-              en_US: ""
-          - container: PGID
-            description:
-              en_US: ""
-          - container: TZ
-            description:
-              en_US: ""
-        port_map: "6767"
-        ports:
-          - container: "6767"
-            description:
-              en_US: ""
+      envs:
+        - container: PUID
+          description:
+            en_US: ""
+        - container: PGID
+          description:
+            en_US: ""
+        - container: TZ
+          description:
+            en_US: ""
+      port_map: "6767"
+      ports:
+        - container: "6767"
+          description:
+            en_US: ""
 
-        volumes:
-          - container: /movies
-            description:
-              en_US: ""
-          - container: /tv
-            description:
-              en_US: ""
-          - container: /config
-            description:
-              en_US: ""
-      description:
-        en_US: Bazarr is a companion application to Sonarr and Radarr. It can manage and download subtitles based on your requirements. You define your preferences by TV show or movie and Bazarr takes care of everything for you.
-        zh_CN: Bazarr是Sonarr和Radarr的伴侣应用程序。它可以根据您的要求管理和下载字幕。您可以根据电视节目或电影来定义您的偏好，并且Bazarr会为您处理所有事情。
-      developer: Sabnzbd Team
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-1.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-2.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-3.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-4.png
-      tagline:
-        en_US: Letter generators for Sonarr and Radarr
-        zh_CN: Sonarr和Radarr的信件生成器
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/thumbnail.png
-      tips: {}
-      title:
-        en_US: Bazarr
+      volumes:
+        - container: /movies
+          description:
+            en_US: ""
+        - container: /tv
+          description:
+            en_US: ""
+        - container: /config
+          description:
+            en_US: ""
 x-casaos:
   architectures:
     - amd64
     - arm
     - arm64
-  main_app: bazarr
+  main: bazarr
+  author: CasaOS Team
+  category: Media
+  description:
+    en_US: Bazarr is a companion application to Sonarr and Radarr. It can manage and download subtitles based on your requirements. You define your preferences by TV show or movie and Bazarr takes care of everything for you.
+    zh_CN: Bazarr是Sonarr和Radarr的伴侣应用程序。它可以根据您的要求管理和下载字幕。您可以根据电视节目或电影来定义您的偏好，并且Bazarr会为您处理所有事情。
+  developer: Sabnzbd Team
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-4.png
+  tagline:
+    en_US: Letter generators for Sonarr and Radarr
+    zh_CN: Sonarr和Radarr的信件生成器
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/thumbnail.png
+  tips: {}
+  title:
+    en_US: Bazarr
