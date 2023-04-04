@@ -17,43 +17,42 @@ services:
         source: /DATA/AppData/$AppID/app/data
         target: /app/data
     x-casaos:
-      author: CasaOS Team
-      category: Network
-      container:
-        index: /
-        port_map: "3001"
-        ports:
-          - container: "3001"
-            description:
-              en_US: WebUI Port
-              zh_CN: WebUI 端口
+      index: /
+      port_map: "3001"
+      ports:
+        - container: "3001"
+          description:
+            en_US: WebUI Port
+            zh_CN: WebUI 端口
 
-        volumes:
-          - container: /app/data
-            description:
-              en_US: Uptime Kuma data directory.
-              zh_CN: Uptime Kuma 数据目录。
-      description:
-        en_US: It is a self-hosted monitoring tool like "Uptime Robot".
-        zh_CN: Uptime Kuma 是一个自托管的监控工具，类似于 Uptime Robot。
-      developer: Louis Lam
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-1.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-2.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-3.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-4.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-5.jpg
-      tagline:
-        en_US: A fancy monitoring tool
-        zh_CN: 一个漂亮的监控工具
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/thumbnail.png
-      tips: {}
-      title:
-        en_US: Uptime Kuma
+      volumes:
+        - container: /app/data
+          description:
+            en_US: Uptime Kuma data directory.
+            zh_CN: Uptime Kuma 数据目录。
 x-casaos:
   architectures:
     - amd64
     - arm64
     - arm
-  main_app: uptimekuma
+  main: uptimekuma
+  author: CasaOS Team
+  category: Network
+  description:
+    en_US: It is a self-hosted monitoring tool like "Uptime Robot".
+    zh_CN: Uptime Kuma 是一个自托管的监控工具，类似于 Uptime Robot。
+  developer: Louis Lam
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-3.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-4.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-5.jpg
+  tagline:
+    en_US: A fancy monitoring tool
+    zh_CN: 一个漂亮的监控工具
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/thumbnail.png
+  tips: {}
+  title:
+    en_US: Uptime Kuma

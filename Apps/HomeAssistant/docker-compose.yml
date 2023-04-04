@@ -17,50 +17,49 @@ services:
         source: /DATA/AppData/$AppID/config
         target: /config
     x-casaos:
-      author: CasaOS Team
-      category: Home Automation
-      container:
-        envs:
-          - container: TZ
-            description:
-              en_US: TimeZone
-              zh_CN: 时区
-          - container: PUID
-            description:
-              en_US: Run HomeAssistant as specified uid.
-              zh_CN: 以指定的uid运行HomeAssistant
-          - container: PGID
-            description:
-              en_US: Run HomeAssistant as specified gid.
-              zh_CN: 以指定的gid运行HomeAssistant
-        index: /
-        port_map: "8123"
+      envs:
+        - container: TZ
+          description:
+            en_US: TimeZone
+            zh_CN: 时区
+        - container: PUID
+          description:
+            en_US: Run HomeAssistant as specified uid.
+            zh_CN: 以指定的uid运行HomeAssistant
+        - container: PGID
+          description:
+            en_US: Run HomeAssistant as specified gid.
+            zh_CN: 以指定的gid运行HomeAssistant
+      index: /
+      port_map: "8123"
 
-        volumes:
-          - container: /config
-            description:
-              en_US: HomeAssistant config directory.
-              zh_CN: HomeAssistant配置目录
-      description:
-        en_US: Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server.
-        zh_CN: 开源的家庭自动化软件，将本地控制和隐私放在首位。由全球各地的爱好者和DIY爱好者组成的社区提供支持。适合在树莓派或本地服务器上运行。
-      developer: Home Assistant
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-1.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-2.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-3.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-4.jpg
-      tagline:
-        en_US: Awaken your home
-        zh_CN: 唤醒你的家
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/thumbnail.png
-      tips: {}
-      title:
-        en_US: Home Assistant
+      volumes:
+        - container: /config
+          description:
+            en_US: HomeAssistant config directory.
+            zh_CN: HomeAssistant配置目录
 x-casaos:
   architectures:
     - amd64
     - arm
     - arm64
-  main_app: homeassistant
+  main: homeassistant
+  author: CasaOS Team
+  category: Home Automation
+  description:
+    en_US: Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server.
+    zh_CN: 开源的家庭自动化软件，将本地控制和隐私放在首位。由全球各地的爱好者和DIY爱好者组成的社区提供支持。适合在树莓派或本地服务器上运行。
+  developer: Home Assistant
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-3.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-4.jpg
+  tagline:
+    en_US: Awaken your home
+    zh_CN: 唤醒你的家
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/thumbnail.png
+  tips: {}
+  title:
+    en_US: Home Assistant

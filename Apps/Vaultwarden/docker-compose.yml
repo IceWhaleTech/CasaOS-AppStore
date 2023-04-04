@@ -17,41 +17,40 @@ services:
         source: /DATA/AppData/$AppID/data
         target: /data
     x-casaos:
-      author: CasaOS Team
-      category: Utilities
-      container:
-        index: /
-        port_map: "80"
-        ports:
-          - container: "80"
-            description:
-              en_US: WebUI HTTP Port
-              zh_CN: WebUI HTTP 端口
+      index: /
+      port_map: "80"
+      ports:
+        - container: "80"
+          description:
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP 端口
 
-        volumes:
-          - container: /data
-            description:
-              en_US: Vaultwarden data directory.
-              zh_CN: Vaultwarden 数据目录。
-      description:
-        en_US: Alternative implementation of the Bitwarden server API written in Rust and compatible with upstream Bitwarden clients*, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
-        zh_CN: 用 Rust 编写的 Bitwarden 服务器 API 的替代实现，与上游 Bitwarden 客户端兼容，适合自托管部署，其中运行官方资源密集型服务可能不是理想的选择。
-      developer: Daniel García
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/screenshot-1.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/screenshot-2.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/screenshot-3.png
-      tagline:
-        en_US: A self-hosted Bitwarden server
-        zh_CN: 自托管的 Bitwarden 服务器
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/thumbnail.png
-      tips: {}
-      title:
-        en_US: Vaultwarden
+      volumes:
+        - container: /data
+          description:
+            en_US: Vaultwarden data directory.
+            zh_CN: Vaultwarden 数据目录。
 x-casaos:
   architectures:
     - amd64
     - arm
     - arm64
-  main_app: vaultwarden
+  main: vaultwarden
+  author: CasaOS Team
+  category: Utilities
+  description:
+    en_US: Alternative implementation of the Bitwarden server API written in Rust and compatible with upstream Bitwarden clients*, perfect for self-hosted deployment where running the official resource-heavy service might not be ideal.
+    zh_CN: 用 Rust 编写的 Bitwarden 服务器 API 的替代实现，与上游 Bitwarden 客户端兼容，适合自托管部署，其中运行官方资源密集型服务可能不是理想的选择。
+  developer: Daniel García
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/screenshot-3.png
+  tagline:
+    en_US: A self-hosted Bitwarden server
+    zh_CN: 自托管的 Bitwarden 服务器
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/thumbnail.png
+  tips: {}
+  title:
+    en_US: Vaultwarden

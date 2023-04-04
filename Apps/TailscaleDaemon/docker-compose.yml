@@ -27,69 +27,68 @@ services:
         source: /DATA/AppData/$AppID/config
         target: /var/lib/tailscale
     x-casaos:
-      author: EzyoStudio
-      category: Network
-      container:
-        envs:
-          - container: TS_AUTH_ONCE
-            description:
-              en_US: if true, only attempt to log in if not already logged in. If false, forcibly log in every time the container starts.
-              zh_CN: 如果为 true，则仅在未登录时尝试登录。如果为 false，则每次启动容器时强制登录。
-          - container: TS_EXTRA_ARGS
-            description:
-              en_US: |
-                extra arguments to `tailscale up`.
-              zh_CN: |
-                `tailscale up` 的额外参数。
-          - container: TS_STATE_DIR
-            description:
-              en_US: the directory in which to store tailscaled state. The data should persist across container restarts.
-              zh_CN: 存储 tailscaled 状态的目录。数据应在容器重新启动时保持持久。
-        port_map: "80"
+      envs:
+        - container: TS_AUTH_ONCE
+          description:
+            en_US: if true, only attempt to log in if not already logged in. If false, forcibly log in every time the container starts.
+            zh_CN: 如果为 true，则仅在未登录时尝试登录。如果为 false，则每次启动容器时强制登录。
+        - container: TS_EXTRA_ARGS
+          description:
+            en_US: |
+              extra arguments to `tailscale up`.
+            zh_CN: |
+              `tailscale up` 的额外参数。
+        - container: TS_STATE_DIR
+          description:
+            en_US: the directory in which to store tailscaled state. The data should persist across container restarts.
+            zh_CN: 存储 tailscaled 状态的目录。数据应在容器重新启动时保持持久。
+      port_map: "80"
 
-        volumes:
-          - container: /dev/net/tun
-            description:
-              en_US: ""
-          - container: /var/lib
-            description:
-              en_US: ""
-          - container: /var/lib/tailscale
-            description:
-              en_US: ""
-      description:
-        en_US: Tailscale lets you easily manage access to private resources, quickly SSH into devices on your network, and work securely from anywhere in the world.
-        zh_CN: Tailscale 让您轻松管理对私有资源的访问，快速 SSH 到网络上的设备，并在世界各地安全地工作。
-      developer: Tailscale
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/screenshot-1.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/screenshot-2.jpg
-      tagline:
-        en_US: Connect your devices and users together in your own secure virtual private network.
-        zh_CN: 在您自己的安全虚拟专用网络中将设备和用户连接在一起。
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/thumbnail.jpg
-      tips:
-        before_install:
-          en_US: |
-            Tailscale hostname: `casaos`
-
-            After install:
-
-            Go to the container log and connect to your tailscale account using the link provided
-          zh_CN: |
-            Tailscale 主机名：`casaos`
-
-            安装后：
-
-            前往容器日志并使用提供的链接连接到您的 tailscale 帐户
-      title:
-        en_US: Tailscale Daemon
-        zh_CN: Tailscale 守护进程
+      volumes:
+        - container: /dev/net/tun
+          description:
+            en_US: ""
+        - container: /var/lib
+          description:
+            en_US: ""
+        - container: /var/lib/tailscale
+          description:
+            en_US: ""
 x-casaos:
   architectures:
     - arm64
     - arm
     - "386"
     - amd64
-  main_app: tailscale-daemon
+  main: tailscale-daemon
+  author: EzyoStudio
+  category: Network
+  description:
+    en_US: Tailscale lets you easily manage access to private resources, quickly SSH into devices on your network, and work securely from anywhere in the world.
+    zh_CN: Tailscale 让您轻松管理对私有资源的访问，快速 SSH 到网络上的设备，并在世界各地安全地工作。
+  developer: Tailscale
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/screenshot-2.jpg
+  tagline:
+    en_US: Connect your devices and users together in your own secure virtual private network.
+    zh_CN: 在您自己的安全虚拟专用网络中将设备和用户连接在一起。
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TailscaleDaemon/thumbnail.jpg
+  tips:
+    before_install:
+      en_US: |
+        Tailscale hostname: `casaos`
+
+        After install:
+
+        Go to the container log and connect to your tailscale account using the link provided
+      zh_CN: |
+        Tailscale 主机名：`casaos`
+
+        安装后：
+
+        前往容器日志并使用提供的链接连接到您的 tailscale 帐户
+  title:
+    en_US: Tailscale Daemon
+    zh_CN: Tailscale 守护进程

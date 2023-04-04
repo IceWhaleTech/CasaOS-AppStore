@@ -23,62 +23,61 @@ services:
         source: /DATA/AppData/$AppID/data
         target: /data
     x-casaos:
-      author: CasaOS Team
-      category: Developer
-      container:
-        envs:
-          - container: USER_UID
-            description:
-              en_US: The UID (Unix user ID) of the user that runs Gitea
-              zh_CN: Gitea 运行的用户的 UID（Unix 用户 ID）
-          - container: USER_GID
-            description:
-              en_US: The GID (Unix group ID) of the user that runs Gitea
-              zh_CN: Gitea 运行的用户的 GID（Unix 组 ID）
-        index: /
-        port_map: "3000"
-        ports:
-          - container: "3000"
-            description:
-              en_US: WebUI Port
-              zh_CN: WebUI 端口
+      envs:
+        - container: USER_UID
+          description:
+            en_US: The UID (Unix user ID) of the user that runs Gitea
+            zh_CN: Gitea 运行的用户的 UID（Unix 用户 ID）
+        - container: USER_GID
+          description:
+            en_US: The GID (Unix group ID) of the user that runs Gitea
+            zh_CN: Gitea 运行的用户的 GID（Unix 组 ID）
+      index: /
+      port_map: "3000"
+      ports:
+        - container: "3000"
+          description:
+            en_US: WebUI Port
+            zh_CN: WebUI 端口
 
-          - container: "22"
-            description:
-              en_US: SSH Port
-              zh_CN: SSH 端口
+        - container: "22"
+          description:
+            en_US: SSH Port
+            zh_CN: SSH 端口
 
-        volumes:
-          - container: /data
-            description:
-              en_US: Gitea data directory.
-              zh_CN: Gitea 数据目录。
-      description:
-        en_US: Gitea is a community managed lightweight code hosting solution written in Go.
-        zh_CN: Gitea 是一个由社区管理的轻量级代码托管解决方案，由 Go 编写。
-      developer: Gitea
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-1.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-2.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-3.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-4.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-5.jpg
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-6.jpg
-      tagline:
-        en_US: Git with a cup of tea
-        zh_CN: Git 与一杯茶
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/thumbnail.png
-      tips:
-        before_install:
-          en_US: |
-            When the App is installed, the first account registered will become the administrator account.
-          zh_CN: |
-            安装应用后，注册的第一个账号将成为管理员账号。
-      title:
-        en_US: Gitea
+      volumes:
+        - container: /data
+          description:
+            en_US: Gitea data directory.
+            zh_CN: Gitea 数据目录。
 x-casaos:
   architectures:
     - amd64
     - arm64
-  main_app: gitea
+  main: gitea
+  author: CasaOS Team
+  category: Developer
+  description:
+    en_US: Gitea is a community managed lightweight code hosting solution written in Go.
+    zh_CN: Gitea 是一个由社区管理的轻量级代码托管解决方案，由 Go 编写。
+  developer: Gitea
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-3.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-4.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-5.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-6.jpg
+  tagline:
+    en_US: Git with a cup of tea
+    zh_CN: Git 与一杯茶
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/thumbnail.png
+  tips:
+    before_install:
+      en_US: |
+        When the App is installed, the first account registered will become the administrator account.
+      zh_CN: |
+        安装应用后，注册的第一个账号将成为管理员账号。
+  title:
+    en_US: Gitea

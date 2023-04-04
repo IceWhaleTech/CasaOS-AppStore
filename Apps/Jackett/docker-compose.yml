@@ -25,55 +25,54 @@ services:
         source: /DATA/Downloads
         target: /downloads
     x-casaos:
-      author: CasaOS Team
-      category: Network
-      container:
-        envs:
-          - container: PUID
-            description:
-              en_US: ""
-          - container: PGID
-            description:
-              en_US: ""
-          - container: TZ
-            description:
-              en_US: ""
-          - container: AUTO_UPDATE
-            description:
-              en_US: ""
-        index: /
-        port_map: "9117"
-        ports:
-          - container: "9117"
-            description:
-              en_US: ""
+      envs:
+        - container: PUID
+          description:
+            en_US: ""
+        - container: PGID
+          description:
+            en_US: ""
+        - container: TZ
+          description:
+            en_US: ""
+        - container: AUTO_UPDATE
+          description:
+            en_US: ""
+      index: /
+      port_map: "9117"
+      ports:
+        - container: "9117"
+          description:
+            en_US: ""
 
-        volumes:
-          - container: /config
-            description:
-              en_US: ""
-          - container: /downloads
-            description:
-              en_US: ""
-      description:
-        en_US: it translates queries from apps (Sonarr, Radarr, SickRage, CouchPotato, Mylar3, Lidarr, DuckieTV, qBittorrent, Nefarious etc.) into tracker-site-specific http queries, parses the html or json response, and then sends results back to the requesting software. This allows for getting recent uploads (like RSS) and performing searches. Jackett is a single repository of maintained indexer scraping & translation logic - removing the burden from other apps.
-        zh_CN: Jackett是一个代理服务器，它将应用程序（Sonarr，Radarr，SickRage，CouchPotato，Mylar3，Lidarr，DuckieTV，qBittorrent，Nefarious等）的查询转换为特定于跟踪器网站的http查询，解析html或json响应，然后将结果发送回请求软件。这允许获取最近的上传（如RSS）并执行搜索。Jackett是维护的索引器抓取和翻译逻辑的单个存储库-从其他应用程序中删除负担。
-      developer: Jackett
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jackett/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jackett/screenshot-1.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jackett/screenshot-2.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jackett/screenshot-3.png
-      tagline:
-        en_US: Jackett works as a proxy server
-        zh_CN: Jackett作为代理服务器工作
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jackett/thumbnail.png
-      tips: {}
-      title:
-        en_US: Jackett
+      volumes:
+        - container: /config
+          description:
+            en_US: ""
+        - container: /downloads
+          description:
+            en_US: ""
 x-casaos:
   architectures:
     - amd64
     - arm
     - arm64
-  main_app: jackett
+  main: jackett
+  author: CasaOS Team
+  category: Network
+  description:
+    en_US: it translates queries from apps (Sonarr, Radarr, SickRage, CouchPotato, Mylar3, Lidarr, DuckieTV, qBittorrent, Nefarious etc.) into tracker-site-specific http queries, parses the html or json response, and then sends results back to the requesting software. This allows for getting recent uploads (like RSS) and performing searches. Jackett is a single repository of maintained indexer scraping & translation logic - removing the burden from other apps.
+    zh_CN: Jackett是一个代理服务器，它将应用程序（Sonarr，Radarr，SickRage，CouchPotato，Mylar3，Lidarr，DuckieTV，qBittorrent，Nefarious等）的查询转换为特定于跟踪器网站的http查询，解析html或json响应，然后将结果发送回请求软件。这允许获取最近的上传（如RSS）并执行搜索。Jackett是维护的索引器抓取和翻译逻辑的单个存储库-从其他应用程序中删除负担。
+  developer: Jackett
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jackett/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jackett/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jackett/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jackett/screenshot-3.png
+  tagline:
+    en_US: Jackett works as a proxy server
+    zh_CN: Jackett作为代理服务器工作
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jackett/thumbnail.png
+  tips: {}
+  title:
+    en_US: Jackett

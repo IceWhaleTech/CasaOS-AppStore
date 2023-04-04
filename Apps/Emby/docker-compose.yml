@@ -36,59 +36,58 @@ services:
         source: /DATA/Media/Movies
         target: /data/movies
     x-casaos:
-      author: CasaOS Team
-      category: Media
-      container:
-        envs:
-          - container: PUID
-            description:
-              en_US: ""
-          - container: PGID
-            description:
-              en_US: ""
-          - container: TZ
-            description:
-              en_US: ""
-        index: /
-        port_map: "8096"
-        ports:
-          - container: "8096"
-            description:
-              en_US: ""
+      envs:
+        - container: PUID
+          description:
+            en_US: ""
+        - container: PGID
+          description:
+            en_US: ""
+        - container: TZ
+          description:
+            en_US: ""
+      index: /
+      port_map: "8096"
+      ports:
+        - container: "8096"
+          description:
+            en_US: ""
 
-          - container: "8920"
-            description:
-              en_US: ""
+        - container: "8920"
+          description:
+            en_US: ""
 
-        volumes:
-          - container: /config
-            description:
-              en_US: ""
-          - container: /data/tvshows
-            description:
-              en_US: ""
-          - container: /data/movies
-            description:
-              en_US: ""
-      description:
-        en_US: Bringing all of your home videos, music, and photos together into one place has never been easier. Your personal Emby Server automatically converts and streams your media on-the-fly to play on any device.
-        zh_CN: 将所有的家庭视频，音乐和照片集中在一个地方从未如此简单。您的个人Emby服务器会自动转换和流媒体，以便在任何设备上播放。
-      developer: linuxserver
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-1.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-2.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-3.png
-      tagline:
-        en_US: TAKE YOUR MEDIA ANYWHERE WITH EMBY
-        zh_CN: 用EMBY随时随地带着媒体
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/thumbnail.png
-      tips: {}
-      title:
-        en_US: Emby
+      volumes:
+        - container: /config
+          description:
+            en_US: ""
+        - container: /data/tvshows
+          description:
+            en_US: ""
+        - container: /data/movies
+          description:
+            en_US: ""
 x-casaos:
   architectures:
     - amd64
     - arm
     - arm64
-  main_app: emby
+  main: emby
+  author: CasaOS Team
+  category: Media
+  description:
+    en_US: Bringing all of your home videos, music, and photos together into one place has never been easier. Your personal Emby Server automatically converts and streams your media on-the-fly to play on any device.
+    zh_CN: 将所有的家庭视频，音乐和照片集中在一个地方从未如此简单。您的个人Emby服务器会自动转换和流媒体，以便在任何设备上播放。
+  developer: linuxserver
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-3.png
+  tagline:
+    en_US: TAKE YOUR MEDIA ANYWHERE WITH EMBY
+    zh_CN: 用EMBY随时随地带着媒体
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/thumbnail.png
+  tips: {}
+  title:
+    en_US: Emby

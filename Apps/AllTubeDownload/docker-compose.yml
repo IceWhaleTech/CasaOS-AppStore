@@ -13,34 +13,33 @@ services:
         protocol: tcp
     restart: always
     x-casaos:
-      author: CasaOS Team
-      category: Utilities
-      container:
-        index: /
-        port_map: "80"
-        ports:
-          - container: "80"
-            description:
-              en_US: ""
+      index: /
+      port_map: "80"
+      ports:
+        - container: "80"
+          description:
+            en_US: ""
 
-      description:
-        en_US: Easily download videos from YouTube, Dailymotion, Vimeo and other websites.
-        zh_CN: 从 YouTube、Dailymotion、Vimeo 等网站轻松下载视频。
-      developer: Rudloff
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/screenshot-1.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/screenshot-2.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/screenshot-3.png
-      tagline:
-        en_US: Web GUI for youtube-dl
-        zh_CN: youtube-dl 的 Web 界面
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/thumbnail.png
-      tips: {}
-      title:
-        en_US: AllTube Download
-        zh_CN: AllTube 下载
 x-casaos:
   architectures:
     - amd64
-  main_app: alltube-download
+  main: alltube-download
+  author: CasaOS Team
+  category: Utilities
+  description:
+    en_US: Easily download videos from YouTube, Dailymotion, Vimeo and other websites.
+    zh_CN: 从 YouTube、Dailymotion、Vimeo 等网站轻松下载视频。
+  developer: Rudloff
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/screenshot-3.png
+  tagline:
+    en_US: Web GUI for youtube-dl
+    zh_CN: youtube-dl 的 Web 界面
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AllTubeDownload/thumbnail.png
+  tips: {}
+  title:
+    en_US: AllTube Download
+    zh_CN: AllTube 下载

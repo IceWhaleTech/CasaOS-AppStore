@@ -17,40 +17,39 @@ services:
         source: /DATA/AppData/$AppID/data
         target: /data
     x-casaos:
-      author: CasaOS Team
-      category: Developer
-      container:
-        index: /
-        port_map: "1880"
-        ports:
-          - container: "1880"
-            description:
-              en_US: ""
+      index: /
+      port_map: "1880"
+      ports:
+        - container: "1880"
+          description:
+            en_US: ""
 
-        volumes:
-          - container: /data
-            description:
-              en_US: ""
-      description:
-        en_US: Node-RED is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways.  It provides a browser-based editor that makes it easy to wire together flows using the wide range of nodes in the palette that can be deployed to its runtime in a single-click.
-        zh_CN: Node-RED是一种编程工具，可将硬件设备，API和在线服务以新颖的方式连接在一起。它提供了一个基于浏览器的编辑器，可以轻松地将流连接在一起，使用调色板中的各种节点，可以在单击中将其部署到其运行时。
-      developer: Node-RED
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/screenshot-1.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/screenshot-2.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/screenshot-3.png
-      tagline:
-        en_US: Low-code programming for event-driven applications
-        zh_CN: 用于事件驱动应用程序的低代码编程
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/thumbnail.png
-      tips: {}
-      title:
-        en_US: Node-RED
+      volumes:
+        - container: /data
+          description:
+            en_US: ""
 x-casaos:
   architectures:
     - amd64
     - arm64
     - s390x
     - arm
-  main_app: node-red
+  main: node-red
+  author: CasaOS Team
+  category: Developer
+  description:
+    en_US: Node-RED is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways.  It provides a browser-based editor that makes it easy to wire together flows using the wide range of nodes in the palette that can be deployed to its runtime in a single-click.
+    zh_CN: Node-RED是一种编程工具，可将硬件设备，API和在线服务以新颖的方式连接在一起。它提供了一个基于浏览器的编辑器，可以轻松地将流连接在一起，使用调色板中的各种节点，可以在单击中将其部署到其运行时。
+  developer: Node-RED
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/screenshot-3.png
+  tagline:
+    en_US: Low-code programming for event-driven applications
+    zh_CN: 用于事件驱动应用程序的低代码编程
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/thumbnail.png
+  tips: {}
+  title:
+    en_US: Node-RED

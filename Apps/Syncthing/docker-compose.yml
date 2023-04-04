@@ -33,70 +33,69 @@ services:
         source: /DATA
         target: /DATA
     x-casaos:
-      author: CasaOS Team
-      category: Backup
-      container:
-        envs:
-          - container: TZ
-            description:
-              en_US: TimeZone
-              zh_CN: 时区
-          - container: PUID
-            description:
-              en_US: Run Syncthing as specified uid.
-              zh_CN: 以指定的用户ID运行Syncthing
-          - container: PGID
-            description:
-              en_US: Run Syncthing as specified gid.
-              zh_CN: 以指定的组ID运行Syncthing
-        index: /
-        port_map: "8384"
-        ports:
-          - container: "8384"
-            description:
-              en_US: WebUI HTTP Port
-              zh_CN: WebUI HTTP端口
+      envs:
+        - container: TZ
+          description:
+            en_US: TimeZone
+            zh_CN: 时区
+        - container: PUID
+          description:
+            en_US: Run Syncthing as specified uid.
+            zh_CN: 以指定的用户ID运行Syncthing
+        - container: PGID
+          description:
+            en_US: Run Syncthing as specified gid.
+            zh_CN: 以指定的组ID运行Syncthing
+      index: /
+      port_map: "8384"
+      ports:
+        - container: "8384"
+          description:
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP端口
 
-          - container: "22000"
-            description:
-              en_US: Syncthing listening Port (TCP)
-              zh_CN: Syncthing监听端口（TCP）
+        - container: "22000"
+          description:
+            en_US: Syncthing listening Port (TCP)
+            zh_CN: Syncthing监听端口（TCP）
 
-          - container: "22000"
-            description:
-              en_US: Syncthing listening Port (UDP)
-              zh_CN: Syncthing监听端口（UDP）
-            protocol: udp
-          - container: "21027"
-            description:
-              en_US: Syncthing protocol discovery Port (TCP)
-              zh_CN: Syncthing协议发现端口（TCP）
-            protocol: udp
+        - container: "22000"
+          description:
+            en_US: Syncthing listening Port (UDP)
+            zh_CN: Syncthing监听端口（UDP）
+          protocol: udp
+        - container: "21027"
+          description:
+            en_US: Syncthing protocol discovery Port (TCP)
+            zh_CN: Syncthing协议发现端口（TCP）
+          protocol: udp
 
-        volumes:
-          - container: /config
-            description:
-              en_US: Syncthing config directory.
-              zh_CN: Syncthing配置目录
-          - container: /DATA
-            description:
-              en_US: Syncthing Accessible Directory.
-              zh_CN: Syncthing可访问目录
-      description:
-        en_US: Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers in real time, safely protected from prying eyes. Your data is your data alone and you deserve to choose where it is stored, whether it is shared with some third party, and how it's transmitted over the internet.
-        zh_CN: Syncthing是一个持续的文件同步程序。它实时同步两台或多台计算机之间的文件，安全地保护免受窥视。您的数据是您自己的数据，您有权选择将其存储在何处，是否与第三方共享，以及如何通过互联网传输。
-      developer: Syncthing
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Syncthing/icon.png
-      tagline:
-        en_US: Free, secure, and distributed file synchronisation tool.
-        zh_CN: 免费，安全，分布式的文件同步工具。
-      thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.jpg
-      tips: {}
-      title:
-        en_US: Syncthing
+      volumes:
+        - container: /config
+          description:
+            en_US: Syncthing config directory.
+            zh_CN: Syncthing配置目录
+        - container: /DATA
+          description:
+            en_US: Syncthing Accessible Directory.
+            zh_CN: Syncthing可访问目录
 x-casaos:
   architectures:
     - amd64
     - arm
     - arm64
-  main_app: syncthing
+  main: syncthing
+  author: CasaOS Team
+  category: Backup
+  description:
+    en_US: Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers in real time, safely protected from prying eyes. Your data is your data alone and you deserve to choose where it is stored, whether it is shared with some third party, and how it's transmitted over the internet.
+    zh_CN: Syncthing是一个持续的文件同步程序。它实时同步两台或多台计算机之间的文件，安全地保护免受窥视。您的数据是您自己的数据，您有权选择将其存储在何处，是否与第三方共享，以及如何通过互联网传输。
+  developer: Syncthing
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Syncthing/icon.png
+  tagline:
+    en_US: Free, secure, and distributed file synchronisation tool.
+    zh_CN: 免费，安全，分布式的文件同步工具。
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.jpg
+  tips: {}
+  title:
+    en_US: Syncthing

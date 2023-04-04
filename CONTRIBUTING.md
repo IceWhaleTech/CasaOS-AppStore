@@ -58,7 +58,7 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
                 - amd64
                 - arm
                 - arm64
-            main_app: syncthing # the name of the main service under `services`
+            main: syncthing # the name of the main service under `services`
         ```
 
 - Container store info (`x-casaos.container`)

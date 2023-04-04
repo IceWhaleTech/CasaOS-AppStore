@@ -25,64 +25,63 @@ services:
         source: /DATA/Media/Books
         target: /books
     x-casaos:
-      author: CasaOS Team
-      category: Media
-      container:
-        envs:
-          - container: PUID
-            description:
-              en_US: ""
-          - container: PGID
-            description:
-              en_US: ""
-          - container: TZ
-            description:
-              en_US: ""
-          - container: DOCKER_MODS
-            description:
-              en_US: ""
-        index: /
-        port_map: "8083"
-        ports:
-          - container: "8083"
-            description:
-              en_US: ""
+      envs:
+        - container: PUID
+          description:
+            en_US: ""
+        - container: PGID
+          description:
+            en_US: ""
+        - container: TZ
+          description:
+            en_US: ""
+        - container: DOCKER_MODS
+          description:
+            en_US: ""
+      index: /
+      port_map: "8083"
+      ports:
+        - container: "8083"
+          description:
+            en_US: ""
 
-        volumes:
-          - container: /config
-            description:
-              en_US: ""
-          - container: /books
-            description:
-              en_US: ""
-      description:
-        en_US: Calibre-web is a web app providing a clean interface for browsing, reading and downloading eBooks using an existing Calibre database. It is also possible to integrate google drive and edit metadata and your calibre library through the app itself.
-        zh_CN: Calibre-web是一个Web应用程序，提供了一个干净的界面，用于浏览，阅读和下载使用现有Calibre数据库的电子书。也可以通过应用程序本身集成谷歌驱动器并编辑元数据和您的calibre库。
-      developer: linuxserver
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Calibre-web/icon.png
-      screenshot_link:
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Calibre-web/screenshot-1.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Calibre-web/screenshot-2.png
-        - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Calibre-web/screenshot-3.png
-      tagline:
-        en_US: Web app for browsing, reading and downloading eBooks stored in a Calibre database
-        zh_CN: 用于浏览，阅读和下载存储在Calibre数据库中的电子书的Web应用程序
-      thumbnail: ' https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Calibre-web/thumbnail.png'
-      tips:
-        before_install:
-          en_US: |
-            | Username | Password |
-            | -------- | -------- |
-            | `admin`    | `admin123` |
-          zh_CN: |
-            | 用户名 | 密码 |
-            | -------- | -------- |
-            | `admin`    | `admin123` |
-      title:
-        en_US: Calibre-web
+      volumes:
+        - container: /config
+          description:
+            en_US: ""
+        - container: /books
+          description:
+            en_US: ""
 x-casaos:
   architectures:
     - amd64
     - arm
     - arm64
-  main_app: calibre-web
+  main: calibre-web
+  author: CasaOS Team
+  category: Media
+  description:
+    en_US: Calibre-web is a web app providing a clean interface for browsing, reading and downloading eBooks using an existing Calibre database. It is also possible to integrate google drive and edit metadata and your calibre library through the app itself.
+    zh_CN: Calibre-web是一个Web应用程序，提供了一个干净的界面，用于浏览，阅读和下载使用现有Calibre数据库的电子书。也可以通过应用程序本身集成谷歌驱动器并编辑元数据和您的calibre库。
+  developer: linuxserver
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Calibre-web/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Calibre-web/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Calibre-web/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Calibre-web/screenshot-3.png
+  tagline:
+    en_US: Web app for browsing, reading and downloading eBooks stored in a Calibre database
+    zh_CN: 用于浏览，阅读和下载存储在Calibre数据库中的电子书的Web应用程序
+  thumbnail: ' https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Calibre-web/thumbnail.png'
+  tips:
+    before_install:
+      en_US: |
+        | Username | Password |
+        | -------- | -------- |
+        | `admin`    | `admin123` |
+      zh_CN: |
+        | 用户名 | 密码 |
+        | -------- | -------- |
+        | `admin`    | `admin123` |
+  title:
+    en_US: Calibre-web
