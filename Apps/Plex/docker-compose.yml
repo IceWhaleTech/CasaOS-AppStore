@@ -26,28 +26,28 @@ services:
       envs:
         - container: PUID
           description:
-            en_US: Run Plex as specified uid.
-            zh_CN: 以指定的uid运行Plex
+            en_us: Run Plex as specified uid.
+            zh_cn: 以指定的uid运行Plex
         - container: PGID
           description:
-            en_US: Run Plex as specified gid.
-            zh_CN: 以指定的gid运行Plex
+            en_us: Run Plex as specified gid.
+            zh_cn: 以指定的gid运行Plex
         - container: VERSION
           description:
-            en_US: Let Docker handle the Plex Version
-            zh_CN: 让Docker处理Plex版本
+            en_us: Let Docker handle the Plex Version
+            zh_cn: 让Docker处理Plex版本
       index: /web/index.html
       port_map: "32400"
 
       volumes:
         - container: /config
           description:
-            en_US: Plex config directory.
-            zh_CN: Plex配置目录
+            en_us: Plex config directory.
+            zh_cn: Plex配置目录
         - container: /Media
           description:
-            en_US: Plex Media directory.
-            zh_CN: Plex媒体目录
+            en_us: Plex Media directory.
+            zh_cn: Plex媒体目录
 x-casaos:
   architectures:
     - amd64
@@ -57,8 +57,8 @@ x-casaos:
   author: CasaOS Team
   category: Media
   description:
-    en_US: Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone Plex Media Server. has always been a top priority. Straightforward design and bulk actions mean getting things done faster.
-    zh_CN: Plex整理个人媒体库中的视频，音乐和照片，并将其流式传输到智能电视，流媒体盒子和移动设备。此容器打包为独立的Plex Media Server。一直以来，Plex的顶级优先级一直是简单的设计和批量操作，这意味着更快地完成任务。
+    en_us: Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone Plex Media Server. has always been a top priority. Straightforward design and bulk actions mean getting things done faster.
+    zh_cn: Plex整理个人媒体库中的视频，音乐和照片，并将其流式传输到智能电视，流媒体盒子和移动设备。此容器打包为独立的Plex Media Server。一直以来，Plex的顶级优先级一直是简单的设计和批量操作，这意味着更快地完成任务。
   developer: Plex
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Plex/icon.png
   screenshot_link:
@@ -66,9 +66,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Plex/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Plex/screenshot-3.png
   tagline:
-    en_US: The home for all your entertainment.
-    zh_CN: 为您的娱乐提供家庭。
+    en_us: The home for all your entertainment.
+    zh_cn: 为您的娱乐提供家庭。
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Plex/thumbnail.png
   tips: {}
   title:
-    en_US: Plex
+    en_us: Plex

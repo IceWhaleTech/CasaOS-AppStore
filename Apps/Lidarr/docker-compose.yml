@@ -30,29 +30,29 @@ services:
       envs:
         - container: PUID
           description:
-            en_US: ""
+            en_us: ""
         - container: PGID
           description:
-            en_US: ""
+            en_us: ""
         - container: TZ
           description:
-            en_US: ""
+            en_us: ""
       port_map: "8686"
       ports:
         - container: "8686"
           description:
-            en_US: ""
+            en_us: ""
 
       volumes:
         - container: /config
           description:
-            en_US: ""
+            en_us: ""
         - container: /music
           description:
-            en_US: ""
+            en_us: ""
         - container: /downloads
           description:
-            en_US: ""
+            en_us: ""
 x-casaos:
   architectures:
     - amd64
@@ -62,8 +62,8 @@ x-casaos:
   author: CasaOS Team
   category: Downloader
   description:
-    en_US: Lidarr is a music collection manager for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new albums from your favorite artists and will interface with clients and indexers to grab, sort, and rename them. It can also be configured to automatically upgrade the quality of existing files in the library when a better quality format becomes available.
-    zh_CN: Lidarr是一个音乐收藏管理器，用于Usenet和BitTorrent用户。它可以监视多个RSS源以获取来自最喜欢的艺术家的新专辑，并且可以与客户端和索引器进行交互以获取，排序和重命名它们。它还可以配置为在更好的质量格式可用时自动升级库中现有文件的质量。
+    en_us: Lidarr is a music collection manager for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new albums from your favorite artists and will interface with clients and indexers to grab, sort, and rename them. It can also be configured to automatically upgrade the quality of existing files in the library when a better quality format becomes available.
+    zh_cn: Lidarr是一个音乐收藏管理器，用于Usenet和BitTorrent用户。它可以监视多个RSS源以获取来自最喜欢的艺术家的新专辑，并且可以与客户端和索引器进行交互以获取，排序和重命名它们。它还可以配置为在更好的质量格式可用时自动升级库中现有文件的质量。
   developer: lidarr Team
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Lidarr/icon.png
   screenshot_link:
@@ -71,9 +71,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Lidarr/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Lidarr/screenshot-3.png
   tagline:
-    en_US: Music collection manager for Usenet and BitTorrent users
-    zh_CN: 用于Usenet和BitTorrent用户的音乐收藏管理器
+    en_us: Music collection manager for Usenet and BitTorrent users
+    zh_cn: 用于Usenet和BitTorrent用户的音乐收藏管理器
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Lidarr/thumbnail.png
   tips: {}
   title:
-    en_US: Lidarr
+    en_us: Lidarr

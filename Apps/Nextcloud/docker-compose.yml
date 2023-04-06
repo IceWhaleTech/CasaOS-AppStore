@@ -25,19 +25,19 @@ services:
       ports:
         - container: "80"
           description:
-            en_US: WebUI HTTP Port
-            zh_CN: WebUI HTTP 端口
+            en_us: WebUI HTTP Port
+            zh_cn: WebUI HTTP 端口
 
         - container: "443"
           description:
-            en_US: WebUI HTTPS Port
-            zh_CN: WebUI HTTPS 端口
+            en_us: WebUI HTTPS Port
+            zh_cn: WebUI HTTPS 端口
 
       volumes:
         - container: /var/www/html
           description:
-            en_US: Nextcloud config directory.
-            zh_CN: Nextcloud 配置目录。
+            en_us: Nextcloud config directory.
+            zh_cn: Nextcloud 配置目录。
 x-casaos:
   architectures:
     - amd64
@@ -51,8 +51,8 @@ x-casaos:
   author: CasaOS Team
   category: Cloud
   description:
-    en_US: Nextcloud puts your data at your fingertips, under your control. Store your documents, calendar, contacts and photos on a server at home, at one of our providers or in a data center you trust.
-    zh_CN: Nextcloud 将您的数据放在您的掌握之中。将您的文档、日历、联系人和照片存储在您信任的家庭服务器、我们的提供商或数据中心中。
+    en_us: Nextcloud puts your data at your fingertips, under your control. Store your documents, calendar, contacts and photos on a server at home, at one of our providers or in a data center you trust.
+    zh_cn: Nextcloud 将您的数据放在您的掌握之中。将您的文档、日历、联系人和照片存储在您信任的家庭服务器、我们的提供商或数据中心中。
   developer: Nextcloud
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/icon.png
   screenshot_link:
@@ -60,9 +60,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-3.png
   tagline:
-    en_US: The productivity platform that keeps you in control
-    zh_CN: 保持您控制的生产力平台
+    en_us: The productivity platform that keeps you in control
+    zh_cn: 保持您控制的生产力平台
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/thumbnail.jpg
   tips: {}
   title:
-    en_US: Nextcloud
+    en_us: Nextcloud

@@ -30,29 +30,29 @@ services:
       envs:
         - container: PUID
           description:
-            en_US: ""
+            en_us: ""
         - container: PGID
           description:
-            en_US: ""
+            en_us: ""
         - container: TZ
           description:
-            en_US: ""
+            en_us: ""
       port_map: "8080"
       ports:
         - container: "8080"
           description:
-            en_US: ""
+            en_us: ""
 
       volumes:
         - container: /incomplete-downloads
           description:
-            en_US: ""
+            en_us: ""
         - container: /config
           description:
-            en_US: ""
+            en_us: ""
         - container: /downloads
           description:
-            en_US: ""
+            en_us: ""
 x-casaos:
   architectures:
     - amd64
@@ -62,8 +62,8 @@ x-casaos:
   author: CasaOS Team
   category: Media
   description:
-    en_US: SABnzbd is an Open Source Binary Newsreader written in Python. It's totally free, easy to use, and works practically everywhere. SABnzbd makes Usenet as simple and streamlined as possible by automating everything we can. All you have to do is add an .nzb. SABnzbd takes over from there, where it will be automatically downloaded, verified, repaired, extracted and filed away with zero human interaction. SABnzbd offers an easy setup wizard and has self-analysis tools to verify your setup.
-    zh_CN: SABnzbd是一个开源的二进制新闻阅读器，由Python编写。它完全免费，易于使用，几乎可以在任何地方使用。 SABnzbd通过自动化我们可以实现的所有内容来使Usenet尽可能简单和流畅。您所要做的就是添加一个.nzb。 SABnzbd从那里开始，它将自动下载，验证，修复，提取和归档，零人工干预。 SABnzbd提供了一个简单的安装向导，并具有自我分析工具来验证您的设置。
+    en_us: SABnzbd is an Open Source Binary Newsreader written in Python. It's totally free, easy to use, and works practically everywhere. SABnzbd makes Usenet as simple and streamlined as possible by automating everything we can. All you have to do is add an .nzb. SABnzbd takes over from there, where it will be automatically downloaded, verified, repaired, extracted and filed away with zero human interaction. SABnzbd offers an easy setup wizard and has self-analysis tools to verify your setup.
+    zh_cn: SABnzbd是一个开源的二进制新闻阅读器，由Python编写。它完全免费，易于使用，几乎可以在任何地方使用。 SABnzbd通过自动化我们可以实现的所有内容来使Usenet尽可能简单和流畅。您所要做的就是添加一个.nzb。 SABnzbd从那里开始，它将自动下载，验证，修复，提取和归档，零人工干预。 SABnzbd提供了一个简单的安装向导，并具有自我分析工具来验证您的设置。
   developer: Sabnzbd Team
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/icon.png
   screenshot_link:
@@ -75,9 +75,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-6.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-7.png
   tagline:
-    en_US: Free and easy binary newsreader
-    zh_CN: 免费易用的二进制新闻阅读器
+    en_us: Free and easy binary newsreader
+    zh_cn: 免费易用的二进制新闻阅读器
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Readarr/thumbnail.png
   tips: {}
   title:
-    en_US: Sabnzbd
+    en_us: Sabnzbd

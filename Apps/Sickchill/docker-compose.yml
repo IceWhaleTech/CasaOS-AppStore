@@ -30,29 +30,29 @@ services:
       envs:
         - container: PUID
           description:
-            en_US: ""
+            en_us: ""
         - container: PGID
           description:
-            en_US: ""
+            en_us: ""
         - container: TZ
           description:
-            en_US: ""
+            en_us: ""
       port_map: "8081"
       ports:
         - container: "8081"
           description:
-            en_US: ""
+            en_us: ""
 
       volumes:
         - container: /config
           description:
-            en_US: ""
+            en_us: ""
         - container: /downloads
           description:
-            en_US: ""
+            en_us: ""
         - container: /tv
           description:
-            en_US: ""
+            en_us: ""
 x-casaos:
   architectures:
     - amd64
@@ -62,9 +62,9 @@ x-casaos:
   author: CasaOS Team
   category: Media
   description:
-    en_US: |
+    en_us: |
       SickChill is an automatic Video Library Manager for TV Shows. It watches for new episodes of your favorite shows, and when they are posted it does its magic: automatic torrent/nzb searching, downloading, and processing at the qualities you want.
-    zh_CN: |
+    zh_cn: |
       SickChill是一个自动视频库管理器。它会监视您喜欢的节目的新剧集，当它们发布时，它会自动搜索、下载和处理您想要的质量。
   developer: Sickchill Team
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sickchill/icon.png
@@ -76,9 +76,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sickchill/screenshot-5.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sickchill/screenshot-6.png
   tagline:
-    en_US: Automatic video library manager for TV Shows
-    zh_CN: 自动视频库管理器
+    en_us: Automatic video library manager for TV Shows
+    zh_cn: 自动视频库管理器
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Readarr/thumbnail.png
   tips: {}
   title:
-    en_US: Sickchill
+    en_us: Sickchill

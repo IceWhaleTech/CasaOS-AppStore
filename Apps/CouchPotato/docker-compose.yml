@@ -30,37 +30,37 @@ services:
       envs:
         - container: TZ
           description:
-            en_US: TimeZone
-            zh_CN: 时区
+            en_us: TimeZone
+            zh_cn: 时区
         - container: PUID
           description:
-            en_US: Run CouchPotato as specified uid.
-            zh_CN: 以指定的uid运行CouchPotato
+            en_us: Run CouchPotato as specified uid.
+            zh_cn: 以指定的uid运行CouchPotato
         - container: PGID
           description:
-            en_US: Run CouchPotato as specified gid.
-            zh_CN: 以指定的gid运行CouchPotato
+            en_us: Run CouchPotato as specified gid.
+            zh_cn: 以指定的gid运行CouchPotato
       index: /
       port_map: "5050"
       ports:
         - container: "5050"
           description:
-            en_US: WebUI HTTP Port
-            zh_CN: WebUI HTTP端口
+            en_us: WebUI HTTP Port
+            zh_cn: WebUI HTTP端口
 
       volumes:
         - container: /config
           description:
-            en_US: CouchPotato config directory.
-            zh_CN: CouchPotato配置目录
+            en_us: CouchPotato config directory.
+            zh_cn: CouchPotato配置目录
         - container: /movies
           description:
-            en_US: CouchPotato movies directory.
-            zh_CN: CouchPotato电影目录
+            en_us: CouchPotato movies directory.
+            zh_cn: CouchPotato电影目录
         - container: /downloads
           description:
-            en_US: CouchPotato downloads directory.
-            zh_CN: CouchPotato下载目录
+            en_us: CouchPotato downloads directory.
+            zh_cn: CouchPotato下载目录
 x-casaos:
   architectures:
     - amd64
@@ -70,8 +70,8 @@ x-casaos:
   author: CasaOS Team
   category: Media
   description:
-    en_US: Awesome PVR for usenet and torrents. Just fill in what you want to see and CouchPotato will add it to your want to watch-list. Every day it will search through multiple sources, looking for the best possible match. If available, it will send it using your favorite download software.
-    zh_CN: 用于usenet和torrent的优秀PVR。只需填写您想要看到的内容，CouchPotato就会将其添加到您的想要观看的列表中。每天，它都会通过多个源进行搜索，寻找最佳匹配。如果可用，它将使用您最喜欢的下载软件发送它。
+    en_us: Awesome PVR for usenet and torrents. Just fill in what you want to see and CouchPotato will add it to your want to watch-list. Every day it will search through multiple sources, looking for the best possible match. If available, it will send it using your favorite download software.
+    zh_cn: 用于usenet和torrent的优秀PVR。只需填写您想要看到的内容，CouchPotato就会将其添加到您的想要观看的列表中。每天，它都会通过多个源进行搜索，寻找最佳匹配。如果可用，它将使用您最喜欢的下载软件发送它。
   developer: CouchPotato
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/icon.png
   screenshot_link:
@@ -81,9 +81,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/screenshot-4.jpg
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/screenshot-5.jpg
   tagline:
-    en_US: Automatically find movies you want to watch
-    zh_CN: 自动查找您想要观看的电影
+    en_us: Automatically find movies you want to watch
+    zh_cn: 自动查找您想要观看的电影
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CouchPotato/thumbnail.jpg
   tips: {}
   title:
-    en_US: CouchPotato
+    en_us: CouchPotato

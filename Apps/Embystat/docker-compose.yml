@@ -24,23 +24,23 @@ services:
       envs:
         - container: PUID
           description:
-            en_US: ""
+            en_us: ""
         - container: PGID
           description:
-            en_US: ""
+            en_us: ""
         - container: TZ
           description:
-            en_US: ""
+            en_us: ""
       port_map: "6555"
       ports:
         - container: "6555"
           description:
-            en_US: ""
+            en_us: ""
 
       volumes:
         - container: /config
           description:
-            en_US: ""
+            en_us: ""
 x-casaos:
   architectures:
     - amd64
@@ -50,8 +50,8 @@ x-casaos:
   author: CasaOS Team
   category: Media
   description:
-    en_US: EmbyStat is a personal web server that can calculate all kinds of statistics from your (local) Emby or Jellyfin server. Just install this on your server and let him calculate all kinds of fun stuff. This project is still in Alpha phase, but feel free to pull in on your computer and test it out yourself. When the time is right I will host a full informational website/release for common platforms and Wiki pages.
-    zh_CN: EmbyStat是一个个人Web服务器，可以从您的（本地）Emby或Jellyfin服务器计算各种统计数据。只需在服务器上安装此程序，让它计算各种有趣的东西。这个项目仍处于Alpha阶段，但是请随时拉入您的计算机并自己测试它。当时机成熟时，我将为常见平台和Wiki页面托管一个完整的信息网站/发布。
+    en_us: EmbyStat is a personal web server that can calculate all kinds of statistics from your (local) Emby or Jellyfin server. Just install this on your server and let him calculate all kinds of fun stuff. This project is still in Alpha phase, but feel free to pull in on your computer and test it out yourself. When the time is right I will host a full informational website/release for common platforms and Wiki pages.
+    zh_cn: EmbyStat是一个个人Web服务器，可以从您的（本地）Emby或Jellyfin服务器计算各种统计数据。只需在服务器上安装此程序，让它计算各种有趣的东西。这个项目仍处于Alpha阶段，但是请随时拉入您的计算机并自己测试它。当时机成熟时，我将为常见平台和Wiki页面托管一个完整的信息网站/发布。
   developer: Embystart Team
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Embystat/icon.png
   screenshot_link:
@@ -59,9 +59,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Embystat/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Embystat/screenshot-3.png
   tagline:
-    en_US: Calculate all kinds of statistics from your (local) Emby or Jellyfin server
-    zh_CN: 从您的（本地）Emby或Jellyfin服务器计算各种统计数据
+    en_us: Calculate all kinds of statistics from your (local) Emby or Jellyfin server
+    zh_cn: 从您的（本地）Emby或Jellyfin服务器计算各种统计数据
   thumbnail: ""
   tips: {}
   title:
-    en_US: Embystat
+    en_us: Embystat

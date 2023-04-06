@@ -27,26 +27,26 @@ services:
       envs:
         - container: PUID
           description:
-            en_US: ""
+            en_us: ""
         - container: PGID
           description:
-            en_US: ""
+            en_us: ""
         - container: TZ
           description:
-            en_US: ""
+            en_us: ""
       port_map: "80"
       ports:
         - container: "80"
           description:
-            en_US: ""
+            en_us: ""
 
       volumes:
         - container: /config
           description:
-            en_US: ""
+            en_us: ""
         - container: /data
           description:
-            en_US: ""
+            en_us: ""
 x-casaos:
   architectures:
     - amd64
@@ -56,8 +56,8 @@ x-casaos:
   author: CasaOS Team
   category: Network
   description:
-    en_US: keeps track of your network latency.
-    zh_CN: 用于跟踪您的网络延迟。
+    en_us: keeps track of your network latency.
+    zh_cn: 用于跟踪您的网络延迟。
   developer: Lazylibrarian Team
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/icon.png
   screenshot_link:
@@ -67,9 +67,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-4.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-5.png
   tagline:
-    en_US: Free open source network performance monitoring tool
-    zh_CN: 免费开源的网络性能监控工具
+    en_us: Free open source network performance monitoring tool
+    zh_cn: 免费开源的网络性能监控工具
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/thumbnail.png
   tips: {}
   title:
-    en_US: Smokeping
+    en_us: Smokeping

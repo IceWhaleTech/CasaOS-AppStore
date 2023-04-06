@@ -22,6 +22,8 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
     ...
     ```
 
+- Language codes are case sensitive and should be in all lower case, e.g. `en_us`, `zh_cn`.
+
 - CasaOS specific metadata, also called *store info*, are stored under [extension](https://docs.docker.com/compose/compose-file/#extension) property `x-casaos` at two positions.
 
     1. Service level
@@ -32,20 +34,25 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
 
         ```yaml
         x-casaos:
-            author: CasaOS Team
-            category: Backup
-            container:   # see Container store info (`x-casaos.container`) below
+            index: /         # the index page for web UI, e.g. index.html
+            port_map: "8384" # the port for web UI
+            envs:            # description of each environment variable
                 ...
-            description: # multiple locales are supported
-                en_US: Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers in real time, safely protected from prying eyes. Your data is your data alone and you deserve to choose where it is stored, whether it is shared with some third party, and how it's transmitted over the internet.
-            developer: Syncthing
-            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Syncthing/icon.png
-            tagline:     # multiple locales are supported
-                en_US: Free, secure, and distributed file synchronisation tool.
-            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.jpg
-            title:       # multiple locales are supported
-                en_US: Syncthing
-
+              - container: PUID
+                description:
+                    en_us: Run Syncthing as specified uid.
+            ports:           # description of each port
+              - container: "8384"
+                description:
+                    en_us: WebUI HTTP Port
+                ...
+            volumes:        # description of each volume
+                - container: /config
+                  description:
+                      en_us: Syncthing config directory.
+                - container: /DATA
+                  description:
+                    en_us: Syncthing Accessible Directory.
         ```
 
     1. Compose app level
@@ -59,31 +66,15 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
                 - arm
                 - arm64
             main: syncthing # the name of the main service under `services`
+            author: CasaOS Team
+            category: Backup
+            description: # multiple locales are supported
+                en_us: Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers in real time, safely protected from prying eyes. Your data is your data alone and you deserve to choose where it is stored, whether it is shared with some third party, and how it's transmitted over the internet.
+            developer: Syncthing
+            icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Syncthing/icon.png
+            tagline:     # multiple locales are supported
+                en_us: Free, secure, and distributed file synchronisation tool.
+            thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.jpg
+            title:       # multiple locales are supported
+                en_us: Syncthing
         ```
-
-- Container store info (`x-casaos.container`)
-
-    ```yaml
-    x-casaos:
-        ...
-        container:
-            index: /         # the index page for web UI, e.g. index.html
-            port_map: "8384" # the port for web UI
-            envs:            # description of each environment variable
-                ...
-              - container: PUID
-                description:
-                    en_US: Run Syncthing as specified uid.
-            ports:           # description of each port
-              - container: "8384"
-                description:
-                    en_US: WebUI HTTP Port
-                ...
-            volumes:        # description of each volume
-                - container: /config
-                  description:
-                     en_US: Syncthing config directory.
-                - container: /DATA
-                  description:
-                    en_US: Syncthing Accessible Directory.
-    ```

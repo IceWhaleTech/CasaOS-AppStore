@@ -47,56 +47,56 @@ services:
       envs:
         - container: TZ
           description:
-            en_US: TimeZone
-            zh_CN: 时区
+            en_us: TimeZone
+            zh_cn: 时区
         - container: PUID
           description:
-            en_US: Run Jellyfin as specified uid.
-            zh_CN: Jellyfin运行的用户ID
+            en_us: Run Jellyfin as specified uid.
+            zh_cn: Jellyfin运行的用户ID
         - container: PGID
           description:
-            en_US: Run Jellyfin as specified gid.
-            zh_CN: Jellyfin运行的用户组ID
+            en_us: Run Jellyfin as specified gid.
+            zh_cn: Jellyfin运行的用户组ID
         - container: JELLYFIN_PublishedServerUrl
           description:
-            en_US: The autodiscovery response domain or IP address.
-            zh_CN: 自动发现响应域名或IP地址
+            en_us: The autodiscovery response domain or IP address.
+            zh_cn: 自动发现响应域名或IP地址
       index: /
       port_map: "8096"
       ports:
         - container: "8096"
           description:
-            en_US: WebUI HTTP Port
-            zh_CN: WebUI HTTP端口
+            en_us: WebUI HTTP Port
+            zh_cn: WebUI HTTP端口
 
         - container: "8920"
           description:
-            en_US: WebUI HTTPS Port
-            zh_CN: WebUI HTTPS端口
+            en_us: WebUI HTTPS Port
+            zh_cn: WebUI HTTPS端口
 
         - container: "7359"
           description:
-            en_US: Jellyfin auto-discovery Port
-            zh_CN: Jellyfin自动发现端口
+            en_us: Jellyfin auto-discovery Port
+            zh_cn: Jellyfin自动发现端口
 
         - container: "1900"
           description:
-            en_US: Jellyfin DLNA Port
-            zh_CN: Jellyfin DLNA端口
+            en_us: Jellyfin DLNA Port
+            zh_cn: Jellyfin DLNA端口
 
       volumes:
         - container: /config
           description:
-            en_US: Jellyfin config directory.
-            zh_CN: Jellyfin配置目录
+            en_us: Jellyfin config directory.
+            zh_cn: Jellyfin配置目录
         - container: /Media
           description:
-            en_US: Jellyfin Media directory.
-            zh_CN: Jellyfin媒体目录
+            en_us: Jellyfin Media directory.
+            zh_cn: Jellyfin媒体目录
         - container: /opt/vc/lib
           description:
-            en_US: OpenMax libs
-            zh_CN: OpenMax库
+            en_us: OpenMax libs
+            zh_cn: OpenMax库
 x-casaos:
   architectures:
     - amd64
@@ -106,8 +106,8 @@ x-casaos:
   author: CasaOS Team
   category: Media
   description:
-    en_US: Jellyfin enables you to collect, manage, and stream your media. Run the Jellyfin server on your system and gain access to the leading free-software entertainment system, bells and whistles included.
-    zh_CN: Jellyfin让您可以收集、管理和流媒体。在您的系统上运行Jellyfin服务器，即可获得免费软件娱乐系统的领先功能，包括铃声和装饰。
+    en_us: Jellyfin enables you to collect, manage, and stream your media. Run the Jellyfin server on your system and gain access to the leading free-software entertainment system, bells and whistles included.
+    zh_cn: Jellyfin让您可以收集、管理和流媒体。在您的系统上运行Jellyfin服务器，即可获得免费软件娱乐系统的领先功能，包括铃声和装饰。
   developer: Jellyfin
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/icon.png
   screenshot_link:
@@ -117,9 +117,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-4.jpg
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-5.jpg
   tagline:
-    en_US: Puts you in control of your media.
-    zh_CN: 让您控制媒体。
+    en_us: Puts you in control of your media.
+    zh_cn: 让您控制媒体。
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.png
   tips: {}
   title:
-    en_US: Jellyfin
+    en_us: Jellyfin

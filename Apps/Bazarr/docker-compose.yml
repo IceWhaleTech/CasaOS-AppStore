@@ -30,29 +30,29 @@ services:
       envs:
         - container: PUID
           description:
-            en_US: ""
+            en_us: ""
         - container: PGID
           description:
-            en_US: ""
+            en_us: ""
         - container: TZ
           description:
-            en_US: ""
+            en_us: ""
       port_map: "6767"
       ports:
         - container: "6767"
           description:
-            en_US: ""
+            en_us: ""
 
       volumes:
         - container: /movies
           description:
-            en_US: ""
+            en_us: ""
         - container: /tv
           description:
-            en_US: ""
+            en_us: ""
         - container: /config
           description:
-            en_US: ""
+            en_us: ""
 x-casaos:
   architectures:
     - amd64
@@ -62,8 +62,8 @@ x-casaos:
   author: CasaOS Team
   category: Media
   description:
-    en_US: Bazarr is a companion application to Sonarr and Radarr. It can manage and download subtitles based on your requirements. You define your preferences by TV show or movie and Bazarr takes care of everything for you.
-    zh_CN: Bazarr是Sonarr和Radarr的伴侣应用程序。它可以根据您的要求管理和下载字幕。您可以根据电视节目或电影来定义您的偏好，并且Bazarr会为您处理所有事情。
+    en_us: Bazarr is a companion application to Sonarr and Radarr. It can manage and download subtitles based on your requirements. You define your preferences by TV show or movie and Bazarr takes care of everything for you.
+    zh_cn: Bazarr是Sonarr和Radarr的伴侣应用程序。它可以根据您的要求管理和下载字幕。您可以根据电视节目或电影来定义您的偏好，并且Bazarr会为您处理所有事情。
   developer: Sabnzbd Team
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/icon.png
   screenshot_link:
@@ -72,9 +72,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-3.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/screenshot-4.png
   tagline:
-    en_US: Letter generators for Sonarr and Radarr
-    zh_CN: Sonarr和Radarr的信件生成器
+    en_us: Letter generators for Sonarr and Radarr
+    zh_cn: Sonarr和Radarr的信件生成器
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Bazarr/thumbnail.png
   tips: {}
   title:
-    en_US: Bazarr
+    en_us: Bazarr

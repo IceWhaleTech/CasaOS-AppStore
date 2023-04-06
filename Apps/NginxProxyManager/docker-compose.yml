@@ -31,28 +31,28 @@ services:
       ports:
         - container: "80"
           description:
-            en_US: Nginx HTTP Port
-            zh_CN: Nginx HTTP 端口
+            en_us: Nginx HTTP Port
+            zh_cn: Nginx HTTP 端口
 
         - container: "443"
           description:
-            en_US: Nginx HTTPS Port
-            zh_CN: Nginx HTTPS 端口
+            en_us: Nginx HTTPS Port
+            zh_cn: Nginx HTTPS 端口
 
         - container: "81"
           description:
-            en_US: WebUI Port
-            zh_CN: WebUI 端口
+            en_us: WebUI Port
+            zh_cn: WebUI 端口
 
       volumes:
         - container: /data
           description:
-            en_US: Nginx Proxy Manager data directory.
-            zh_CN: Nginx 代理管理器数据目录。
+            en_us: Nginx Proxy Manager data directory.
+            zh_cn: Nginx 代理管理器数据目录。
         - container: /etc/letsencrypt
           description:
-            en_US: Nginx Proxy Manager letsencrypt directory.
-            zh_CN: Nginx 代理管理器 letsencrypt 目录。
+            en_us: Nginx Proxy Manager letsencrypt directory.
+            zh_cn: Nginx 代理管理器 letsencrypt 目录。
 x-casaos:
   architectures:
     - amd64
@@ -62,8 +62,8 @@ x-casaos:
   author: CasaOS Team
   category: Network
   description:
-    en_US: Nginx Proxy Manager is a simple, powerful tool to help you host multiple websites on a single server.
-    zh_CN: Nginx 代理管理器是一个简单、强大的工具，可帮助您在单个服务器上托管多个网站。
+    en_us: Nginx Proxy Manager is a simple, powerful tool to help you host multiple websites on a single server.
+    zh_cn: Nginx 代理管理器是一个简单、强大的工具，可帮助您在单个服务器上托管多个网站。
   developer: Nginx Proxy Manager
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/icon.png
   screenshot_link:
@@ -71,12 +71,12 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/screenshot-2.jpg
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/screenshot-3.jpg
   tagline:
-    en_US: Managing Nginx proxy hosts with a simple, powerful interface.
-    zh_CN: 通过简单、强大的界面管理 Nginx 代理主机。
+    en_us: Managing Nginx proxy hosts with a simple, powerful interface.
+    zh_cn: 通过简单、强大的界面管理 Nginx 代理主机。
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/thumbnail.png
   tips:
     before_install:
-      en_US: |
+      en_us: |
         ⚠️ Warning!
         This is a technical app, please make sure you know what you are doing.
         Nginx Proxy Manager occupies ports 80 and 443 by default for built-in Nginx use. It occupies port 81 for the admin page.
@@ -87,7 +87,7 @@ x-casaos:
         | Username | Password |
         | -------- | -------- |
         | `admin@example.com` | `changeme` |
-      zh_CN: |
+      zh_cn: |
         ⚠️ 警告！
         这是一个技术类应用，请确保你知道你在做什么。
         Nginx Proxy Manager 默认占用 80 和 443 端口给内置 Nginx 使用。占用 81 端口给管理页面。
@@ -99,5 +99,5 @@ x-casaos:
         | -------- | -------- |
         | `admin@example.com` | `changeme` |
   title:
-    en_US: Nginx Proxy Manager
-    zh_CN: Nginx 代理管理器
+    en_us: Nginx Proxy Manager
+    zh_cn: Nginx 代理管理器

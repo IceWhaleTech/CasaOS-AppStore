@@ -22,21 +22,21 @@ services:
       envs:
         - container: TZ
           description:
-            en_US: TimeZone
-            zh_CN: 时区
+            en_us: TimeZone
+            zh_cn: 时区
       index: /
       port_map: "5678"
       ports:
         - container: "5678"
           description:
-            en_US: web port
-            zh_CN: web 端口
+            en_us: web port
+            zh_cn: web 端口
 
       volumes:
         - container: /home/node/.n8n
           description:
-            en_US: n8n directory.
-            zh_CN: n8n 目录。
+            en_us: n8n directory.
+            zh_cn: n8n 目录。
 x-casaos:
   architectures:
     - amd64
@@ -46,8 +46,8 @@ x-casaos:
   author: YoussofKhawaja
   category: Utilities
   description:
-    en_US: Free and source-available fair-code licensed workflow automation tool. Easily automate tasks across different services.
-    zh_CN: 免费且开源的 fair-code 许可的工作流自动化工具。轻松地在不同的服务之间自动化任务。
+    en_us: Free and source-available fair-code licensed workflow automation tool. Easily automate tasks across different services.
+    zh_cn: 免费且开源的 fair-code 许可的工作流自动化工具。轻松地在不同的服务之间自动化任务。
   developer: n8n
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/icon.png
   screenshot_link:
@@ -55,9 +55,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/screenshot-3.png
   tagline:
-    en_US: Workflow automation tool
-    zh_CN: 工作流自动化工具
+    en_us: Workflow automation tool
+    zh_cn: 工作流自动化工具
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/thumbnail.png
   tips: {}
   title:
-    en_US: n8n
+    en_us: n8n

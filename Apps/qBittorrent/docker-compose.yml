@@ -28,37 +28,37 @@ services:
       envs:
         - container: TZ
           description:
-            en_US: TimeZone
-            zh_CN: 时区
+            en_us: TimeZone
+            zh_cn: 时区
         - container: PUID
           description:
-            en_US: Run qBittorrent as specified uid.
-            zh_CN: 以指定的 uid 运行 qBittorrent。
+            en_us: Run qBittorrent as specified uid.
+            zh_cn: 以指定的 uid 运行 qBittorrent。
         - container: PGID
           description:
-            en_US: Run qBittorrent as specified gid.
-            zh_CN: 以指定的 gid 运行 qBittorrent。
+            en_us: Run qBittorrent as specified gid.
+            zh_cn: 以指定的 gid 运行 qBittorrent。
         - container: UMASK
           description:
-            en_US: Run qBittorrent as specified UMASK.
-            zh_CN: 以指定的 UMASK 运行 qBittorrent。
+            en_us: Run qBittorrent as specified UMASK.
+            zh_cn: 以指定的 UMASK 运行 qBittorrent。
       index: /
       port_map: "8080"
       ports:
         - container: "8080"
           description:
-            en_US: WebUI HTTP Port
-            zh_CN: WebUI HTTP 端口
+            en_us: WebUI HTTP Port
+            zh_cn: WebUI HTTP 端口
 
       volumes:
         - container: /config
           description:
-            en_US: qBittorrent config directory.
-            zh_CN: qBittorrent 配置目录。
+            en_us: qBittorrent config directory.
+            zh_cn: qBittorrent 配置目录。
         - container: /DATA
           description:
-            en_US: qBittorrent Accessible directory.
-            zh_CN: qBittorrent 可访问目录。
+            en_us: qBittorrent Accessible directory.
+            zh_cn: qBittorrent 可访问目录。
 x-casaos:
   architectures:
     - amd64
@@ -67,20 +67,20 @@ x-casaos:
   author: CasaOS Team
   category: Downloader
   description:
-    en_US: The qBittorrent project aims to provide an open-source software alternative to µTorrent.
-    zh_CN: qBittorrent 项目旨在提供一个开源的 µTorrent 替代品。
+    en_us: The qBittorrent project aims to provide an open-source software alternative to µTorrent.
+    zh_cn: qBittorrent 项目旨在提供一个开源的 µTorrent 替代品。
   developer: qBittorrent
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/qBittorrent/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/qBittorrent/screenshot-1.jpg
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/qBittorrent/screenshot-2.jpg
   tagline:
-    en_US: Free BitTorrent downloader
-    zh_CN: 免费的 BitTorrent 下载器
+    en_us: Free BitTorrent downloader
+    zh_cn: 免费的 BitTorrent 下载器
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/qBittorrent/thumbnail.jpg
   tips:
     before_install:
-      en_US: |
+      en_us: |
         Default Account
 
         | Username | Password |
@@ -97,7 +97,7 @@ x-casaos:
 
         The paths of other DATA subdirectories in CasaOS are also similar.
         Please make sure you use the correct path when using qBittorrent.
-      zh_CN: |
+      zh_cn: |
         默认账号
 
         | 用户名 | 密码 |
@@ -116,4 +116,4 @@ x-casaos:
         请确保在使用 qBittorrent 时使用正确的路径。
 
   title:
-    en_US: qBittorrent
+    en_us: qBittorrent

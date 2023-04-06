@@ -39,34 +39,34 @@ services:
       envs:
         - container: PUID
           description:
-            en_US: ""
+            en_us: ""
         - container: PGID
           description:
-            en_US: ""
+            en_us: ""
         - container: TZ
           description:
-            en_US: ""
+            en_us: ""
       index: /
       port_map: "8096"
       ports:
         - container: "8096"
           description:
-            en_US: ""
+            en_us: ""
 
         - container: "8920"
           description:
-            en_US: ""
+            en_us: ""
 
       volumes:
         - container: /config
           description:
-            en_US: ""
+            en_us: ""
         - container: /data/tvshows
           description:
-            en_US: ""
+            en_us: ""
         - container: /data/movies
           description:
-            en_US: ""
+            en_us: ""
 x-casaos:
   architectures:
     - amd64
@@ -76,8 +76,8 @@ x-casaos:
   author: CasaOS Team
   category: Media
   description:
-    en_US: Bringing all of your home videos, music, and photos together into one place has never been easier. Your personal Emby Server automatically converts and streams your media on-the-fly to play on any device.
-    zh_CN: 将所有的家庭视频，音乐和照片集中在一个地方从未如此简单。您的个人Emby服务器会自动转换和流媒体，以便在任何设备上播放。
+    en_us: Bringing all of your home videos, music, and photos together into one place has never been easier. Your personal Emby Server automatically converts and streams your media on-the-fly to play on any device.
+    zh_cn: 将所有的家庭视频，音乐和照片集中在一个地方从未如此简单。您的个人Emby服务器会自动转换和流媒体，以便在任何设备上播放。
   developer: linuxserver
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/icon.png
   screenshot_link:
@@ -85,9 +85,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-3.png
   tagline:
-    en_US: TAKE YOUR MEDIA ANYWHERE WITH EMBY
-    zh_CN: 用EMBY随时随地带着媒体
+    en_us: TAKE YOUR MEDIA ANYWHERE WITH EMBY
+    zh_cn: 用EMBY随时随地带着媒体
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/thumbnail.png
   tips: {}
   title:
-    en_US: Emby
+    en_us: Emby
