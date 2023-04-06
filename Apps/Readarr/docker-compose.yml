@@ -30,29 +30,29 @@ services:
       envs:
         - container: PUID
           description:
-            en_US: ""
+            en_us: ""
         - container: PGID
           description:
-            en_US: ""
+            en_us: ""
         - container: TZ
           description:
-            en_US: ""
+            en_us: ""
       port_map: "8787"
       ports:
         - container: "8787"
           description:
-            en_US: ""
+            en_us: ""
 
       volumes:
         - container: /config
           description:
-            en_US: ""
+            en_us: ""
         - container: /books
           description:
-            en_US: ""
+            en_us: ""
         - container: /downloads
           description:
-            en_US: ""
+            en_us: ""
 x-casaos:
   architectures:
     - amd64
@@ -62,8 +62,8 @@ x-casaos:
   author: CasaOS Team
   category: Media
   description:
-    en_US: Readarr is a ebook collection manager for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new books from your favorite authors and will interface with clients and indexers to grab, sort, and rename them.
-    zh_CN: Readarr是一个用于Usenet和BitTorrent用户的电子书收藏管理器。它可以监视多个RSS源以获取您最喜欢的作者的新书，并且可以与客户端和索引器进行交互以获取，排序和重命名它们。
+    en_us: Readarr is a ebook collection manager for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new books from your favorite authors and will interface with clients and indexers to grab, sort, and rename them.
+    zh_cn: Readarr是一个用于Usenet和BitTorrent用户的电子书收藏管理器。它可以监视多个RSS源以获取您最喜欢的作者的新书，并且可以与客户端和索引器进行交互以获取，排序和重命名它们。
   developer: Readarr Team
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Readarr/icon.png
   screenshot_link:
@@ -72,9 +72,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Readarr/screenshot-3.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Readarr/screenshot-4.png
   tagline:
-    en_US: Ebook and audiobook collection manager for Usenet and BitTorrent users.
-    zh_CN: 用于Usenet和BitTorrent用户的电子书和有声书收藏管理器。
+    en_us: Ebook and audiobook collection manager for Usenet and BitTorrent users.
+    zh_cn: 用于Usenet和BitTorrent用户的电子书和有声书收藏管理器。
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Readarr/thumbnail.png
   tips: {}
   title:
-    en_US: Readarr
+    en_us: Readarr

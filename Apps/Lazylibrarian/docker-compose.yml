@@ -31,32 +31,32 @@ services:
       envs:
         - container: PUID
           description:
-            en_US: ""
+            en_us: ""
         - container: PGID
           description:
-            en_US: ""
+            en_us: ""
         - container: TZ
           description:
-            en_US: ""
+            en_us: ""
         - container: DOCKER_MODS
           description:
-            en_US: ""
+            en_us: ""
       port_map: "5299"
       ports:
         - container: "5299"
           description:
-            en_US: ""
+            en_us: ""
 
       volumes:
         - container: /downloads
           description:
-            en_US: ""
+            en_us: ""
         - container: /books
           description:
-            en_US: ""
+            en_us: ""
         - container: /config
           description:
-            en_US: ""
+            en_us: ""
 x-casaos:
   architectures:
     - amd64
@@ -66,8 +66,8 @@ x-casaos:
   author: CasaOS Team
   category: Downloader
   description:
-    en_US: Lazylibrarian is a program to follow authors and grab metadata for all your digital reading needs. It uses a combination of Goodreads Librarything and optionally GoogleBooks as sources for author info and book info. This container is based on the DobyTang fork.
-    zh_CN: Lazylibrarian是一个程序，用于跟踪作者并获取所有数字阅读需求的元数据。它使用Goodreads Librarything和可选的GoogleBooks作为作者信息和书籍信息的来源。此容器基于DobyTang分支。
+    en_us: Lazylibrarian is a program to follow authors and grab metadata for all your digital reading needs. It uses a combination of Goodreads Librarything and optionally GoogleBooks as sources for author info and book info. This container is based on the DobyTang fork.
+    zh_cn: Lazylibrarian是一个程序，用于跟踪作者并获取所有数字阅读需求的元数据。它使用Goodreads Librarything和可选的GoogleBooks作为作者信息和书籍信息的来源。此容器基于DobyTang分支。
   developer: Lazylibrarian Team
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Lazylibrarian/icon.png
   screenshot_link:
@@ -75,10 +75,10 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Lazylibrarian/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Lazylibrarian/screenshot-3.png
   tagline:
-    en_US: eBook Auto Downloader
-    zh_CN: eBook自动下载器
+    en_us: eBook Auto Downloader
+    zh_cn: eBook自动下载器
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Lazylibrarian/thumbnail.png
   tips: {}
   title:
-    en_US: Lazylibrarian
-    zh_CN: Lazylibrarian
+    en_us: Lazylibrarian
+    zh_cn: Lazylibrarian

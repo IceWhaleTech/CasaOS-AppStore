@@ -22,14 +22,14 @@ services:
       ports:
         - container: "3001"
           description:
-            en_US: WebUI Port
-            zh_CN: WebUI 端口
+            en_us: WebUI Port
+            zh_cn: WebUI 端口
 
       volumes:
         - container: /app/data
           description:
-            en_US: Uptime Kuma data directory.
-            zh_CN: Uptime Kuma 数据目录。
+            en_us: Uptime Kuma data directory.
+            zh_cn: Uptime Kuma 数据目录。
 x-casaos:
   architectures:
     - amd64
@@ -39,8 +39,8 @@ x-casaos:
   author: CasaOS Team
   category: Network
   description:
-    en_US: It is a self-hosted monitoring tool like "Uptime Robot".
-    zh_CN: Uptime Kuma 是一个自托管的监控工具，类似于 Uptime Robot。
+    en_us: It is a self-hosted monitoring tool like "Uptime Robot".
+    zh_cn: Uptime Kuma 是一个自托管的监控工具，类似于 Uptime Robot。
   developer: Louis Lam
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/icon.png
   screenshot_link:
@@ -50,9 +50,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-4.jpg
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/screenshot-5.jpg
   tagline:
-    en_US: A fancy monitoring tool
-    zh_CN: 一个漂亮的监控工具
+    en_us: A fancy monitoring tool
+    zh_cn: 一个漂亮的监控工具
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UptimeKuma/thumbnail.png
   tips: {}
   title:
-    en_US: Uptime Kuma
+    en_us: Uptime Kuma
