@@ -20,7 +20,7 @@ services:
         published: "10001"
         protocol: udp
       - target: 8080
-        published: "8080"
+        published: "8383"
         protocol: tcp
       - target: 8443
         published: "8443"
@@ -60,7 +60,7 @@ services:
           description:
             en_us: ""
       index: /
-      port_map: "8080"
+      port_map: "8383"
       ports:
         - container: "3478"
           description:

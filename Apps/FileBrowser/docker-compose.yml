@@ -13,7 +13,7 @@ services:
     network_mode: bridge
     ports:
       - target: 80
-        published: "80"
+        published: "10180"
         protocol: tcp
     restart: unless-stopped
     volumes:
@@ -38,7 +38,7 @@ services:
             en_us: Run FileBrowser as specified gid.
             zh_cn: 以指定的组ID运行FileBrowser
       index: /
-      port_map: "80"
+      port_map: "10180"
       ports:
         - container: "80"
           description:

@@ -21,7 +21,7 @@ services:
         target: /var/www/html
     x-casaos:
       index: /
-      port_map: "80"
+      port_map: "10080"
       ports:
         - container: "80"
           description:

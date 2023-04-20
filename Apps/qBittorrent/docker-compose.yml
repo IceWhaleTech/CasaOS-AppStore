@@ -14,7 +14,7 @@ services:
     network_mode: bridge
     ports:
       - target: 8080
-        published: "8080"
+        published: "8181"
         protocol: tcp
     restart: unless-stopped
     volumes:
@@ -43,7 +43,7 @@ services:
             en_us: Run qBittorrent as specified UMASK.
             zh_cn: 以指定的 UMASK 运行 qBittorrent。
       index: /
-      port_map: "8080"
+      port_map: "8181"
       ports:
         - container: "8080"
           description:

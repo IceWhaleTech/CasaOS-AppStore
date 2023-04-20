@@ -15,7 +15,7 @@ services:
         published: "53"
         protocol: udp
       - target: 3000
-        published: "3000"
+        published: "3001"
         protocol: tcp
       - target: 853
         published: "853"
@@ -33,7 +33,7 @@ services:
         target: /opt/adguardhome/conf
     x-casaos:
       index: /
-      port_map: "3000"
+      port_map: "3001"
       ports:
         - container: "53"
           description:
