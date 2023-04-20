@@ -13,7 +13,7 @@ services:
     network_mode: bridge
     ports:
       - target: 8080
-        published: "8080"
+        published: "8282"
         protocol: tcp
     restart: unless-stopped
     volumes:
@@ -37,7 +37,7 @@ services:
         - container: TZ
           description:
             en_us: ""
-      port_map: "8080"
+      port_map: "8282"
       ports:
         - container: "8080"
           description:

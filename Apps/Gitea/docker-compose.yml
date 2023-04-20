@@ -12,7 +12,7 @@ services:
     network_mode: bridge
     ports:
       - target: 3000
-        published: "3000"
+        published: "3002"
         protocol: tcp
       - target: 22
         published: "222"
@@ -33,7 +33,7 @@ services:
             en_us: The GID (Unix group ID) of the user that runs Gitea
             zh_cn: Gitea 运行的用户的 GID（Unix 组 ID）
       index: /
-      port_map: "3000"
+      port_map: "3002"
       ports:
         - container: "3000"
           description:

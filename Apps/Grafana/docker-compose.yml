@@ -9,12 +9,12 @@ services:
     network_mode: bridge
     ports:
       - target: 3000
-        published: "3000"
+        published: "3003"
         protocol: tcp
     restart: always
     x-casaos:
       index: /
-      port_map: "3000"
+      port_map: "3003"
       ports:
         - container: "3000"
           description:

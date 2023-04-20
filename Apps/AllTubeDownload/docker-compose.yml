@@ -9,12 +9,12 @@ services:
     network_mode: bridge
     ports:
       - target: 80
-        published: "80"
+        published: "10480"
         protocol: tcp
     restart: always
     x-casaos:
       index: /
-      port_map: "80"
+      port_map: "10480"
       ports:
         - container: "80"
           description:
