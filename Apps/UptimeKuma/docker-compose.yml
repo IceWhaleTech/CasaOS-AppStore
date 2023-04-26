@@ -17,8 +17,6 @@ services:
         source: /DATA/AppData/$AppID/app/data
         target: /app/data
     x-casaos:
-      index: /
-      port_map: "3001"
       ports:
         - container: "3001"
           description:
@@ -78,3 +76,5 @@ x-casaos:
   tips: {}
   title:
     en_us: Uptime Kuma
+  index: /
+  port_map: "3001"

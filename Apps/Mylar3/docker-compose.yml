@@ -33,7 +33,6 @@ services:
         - container: PGID
           description:
             en_us: ""
-      port_map: "8090"
       ports:
         - container: "8090"
           description:
@@ -96,3 +95,4 @@ x-casaos:
   tips: {}
   title:
     en_us: Mylar3
+  port_map: "8090"

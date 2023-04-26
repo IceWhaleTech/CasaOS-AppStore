@@ -24,8 +24,6 @@ services:
           description:
             en_us: TimeZone
             zh_cn: 时区
-      index: /
-      port_map: "5678"
       ports:
         - container: "5678"
           description:
@@ -83,3 +81,5 @@ x-casaos:
   tips: {}
   title:
     en_us: n8n
+  index: /
+  port_map: "5678"

@@ -48,8 +48,6 @@ services:
           description:
             en_us: Deluge Log Level
             zh_cn: Deluge 日志级别
-      index: /
-      port_map: "8112"
       ports:
         - container: "8112"
           description:
@@ -152,3 +150,5 @@ x-casaos:
         请确保在使用 Deluge 时使用正确的路径。
   title:
     en_us: Deluge
+  index: /
+  port_map: "8112"

@@ -38,8 +38,6 @@ services:
         - container: AUTO_UPDATE
           description:
             en_us: ""
-      index: /
-      port_map: "9117"
       ports:
         - container: "9117"
           description:
@@ -98,3 +96,5 @@ x-casaos:
   tips: {}
   title:
     en_us: Jackett
+  index: /
+  port_map: "9117"

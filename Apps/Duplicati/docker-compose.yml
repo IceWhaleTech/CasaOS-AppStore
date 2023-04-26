@@ -37,8 +37,6 @@ services:
         - container: TZ
           description:
             en_us: ""
-      index: /
-      port_map: "8200"
       ports:
         - container: "8200"
           description:
@@ -99,3 +97,5 @@ x-casaos:
   tips: {}
   title:
     en_us: Duplicati
+  index: /
+  port_map: "8200"

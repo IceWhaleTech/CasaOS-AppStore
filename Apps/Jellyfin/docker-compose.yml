@@ -61,8 +61,6 @@ services:
           description:
             en_us: The autodiscovery response domain or IP address.
             zh_cn: 自动发现响应域名或IP地址
-      index: /
-      port_map: "8096"
       ports:
         - container: "8096"
           description:
@@ -145,3 +143,5 @@ x-casaos:
   tips: {}
   title:
     en_us: Jellyfin
+  index: /
+  port_map: "8096"

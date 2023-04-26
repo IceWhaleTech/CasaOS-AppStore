@@ -13,8 +13,6 @@ services:
         protocol: tcp
     restart: always
     x-casaos:
-      index: /
-      port_map: "3004"
       ports:
         - container: "3000"
           description:
@@ -69,3 +67,5 @@ x-casaos:
   tips: {}
   title:
     en_us: OpenSpeedTest
+  index: /
+  port_map: "3004"

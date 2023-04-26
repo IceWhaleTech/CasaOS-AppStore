@@ -20,8 +20,6 @@ services:
         source: /DATA/AppData/$AppID/var/www/html
         target: /var/www/html
     x-casaos:
-      index: /
-      port_map: "10080"
       ports:
         - container: "80"
           description:
@@ -88,3 +86,5 @@ x-casaos:
   tips: {}
   title:
     en_us: Nextcloud
+  index: /
+  port_map: "10080"

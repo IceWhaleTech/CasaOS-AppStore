@@ -32,8 +32,6 @@ services:
         source: /DATA/AppData/$AppID/opt/adguardhome/conf
         target: /opt/adguardhome/conf
     x-casaos:
-      index: /
-      port_map: "3001"
       ports:
         - container: "53"
           description:
@@ -106,3 +104,5 @@ x-casaos:
   tips: {}
   title:
     en_us: AdGuard Home
+  index: /
+  port_map: "3001"

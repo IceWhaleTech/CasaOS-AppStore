@@ -37,8 +37,6 @@ services:
           description:
             en_us: The password of admin
             zh_cn: 管理员密码
-      index: /
-      port_map: "2342"
       ports:
         - container: "2342"
           description:
@@ -112,3 +110,5 @@ x-casaos:
         | `admin`    | `casaos`   |
   title:
     en_us: PhotoPrism
+  index: /
+  port_map: "2342"

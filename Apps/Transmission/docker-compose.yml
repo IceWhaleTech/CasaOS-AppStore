@@ -59,8 +59,6 @@ services:
         - container: PEERPORT
           description:
             en_us: ""
-      index: /
-      port_map: "9091"
       ports:
         - container: "9091"
           description:
@@ -153,3 +151,5 @@ x-casaos:
         | `casaos` | `casaos` |
   title:
     en_us: Transmission
+  index: /
+  port_map: "9091"

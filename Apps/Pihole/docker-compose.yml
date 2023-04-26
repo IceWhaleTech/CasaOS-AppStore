@@ -53,8 +53,6 @@ services:
         - container: PROXY_LOCATION
           description:
             en_us: Pi-hole PROXY_LOCATION
-      index: /admin
-      port_map: "8800"
       ports:
         - container: "80"
           description:
@@ -143,3 +141,5 @@ x-casaos:
         默认密码：`casaos`
   title:
     en_us: Pi-hole
+  index: /admin
+  port_map: "8800"

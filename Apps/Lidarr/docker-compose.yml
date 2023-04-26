@@ -37,7 +37,6 @@ services:
         - container: TZ
           description:
             en_us: ""
-      port_map: "8686"
       ports:
         - container: "8686"
           description:
@@ -99,3 +98,4 @@ x-casaos:
   tips: {}
   title:
     en_us: Lidarr
+  port_map: "8686"

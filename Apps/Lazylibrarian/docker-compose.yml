@@ -41,7 +41,6 @@ services:
         - container: DOCKER_MODS
           description:
             en_us: ""
-      port_map: "5299"
       ports:
         - container: "5299"
           description:
@@ -103,4 +102,4 @@ x-casaos:
   tips: {}
   title:
     en_us: Lazylibrarian
-    zh_cn: Lazylibrarian
+  port_map: "5299"

@@ -36,8 +36,6 @@ services:
           description:
             en_us: Let Docker handle the Plex Version
             zh_cn: 让Docker处理Plex版本
-      index: /web/index.html
-      port_map: "32400"
 
       volumes:
         - container: /config
@@ -94,3 +92,5 @@ x-casaos:
   tips: {}
   title:
     en_us: Plex
+  index: /web/index.html
+  port_map: "32400"

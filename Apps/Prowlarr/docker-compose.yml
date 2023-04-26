@@ -31,7 +31,6 @@ services:
         - container: TZ
           description:
             en_us: ""
-      port_map: "9696"
       ports:
         - container: "9696"
           description:
@@ -86,3 +85,4 @@ x-casaos:
   tips: {}
   title:
     en_us: Prowlarr
+  port_map: "9696"

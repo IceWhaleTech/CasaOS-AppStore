@@ -35,7 +35,6 @@ services:
         - container: BASE_URL
           description:
             en_us: ""
-      port_map: "3579"
       ports:
         - container: "3579"
           description:
@@ -91,3 +90,4 @@ x-casaos:
   tips: {}
   title:
     en_us: Ombi
+  port_map: "3579"

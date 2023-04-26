@@ -37,7 +37,6 @@ services:
         - container: TZ
           description:
             en_us: ""
-      port_map: "6767"
       ports:
         - container: "6767"
           description:
@@ -100,3 +99,4 @@ x-casaos:
   tips: {}
   title:
     en_us: Bazarr
+  port_map: "6767"

@@ -42,7 +42,6 @@ services:
         - container: NZBGET_PASS
           description:
             en_us: ""
-      port_map: "6789"
       ports:
         - container: "6789"
           description:
@@ -102,3 +101,4 @@ x-casaos:
   tips: {}
   title:
     en_us: Nzbget
+  port_map: "6789"

@@ -37,7 +37,6 @@ services:
         - container: TZ
           description:
             en_us: ""
-      port_map: "8787"
       ports:
         - container: "8787"
           description:
@@ -100,3 +99,4 @@ x-casaos:
   tips: {}
   title:
     en_us: Readarr
+  port_map: "8787"

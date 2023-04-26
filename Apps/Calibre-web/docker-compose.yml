@@ -38,8 +38,6 @@ services:
         - container: DOCKER_MODS
           description:
             en_us: ""
-      index: /
-      port_map: "8083"
       ports:
         - container: "8083"
           description:
@@ -107,3 +105,5 @@ x-casaos:
         | `admin`    | `admin123` |
   title:
     en_us: Calibre-web
+  index: /
+  port_map: "8083"

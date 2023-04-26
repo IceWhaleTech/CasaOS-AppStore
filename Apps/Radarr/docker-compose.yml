@@ -40,8 +40,6 @@ services:
           description:
             en_us: Run Radarr as specified gid.
             zh_cn: 以指定的gid运行Radarr
-      index: /
-      port_map: "7878"
       ports:
         - container: "7878"
           description:
@@ -108,3 +106,5 @@ x-casaos:
   tips: {}
   title:
     en_us: Radarr
+  index: /
+  port_map: "7878"

@@ -30,8 +30,6 @@ services:
         - container: TZ
           description:
             en_us: ""
-      index: /
-      port_map: "8181"
       ports:
         - container: "8181"
           description:
@@ -89,3 +87,5 @@ x-casaos:
   tips: {}
   title:
     en_us: Tautulli
+  index: /
+  port_map: "8181"

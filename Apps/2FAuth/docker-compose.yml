@@ -17,8 +17,6 @@ services:
         source: /DATA/AppData/$AppID
         target: /2fauth
     x-casaos:
-      index: /
-      port_map: "8000"
       ports:
         - container: "8000"
           description:
@@ -74,3 +72,5 @@ x-casaos:
   tips: {}
   title:
     en_us: 2FAuth
+  index: /
+  port_map: "8000"
