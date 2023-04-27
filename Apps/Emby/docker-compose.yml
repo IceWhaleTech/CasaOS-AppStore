@@ -46,8 +46,6 @@ services:
         - container: TZ
           description:
             en_us: ""
-      index: /
-      port_map: "8096"
       ports:
         - container: "8096"
           description:
@@ -113,3 +111,5 @@ x-casaos:
   tips: {}
   title:
     en_us: Emby
+  index: /
+  port_map: "8096"

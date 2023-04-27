@@ -46,8 +46,6 @@ services:
           description:
             en_us: Run Syncthing as specified gid.
             zh_cn: 以指定的组ID运行Syncthing
-      index: /
-      port_map: "8384"
       ports:
         - container: "8384"
           description:
@@ -121,3 +119,5 @@ x-casaos:
   tips: {}
   title:
     en_us: Syncthing
+  index: /
+  port_map: "8384"

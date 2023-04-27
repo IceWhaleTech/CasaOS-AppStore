@@ -37,7 +37,6 @@ services:
         - container: TZ
           description:
             en_us: ""
-      port_map: "8282"
       ports:
         - container: "8080"
           description:
@@ -103,3 +102,4 @@ x-casaos:
   tips: {}
   title:
     en_us: Sabnzbd
+  port_map: "8282"

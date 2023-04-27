@@ -40,8 +40,6 @@ services:
           description:
             en_us: Run CouchPotato as specified gid.
             zh_cn: 以指定的gid运行CouchPotato
-      index: /
-      port_map: "5050"
       ports:
         - container: "5050"
           description:
@@ -101,7 +99,7 @@ x-casaos:
     hu_hu: Automatikusan találja meg a filmeket, amelyeket meg szeretne nézni
     it_it: Trova automaticamente film che vuoi vedere
     ru_ru: Автоматически находите фильмы, которые вы хотите посмотреть
-    pl_pl: Automatycznie znajdź filmy, które chcesz obejrzeć  
+    pl_pl: Automatycznie znajdź filmy, które chcesz obejrzeć
     pt_br: Encontre automaticamente filmes que você deseja assistir
     sv_se: Hitta automatiskt filmer du vill se
     uk_ua: Автоматично знаходьте фільми, які ви хочете подивитися
@@ -109,3 +107,5 @@ x-casaos:
   tips: {}
   title:
     en_us: CouchPotato
+  index: /
+  port_map: "5050"

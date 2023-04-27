@@ -37,8 +37,6 @@ services:
           description:
             en_us: Run FileBrowser as specified gid.
             zh_cn: 以指定的组ID运行FileBrowser
-      index: /
-      port_map: "10180"
       ports:
         - container: "80"
           description:
@@ -113,3 +111,5 @@ x-casaos:
         | `admin`    | `admin`    |
   title:
     en_us: FileBrowser
+  index: /
+  port_map: "10180"

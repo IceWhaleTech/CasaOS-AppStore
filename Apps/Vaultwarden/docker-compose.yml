@@ -17,8 +17,6 @@ services:
         source: /DATA/AppData/$AppID/data
         target: /data
     x-casaos:
-      index: /
-      port_map: "10380"
       ports:
         - container: "80"
           description:
@@ -76,3 +74,5 @@ x-casaos:
   tips: {}
   title:
     en_us: Vaultwarden
+  index: /
+  port_map: "10380"

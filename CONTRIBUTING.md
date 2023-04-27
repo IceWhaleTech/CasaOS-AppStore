@@ -34,8 +34,6 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
 
         ```yaml
         x-casaos:
-            index: /         # the index page for web UI, e.g. index.html
-            port_map: "8384" # the port for web UI
             envs:            # description of each environment variable
                 ...
               - container: PUID
@@ -77,4 +75,6 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
             thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.jpg
             title:       # multiple locales are supported
                 en_us: Syncthing
+            index: /         # the index page for web UI, e.g. index.html
+            port_map: "8384" # the port for web UI
         ```

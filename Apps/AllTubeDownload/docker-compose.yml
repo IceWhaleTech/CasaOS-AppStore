@@ -13,8 +13,6 @@ services:
         protocol: tcp
     restart: always
     x-casaos:
-      index: /
-      port_map: "10480"
       ports:
         - container: "80"
           description:
@@ -65,3 +63,5 @@ x-casaos:
   title:
     en_us: AllTube Download
     zh_cn: AllTube 下载
+  index: /
+  port_map: "10480"

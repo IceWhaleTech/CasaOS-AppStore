@@ -31,7 +31,6 @@ services:
         - container: TZ
           description:
             en_us: ""
-      port_map: "6555"
       ports:
         - container: "6555"
           description:
@@ -87,3 +86,4 @@ x-casaos:
   tips: {}
   title:
     en_us: Embystat
+  port_map: "6555"

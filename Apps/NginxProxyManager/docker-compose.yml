@@ -26,8 +26,6 @@ services:
         source: /DATA/AppData/$AppID/etc/letsencrypt
         target: /etc/letsencrypt
     x-casaos:
-      index: /
-      port_map: "81"
       ports:
         - container: "80"
           description:
@@ -123,3 +121,5 @@ x-casaos:
   title:
     en_us: Nginx Proxy Manager
     zh_cn: Nginx 代理管理器
+  index: /
+  port_map: "81"

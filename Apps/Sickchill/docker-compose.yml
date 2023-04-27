@@ -37,7 +37,6 @@ services:
         - container: TZ
           description:
             en_us: ""
-      port_map: "8081"
       ports:
         - container: "8081"
           description:
@@ -115,3 +114,4 @@ x-casaos:
   tips: {}
   title:
     en_us: Sickchill
+  port_map: "8081"

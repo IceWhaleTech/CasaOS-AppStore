@@ -34,7 +34,6 @@ services:
         - container: TZ
           description:
             en_us: ""
-      port_map: "10280"
       ports:
         - container: "80"
           description:
@@ -95,3 +94,4 @@ x-casaos:
   tips: {}
   title:
     en_us: Smokeping
+  port_map: "10280"

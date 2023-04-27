@@ -13,8 +13,6 @@ services:
         protocol: tcp
     restart: always
     x-casaos:
-      index: /
-      port_map: "3003"
       ports:
         - container: "3000"
           description:
@@ -101,3 +99,5 @@ x-casaos:
         | `admin`    | `admin`    |
   title:
     en_us: Grafana
+  index: /
+  port_map: "3003"

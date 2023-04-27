@@ -32,8 +32,6 @@ services:
           description:
             en_us: The GID (Unix group ID) of the user that runs Gitea
             zh_cn: Gitea 运行的用户的 GID（Unix 组 ID）
-      index: /
-      port_map: "3002"
       ports:
         - container: "3000"
           description:
@@ -103,3 +101,5 @@ x-casaos:
         安装应用后，注册的第一个账号将成为管理员账号。
   title:
     en_us: Gitea
+  index: /
+  port_map: "3002"

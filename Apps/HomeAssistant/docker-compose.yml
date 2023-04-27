@@ -30,8 +30,6 @@ services:
           description:
             en_us: Run HomeAssistant as specified gid.
             zh_cn: 以指定的gid运行HomeAssistant
-      index: /
-      port_map: "8123"
 
       volumes:
         - container: /config
@@ -85,3 +83,5 @@ x-casaos:
   tips: {}
   title:
     en_us: Home Assistant
+  index: /
+  port_map: "8123"

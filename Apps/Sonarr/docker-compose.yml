@@ -40,8 +40,6 @@ services:
           description:
             en_us: Run Sonarr as specified gid.
             zh_cn: 以指定的gid运行Sonarr
-      index: /
-      port_map: "8989"
       ports:
         - container: "8989"
           description:
@@ -107,3 +105,5 @@ x-casaos:
   tips: {}
   title:
     en_us: Sonarr
+  index: /
+  port_map: "8989"

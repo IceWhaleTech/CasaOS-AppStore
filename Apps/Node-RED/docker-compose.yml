@@ -17,8 +17,6 @@ services:
         source: /DATA/AppData/$AppID/data
         target: /data
     x-casaos:
-      index: /
-      port_map: "1880"
       ports:
         - container: "1880"
           description:
@@ -75,3 +73,5 @@ x-casaos:
   tips: {}
   title:
     en_us: Node-RED
+  index: /
+  port_map: "1880"

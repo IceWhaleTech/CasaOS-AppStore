@@ -24,8 +24,6 @@ services:
           description:
             en_us: TimeZone
             zh_cn: 时区
-      index: /
-      port_map: "3009"
       ports:
         - container: "3000"
           description:
@@ -82,3 +80,5 @@ x-casaos:
   tips: {}
   title:
     en_us: VoceChat
+  index: /
+  port_map: "3009"

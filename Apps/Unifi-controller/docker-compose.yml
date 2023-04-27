@@ -59,8 +59,6 @@ services:
         - container: MEM_STARTUP
           description:
             en_us: ""
-      index: /
-      port_map: "8383"
       ports:
         - container: "3478"
           description:
@@ -149,3 +147,5 @@ x-casaos:
   title:
     en_us: Unifi-controller
     zh_cn: Unifi控制器
+  index: /
+  port_map: "8383"

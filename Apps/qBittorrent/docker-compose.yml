@@ -42,8 +42,6 @@ services:
           description:
             en_us: Run qBittorrent as specified UMASK.
             zh_cn: 以指定的 UMASK 运行 qBittorrent。
-      index: /
-      port_map: "8181"
       ports:
         - container: "8080"
           description:
@@ -139,3 +137,5 @@ x-casaos:
 
   title:
     en_us: qBittorrent
+  index: /
+  port_map: "8181"
