@@ -1,6 +1,6 @@
 name: memos
 services:
-  lidarr:
+  memos:
     environment:
       PGID: "1000"
       PUID: "1000"
@@ -44,7 +44,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: memos
   author: usememos Team
