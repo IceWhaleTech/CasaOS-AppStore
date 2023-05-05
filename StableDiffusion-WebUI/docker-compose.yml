@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  stable-diffusion-webui:
+    image: universonic/stable-diffusion-webui:nightly-20230505030249
+    container_name: stable-diffusion-webui
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - /DATA/AppData/sd-webui/extensions:/app/stable-diffusion-webui/extensions
+      - /DATA/AppData/sd-webui/models:/app/stable-diffusion-webui/models
+      - /DATA/AppData/sd-webui/outputs:/app/stable-diffusion-webui/outputs
+      - /DATA/AppData/sd-webui/localizations:/app/stable-diffusion-webui/localizations
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [ gpu ]
