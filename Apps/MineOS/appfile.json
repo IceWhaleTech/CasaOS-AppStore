@@ -1,0 +1,179 @@
+{
+    "version": "1.0",
+    "title": "MineOS",
+    "name": "mineos-node",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MineOS/icon.png",
+    "tagline": "Free and easy to use Minecraft server management tool.",
+    "overview": "MineOS is a server front-end to ease managing Minecraft administrative tasks. This iteration using Node.js aims to enhance previous MineOS scripts (Python-based), by leveraging the event-triggering, asyncronous model of Node.JS and websockets.",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/screenshot-1.png"
+    ],
+    "category": [
+        "Gaming"
+    ],
+    "developer": {
+        "name": "hexparrot",
+        "website": "https://github.com/hexparrot/",
+        "donate_text": "", 
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "Chàra Rose",
+        "website": "https://chara.cloud",
+        "donate_text": "", 
+        "donate_link": ""
+    },
+    "support": "https://discord.gg/knqAbbBbeX",
+    "website": "https://www.casaos.io",
+    "container": {
+        "image": "hexparrot/mineos:latest",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "8443",
+            "path": "/admin/index.html"
+        },
+        "envs": [
+            {
+                "key": "TZ",
+                "value": "$TZ",
+                "configurable": "no",
+                "description": "TimeZone"
+            }
+        ],
+        "ports": [
+            {
+                "container": "8443",
+                "host": "8443",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            },
+            {
+                "container": "25565",
+                "host": "25565",
+                "type": "tcp",
+                "allocation": "required",
+                "configurable": "no",
+                "description": "Minecraft listening Port (TCP)"
+            },
+            {
+                "container": "25566",
+                "host": "25566",
+                "type": "tcp",
+                "allocation": "required",
+                "configurable": "no",
+                "description": "Minecraft listening Port (TCP)"
+            },
+            {
+                "container": "25567",
+                "host": "25567",
+                "type": "tcp",
+                "allocation": "required",
+                "configurable": "no",
+                "description": "Minecraft listening Port (TCP)"
+            },
+            {
+                "container": "25568",
+                "host": "25568",
+                "type": "tcp",
+                "allocation": "required",
+                "configurable": "no",
+                "description": "Minecraft listening Port (TCP)"
+            },
+            {
+                "container": "25569",
+                "host": "25569",
+                "type": "tcp",
+                "allocation": "required",
+                "configurable": "no",
+                "description": "Minecraft listening Port (TCP)"
+            },
+            {
+                "container": "25570",
+                "host": "25570",
+                "type": "tcp",
+                "allocation": "required",
+                "configurable": "no",
+                "description": "Minecraft listening Port (TCP)"
+            },
+            {
+                "container": "25565",
+                "host": "25565",
+                "type": "udp",
+                "allocation": "required",
+                "configurable": "no",
+                "description": "Minecraft listening Port (UDP)"
+            },
+            {
+                "container": "25566",
+                "host": "25566",
+                "type": "udp",
+                "allocation": "required",
+                "configurable": "no",
+                "description": "Minecraft listening Port (UDP)"
+            },
+            {
+                "container": "25567",
+                "host": "25567",
+                "type": "udp",
+                "allocation": "required",
+                "configurable": "no",
+                "description": "Minecraft listening Port (UDP)"
+            },
+            {
+                "container": "25568",
+                "host": "25568",
+                "type": "udp",
+                "allocation": "required",
+                "configurable": "no",
+                "description": "Minecraft listening Port (UDP)"
+            },
+            {
+                "container": "25569",
+                "host": "25569",
+                "type": "udp",
+                "allocation": "required",
+                "configurable": "no",
+                "description": "Minecraft listening Port (UDP)"
+            },
+            {
+                "container": "25570",
+                "host": "25570",
+                "type": "udp",
+                "allocation": "required",
+                "configurable": "no",
+                "description": "Minecraft listening Port (UDP)"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/var/games/minecraft",
+                "host": "/var/games/mineos/minecraft",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "MineOS directory."
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 1024,
+            "min_storage": 1024
+        },
+        "restart_policy": "unless-stopped",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {}
+}
