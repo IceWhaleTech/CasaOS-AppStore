@@ -59,10 +59,6 @@ services:
       - "25565-25570:25565-25570/udp"
 
     x-casaos:
-      envs:
-        - container: TZ
-          description:
-            en_us: TimeZone
       ports:
         - container: "8443"
           description:
@@ -140,7 +136,7 @@ x-casaos:
     - arm64
   main: mineos
   author: Chàra Rose
-  category: Gaming
+  category: Games
   description:
     en_us: MineOS is a server front-end to ease managing Minecraft administrative tasks. This iteration using Node.js aims to enhance previous MineOS scripts (Python-based), by leveraging the event-triggering, asyncronous model of Node.JS and websockets.
     es_es: MineOS es una interfaz de servidor para facilitar la gestión de las tareas administrativas de Minecraft. Esta iteración que utiliza Node.js tiene como objetivo mejorar los scripts anteriores de MineOS (basados en Python), aprovechando el modelo asincrónico de activación de eventos de Node.JS y websockets.
