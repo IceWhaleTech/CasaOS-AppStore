@@ -78,7 +78,7 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
             tips:
                 before_install:
                     en_us: |
-                        (some notes for user to read prior to installation)
+                        (some notes for user to read prior to installation, such as preset `username` and `password` - markdown is supported!)
             index: /         # the index page for web UI, e.g. index.html
             port_map: "8384" # the port for web UI
         ```
