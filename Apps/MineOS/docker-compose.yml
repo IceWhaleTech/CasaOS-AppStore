@@ -25,12 +25,12 @@ services:
       SERVER_PORT: 8443
       USER_NAME: mc
       USER_UID: 1000
-      USER_PASSWORD: random_see_log
+      USER_PASSWORD: root
 
     ports:
       # HTTPS port for web interface. If you change the SERVER_PORT
       # variable, also change this mapping.
-      - "8443:8444/tcp"
+      - "8444:8443/tcp"
 
       # Minecraft server ports. 25565 is the default, but is you plan
       # on running multiple servers at the same time, each will need
@@ -63,8 +63,8 @@ services:
 
         - container: USER_PASSWORD
           description:
-            en_us: If the "mc" account is being created, it will use either the value of USER_PASSWORD, or a random 20 character password will be generated for you and displayed in the console log. After first launch, you should check the log.
-            es_es: Si se está creando la cuenta "mc", utilizará el valor de USER_PASSWORD o se generará una contraseña aleatoria de 20 caracteres para usted y se mostrará en el registro de la consola. Después del primer lanzamiento, debería revisar el registro.
+            en_us: If the "mc" account is being created, it will use the default password "root" (without quotes). It is recommended to change this to something more secure.
+            es_es: Si se está creando la cuenta "mc", utilizará la contraseña "root" (sin comillas) por defecto. Es recomendable cambiar esto por algo más seguro.
             
       ports:
         - container: "8443"
@@ -152,10 +152,18 @@ x-casaos:
   tagline:
     en_us: Free and easy to use Minecraft server management tool.
     es_es: Herramienta de administración de servidores de Minecraft gratuita y fácil de usar.
-  tips: {}
+  tips:
+    before_install:
+      en_us: |
+        Default Account
+
+        | Username | Password |
+        |----------|----------|
+        | `mc`    | `root` |
   title:
     en_us: MineOS
   index: /admin/index.html
+  scheme: https
   port_map: "8444"
 
 volumes:
