@@ -21,35 +21,16 @@ services:
       - /var/games/mineos/minecraft:/var/games/minecraft
 
     environment:
-      # Should the web interface use HTTPS or HTTP?
-      # Valid entries are "true" and "false" (with quotes)
       USE_HTTPS: "true"
-
-      # What port should the web interface listen on?
-      # This is independant of the USE_HTTPS setting.
       SERVER_PORT: 8443
-
-      # On startup, mineos will check if an account of this name exists.
-      # If it does not exist, one will be created. This account, and
-      # any other created with this variable will be permitted to login
-      # to the web interface.
       USER_NAME: mc
-
-      # If the account listed above does not already exist, when mineos
-      # creates it, it will do so with UID. If an account with this UID
-      # already exists, account creation will be aborted.
       USER_UID: 1000
-
-      # If the account is being created, it will use either the password
-      # set below, or a random, 20 character password will generated for
-      # you and displayed in the console log. After first launch, you
-      # should check the log.
       USER_PASSWORD: random_see_log
 
     ports:
       # HTTPS port for web interface. If you change the SERVER_PORT
       # variable, also change this mapping.
-      - "8443:8443/tcp"
+      - "8443:8444/tcp"
 
       # Minecraft server ports. 25565 is the default, but is you plan
       # on running multiple servers at the same time, each will need
@@ -59,6 +40,32 @@ services:
       - "25565-25570:25565-25570/udp"
 
     x-casaos:
+      envs:
+        - container: USE_HTTPS
+          description:
+            en_us: Should the web interface use HTTPS or HTTP? Valid entries are "true" and "false" (with quotes) 
+            es_es: ¿Debe la interfaz web usar HTTPS o HTTP? Las entradas válidas son "true" y "false" (con comillas)
+            
+        - container: SERVER_PORT
+          description:
+            en_us: What port should the web interface listen on? This is independent of the USE_HTTPS setting.
+            es_es: ¿En qué puerto debe escuchar la interfaz web? Esto es independiente de la configuración USE_HTTPS.
+            
+        - container: USER_NAME
+          description:
+            en_us: On startup, mineos will check if an account of the name "mc" exists. If it does not exist, one will be created. This account, and any other created with this variable will be permitted to login to the web interface.
+            es_es: Al iniciar, mineos verificará si existe una cuenta con el nombre "mc". Si no existe, se creará una. Esta cuenta y cualquier otra creada con esta variable podrán iniciar sesión en la interfaz web.
+            
+        - container: USER_UID
+          description:
+            en_us: If the "mc" account does not already exist, when mineos creates it, it will do so with UID same as the value of the variable. If an account with this UID already exists, account creation will be aborted.
+            es_es: Si la cuenta "mc" aún no existe, cuando mineos la cree, lo hará con el mismo UID que el valor de la variable. Si ya existe una cuenta con este UID, se cancelará la creación de la cuenta.
+
+        - container: USER_PASSWORD
+          description:
+            en_us: If the "mc" account is being created, it will use either the value of USER_PASSWORD, or a random 20 character password will be generated for you and displayed in the console log. After first launch, you should check the log.
+            es_es: Si se está creando la cuenta "mc", utilizará el valor de USER_PASSWORD o se generará una contraseña aleatoria de 20 caracteres para usted y se mostrará en el registro de la consola. Después del primer lanzamiento, debería revisar el registro.
+            
       ports:
         - container: "8443"
           description:
@@ -149,7 +156,7 @@ x-casaos:
   title:
     en_us: MineOS
   index: /admin/index.html
-  port_map: "8443"
+  port_map: "8444"
 
 volumes:
   mineos_data:
