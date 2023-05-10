@@ -4,7 +4,7 @@
 
 CasaOS AppStore needs your help to grow:
 
-- See [CONTRIBUTING.MD](CONTRIBUTING.MD) for how to contribute CasaOS Apps in Docker Compose format.
+- See [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute CasaOS Apps in Docker Compose format.
 - Check `help wanted` for which issues you can help with.
 
 Thank you!

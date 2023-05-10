@@ -55,7 +55,7 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
 
     1. Compose app level
 
-        For the same example, at the bottome of the [`docker-compose.yml` of Syncthing](Apps/Syncthing/docker-compose.yml)
+        For the same example, at the bottom of the [`docker-compose.yml` of Syncthing](Apps/Syncthing/docker-compose.yml)
 
         ```yaml
         x-casaos:
@@ -75,6 +75,10 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
             thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.jpg
             title:       # multiple locales are supported
                 en_us: Syncthing
+            tips:
+                before_install:
+                    en_us: |
+                        (some notes for user to read prior to installation, such as preset `username` and `password` - markdown is supported!)
             index: /         # the index page for web UI, e.g. index.html
             port_map: "8384" # the port for web UI
         ```
