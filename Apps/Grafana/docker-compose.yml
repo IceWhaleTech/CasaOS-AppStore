@@ -12,11 +12,20 @@ services:
         published: "3003"
         protocol: tcp
     restart: always
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /var/lib/grafana
     x-casaos:
       ports:
         - container: "3000"
           description:
             en_us: ""
+      volumes:
+        - container: /var/lib/grafana
+          description:
+            en_us: Grafana database and plugins directory.
+            zh_cn: Grafana 数据库和插件目录
 
 x-casaos:
   architectures:
