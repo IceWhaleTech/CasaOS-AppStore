@@ -30,14 +30,13 @@ jobs:
           cp -r ./Apps ./tmp
           cp recommend-list.json category-list.json ./tmp
           ls ./tmp
-      - name: Copycat
-        uses: andstor/copycat-action@v3
+      - name: Pushes test folder
+        uses: datalbry/copy_folder_to_another_repo_action@1.0.0
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB2 }}
         with:
-          personal_token: ${{ secrets.API_TOKEN_GITHUB2 }}
-          src_path: tmp
-          dst_owner: IceWhaleTech
-          dst_repo_name: _appstore
-          dst_path: ./
-          email: q2676515970@163.com
-          src_branch: main
-          dst_branch: main
+          source_folder: 'tmp'
+          destination_repo: 'IceWhaleTech/_appstore'
+          destination_folder: './'
+          user_email: 'q2676515970@163.com'
+          user_name: 'raller1028'
