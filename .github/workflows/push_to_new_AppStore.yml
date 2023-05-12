@@ -24,11 +24,17 @@ jobs:
           destination-repository-name: '_appstore'
           user-email: q2676515970@163.com
           target-directory: './Apps'
-      - name: Copycat1
+      - name: cp
+        run: |
+          mkdir ./tmp
+          cp -r ./Apps ./tmp
+          cp recommend-list.json category-list.json ./tmp
+          ls ./tmp
+      - name: Copycat
         uses: andstor/copycat-action@v3
         with:
           personal_token: ${{ secrets.API_TOKEN_GITHUB2 }}
-          src_path: recommend-list.json category-list.json
+          src_path: tmp
           dst_owner: IceWhaleTech
           dst_repo_name: _appstore
           dst_path: ./
