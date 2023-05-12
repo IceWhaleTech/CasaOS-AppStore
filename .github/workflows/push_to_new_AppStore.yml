@@ -20,14 +20,15 @@ jobs:
           cp -r ./Apps ./tmp
           cp recommend-list.json category-list.json ./tmp
           ls ./tmp
+          cat ./tmp/recommend-list.json
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB2 }}
         with:
-          source-directory: './tmp'
+          source-directory: './Apps'
           destination-github-username: 'IceWhaleTech'
           destination-repository-name: '_appstore'
           user-email: q2676515970@163.com
-          target-directory: './'
+          target-directory: './Apps'
 
