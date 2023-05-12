@@ -35,7 +35,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB2 }}
         with:
-          source_folder: 'tmp'
+          source_folder: './tmp'
           destination_repo: 'IceWhaleTech/_appstore'
           destination_folder: './'
           user_email: 'q2676515970@163.com'
