@@ -14,13 +14,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: remove all file except icon.png
         run: find . -type f -not \( -name 'icon.png' -or -name '*.json' -or -name '*.yml' \) -delete
-      - name: cp
-        run: |
-          mkdir ./tmp
-          cp -r ./Apps ./tmp
-          cp recommend-list.json category-list.json ./tmp
-          ls ./tmp
-          cat ./tmp/recommend-list.json
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
@@ -31,4 +24,13 @@ jobs:
           destination-repository-name: '_appstore'
           user-email: q2676515970@163.com
           target-directory: './Apps'
-
+      - name: Copycat
+        uses: andstor/copycat-action@v3
+        with:
+          personal_token: ${{ secrets.API_TOKEN_GITHUB2 }}
+          src_path: ./category-list.json 
+          dst_owner: IceWhaleTech
+          dst_repo_name: _appstore
+          email: q2676515970@163.com
+          src_branch: main
+          dst_branch: main
