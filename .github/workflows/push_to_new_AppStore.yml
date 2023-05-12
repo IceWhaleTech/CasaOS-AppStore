@@ -29,8 +29,8 @@ jobs:
         with:
           personal_token: ${{ secrets.API_TOKEN_GITHUB2 }}
           src_path: |
-            ./recommend-list.json
-            ./category-list.json
+            recommend-list.json
+            category-list.json
           dst_owner: IceWhaleTech
           dst_repo_name: _appstore
           dst_path: ./
