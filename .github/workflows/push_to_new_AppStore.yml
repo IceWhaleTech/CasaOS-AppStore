@@ -30,15 +30,9 @@ jobs:
           cp -r ./Apps ./tmp
           cp recommend-list.json category-list.json ./tmp
           ls ./tmp
-      - name: Pushes test folder
-        uses: datalbry/copy_folder_to_another_repo_action@1.0.0
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB2 }}
+      - name: copy1
+      - uses: GuillaumeFalourd/copy-push-files@v1
         with:
-          source_folder: './tmp'
-          destination_repo: 'IceWhaleTech/_appstore'
-          destination_folder: './'
-          INPUT_DESTINATION_BRANCH: main
-          OUTPUT_BRANCH: main
-          user_email: 'q2676515970@163.com'
-          user_name: 'raller1028'
+          source_files: ./recommend-list.json ./category-list.json
+          remote_repository: https://github.com/IceWhaleTech/_appstore
+          access_token: ${{ secrets.API_TOKEN_GITHUB2 }}
