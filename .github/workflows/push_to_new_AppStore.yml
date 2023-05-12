@@ -33,6 +33,9 @@ jobs:
       - name: copy1
       - uses: GuillaumeFalourd/copy-push-files@v1
         with:
+          email: q2676515970@163.com
+          name: raller1028
+          target_branch: main
           source_files: ./recommend-list.json ./category-list.json
           remote_repository: https://github.com/IceWhaleTech/_appstore
           access_token: ${{ secrets.API_TOKEN_GITHUB2 }}
