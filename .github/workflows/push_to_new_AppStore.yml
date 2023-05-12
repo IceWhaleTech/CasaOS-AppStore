@@ -34,7 +34,7 @@ jobs:
         uses: andstor/copycat-action@v3
         with:
           personal_token: ${{ secrets.API_TOKEN_GITHUB2 }}
-          src_path: tmp
+          src_path: ./tmp
           dst_owner: IceWhaleTech
           dst_repo_name: _appstore
           email: q2676515970@163.com
