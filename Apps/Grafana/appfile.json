@@ -49,7 +49,16 @@
 				"description": ""
 			}
 		],
-		"volumes": [],
+		"volumes": [
+			{
+                "container": "/var/lib/grafana",
+                "host": "/DATA/AppData/$AppID/data",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Grafana database and plugins directory."
+            }
+		],
 		"devices": [],
 		"constraints": {
 			"min_memory": 64,
