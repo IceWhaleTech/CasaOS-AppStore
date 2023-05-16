@@ -9,7 +9,7 @@
         "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MineOS/screenshot-1.png"
     ],
     "category": [
-        "Gaming"
+        "Games"
     ],
     "developer": {
         "name": "hexparrot",
@@ -40,30 +40,30 @@
                 "value": "\"true\"",
                 "configurable": "yes",
                 "description": "Should the web interface use HTTPS or HTTP? Valid entries are \"true\" and \"false\" (with quotes)"
-            }
+            },
             {
                 "key": "SERVER_PORT",
                 "value": "8443",
                 "configurable": "yes",
                 "description": "What port should the web interface listen on? This is independent of the USE_HTTPS setting."
-            }
+            },
             {
                 "key": "USER_NAME",
                 "value": "mc",
                 "configurable": "yes",
                 "description": "On startup, mineos will check if an account of the name \"mc\" exists. If it does not exist, one will be created. This account, and any other created with this variable will be permitted to login to the web interface."
-            }
+            },
             {
                 "key": "USER_UID",
                 "value": "1000",
                 "configurable": "yes",
                 "description": "If the \"mc\" account does not already exist, when mineos creates it, it will do so with UID same as the value of the variable. If an account with this UID already exists, account creation will be aborted."
-            }
+            },
             {
                 "key": "USER_PASSWORD",
-                "value": "random_see_log",
+                "value": "root",
                 "configurable": "yes",
-                "description": "If the \"mc\" account is being created, it will use either the value of USER_PASSWORD, or a random 20 character password will be generated for you and displayed in the console log. After first launch, you should check the log."
+                "description": "If the \"mc\" account is being created, it will use the default password \"root\" (without quotes). It is recommended to change this to something more secure."
             }
         ],
         "ports": [
