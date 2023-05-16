@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/homeassistant:2023.3.1
+    image: linuxserver/homeassistant:2023.5.3
     deploy:
       resources:
         reservations:
@@ -39,7 +39,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: homeassistant
   author: CasaOS Team
