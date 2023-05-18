@@ -17,13 +17,9 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/snapdrop/config
+        source: /DATA/AppData/$AppID/config
         target: /config
-    devices: []
-    cap_add: []
-    command: []
     privileged: false
-    container_name: ""
 x-casaos:
   architectures:
     - amd64
