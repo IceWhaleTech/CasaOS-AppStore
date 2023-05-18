@@ -14,7 +14,7 @@ services:
         source: /DATA
         target: /storage
       - type: bind
-        source: /DATA/AppData/HandBrake/watch
+        source: /DATA/AppData/$AppID/watch
         target: /watch
       - type: bind
         source: /DATA/Media
@@ -25,11 +25,6 @@ services:
       - type: bind
         source: /DATA/AppData/HandBrake/config
         target: /config
-    devices: []
-    cap_add: []
-    command: []
-    environment: []
-    container_name: ""
 x-casaos:
   architectures:
     - amd64

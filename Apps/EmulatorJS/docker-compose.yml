@@ -22,18 +22,14 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/emulatorjs/config
+        source: /DATA/AppData/$AppID/config
         target: /config
       - type: bind
-        source: /DATA/AppData/emulatorjs/data
+        source: /DATA/AppData/$AppID/data
         target: /data
       - type: bind
         source: /ROMS/nes
         target: /data/nes/roms
-    devices: []
-    cap_add: []
-    command: []
-    container_name: ""
 x-casaos:
   architectures:
     - amd64

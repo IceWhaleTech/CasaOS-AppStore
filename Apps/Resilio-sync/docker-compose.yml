@@ -17,19 +17,15 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/resilio-sync/data
+        source: /DATA/AppData/$AppID/data
         target: /sync
       - type: bind
-        source: /DATA/AppData/resilio-sync/config
+        source: /DATA/AppData/$AppID/config
         target: /config
       - type: bind
         source: /DATA/Downloads
         target: /downloads
-    devices: []
-    cap_add: []
-    command: []
     privileged: false
-    container_name: ""
 x-casaos:
   architectures:
     - amd64
@@ -48,7 +44,7 @@ x-casaos:
     pl_pl: resilio-sync to aplikacja oparta na Dockerze, umożliwiająca szybką i bezpieczną synchronizację i udostępnianie plików.
     pt_br: resilio-sync é um aplicativo baseado em Docker que permite a sincronização e compartilhamento de arquivos de forma rápida e segura.
     sv_se: resilio-sync är en Docker-baserad applikation som möjliggör snabb och säker filsynkronisering och delning.
-    uk_ua: resilio-sync - це додаток на основі Docker, який забезпечує швидку і безпечну синхронізацію та обмін файлами.  
+    uk_ua: resilio-sync - це додаток на основі Docker, який забезпечує швидку і безпечну синхронізацію та обмін файлами.
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Resilio-sync/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Resilio-sync/screenshot-1.png
