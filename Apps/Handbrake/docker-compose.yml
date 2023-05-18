@@ -20,10 +20,7 @@ services:
         source: /DATA/Media
         target: /output
       - type: bind
-        source: /var/lib/docker/volumes/600fc8152964f5086ca729ef43181c2486230387bc84beff1951ebdc969850c9/_data
-        target: /trash
-      - type: bind
-        source: /DATA/AppData/HandBrake/config
+        source: /DATA/AppData/$AppID/config
         target: /config
 x-casaos:
   architectures:

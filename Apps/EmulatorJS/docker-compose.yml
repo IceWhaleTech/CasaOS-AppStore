@@ -7,7 +7,7 @@ services:
       - SUBFOLDER=/
       - TZ=Etc/UTC
     image: lscr.io/linuxserver/emulatorjs:1.7.2
-    network_mode: data_default
+    network_mode: bridge
     ports:
       - target: 3000
         published: "3001"
