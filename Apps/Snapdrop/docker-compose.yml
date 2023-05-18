@@ -2,9 +2,9 @@ name: snapdrop
 services:
   snapdrop:
     environment:
-      - PGID=1000
-      - PUID=1000
-      - TZ=Etc/UTC
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
     image: lscr.io/linuxserver/snapdrop:version-eac78009
     network_mode: bridge
     ports:

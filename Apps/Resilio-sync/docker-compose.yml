@@ -2,9 +2,9 @@ name: resilio-sync
 services:
   resilio-sync:
     environment:
-      - PGID=1000
-      - PUID=1000
-      - TZ=Etc/UTC
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
     image: lscr.io/linuxserver/resilio-sync:2.7.3
     network_mode: bridge
     ports:
