@@ -2,12 +2,12 @@ name: emulatorjs
 services:
   emulatorjs:
     environment:
-      - PGID=1000
-      - PUID=1000
+      - PGID=$PGID
+      - PUID=$PUID
       - SUBFOLDER=/
-      - TZ=Etc/UTC
+      - TZ=$TZ
     image: lscr.io/linuxserver/emulatorjs:1.7.2
-    network_mode: data_default
+    network_mode: bridge
     ports:
       - target: 3000
         published: "3001"
