@@ -24,6 +24,19 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
 
 - Language codes are case sensitive and should be in all lower case, e.g. `en_us`, `zh_cn`.
 
+- There are few system wide variables can be used in `environment` and `volumes`:
+
+    ```yaml
+    environment:
+      PGID: $PGID # Preset Group ID
+      PUID: $PUID # Preset User ID
+      TZ: $TZ # Current system timezone
+    ...
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config # $AppID = app name, e.g. syncthing
+    ```
+
 - CasaOS specific metadata, also called *store info*, are stored under [extension](https://docs.docker.com/compose/compose-file/#extension) property `x-casaos` at two positions.
 
     1. Service level
