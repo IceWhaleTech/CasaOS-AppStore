@@ -30,6 +30,16 @@ services:
       - type: bind
         source: /ROMS/nes
         target: /data/nes/roms
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_us: Play Game
+            zh_cn: 玩游戏
+        - container: "3000"
+          description:
+            en_us: Manage ROMS
+            zh_cn: ROM 管理
 x-casaos:
   architectures:
     - amd64
