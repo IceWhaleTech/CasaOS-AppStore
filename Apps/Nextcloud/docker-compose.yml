@@ -9,7 +9,7 @@ services:
     network_mode: bridge
     ports:
       - target: 80
-        published: "10080"
+        published: "10081"
         protocol: tcp
       - target: 443
         published: "10443"
@@ -87,4 +87,4 @@ x-casaos:
   title:
     en_us: Nextcloud
   index: /
-  port_map: "10080"
+  port_map: "10081"
