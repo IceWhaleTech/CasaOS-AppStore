@@ -1,5 +1,5 @@
 {
-	"version": "0.12.2",
+	"version": "0.13.0",
 	"title": "Memos",
 	"name": "Memos",
 	"icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/icon.png",
@@ -7,9 +7,10 @@
 	"overview": "A lightweight, self-hosted memo hub. Open Source and Free forever.",
 	"thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/thumbnail.png",
 	"screenshots": [
-	"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/screenshot-1.png"
+		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/screenshot-1.png",
+		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/screenshot-2.png"
 	],
-	"category": ["Note"],
+	"category": ["Notes"],
 	"developer": {
 		"name": "usememos Team",
 		"website": "https://github.com/usememos/memos/graphs/contributors",
@@ -61,7 +62,7 @@
 				"type": "tcp",
 				"allocation": "automatic",
 				"configurable": "no",
-				"description": ""
+				"description": "Memos HTTP Port"
 			}
 		],
 		"volumes": [
@@ -71,7 +72,7 @@
 				"mode": "rw",
 				"allocation": "automatic",
 				"configurable": "no",
-				"description": ""
+				"description": "memos data directory"
 			},
 		],
 		"devices": [],

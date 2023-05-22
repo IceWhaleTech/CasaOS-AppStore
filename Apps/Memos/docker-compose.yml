@@ -2,10 +2,10 @@ name: memos
 services:
   memos:
     environment:
-      PGID: "1000"
-      PUID: "1000"
+      PGID: $PGID
+      PUID: $PUID
       TZ: $TZ
-    image: neosmemo/memos:0.12.2
+    image: neosmemo/memos:0.13.0
     deploy:
       resources:
         reservations:
@@ -30,21 +30,24 @@ services:
             en_us: ""
         - container: TZ
           description:
-            en_us: ""
+            en_us: "timezone"
+            zh_cn: "时区"
       ports:
         - container: "5230"
           description:
             en_us: WebUI HTTP Port
             zh_cn: WebUI HTTP 端口
-
       volumes:
-        - container: /config
+        - container: /var/opt/memos
           description:
-            en_us: ""
+            en_us: memos data directory.
+            zh_cn: memos 数据目录
+
 x-casaos:
   architectures:
     - amd64
     - arm64
+    - arm
   main: memos
   author: usememos Team
   category: Notes
@@ -55,6 +58,7 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/screenshot-2.png
   tagline:
     en_us: Memos is a lightweight, self-hosted memo hub. Open Source and Free forever.
     zh_cn: Memos 是一个轻量级的自托管Memos中心。 开源且永远免费。
