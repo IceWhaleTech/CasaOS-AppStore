@@ -43,19 +43,19 @@ services:
       envs:
         - container: USE_HTTPS
           description:
-            en_us: Should the web interface use HTTPS or HTTP? Valid entries are "true" and "false" (with quotes) 
+            en_us: Should the web interface use HTTPS or HTTP? Valid entries are "true" and "false" (with quotes)
             es_es: ¿Debe la interfaz web usar HTTPS o HTTP? Las entradas válidas son "true" y "false" (con comillas)
-            
+
         - container: SERVER_PORT
           description:
             en_us: What port should the web interface listen on? This is independent of the USE_HTTPS setting.
             es_es: ¿En qué puerto debe escuchar la interfaz web? Esto es independiente de la configuración USE_HTTPS.
-            
+
         - container: USER_NAME
           description:
             en_us: On startup, mineos will check if an account of the name "mc" exists. If it does not exist, one will be created. This account, and any other created with this variable will be permitted to login to the web interface.
             es_es: Al iniciar, mineos verificará si existe una cuenta con el nombre "mc". Si no existe, se creará una. Esta cuenta y cualquier otra creada con esta variable podrán iniciar sesión en la interfaz web.
-            
+
         - container: USER_UID
           description:
             en_us: If the "mc" account does not already exist, when mineos creates it, it will do so with UID same as the value of the variable. If an account with this UID already exists, account creation will be aborted.
@@ -65,7 +65,7 @@ services:
           description:
             en_us: If the "mc" account is being created, it will use the default password "root" (without quotes). It is recommended to change this to something more secure.
             es_es: Si se está creando la cuenta "mc", utilizará la contraseña "root" (sin comillas) por defecto. Es recomendable cambiar esto por algo más seguro.
-            
+
       ports:
         - container: "8443"
           description:
@@ -146,18 +146,112 @@ x-casaos:
   category: Games
   description:
     en_us: MineOS is a server front-end to ease managing Minecraft administrative tasks. This iteration using Node.js aims to enhance previous MineOS scripts (Python-based), by leveraging the event-triggering, asyncronous model of Node.JS and websockets.
+    zh_cn: MineOS是一个服务器前端，用于简化Minecraft管理任务。这个使用Node.js的迭代旨在通过利用Node.JS和websockets的事件触发、异步模型来增强以前的MineOS脚本（基于Python）。
+    ar_sa: MineOS هو واجهة خادم لتسهيل إدارة مهام إدارة Minecraft. تهدف هذه التكرار باستخدام Node.js إلى تعزيز البرامج النصية MineOS السابقة (التي تعتمد على Python) ، من خلال استغلال نموذج الحدث والتجزئة اللامتزامن لـ Node.JS و websockets.
+    de_de: MineOS ist eine Server-Front-End, um die Verwaltung von Minecraft-Administrationsaufgaben zu erleichtern. Diese Iteration mit Node.js zielt darauf ab, frühere MineOS-Skripte (Python-basiert) zu verbessern, indem das ereignisgesteuerte, asynchrone Modell von Node.JS und Websockets genutzt wird.
     es_es: MineOS es una interfaz de servidor para facilitar la gestión de las tareas administrativas de Minecraft. Esta iteración que utiliza Node.js tiene como objetivo mejorar los scripts anteriores de MineOS (basados en Python), aprovechando el modelo asincrónico de activación de eventos de Node.JS y websockets.
+    fr_fr: MineOS est une interface de serveur pour faciliter la gestion des tâches administratives de Minecraft. Cette itération utilisant Node.js vise à améliorer les scripts MineOS précédents (basés sur Python), en tirant parti du modèle asynchrone de déclenchement d'événements de Node.JS et des websockets.
+    hu_hu: A MineOS egy szerver front-end, amely megkönnyíti a Minecraft adminisztratív feladatok kezelését. Ez az iteráció a Node.js használatával az előző MineOS parancsfájlok (Python alapú) javítására törekszik, kihasználva a Node.JS és a websockets eseményvezérelt, aszinkron modelljét.
+    it_it: MineOS è un front-end del server per facilitare la gestione dei compiti amministrativi di Minecraft. Questa iterazione che utilizza Node.js mira a migliorare gli script precedenti di MineOS (basati su Python), sfruttando il modello asincrono di attivazione degli eventi di Node.JS e websockets.
+    ru_ru: MineOS - это серверный фронт-энд, который облегчает управление административными задачами Minecraft. Эта итерация с использованием Node.js направлена на улучшение предыдущих сценариев MineOS (на основе Python), используя событийно-ориентированную, асинхронную модель Node.JS и websockets.
+    pl_pl: MineOS to interfejs serwera ułatwiający zarządzanie zadaniami administracyjnymi Minecraft. Ta iteracja z wykorzystaniem Node.js ma na celu ulepszenie poprzednich skryptów MineOS (opartych na Pythonie), wykorzystując model asynchroniczny wyzwalania zdarzeń Node.JS i websockets.
+    pt_br: MineOS é uma interface de servidor para facilitar a gestão de tarefas administrativas do Minecraft. Esta iteração usando o Node.js visa aprimorar os scripts anteriores do MineOS (baseados em Python), aproveitando o modelo assíncrono de acionamento de eventos do Node.JS e websockets.
+    sv_se: MineOS är ett serverfront som underlättar hanteringen av administrativa uppgifter för Minecraft. Denna iteration med Node.js syftar till att förbättra tidigare MineOS-skript (baserade på Python), genom att utnyttja Node.JS och websockets händelseutlösningsmodell.
+    uk_ua: MineOS - це серверний фронт-енд, який полегшує управління адміністративними завданнями Minecraft. Ця ітерація з використанням Node.js спрямована на поліпшення попередніх сценаріїв MineOS (на основі Python), використовуючи подійно-орієнтовану, асинхронну модель Node.JS та websockets.
   developer: hexparrot
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MineOS/icon.png
   tagline:
     en_us: Free and easy to use Minecraft server management tool.
+    zh_cn: 免费且易于使用的Minecraft服务器管理工具。
+    ar_sa: أداة إدارة خادم Minecraft مجانية وسهلة الاستخدام.
+    de_de: Kostenloses und einfach zu bedienendes Minecraft-Server-Verwaltungstool.
     es_es: Herramienta de administración de servidores de Minecraft gratuita y fácil de usar.
+    fr_fr: Outil de gestion de serveur Minecraft gratuit et facile à utiliser.
+    hu_hu: Ingyenes és könnyen használható Minecraft szerverkezelő eszköz.
+    it_it: Strumento gratuito e facile da usare per la gestione del server Minecraft.
+    ru_ru: Бесплатный и простой в использовании инструмент управления сервером Minecraft.
+    pl_pl: Darmowe i łatwe w użyciu narzędzie do zarządzania serwerem Minecraft.
+    pt_br: Ferramenta gratuita e fácil de usar para gerenciamento de servidor Minecraft.
+    sv_se: Gratis och enkelt att använda Minecraft serverhanteringsverktyg.
+    uk_ua: Безкоштовний та простий у використанні інструмент управління сервером Minecraft.
   tips:
     before_install:
       en_us: |
         Default Account
 
         | Username | Password |
+        |----------|----------|
+        | `mc`    | `root` |
+      zh_cn: |
+        默认账号
+
+        | 用户名 | 密码 |
+        |----------|----------|
+        | `mc`    | `root` |
+      ar_sa: |
+        الحساب الافتراضي
+
+        | اسم المستخدم | كلمة المرور |
+        |----------|----------|
+        | `mc`    | `root` |
+      de_de: |
+        Standardkonto
+
+        | Benutzername | Passwort |
+        |----------|----------|
+        | `mc`    | `root` |
+      es_es: |
+        Cuenta predeterminada
+
+        | Nombre de usuario | Contraseña |
+        |----------|----------|
+        | `mc`    | `root` |
+      fr_fr: |
+        Compte par défaut
+
+        | Nom d'utilisateur | Mot de passe |
+        |----------|----------|
+        | `mc`    | `root` |
+      hu_hu: |
+        Alapértelmezett fiók
+
+        | Felhasználónév | Jelszó |
+        |----------|----------|
+        | `mc`    | `root` |
+      it_it: |
+        Account predefinito
+
+        | Nome utente | Password |
+        |----------|----------|
+        | `mc`    | `root` |
+      ru_ru: |
+        Учетная запись по умолчанию
+
+        | Имя пользователя | Пароль |
+        |----------|----------|
+        | `mc`    | `root` |
+      pl_pl: |
+        Konto domyślne
+
+        | Nazwa użytkownika | Hasło |
+        |----------|----------|
+        | `mc`    | `root` |
+      pt_br: |
+        Conta padrão
+
+        | Nome de usuário | Senha |
+        |----------|----------|
+        | `mc`    | `root` |
+      sv_se: |
+        Standardkonto
+
+        | Användarnamn | Lösenord |
+        |----------|----------|
+        | `mc`    | `root` |
+      uk_ua: |
+        Обліковий запис за замовчуванням
+
+        | Ім'я користувача | Пароль |
         |----------|----------|
         | `mc`    | `root` |
   title:
@@ -168,6 +262,7 @@ x-casaos:
 
 volumes:
   mineos_data:
+
 
 networks:
   mineos:
