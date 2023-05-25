@@ -121,10 +121,10 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
             port_map: "8384"                # the port for web UI
         ```
 
-#### The specifications for the app icon and other display images
+#### Specifications of Icon, Thumbnail and Screenshots
 
-- The icon.png must be a transparent background PNG image with a size of 192x192 pixels.
-- The image size for Thumbnail.png is 784x442 pixels, with a rounded corner mask. It also needs to be saved as a PNG image with a transparent background.
-- The image size for screenshot.png is 1280x720 pixels and can be saved in either PNG or JPG format. Please try to keep the file size as small as possible.
+- Icon image should be a transparent background PNG image with a size of 192x192 pixels.
+- Thumbnail image should be 784x442 pixels, with a rounded corner mask. It is recommended to be saved as a PNG image with a transparent background.
+- Screenshot image should be 1280x720 pixels and can be saved in either PNG or JPG format. Please try to keep the file size as small as possible.
 
-We have prepared three Photoshop template files to help you quickly create the above images. You can [download them](psd-source) here.
+Please find the prepared [PSD template files](psd-source), to quickly create the above images if you need.
