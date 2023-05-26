@@ -35,6 +35,10 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
 
 - It should be a valid [Docker Compose file](https://docs.docker.com/compose/compose-file/).
 
+- Image tag should be specific, e.g. `:0.1.2`, instead of `:latest`.
+
+  > [What's Wrong With The Docker `:latest` Tag?](https://github.com/IceWhaleTech/CasaOS-AppStore/issues/167)
+
 - The `name` property is used as the *store App ID*, which should be unique across all apps.
 
     For example, in the [`docker-compose.yml` of Syncthing](Apps/Syncthing/docker-compose.yml#L1), its store App ID is `syncthing`:
