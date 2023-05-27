@@ -3,9 +3,9 @@ services:
   calibre-web:
     environment:
       DOCKER_MODS: linuxserver/calibre-web:calibre
-      PGID: "1000"
-      PUID: "1000"
-      TZ: Europe/London
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
     image: linuxserver/calibre-web:0.6.19
     deploy:
       resources:
