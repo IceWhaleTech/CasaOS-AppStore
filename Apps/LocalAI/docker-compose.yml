@@ -1,0 +1,131 @@
+version: '3.6'
+name: localai
+services:
+  api:
+    environment:
+      MODELS_PATH: /models
+      PRELOAD_MODELS: '[{"url": "https://raw.githubusercontent.com/go-skynet/model-gallery/main/gpt4all-j.yaml","name": "gpt4all-j"}]'
+    image: quay.io/go-skynet/local-ai:v1.17.1
+    ports:
+      - target: 8080
+        published: "18080"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - /DATA/AppData/$AppID/models:/models:cache
+    command: [ "/usr/bin/local-ai" ]
+    x-casaos:
+      envs:
+        - container: PRELOAD_MODELS
+          description:
+            en_us: "You can preload different models here as well. See https://github.com/go-skynet/model-gallery"
+            zh_cn: "你也可以在这里预加载不同的模型。请参阅 https://github.com/go-skynet/model-gallery"
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: api
+  author: go-skynet
+  category: Developer
+  description:
+    en_us: |-
+      LocalAI allows you to run LLMs (and not only) locally or on-prem with consumer grade hardware, supporting multiple model families that are compatible with the ggml format. Does not require GPU.
+
+      This app does not come with a UI. It only serves API that is compatible with OpenAI. You can use it with any app that supports OpenAI API, such as the ChatBot UI app.
+    zh_cn: |-
+      LocalAI 允许您在消费级硬件上本地或本地运行 LLM（不仅仅是 LLM），支持与 ggml 格式兼容的多个模型系列。不需要 GPU。
+
+      该应用程序不带有 UI。它只提供与 OpenAI 兼容的 API。您可以将其与任何支持 OpenAI API 的应用程序一起使用，例如 ChatBot UI 应用程序。
+    ar_sa: |-
+      يتيح لك LocalAI تشغيل LLMs (وغيرها) محليًا أو في الموقع مع عتاد المستهلك ، ودعم عدة عائلات نماذج متوافقة مع تنسيق ggml. لا يتطلب GPU.
+
+      هذا التطبيق لا يأتي مع واجهة مستخدم. إنه يخدم فقط API متوافقة مع OpenAI. يمكنك استخدامه مع أي تطبيق يدعم OpenAI API ، مثل تطبيق ChatBot UI.
+    de_de: |-
+      LocalAI ermöglicht es Ihnen, LLMs (und nicht nur) lokal oder vor Ort mit Consumer-Hardware auszuführen und unterstützt mehrere Modellfamilien, die mit dem ggml-Format kompatibel sind. Benötigt keine GPU.
+
+      Diese App wird ohne Benutzeroberfläche geliefert. Es dient nur API, die mit OpenAI kompatibel ist. Sie können es mit jeder App verwenden, die OpenAI API unterstützt, z. B. der ChatBot UI-App.
+    es_es: |-
+      LocalAI le permite ejecutar LLM (y no solo) localmente o en las instalaciones con hardware de consumo, admitiendo múltiples familias de modelos compatibles con el formato ggml. No requiere GPU.
+
+      Esta aplicación no viene con una interfaz de usuario. Solo sirve API que es compatible con OpenAI. Puede usarlo con cualquier aplicación que admita la API de OpenAI, como la aplicación ChatBot UI.
+    fr_fr: |-
+      LocalAI vous permet d'exécuter des LLM (et pas seulement) localement ou sur site avec du matériel grand public, prenant en charge plusieurs familles de modèles compatibles avec le format ggml. Ne nécessite pas de GPU.
+
+      Cette application ne dispose pas d'interface utilisateur. Il ne sert que l'API compatible avec OpenAI. Vous pouvez l'utiliser avec n'importe quelle application prenant en charge l'API OpenAI, comme l'application ChatBot UI.
+    hu_hu: |-
+      A LocalAI lehetővé teszi, hogy LLM-eket (és nem csak) futtasson helyben vagy helyben, fogyasztói minőségű hardverrel, több modellcsaládot támogatva, amelyek kompatibilisek a ggml formátummal. Nem igényel GPU-t.
+
+      Ez az alkalmazás nem rendelkezik felhasználói felülettel. Csak olyan API-t szolgál, amely kompatibilis az OpenAI-val. Bármely olyan alkalmazással használhatja, amely támogatja az OpenAI API-t, például a ChatBot UI alkalmazással.
+    it_it: |-
+      LocalAI consente di eseguire LLM (e non solo) localmente o in locale con hardware di consumo, supportando più famiglie di modelli compatibili con il formato ggml. Non richiede GPU.
+
+      Questa app non viene fornita con un'interfaccia utente. Serve solo API compatibili con OpenAI. Puoi usarlo con qualsiasi app che supporti l'API OpenAI, come l'app ChatBot UI.
+    ru_ru: |-
+      LocalAI позволяет запускать LLM (и не только) локально или локально с оборудованием для потребителей, поддерживая несколько семейств моделей, совместимых с форматом ggml. Не требует GPU.
+
+      Это приложение не поставляется с пользовательским интерфейсом. Он обслуживает только API, совместимый с OpenAI. Вы можете использовать его с любым приложением, поддерживающим API OpenAI, например, с приложением ChatBot UI.
+    pl_pl: |-
+      LocalAI pozwala uruchamiać LLM-y (i nie tylko) lokalnie lub lokalnie z sprzętem dla konsumentów, obsługując wiele rodzin modeli zgodnych z formatem ggml. Nie wymaga GPU.
+
+      Ta aplikacja nie jest dostarczana z interfejsem użytkownika. Służy tylko API zgodne z OpenAI. Możesz go używać z dowolną aplikacją obsługującą API OpenAI, taką jak aplikacja ChatBot UI.
+    pt_br: |-
+      LocalAI permite que você execute LLMs (e não apenas) localmente ou localmente com hardware de consumo, suportando várias famílias de modelos compatíveis com o formato ggml. Não requer GPU.
+
+      Este aplicativo não vem com uma interface do usuário. Ele serve apenas API compatível com OpenAI. Você pode usá-lo com qualquer aplicativo que suporte a API OpenAI, como o aplicativo ChatBot UI.
+    sv_se: |-
+      LocalAI låter dig köra LLM (och inte bara) lokalt eller lokalt med konsumenthårdvara och stöder flera modellfamiljer som är kompatibla med ggml-formatet. Kräver inte GPU.
+
+      Den här appen levereras inte med ett användargränssnitt. Det serverar bara API som är kompatibelt med OpenAI. Du kan använda den med vilken app som helst som stöder OpenAI API, till exempel ChatBot UI-appen.
+    uk_ua: |-
+      LocalAI дозволяє запускати LLM (і не тільки) локально або локально з обладнанням для споживачів, підтримуючи кілька сімей моделей, сумісних з форматом ggml. Не потребує GPU.
+
+      Цей додаток не постачається з інтерфейсом користувача. Він обслуговує лише API, сумісне з OpenAI. Ви можете використовувати його з будь-яким додатком, який підтримує API OpenAI, наприклад, додатком ChatBot UI.
+  developer: go-skynet
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LocalAI/icon.png
+  tagline:
+    en_us: "A drop-in replacement REST API that's compatible with OpenAI API specifications for local inferencing."
+    zh_cn: "一个与 OpenAI API 规范兼容的本地推理 REST API 的替代品。"
+    ar_sa: "API REST متوافق مع مواصفات OpenAI API للتعويض عنه."
+    de_de: "Ein Drop-In-Ersatz-REST-API, die mit OpenAI API-Spezifikationen für die lokale Inferenzierung kompatibel ist."
+    es_es: "Una API REST de reemplazo que es compatible con las especificaciones de la API de OpenAI para la inferencia local."
+    fr_fr: "Une API REST de remplacement compatible avec les spécifications de l'API OpenAI pour l'inférence locale."
+    hu_hu: "Egy helyi inferencia számára kompatibilis OpenAI API specifikációkkal rendelkező helyettesítő REST API."
+    it_it: "Un'API REST di sostituzione compatibile con le specifiche dell'API OpenAI per l'inferenza locale."
+    ru_ru: "Замена REST API, совместимая с спецификациями OpenAI API для локального вывода."
+    pl_pl: "Zastępujące REST API, które jest zgodne ze specyfikacjami interfejsu API OpenAI do lokalnego wnioskowania."
+    pt_br: "Uma API REST de substituição compatível com as especificações da API OpenAI para inferência local."
+    sv_se: "En drop-in-ersättning REST API som är kompatibel med OpenAI API-specifikationer för lokal inferens."
+    uk_ua: "Заміна REST API, сумісна зі специфікаціями OpenAI API для локального виведення."
+  tips:
+    before_install:
+      en_us: |
+        This app does not come with a UI. It only serves API that is compatible with OpenAI.
+      zh_cn: |
+        本应用不带有 UI，它只提供与 OpenAI 兼容的 API。
+      ar_sa: |
+        هذا التطبيق لا يأتي مع واجهة مستخدم. إنه يخدم فقط API متوافق مع OpenAI.
+      de_de: |
+        Diese App wird nicht mit einer Benutzeroberfläche geliefert. Es dient nur API, die mit OpenAI kompatibel ist.
+      es_es: |
+        Esta aplicación no viene con una interfaz de usuario. Solo sirve API que es compatible con OpenAI.
+      fr_fr: |
+        Cette application ne dispose pas d'interface utilisateur. Il ne sert que l'API compatible avec OpenAI.
+      hu_hu: |
+        Ez az alkalmazás nem rendelkezik felhasználói felülettel. Csak olyan API-t szolgál ki, amely kompatibilis az OpenAI-val.
+      it_it: |
+        Questa app non viene fornita con un'interfaccia utente. Serve solo API compatibili con OpenAI.
+      ru_ru: |
+        Это приложение не поставляется с пользовательским интерфейсом. Он обслуживает только API, совместимый с OpenAI.
+      pl_pl: |
+        Ta aplikacja nie jest dostarczana z interfejsem użytkownika. Obsługuje tylko API zgodne z OpenAI.
+      pt_br: |
+        Este aplicativo não vem com uma interface do usuário. Ele serve apenas API compatível com OpenAI.
+      sv_se: |
+        Den här appen levereras inte med ett användargränssnitt. Det serverar bara API som är kompatibla med OpenAI.
+      uk_ua: |
+        Ця програма не постачається з інтерфейсом користувача. Вона обслуговує лише API, сумісний з OpenAI.
+  title:
+    en_us: LocalAI
+  index: /v1/models
+  port_map: "18080"
