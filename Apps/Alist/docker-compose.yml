@@ -2,6 +2,10 @@ name: alist
 services:
   alist:
     image: xhofe/alist:v3.18.0
+    deploy:
+      resources:
+        reservations:
+          memory: "64M"
     network_mode: bridge
     ports:
       - target: 5244
@@ -34,14 +38,16 @@ x-casaos:
     en_us: A file list program that supports multiple storage, powered by Gin and Solidjs.
     zh_cn: 一个支持多种存储的文件列表程序，使用 Gin 和 Solidjs。
   developer: Xhofe
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/alist/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist/screenshot-1.png
   main: alist
   port_map: "5244"
   scheme: http
   tagline:
-    en_us: A file list program that supports multiple storage, powered by Gin and Solidjs.
-    zh_cn: 一个支持多种存储的文件列表程序，使用 Gin 和 Solidjs。
-  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/alist/thumbnail.jpg
+    en_us: A file list program that supports multiple storage
+    zh_cn: 一个支持多种存储的文件列表程序
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist/thumbnail.png
   tips:
     before_install:
       en_us: After installation, view the initial password in the log.
