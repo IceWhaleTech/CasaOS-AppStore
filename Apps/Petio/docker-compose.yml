@@ -1,6 +1,6 @@
 name: Petio
 services:
-  app:
+  petio:
     image: ghcr.io/petio-team/petio@sha256:1c5a9276a844f4284601cbe332905864950545ebdeaad74bacb9097ea4f4b333
     restart: unless-stopped
     network_mode: bridge
@@ -46,7 +46,7 @@ x-casaos:
     - amd64
     - arm
     - arm64
-  main: app
+  main: petio
   description:
     en_us: |
       Petio is a third party companion app available to Plex server owners to allow their users to request, review and discover content. The app is built to appear instantly familiar and intuitive to even the most tech-agnostic users. Petio will help you manage requests from your users, connect to other third party apps such as Sonarr and Radarr, notify users when content is available and track request progress. Petio also allows users to discover media both on and off your server, quickly and easily find related content and review to leave their opinion for other users.
@@ -109,13 +109,13 @@ x-casaos:
     pl_pl: Aplikacja towarzysząca od osoby trzeciej, dostępna dla właścicieli serwerów Plex, umożliwiająca użytkownikom żądanie, przeglądanie i odkrywanie treści.
     pt_br: Um aplicativo complementar de terceiros disponível para proprietários de servidores Plex, permitindo que seus usuários solicitem, revisem e descubram conteúdo.
   screenshot_link:
-    - https://raw.githubusercontent.com/WisdomSky/Casaos-Appstore/main/Apps/Petio/screenshot-1.png
-    - https://raw.githubusercontent.com/WisdomSky/Casaos-Appstore/main/Apps/Petio/screenshot-2.png
-    - https://raw.githubusercontent.com/WisdomSky/Casaos-Appstore/main/Apps/Petio/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Petio/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Petio/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Petio/screenshot-3.png
   developer: Petio Team
   author: WisdomSky
-  icon: https://raw.githubusercontent.com/WisdomSky/Casaos-Appstore/main/Apps/Petio/icon.png
-  thumbnail: https://raw.githubusercontent.com/WisdomSky/Casaos-Appstore/main/Apps/Petio/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Petio/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Petio/icon.png
   tips:
     before_install:
         en_us: MongoDB is required when setting up Petio. Make sure to install it if you haven't installed it yet.
