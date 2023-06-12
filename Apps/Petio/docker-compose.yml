@@ -32,7 +32,7 @@ services:
             en_us: WebUI Port
     ports:
       - target: 7777
-        published: 7777
+        published: "7777"
         protocol: tcp
     volumes:
       - type: bind
