@@ -45,10 +45,10 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /DATA/AppData/mongo/data/configdb
+        source: /DATA/AppData/mongodb4/data/configdb
         target: /data/configdb
       - type: bind
-        source: /DATA/AppData/mongo/data/db
+        source: /DATA/AppData/mongodb4/data/db
         target: /data/db
 x-casaos:
   architectures:
