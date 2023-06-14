@@ -3,7 +3,10 @@ services:
   petio:
     image: ghcr.io/petio-team/petio@sha256:1c5a9276a844f4284601cbe332905864950545ebdeaad74bacb9097ea4f4b333
     restart: unless-stopped
-    network_mode: bridge
+    networks:
+      - petio-network
+    depends_on:
+      - mongo
     environment:
       PUID: $PUID
       PGID: $PGID
@@ -41,6 +44,19 @@ services:
       - type: bind
         source: /DATA/AppData/petio/logs
         target: /app/logs
+  mongo:
+    image: mongo:4.4.22
+    restart: unless-stopped
+    hostname: mongo
+    networks:
+      - petio-network
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+networks:
+  petio-network:
+    driver: bridge
 x-casaos:
   architectures:
     - amd64
