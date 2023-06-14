@@ -7,10 +7,10 @@ services:
       PUID: $PUID
       PGID: $PGID
       TZ: $TZ
-      MYSQL_ROOT_PASSWORD: ''
-      MYSQL_DATABASE: ''
-      MYSQL_USER: ''
-      MYSQL_PASSWORD: ''
+      MYSQL_ROOT_PASSWORD: 'casaos'
+      MYSQL_DATABASE: 'casaos'
+      MYSQL_USER: 'casaos'
+      MYSQL_PASSWORD: 'casaos'
       REMOTE_SQL: ''
     x-casaos:
       envs:
@@ -119,6 +119,14 @@ x-casaos:
   author: WisdomSky
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MariaDB/icon.png
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MariaDB/icon.png
+  tips:
+    before_install:
+      en_us: |
+        Default user: `casaos`
+        Default password: `casaos`
+        Default database: `casaos`
+
+        Default root password: `casaos`
   title:
     en_us: MariaDB
   category: Developer
