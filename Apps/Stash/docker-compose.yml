@@ -86,19 +86,19 @@ services:
       - 9999:9999
     volumes:
       - /DATA/Media/xxx:/media
-      - /DATA/AppData/stash/generated:/generated
-      - /DATA/AppData/stash/metadata:/metadata
-      - /DATA/AppData/stash/cache:/cache
-      - /DATA/AppData/stash/plugins:/plugins
-      - /DATA/AppData/stash/themes:/themes
-      - /DATA/AppData/stash/userscripts:/userscripts
-      - /DATA/AppData/stash/validator:/validator
-      - /DATA/AppData/stash/scrapers:/scrapers
-      - /DATA/AppData/stash/templates:/templates
-      - /DATA/AppData/stash/config:/config
-      - /DATA/AppData/stash/blobs:/blobs
-      - /DATA/AppData/stash/logs:/logs
-      - /DATA/AppData/stash/data:/data
+      - /DATA/AppData/$AppID/generated:/generated
+      - /DATA/AppData/$AppID/metadata:/metadata
+      - /DATA/AppData/$AppID/cache:/cache
+      - /DATA/AppData/$AppID/plugins:/plugins
+      - /DATA/AppData/$AppID/themes:/themes
+      - /DATA/AppData/$AppID/userscripts:/userscripts
+      - /DATA/AppData/$AppID/validator:/validator
+      - /DATA/AppData/$AppID/scrapers:/scrapers
+      - /DATA/AppData/$AppID/templates:/templates
+      - /DATA/AppData/$AppID/config:/config
+      - /DATA/AppData/$AppID/blobs:/blobs
+      - /DATA/AppData/$AppID/logs:/logs
+      - /DATA/AppData/$AppID/data:/data
 x-casaos:
   architectures:
     - amd64
@@ -111,14 +111,14 @@ x-casaos:
     en_us: "Stash allows you to organize and view your own collection of adult video and image files. Think of it like a private PornHub site for your personal porn collection."
   screenshot_link:
     - https://github.com/stashapp/stash/raw/develop/docs/readme_assets/demo_image.png
-    - https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/stash/stash_home_screenshot.png
-    - https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/stash/stash_scenes_screenshot.png
-    - https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/stash/stash_settings_screenshot.png
+    - https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/Stash/home_screenshot.png
+    - https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/Stash/scenes_screenshot.png
+    - https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/Stash/settings_screenshot.png
   developer: Stash
   author: Stash
-  icon: https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/stash/icon.png
-  thumbnail: https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/stash/icon.png
+  icon: https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/Stash/icon.png
+  thumbnail: https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/Stash/icon.png
   title:
     en_us: Stash
-  category: Database
+  category: Utilities
   port_map: "9999"
