@@ -1,0 +1,124 @@
+---
+name: stash
+services:
+  app:
+    image: stashapp/stash:latest
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-Europe/Berlin}
+      - STASH_STASH=/data/
+      - STASH_GENERATED=/generated/
+      - STASH_BLOBS=/blobs/
+      - STASH_METADATA=/metadata/
+      - STASH_CACHE=/cache/
+      - STASH_PLUGINS=/plugins/
+      - STASH_THEMES=/themes/
+      - STASH_USERSCRIPTS=/userscripts/
+      - STASH_VALIDATOR=/validator/
+      - STASH_SCRAPERS=/scrapers/
+      - STASH_TEMPLATES=/templates/
+      - STASH_CONFIG_FILE=/config/config.yml
+      - STASH_LOG_FILE=/logs/stash.log
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_us: for UserID
+        - container: PGID
+          description:
+            en_us: for GroupID
+        - container: TZ
+          description:
+            en_us: Specify a timezone to use.
+        - container: STASH_STASH
+          description:
+            en_us: Stash Stash
+        - container: STASH_GENERATED
+          description:
+            en_us: Stash Generated
+        - container: STASH_METADATA
+          description:
+            en_us: Stash Metadata
+        - container: STASH_CACHE
+          description:
+            en_us: Stash Cache
+        - container: STASH_PLUGINS
+          description:
+            en_us: Stash Plugins
+        - container: STASH_THEMES
+          description:
+            en_us: Stash Themes
+        - container: STASH_USERSCRIPTS
+          description:
+            en_us: Stash Userscripts
+        - container: STASH_VALIDATOR
+          description:
+            en_us: Stash Validator
+        - container: STASH_SCRAPERS
+          description:
+            en_us: Stash Scrapers
+        - container: STASH_TEMPLATES
+          description:
+            en_us: Stash Templates
+        - container: STASH_CONFIG_FILE
+          description:
+            en_us: Stash Config File
+        - container: STASH_LOG_FILE
+          description:
+            en_us: Stash Log File
+      volumes:
+        - container: /data
+          description:
+            en_us: Stash Stash
+        - container: /logs
+          description:
+            en_us: Stash Logs
+        - container: /config
+          description:
+            en_us: Stash Config
+      ports:
+        - container: "9999"
+          description:
+            en_us: Stash Web Port
+    ports:
+      - 9999:9999
+    volumes:
+      - /DATA/Media/xxx:/media
+      - /DATA/AppData/stash/generated:/generated
+      - /DATA/AppData/stash/metadata:/metadata
+      - /DATA/AppData/stash/cache:/cache
+      - /DATA/AppData/stash/plugins:/plugins
+      - /DATA/AppData/stash/themes:/themes
+      - /DATA/AppData/stash/userscripts:/userscripts
+      - /DATA/AppData/stash/validator:/validator
+      - /DATA/AppData/stash/scrapers:/scrapers
+      - /DATA/AppData/stash/templates:/templates
+      - /DATA/AppData/stash/config:/config
+      - /DATA/AppData/stash/blobs:/blobs
+      - /DATA/AppData/stash/logs:/logs
+      - /DATA/AppData/stash/data:/data
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: app
+  description:
+    en_us: "Stash is a self-hosted webapp written in Go which organizes and serves your porn."
+  tagline:
+    en_us: "Stash allows you to organize and view your own collection of adult video and image files. Think of it like a private PornHub site for your personal porn collection."
+  screenshot_link:
+    - https://github.com/stashapp/stash/raw/develop/docs/readme_assets/demo_image.png
+    - https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/stash/stash_home_screenshot.png
+    - https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/stash/stash_scenes_screenshot.png
+    - https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/stash/stash_settings_screenshot.png
+  developer: Stash
+  author: Stash
+  icon: https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/stash/icon.png
+  thumbnail: https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/stash/icon.png
+  title:
+    en_us: Stash
+  category: Database
+  port_map: "9999"

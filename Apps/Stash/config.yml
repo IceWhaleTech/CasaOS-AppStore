@@ -1,0 +1,161 @@
+---
+blobs_path: /blobs/
+blobs_storage: FILESYSTEM
+cache: /cache/
+calculate_md5: false
+dangerous_allow_public_without_auth: "false"
+database: /data/stash-go.sqlite
+defaults:
+  auto_tag_task:
+    paths: []
+    performers:
+      - '*'
+    studios:
+      - '*'
+    tags:
+      - '*'
+  generate_task:
+    covers: true
+    forcetranscodes: false
+    imagepreviews: false
+    interactiveheatmapsspeeds: false
+    markerids: []
+    markerimagepreviews: false
+    markers: true
+    markerscreenshots: false
+    overwrite: false
+    phashes: true
+    previewoptions:
+      previewexcludeend: "0"
+      previewexcludestart: "0"
+      previewpreset: slow
+      previewsegmentduration: 0.75
+      previewsegments: 12
+    previews: true
+    sceneids: []
+    sprites: true
+    transcodes: false
+  identify_task:
+    options:
+      fieldoptions:
+        - createmissing: true
+          field: title
+          strategy: OVERWRITE
+        - createmissing: true
+          field: studio
+          strategy: MERGE
+        - createmissing: true
+          field: performers
+          strategy: MERGE
+        - createmissing: true
+          field: tags
+          strategy: MERGE
+        - createmissing: true
+          field: stash_ids
+          strategy: MERGE
+      includemaleperformers: true
+      setcoverimage: true
+      setorganized: false
+    paths: []
+    sceneids: []
+    sources:
+      - options:
+          fieldoptions: []
+          includemaleperformers: null
+          setcoverimage: null
+          setorganized: false
+        source:
+          scraperid: builtin_autotag
+          stashboxendpoint: null
+          stashboxindex: null
+      - options: null
+        source:
+          scraperid: ThePornDB
+          stashboxendpoint: null
+          stashboxindex: null
+  scan_task:
+    scangeneratecovers: false
+    scangenerateimagepreviews: false
+    scangeneratephashes: true
+    scangeneratepreviews: true
+    scangeneratesprites: true
+    scangeneratethumbnails: false
+    stripfileextension: false
+    usefilemetadata: true
+gallery_cover_regex: (poster|cover|folder|board)\.[^\.]+$
+generated: /generated/
+host: 0.0.0.0
+jwt_secret_key: 7d93e7fc52ef51a397fc40c6f569f05a37fd278a5231f9418477843ee865faea
+logfile: /logs/stash.log
+metadata: /metadata/
+no_proxy: localhost,127.0.0.1,192.168.0.0/16,10.0.0.0/8,172.16.0.0/12
+nobrowser: false
+notifications_enabled: true
+parallel_tasks: 0
+plugins_path: /plugins/
+port: 9999
+preview_audio: true
+preview_exclude_end: "0"
+preview_exclude_start: "0"
+preview_segment_duration: 0.75
+preview_segments: 12
+scraper_cdp_path: http://127;0.0.1:9222/json/version
+scraper_user_agent: |
+  Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like
+  Gecko) Chrome/113.0.5672.64 Safari/537.36
+scrapers_path: /scrapers/
+security_tripwire_accessed_from_public_internet: ""
+sequential_scanning: false
+session_store_key: avc123
+show_one_time_moved_notification: false
+sound_on_preview: false
+stash:
+  - excludeimage: true
+    excludevideo: false
+    path: /data
+theme_color: '#202b33'
+ui:
+  front_page_content:
+    - __typename: CustomFilter
+      direction: DESC
+      message:
+        id: recently_released_objects
+        values:
+          objects: Scenes
+      mode: SCENES
+      sortBy: date
+    - __typename: CustomFilter
+      direction: DESC
+      message:
+        id: recently_added_objects
+        values:
+          objects: Studios
+      mode: STUDIOS
+      sortBy: created_at
+    - __typename: CustomFilter
+      direction: DESC
+      message:
+        id: recently_released_objects
+        values:
+          objects: Movies
+      mode: MOVIES
+      sortBy: date
+    - __typename: CustomFilter
+      direction: DESC
+      message:
+        id: recently_added_objects
+        values:
+          objects: Performers
+      mode: PERFORMERS
+      sortBy: created_at
+    - __typename: CustomFilter
+      direction: DESC
+      message:
+        id: recently_released_objects
+        values:
+          objects: Galleries
+      mode: GALLERIES
+      sortBy: date
+  last_note_seen: 20230301
+video_file_naming_algorithm: OSHASH
+write_image_thumbnails: true
