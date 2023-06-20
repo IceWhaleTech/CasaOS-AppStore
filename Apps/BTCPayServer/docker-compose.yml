@@ -1,0 +1,333 @@
+---
+name: btcpayserver
+services:
+  nginx:
+    restart: unless-stopped
+    image: nginx:1.23.3
+    container_name: nginx
+    ports:
+      - ${REVERSEPROXY_HTTP_PORT:-80}:80
+      - ${REVERSEPROXY_HTTPS_PORT:-443}:443
+    volumes:
+      - nginx_conf:/etc/nginx/conf.d
+      - nginx_vhost:/etc/nginx/vhost.d
+      - nginx_html:/usr/share/nginx/html
+      - tor_servicesdir:/var/lib/tor/hidden_services
+      - nginx_certs:/etc/nginx/certs:ro
+  nginx-gen:
+    restart: unless-stopped
+    image: btcpayserver/docker-gen:0.7.8
+    container_name: nginx-gen
+    environment:
+      DEFAULT_HOST: ${REVERSEPROXY_DEFAULT_HOST:-none}
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
+      - nginx_conf:/etc/nginx/conf.d
+      - nginx_vhost:/etc/nginx/vhost.d
+      - nginx_html:/usr/share/nginx/html
+      - tor_servicesdir:/var/lib/tor/hidden_services
+      - nginx_certs:/etc/nginx/certs:ro
+    entrypoint: /usr/local/bin/docker-gen -notify-sighup nginx -watch -wait 5s:30s /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+    links:
+    - btcpayserver
+    - nginx
+  btcpayserver:
+    restart: unless-stopped
+    image: ${BTCPAY_IMAGE:-btcpayserver/btcpayserver:1.10.2}
+    expose:
+      - 49392
+    environment:
+      BTCPAY_POSTGRES: User ID=postgres;Host=postgres;Port=5432;Application Name=btcpayserver;Database=btcpayserver${NBITCOIN_NETWORK:-regtest}
+      BTCPAY_EXPLORERPOSTGRES: User ID=postgres;Host=postgres;Port=5432;Application Name=btcpayserver;MaxPoolSize=80;Database=nbxplorer${NBITCOIN_NETWORK:-regtest}
+      BTCPAY_NETWORK: ${NBITCOIN_NETWORK:-regtest}
+      BTCPAY_BIND: 0.0.0.0:49392
+      BTCPAY_ROOTPATH: ${BTCPAY_ROOTPATH:-/}
+      BTCPAY_SSHCONNECTION: root@host.docker.internal
+      BTCPAY_SSHTRUSTEDFINGERPRINTS: ${BTCPAY_SSHTRUSTEDFINGERPRINTS}
+      BTCPAY_SSHKEYFILE: ${BTCPAY_SSHKEYFILE}
+      BTCPAY_SSHAUTHORIZEDKEYS: ${BTCPAY_SSHAUTHORIZEDKEYS}
+      BTCPAY_DEBUGLOG: btcpay.log
+      BTCPAY_UPDATEURL: https://api.github.com/repos/btcpayserver/btcpayserver/releases/latest
+      BTCPAY_DOCKERDEPLOYMENT: true
+      BTCPAY_CHAINS: btc
+      BTCPAY_BTCEXPLORERURL: http://nbxplorer:32838/
+      BTCPAY_BTCLIGHTNING: type=clightning;server=unix://etc/clightning_bitcoin/lightning-rpc
+      BTCPAY_BTCEXTERNALSPARK: server=/spark/btc/;cookiefile=/etc/clightning_bitcoin_spark/.cookie
+      BTCPAY_BTCEXTERNALCHARGE: server=/lightning-charge/btc/;cookiefilepath=/etc/clightning_bitcoin_charge/.cookie
+      BTCPAY_BTCEXTERNALRTL: server=/rtl/api/authenticate/cookie;cookiefile=/etc/clightning_bitcoin_rtl/.cookie
+      BTCPAY_BTCEXTERNALCLIGHTNINGREST: server=/clightning-rest/btc;macaroonfilepath=/etc/clightning_bitcoin_rest_certs/access.macaroon;macaroondirectorypath=/etc/clightning_bitcoin_rest_certs
+      HIDDENSERVICE_NAME: BTCPayServer
+      HIDDENSERVICE_REVERSEPROXY: nginx
+      BTCPAY_TORRCFILE: /usr/local/etc/tor/torrc-2
+      BTCPAY_SOCKSENDPOINT: tor:9050
+      VIRTUAL_NETWORK: nginx-proxy
+      VIRTUAL_PORT: 49392
+      VIRTUAL_HOST: ${BTCPAY_HOST},${BTCPAY_ADDITIONAL_HOSTS}
+      VIRTUAL_HOST_NAME: btcpay
+      SSL_POLICY: Mozilla-Modern
+      LETSENCRYPT_HOST: ${BTCPAY_HOST},${BTCPAY_ADDITIONAL_HOSTS}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL:-<no value>}
+    links:
+      - postgres
+      - clightning_bitcoin
+    volumes:
+      - btcpay_datadir:/datadir
+      - nbxplorer_datadir:/root/.nbxplorer
+      - /share/homes/admin/.ssh/authorized_keys:${BTCPAY_SSHAUTHORIZEDKEYS}
+      - btcpay_pluginsdir:/root/.btcpayserver/Plugins
+      - clightning_bitcoin_datadir:/etc/clightning_bitcoin
+      - clightning_bitcoin_spark:/etc/clightning_bitcoin_spark
+      - clightning_bitcoin_charge:/etc/clightning_bitcoin_charge
+      - clightning_bitcoin_rtl_datadir:/etc/clightning_bitcoin_rtl
+      - clightning_bitcoin_rest_certsdir:/etc/clightning_bitcoin_rest_certs
+      - tor_servicesdir:/var/lib/tor/hidden_services
+      - tor_torrcdir:/usr/local/etc/tor/
+  bitcoind:
+    restart: unless-stopped
+    container_name: btcpayserver_bitcoind
+    image: btcpayserver/bitcoin:25.0
+    environment:
+      BITCOIN_NETWORK: ${NBITCOIN_NETWORK:-regtest}
+      CREATE_WALLET: false
+      BITCOIN_WALLETDIR: /walletdata
+      BITCOIN_EXTRA_ARGS: |-
+        rpcport=43782
+        rpcbind=0.0.0.0:43782
+        rpcallowip=0.0.0.0/0
+        port=39388
+        whitelist=0.0.0.0/0
+        maxmempool=500
+
+        prune=50000
+        onion=tor:9050
+        # rpcuser=btcrpc
+        # rpcpassword=btcpayserver4ever
+        # We need to use rpcauth because we also need cookieauth. rpcpassword disabled cookie file auth.
+        # Be careful if you copy the line below from the docker-compose.yml! A dollar sign is escaped.
+        rpcauth=btcrpc:a6a5d29a3f44f02e4cd8cabb5b10a234$$ab6152915515f6a9cca806d2ab5f0e2794c346ba74f812c61e48241d523778b8
+
+        mempoolfullrbf=1
+      HIDDENSERVICE_NAME: BTC-P2P,BTC-RPC
+      BTC-P2P_HIDDENSERVICE_VIRTUAL_PORT: 8333
+      BTC-P2P_HIDDENSERVICE_PORT: 39388
+      BTC-RPC_HIDDENSERVICE_VIRTUAL_PORT: 8332
+      BTC-RPC_HIDDENSERVICE_PORT: 43782
+    expose:
+      - 43782
+      - 39388
+    volumes:
+      - bitcoin_datadir:/data
+      - bitcoin_wallet_datadir:/walletdata
+      - tor_datadir:/home/tor/.tor
+    links:
+      - tor
+  nbxplorer:
+    restart: unless-stopped
+    image: nicolasdorier/nbxplorer:2.3.64
+    expose:
+      - 32838
+    environment:
+      NBXPLORER_NETWORK: ${NBITCOIN_NETWORK:-regtest}
+      NBXPLORER_BIND: 0.0.0.0:32838
+      NBXPLORER_TRIMEVENTS: 10000
+      NBXPLORER_SIGNALFILESDIR: /datadir
+      NBXPLORER_POSTGRES: User ID=postgres;Host=postgres;Port=5432;Application Name=nbxplorer;MaxPoolSize=20;Database=nbxplorer${NBITCOIN_NETWORK:-regtest}
+      NBXPLORER_AUTOMIGRATE: 1
+      NBXPLORER_NOMIGRATEEVTS: 1
+      NBXPLORER_CHAINS: btc
+      NBXPLORER_BTCRPCURL: http://bitcoind:43782/
+      NBXPLORER_BTCNODEENDPOINT: bitcoind:39388
+    links:
+      - postgres
+    volumes:
+      - nbxplorer_datadir:/datadir
+      - bitcoin_datadir:/root/.bitcoin
+  clightning_bitcoin:
+    image: btcpayserver/lightning:v23.02-1
+    container_name: btcpayserver_clightning_bitcoin
+    restart: unless-stopped
+    environment:
+      LIGHTNINGD_NETWORK: ${NBITCOIN_NETWORK:-regtest}
+      LIGHTNINGD_CHAIN: btc
+      LIGHTNINGD_ALIAS: ${LIGHTNING_ALIAS}
+      LIGHTNINGD_ANNOUNCEADDR: ${BTCPAY_ANNOUNCEABLE_HOST}
+      LIGHTNINGD_PORT: 9735
+      LIGHTNINGD_READY_FILE: /root/.nbxplorer/btc_fully_synched
+      LIGHTNINGD_OPT: |
+        bitcoin-datadir=/etc/bitcoin
+        bitcoin-rpcconnect=bitcoind
+        experimental-offers
+        database-upgrade=true
+        rpc-file-mode=0666
+
+        proxy=tor:9050
+      HIDDENSERVICE_NAME: c-lightning
+      HIDDENSERVICE_PORT: 9735
+      LIGHTNINGD_HIDDENSERVICE_HOSTNAME_FILE: /var/lib/tor/hidden_services/c-lightning/hostname
+    volumes:
+      - clightning_bitcoin_datadir:/root/.lightning
+      - bitcoin_datadir:/etc/bitcoin
+      - nbxplorer_datadir:/root/.nbxplorer
+      - tor_servicesdir:/var/lib/tor/hidden_services
+    ports:
+      - 9735:9735
+    links:
+      - bitcoind
+      - tor
+  clightning_bitcoin_charge:
+    image: shesek/lightning-charge:0.4.23-1-standalone
+    restart: unless-stopped
+    environment:
+      NETWORK: ${NBITCOIN_NETWORK:-regtest}
+      COOKIE_FILE: /data/.cookie
+      URL: ${BTCPAY_ROOTPATH:-/}lightning-charge/btc/
+      LN_NET_PATH: /etc/lightning
+      LN_NET: /etc/lightning
+    volumes:
+    - clightning_bitcoin_datadir:/etc/lightning
+    - clightning_bitcoin_charge:/data
+    expose:
+    - 9112
+    links:
+    - clightning_bitcoin
+  clightning_bitcoin_spark:
+    image: shesek/spark-wallet:0.3.1-standalone
+    restart: unless-stopped
+    environment:
+      NETWORK: ${NBITCOIN_NETWORK:-regtest}
+      SPARK_OPT: --no-tls -C /data/.cookie
+    volumes:
+    - clightning_bitcoin_datadir:/etc/lightning
+    - clightning_bitcoin_spark:/data
+    links:
+    - clightning_bitcoin
+    expose:
+    - 9737
+  clightning_bitcoin_rest:
+    image: saubyk/c-lightning-rest:0.9.0
+    restart: unless-stopped
+    environment:
+      PROTOCOL: http
+      NODE: clightning_bitcoin:9835
+      LIGHTNINGD_READY_FILE: /root/.nbxplorer/btc_fully_synched
+    links:
+    - clightning_bitcoin
+    volumes:
+    - clightning_bitcoin_datadir:/root/.lightning
+    - bitcoin_datadir:/etc/bitcoin
+    - clightning_bitcoin_rest_certsdir:/usr/src/app/certs
+    - nbxplorer_datadir:/root/.nbxplorer
+    expose:
+    - 3001
+  bitcoin_rtl:
+    image: shahanafarooqui/rtl:0.13.3
+    restart: unless-stopped
+    environment:
+      LN_IMPLEMENTATION: CLN
+      CONFIG_PATH: /root/.lightning/config
+      LN_SERVER_URL: http://clightning_bitcoin_rest:3001/v1
+      MACAROON_PATH: /etc/clightning_bitcoin_rest_certs
+      RTL_CONFIG_PATH: /data/
+      BITCOIND_CONFIG_PATH: /etc/bitcoin/bitcoin.conf
+      RTL_SSO: 1
+      RTL_COOKIE_PATH: /data/.cookie
+      LOGOUT_REDIRECT_LINK: /server/services
+    volumes:
+    - clightning_bitcoin_datadir:/root/.lightning
+    - bitcoin_datadir:/etc/bitcoin
+    - clightning_bitcoin_rtl_datadir:/data
+    - clightning_bitcoin_rest_certsdir:/etc/clightning_bitcoin_rest_certs
+    expose:
+    - 3000
+  tor:
+    restart: unless-stopped
+    image: btcpayserver/tor:0.4.7.10
+    container_name: tor
+    environment:
+      TOR_PASSWORD: btcpayserver
+      TOR_ADDITIONAL_CONFIG: /usr/local/etc/tor/torrc-2
+      TOR_EXTRA_ARGS: |
+        CookieAuthentication 1
+    expose:
+      - 9050
+      - 9051
+    volumes:
+      - tor_datadir:/home/tor/.tor
+      - tor_torrcdir:/usr/local/etc/tor
+      - tor_servicesdir:/var/lib/tor/hidden_services
+  tor-gen:
+    restart: unless-stopped
+    image: btcpayserver/docker-gen:0.7.8
+    container_name: tor-gen
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./torrc.tmpl:/etc/docker-gen/templates/torrc.tmpl:ro
+      - tor_torrcdir:/usr/local/etc/tor
+    entrypoint: /usr/local/bin/docker-gen -notify-sighup tor -watch -wait 5s:30s /etc/docker-gen/templates/torrc.tmpl /usr/local/etc/tor/torrc-2
+    links:
+      - tor
+  letsencrypt-nginx-proxy-companion:
+    restart: unless-stopped
+    image: btcpayserver/letsencrypt-nginx-proxy-companion:1.12.2
+    container_name: letsencrypt-nginx-proxy-companion
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - nginx_conf:/etc/nginx/conf.d
+      - nginx_vhost:/etc/nginx/vhost.d
+      - nginx_html:/usr/share/nginx/html
+      - nginx_certs:/etc/nginx/certs:rw
+    environment:
+      NGINX_DOCKER_GEN_CONTAINER: nginx-gen
+      NGINX_PROXY_CONTAINER: nginx
+      ACME_CA_URI: ${ACME_CA_URI:-production}
+    links:
+      - nginx-gen
+  postgres:
+    restart: unless-stopped
+    image: btcpayserver/postgres:13.10
+    command: ["-c", "random_page_cost=1.0", "-c", "shared_preload_libraries=pg_stat_statements"]
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - postgres_datadir:/var/lib/postgresql/data
+volumes:
+  nginx_conf:
+  nginx_vhost:
+  nginx_html:
+  nginx_certs:
+  btcpay_datadir:
+  btcpay_pluginsdir:
+  bitcoin_datadir:
+  bitcoin_wallet_datadir:
+  clightning_bitcoin_datadir:
+  clightning_bitcoin_spark:
+  clightning_bitcoin_charge:
+  clightning_bitcoin_rtl_datadir:
+  clightning_bitcoin_rest_certsdir:
+  tor_datadir:
+  tor_torrcdir:
+  tor_servicesdir:
+  nbxplorer_datadir:
+  postgres_datadir:
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: btcpayserver
+  description:
+    en_us: Start Accepting Bitcoin Payments With 0% Fees & No Third-party. BTCPay Server is a self-hosted, open-source cryptocurrency payment processor. It's secure, private, censorship-resistant and free.
+  tagline:
+    en_us: Accept Bitcoin payments. Free, open-source & self-hosted, Bitcoin payment processor.
+  screenshot_link:
+    - ./home_screenshot.png
+  developer: BTCPayServer
+  author: BTCPayServer
+  icon: ./icon.png
+  thumbnail: ./thumbnail.png
+  title:
+    en_us: BTCPayServer
+  category: Utilities
+  port_map: 9999
