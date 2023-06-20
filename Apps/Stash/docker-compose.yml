@@ -5,8 +5,6 @@ services:
     image: stashapp/stash:latest
     restart: unless-stopped
     environment:
-      - PUID=${PUID:-1000}
-      - PGID=${PGID:-1000}
       - TZ=${TZ:-Europe/Berlin}
       - STASH_STASH=/data/
       - STASH_GENERATED=/data/generated/
@@ -22,18 +20,9 @@ services:
       - STASH_CUSTOM_PERFORMERS=/data/custom_performers/
       - STASH_BACKUPS=/data/backups/
       - STASH_CONFIG_FILE=/data/config.yml
-      - STASH_LOG_FILE=/data/logs/stash.log
+      - STASH_LOG_FILE=/data/stash.log
     x-casaos:
       envs:
-        - container: PUID
-          description:
-            en_us: for UserID
-        - container: PGID
-          description:
-            en_us: for GroupID
-        - container: TZ
-          description:
-            en_us: Specify a timezone to use.
         - container: STASH_STASH
           description:
             en_us: Stash Stash
@@ -90,8 +79,8 @@ services:
     ports:
       - 9999:9999
     volumes:
-      - /mnt/smb/qf4b/media/_stash:/data
-      - /mnt/smb/qf4b/media/xxx:/media
+      - /DATA/Media/_stash:/data
+      - /DATA/Media/xxx:/media
 x-casaos:
   architectures:
     - amd64
@@ -104,13 +93,13 @@ x-casaos:
     en_us: "Stash allows you to organize and view your own collection of adult video and image files. Think of it like a private PornHub site for your personal porn collection."
   screenshot_link:
     - https://github.com/stashapp/stash/raw/develop/docs/readme_assets/demo_image.png
-    - https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/Stash/home_screenshot.png
-    - https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/Stash/scenes_screenshot.png
-    - https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/Stash/settings_screenshot.png
+    - ./home_screenshot.png
+    - ./scenes_screenshot.png
+    - ./settings_screenshot.png
   developer: Stash
   author: Stash
-  icon: https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/Stash/icon.png
-  thumbnail: https://github.com/f4bio/CasaOS-Appstore/raw/main/Apps/Stash/icon.png
+  icon: ./icon.png
+  thumbnail: ./thumbnail.png
   title:
     en_us: Stash
   category: Utilities
