@@ -9,20 +9,20 @@ services:
       - PGID=${PGID:-1000}
       - TZ=${TZ:-Europe/Berlin}
       - STASH_STASH=/data/
-      - STASH_GENERATED=/generated/
-      - STASH_BLOBS=/blobs/
-      - STASH_METADATA=/metadata/
-      - STASH_CACHE=/cache/
-      - STASH_PLUGINS=/plugins/
-      - STASH_THEMES=/themes/
-      - STASH_USERSCRIPTS=/userscripts/
-      - STASH_VALIDATOR=/validator/
-      - STASH_SCRAPERS=/scrapers/
-      - STASH_TEMPLATES=/templates/
-      - STASH_CUSTOM_PERFORMERS=/custom_performers/
-      - STASH_BACKUPS=/backups/
-      - STASH_CONFIG_FILE=/config/config.yml
-      - STASH_LOG_FILE=/logs/stash.log
+      - STASH_GENERATED=/data/generated/
+      - STASH_BLOBS=/data/blobs/
+      - STASH_METADATA=/data/metadata/
+      - STASH_CACHE=/data/cache/
+      - STASH_PLUGINS=/data/plugins/
+      - STASH_THEMES=/data/themes/
+      - STASH_USERSCRIPTS=/data/userscripts/
+      - STASH_VALIDATOR=/data/validator/
+      - STASH_SCRAPERS=/data/scrapers/
+      - STASH_TEMPLATES=/data/templates/
+      - STASH_CUSTOM_PERFORMERS=/data/custom_performers/
+      - STASH_BACKUPS=/data/backups/
+      - STASH_CONFIG_FILE=/data/config.yml
+      - STASH_LOG_FILE=/data/logs/stash.log
     x-casaos:
       envs:
         - container: PUID
@@ -83,12 +83,6 @@ services:
         - container: /data
           description:
             en_us: Stash Stash
-        - container: /logs
-          description:
-            en_us: Stash Logs
-        - container: /config
-          description:
-            en_us: Stash Config
       ports:
         - container: "9999"
           description:
@@ -96,21 +90,8 @@ services:
     ports:
       - 9999:9999
     volumes:
-      - /DATA/AppData/$AppID/generated:/generated
-      - /DATA/AppData/$AppID/metadata:/metadata
-      - /DATA/AppData/$AppID/cache:/cache
-      - /DATA/AppData/$AppID/plugins:/plugins
-      - /DATA/AppData/$AppID/themes:/themes
-      - /DATA/AppData/$AppID/userscripts:/userscripts
-      - /DATA/AppData/$AppID/validator:/validator
-      - /DATA/AppData/$AppID/scrapers:/scrapers
-      - /DATA/AppData/$AppID/templates:/templates
-      - /DATA/AppData/$AppID/config:/config
-      - /DATA/AppData/$AppID/blobs:/blobs
-      - /DATA/AppData/$AppID/custom_performers:/custom_performers
-      - /DATA/AppData/$AppID/backups:/backups
-      - /DATA/AppData/$AppID/logs:/logs
-      - /DATA/Media/xxx:/data
+      - /mnt/smb/qf4b/media/_stash:/data
+      - /mnt/smb/qf4b/media/xxx:/media
 x-casaos:
   architectures:
     - amd64
