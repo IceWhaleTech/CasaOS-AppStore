@@ -2,7 +2,7 @@
 name: stash
 services:
   app:
-    image: stashapp/stash:latest
+    image: stashapp/stash:v0.21.0
     restart: unless-stopped
     environment:
       - TZ=${TZ:-Europe/Berlin}
@@ -99,7 +99,7 @@ x-casaos:
   developer: Stash
   author: Stash
   icon: ./icon.png
-  thumbnail: ./thumbnail.png
+  thumbnail: ./thumbnail.jpg
   title:
     en_us: Stash
   category: Utilities
