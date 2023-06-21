@@ -41,7 +41,7 @@ services:
             en_us: MongoDB Port
     ports:
       - target: 27017
-        published: 27017
+        published: "27017"
         protocol: tcp
     volumes:
       - type: bind
