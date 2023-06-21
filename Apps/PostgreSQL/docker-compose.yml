@@ -36,7 +36,7 @@ services:
             en_us: "Directory where Postgres database data is stored"
     ports:
       - target: 5432
-        published: 5432
+        published: "5432"
         protocol: tcp
     volumes:
       - type: bind
