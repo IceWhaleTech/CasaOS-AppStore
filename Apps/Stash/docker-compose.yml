@@ -1,0 +1,108 @@
+---
+name: stash
+services:
+  app:
+    image: stashapp/stash:v0.21.0
+    restart: unless-stopped
+    environment:
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
+      - STASH_STASH=/data/
+      - STASH_GENERATED=/data/generated/
+      - STASH_BLOBS=/data/blobs/
+      - STASH_METADATA=/data/metadata/
+      - STASH_CACHE=/data/cache/
+      - STASH_PLUGINS=/data/plugins/
+      - STASH_THEMES=/data/themes/
+      - STASH_USERSCRIPTS=/data/userscripts/
+      - STASH_VALIDATOR=/data/validator/
+      - STASH_SCRAPERS=/data/scrapers/
+      - STASH_TEMPLATES=/data/templates/
+      - STASH_CUSTOM_PERFORMERS=/data/custom_performers/
+      - STASH_BACKUPS=/data/backups/
+      - STASH_CONFIG_FILE=/data/config.yml
+      - STASH_LOG_FILE=/data/stash.log
+    x-casaos:
+      envs:
+        - container: STASH_STASH
+          description:
+            en_us: Stash Stash
+        - container: STASH_GENERATED
+          description:
+            en_us: Stash Generated
+        - container: STASH_METADATA
+          description:
+            en_us: Stash Metadata
+        - container: STASH_BLOBS
+          description:
+            en_us: Stash Blobs
+        - container: STASH_CACHE
+          description:
+            en_us: Stash Cache
+        - container: STASH_PLUGINS
+          description:
+            en_us: Stash Plugins
+        - container: STASH_THEMES
+          description:
+            en_us: Stash Themes
+        - container: STASH_USERSCRIPTS
+          description:
+            en_us: Stash Userscripts
+        - container: STASH_VALIDATOR
+          description:
+            en_us: Stash Validator
+        - container: STASH_SCRAPERS
+          description:
+            en_us: Stash Scrapers
+        - container: STASH_TEMPLATES
+          description:
+            en_us: Stash Templates
+        - container: STASH_CUSTOM_PERFORMERS
+          description:
+            en_us: Stash Custom Performers
+        - container: STASH_BACKUPS
+          description:
+            en_us: Stash Backups
+        - container: STASH_CONFIG_FILE
+          description:
+            en_us: Stash Config File
+        - container: STASH_LOG_FILE
+          description:
+            en_us: Stash Log File
+      volumes:
+        - container: /data
+          description:
+            en_us: Stash Stash
+      ports:
+        - container: "9999"
+          description:
+            en_us: Stash Web Port
+    ports:
+      - 9999:9999
+    volumes:
+      - /DATA/Media/_stash:/data
+      - /DATA/Media/xxx:/media
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: app
+  description:
+    en_us: "Stash is a self-hosted webapp written in Go which organizes and serves your porn."
+  tagline:
+    en_us: "Stash allows you to organize and view your own collection of adult video and image files. Think of it like a private PornHub site for your personal porn collection."
+  screenshot_link:
+    - https://github.com/stashapp/stash/raw/develop/docs/readme_assets/demo_image.png
+    - ./home_screenshot.png
+    - ./scenes_screenshot.png
+    - ./settings_screenshot.png
+  developer: Stash
+  author: Stash
+  icon: ./icon.png
+  thumbnail: ./thumbnail.jpg
+  title:
+    en_us: Stash
+  category: Utilities
+  port_map: "9999"
