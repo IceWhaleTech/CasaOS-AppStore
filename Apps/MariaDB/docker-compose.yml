@@ -40,7 +40,7 @@ services:
             en_us: Set this to ingest sql files from an http/https endpoint (comma seperated array).
     ports:
       - target: 3306
-        published: 3306
+        published: "3306"
         protocol: tcp
     volumes:
       - type: bind
