@@ -101,7 +101,7 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
                     en_us: Syncthing Accessible Directory.
         ```
 
-    1. Compose app level
+    2. Compose app level
 
         For the same example, at the bottom of the [`docker-compose.yml` of Syncthing](Apps/Syncthing/docker-compose.yml)
 
@@ -131,6 +131,38 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
             port_map: "8384"                # the port for web UI
         ```
 
+    3. Magic Value
+   
+        **Note: The features is only working in casaos 0.4.5**
+
+        For same case. Casaos provide some magic value to power your application:
+        
+        - $OPENAI_API_KEY
+        - $WEBUI_PORT
+
+        ##### $OPENAI_API_KEY
+
+        your application can read `OPENAI_API_KEY` from env variable. It is set in `/etc/casaos/app-management`. User can set only once and using anywhere.
+
+        #### WEBUI_PORT
+
+        your `docker-compose.yml` can use `WEBUI_PORT` to set webui port. Casaos will assign a available port for your application. You can use it like this:
+
+        ```yaml
+        ...
+        ports:
+         - target: 5230
+           published: ${WEBUI_PORT:-5230}
+           protocol: tcp
+        ...
+        x-casaos:
+            architectures:
+                - amd64
+                - arm64
+                - arm
+        ...
+            port_map: ${WEBUI_PORT:-5230}
+        ```
 #### Specifications of Icon, Thumbnail and Screenshots
 
 - Icon image should be a transparent background PNG image with a size of 192x192 pixels.
