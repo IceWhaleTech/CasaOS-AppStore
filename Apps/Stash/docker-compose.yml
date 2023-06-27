@@ -72,6 +72,9 @@ services:
         - container: /data
           description:
             en_us: Stash Stash
+        - container: /media
+          description:
+            en_us: Stash Media
       ports:
         - container: "9999"
           host: "9999"
@@ -104,9 +107,9 @@ x-casaos:
   main: app
   author: f4bio
   description:
-    en_us: "Stash allows you to organize and view your own collection of adult video and image files. Think of it like a private PornHub site for your personal porn collection."
+    en_us: "Stash allows you to organize and view your own collection of adult video and image files. Think of it like a private PornHub site for your personal porn collection. Documentation: https://docs.stashapp.cc"
   tagline:
-    en_us: "Stash is a self-hosted webapp written in Go which organizes and serves your porn."
+    en_us: "An organizer for your porn, written in Go"
   screenshot_link:
     - https://github.com/stashapp/stash/raw/develop/docs/readme_assets/demo_image.png
     - https://cdn.jsdelivr.net/gh/f4bio/CasaOS-AppStore@develop/Apps/Stash/home_screenshot.png
