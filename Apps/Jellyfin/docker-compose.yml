@@ -9,7 +9,6 @@ services:
       - /dev/video11:/dev/video11
       - /dev/video12:/dev/video12
     environment:
-      JELLYFIN_PublishedServerUrl: $APP_IPV4
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
