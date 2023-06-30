@@ -133,21 +133,42 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
 
     3. Magic Value
    
-        **Note: The features is only working in casaos 0.4.5**
+        **Note**: The features is only working in casaos 0.4.5
 
-        For same case. Casaos provide some magic value to power your application:
+        For resolves some cases. Casaos provide some magic value to power your application:
         
         - $OPENAI_API_KEY
         - $WEBUI_PORT
 
         ##### $OPENAI_API_KEY
+        > for developer
 
-        your application can read `OPENAI_API_KEY` from env variable. It is set in `/etc/casaos/app-management`. User can set only once and using anywhere.
+        your application can read `OPENAI_API_KEY` from env variable. It is set in `/etc/casaos/app-management`. User can set only once and using anywhere. It can be change by api, after change, all application will re up to inject new env var.
+
+        **Note**: change the config didn't change the env var of current container.
+
 
         #### WEBUI_PORT
+        > for application maintainer
 
         your `docker-compose.yml` can use `WEBUI_PORT` to set webui port. Casaos will assign a available port for your application. You can use it like this:
 
+        ```yaml
+        ...
+        ports:
+         - target: 5230
+           published: ${WEBUI_PORT}
+           protocol: tcp
+        ...
+        x-casaos:
+            architectures:
+                - amd64
+                - arm64
+                - arm
+        ...
+            port_map: ${WEBUI_PORT}
+        ```
+        or
         ```yaml
         ...
         ports:
@@ -163,6 +184,8 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
         ...
             port_map: ${WEBUI_PORT:-5230}
         ```
+        
+        **Note**: the WEBUI_PORT only allocated once. It promise the port is available when allocated. If the port be used by other application. It didn't reallocate a new port.
 #### Specifications of Icon, Thumbnail and Screenshots
 
 - Icon image should be a transparent background PNG image with a size of 192x192 pixels.
