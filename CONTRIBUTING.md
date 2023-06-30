@@ -186,7 +186,6 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
         ```
         
         **Note**: the WEBUI_PORT only allocated once. It promise the port is available when allocated. If the port be used by other application. It didn't reallocate a new port.
-#### Specifications of Icon, Thumbnail and Screenshots
 
 ## Requirements for Featured Apps
 
