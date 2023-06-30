@@ -2,17 +2,17 @@
 
 This document describes how to contribute an app to CasaOS AppStore.
 
-## Guidelines
-
-### Submit Process 
+## Submit Process 
 
 App submission should be done via Pull Request. Fork this repository and prepare the app per guidelines below.
 
 Once the PR is ready, create and assign your PR to anyone from CasaOS Team or some other contributor you trust.
 
+## Guidelines
+
 ### Project Structure
 
-```bash
+```shell
 CasaOS-AppStore
 ├─ category-list.json   # Configuration file for category list
 ├─ recommend-list.json  # Configuration file for recommended apps list
@@ -23,16 +23,16 @@ CasaOS-AppStore
 └─ psd-source           # Icon thumbnail screenshot PSD Templates
 ```
 
-### A complete app profile should include the following contents
+### A CasaOS App typically includes following files
 
-```bash
+```shell
 App-Name
-├─ docker-compose.yml   # A valid Docker Compose file
-├─ icon.png             # App icon
-├─ thumbnail.png        # Required when the app is used as a recommended app
-├─ screenshot-1.png     # Three screenshots introducing the app are required in the app details
-├─ screenshot-2.png
-└─ screenshot-3.png
+├─ docker-compose.yml   # (Required) A valid Docker Compose file
+├─ icon.png             # (Required) App icon
+├─ screenshot-1.png     # (Required) At least one screenshot is needed, to demonstrate the app runs on CasaOS successfully.
+├─ screenshot-2.png     # (Optional) More screenshots to demonstrate different functionalities is highly recommended.
+├─ screenshot-3.png     # (Optional) ...
+└─ thumbnail.png        # (Optional) A thumbnail file is needed only if you want it to be featured in AppStore front. (see specification at bottom)
 ```
 
 #### A CasaOS App is a Docker Compose app, or a *compose app*
@@ -188,8 +188,14 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
         **Note**: the WEBUI_PORT only allocated once. It promise the port is available when allocated. If the port be used by other application. It didn't reallocate a new port.
 #### Specifications of Icon, Thumbnail and Screenshots
 
+## Requirements for Featured Apps
+
+Once in a while, we pick certain apps as featured apps and display them at the AppStore front. The standard for apps to be featured is a bit higher than rest of the apps:
+
 - Icon image should be a transparent background PNG image with a size of 192x192 pixels.
 - Thumbnail image should be 784x442 pixels, with a rounded corner mask. It is recommended to be saved as a PNG image with a transparent background.
 - Screenshot image should be 1280x720 pixels and can be saved in either PNG or JPG format. Please try to keep the file size as small as possible.
 
 Please find the prepared [PSD template files](psd-source), to quickly create the above images if you need.
+
+If you have any feedback and suggestion about this contributing process, please let us know via Discord or Issues immediately. Thanks!

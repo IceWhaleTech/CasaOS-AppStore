@@ -1,0 +1,29 @@
+name: adminer
+services:
+
+  adminer:
+    image: adminer:4.8.1
+    restart: always
+    ports:
+      - 8080:8080
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+  main: adminer
+  author: Tim Düsterhus (of the Docker Community)
+  category: Database
+  description:
+    en_us: Adminer (formerly phpMinAdmin) is a full-featured database management tool written in PHP. Conversely to phpMyAdmin, it consist of a single file ready to deploy to the target server. Adminer is available for MySQL, PostgreSQL, SQLite, MS SQL, Oracle, Firebird, SimpleDB, Elasticsearch and MongoDB.
+  developer: Jakub Vrána
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Adminer/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Adminer/Screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Adminer/Screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Adminer/Screenshot-3.png
+  tagline:
+    en_us: Database management in a single PHP file
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Adminer/thumbnail.png
+  title:
+    en_us: Adminer
+  port_map: '8080'
