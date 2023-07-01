@@ -1,0 +1,13 @@
+version: '3'
+services:
+  wallabag:
+    container_name: wallabag
+    image: ugeek/wallabag:arm
+    ports:
+      - "80:80"
+    environment:
+      - SYMFONY__ENV__DOMAIN_NAME=http://localhost
+    volumes:
+      - /DATA/AppData/Wallabag/images:/var/www/wallabag/web/assets/images
+      - /DATA/AppData/Wallabag/data:/var/www/wallabag/data
+    command: wallabag

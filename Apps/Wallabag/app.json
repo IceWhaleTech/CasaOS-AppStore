@@ -1,0 +1,58 @@
+{
+    "host": "walla.home",
+    "protocol": "http",
+    "port_map": "80",
+    "cpu_shares": 10,
+    "restart": "unless-stopped",
+    "label": "wallabag",
+    "position": false,
+    "index": "",
+    "icon": "https://icon.casaos.io/main/all/wallabag.png",
+    "network_model": "bridge",
+    "image": "ugeek/wallabag:arm",
+    "description": "",
+    "origin": "custom",
+    "ports": [
+        {
+            "container": "80",
+            "host": "8001",
+            "protocol": "tcp",
+            "desc": "",
+            "type": 0
+        }
+    ],
+    "volumes": [
+        {
+            "container": "/var/www/wallabag/web/assets/images",
+            "host": "/DATA/AppData/Wallabag/images",
+            "type": 0,
+            "desc": ""
+        },
+        {
+            "container": "/var/www/wallabag/data",
+            "host": "/DATA/AppData/Wallabag/data",
+            "type": 0,
+            "desc": ""
+        }
+    ],
+    "envs": [
+        {
+            "container": "SYMFONY__ENV__DOMAIN_NAME",
+            "host": "http://localhost",
+            "desc": "",
+            "type": 0
+        }
+    ],
+    "devices": [],
+    "cap_add": [],
+    "cmd": [
+        "wallabag"
+    ],
+    "privileged": false,
+    "host_name": "wallabag",
+    "container_name": "wallabag",
+    "appstore_id": 0,
+    "custom_id": "55a50e2f-d2e5-4759-be41-a2dac9f5cb0a",
+    "enable_upnp": false,
+    "version": "1.0"
+}
