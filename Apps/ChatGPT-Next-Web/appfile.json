@@ -1,0 +1,112 @@
+{
+	"version": "2.8.8",
+	"title": "Chatgpt-next-web",
+	"name": "Chatgpt-next-web",
+	"icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/icon.png",
+	"tagline": "A well-designed cross-platform ChatGPT UI.",
+	"overview": "A well-designed cross-platform ChatGPT UI .",
+	"thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/thumbnail.png",
+	"screenshots": [
+		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/screenshot-1.png"
+	],
+	"category": ["Utilities"],
+	"developer": {
+		"name": "Yidadaa",
+		"website": "https://github.com/Yidadaa",
+		"donate_text": "",
+		"donate_link": ""
+	},
+	"adaptor": {
+		"name": "CorrectRoadH",
+		"website": "https://github.com/CorrectRoadH",
+		"donate_text": "",
+		"donate_link": ""
+	},
+	"support": "",
+	"website": "",
+	"container": {
+		"image": "yidadaa/chatgpt-next-web:latest",
+		"shell": "sh",
+		"privileged": false,
+		"network_model": "bridge",
+		"web_ui": {
+			"http": "3000",
+			"path": ""
+		},
+		"health_check": "",
+		"envs": [
+			{
+				"key": "PUID",
+				"value": "1000",
+				"description": "",
+				"configurable": "no"
+			},
+			{
+				"key": "PGID",
+				"value": "1000",
+				"description": "",
+				"configurable": "no"
+			},
+			{
+				"key": "TZ",
+				"value": "$TZ",
+				"description": "",
+				"configurable": "no"
+			},
+			{
+				"key": "OPENAI_API_KEY",
+				"value": "$OPENAI_API_KEY",
+				"description": "",
+				"configurable": "yes"
+			},
+			{
+				"key": "CODE",
+				"value": "$CODE",
+				"description": "password",
+				"configurable": "yes"
+			},
+			{
+				"key": "PROXY_URL",
+				"value": "$PROXY_URL",
+				"description": "proxy",
+				"configurable": "yes"
+			}
+		],
+		"ports": [
+			{
+				"container": "3000",
+				"host": "3000",
+				"type": "tcp",
+				"allocation": "automatic",
+				"configurable": "no",
+				"description": "Chat HTTP Port"
+			}
+		],
+		"devices": [],
+		"constraints": {
+			"min_memory": 64,
+			"min_storage": 128
+		},
+		"restart_policy": "unless-stopped",
+		"sysctls": [],
+		"cap_add": [],
+		"labels": [],
+		"host_name": "chatgpt-next-web",
+		"cmd": []
+	},
+	"abilities": {
+		"notification": false,
+		"widgets": false,
+		"authentication": false,
+		"search": false,
+		"upnp": false
+	},
+	"tips": {
+		"before_install": []
+	},
+	"changelog": {
+		"latest_updates": "",
+		"url": ""
+	},
+	"latest_update_date": ""
+}

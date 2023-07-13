@@ -1,0 +1,69 @@
+name: chatgpt-next-web
+services:
+  chatgpt-next-web:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+      CODE: ""
+      PROXY_URL: ""
+    image: yidadaa/chatgpt-next-web:v2.8.8
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+    restart: unless-stopped
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_us: ""
+        - container: PGID
+          description:
+            en_us: ""
+        - container: TZ
+          description:
+            en_us: "timezone"
+            zh_cn: "时区"
+        - container: CODE
+          description:
+            en_us: "password"
+            zh_cn: "密码"
+        - container: PROXY_URL
+          description:
+            en_us: "http proxy"
+            zh_cn: "http 代理"
+      ports:
+        - container: "3000"
+          description:
+            en_us: WebUI HTTP Port
+            zh_cn: WebUI HTTP 端口
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: chatgpt-next-web
+  author: CorrectRoadH
+  category: Utilities
+  description:
+    en_us: A well-designed cross-platform ChatGPT UI. 
+    zh_cn: 精心设计的跨平台 ChatGPT UI
+  developer: Yidadaa
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ChatGPT-Next-Web/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ChatGPT-Next-Web/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ChatGPT-Next-Web/screenshot-2.png
+  tagline:
+    en_us: A well-designed cross-platform ChatGPT UI.
+    zh_cn: 精心设计的跨平台 ChatGPT UI
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ChatGPT-Next-Web/thumbnail.png
+  tips: {}
+  title:
+    en_us: ChatGPT-Next-Web
+  port_map: "3000"
