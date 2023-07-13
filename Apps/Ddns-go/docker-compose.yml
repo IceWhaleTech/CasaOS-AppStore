@@ -2,19 +2,19 @@ name: ddns-go
 services:
   ddns-go:
     image: jeessy/ddns-go:v5.3.6
-    network_mode: host
+    network_mode: bridge
     restart: unless-stopped
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/config
         target: /root
     ports:
-      - target: 7890
-        published: "7890"
+      - target: 9876
+        published: "9876"
         protocol: tcp
     x-casaos:
       ports:
-        - container: "7890"
+        - container: "9876"
           description:
             en_us: WebUI HTTP Port
             zh_cn: WebUI HTTP端口
@@ -38,7 +38,7 @@ x-casaos:
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ddns-go/screenshot-1.png
   main: ddns-go
-  port_map: "7890"
+  port_map: "9876"
   scheme: http
   tagline:
     en_us: Simple and easy to use DDNS. automatically update domain name resolution to public IP
