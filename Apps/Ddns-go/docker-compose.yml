@@ -1,8 +1,12 @@
 name: ddns-go
 services:
   ddns-go:
-    image: jeessy/ddns-go:v5.3.6
+    image: jeessy/ddns-go:v5.3.7
     network_mode: bridge
+    deploy:
+      resources:
+        reservations:
+          memory: "32M"
     restart: unless-stopped
     volumes:
       - type: bind
@@ -17,7 +21,7 @@ services:
         - container: "9876"
           description:
             en_us: WebUI HTTP Port
-            zh_cn: WebUI HTTP端口
+            zh_cn: WebUI HTTP 端口
       volumes:
         - container: /root
           description:
@@ -28,7 +32,7 @@ x-casaos:
     - amd64
     - arm
     - arm64
-  author: zxxhz
+  author: zxxhz,Cp0204
   category: Network
   description:
     en_us: Simple and easy to use DDNS. automatically update domain name resolution to public IP (support Ali cloud, Tencent cloud, Dnspod, Cloudflare, Callback, Huawei cloud, Baidu cloud, Porkbun, GoDaddy, Google Domain).
@@ -41,7 +45,7 @@ x-casaos:
   port_map: "9876"
   scheme: http
   tagline:
-    en_us: Simple and easy to use DDNS. automatically update domain name resolution to public IP
-    zh_cn: 简单好用的DDNS。自动更新域名解析到公网IP
+    en_us: Simple and easy to use DDNS
+    zh_cn: 简单好用的DDNS
   title:
     en_us: ddns-go
