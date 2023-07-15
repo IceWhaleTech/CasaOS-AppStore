@@ -1,0 +1,40 @@
+name: Portainer
+services:
+  Portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:2.18.4
+    labels:
+      icon: https://icon.casaos.io/main/all/portainer-ce.png
+    ports:
+      - target: 9000
+        published: "9000"
+        protocol: tcp
+    restart: always
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /data
+    network_mode: bridge
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  author: zxxhz
+  category: Utilities
+  description:
+    en_us: Portainer Community Edition is a lightweight service delivery platform for containerized applications that can be used to manage Docker, Swarm, Kubernetes and ACI environments. It is designed to be as simple to deploy as it is to use. The application allows you to manage all your orchestrator resources (containers, images, volumes, networks and more) through a ‘smart’ GUI and/or an extensive API.
+    zh_cn: Portainer社区版是一个面向容器化应用的轻量级服务交付平台，可用于管理Docker、Swarm、Kubernetes和ACI环境。其设计理念是部署简单，使用方便。该应用程序允许您通过 "智能 "GUI和/或广泛的API管理所有协调器资源（容器、镜像、卷、网络等）。
+  developer: portainer
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ddns-go/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ddns-go/screenshot-1.png
+  main: portainer
+  index: /
+  port_map: "9000"
+  scheme: http
+  title:
+    en_us: Portainer
