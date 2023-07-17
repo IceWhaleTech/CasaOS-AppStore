@@ -1,1 +1,59 @@
-{"host":"","protocol":"http","port_map":"8765","cpu_shares":10,"restart":"unless-stopped","label":"motioneye","position":false,"index":"","icon":"https://icon.casaos.io/main/all/motioneye.png","network_model":"bridge","image":"ccrisan/motioneye:master-amd64","description":"","origin":"custom","ports":[{"container":"8765","host":"8765","protocol":"tcp","desc":"","type":0}],"volumes":[{"container":"/etc/motioneye","host":"/DATA/AppData/Motioneye/config","type":0,"desc":""},{"container":"/var/lib/motioneye","host":"/DATA/Media/Motioneye","type":0,"desc":""},{"container":"/var/run/motion","host":"/var/lib/docker/volumes/8a18b847b9da53d491a027901929dc75eef4c00dedcfc014a6eeee149c88fed8/_data","type":0,"desc":""}],"envs":[],"devices":[],"cap_add":[],"cmd":["/bin/sh","-c","test -e /etc/motioneye/motioneye.conf ||     cp /usr/share/motioneye/extra/motioneye.conf.sample /etc/motioneye/motioneye.conf ;     /usr/local/bin/meyectl startserver -c /etc/motioneye/motioneye.conf"],"privileged":false,"host_name":"motioneye","container_name":"motioneye","appstore_id":0,"custom_id":"5e2c1ff1-1bb9-4bb8-a99a-32acb4018317","enable_upnp":false,"version":"1.0"}
+{
+    "host": "",
+    "protocol": "http",
+    "port_map": "8765",
+    "cpu_shares": 10,
+    "restart": "unless-stopped",
+    "label": "motioneye",
+    "position": false,
+    "index": "",
+    "icon": "https://icon.casaos.io/main/all/motioneye.png",
+    "network_model": "bridge",
+    "image": "ccrisan/motioneye:master-amd64",
+    "description": "",
+    "origin": "custom",
+    "ports": [
+        {
+            "container": "8765",
+            "host": "8765",
+            "protocol": "tcp",
+            "desc": "",
+            "type": 0
+        }
+    ],
+    "volumes": [
+        {
+            "container": "/etc/motioneye",
+            "host": "/DATA/AppData/Motioneye/config",
+            "type": 0,
+            "desc": ""
+        },
+        {
+            "container": "/var/lib/motioneye",
+            "host": "/DATA/Media/Motioneye",
+            "type": 0,
+            "desc": ""
+        },
+        {
+            "container": "/var/run/motion",
+            "host": "/var/lib/docker/volumes/8a18b847b9da53d491a027901929dc75eef4c00dedcfc014a6eeee149c88fed8/_data",
+            "type": 0,
+            "desc": ""
+        }
+    ],
+    "envs": [],
+    "devices": [],
+    "cap_add": [],
+    "cmd": [
+        "/bin/sh",
+        "-c",
+        "test -e /etc/motioneye/motioneye.conf ||     cp /usr/share/motioneye/extra/motioneye.conf.sample /etc/motioneye/motioneye.conf ;     /usr/local/bin/meyectl startserver -c /etc/motioneye/motioneye.conf"
+    ],
+    "privileged": false,
+    "host_name": "motioneye",
+    "container_name": "motioneye",
+    "appstore_id": 0,
+    "custom_id": "5e2c1ff1-1bb9-4bb8-a99a-32acb4018317",
+    "enable_upnp": false,
+    "version": "1.0"
+}
