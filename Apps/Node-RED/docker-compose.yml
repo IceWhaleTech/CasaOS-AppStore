@@ -6,7 +6,7 @@ services:
       resources:
         reservations:
           memory: 64M
-    network_mode: bridge
+    network_mode: host
     ports:
       - target: 1880
         published: "1880"
