@@ -4,7 +4,7 @@ services:
     image: portainer/portainer-ce:2.18.4
     deploy:
       resources:
-        limits:
+        reservations:
           memory: 32M
     network_mode: bridge
     ports:
