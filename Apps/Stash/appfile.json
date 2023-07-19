@@ -1,0 +1,226 @@
+{
+  "host": "",
+  "protocol": "http",
+  "port_map": "9999",
+  "cpu_shares": 50,
+  "restart": "unless-stopped",
+  "label": "Stash",
+  "position": false,
+  "index": "",
+  "icon": "https://avatars.githubusercontent.com/u/24867479",
+  "network_model": "bridge",
+  "image": "stashapp/stash:v0.21.0",
+  "description": "Stash allows you to organize and view your own collection of adult video and image files. Think of it like a private PornHub site for your personal porn collection. Documentation: https://docs.stashapp.cc",
+  "origin": "custom",
+  "ports": [
+    {
+      "container": "9999",
+      "host": "9999",
+      "protocol": "tcp",
+      "desc": "WebUI Port",
+      "type": 0
+    }
+  ],
+  "volumes": [
+    {
+      "container": "/backups",
+      "host": "/DATA/AppData/Stash/backups",
+      "type": 0,
+      "desc": "Backups"
+    },
+    {
+      "container": "/blobs",
+      "host": "/DATA/AppData/Stash/blobs",
+      "type": 0,
+      "desc": "Blobs"
+    },
+    {
+      "container": "/cache",
+      "host": "/DATA/AppData/Stash/cache",
+      "type": 0,
+      "desc": "Cache"
+    },
+    {
+      "container": "/config",
+      "host": "/DATA/AppData/Stash/config",
+      "type": 0,
+      "desc": "config"
+    },
+    {
+      "container": "/custom_performers",
+      "host": "/DATA/AppData/Stash/custom_performers",
+      "type": 0,
+      "desc": "custom_performers"
+    },
+    {
+      "container": "/data",
+      "host": "/DATA/AppData/Stash/data",
+      "type": 0,
+      "desc": "data"
+    },
+    {
+      "container": "/media",
+      "host": "/DATA/Media/xxx",
+      "type": 0,
+      "desc": "media"
+    },
+    {
+      "container": "/generated",
+      "host": "/DATA/AppData/Stash/generated",
+      "type": 0,
+      "desc": "Generated files"
+    },
+    {
+      "container": "/logs",
+      "host": "/DATA/AppData/Stash/logs",
+      "type": 0,
+      "desc": "Logs"
+    },
+    {
+      "container": "/metadata",
+      "host": "/DATA/AppData/Stash/metadata",
+      "type": 0,
+      "desc": "Metadata"
+    },
+    {
+      "container": "/plugins",
+      "host": "/DATA/AppData/Stash/plugins",
+      "type": 0,
+      "desc": "Plugins"
+    },
+    {
+      "container": "/scrapers",
+      "host": "/DATA/AppData/Stash/scrapers",
+      "type": 0,
+      "desc": "Scrapers"
+    },
+    {
+      "container": "/templates",
+      "host": "/DATA/AppData/Stash/templates",
+      "type": 0,
+      "desc": "Templates"
+    },
+    {
+      "container": "/themes",
+      "host": "/DATA/AppData/Stash/themes",
+      "type": 0,
+      "desc": "Themes"
+    },
+    {
+      "container": "/userscripts",
+      "host": "/DATA/AppData/Stash/userscripts",
+      "type": 0,
+      "desc": "Userscripts"
+    },
+    {
+      "container": "/validator",
+      "host": "/DATA/AppData/Stash/validator",
+      "type": 0,
+      "desc": "Validators"
+    }
+  ],
+  "envs": [
+    {
+      "container": "TZ",
+      "host": "Etc/UTC",
+      "desc": "",
+      "type": 0
+    },
+    {
+      "container": "STASH_STASH",
+      "host": "/data/",
+      "desc": "Stash Stash",
+      "type": 0
+    },
+    {
+      "container": "STASH_GENERATED",
+      "host": "/generated/",
+      "desc": "Stash Generated",
+      "type": 0
+    },
+    {
+      "container": "STASH_METADATA",
+      "host": "/metadata/",
+      "desc": "Stash Metadata",
+      "type": 0
+    },
+    {
+      "container": "STASH_CACHE",
+      "host": "/cache/",
+      "desc": "Stash Cache",
+      "type": 0
+    },
+    {
+      "container": "STASH_PLUGINS",
+      "host": "/plugins/",
+      "desc": "Stash Plugins",
+      "type": 0
+    },
+    {
+      "container": "STASH_THEMES",
+      "host": "/themes/",
+      "desc": "Stash Themes",
+      "type": 0
+    },
+    {
+      "container": "STASH_USERSCRIPTS",
+      "host": "/userscripts/",
+      "desc": "Stash Userscripts",
+      "type": 0
+    },
+    {
+      "container": "STASH_VALIDATOR",
+      "host": "/validator/",
+      "desc": "Stash Validator",
+      "type": 0
+    },
+    {
+      "container": "STASH_SCRAPERS",
+      "host": "/scrapers/",
+      "desc": "Stash Scrapers",
+      "type": 0
+    },
+    {
+      "container": "STASH_TEMPLATES",
+      "host": "/templates/",
+      "desc": "Stash Templates",
+      "type": 0
+    },
+    {
+      "container": "STASH_CONFIG_FILE",
+      "host": "/config/config.yml",
+      "desc": "Stash Config File",
+      "type": 0
+    },
+    {
+      "container": "STASH_BACKUPS",
+      "host": "/backups/",
+      "desc": "Stash Backups",
+      "type": 0
+    },
+    {
+      "container": "STASH_CUSTOM_PERFORMERS",
+      "host": "/custom_performers/",
+      "desc": "Stash Custom Performers",
+      "type": 0
+    },
+    {
+      "container": "STASH_LOG_FILE",
+      "host": "/logs/stash.log",
+      "desc": "Stash Log File",
+      "type": 0
+    }
+  ],
+  "devices": [],
+  "cap_add": [],
+  "cmd": [
+    "stash"
+  ],
+  "privileged": false,
+  "host_name": "Stash",
+  "container_name": "Stash",
+  "appstore_id": 0,
+  "custom_id": "c59788af-cb1a-4a17-82fa-13582b326108",
+  "enable_upnp": false,
+  "version": "1.0"
+}
