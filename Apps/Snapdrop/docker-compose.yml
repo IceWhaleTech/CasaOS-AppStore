@@ -20,6 +20,7 @@ services:
         source: /DATA/AppData/$AppID/config
         target: /config
     privileged: false
+    container_name: snapdrop
 x-casaos:
   architectures:
     - amd64

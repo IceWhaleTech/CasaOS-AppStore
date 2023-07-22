@@ -46,6 +46,7 @@ services:
       - type: bind
         source: /DATA/AppData/postgresql/data
         target: /var/lib/postgresql/data
+    container_name: postgresql
 x-casaos:
   architectures:
     - amd64

@@ -1,4 +1,4 @@
-name: Overseerr
+name: overseerr
 services:
   overseerr:
     image: linuxserver/overseerr:1.33.0
@@ -70,6 +70,7 @@ services:
       - type: bind
         source: /DATA/AppData/overseerr/config
         target: /config
+    container_name: overseerr
 x-casaos:
   architectures:
     - amd64
