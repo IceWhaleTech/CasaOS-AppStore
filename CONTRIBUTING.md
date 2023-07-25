@@ -137,13 +137,13 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
 
         For resolves some cases. Casaos provide some magic value to power your application:
         
-        - Any environment variable
+        - Any environment variable that user to set
         - $WEBUI_PORT
 
         ##### Environment variable
         > for developer
 
-        your application can read environment variable that user set, such as `OPENAI_API_KEY` from env variable. It is set in `/etc/casaos/env`. User can set only once and using anywhere. It can be change by api, after change, all application will re up to inject new env var.
+        your application can read environment variable that user set, such as `OPENAI_API_KEY` from environment variable. It is store in `/etc/casaos/env`. User can set only once and using anywhere. It can be change by api, after change, all application will re up to inject new env var.
 
         **Note**: change the config didn't change the env var of current container. To set env var, you should use cli to set it.
 
