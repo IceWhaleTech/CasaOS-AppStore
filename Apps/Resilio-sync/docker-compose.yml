@@ -26,6 +26,7 @@ services:
         source: /DATA/Downloads
         target: /downloads
     privileged: false
+    container_name: resilio-sync
 x-casaos:
   architectures:
     - amd64
