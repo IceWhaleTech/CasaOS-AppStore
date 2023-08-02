@@ -1,0 +1,69 @@
+name: media-fetch-pro
+services:
+  media-fetch-pro:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: correctroad/media-fetch-pro:0.2.0
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+      - target: 7789
+        published: "7789"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/video
+        target: /var/opt/video
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_us: ""
+        - container: PGID
+          description:
+            en_us: ""
+        - container: TZ
+          description:
+            en_us: "timezone"
+            zh_cn: "时区"
+      ports:
+        - container: "7789"
+          description:
+            en_us: WebUI HTTP Port
+            zh_cn: WebUI HTTP 端口
+      volumes:
+        - container: /var/opt/video
+          description:
+            en_us: video download directory.
+            zh_cn: 视频下载目录
+    container_name: mediafetchpro
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  main: media-fetch-pro
+  author: CorrectRoadH
+  category: Media
+  description:
+    en_us: Media Fetch PRO is an application to download video of youtube, bilibili and more websites in future with metadata to jellyfin, emby, plex and more softwares in future.
+    zh_cn: Media Fetch PRO is an application to download video of youtube, bilibili and more websites in future with metadata to jellyfin, emby, plex and more softwares in future.
+  developer: CorrectRoadH
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MediaFetchPro/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MediaFetchPro/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MediaFetchPro/screenshot-2.png
+  tagline:
+    en_us: Media Fetch PRO is an application to download video of youtube, bilibili and more websites in future with metadata to jellyfin, emby, plex and more softwares in future.
+    zh_cn: Media Fetch PRO is an application to download video of youtube, bilibili and more websites in future with metadata to jellyfin, emby, plex and more softwares in future.
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MediaFetchPro/thumbnail.png
+  tips: {}
+  title:
+    en_us: Media Fetch Pro
+  port_map: "7789"
