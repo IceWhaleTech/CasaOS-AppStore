@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: correctroad/media-fetch-pro:0.2.1
+    image: correctroad/media-fetch-pro:0.2.2
     deploy:
       resources:
         reservations:
@@ -47,7 +47,6 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-    - arm
   main: media-fetch-pro
   author: CorrectRoadH
   category: Media
