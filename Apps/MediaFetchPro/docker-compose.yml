@@ -18,8 +18,12 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/$AppID/video
+        source: /DATA/Media
         target: /var/opt/video
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /var/opt/config
+
     x-casaos:
       envs:
         - container: PUID
