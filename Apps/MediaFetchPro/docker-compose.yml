@@ -18,7 +18,7 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/Media
+        source: /DATA/Media/MediaFetchPro
         target: /var/opt/video
       - type: bind
         source: /DATA/AppData/$AppID/config
