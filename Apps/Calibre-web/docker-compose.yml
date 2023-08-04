@@ -2,7 +2,7 @@ name: calibre-web
 services:
   calibre-web:
     environment:
-      DOCKER_MODS: linuxserver/calibre-web:calibre
+      DOCKER_MODS: ghcr.io/linuxserver/mods:universal-calibre
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ

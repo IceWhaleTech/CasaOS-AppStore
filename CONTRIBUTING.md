@@ -2,7 +2,7 @@
 
 This document describes how to contribute an app to CasaOS AppStore.
 
-## Submit Process 
+## Submit Process
 
 App submission should be done via Pull Request. Fork this repository and prepare the app per guidelines below.
 
@@ -39,7 +39,9 @@ App-Name
 
 Each directory under [Apps](Apps) correspond to a CasaOS App. The directory should contain at least a `docker-compose.yml` file:
 
-- It should be a valid [Docker Compose file](https://docs.docker.com/compose/compose-file/).
+- It should be a valid [Docker Compose file](https://docs.docker.com/compose/compose-file/). Here are some requirements (but not limited to):
+
+  - `name` must contain only lower case letters, numbers, underscore "`_`" and hyphen "`-`" (in other words, must match `^[a-z0-9][a-z0-9_-]*$`)
 
 - Image tag should be specific, e.g. `:0.1.2`, instead of `:latest`.
 
@@ -101,7 +103,7 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
                     en_us: Syncthing Accessible Directory.
         ```
 
-    1. Compose app level
+    2. Compose app level
 
         For the same example, at the bottom of the [`docker-compose.yml` of Syncthing](Apps/Syncthing/docker-compose.yml)
 
@@ -130,6 +132,58 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
             index: /                        # the index page for web UI, e.g. index.html
             port_map: "8384"                # the port for web UI
         ```
+
+    3. Magic Value
+
+        **Note**: The features is only working in casaos 0.4.4 and newer version.
+
+        For resolves some cases. Casaos provide some magic value to power your application:
+
+        - Environment variable
+
+            your application can read environment variable that user set, such as `OPENAI_API_KEY` from environment variable. It is store in `/etc/casaos/env`. User can set only once and using anywhere. It can be change by api, after change, all application will re up to inject new env var.
+
+            **Note**: change the config didn't change the env var of current container. To set env var, you should use cli to set it.
+
+        - `WEBUI_PORT`
+
+            your `docker-compose.yml` can use `WEBUI_PORT` to set webui port. Casaos will assign a available port for your application. You can use it like this:
+
+            ```yaml
+            ...
+            ports:
+                - target: 5230
+                published: ${WEBUI_PORT}
+                protocol: tcp
+            ...
+            x-casaos:
+                architectures:
+                    - amd64
+                    - arm64
+                    - arm
+            ...
+                port_map: ${WEBUI_PORT}
+            ```
+
+            or
+
+            ```yaml
+            ...
+            ports:
+                - target: 5230
+                published: ${WEBUI_PORT:-5230}
+                protocol: tcp
+            ...
+            x-casaos:
+                architectures:
+                    - amd64
+                    - arm64
+                    - arm
+            ...
+                port_map: ${WEBUI_PORT:-5230}
+            ```
+
+            **Note**: the WEBUI_PORT only allocated once. It promise the port is available when allocated. If the port be used by other application. It didn't reallocate a new port.
 
 ## Requirements for Featured Apps
 
