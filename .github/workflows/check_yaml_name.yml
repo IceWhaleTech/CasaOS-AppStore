@@ -1,0 +1,34 @@
+name: PR Check YAML
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  check_yaml:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Find YAML files
+        id: find_yaml
+        run: |
+          yaml_files=$(find . -name "*.yaml" -o -name "*.yml" | tr '\n' ' ')
+          echo "::set-output name=yaml_files::$yaml_files"
+
+      - name: Check name field in YAML files
+        id: check_name
+        run: |
+          result=$(grep -oP '^name:\s(?!.*[A-Z])[a-z0-9_-]*$' ${{ steps.find_yaml.outputs.yaml_files }})
+          echo "::set-output name=result::$result"
+
+      - name: Check result
+        run: |
+          if [ -z "${{ steps.check_name.outputs.result }}" ]; then
+            echo "There is a problem with the value of name in the submitted yaml, please make sure the value is in the range [a-z0-9_-]."
+            exit 1
+          else
+            echo "name：${{ steps.check_name.outputs.result }}"
+          fi
