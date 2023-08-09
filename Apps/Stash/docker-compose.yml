@@ -1,7 +1,6 @@
----
 name: stash
 services:
-  app:
+  stash:
     image: stashapp/stash:v0.21.0
     restart: unless-stopped
     environment:
@@ -99,12 +98,13 @@ services:
       - /DATA/AppData/$AppID/userscripts:/userscripts
       - /DATA/AppData/$AppID/validator:/validator
       - /DATA/Media/xxx:/media
+    container_name: stash
 x-casaos:
   architectures:
     - amd64
     - arm
     - arm64
-  main: app
+  main: stash
   author: f4bio
   description:
     en_us: "Stash allows you to organize and view your own collection of adult video and image files. Think of it like a private PornHub site for your personal porn collection. Documentation: https://docs.stashapp.cc"
@@ -115,8 +115,8 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stash/screenshot-2.jpg
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stash/screenshot-3.jpg
   developer: Stash
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@develop/Apps/Stash/icon.png
-  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@develop/Apps/Stash/thumbnail.jpg
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stash/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stash/thumbnail.jpg
   title:
     en_us: Stash
   category: Utilities

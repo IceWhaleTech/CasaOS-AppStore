@@ -1,7 +1,7 @@
 name: alist
 services:
   alist:
-    image: xhofe/alist:v3.21.0
+    image: xhofe/alist:v3.23.0
     deploy:
       resources:
         reservations:
@@ -27,6 +27,7 @@ services:
           description:
             en_us: alist config directory.
             zh_cn: alist 配置目录
+    container_name: alist
 x-casaos:
   architectures:
     - amd64
@@ -50,7 +51,7 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist/thumbnail.png
   tips:
     before_install:
-      en_us: After installation, view the initial password in the log.
-      zh_cn: 安装完成后，请在日志中查看初始密码。
+      en_us: After installation, please check the initial password in the container log (Settings - TopRight - Terminal and Logs - Logs).
+      zh_cn: 安装完成后，请在容器日志（应用-设置-右上角-终端与日志-日志）中查看初始密码。
   title:
     en_us: Alist

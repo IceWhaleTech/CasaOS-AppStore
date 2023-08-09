@@ -1,7 +1,7 @@
-name: Databag
+name: databag
 services:
   databag:
-    image: balzack/databag:0.1.5
+    image: balzack/databag:0.1.6
     restart: unless-stopped
     x-casaos:
       volumes:
@@ -20,6 +20,7 @@ services:
       - type: bind
         source: /DATA/AppData/databag/data
         target: /var/lib/databag
+    container_name: databag
 x-casaos:
   architectures:
     - amd64

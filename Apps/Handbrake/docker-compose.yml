@@ -22,6 +22,7 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/config
         target: /config
+    container_name: handbrake
 x-casaos:
   architectures:
     - amd64
