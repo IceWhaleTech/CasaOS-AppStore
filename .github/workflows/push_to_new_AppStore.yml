@@ -34,4 +34,8 @@ jobs:
           email: q2676515970@163.com
           src_branch: main
           dst_branch: main
+      - name: Error Handling
+        if: ${{ failure() }}
+        run: |
+          curl -X POST -H "Content-Type: application/json" -d '{"msg_type":"text","content":{"text":"CasaOS-AppStore build and publish error"}}' ${{ secrets.APPSTORE_ROBOT_URL }} 
 
