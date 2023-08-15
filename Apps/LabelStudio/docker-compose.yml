@@ -5,16 +5,6 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-      LABEL_STUDIO_HOST: ${LABEL_STUDIO_HOST:-}
-      DJANGO_DB: default
-      POSTGRE_NAME: postgres
-      POSTGRE_USER: postgres
-      POSTGRE_PASSWORD:
-      POSTGRE_PORT: 5432
-      POSTGRE_HOST: db
-      JSON_LOG: 1
-    depends_on:
-      - db
     image: heartexlabs/label-studio:1.8.1
     deploy:
       resources:
@@ -41,29 +31,13 @@ services:
           description:
             en_us: WebUI HTTP Port
             zh_cn: WebUI HTTP 端口
-  db:
-    image: postgres:11.5
-    hostname: db
-    restart: unless-stopped
-    # Optional: Enable TLS on PostgreSQL
-    # Just drop your server.crt and server.key into folder 'deploy/pgsql/certs'
-    # NOTE: Both files must have permissions u=rw (0600) or less
-    #    command: >
-    #      -c ssl=on
-    #      -c ssl_cert_file=/var/lib/postgresql/certs/server.crt
-    #      -c ssl_key_file=/var/lib/postgresql/certs/server.key
-    environment:
-      - POSTGRES_HOST_AUTH_METHOD=trust
-    volumes:
-      - ${POSTGRES_DATA_DIR:-./postgres-data}:/var/lib/postgresql/data
-      - ./deploy/pgsql/certs:/var/lib/postgresql/certs:ro
 x-casaos:
   architectures:
     - amd64
     - arm64
   main: label-studio
   author: CorrectRoadH
-  category: HumanSignal
+  category: AI
   description:
     en_us: Label Studio is an open source data labeling tool. It lets you label data types like audio, text, images, videos, and time series with a simple and straightforward UI and export to various model formats. It can be used to prepare raw data or improve existing training data to get more accurate ML models.
     zh_cn: Label Studio 是一个开源数据标记工具。 它允许您使用简单直观的 UI 来标记音频、文本、图像、视频和时间序列等数据类型，并导出为各种模型格式。 它可用于准备原始数据或改进现有训练数据以获得更准确的机器学习模型。
@@ -78,4 +52,4 @@ x-casaos:
   tips: {}
   title:
     en_us: Label Studio   
-  port_map: 3080
+  port_map: "3080"
