@@ -6,7 +6,6 @@ services:
       - SYS_PTRACE
       - SYS_ADMIN
     cpu_shares: 90
-    command: []
     container_name: netdata
     deploy:
       resources:
@@ -51,8 +50,6 @@ services:
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
-    devices: []
-    environment: []
     network_mode: bridge
     privileged: false
 x-casaos:
