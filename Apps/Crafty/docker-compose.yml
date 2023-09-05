@@ -4,7 +4,7 @@ version: '3'
 
 services:
   crafty:
-    container_name: crafty_container
+    container_name: crafty-container
     image: registry.gitlab.com/crafty-controller/crafty-4:4.1.3
     restart: always
     environment:
@@ -109,9 +109,88 @@ x-casaos:
   tagline:
     en_us: Take control of your Minecraft servers.
     es_es: Toma el control de tus servidores de Minecraft.
-  tips: {}
+  tips:
+    before_install:
+      ar_sa: |
+        الحساب الافتراضي
+
+        | اسم المستخدم | كلمة المرور |
+        |----------|----------|
+        | `admin`    | `crafty` |
+      de_de: |
+        Standardkonto
+
+        | Benutzername | Passwort |
+        |----------|----------|
+        | `admin`    | `crafty` |
+      en_us: |
+        Default Account
+
+        | Username | Password |
+        |----------|----------|
+        | `admin`    | `crafty` |
+      es_es: |
+        Cuenta predeterminada
+
+        | Nombre de usuario | Contraseña |
+        |----------|----------|
+        | `admin`    | `crafty` |
+      fr_fr: |
+        Compte par défaut
+
+        | Nom d'utilisateur | Mot de passe |
+        |----------|----------|
+        | `admin`    | `crafty` |
+      hu_hu: |
+        Alapértelmezett fiók
+
+        | Felhasználónév | Jelszó |
+        |----------|----------|
+        | `admin`    | `crafty` |
+      it_it: |
+        Account predefinito
+
+        | Nome utente | Password |
+        |----------|----------|
+        | `admin`    | `crafty` |
+      pl_pl: |
+        Konto domyślne
+
+        | Nazwa użytkownika | Hasło |
+        |----------|----------|
+        | `admin`    | `crafty` |
+      pt_br: |
+        Conta padrão
+
+        | Nome de usuário | Senha |
+        |----------|----------|
+        | `admin`    | `crafty` |
+      ru_ru: |
+        Учетная запись по умолчанию
+
+        | Имя пользователя | Пароль |
+        |----------|----------|
+        | `admin`    | `crafty` |
+      sv_se: |
+        Standardkonto
+
+        | Användarnamn | Lösenord |
+        |----------|----------|
+        | `admin`    | `crafty` |
+      uk_ua: |
+        Обліковий запис за замовчуванням
+
+        | Ім'я користувача | Пароль |
+        |----------|----------|
+        | `admin`    | `crafty` |
+      zh_cn: |
+        默认账号
+
+        | 用户名 | 密码 |
+        |----------|----------|
+        | `admin`    | `crafty` |
   title:
     en_us: Crafty
   index: /panel
-  scheme: http
-  port_map: "8110"
+  scheme: https
+  port_map: "8111"
