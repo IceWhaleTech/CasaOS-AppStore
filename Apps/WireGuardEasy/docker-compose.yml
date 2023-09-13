@@ -5,7 +5,10 @@ services:
     restart: unless-stopped
     network_mode: bridge
     environment:
+      PASSWORD: 'casaos'
       WG_HOST: 'casaos.local'
+      WG_PORT: '51820'
+      WG_DEFAULT_DNS: '1.1.1.1'
     x-casaos:
       volumes:
         - container: /etc/wireguard
@@ -80,10 +83,16 @@ x-casaos:
   tips:
     before_install:
       en_us: |
+        🔧 Settings
+
+        Default password: `casaos`
+
         ⚠️ Warning!
 
         You need to change at least change the mandatory parameter `WG_HOST` for this app to work properly.
         It's value has to be a domain (or an IP address) that points to this server (accesible from WAN).
+
+        Same applies to the `WG_PORT` parameter. Change it to the port accessible from outside your LAN if it differs from the default 51820.
   title:
     en_us: WireGuard Easy
   port_map: '51821'
