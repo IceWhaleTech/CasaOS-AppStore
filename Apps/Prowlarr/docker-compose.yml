@@ -5,7 +5,7 @@ services:
       PGID: "1000"
       PUID: "1000"
       TZ: Europe/London
-    image: linuxserver/prowlarr:0.4.5-nightly
+    image: linuxserver/prowlarr:1.7.4
     deploy:
       resources:
         reservations:
@@ -40,6 +40,7 @@ services:
         - container: /config
           description:
             en_us: ""
+    container_name: prowlarr
 x-casaos:
   architectures:
     - amd64

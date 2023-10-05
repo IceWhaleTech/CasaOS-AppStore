@@ -1,10 +1,10 @@
 name: portainer
 services:
   portainer:
-    image: portainer/portainer-ce:2.18.4
+    image: portainer/portainer-ce:2.19.1
     deploy:
       resources:
-        limits:
+        reservations:
           memory: 32M
     network_mode: bridge
     ports:
@@ -40,6 +40,7 @@ services:
           description:
             en_us: Portainer data directory
             zh_cn: Portainer 数据目录
+    container_name: portainer
 x-casaos:
   architectures:
     - amd64

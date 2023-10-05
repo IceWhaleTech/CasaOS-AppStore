@@ -1,7 +1,7 @@
 name: uptimekuma
 services:
   uptimekuma:
-    image: louislam/uptime-kuma:1.20.2-alpine
+    image: louislam/uptime-kuma:1.23.2-alpine
     deploy:
       resources:
         reservations:
@@ -28,6 +28,7 @@ services:
           description:
             en_us: Uptime Kuma data directory.
             zh_cn: Uptime Kuma 数据目录。
+    container_name: uptimekuma
 x-casaos:
   architectures:
     - amd64

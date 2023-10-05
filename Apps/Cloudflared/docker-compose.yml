@@ -1,7 +1,7 @@
-name: Cloudflared
+name: cloudflared
 services:
-  app:
-    image: wisdomsky/casaos-cloudflared:1.0
+  cloudflared:
+    image: wisdomsky/cloudflared-web:2023.8.2
     restart: unless-stopped
     network_mode: host
     x-casaos:
@@ -41,12 +41,13 @@ services:
       - type: bind
         source: /DATA/AppData/casaos-cloudflared/config
         target: /config
+    container_name: cloudflared
 x-casaos:
   architectures:
     - amd64
     - arm
     - arm64
-  main: app
+  main: cloudflared
   description:
     en_us: Cloudflare Tunnel offers an easy way to expose web servers securely to the internet, without opening up firewall ports and configuring ACLs. Cloudflare Tunnel also ensures requests route through Cloudflare before reaching the web server, so you can be sure attack traffic is stopped with Cloudflare’s WAF and Unmetered DDoS mitigation, and authenticated with Access if you’ve enabled those features for your account.
     zh_cn: Cloudflare Tunnel 提供了一种安全的方式，可以将 Web 服务器安全地公开到互联网上，而无需打开防火墙端口和配置访问控制列表（ACL）。Cloudflare Tunnel 还确保请求在到达 Web 服务器之前通过 Cloudflare 路由，因此您可以确保攻击流量会被 Cloudflare 的 WAF 和无限制的 DDoS 缓解功能阻止，并在启用了这些功能的情况下通过 Access 进行身份验证。

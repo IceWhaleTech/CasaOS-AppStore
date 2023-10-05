@@ -1,8 +1,6 @@
-name: PostgreSQL
+name: postgresql
 services:
-  app:
-    image: postgres:15.3
-    restart: unless-stopped
+  postgresql:
     environment:
       PUID: $PUID
       PGID: $PGID
@@ -10,6 +8,12 @@ services:
       POSTGRES_USER: casaos
       POSTGRES_PASSWORD: casaos
       POSTGRES_DB: casaos
+    image: postgres:15.3
+    deploy:
+      resources:
+        reservations:
+          memory: "2048M"
+    restart: unless-stopped
     x-casaos:
       envs:
         - container: PUID
@@ -42,6 +46,7 @@ services:
       - type: bind
         source: /DATA/AppData/postgresql/data
         target: /var/lib/postgresql/data
+    container_name: postgresql
 x-casaos:
   architectures:
     - amd64

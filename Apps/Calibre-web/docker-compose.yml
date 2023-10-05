@@ -2,7 +2,7 @@ name: calibre-web
 services:
   calibre-web:
     environment:
-      DOCKER_MODS: linuxserver/calibre-web:calibre
+      DOCKER_MODS: ghcr.io/linuxserver/mods:universal-calibre
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
@@ -50,6 +50,7 @@ services:
         - container: /books
           description:
             en_us: ""
+    container_name: calibre-web
 x-casaos:
   architectures:
     - amd64
@@ -92,7 +93,7 @@ x-casaos:
     pt_br: Aplicativo da web para navegar, ler e baixar eBooks armazenados em um banco de dados Calibre
     sv_se: Webbapplikation för att bläddra, läsa och ladda ner e-böcker som lagras i en Calibre-databas
     uk_ua: Веб-застосунок для перегляду, читання та завантаження електронних книг, що зберігаються в базі даних Calibre
-  thumbnail: ' https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Calibre-web/thumbnail.png'
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Calibre-web/thumbnail.png
   tips:
     before_install:
       en_us: |

@@ -1,6 +1,6 @@
-name: MariaDB
+name: mariadb
 services:
-  app:
+  mariadb:
     image: linuxserver/mariadb:10.11.4
     restart: unless-stopped
     environment:
@@ -46,12 +46,13 @@ services:
       - type: bind
         source: /DATA/AppData/mariadb/config
         target: /config
+    container_name: mariadb
 x-casaos:
   architectures:
     - amd64
     - arm
     - arm64
-  main: app
+  main: mariadb
   description:
     en_us: |
       MariaDB Server is one of the most popular open source relational databases. It’s made by the original developers of MySQL and guaranteed to stay open source. It is part of most cloud offerings and the default in most Linux distributions.

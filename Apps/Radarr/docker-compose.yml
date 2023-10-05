@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/radarr:4.5.2
+    image: linuxserver/radarr:4.7.5
     deploy:
       resources:
         reservations:
@@ -59,6 +59,7 @@ services:
           description:
             en_us: Radarr downloads directory.
             zh_cn: Radarr下载目录
+    container_name: radarr
 x-casaos:
   architectures:
     - amd64

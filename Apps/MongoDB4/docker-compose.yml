@@ -1,6 +1,6 @@
-name: MongoDB4
+name: mongodb4
 services:
-  mongo:
+  mongodb4:
     image: mongo:4.4.22
     restart: unless-stopped
     environment:
@@ -50,12 +50,13 @@ services:
       - type: bind
         source: /DATA/AppData/mongodb4/data/db
         target: /data/db
+    container_name: mongodb4
 x-casaos:
   architectures:
     - amd64
     - arm
     - arm64
-  main: mongo
+  main: mongodb4
   description:
     en_us: MongoDB is a free and open-source cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with schemata. MongoDB is developed by MongoDB Inc., and is published under a combination of the Server Side Public License and the Apache License.
     zh_cn: MongoDB 是一个免费且开源的跨平台面向文档的数据库程序。MongoDB 被归类为 NoSQL 数据库程序，它使用具有模式的类似 JSON 的文档。MongoDB 由 MongoDB Inc. 开发，并在 Server Side Public License 和 Apache License 的组合下发布。
@@ -69,7 +70,7 @@ x-casaos:
     pl_pl: MongoDB to darmowy i otwartoźródłowy, wieloplatformowy program bazodanowy zorientowany na dokumenty. MongoDB jest klasyfikowana jako program bazodanowy NoSQL i wykorzystuje dokumenty w formacie JSON z schematami. MongoDB jest rozwijana przez MongoDB Inc. i jest publikowana na zasadach licencji Server Side Public License oraz licencji Apache.
     pt_br: O MongoDB é um programa de banco de dados orientado a documentos, gratuito e de código aberto, multiplataforma. Classificado como um programa de banco de dados NoSQL, o MongoDB utiliza documentos semelhantes a JSON com esquemas. O MongoDB é desenvolvido pela MongoDB Inc. e é publicado sob uma combinação da Licença Pública do Lado do Servidor e da Licença Apache.
   tagline:
-    en_us: A free and open-source cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with schemata. 
+    en_us: A free and open-source cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with schemata.
     zh_cn: 一个免费且开源的跨平台面向文档的数据库程序。MongoDB 被归类为 NoSQL 数据库程序，它使用具有模式的类似 JSON 的文档。
     ar_sa: برنامج قاعدة بيانات وثائقية عابرة المنصات ومفتوح المصدر ومجاني. يُصنف MongoDB كبرنامج قاعدة بيانات NoSQL، ويستخدم وثائق تشبه JSON مع تخطيطات.
     de_de: Ein kostenloses und Open-Source, plattformübergreifendes, dokumentenorientiertes Datenbankprogramm. MongoDB wird als NoSQL-Datenbankprogramm eingestuft und verwendet JSON-ähnliche Dokumente mit Schemata.

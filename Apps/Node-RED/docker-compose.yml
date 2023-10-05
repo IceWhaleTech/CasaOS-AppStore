@@ -6,7 +6,7 @@ services:
       resources:
         reservations:
           memory: 64M
-    network_mode: bridge
+    network_mode: host
     ports:
       - target: 1880
         published: "1880"
@@ -26,6 +26,7 @@ services:
         - container: /data
           description:
             en_us: ""
+    container_name: node-red
 x-casaos:
   architectures:
     - amd64
