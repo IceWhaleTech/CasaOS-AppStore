@@ -13,14 +13,14 @@ services:
     restart: always
     ports:
       - target: 6052
-        published: 6052
+        published: "6052"
         protocol: tcp
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/config
         target: /config
     environment:
-      ESPHOME_DASHBOARD_USE_PING: false
+      ESPHOME_DASHBOARD_USE_PING: "false"
       TZ: $TZ
     network_mode: host
     privileged: false
