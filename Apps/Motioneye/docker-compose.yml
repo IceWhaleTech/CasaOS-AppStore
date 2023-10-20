@@ -1,18 +1,8 @@
 name: motioneye
 services:
-  app:
-    cpu_shares: 10
-    command: []
+  motioneye:
     container_name: motioneye
-    deploy:
-      resources:
-        limits:
-          memory: 1794M
-    environment:
-      - TZ=Europe/Berlin
     image: ccrisan/motioneye:master-amd64
-    labels:
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Motioneye/icon.png
     ports:
       - target: 8765
         published: "8765"
@@ -38,8 +28,6 @@ services:
         - container: /var/lib/motioneye
           description:
             en_us: Media files
-    devices: []
-    cap_add: []
     network_mode: bridge
     privileged: false
 x-casaos:
@@ -48,14 +36,11 @@ x-casaos:
   author: f4bio
   category: Utilities
   description:
-    en_us: motionEye is a web-based frontend for motion. Check out the wiki for more
-      details. Changelog is available on the releases page.
-      https://github.com/motioneye-project/motioneye
+    en_us: motionEye is a web-based frontend for motion. Check out the wiki for more details. Changelog is available on the releases page. https://github.com/motioneye-project/motioneye
   developer: Motioneye
-  hostname: ""
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Motioneye/icon.png
   index: /
-  main: app
+  main: motioneye
   port_map: "8765"
   scheme: http
   screenshot_link:
@@ -66,5 +51,4 @@ x-casaos:
   tagline:
     en_us: A web frontend for the motion daemon.
   title:
-    custom: ""
     en_us: Motioneye
