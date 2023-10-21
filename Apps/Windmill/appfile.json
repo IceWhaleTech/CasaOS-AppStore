@@ -1,0 +1,98 @@
+{
+	"version": "3.7",
+	"title": "Windmill",
+	"name": "windmill",
+	"icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Windmill/icon.png",
+	"tagline": "Windmill is an open-source, blazing fast and scalable alternative to Retool, Airplane, Superblocks, n8n, Airflow, Temporal to build all your internal tools (endpoints, workflows, UIs) through the combination of code (in Typescript, Python, Go, Bash, SQL or any docker image) and low code builders",
+	"overview": "Windmill is a feature-rich platform that allows you to build endpoints, cron jobs, workflows & UIs. Each of these features can be used standalone.",
+	"thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Windmill/thumbnail.png",
+	"screenshots": [
+		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Windmill/screenshot-1.png",
+		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Windmill/screenshot-2.png",
+		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Windmill/screenshot-3.png"
+	],
+	"category": [
+		"Developer"
+	],
+	"developer": {
+		"name": "windmill-labs",
+		"website": "https://github.com/windmill-labs/windmill",
+		"donate_text": "",
+		"donate_link": ""
+	},
+	"adaptor": {
+		"name": "CasaOS Team",
+		"website": "https://www.casaos.io",
+		"donate_text": "",
+		"donate_link": ""
+	},
+	"support": "https://discord.gg/V7PM2YHsPB",
+	"website": "https://www.windill.dev",
+	"container": {
+		"image": "ghcr.io/windmill-labs/windmill:main",
+		"shell": "sh",
+		"privileged": false,
+		"network_model": "bridge",
+		"web_ui": {
+			"http": "3011",
+			"path": "/"
+		},
+		"health_check": "",
+		"envs": [],
+		"ports": [
+			{
+				"container": "8000",
+				"host": "3011",
+				"type": "tcp",
+				"allocation": "automatic",
+				"configurable": "no",
+				"description": ""
+			}
+		],
+		"volumes": [
+			{
+                "container": "/tmp/windmill/cache",
+                "host": "worker_dependency_cache",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Windmill database and plugins directory."
+            }
+		],
+		"devices": [],
+		"constraints": {
+			"min_memory": 64,
+			"min_storage": 128
+		},
+		"restart_policy": "always",
+		"sysctls": [],
+		"cap_add": [],
+		"labels": [],
+		"host_name": "",
+		"cmd": []
+	},
+	"abilities": {
+		"notification": false,
+		"widgets": false,
+		"authentication": false,
+		"search": false,
+		"upnp": false
+	},
+	"tips": {
+		"before_install": [
+			{
+				"content": "username",
+				"value": "admin@windmill.dev"
+			},
+			{
+				"content": "password",
+				"value": "changeme"
+			}
+		]
+	},
+	"changelog": {
+		"latest_updates": "",
+		"url": "https://github.com/windmill-labs/windmill/blob/main/CHANGELOG.md"
+	},
+	"latest_update_date": ""
+}
