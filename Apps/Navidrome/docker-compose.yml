@@ -13,7 +13,7 @@ services:
     restart: always
     ports:
       - target: 4533
-        published: 4533
+        published: "4533"
         protocol: tcp
     volumes:
       - type: bind

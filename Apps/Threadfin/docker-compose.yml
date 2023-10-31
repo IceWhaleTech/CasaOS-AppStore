@@ -3,6 +3,9 @@ services:
   threadfin:
     image: fyb3roptik/threadfin:latest
     restart: unless-stopped
+    environment:
+      - THREADFIN_BRANCH=main
+      - THREADFIN_DEBUG=0
     x-casaos:
       volumes:
         - container: /home/threadfin/conf/data
@@ -22,9 +25,6 @@ services:
         - container: "34400"
           description:
             en_us: Port to access the application's GUI via the web interface.
-    environment:
-      - THREADFIN_BRANCH=$THREADFIN_BRANCH
-      - THREADFIN_DEBUG=$THREADFIN_DEBUG
     ports:
       - target: 34400
         published: "34400"
