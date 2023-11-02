@@ -6,7 +6,7 @@ services:
     command:
       - /connectord
     environment:
-      TWINGATE_NETWORK: rasp
+      TWINGATE_NETWORK: ""
       TWINGATE_ACCESS_TOKEN: ""
       TWINGATE_REFRESH_TOKEN: ""
       TWINGATE_LABEL_HOSTNAME: ${HOSTNAME}
