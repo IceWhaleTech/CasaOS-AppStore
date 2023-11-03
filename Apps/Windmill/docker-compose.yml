@@ -19,6 +19,22 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    x-casaos:
+        envs:
+          - container: POSTGRES_PASSWORD
+            description:
+              en_us: Password for the Postgres DB
+          - container: POSTGRES_DB
+            description:
+              en_us: Name of the Postgres DB
+        ports:
+          - container: "5432"
+            description:
+              en_us: Postgres DB port (default 5432)
+        volumes:
+          - container: db_data
+            description:
+              en_us: Postgres data directory.
 
   windmill_server:
     image: ghcr.io/windmill-labs/windmill:main
@@ -32,13 +48,22 @@ services:
       - 3011:8000
     environment:
       - DATABASE_URL=postgres://postgres:changeme@db/windmill?sslmode=disable
-      - RUST_LOG=info
       - MODE=server
-      ## You can set the number of workers to 1 and not need any separate worker service but not recommended
-      - METRICS_ADDR=false # (ee only, if set to true, metrics will be exposed on port 8001)
     depends_on:
       db:
         condition: service_healthy
+    x-casaos:
+        envs:
+          - container: DATABASE_URL
+            description:
+              en_us: URL Encoded string of Postgres DB
+          - container: MODE
+            description:
+              en_us: Leave as "server"
+        ports:
+          - container: "3011"
+            description:
+              en_us: The port that windmill will be accessible on
 
   windmill_worker:
     image: ghcr.io/windmill-labs/windmill:main
@@ -52,10 +77,7 @@ services:
     restart: unless-stopped
     environment:
       - DATABASE_URL=postgres://postgres:changeme@db/windmill?sslmode=disable
-      - RUST_LOG=info
       - MODE=worker
-      - KEEP_JOB_DIR=false
-      - METRICS_ADDR=false
       - WORKER_GROUP=default
     depends_on:
       db:
@@ -65,6 +87,24 @@ services:
       # mount the docker socket to allow to run docker containers from within the workers
       - /var/run/docker.sock:/var/run/docker.sock
       - worker_dependency_cache:/tmp/windmill/cache
+    x-casaos:
+        envs:
+          - container: DATABASE_URL
+            description:
+              en_us: URL Encoded string of Postgres DB
+          - container: MODE
+            description:
+              en_us: Leave as "worker"
+          - container: WORKER_GROUP
+            description:
+              en_us: The default group name for workers
+        volumes:
+          - container: /var/run/docker.sock
+            description:
+              en_us: Map the docker sock to allow windmill workers to run docker containers
+          - container: worker_dependency_cache
+            description:
+              en_us: A temporary directory for dependencies needed by windmill workers
 
   ## This worker is specialized for "native" jobs. Native jobs run in-process and thus are much more lightweight than other jobs
   windmill_worker_native:
@@ -80,13 +120,22 @@ services:
     restart: unless-stopped
     environment:
       - DATABASE_URL=postgres://postgres:changeme@db/windmill?sslmode=disable
-      - RUST_LOG=info
       - MODE=worker
       - WORKER_GROUP=native
-      - METRICS_ADDR=false # (ee only, if set to true, metrics will be exposed on port 8001)
     depends_on:
       db:
         condition: service_healthy
+    x-casaos:
+        envs:
+          - container: POSTGRES_PASSWORD
+            description:
+              en_us: Password for the Postgres DB
+          - container: POSTGRES_DB
+            description:
+              en_us: Name of the Postgres DB
+          - container: WORKER_GROUP
+            description:
+              en_us: Worker group name for native jobs
 
   lsp:
     image: ghcr.io/windmill-labs/windmill-lsp:1.187
@@ -95,8 +144,16 @@ services:
       - 3001
     volumes:
       - lsp_cache:/root/.cache
-
-
+    x-casaos:
+        ports:
+          - container: "3001"
+            description:
+              en_us: The port that lsp is used for intellisense
+        volumes:
+          - container: lsp_cache
+            description:
+              en_us: The cache used for lsp service
+              
 volumes:
   db_data: null
   worker_dependency_cache: null
