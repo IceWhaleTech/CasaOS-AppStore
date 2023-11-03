@@ -2,6 +2,8 @@
 
 This document describes how to contribute an app to CasaOS AppStore.
 
+**IMPORTANT**: Your PR must be *well tested* on your own CasaOS first. This is the mandatory first step for your submission.
+
 ## Submit Process
 
 App submission should be done via Pull Request. Fork this repository and prepare the app per guidelines below.
