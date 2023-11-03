@@ -5,6 +5,9 @@
 CasaOS AppStore needs your help to grow:
 
 - See [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute CasaOS Apps in Docker Compose format.
+
+  **IMPORTANT**: Your PR must be *well tested* on your own CasaOS first. This is the mandatory first step for your submission.
+
 - Check `help wanted` for which issues you can help with.
 
 Thank you!
