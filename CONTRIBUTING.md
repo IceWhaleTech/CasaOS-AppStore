@@ -59,7 +59,7 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
     name: syncthing
     services:
         syncthing:
-            image: linuxserver/syncthing:latest
+            image: linuxserver/syncthing:<specific version>
     ...
     ```
 
