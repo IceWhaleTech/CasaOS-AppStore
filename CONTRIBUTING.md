@@ -4,6 +4,8 @@ This document describes how to contribute an app to CasaOS AppStore.
 
 **IMPORTANT**: Your PR must be *well tested* on your own CasaOS first. This is the mandatory first step for your submission.
 
+**NOTE**: The legacy `appfile.json` is no longer supported since CasaOS v0.4.4. There is no need to include this file in your PR.
+
 ## Submit Process
 
 App submission should be done via Pull Request. Fork this repository and prepare the app per guidelines below.
