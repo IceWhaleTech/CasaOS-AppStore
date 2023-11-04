@@ -1,0 +1,40 @@
+name: trilium
+services:
+  trilium:
+    cpu_shares: 10
+    command: []
+    container_name: trilium
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    image: zadam/trilium:0.61.12
+    labels:
+      icon: https://icon.casaos.io/main/all/trilium.png
+    ports:
+      - target: 8080
+        published: 8088
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/trilium
+        target: /home/node/trilium-data
+    devices: []
+    cap_add: []
+    environment: []
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  author: Jason McFeetors
+  category: Notes
+  description:
+    en_us: Trilium Notes is a hierarchical note taking application with focus on building large personal knowledge bases.
+  developer: zadam (https://github.com/zadam)
+  icon: https://icon.casaos.io/main/all/trilium.png
+  index: /
+  port_map: "8088"
+  scheme: http
+  store_app_id: trilium
+  title:
+    en_us: Trilium
