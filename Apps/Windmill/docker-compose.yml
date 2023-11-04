@@ -1,5 +1,4 @@
-version: "3.7"
-
+name: windmill
 services:
   db:
     deploy:
@@ -158,3 +157,27 @@ volumes:
   db_data: null
   worker_dependency_cache: null
   lsp_cache: null
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: windmill
+  author: Windmill.dev
+  category: Developer
+  description:
+    en_us: Windmill is an open-source, blazing fast and scalable alternative to Retool, Airplane, Superblocks, n8n, Airflow, Temporal to build all your internal tools (endpoints, workflows, UIs) through the combination of code (in Typescript, Python, Go, Bash, SQL or any docker image) and low code builders.
+ developer: Windmill
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Windmill/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Windmill/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Windmill/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Windmill/screenshot-3.png
+  tagline:
+    en_us: Windmill is a feature-rich platform that allows you to build endpoints, cron jobs, workflows & UIs. Each of these features can be used standalone.
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Windmill/thumbnail.png
+  tips: {}
+  title:
+    en_us: Sonarr
+  index: /
+  port_map: "8989"
