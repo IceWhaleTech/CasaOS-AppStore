@@ -6,10 +6,11 @@ services:
         reservations:
           memory: "64M"
     image: gdy666/lucky:2.4.6
+    container_name: lucky
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/$AppID/config
+        source: /DATA/AppData/lucky
         target: /goodluck
     network_mode: host
     privileged: false
@@ -19,7 +20,7 @@ x-casaos:
     - arm
     - arm64
   main: lucky
-  author: IceWhaleTech
+  author: Cp0204
   category: Network
   description:
     en_us: A powerful tool for port forwarding, reverse proxy, dynamic DNS, wake-on-LAN, IPv4 NAT traversal, webdav services, task scheduling, and automatic certificate management.
