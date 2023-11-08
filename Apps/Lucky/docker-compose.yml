@@ -11,7 +11,8 @@ services:
       - type: bind
         source: /DATA/AppData/lucky
         target: /goodluck
-    environment: TZ: $TZ
+    environment: 
+      TZ: $TZ
     network_mode: host
     privileged: false
 x-casaos:
