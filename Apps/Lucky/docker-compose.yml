@@ -1,16 +1,15 @@
 name: lucky
 services:
   lucky:
-    container_name: lucky
     deploy:
       resources:
         reservations:
-          memory: 64M
+          memory: "64M"
     image: gdy666/lucky:2.4.6
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/lucky
+        source: /DATA/AppData/$AppID/config
         target: /goodluck
     network_mode: host
     privileged: false
@@ -40,8 +39,6 @@ x-casaos:
       zh_cn: 默认登录账号 `666`，默认登录密码 `666`
   title:
     en_us: Lucky
-    zh_cn: 大吉
-  index: /
   port_map: "16601"
   scheme: http
   store_app_id: lucky
