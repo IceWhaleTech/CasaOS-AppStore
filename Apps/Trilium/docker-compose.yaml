@@ -13,7 +13,7 @@ services:
       icon: https://icon.casaos.io/main/all/trilium.png
     ports:
       - target: 8080
-        published: 8088
+        published: "8088"
         protocol: tcp
     restart: unless-stopped
     volumes:
