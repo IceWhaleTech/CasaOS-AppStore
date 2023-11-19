@@ -2,37 +2,32 @@ name: cloudbeaver
 services:
   cloudbeaver:
     container_name: cloudbeaver
-    image: dbeaver/cloudbeaver:23.2.4
     deploy:
       resources:
-        reservations:
-          memory: "256M"
+        limits:
+          memory: 256M
+    image: dbeaver/cloudbeaver:23.2.4
+    ports:
+      - target: 8978
+        published: "5216"
+        protocol: tcp
     restart: unless-stopped
-    network_mode: host
-    privileged: false
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/workspace
         target: /opt/cloudbeaver/workspace
-    ports:
-      - target: 8978
-        published: "8978"
-        protocol: tcp
-
+    network_mode: bridge
+    privileged: false
     x-casaos:
       ports:
         - container: "8978"
           description:
             en_us: WebUI HTTP Port
-            pt_br: Porta da WebUI.
-          protocol: tcp
-      
+          protocol: tcp   
       volumes:
         - container: /opt/cloudbeaver/workspace
           description:
             en_us: Workspace directory.
-            pt_br: Diretorio do workspace.
-
 
 x-casaos:
   architectures:
