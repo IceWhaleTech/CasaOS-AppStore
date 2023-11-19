@@ -24,11 +24,13 @@ services:
         - container: "8978"
           description:
             en_us: WebUI HTTP Port
+            pt_br: Porta da WebUI
           protocol: tcp   
       volumes:
         - container: /opt/cloudbeaver/workspace
           description:
             en_us: Workspace directory.
+            pt_br: Diretório do workspace
 
 x-casaos:
   architectures:
