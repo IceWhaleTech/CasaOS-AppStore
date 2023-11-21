@@ -20,7 +20,6 @@ jobs:
         run: |
 
           find . -type f \( -name "docker-compose.yaml" -or -name "docker-compose.yml" \) | while read -r file; do
-            dos2unix "$file"
             if ! grep -qP '^name:\s[a-z0-9_-]*\r?$' "$file"; then
               echo "There is a problem with the value of name in the submitted yaml, please make sure the value is in the range [a-z0-9_-]. And error file name：$file"
               echo $file
