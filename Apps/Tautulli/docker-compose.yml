@@ -5,7 +5,7 @@ services:
       PGID: "1000"
       PUID: "1000"
       TZ: Europe/London
-    image: linuxserver/tautulli:2.12.4
+    image: linuxserver/tautulli:2.13.2
     deploy:
       resources:
         reservations:
@@ -44,7 +44,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: tautulli
   author: Triskae

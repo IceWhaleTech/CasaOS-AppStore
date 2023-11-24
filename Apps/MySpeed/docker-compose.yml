@@ -23,7 +23,7 @@ services:
         - container: "5216"
           description:
             en_us: WebUI HTTP Port
-          protocol: tcp   
+          protocol: tcp
       volumes:
         - container: /myspeed/data
           description:
@@ -33,6 +33,7 @@ x-casaos:
   architectures:
     - amd64
     - arm64
+    - arm
   main: myspeed
   author: joaobosconff
   category: Utility

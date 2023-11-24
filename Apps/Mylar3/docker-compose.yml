@@ -4,7 +4,7 @@ services:
     environment:
       PGID: "1000"
       PUID: "1000"
-    image: linuxserver/mylar3:0.7.2
+    image: linuxserver/mylar3:0.7.6
     deploy:
       resources:
         reservations:
@@ -52,7 +52,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: mylar3
   author: CasaOS Team

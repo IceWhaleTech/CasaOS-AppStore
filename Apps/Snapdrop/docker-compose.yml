@@ -5,7 +5,7 @@ services:
       - PGID=$PGID
       - PUID=$PUID
       - TZ=$TZ
-    image: lscr.io/linuxserver/snapdrop:version-eac78009
+    image: linuxserver/snapdrop:version-eac78009
     network_mode: bridge
     ports:
       - target: 443
@@ -25,7 +25,6 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-    - arm
   description:
     en_us: Snapdrop is a Progressive Web App (PWA) that allows you to transfer files between devices in the same network without having to install anything.
     zh_cn: Snapdrop是一个渐进式Web应用程序（PWA），允许您在同一网络中的设备之间传输文件，而无需安装任何内容。

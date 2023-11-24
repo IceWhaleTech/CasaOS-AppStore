@@ -12,7 +12,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/jellyfin:10.8.10
+    image: linuxserver/jellyfin:10.8.12
     deploy:
       resources:
         reservations:
@@ -98,7 +98,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: jellyfin
   author: CasaOS Team

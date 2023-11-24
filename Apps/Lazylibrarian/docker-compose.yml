@@ -6,7 +6,7 @@ services:
       PGID: "1000"
       PUID: "1000"
       TZ: Europe/London
-    image: linuxserver/lazylibrarian:version-a7d5948a
+    image: linuxserver/lazylibrarian:version-0ca9b70c
     deploy:
       resources:
         reservations:
@@ -60,7 +60,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: lazylibrarian
   author: CasaOS Team
