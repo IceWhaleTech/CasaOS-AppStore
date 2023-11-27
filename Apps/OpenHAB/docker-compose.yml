@@ -5,7 +5,7 @@ services:
       CRYPTO_POLICY: unlimited
       PGID: $PGID
       PUID: $PUID
-    image: openhab/openhab:3.4.4
+    image: openhab/openhab:4.0.4
     deploy:
       resources:
         reservations:
@@ -23,13 +23,13 @@ services:
         read_only: true
       - type: bind
         source: /DATA/AppData/$AppID/addons
-        target: /opt/openhab/addons
+        target: /openhab/addons
       - type: bind
         source: /DATA/AppData/$AppID/conf
-        target: /opt/openhab/conf
+        target: /openhab/conf
       - type: bind
         source: /DATA/AppData/$AppID/userdata
-        target: /opt/openhab/userdata
+        target: /openhab/userdata
     x-casaos:
       envs:
         - container: CRYPTO_POLICY

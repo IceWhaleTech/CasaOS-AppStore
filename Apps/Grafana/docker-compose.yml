@@ -1,7 +1,7 @@
 name: grafana
 services:
   grafana:
-    image: grafana/grafana:8.5.27
+    image: grafana/grafana:10.2.2
     deploy:
       resources:
         reservations:
@@ -32,7 +32,6 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-    - arm
   main: grafana
   author: CasaOS Team
   category: Network

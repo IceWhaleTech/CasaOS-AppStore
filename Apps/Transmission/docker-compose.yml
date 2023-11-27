@@ -9,7 +9,7 @@ services:
       TRANSMISSION_WEB_HOME: /transmission-web-control/
       TZ: Europe/London
       USER: casaos
-    image: lscr.io/linuxserver/transmission:version-3.00-r5
+    image: linuxserver/transmission:4.0.4
     deploy:
       resources:
         reservations:
@@ -87,7 +87,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: transmission
   author: CasaOS Team

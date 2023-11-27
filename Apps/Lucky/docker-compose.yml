@@ -11,7 +11,7 @@ services:
       - type: bind
         source: /DATA/AppData/lucky
         target: /goodluck
-    environment: 
+    environment:
       TZ: $TZ
     network_mode: host
     privileged: false

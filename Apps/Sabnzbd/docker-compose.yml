@@ -5,7 +5,7 @@ services:
       PGID: "1000"
       PUID: "1000"
       TZ: Europe/London
-    image: linuxserver/sabnzbd:4.0.3
+    image: linuxserver/sabnzbd:4.1.0
     deploy:
       resources:
         reservations:
@@ -56,7 +56,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: sabnzbd
   author: CasaOS Team
