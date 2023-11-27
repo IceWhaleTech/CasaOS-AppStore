@@ -10,7 +10,7 @@ services:
     image: dbeaver/cloudbeaver:23.2.4
     ports:
       - target: 8978
-        published: "5216"
+        published: "8978"
         protocol: tcp
     restart: unless-stopped
     volumes:
