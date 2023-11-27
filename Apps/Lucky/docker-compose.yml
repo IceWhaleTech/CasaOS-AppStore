@@ -5,8 +5,8 @@ services:
       resources:
         reservations:
           memory: 64M
-    image: gdy666/lucky:2.4.7
-    restart: unless-stopped
+    image: gdy666/lucky:2.5.0
+    restart: always
     volumes:
       - type: bind
         source: /DATA/AppData/lucky
