@@ -1,0 +1,47 @@
+name: medusa
+services:
+  medusa:
+    cpu_shares: 90
+    command: []
+    container_name: medusa
+    deploy:
+      resources:
+        limits:
+          memory: 7848M
+    environment:
+      - TZ=GMT
+    image: pymedusa/medusa:master
+    labels:
+      icon: https://icon.casaos.io/main/all/medusa.png
+    ports:
+      - target: 8081
+        published: "8081"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/medusa
+        target: /config
+      - type: bind
+        source: /DATA/Downloads/Television
+        target: /downloads
+      - type: bind
+        source: /DATA/Media/Television
+        target: /tv
+    devices: []
+    cap_add: []
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  author: Jason McFeetors
+  developer: pyMedusa (https://github.com/pymedusa)
+  category: Media
+  description:
+    en_us: Automatic Video Library Manager for TV Shows. It watches for new episodes of your favorite shows, and when they are posted it does its magic.
+  icon: https://icon.casaos.io/main/all/medusa.png
+  index: /
+  port_map: "8081"
+  scheme: http
+  store_app_id: medusa
+  title:
+    en_us: Medusa
