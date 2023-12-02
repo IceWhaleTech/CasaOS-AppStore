@@ -1,0 +1,33 @@
+name: brilliant_kaity
+services:
+  stremio:
+    container_name: stremio
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+    environment:
+      - NO_CORS=1
+    image: stremio/server:4.20.2
+    ports:
+      - target: 11470
+        published: "11470"
+        protocol: tcp
+      - target: 12470
+        published: "12470"
+        protocol: tcp
+    restart: unless-stopped
+    network_mode: bridge
+    privileged: false
+    
+x-casaos:
+  author: self
+  category: self
+  hostname: ""
+  icon: ""
+  index: /
+  port_map: "11470"
+  scheme: http
+  store_app_id: brilliant_kaity
+  title:
+    custom: tei2
