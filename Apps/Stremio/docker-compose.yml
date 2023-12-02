@@ -19,6 +19,22 @@ services:
     restart: unless-stopped
     network_mode: bridge
     privileged: false
+    x-casaos:
+      ports:
+        - container: "11470"
+          description:
+            en_us: WebUI HTTP Port
+            pt_br: Porta da WebUI
+          protocol: tcp
+        - container: "12470"
+          description:
+            en_us: WebUI HTTPS Port
+            pt_br: Porta da WebUI
+          protocol: tcp
+      envs:
+        - container: NO_CORS
+          description:
+            en_us: CORS config.
     
 x-casaos:
   author: self
