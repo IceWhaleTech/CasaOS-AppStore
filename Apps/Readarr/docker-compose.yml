@@ -18,10 +18,11 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/readarr/config
+        source: /DATA/AppData/$AppID/config
         target: /config
+        
       - type: bind
-        source: /path/to/books
+        source: /DATA/AppData/$AppID/books
         target: /books
       - type: bind
         source: /DATA/Downloads
