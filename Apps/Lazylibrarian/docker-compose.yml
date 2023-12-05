@@ -3,9 +3,9 @@ services:
   lazylibrarian:
     environment:
       DOCKER_MODS: linuxserver/calibre-web:calibre|linuxserver/mods:lazylibrarian-ffmpeg
-      PGID: "1000"
-      PUID: "1000"
-      TZ: Europe/London
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
     image: linuxserver/lazylibrarian:version-0ca9b70c
     deploy:
       resources:
@@ -22,7 +22,7 @@ services:
         source: /DATA/Downloads
         target: /downloads
       - type: bind
-        source: /path/to/data
+        source: /DATA/Media/Books
         target: /books
       - type: bind
         source: /DATA/AppData/lazylibrarian/config
@@ -31,13 +31,13 @@ services:
       envs:
         - container: PUID
           description:
-            en_us: ""
+            en_us: "Run LazyLibrarian as specified UID"
         - container: PGID
           description:
-            en_us: ""
+            en_us: "Run LazyLibrarian as specified GID"
         - container: TZ
           description:
-            en_us: ""
+            en_us: "TimeZone"
         - container: DOCKER_MODS
           description:
             en_us: ""
@@ -49,13 +49,13 @@ services:
       volumes:
         - container: /downloads
           description:
-            en_us: ""
+            en_us:  "LazyLibrarian downloads directory"
         - container: /books
           description:
-            en_us: ""
+            en_us:  "LazyLibrarian Books directory"
         - container: /config
           description:
-            en_us: ""
+            en_us:  "LazyLibrarian config directory"
     container_name: lazylibrarian
 x-casaos:
   architectures:

@@ -40,18 +40,24 @@
 		},
 		"health_check": "",
 		"envs": [
-			{
-				"key": "PUID",
-				"value": "1000",
-				"description": "",
-				"configurable": "no"
-			},
-			{
-				"key": "PGID",
-				"value": "1000",
-				"description": "",
-				"configurable": "no"
-			}
+            {
+                "key": "TZ",
+                "value": "$TZ",
+                "configurable": "no",
+                "description": "TimeZone"
+            },
+            {
+                "key": "PUID",
+                "value": "$PUID",
+                "configurable": "no",
+                "description": "Run Mylar3 as specified uid."
+            },
+            {
+                "key": "PGID",
+                "value": "$PGID",
+                "configurable": "no",
+                "description": "Run Mylar3 as specified gid."
+            }
 		],
 		"ports": [
 			{
@@ -74,10 +80,10 @@
 			},
 			{
 				"container": "/comics",
-				"host": "/path/to/comics",
+				"host": "/DATA/Media/Comics",
 				"mode": "rw",
 				"allocation": "automatic",
-				"configurable": "no",
+				"configurable": "advanced",
 				"description": ""
 			},
 			{
@@ -85,7 +91,7 @@
 				"host": "/DATA/Downloads",
 				"mode": "rw",
 				"allocation": "automatic",
-				"configurable": "no",
+				"configurable": "advanced",
 				"description": ""
 			}
 		],
