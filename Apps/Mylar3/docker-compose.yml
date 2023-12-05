@@ -2,8 +2,9 @@ name: mylar3
 services:
   mylar3:
     environment:
-      PGID: "1000"
-      PUID: "1000"
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
     image: linuxserver/mylar3:0.7.6
     deploy:
       resources:
@@ -20,7 +21,7 @@ services:
         source: /DATA/AppData/mylar3/config
         target: /config
       - type: bind
-        source: /path/to/comics
+        source: /DATA/Media/Comics
         target: /comics
       - type: bind
         source: /DATA/Downloads
@@ -29,10 +30,13 @@ services:
       envs:
         - container: PUID
           description:
-            en_us: ""
+            en_us: "Run Mylar3 as specified uid."
         - container: PGID
           description:
-            en_us: ""
+            en_us: "Run Mylar3 as specified gid."
+        - container: TZ
+          description:
+            en_us: TimeZone
       ports:
         - container: "8090"
           description:
@@ -41,13 +45,13 @@ services:
       volumes:
         - container: /config
           description:
-            en_us: ""
+            en_us: "Mylar3 config directory"
         - container: /comics
           description:
-            en_us: ""
+            en_us: "Mylar3 Comics directory"
         - container: /downloads
           description:
-            en_us: ""
+            en_us: "Mylar3 downloads directory"
     container_name: mylar3
 x-casaos:
   architectures:
