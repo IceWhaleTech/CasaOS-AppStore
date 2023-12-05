@@ -40,24 +40,24 @@
 		},
 		"health_check": "",
 		"envs": [
-			{
-				"key": "PUID",
-				"value": "1000",
-				"description": "",
-				"configurable": "no"
-			},
-			{
-				"key": "PGID",
-				"value": "1000",
-				"description": "",
-				"configurable": "no"
-			},
-			{
-				"key": "TZ",
-				"value": "Europe/London",
-				"description": "",
-				"configurable": "no"
-			}
+            {
+                "key": "TZ",
+                "value": "$TZ",
+                "configurable": "no",
+                "description": "TimeZone"
+            },
+            {
+                "key": "PUID",
+                "value": "$PUID",
+                "configurable": "no",
+                "description": "Run Readarr as specified uid."
+            },
+            {
+                "key": "PGID",
+                "value": "$PGID",
+                "configurable": "no",
+                "description": "Run Readarr as specified gid."
+            }
 		],
 		"ports": [
 			{
@@ -72,27 +72,27 @@
 		"volumes": [
 			{
 				"container": "/config",
-				"host": "/DATA/AppData/readarr/config",
+				"host": "/DATA/AppData/$AppID/config",
 				"mode": "rw",
 				"allocation": "automatic",
 				"configurable": "no",
-				"description": ""
+				"description": "Readarr config directory"
 			},
 			{
 				"container": "/books",
-				"host": "/path/to/books",
+				"host": "/DATA/Media/Books",
 				"mode": "rw",
 				"allocation": "automatic",
-				"configurable": "no",
-				"description": ""
+				"configurable": "advanced",
+				"description": "Readarr books directory"
 			},
 			{
 				"container": "/downloads",
 				"host": "/DATA/Downloads",
 				"mode": "rw",
 				"allocation": "automatic",
-				"configurable": "no",
-				"description": ""
+				"configurable": "advanced",
+				"description": "Readarr downloads directory"
 			}
 		],
 		"devices": [],
