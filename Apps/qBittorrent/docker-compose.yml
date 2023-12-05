@@ -6,7 +6,7 @@ services:
       PUID: $PUID
       TZ: $TZ
       UMASK: "002"
-    image: hotio/qbittorrent:release-4.6.1
+    image: hotio/qbittorrent:release-4.6.2
     deploy:
       resources:
         reservations:
@@ -107,7 +107,7 @@ x-casaos:
         | Username | Password |
         |----------|----------|
         | `admin`    | `adminadmin` |
-
+        Passwords need to be viewed in the log
         Default Accessible Path in qBittorrent
 
         | Name | Value |
@@ -124,7 +124,7 @@ x-casaos:
         | 用户名 | 密码 |
         |----------|----------|
         | `admin`    | `adminadmin` |
-
+        需要在日志中查看密码
         qBittorrent 默认可访问路径
 
         | 名称 | 值 |
