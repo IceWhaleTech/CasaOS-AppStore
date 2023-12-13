@@ -39,24 +39,24 @@
 		},
 		"health_check": "",
 		"envs": [
-			{
-				"key": "PUID",
-				"value": "1000",
-				"description": "",
-				"configurable": "no"
-			},
-			{
-				"key": "PGID",
-				"value": "1000",
-				"description": "",
-				"configurable": "no"
-			},
-			{
-				"key": "TZ",
-				"value": "Europe/London",
-				"description": "",
-				"configurable": "no"
-			},
+            {
+                "key": "TZ",
+                "value": "$TZ",
+                "configurable": "no",
+                "description": "TimeZone"
+            },
+            {
+                "key": "PUID",
+                "value": "$PUID",
+                "configurable": "no",
+                "description": "Run LazyLibrarian as specified uid."
+            },
+            {
+                "key": "PGID",
+                "value": "$PGID",
+                "configurable": "no",
+                "description": "Run LazyLibrarian as specified gid."
+            },
 			{
 				"key": "DOCKER_MODS",
 				"value": "linuxserver/calibre-web:calibre|linuxserver/mods:lazylibrarian-ffmpeg",
@@ -80,16 +80,16 @@
 				"host": "/DATA/Downloads",
 				"mode": "rw",
 				"allocation": "automatic",
-				"configurable": "no",
-				"description": ""
+				"configurable": "advanced",
+				"description": "LazyLibrarian downloads directory"
 			},
 			{
 				"container": "/books",
-				"host": "/path/to/data",
+				"host": "/DATA/Media/Books",
 				"mode": "rw",
 				"allocation": "automatic",
-				"configurable": "no",
-				"description": ""
+				"configurable": "advanced",
+				"description": "LazyLibrarian Books directory"
 			},
 			{
 				"container": "/config",
@@ -97,7 +97,7 @@
 				"mode": "rw",
 				"allocation": "automatic",
 				"configurable": "no",
-				"description": ""
+				"description": "LazyLibrarian Config directory"
 			}
 		],
 		"devices": [],

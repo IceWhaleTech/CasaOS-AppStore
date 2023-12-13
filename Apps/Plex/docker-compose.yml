@@ -8,7 +8,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       VERSION: docker
-    image: linuxserver/plex:1.32.7
+    image: linuxserver/plex:1.32.8
     deploy:
       resources:
         reservations:
@@ -50,7 +50,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: plex
   author: CasaOS Team
