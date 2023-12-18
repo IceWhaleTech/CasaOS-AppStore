@@ -5,7 +5,7 @@ version: '3'
 services:
   crafty:
     container_name: crafty-container
-    image: registry.gitlab.com/crafty-controller/crafty-4:4.2.2
+    image: registry.gitlab.com/crafty-controller/crafty-4:4.2.1
     restart: always
     environment:
       - TZ=Etc/UTC
@@ -116,79 +116,79 @@ x-casaos:
 
         | اسم المستخدم | كلمة المرور |
         |----------|----------|
-        | `admin`    | `app/config/default-creds.txt` |
+        | `admin`    | `crafty` |
       de_de: |
         Standardkonto
 
         | Benutzername | Passwort |
         |----------|----------|
-        | `admin`    | `app/config/default-creds.txt` |
+        | `admin`    | `crafty` |
       en_us: |
         Default Account
 
         | Username | Password |
         |----------|----------|
-        | `admin`    | `app/config/default-creds.txt` |
+        | `admin`    | `crafty` |
       es_es: |
         Cuenta predeterminada
 
         | Nombre de usuario | Contraseña |
         |----------|----------|
-        | `admin`    | `app/config/default-creds.txt` |
+        | `admin`    | `crafty` |
       fr_fr: |
         Compte par défaut
 
         | Nom d'utilisateur | Mot de passe |
         |----------|----------|
-        | `admin`    | `app/config/default-creds.txt` |
+        | `admin`    | `crafty` |
       hu_hu: |
         Alapértelmezett fiók
 
         | Felhasználónév | Jelszó |
         |----------|----------|
-        | `admin`    | `app/config/default-creds.txt` |
+        | `admin`    | `crafty` |
       it_it: |
         Account predefinito
 
         | Nome utente | Password |
         |----------|----------|
-        | `admin`    | `app/config/default-creds.txt` |
+        | `admin`    | `crafty` |
       pl_pl: |
         Konto domyślne
 
         | Nazwa użytkownika | Hasło |
         |----------|----------|
-        | `admin`    | `app/config/default-creds.txt` |
+        | `admin`    | `crafty` |
       pt_br: |
         Conta padrão
 
         | Nome de usuário | Senha |
         |----------|----------|
-        | `admin`    | `app/config/default-creds.txt` |
+        | `admin`    | `crafty` |
       ru_ru: |
         Учетная запись по умолчанию
 
         | Имя пользователя | Пароль |
         |----------|----------|
-        | `admin`    | `app/config/default-creds.txt` |
+        | `admin`    | `crafty` |
       sv_se: |
         Standardkonto
 
         | Användarnamn | Lösenord |
         |----------|----------|
-        | `admin`    | `app/config/default-creds.txt` |
+        | `admin`    | `crafty` |
       uk_ua: |
         Обліковий запис за замовчуванням
 
         | Ім'я користувача | Пароль |
         |----------|----------|
-        | `admin`    | `app/config/default-creds.txt` |
+        | `admin`    | `crafty` |
       zh_cn: |
         默认账号
 
         | 用户名 | 密码 |
         |----------|----------|
-        | `admin`    | `app/config/default-creds.txt` |
+        | `admin`    | `crafty` |
   title:
     en_us: Crafty
   index: /panel
