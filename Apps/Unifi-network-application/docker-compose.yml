@@ -1,0 +1,126 @@
+name: unifi-network-application
+services:
+  unifi-db:
+    container_name: unifi-db
+    image: docker.io/mongo:3.6
+    environment:
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
+    ports:
+      - target: 27017
+        published: "27017"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/init-mongo.js
+        target: /docker-entrypoint-initdb.d/init-mongo.js
+      - type: bind
+        source: /DATA/AppData/unifi-db
+        target: /data/db
+    networks:
+     - unifi-bridge
+    privileged: false
+  unifi-network-application:
+    container_name: unifi-network-application
+    depends_on:
+      unifi-db:
+        condition: service_started
+        required: true
+    environment:
+      - MONGO_DBNAME=unifi-db
+      - MONGO_HOST=unifi-db
+      - MONGO_PASS=pass
+      - MONGO_PORT=27017
+      - MONGO_USER=unifi
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
+    image: lscr.io/linuxserver/unifi-network-application:latest
+    ports:
+      - target: 8443
+        published: "8443"
+        protocol: tcp
+      - target: 3478
+        published: "3478"
+        protocol: udp
+      - target: 10001
+        published: "10001"
+        protocol: udp
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/unifi-network-application
+        target: /config
+    networks:
+     - unifi-bridge
+    privileged: false
+networks:
+  unifi-bridge:
+    driver: bridge
+x-casaos:
+  architectures:                 
+    - amd64
+    - arm64
+  main: unifi-network-application
+  author: ""
+  category: Network
+  description:
+    en_us: For Unifi to adopt other devices, e.g. an Access Point, it is required to change the inform IP address. Because Unifi runs inside Docker by default it uses an IP address not accessible by other devices. To change this go to Settings > System Settings > Controller Configuration and set the Controller Hostname/IP to a hostname or IP address accessible by your devices. Additionally the checkbox "Override inform host with controller hostname/IP" has to be checked, so that devices can connect to the controller during adoption (devices use the inform-endpoint during adoption).
+    zh_cn: 为了让Unifi控制器能够管理其他设备，例如无线接入点，需要修改inform IP地址。因为Unifi控制器默认运行在Docker中，所以它使用的IP地址不可被其他设备访问。要修改这个设置，请前往设置>系统设置>控制器配置，将控制器主机名/ IP设置为可被您的设备访问的主机名或IP地址。此外，必须选中“使用控制器主机名/ IP覆盖inform主机”复选框，以便在采用期间设备可以连接到控制器（设备在采用期间使用inform-endpoint）。
+    ar_sa: يجب تغيير عنوان IP inform لـ Unifi للسماح لـ Unifi بالتحكم في أجهزة أخرى ، على سبيل المثال نقطة الوصول. لأن Unifi يعمل داخل Docker بشكل افتراضي ، فإنه يستخدم عنوان IP غير قابل للوصول من قبل أجهزة أخرى. لتغيير ذلك ، انتقل إلى الإعدادات> إعدادات النظام> تكوين المراقب وقم بتعيين اسم المضيف / IP للمضيف أو عنوان IP الذي يمكن الوصول إليه من قبل الأجهزة الخاصة بك. بالإضافة إلى ذلك ، يجب عليك تحديد مربع الاختيار "تجاوز مضيف inform بمضيف المضيف / IP للمراقب" ، حتى يتمكن الأجهزة من الاتصال بالمراقبة أثناء الاستيفاء (تستخدم الأجهزة نقطة الاتصال inform أثناء الاستيفاء).
+    de_de: Um Unifi zu anderen Geräten, z. B. einem Access Point, zu übernehmen, muss die Inform-IP-Adresse geändert werden. Da Unifi standardmäßig in Docker läuft, verwendet es eine IP-Adresse, die von anderen Geräten nicht erreichbar ist. Um dies zu ändern, gehen Sie zu Einstellungen> Systemeinstellungen> Controller-Konfiguration und setzen Sie den Controller-Hostname / IP auf einen Hostname oder eine IP-Adresse, die von Ihren Geräten erreichbar ist. Zusätzlich muss die Option "Inform-Host mit Controller-Hostname / IP überschreiben" aktiviert sein, damit Geräte während der Übernahme mit dem Controller verbunden werden können (Geräte verwenden während der Übernahme den Inform-Endpunkt).
+    es_es: Para que Unifi adopte otros dispositivos, por ejemplo, un punto de acceso, es necesario cambiar la dirección IP inform. Debido a que Unifi se ejecuta en Docker de forma predeterminada, utiliza una dirección IP que no es accesible para otros dispositivos. Para cambiar esto, vaya a Configuración> Configuración del sistema> Configuración del controlador y establezca el nombre de host / IP del controlador en un nombre de host o una dirección IP accesible para sus dispositivos. Además, la casilla de verificación "Anular el host inform con el nombre de host / IP del controlador" debe estar marcada para que los dispositivos puedan conectarse al controlador durante la adopción (los dispositivos utilizan el punto final inform durante la adopción).
+    fr_fr: Pour que Unifi adopte d'autres appareils, par exemple un point d'accès, il est nécessaire de modifier l'adresse IP inform. Comme Unifi s'exécute par défaut dans Docker, il utilise une adresse IP non accessible par d'autres appareils. Pour modifier cela, allez dans Paramètres> Paramètres système> Configuration du contrôleur et définissez le nom d'hôte / IP du contrôleur sur un nom d'hôte ou une adresse IP accessible par vos appareils. De plus, la case "Remplacer l'hôte inform avec le nom d'hôte / IP du contrôleur" doit être cochée pour que les appareils puissent se connecter au contrôleur lors de l'adoption (les appareils utilisent le point de terminaison inform lors de l'adoption).
+    hu_hu: A Unifi-hez más eszközök, például egy hozzáférési pont, csatlakoztatásához meg kell változtatni az inform IP-címet. Mivel az Unifi alapértelmezetten Dockerben fut, használ egy IP-címet, amely nem elérhető más eszközöktől. Ehhez menj a Beállítások> Rendszerbeállítások> Vezérlő konfigurációhoz és állítsd be a Vezérlő hosztnevet / IP-címét egy hosztnévre vagy egy IP-címre, amely elérhető a készülékeidről. Továbbá a "Inform hoszt felülírása a vezérlő hosztnevével / IP-címmel" jelölőnégyzetet be kell jelölni, hogy a készülékek csatlakozhassanak a vezérlőhöz az öröklés során (a készülékek az inform végpontot használják az öröklés során).
+    it_it: Per far adottare a Unifi altri dispositivi, ad esempio un access point, è necessario modificare l'indirizzo IP inform. Poiché Unifi viene eseguito di default in Docker, utilizza un indirizzo IP non accessibile da altri dispositivi. Per modificarlo, vai su Impostazioni> Impostazioni di sistema> Configurazione del controller e imposta il nome host / IP del controller su un nome host o un indirizzo IP accessibile dai tuoi dispositivi. Inoltre, la casella di controllo "Sovrascrivi host inform con nome host / IP del controller" deve essere selezionata per consentire ai dispositivi di connettersi al controller durante l'adozione (i dispositivi utilizzano il punto di terminazione inform durante l'adozione).
+    ru_ru: Чтобы Unifi принял другие устройства, например, точку доступа, необходимо изменить IP-адрес inform. Поскольку Unifi по умолчанию запускается в Docker, он использует IP-адрес, который недоступен для других устройств. Чтобы это изменить, перейдите в Настройки> Системные настройки> Конфигурация контроллера и установите имя хоста / IP-адреса контроллера на имя хоста или IP-адрес, доступный для ваших устройств. Кроме того, флажок "Перезаписать хост inform с именем хоста / IP-адресом контроллера" должен быть установлен, чтобы устройства могли подключиться к контроллеру во время принятия (устройства используют конечную точку inform во время принятия).
+    pl_pl: Aby Unifi przyjął inne urządzenia, na przykład punkt dostępu, należy zmienić adres IP inform. Ponieważ Unifi jest domyślnie uruchamiany w Dockerze, używa adresu IP, który nie jest dostępny dla innych urządzeń. Aby to zmienić, przejdź do Ustawienia> Ustawienia systemowe> Konfiguracja kontrolera i ustaw nazwę hosta / adres IP kontrolera na nazwę hosta lub adres IP dostępny dla Twoich urządzeń. Ponadto pole wyboru "Nadpisz host inform na nazwę hosta / adres IP kontrolera" musi być zaznaczone, aby urządzenia mogły połączyć się z kontrolerem podczas adopcji (urządzenia korzystają z punktu końcowego inform podczas adopcji).
+    pt_br: Para que o Unifi aceite outros dispositivos, como um ponto de acesso, é necessário modificar o endereço IP inform. Como o Unifi é executado por padrão no Docker, ele usa um endereço IP não acessível por outros dispositivos. Para modificá-lo, vá para Configurações> Configurações do sistema> Configuração do controlador e defina o nome do host / IP do controlador em um nome de host ou um endereço IP acessível por seus dispositivos. Além disso, a caixa de seleção "Substituir host inform pelo nome do host / IP do controlador" deve ser marcada para permitir que os dispositivos se conectem ao controlador durante a adoção (os dispositivos usam o ponto de extremidade inform durante a adoção).
+    sv_se: För att Unifi ska acceptera andra enheter, till exempel en accesspunkt, måste du ändra IP-adressen inform. Eftersom Unifi körs som standard i Docker använder den en IP-adress som inte är tillgänglig för andra enheter. För att ändra detta, gå till Inställningar> Systeminställningar> Kontrollerns konfiguration och ange kontrollerns värdnamn / IP-adress till ett värdnamn eller en IP-adress som är tillgänglig för dina enheter. Dessutom måste kryssrutan "Ersätt informhost med kontrollerns värdnamn / IP-adress" vara markerad för att enheterna ska kunna ansluta till kontrollern under adoption (enheterna använder informändpunkten under adoption).
+    uk_ua: Щоб Unifi прийняв інші пристрої, наприклад, точку доступу, необхідно змінити IP-адресу inform. Оскільки Unifi за замовчуванням запускається в Docker, він використовує IP-адресу, яка недоступна для інших пристроїв. Щоб це змінити, перейдіть до Налаштування> Системні налаштування> Конфігурація контролера і встановіть ім'я хоста / IP-адресу контролера на ім'я хоста або IP-адресу, доступну для ваших пристроїв. Крім того, прапорець "Перезаписати хост inform з іменем хоста / IP-адресою контролера" повинен бути встановлений, щоб пристрої могли підключитися до контролера під час прийняття (пристрої використовують кінцеву точку inform під час прийняття).
+  hostname: ""
+  icon: ""
+  screenshot_link: ""
+  tagline:
+    en_us: |
+        To properly initialize the database, before installing, create a file named `init-mongo.js` in the `/DATA/AppData` folder, with the following content:
+        ```
+        db.getSiblingDB("unifi-db").createUser({user: "unifi", pwd: "pass", roles: [{role: "dbOwner", db: "unifi-db"}]}); 
+        db.getSiblingDB("unifi-db_stat").createUser({user: "unifi", pwd: "pass", roles: [{role: "dbOwner", db: "unifi-db_stat"}]});
+        ```
+        This file is used only upon the first container start, to perform initial configuration.
+        If you want, you can change the password `pass` modifying this file and then the container's environment variables.
+
+        Because the network application runs inside Docker by default it uses an IP address not accessible by other devices.
+        So, for it to adopt other devices, it is required to use port `8080` and change the inform IP address. To do so, go in settings and search for the `Inform Host` option, there select override and set the address to that of the host.
+        Often, it is also needed to ssh into the devices you want to adopt and manually set the inform IP address, the command needed for doing so is `set-inform http://HOST-ADDRESS:8080/inform`.
+
+        For more [information](https://docs.linuxserver.io/images/docker-unifi-network-application/)
+  tips:
+    before_install:
+      en_us: |
+        To properly initialize the database, before installing, create a file named `init-mongo.js` in the `/DATA/AppData` folder, with the following content:
+        ```
+        db.getSiblingDB("unifi-db").createUser({user: "unifi", pwd: "pass", roles: [{role: "dbOwner", db: "unifi-db"}]}); 
+        db.getSiblingDB("unifi-db_stat").createUser({user: "unifi", pwd: "pass", roles: [{role: "dbOwner", db: "unifi-db_stat"}]});
+        ```
+        This file is used only upon the first container start, to perform initial configuration.
+        If you want, you can change the password `pass` modifying this file and then the container's environment variables.
+
+        Because the network application runs inside Docker by default it uses an IP address not accessible by other devices.
+        So, for it to adopt other devices, it is required to use port `8080` and change the inform IP address. To do so, go in settings and search for the `Inform Host` option, there select override and set the address to that of the host.
+        Often, it is also needed to ssh into the devices you want to adopt and manually set the inform IP address, the command needed for doing so is `set-inform http://HOST-ADDRESS:8080/inform`.
+
+        For more [information](https://docs.linuxserver.io/images/docker-unifi-network-application/)
+  thumbnail: ""
+  index: /
+  port_map: "8443"
+  scheme: https
+  store_app_id: unifi-network-application
+  title:
+    en_us: Unifi Network Application
