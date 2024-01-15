@@ -60,8 +60,8 @@ jobs:
           cp /tmp/linux-all-appstore-${{ github.ref_name }}.tar.gz pages/
       
       - name: Commit and Push to Target Repository
+        working-directory: pages
         run: |
-          cd target-repo
           git config user.name 'GitHub Action'
           git config user.email 'a778917369@gmail.com'
           git add .
