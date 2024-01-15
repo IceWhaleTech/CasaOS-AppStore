@@ -70,8 +70,9 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
+          directory: pages
+          github_url: https://github.com/IceWhaleTech/icewhaletech.github.io
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-    
+          branch: main
 
 
