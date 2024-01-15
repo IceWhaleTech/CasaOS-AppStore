@@ -51,6 +51,7 @@ jobs:
       - name: Upload to GitHub Pages
         uses: actions/checkout@v4
         with:
+          persist-credentials: false
           repository: IceWhaleTech/icewhaletech.github.io
           path: pages
         
@@ -65,7 +66,12 @@ jobs:
           git config user.email 'a778917369@gmail.com'
           git add .
           git commit -m "Update app store zip"
-          git push
-
+      
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+    
 
 
