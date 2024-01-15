@@ -47,5 +47,26 @@ jobs:
           assets: |
             /tmp/checksums.txt:/IceWhaleTech/CasaOS-AppStore/releases/download/${{ steps.get_version.outputs.VERSION }}/checksums.txt
             /tmp/linux-all-appstore-${{ github.ref_name }}.tar.gz:/IceWhaleTech/CasaOS-AppStore/releases/download/${{ steps.get_version.outputs.VERSION }}/linux-all-appstore-${{ github.ref_name }}.tar.gz
+      
+      - name: Upload to GitHub Pages
+        uses: actions/checkout@v4
+        with:
+          repository: IceWhaleTech/icewhaletech.github.io
+          path: pages
+        
+      - name: Copy Files to Pages
+        run: |
+          cp /tmp/checksums.txt pages/checksums.txt
+          cp /tmp/linux-all-appstore-${{ github.ref_name }}.tar.gz pages/
+      
+      - name: Commit and Push to Target Repository
+        run: |
+          cd target-repo
+          git config user.name 'GitHub Action'
+          git config user.email 'a778917369@gmail.com'
+          git add .
+          git commit -m "Update app store zip"
+          git push
+
 
 
