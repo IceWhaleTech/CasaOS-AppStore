@@ -54,7 +54,7 @@ jobs:
       - name: Copy
         run: |
           mkdir pages
-          cp linux-all-appstore.zip pages/linux-all-appstore.zip
+          cp /tmp/linux-all-appstore.zip pages/linux-all-appstore.zip
       
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
