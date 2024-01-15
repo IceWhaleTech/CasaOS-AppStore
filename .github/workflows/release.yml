@@ -56,7 +56,6 @@ jobs:
         
       - name: Copy Files to Pages
         run: |
-          cp /tmp/checksums.txt pages/checksums.txt
           cp /tmp/linux-all-appstore-${{ github.ref_name }}.tar.gz pages/
       
       - name: Commit and Push to Target Repository
