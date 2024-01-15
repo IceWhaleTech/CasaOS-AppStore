@@ -26,6 +26,7 @@ jobs:
           cp -v README.md /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
           pushd /tmp
           tar zcvf linux-all-appstore-${{ github.ref_name }}.tar.gz build
+      
       - uses: softprops/action-gh-release@v1
         if: steps.build.outcome == 'success'
         with:
@@ -33,6 +34,7 @@ jobs:
           draft: true
           prerelease: true
           fail_on_unmatched_files: true
+
       - name: Get version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
@@ -48,31 +50,13 @@ jobs:
             /tmp/checksums.txt:/IceWhaleTech/CasaOS-AppStore/releases/download/${{ steps.get_version.outputs.VERSION }}/checksums.txt
             /tmp/linux-all-appstore-${{ github.ref_name }}.tar.gz:/IceWhaleTech/CasaOS-AppStore/releases/download/${{ steps.get_version.outputs.VERSION }}/linux-all-appstore-${{ github.ref_name }}.tar.gz
       
-      - name: Upload to GitHub Pages
-        uses: actions/checkout@v4
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB2 }}
         with:
-          persist-credentials: false
-          repository: IceWhaleTech/icewhaletech.github.io
-          path: pages
-        
-      - name: Copy Files to Pages
-        run: |
-          cp /tmp/linux-all-appstore-${{ github.ref_name }}.tar.gz pages/
-      
-      - name: Commit and Push to Target Repository
-        working-directory: pages
-        run: |
-          git config user.name 'GitHub Action'
-          git config user.email 'a778917369@gmail.com'
-          git add .
-          git commit -m "Update app store zip"
-    
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:        
-          directory: pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          repository: IceWhaleTech/icewhaletech.github.io
-          branch: main
-
-
+          source-directory: '/tmp'
+          destination-github-username: 'IceWhaleTech'
+          destination-repository-name: 'icewhaletech.github.io'
+          user-email: a778917369@gmail.com
+          target-directory: './'
