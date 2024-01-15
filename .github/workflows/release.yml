@@ -66,13 +66,13 @@ jobs:
           git config user.email 'a778917369@gmail.com'
           git add .
           git commit -m "Update app store zip"
-      
+    
       - name: Push changes
         uses: ad-m/github-push-action@master
-        with:
+        with:        
           directory: pages
-          github_url: https://github.com/IceWhaleTech/icewhaletech.github.io
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: IceWhaleTech/icewhaletech.github.io
           branch: main
 
 
