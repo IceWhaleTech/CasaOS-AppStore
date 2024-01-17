@@ -26,7 +26,6 @@ jobs:
           cp -v README.md /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
           pushd /tmp
           tar zcvf linux-all-appstore-${{ github.ref_name }}.tar.gz build
-          zip -r linux-all-appstore.zip build
       
       - uses: softprops/action-gh-release@v1
         if: steps.build.outcome == 'success'
@@ -51,18 +50,3 @@ jobs:
             /tmp/checksums.txt:/IceWhaleTech/CasaOS-AppStore/releases/download/${{ steps.get_version.outputs.VERSION }}/checksums.txt
             /tmp/linux-all-appstore-${{ github.ref_name }}.tar.gz:/IceWhaleTech/CasaOS-AppStore/releases/download/${{ steps.get_version.outputs.VERSION }}/linux-all-appstore-${{ github.ref_name }}.tar.gz
       
-      - name: Copy
-        run: |
-          mkdir pages
-          cp /tmp/linux-all-appstore.zip pages/linux-all-appstore.zip
-      
-      - name: Pushes to another repository
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB2 }}
-        with:
-          source-directory: 'pages'
-          destination-github-username: 'CasaOS-AppStore'
-          destination-repository-name: 'casaos-appstore.github.io'
-          user-email: a778917369@gmail.com
-          target-directory: 'casaos-appstore'
