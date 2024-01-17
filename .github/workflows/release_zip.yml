@@ -14,6 +14,11 @@ jobs:
         run: find . -name "screenshot*" | xargs rm -f
       - name: remove all thumbnails
         run: find . -name "thumbnail*" | xargs rm -f
+      - name: remove all icon
+        run: find . -name "icon.png" | xargs rm -f
+      - name: remove all app file
+        run: find . -name "appfile.json" | xargs rm -f
+
       - name: create a build with sysroot
         id: build
         run: |
@@ -27,18 +32,23 @@ jobs:
           pushd /tmp
           zip -r main.zip build
             
-      - name: Copy
+      - name: Checkout pages
+        uses: actions/checkout@v4
+        with:
+          repository: IceWhaleTech/icewhaletech.github.io
+          path: pages
+  
+      - name: Copy build to pages
         run: |
-          mkdir pages
-          cp /tmp/main.zip pages/main.zip
+          cp /tmp/main.zip pages/store/main.zip
       
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB2 }}
         with:
-          source-directory: 'pages'
+          source-directory: 'store'
           destination-github-username: 'CasaOS-AppStore'
           destination-repository-name: 'casaos-appstore.github.io'
           user-email: wiki@casaos.io
-          target-directory: 'heads'
+          target-directory: ''

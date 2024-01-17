@@ -14,6 +14,11 @@ jobs:
         run: find . -name "screenshot*" | xargs rm -f
       - name: remove all thumbnails
         run: find . -name "thumbnail*" | xargs rm -f
+      - name: remove all icon
+        run: find . -name "icon.png" | xargs rm -f
+      - name: remove all app file
+        run: find . -name "appfile.json" | xargs rm -f
+        
       - name: create a build with sysroot
         id: build
         run: |
@@ -38,6 +43,7 @@ jobs:
       - name: Get version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      
       - name: Upload to oss
         id: upload_to_oss
         uses: tvrcgo/upload-to-oss@master
