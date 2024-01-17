@@ -52,3 +52,14 @@ jobs:
           destination-repository-name: 'casaos-appstore.github.io'
           user-email: wiki@casaos.io
           target-directory: ''
+
+      - name: Upload to oss
+        id: upload_to_oss
+        uses: tvrcgo/upload-to-oss@master
+        with:
+          key-id: ${{ secrets.OSS_KEY_ID }}
+          key-secret: ${{ secrets.OSS_KEY_SECRET }}
+          region: oss-cn-shanghai
+          bucket: casaos
+          assets: |
+            /tmp/main.zip:/store/main.zip
