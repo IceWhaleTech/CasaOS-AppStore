@@ -25,12 +25,12 @@ jobs:
           cp -v recommend-list.json /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
           cp -v README.md /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
           pushd /tmp
-          zip -r linux-all-appstore.zip build
+          zip -r main.zip build
             
       - name: Copy
         run: |
           mkdir pages
-          cp /tmp/linux-all-appstore.zip pages/linux-all-appstore.zip
+          cp /tmp/main.zip pages/main.zip
       
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
@@ -41,4 +41,4 @@ jobs:
           destination-github-username: 'CasaOS-AppStore'
           destination-repository-name: 'casaos-appstore.github.io'
           user-email: a778917369@gmail.com
-          target-directory: 'casaos-appstore'
+          target-directory: 'heads'
