@@ -2,10 +2,10 @@ name: readarr
 services:
   readarr:
     environment:
-      PGID: "1000"
-      PUID: "1000"
-      TZ: Europe/London
-    image: linuxserver/readarr:0.1.1-nightly
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: linuxserver/readarr:0.3.10-develop
     deploy:
       resources:
         reservations:
@@ -18,10 +18,11 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/readarr/config
+        source: /DATA/AppData/$AppID/config
         target: /config
+        
       - type: bind
-        source: /path/to/books
+        source: /DATA/Media/Books
         target: /books
       - type: bind
         source: /DATA/Downloads
@@ -30,13 +31,13 @@ services:
       envs:
         - container: PUID
           description:
-            en_us: ""
+            en_us: "Run Readarr as specified UID"
         - container: PGID
           description:
-            en_us: ""
+            en_us: "Run Readarr as specified GID"
         - container: TZ
           description:
-            en_us: ""
+            en_us: "Timezon"
       ports:
         - container: "8787"
           description:
@@ -45,18 +46,17 @@ services:
       volumes:
         - container: /config
           description:
-            en_us: ""
+            en_us: "Readarr config directory"
         - container: /books
           description:
-            en_us: ""
+            en_us: "Readarr books directory"
         - container: /downloads
           description:
-            en_us: ""
+            en_us: "Readarr downloads directory"
     container_name: readarr
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: readarr
   author: CasaOS Team

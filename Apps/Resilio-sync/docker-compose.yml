@@ -5,7 +5,7 @@ services:
       - PGID=$PGID
       - PUID=$PUID
       - TZ=$TZ
-    image: lscr.io/linuxserver/resilio-sync:2.7.3
+    image: linuxserver/resilio-sync:2.7.3
     network_mode: bridge
     ports:
       - target: 55555
@@ -31,7 +31,6 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-    - arm
   description:
     en_us: resilio-sync is a Docker-based application that enables fast and secure file synchronization and sharing.
     zh_cn: resilio-sync是一个基于Docker的应用，可以实现无缝快速、安全的文件同步和共享。

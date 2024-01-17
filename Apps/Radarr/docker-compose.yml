@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/radarr:4.7.5
+    image: linuxserver/radarr:5.1.3
     deploy:
       resources:
         reservations:
@@ -63,7 +63,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: radarr
   author: CasaOS Team

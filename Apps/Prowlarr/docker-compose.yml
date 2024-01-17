@@ -5,7 +5,7 @@ services:
       PGID: "1000"
       PUID: "1000"
       TZ: Europe/London
-    image: linuxserver/prowlarr:1.7.4
+    image: linuxserver/prowlarr:1.9.4
     deploy:
       resources:
         reservations:
@@ -44,7 +44,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: prowlarr
   author: CasaOS Team

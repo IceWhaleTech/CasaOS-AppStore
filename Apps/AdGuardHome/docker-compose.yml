@@ -1,7 +1,7 @@
 name: adguard-home
 services:
   adguard-home:
-    image: adguard/adguardhome:v0.107.32
+    image: adguard/adguardhome:v0.107.41
     deploy:
       resources:
         reservations:
@@ -9,10 +9,10 @@ services:
     network_mode: bridge
     ports:
       - target: 53
-        published: "53"
+        published: "531"
         protocol: tcp
       - target: 53
-        published: "53"
+        published: "531"
         protocol: udp
       - target: 3000
         published: "3001"
