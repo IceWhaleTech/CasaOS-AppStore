@@ -12,7 +12,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/jellyfin:10.8.10
+    image: linuxserver/jellyfin:10.8.12
     deploy:
       resources:
         reservations:
@@ -20,16 +20,16 @@ services:
     network_mode: bridge
     ports:
       - target: 8096
-        published: "8096"
+        published: "8097"
         protocol: tcp
       - target: 8920
-        published: "8920"
+        published: "8921"
         protocol: tcp
       - target: 7359
         published: "7359"
         protocol: tcp
       - target: 1900
-        published: "1900"
+        published: "1901"
         protocol: tcp
     restart: unless-stopped
     volumes:
@@ -98,7 +98,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: jellyfin
   author: CasaOS Team
@@ -144,4 +143,4 @@ x-casaos:
   title:
     en_us: Jellyfin
   index: /
-  port_map: "8096"
+  port_map: "8097"
