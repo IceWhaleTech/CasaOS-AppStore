@@ -47,7 +47,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB2 }}
         with:
-          source-directory: 'store'
+          source-directory: 'pages'
           destination-github-username: 'IceWhaleTech'
           destination-repository-name: 'CasaOS-AppStore'
           target-branch: 'gh-pages'
