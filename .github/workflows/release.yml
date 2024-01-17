@@ -26,6 +26,7 @@ jobs:
           cp -v README.md /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
           pushd /tmp
           tar zcvf linux-all-appstore-${{ github.ref_name }}.tar.gz build
+      
       - uses: softprops/action-gh-release@v1
         if: steps.build.outcome == 'success'
         with:
@@ -33,6 +34,7 @@ jobs:
           draft: true
           prerelease: true
           fail_on_unmatched_files: true
+
       - name: Get version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
@@ -47,5 +49,4 @@ jobs:
           assets: |
             /tmp/checksums.txt:/IceWhaleTech/CasaOS-AppStore/releases/download/${{ steps.get_version.outputs.VERSION }}/checksums.txt
             /tmp/linux-all-appstore-${{ github.ref_name }}.tar.gz:/IceWhaleTech/CasaOS-AppStore/releases/download/${{ steps.get_version.outputs.VERSION }}/linux-all-appstore-${{ github.ref_name }}.tar.gz
-
-
+      
