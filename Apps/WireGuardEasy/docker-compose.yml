@@ -1,7 +1,7 @@
 name: wg-easy
 services:
   wg-easy:
-    image: weejewel/wg-easy:7
+    image: ghcr.io/wg-easy/wg-easy
     restart: unless-stopped
     network_mode: bridge
     environment:
