@@ -6,7 +6,7 @@ services:
       PGID: "1000"
       PUID: "1000"
       TZ: Europe/London
-    image: lscr.io/linuxserver/jackett:0.21.341
+    image: linuxserver/jackett:0.21.1250
     deploy:
       resources:
         reservations:
@@ -54,7 +54,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: jackett
   author: CasaOS Team

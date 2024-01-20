@@ -6,7 +6,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/calibre-web:0.6.20
+    image: linuxserver/calibre-web:0.6.21
     deploy:
       resources:
         reservations:
@@ -54,7 +54,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm
     - arm64
   main: calibre-web
   author: CasaOS Team

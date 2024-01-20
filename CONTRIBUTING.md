@@ -2,6 +2,12 @@
 
 This document describes how to contribute an app to CasaOS AppStore.
 
+**IMPORTANT**: Your PR must be *well tested* on your own CasaOS first. This is the mandatory first step for your submission.
+
+**NOTE**: The legacy `appfile.json` is no longer supported since CasaOS v0.4.4. There is no need to include this file in your PR.
+
+**NOTE**: Do not use `latest` tag for `image`. [What's Wrong With The Docker `:latest` Tag?](https://github.com/IceWhaleTech/CasaOS-AppStore/issues/167)
+
 ## Submit Process
 
 App submission should be done via Pull Request. Fork this repository and prepare the app per guidelines below.
@@ -55,7 +61,7 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
     name: syncthing
     services:
         syncthing:
-            image: linuxserver/syncthing:latest
+            image: linuxserver/syncthing:<specific version>
     ...
     ```
 
