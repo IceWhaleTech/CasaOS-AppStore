@@ -14,7 +14,7 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/init-mongo.js
+        source: init-mongo.js
         target: /docker-entrypoint-initdb.d/init-mongo.js
       - type: bind
         source: /DATA/AppData/unifi-db
@@ -62,6 +62,11 @@ services:
 networks:
   unifi-bridge:
     driver: bridge
+configs:
+  init-mongo.js:
+    content: |
+      db.getSiblingDB("unifi-db").createUser({user: "unifi", pwd: "pass", roles: [{role: "dbOwner", db: "unifi-db"}]}); 
+      db.getSiblingDB("unifi-db_stat").createUser({user: "unifi", pwd: "pass", roles: [{role: "dbOwner", db: "unifi-db_stat"}]});
 x-casaos:
   architectures:                 
     - amd64
