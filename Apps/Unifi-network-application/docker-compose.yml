@@ -4,7 +4,8 @@ services:
     container_name: unifi-db
     image: docker.io/mongo:3.6
     configs:
-      - init-mongo.js
+      - source: init-mongo.js
+        target: /docker-entrypoint-initdb.d/init-mongo.js
     environment:
       - PGID=$PGID
       - PUID=$PUID
@@ -15,9 +16,6 @@ services:
         protocol: tcp
     restart: unless-stopped
     volumes:
-      - type: bind
-        source: init-mongo.js
-        target: /docker-entrypoint-initdb.d/init-mongo.js
       - type: bind
         source: /DATA/AppData/unifi-db
         target: /data/db
