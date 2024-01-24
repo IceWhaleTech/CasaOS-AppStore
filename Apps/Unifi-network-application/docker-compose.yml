@@ -3,6 +3,8 @@ services:
   unifi-db:
     container_name: unifi-db
     image: docker.io/mongo:3.6
+    configs:
+      - init-mongo.js
     environment:
       - PGID=$PGID
       - PUID=$PUID
