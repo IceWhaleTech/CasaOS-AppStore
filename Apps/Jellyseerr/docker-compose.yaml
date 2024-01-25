@@ -22,8 +22,6 @@ services:
         target: /app/config
         bind:
           create_host_path: true
-    devices: []
-    cap_add: []
     network_mode: bridge
     privileged: false
 x-casaos:
