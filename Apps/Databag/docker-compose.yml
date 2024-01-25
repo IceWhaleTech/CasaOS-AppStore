@@ -8,10 +8,12 @@ services:
         - container: /var/lib/databag
           description:
             en_us: database and asset store
+            zh_cn: 数据库和资源存储
       ports:
         - container: '7000'
           description:
             en_us: rest api port
+            zh_cn: REST API端口
     ports:
       - target: 7000
         published: 7000
@@ -28,8 +30,10 @@ x-casaos:
   main: databag
   description:
     en_us: Databag is a federated chat app for self-hosting that focuses on user privacy and security; the service includes clients for iOS, Android, and browser.
+    zh_cn: Databag是一个自托管的联邦聊天应用，专注于用户隐私和安全；该服务包括iOS、Android和浏览器的客户端。
   tagline:
     en_us: Messenger for the Decentralized Web
+    zh_cn: 分布式网络的通讯应用
   developer: balzack
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Databag/icon.png
   screenshot_link:
