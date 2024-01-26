@@ -19,7 +19,6 @@ services:
       - type: bind
         source: /DATA/AppData/trilium
         target: /home/node/trilium-data
-    environment: []
     network_mode: bridge
     privileged: false
 x-casaos:
