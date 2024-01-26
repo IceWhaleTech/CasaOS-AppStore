@@ -20,14 +20,17 @@ services:
         - container: "8765"
           description:
             en_us: Motioneye Web Port
+            zh_cn: Motioneye Web端口
           host: "8765"
       volumes:
         - container: /etc/motioneye
           description:
             en_us: Config files
+            zh_cn: 配置文件
         - container: /var/lib/motioneye
           description:
             en_us: Media files
+            zh_cn: 媒体文件
     network_mode: bridge
     privileged: false
 x-casaos:
@@ -37,6 +40,7 @@ x-casaos:
   category: Utilities
   description:
     en_us: motionEye is a web-based frontend for motion. Check out the wiki for more details. Changelog is available on the releases page. https://github.com/motioneye-project/motioneye
+    zh_cn: motionEye是motion的基于Web的前端。查看Wiki以获取更多详细信息。更改日志请参阅发布页面。https://github.com/motioneye-project/motioneye
   developer: Motioneye
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Motioneye/icon.png
   index: /
@@ -50,5 +54,6 @@ x-casaos:
   store_app_id: motioneye
   tagline:
     en_us: A web frontend for the motion daemon.
+    zh_cn: 用于motion的Web前端守护程序。
   title:
     en_us: Motioneye
