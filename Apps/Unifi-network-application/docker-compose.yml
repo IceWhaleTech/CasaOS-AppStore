@@ -76,13 +76,8 @@ x-casaos:
   category: Network
   description:
     en_us: |
-        To properly initialize the database, before installing, create a file named `init-mongo.js` in the `/DATA/AppData` folder, with the following content:
-        ```
-        db.getSiblingDB("unifi-db").createUser({user: "unifi", pwd: "pass", roles: [{role: "dbOwner", db: "unifi-db"}]}); 
-        db.getSiblingDB("unifi-db_stat").createUser({user: "unifi", pwd: "pass", roles: [{role: "dbOwner", db: "unifi-db_stat"}]});
-        ```
-        This file is used only upon the first container start, to perform initial configuration.
-        If you want, you can change the password `pass` modifying this file and then the container's environment variables.
+        Only mandatory ports are enabled by default, to extend functionality consider exposing 1900:1900/udp, 8843:8843, 8880:8880, 6789:6789, 5514:5514/udp.
+        Other ports specifications [here](https://docs.linuxserver.io/images/docker-unifi-network-application/#ports-p).
 
         Because the network application runs inside Docker by default it uses an IP address not accessible by other devices.
         So, for it to adopt other devices, it is required to use port `8080` and change the inform IP address. To do so, go in settings and search for the `Inform Host` option, there select override and set the address to that of the host.
@@ -109,13 +104,8 @@ x-casaos:
   tips:
     before_install:
       en_us: |
-        To properly initialize the database, before installing, create a file named `init-mongo.js` in the `/DATA/AppData` folder, with the following content:
-        ```
-        db.getSiblingDB("unifi-db").createUser({user: "unifi", pwd: "pass", roles: [{role: "dbOwner", db: "unifi-db"}]}); 
-        db.getSiblingDB("unifi-db_stat").createUser({user: "unifi", pwd: "pass", roles: [{role: "dbOwner", db: "unifi-db_stat"}]});
-        ```
-        This file is used only upon the first container start, to perform initial configuration.
-        If you want, you can change the password `pass` modifying this file and then the container's environment variables.
+        Only mandatory ports are enabled by default, to extend functionality consider exposing 1900:1900/udp, 8843:8843, 8880:8880, 6789:6789, 5514:5514/udp.
+        Other ports specifications [here](https://docs.linuxserver.io/images/docker-unifi-network-application/#ports-p).
 
         Because the network application runs inside Docker by default it uses an IP address not accessible by other devices.
         So, for it to adopt other devices, it is required to use port `8080` and change the inform IP address. To do so, go in settings and search for the `Inform Host` option, there select override and set the address to that of the host.
