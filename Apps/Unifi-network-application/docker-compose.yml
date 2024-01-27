@@ -59,6 +59,23 @@ services:
     networks:
      - unifi-bridge
     privileged: false
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_us: ""
+        - container: PGID
+          description:
+            en_us: ""
+        - container: TZ
+          description:
+            en_us: "timezone"
+            zh_cn: "时区"
+      ports:
+        - container: "8443"
+          description:
+            en_us: WebUI HTTP Port
+            zh_cn: WebUI HTTP 端口
 networks:
   unifi-bridge:
     driver: bridge
@@ -86,8 +103,11 @@ x-casaos:
 
         For more [information](https://docs.linuxserver.io/images/docker-unifi-network-application/)
   hostname: ""
-  icon: ""
-  screenshot_link: ""
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-network-application/icon.png
+  screenshot_link: 
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-network-application/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-network-application/screenshot-1.png
+
   tagline:
     en_us: The Unifi network application software is a powerful, enterprise wireless software engine ideal for high-density client deployments requiring low latency and high uptime performance.
     zh_cn: Unifi控制器软件是一种功能强大的企业级无线软件引擎，适用于需要低延迟和高可用性性能的高密度客户端部署。
@@ -113,7 +133,7 @@ x-casaos:
         Often, it is also needed to ssh into the devices you want to adopt and manually set the inform IP address, the command needed for doing so is `set-inform http://HOST-ADDRESS:8080/inform`.
 
         For more [information](https://docs.linuxserver.io/images/docker-unifi-network-application/)
-  thumbnail: ""
+  thumbnail:  https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unifi-network-application/thumbnail.png
   index: /
   port_map: "8443"
   scheme: https
