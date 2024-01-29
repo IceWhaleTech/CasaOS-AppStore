@@ -14,8 +14,7 @@ jobs:
         with:
             repo: 'IceWhaleTech/CasaOS-AppManagement'
             version: 'tag/v0.4.6-alpha3'
-            regex: true
-            file: 'linux-amd64-casaos-app-management-validator-.*\\.tar.gz'
+            file: 'linux-amd64-casaos-app-management-validator-v0.4.6-alpha3.tar.gz'
             token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract
