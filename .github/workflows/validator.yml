@@ -10,16 +10,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: dsaltares/fetch-gh-release-asset@master
+      - uses: houqp/download-release-assets@v1
         with:
-            repo: 'IceWhaleTech/CasaOS-AppManagement'
-            version: 'tag/v0.4.6-alpha3'
-            file: 'linux-amd64-casaos-app-management-validator-v0.4.6-alpha3.tar.gz'
-            token: ${{ secrets.GITHUB_TOKEN }}
-
+          repo: IceWhaleTech/CasaOS-AppManagement
+          match: "linux-amd64-casaos-app-management-validator-.+.tar.gz$"
+          rename: validator.tar.gz
+    
       - name: Extract
         run: |
-            tar -zxvf linux-amd64-casaos-app-management-validator-*.tar.gz /
+            tar -zxvf validator.tar.gz /
             chmod +x /usr/local/bin/casaos-app-management-validator
 
       - name: Check name field in YAML files
