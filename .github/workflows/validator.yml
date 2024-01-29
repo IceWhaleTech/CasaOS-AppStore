@@ -20,12 +20,14 @@ jobs:
       - name: Extract
         run: |
             tar zxf linux-amd64-casaos-app-management-validator-*.tar.gz
-            chmod +x /usr/local/bin/casaos-app-management-validator
+
+      - name: Install
+        run: |
+            chmod +x build/sysroot/usr/bin/casaos-app-management-validator
 
       - name: Check name field in YAML files
         id: validate_docker_compose
         run: |
-
             find . -type f \( -name "docker-compose.yaml" -or -name "docker-compose.yml" \) | while read -r file; do
-                /usr/local/bin/casaos-app-management-validator $file
+            build/sysroot/usr/bin/casaos-app-management-validator $file
             done
