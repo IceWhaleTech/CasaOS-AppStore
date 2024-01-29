@@ -19,7 +19,7 @@ jobs:
 
       - name: Extract
         run: |
-            tar -zxvf linux-amd64-casaos-app-management-validator-*.tar.gz /
+            tar zxf linux-amd64-casaos-app-management-validator-*.tar.gz
             chmod +x /usr/local/bin/casaos-app-management-validator
 
       - name: Check name field in YAML files
