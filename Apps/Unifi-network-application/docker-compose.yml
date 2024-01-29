@@ -1,27 +1,5 @@
 name: unifi-network-application
 services:
-  unifi-db:
-    container_name: unifi-db
-    image: docker.io/mongo:3.6
-    configs:
-      - source: init-mongo.js
-        target: /docker-entrypoint-initdb.d/init-mongo.js
-    environment:
-      - PGID=$PGID
-      - PUID=$PUID
-      - TZ=$TZ
-    ports:
-      - target: 27017
-        published: "27017"
-        protocol: tcp
-    restart: unless-stopped
-    volumes:
-      - type: bind
-        source: /DATA/AppData/unifi-db
-        target: /data/db
-    networks:
-     - unifi-bridge
-    privileged: false
   unifi-network-application:
     container_name: unifi-network-application
     depends_on:
@@ -76,6 +54,28 @@ services:
           description:
             en_us: WebUI HTTP Port
             zh_cn: WebUI HTTP 端口
+  unifi-db:
+    container_name: unifi-db
+    image: docker.io/mongo:3.6
+    configs:
+      - source: init-mongo.js
+        target: /docker-entrypoint-initdb.d/init-mongo.js
+    environment:
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
+    ports:
+      - target: 27017
+        published: "27017"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/unifi-db
+        target: /data/db
+    networks:
+     - unifi-bridge
+    privileged: false
 networks:
   unifi-bridge:
     driver: bridge
