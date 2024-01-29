@@ -10,15 +10,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: houqp/download-release-assets@v1
+
+      - uses: robinraju/release-downloader@v1.9
         with:
-          repo: IceWhaleTech/CasaOS-AppManagement
-          match: "linux-amd64-casaos-app-management-validator-.+.tar.gz$"
-          rename: validator.tar.gz
-    
+          repository: "IceWhaleTech/CasaOS-AppManagement"
+          latest: true
+          fileName: "linux-amd64-casaos-app-management-validator-*.tar.gz"
+
       - name: Extract
         run: |
-            tar -zxvf validator.tar.gz /
+            tar -zxvf linux-amd64-casaos-app-management-validator-*.tar.gz /
             chmod +x /usr/local/bin/casaos-app-management-validator
 
       - name: Check name field in YAML files
