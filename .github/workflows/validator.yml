@@ -25,9 +25,10 @@ jobs:
         run: |
             chmod +x build/sysroot/usr/bin/casaos-app-management-validator
 
-      - name: Check name field in YAML files
+      - name: Check All Docker Compose File
         id: validate_docker_compose
         run: |
             find . -type f \( -name "docker-compose.yaml" -or -name "docker-compose.yml" \) | while read -r file; do
-            build/sysroot/usr/bin/casaos-app-management-validator $file
+              echo $file
+              build/sysroot/usr/bin/casaos-app-management-validator $file
             done
