@@ -1,0 +1,33 @@
+name: validate docker compose file
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dsaltares/fetch-gh-release-asset@master
+        with:
+            repo: 'IceWhaleTech/CasaOS-AppManagement'
+            version: 'latest'
+            regex: true
+            file: 'linux-amd64-casaos-app-management-validator-.*\\.tar.gz'
+            token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract
+        run: |
+            tar -zxvf linux-amd64-casaos-app-management-validator-*.tar.gz /
+            chmod +x /usr/local/bin/casaos-app-management-validator
+
+      - name: Check name field in YAML files
+        id: validate_docker_compose
+        run: |
+
+            find . -type f \( -name "docker-compose.yaml" -or -name "docker-compose.yml" \) | while read -r file; do
+                /usr/local/bin/casaos-app-management-validator $file
+            done
