@@ -10,7 +10,7 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 6G
+          memory: "512M"
     network_mode: bridge
     ports:
       - target: 7860
@@ -33,7 +33,7 @@ x-casaos:
   architectures:
     - amd64
   main: icewhale-stable-diffusion-webui
-  author: stability.ai
+  developer: stability.ai
   category: Developer
   description:
     en_us: Stable Diffusion is a deep learning, text-to-image model released in 2022 based on diffusion techniques. It is primarily used to generate detailed images conditioned on text descriptions, though it can also be applied to other tasks such as inpainting, outpainting, and generating image-to-image translations guided by a text prompt.
