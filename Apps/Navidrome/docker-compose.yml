@@ -9,7 +9,7 @@ services:
     image: deluan/navidrome:0.50.1
     labels:
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Navidrome/icon.png
-    restart: always
+    restart: unless-stopped
     ports:
       - target: 4533
         published: "4533"
@@ -27,7 +27,7 @@ services:
       ND_SESSIONTIMEOUT: 24h
       ND_BASEURL: ""
       TZ: $TZ
-    network_mode: host
+    network_mode: bridge
     privileged: false
     x-casaos:
       envs:
