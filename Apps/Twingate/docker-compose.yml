@@ -14,10 +14,6 @@ services:
     restart: unless-stopped
     sysctls:
       net.ipv4.ping_group_range: "0 2147483647"
-    ports: []
-    volumes: []
-    devices: []
-    cap_add: []
     network_mode: default
     privileged: false
     cpu_shares: 90
