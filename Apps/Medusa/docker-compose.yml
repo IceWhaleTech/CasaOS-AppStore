@@ -24,8 +24,6 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/Media/Television
         target: /tv
-    devices: []
-    cap_add: []
     network_mode: bridge
     privileged: false
 x-casaos:
