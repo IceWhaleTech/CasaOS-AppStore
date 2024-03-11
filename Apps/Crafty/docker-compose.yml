@@ -1,11 +1,11 @@
 name: crafty
 # Base file from https://gitlab.com/crafty-controller/crafty-4/-/blob/dev/docker/docker-compose.yml
-version: '3'
+version: "3"
 
 services:
   crafty:
     container_name: crafty-container
-    image: registry.gitlab.com/crafty-controller/crafty-4:4.2.3
+    image: registry.gitlab.com/crafty-controller/crafty-4:4.3.0
     restart: always
     environment:
       - TZ=Etc/UTC
