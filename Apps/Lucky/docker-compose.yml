@@ -5,7 +5,7 @@ services:
       resources:
         reservations:
           memory: 64M
-    image: gdy666/lucky:2.6.2
+    image: gdy666/lucky:2.7.1
     restart: unless-stopped
     volumes:
       - type: bind
@@ -38,8 +38,8 @@ x-casaos:
     zh_cn: 家用软硬路由公网利器
   tips:
     before_install:
-      en_us: Default login account `666`, Default login password `666`
-      zh_cn: 默认登录账号 `666`，默认登录密码 `666`
+      en_us: Default login account `666`, Default login password `666`,tips:`Before each update, remember to back up the configuration`.
+      zh_cn: 默认登录账号 `666`，默认登录密码 `666`,提示：`每次更新前，请记得备份好配置`
   title:
     en_us: Lucky
   port_map: "16601"
