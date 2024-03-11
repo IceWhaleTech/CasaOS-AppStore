@@ -45,7 +45,7 @@ x-casaos:
     - arm
     - arm64
   main: wg-easy
-  description:
+  tagline:
     en_us: WEB UI to manage WireGuard VPN.
     zh_cn: 管理 WireGuard VPN 的 WEB UI。
     de_de: WEB UI zur Verwaltung von WireGuard VPN.
@@ -58,7 +58,7 @@ x-casaos:
     pt_br: WEB UI para gerenciar o WireGuard VPN.
     sv_se: WEB UI för att hantera WireGuard VPN.
     uk_ua: WEB інтерфейс для керування WireGuard VPN.
-  tagline:
+  description:
     en_us: You have found the easiest way to install & manage WireGuard on any Linux host!
     zh_cn: 您已经找到了在任何 Linux 主机上安装和管理 WireGuard 的最简单方法！
     de_de: Sie haben den einfachsten Weg gefunden, WireGuard auf jedem Linux-Host zu installieren und zu verwalten!
@@ -93,6 +93,17 @@ x-casaos:
         It's value has to be a domain (or an IP address) that points to this server (accesible from WAN).
 
         Same applies to the `WG_PORT` parameter. Change it to the port accessible from outside your LAN if it differs from the default 51820.
+      zh_cn: |
+        🔧 设置
+
+        默认密码： `casaos`
+
+        ⚠️ 警告！
+
+        您至少需要更改强制参数 `WG_HOST` 才能使本应用程序正常工作。
+        其值必须是指向本服务器的域（或 IP 地址）（可从广域网访问）。
+
+        同样，`WG_PORT` 参数也是如此。如果与默认的 51820 不同，请将其更改为局域网外可以访问的端口。
   title:
     en_us: WireGuard Easy
   port_map: '51821'
