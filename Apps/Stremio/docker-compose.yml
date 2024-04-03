@@ -42,11 +42,13 @@ services:
           description:
             en_us: CORS config.
             zh_cn: CORS配置
+            pt_br: Configuração do CORS
       volumes:
         - container: /root/.stremio-server
           description:
             en_us: Stremio config directory.
             zh_cn: Stremio配置目录
+            pt_br: Diretório de configurações do Stremio
 
 x-casaos:
   architectures:
@@ -73,6 +75,10 @@ x-casaos:
     before_install:
       en_us: |
         You need to set streaming server to http://YOUR_SERVER_IP:11470 on Settings -> Streaming -> Url
+      zh_cn: |
+        您需要在 "设置"->"流媒体"->"网址 "中将流媒体服务器设置为 http://YOUR_SERVER_IP:11470
+      pt_br: |
+        É necessário colocar a url do servidor de streaming para http://YOUR_SERVER_IP:11470 em Configurações -> Streaming -> Url
   title:
     en_us: Stremio
     pt_br: Stremio
