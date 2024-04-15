@@ -2,6 +2,7 @@ name: ddns-updater
 services:
   ddns-updater:
     image: qmcgaw/ddns-updater:v2.6.0
+    network-mode: bridge
     cpu_shares: 90
     command:
       - touch /data/config.json
@@ -36,12 +37,8 @@ services:
     restart: always
     volumes:
       - type: bind
-        source: /DATA/AppData/ddns-updater/data
+        source: /DATA/AppData/$AppID/data
         target: /updater/data
-    devices: []
-    cap_add: []
-    network_mode: bridge
-    privileged: false
 x-casaos:
   architectures:
     - amd64
