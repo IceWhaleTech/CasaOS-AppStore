@@ -3,14 +3,13 @@ services:
   ddns-updater:
     image: qmcgaw/ddns-updater:v2.6.0
     network-mode: bridge
-    cpu_shares: 90
     command:
       - touch /data/config.json
     container_name: ddns-updater
     deploy:
       resources:
         limits:
-          memory: 7801M
+          memory: 32M
     environment:
       - BACKUP_DIRECTORY=/updater/data
       - BACKUP_PERIOD=0
@@ -34,7 +33,7 @@ services:
       - target: 8000
         published: "8000"
         protocol: tcp
-    restart: always
+    restart: unless-stopped
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/data
