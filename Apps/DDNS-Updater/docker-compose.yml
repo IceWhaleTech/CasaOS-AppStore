@@ -38,6 +38,15 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/data
         target: /updater/data
+    x-casaos:
+      ports:
+        - container: "8000"
+          description:
+            en_us: WebUI HTTP Port
+      volumes:
+        - container: /updater/data
+          description:
+            en_us: ddns-updater config directory.
 x-casaos:
   architectures:
     - amd64
