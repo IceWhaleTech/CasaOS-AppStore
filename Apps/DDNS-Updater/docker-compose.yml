@@ -2,7 +2,7 @@ name: ddns-updater
 services:
   ddns-updater:
     image: qmcgaw/ddns-updater:v2.6.0
-    network-mode: bridge
+    network_mode: bridge
     command:
       - touch /data/config.json
     container_name: ddns-updater
