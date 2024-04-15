@@ -1,6 +1,7 @@
 name: ddns-updater
 services:
   ddns-updater:
+    image: qmcgaw/ddns-updater:v2.6.0
     cpu_shares: 90
     command:
       - touch /data/config.json
@@ -28,7 +29,6 @@ services:
       - SHOUTRRR_ADDRESSES=
       - UPDATE_COOLDOWN_PERIOD=5m
     hostname: ddns-updater
-    image: qmcgaw/ddns-updater:latest
     ports:
       - target: 8000
         published: "8000"
