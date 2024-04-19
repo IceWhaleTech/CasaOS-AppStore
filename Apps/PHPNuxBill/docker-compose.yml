@@ -1,0 +1,122 @@
+name: phpnuxbill
+services:
+  pnbrad:
+    cpu_shares: 90
+    command:
+      - /usr/bin/supervisord
+      - -c
+      - /etc/supervisor/conf.d/supervisord.conf
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+    environment:
+      - DB_DATABASE=pnb
+      - DB_PASSWORD=pnb123
+      - DB_USERNAME=pnb
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      - RADIUS_CLIENT=0.0.0.0
+      - RADIUS_LOG_AUTH=no
+      - RADIUS_SECRET=pnb123
+      - ROOT_PASSWORD=pnb123
+      - TIME_ZONE=Asia/Jakarta
+    image: agstr/pnb:latest
+    ports:
+      - target: 1812
+        published: "1812"
+        protocol: udp
+      - target: 1813
+        published: "1813"
+        protocol: udp
+      - target: 22
+        published: "922"
+        protocol: tcp
+      - target: 3306
+        published: "9306"
+        protocol: tcp
+      - target: 80
+        published: "9980"
+        protocol: tcp
+    privileged: true
+    restart: unless-stopped
+    x-casaos:
+      envs:
+        - container: DB_USERNAME
+          description:
+            en_us: ""
+        - container: DB_PASSWORD
+          description:
+            en_us: ""
+        - container: TIME_ZONE
+          description:
+            en_us: ""
+        - container: ROOT_PASSWORD
+          description:
+            en_us: ""
+        - container: RADIUS_SECRET
+          description:
+            en_us: ""
+        - container: RADIUS_CLIENT
+          description:
+            en_us: ""
+        - container: RADIUS_LOG_AUTH
+          description:
+            en_us: ""
+        - container: DB_DATABASE
+          description:
+            en_us: ""
+        - container: PATH
+          description:
+            en_us: ""
+      ports:
+        - container: "1812"
+          description:
+            en_us: ""
+        - container: "1813"
+          description:
+            en_us: ""
+        - container: "22"
+          description:
+            en_us: ""
+        - container: "3306"
+          description:
+            en_us: ""
+        - container: "80"
+          description:
+            en_us: ""
+    volumes: []
+    devices: []
+    cap_add: []
+    network_mode: bridge
+    container_name: ""
+    hostname: ""
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  author: AGSTRxyz
+  category: Network
+  description:
+    en_us: PHPNuxBill was first made specifically for selling Vouchers, where Vouchers were made at PHPNuxBill and then sold to customers, Vouchers did not enter Mikrotik, for this a Mikrotik Login Template was needed which took customers to the PHPNuxBill page for Registration. The customer buys a Voucher, then register at PHPNuxbill, and activate the Voucher at PHPNuxBill. PHPNuxBill will automatically add these customers to Mikrotik, and customers can enter the Mikrotik login page using the PHPNuxBill account. With the development of Payment Gateways and easy registration, Vouchers are now only an alternative. Customers can buy internet packages directly through the payment gateway at PHPNuxBill.
+  developer: PHPNuxBill
+  hostname: ""
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PHPNuxBill/icon.png
+  index: /
+  main: pnbrad
+  port_map: "9980"
+  scheme: http
+  store_app_id: pnbrad
+  tagline:
+    en_us: PHPNuxBill - PHP Mikrotik Billing with FreeRadius Server
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PHPNuxBill/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PHPNuxBill/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PHPNuxBill/screenshot-3.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PHPNuxBill/icon.png
+  tips:
+    custom: This is a compose app converted from a legacy app (CasaOS v0.4.3 or
+      earlier)
+  title:
+    custom: ""
+    en_us: PHPNuxBill
