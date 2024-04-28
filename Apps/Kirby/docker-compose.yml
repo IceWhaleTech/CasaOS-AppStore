@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  kirby:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - target: 80
+        published: "8081"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/kirby
+        target: /app
+    environment:
+      - APP_ENV=development
+    container_name: kirby
+    restart: unless-stopped
+    network_mode: bridge
+  mailhog:
+      container_name: mailhog
+      image: mailhog/mailhog:latest
+      restart: always
+      hostname: mailhog
+      ports:
+        - "1025:1025"
+        - "8025:8025"
+x-casaos:
+  title:
+    en_us: Kirby
+  description:
+    en_us: Kirby is a file-based CMS. Easy to setup. Easy to use. Flexible as hell.
+  tagline:
+    en_us: A flexible and easy-to-use file-based CMS.
+  developer: Bastian Allgeier GmbH
+  category: Web
+  port_map: '8081'
+  volumes:
+    - container: /app
+      description:
+        en_us: Contains Kirby application files.
