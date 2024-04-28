@@ -1,0 +1,114 @@
+name: immich
+
+services:
+  immich-server:
+    container_name: immich_server
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    command: ['start.sh', 'immich']
+    volumes:
+      - ${UPLOAD_LOCATION}:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_DATABASE_NAME: ${DB_DATABASE_NAME}
+      DB_DATA_LOCATION: ${DB_DATA_LOCATION}
+      REDIS_HOSTNAME: ${REDIS_HOSTNAME}
+      UPLOAD_LOCATION: ${UPLOAD_LOCATION}
+      IMMICH_VERSION: ${IMMICH_VERSION}
+    ports:
+      - 2283:3001
+    depends_on:
+      - redis
+      - database
+    restart: always
+    x-casaos:
+      volumes:
+        - container: /usr/src/app/upload
+          description:
+            en_us: Contains uploaded files for Immich.
+        - container: /etc/localtime
+          description:
+            en_us: System localtime read-only volume.
+      ports:
+        - container: '2283'
+          description:
+            en_us: Immich server port.
+
+  immich-microservices:
+    container_name: immich_microservices
+    image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
+    command: ['start.sh', 'microservices']
+    volumes:
+      - ${UPLOAD_LOCATION}:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_DATABASE_NAME: ${DB_DATABASE_NAME}
+      DB_DATA_LOCATION: ${DB_DATA_LOCATION}
+      REDIS_HOSTNAME: ${REDIS_HOSTNAME}
+      UPLOAD_LOCATION: ${UPLOAD_LOCATION}
+      IMMICH_VERSION: ${IMMICH_VERSION}
+    depends_on:
+      - redis
+      - database
+    restart: always
+    x-casaos:
+      volumes:
+        - container: /usr/src/app/upload
+          description:
+            en_us: Contains uploaded files for Immich microservices.
+        - container: /etc/localtime
+          description:
+            en_us: System localtime read-only volume.
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
+    volumes:
+      - model-cache:/cache
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_DATABASE_NAME: ${DB_DATABASE_NAME}
+      DB_DATA_LOCATION: ${DB_DATA_LOCATION}
+      REDIS_HOSTNAME: ${REDIS_HOSTNAME}
+      UPLOAD_LOCATION: ${UPLOAD_LOCATION}
+      IMMICH_VERSION: ${IMMICH_VERSION}
+    restart: always
+    x-casaos:
+      volumes:
+        - container: /cache
+          description:
+            en_us: Cache volume for machine learning models.
+
+  redis:
+    container_name: immich_redis
+    image: registry.hub.docker.com/library/redis:6.2-alpine@sha256:84882e87b54734154586e5f8abd4dce69fe7311315e2fc6d67c29614c8de2672
+    restart: always
+    x-casaos:
+      description:
+        en_us: Redis container for Immich.
+
+  database:
+    container_name: immich_postgres
+    image: registry.hub.docker.com/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE_NAME}
+    volumes:
+      - ${DB_DATA_LOCATION}:/var/lib/postgresql/data
+    restart: always
+    x-casaos:
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_us: Persistent volume for PostgreSQL database data.
+
+volumes:
+  model-cache:
+    x-casaos:
+      description:
+        en_us: Named volume for storing machine learning models cache.
