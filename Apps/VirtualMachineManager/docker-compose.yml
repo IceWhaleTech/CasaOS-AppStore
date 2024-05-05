@@ -1,24 +1,27 @@
+name: virt-manager
 services: 
   virt-manager:
-    image: mber5/virt-manager:latest
     restart: always
-    ports:
-      - 8185:80
+    devices:
+      - /dev/kvm:/dev/kvm
     environment:
-    # Set DARK_MODE to true to enable dark mode
+      # Set DARK_MODE to true to enable dark mode
       DARK_MODE: false
 
-    # Set HOSTS: "['qemu:///session']" to connect to a user session
+      # Set HOSTS: "['qemu:///session']" to connect to a user session
       HOSTS: "['qemu:///system']"
-
-    # If on an Ubuntu host (or any host with the libvirt AppArmor policy,
-    # you will need to use an ssh connection to localhost
-    # or use qemu:///system and uncomment the below line
-
-    # privileged: true
-
+    image: mber5/virt-manager:latest
+    network_mode: bridge
+    ports:
+      - target: 80
+        published: "8185"
+        protocol: tcp
+    restart: always
     volumes:
-      - "/var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock"
-      - "/var/lib/libvirt/images:/var/lib/libvirt/images"
-    devices:
-      - "/dev/kvm:/dev/kvm"
+      - type: bind
+        source: /var/lib/libvirt
+        target: /var/lib/libvirt
+      - type: bind
+        source: /DATA/Downloads
+        target: /DATA/Downloads
+    
