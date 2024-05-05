@@ -5,10 +5,7 @@ services:
     devices:
       - /dev/kvm:/dev/kvm
     environment:
-      # Set DARK_MODE to true to enable dark mode
       DARK_MODE: false
-
-      # Set HOSTS: "['qemu:///session']" to connect to a user session
       HOSTS: "['qemu:///system']"
     image: mber5/virt-manager:latest
     network_mode: bridge
@@ -24,4 +21,66 @@ services:
       - type: bind
         source: /DATA/Downloads
         target: /DATA/Downloads
-    
+  x-casaos:
+    envs:
+      - container: DARK_MODE
+	description:
+	  en_us: Set DARK_MODE to true to enable dark mode.
+      - container: HOSTS
+	description:
+	  en_us: Set HOSTS to "['qemu:///session']" to connect to a user session. Only change this option if you know what you're doing!
+    ports:
+      - container: "80"
+	description:
+	  en_us: GUI HTTP port
+    volumes:
+      - container: /var/lib/libvirt
+	description:
+	  en_us: Libvirt directory
+      - container: /DATA/Downloads
+	description: Downloads directory (e.g. ISO images)
+  container_name: virt-manager
+x-casaos:
+  architectures:
+    - amd64=
+    - arm64
+  main: virt-manager
+  author: mber5
+  category: Utilities
+  description:
+    en_us: A GTK Broadway web UI for libvirt and virt-manager, to run virtual machines using QEMU/KVM.
+    zh_cn: Libvirt 和 virt-manager 的 GTK Broadway Web UI，用于使用 QEMU/KVM 运行虚拟机。
+    ar_sa: واجهة مستخدم ويب GTK Broadway لواجهة مستخدم الويب ل libvirt و libvirt-manager، لتشغيل الأجهزة الافتراضية باستخدام QEMU/KVM.
+    de_de: Ein GTK Broadway Web UI für libvirt und virt-manager, um virtuelle Maschinen mit QEMU/KVM zu betreiben.
+    es_es: Una interfaz web GTK Broadway para libvirt y virt-manager, para ejecutar máquinas virtuales usando QEMU/KVM.
+    fr_fr: Une interface web GTK Broadway pour libvirt et virt-manager, pour exécuter des machines virtuelles utilisant QEMU/KVM.
+    hu_hu: GTK Broadway webes felhasználói felület a libvirt és a virt-manager számára, virtuális gépek futtatásához QEMU/KVM használatával.
+    it_it: Un'interfaccia web GTK Broadway per libvirt e virt-manager, per eseguire macchine virtuali utilizzando QEMU/KVM.
+    ru_ru: Веб-интерфейс GTK Broadway для libvirt и virt-manager, позволяющий запускать виртуальные машины с помощью QEMU/KVM.
+    pl_pl: Interfejs sieciowy GTK Broadway dla libvirt i virt-manager do uruchamiania maszyn wirtualnych przy użyciu QEMU/KVM.
+    pt_br: Uma interface de usuário da Web GTK Broadway para libvirt e virt-manager, para executar máquinas virtuais usando QEMU/KVM.
+    sv_se: Ett GTK Broadway webbgränssnitt för libvirt och virt-manager, för att köra virtuella maskiner med QEMU/KVM.
+    uk_ua: Веб-інтерфейс GTK Broadway для libvirt та virt-manager для запуску віртуальних машин за допомогою QEMU/KVM.
+  developer: Red Hat
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VirtualMachineManager/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VirtualMachineManager/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VirtualMachineManager/screenshot-2.png
+  tagline:
+    en_us: A GTK Broadway web UI for libvirt and virt-manager.
+    zh_cn: Libvirt 和 virt-manager 的 GTK Broadway Web UI。
+    de_de: Ein GTK Broadway Web UI für libvirt und virt-manager.
+    es_es: Una interfaz web GTK Broadway para libvirt y virt-manager.
+    fr_fr: Une interface web GTK Broadway pour libvirt et virt-manager.
+    hu_hu: GTK Broadway webes felhasználói felület a libvirt és a virt-manager számára.
+    it_it: Un'interfaccia web GTK Broadway per libvirt e virt-manager.
+    ru_ru: Веб-интерфейс GTK Broadway для libvirt и virt-manager.
+    pl_pl: Interfejs sieciowy GTK Broadway dla libvirt i virt-manager.
+    pt_br: Uma interface de usuário da Web GTK Broadway para libvirt e virt-manager.
+    sv_se: Ett GTK Broadway webbgränssnitt för libvirt och virt-manager.
+    uk_ua: Веб-інтерфейс GTK Broadway для libvirt та virt-manager.
+  port_map: 8185
+  scheme: http
+  store_app_id: virt-manager
+  title: 
+    en_us: Virtual Machine Manager
