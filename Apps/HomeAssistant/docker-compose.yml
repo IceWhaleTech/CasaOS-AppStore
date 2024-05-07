@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/homeassistant:2023.11.3
+    image: ghcr.io/home-assistant/home-assistant:stable
     deploy:
       resources:
         reservations:
