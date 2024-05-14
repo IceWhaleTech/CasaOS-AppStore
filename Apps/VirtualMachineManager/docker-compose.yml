@@ -11,7 +11,7 @@ services:
     network_mode: bridge
     ports:
       - target: 80
-        published: "8185"  # Changed from plain integer to string for consistency
+        published: "8185"
         protocol: tcp
     volumes:
       - type: bind
@@ -21,28 +21,28 @@ services:
         source: /DATA/Downloads
         target: /DATA/Downloads
   x-casaos:
-    envs:  # Changed to match the correct format for environment variables
+    envs:
       - container: DARK_MODE
-        description:  # Added indentation for description for proper nesting
+        description:
           en_us: Set DARK_MODE to true to enable dark mode.
       - container: HOSTS
-        description:  # Added indentation for description for proper nesting
+        description:
           en_us: Set HOSTS to "['qemu:///session']" to connect to a user session. Only change this option if you know what you're doing!
     ports:
-      - container: "80"  # Changed to string for consistency
-        description:  # Added indentation for description for proper nesting
+      - container: "80"
+        description:
           en_us: GUI HTTP port
     volumes:
-      - container: /var/lib/libvirt  # Added indentation for container for proper nesting
-        description:  # Added indentation for description for proper nesting
-          en_us: Libvirt directory
-      - container: /DATA/Downloads  # Added indentation for container for proper nesting
-        description:  # Added indentation for description for proper nesting
-          en_us: Downloads directory (e.g. ISO images)
+      - type: bind
+        source: /var/lib/libvirt
+        target: /var/lib/libvirt
+      - type: bind
+        source: /DATA/Downloads
+        target: /DATA/Downloads
   container_name: virt-manager
 x-casaos:
   architectures:
-    - amd64  # Removed '=' sign
+    - amd64
     - arm64
   main: virt-manager
   author: mber5
@@ -50,11 +50,11 @@ x-casaos:
   description:
     en_us: A GTK Broadway web UI for libvirt and virt-manager, to run virtual machines using QEMU/KVM.
     zh_cn: Libvirt 和 virt-manager 的 GTK Broadway Web UI，用于使用 QEMU/KVM 运行虚拟机。
-    ar_sa: واجهة مستخدم ويب GTK Broadway لواجهة مستخدم الويب ل libvirt و libvirt-manager، لتشغيل الأجهزة الافتراضية باستخدام QEMU/KVM.
-    de_de: Ein GTK Broadway Web UI für libvirt und virt-manager, um virtuelle Maschinen mit QEMU/KVM zu betreiben.
+    ar_sa: واجهة مستخدم ويب GTK Broadway لواجهة مستخدم الويب ل libvirt و libvirt-manager، لتشغيل الأجهزة الافتراضية باستخدام QEMU/KVM。
+    de_de: Ein GTK Broadway Web UI für libvirt und virt-manager, um virtuelle Maschinen mit QEMU/KVM zu betreiben。
     es_es: Una interfaz web GTK Broadway para libvirt y virt-manager, para ejecutar máquinas virtuales usando QEMU/KVM.
     fr_fr: Une interface web GTK Broadway pour libvirt et virt-manager, pour exécuter des machines virtuelles utilisant QEMU/KVM.
-    hu_hu: GTK Broadway webes felhasználói felület a libvirt és a virt-manager számára, virtuális gépek futtatásához QEMU/KVM használatával.
+    hu_hu: GTK Broadway webes felhasználói felület a libvirt és a virt-manager számára, virtuális gépek futtatásához QEMU/KVM használatával。
     it_it: Un'interfaccia web GTK Broadway per libvirt e virt-manager, per eseguire macchine virtuali utilizzando QEMU/KVM.
     ru_ru: Веб-интерфейс GTK Broadway для libvirt и virt-manager, позволяющий запускать виртуальные машины с помощью QEMU/KVM.
     pl_pl: Interfejs sieciowy GTK Broadway dla libvirt i virt-manager do uruchamiania maszyn wirtualnych przy użyciu QEMU/KVM.
