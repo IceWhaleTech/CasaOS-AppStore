@@ -47,6 +47,57 @@ services:
     main: virt-manager
     author: mber5
     category: Utilities
+    tips:
+      before_install:
+        en_us: |
+          # PLEASE READ WELL!
+          ## Installing Necessary Dependencies on Host
+
+          To make sure that everything works, you should first install ``qemu`` and ``libvirt`` on your system for the Virtual Machine Manager application to work, because otherwise it doesn't and won't be able to connect to the QEMU/KVM connection (this always applies if you have left HOST at the default).
+          
+          Ubuntu/Debian/Raspberry Pi OS:
+          ```
+          sudo apt update
+          sudo apt install -y qemu-kvm libvirt-daemon-system libvirt-clients
+          ```
+          Alpine Linux:
+          ```
+          sudo apk update
+          sudo apk add qemu libvirt qemu-img
+          sudo rc-update add libvirtd default
+          sudo systemctl enable --now libvirtd
+          ```
+          OpenWrt (compile from source):
+          ```
+          # Install necessary packages to compile from source
+          sudo opkg update
+          sudo opkg install build-essential libtool automake autoconf pkg-config libudev-dev libnl-tiny-dev glib2-dev libssl-dev
+          
+          # Clone QEMU and libvirt repositories
+          git clone https://github.com/qemu/qemu.git
+          git clone https://github.com/libvirt/libvirt.git
+          
+          # Build and install QEMU
+          cd qemu
+          ./configure
+          make -j$(nproc)
+          sudo make install
+          
+          # Build and install libvirt
+          cd ../libvirt
+          ./autogen.sh
+          ./configure
+          make -j$(nproc)
+          sudo make install
+          ```
+          Arch Linux:
+          ```
+          sudo pacman -S --noconfirm qemu libvirt virt-manager
+          sudo systemctl enable --now libvirtd
+          ```
+
+          ## Setting up Directories (for ISO Images, Hard Disk Images etc.)
+          
     description:
       en_us: A GTK Broadway web UI for libvirt and virt-manager, to run virtual machines using QEMU/KVM.
       zh_cn: Libvirt 和 virt-manager 的 GTK Broadway Web UI，用于使用 QEMU/KVM 运行虚拟机。
