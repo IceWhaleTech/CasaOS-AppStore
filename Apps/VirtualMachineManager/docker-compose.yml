@@ -97,7 +97,12 @@ services:
           ```
 
           ## Setting up Directories (for ISO Images, Hard Disk Images etc.)
-          
+
+          In order to set up directories and volumes for storing and accessing things (ISO and hard disk images for example), you can go to the panel for Virtual Machine Manager, right click on the 'QEMU/KVM' text at the homepage of Virtual Machine Manager and click on on 'Details'. From there, go to 'Storage' and click on the green plus icon. From there, you can choose a pool name and use 'Target Path' to choose the desired directory. E.g. for ISO images you can choose /DATA/Downloads (mounted on container at default) as directory to store ISO images. Then create it, and you're good to go! You can do the same if you'd want to store the hard disk images on another location or another drive (a volume/mount first needs to be configured with the settings of the Docker container of Virtual Machine Manager) and make sure to point it to the same path as on the host, in order to resolve conflicts when connecting to the server remotely! Also, if you desire you could also choose the ISO images manually from a path later on, but it has to be on the drive that the server uses and mounted.
+          ## Troubleshooting
+          ### No Connection Found
+
+          Just go to 'File' > 'Add Connection...'. Make sure that the hypervisor is on QEMU/KVM and do NOT check the SSH option. I'd recommend to leave the automatic connection option turned on, and click 'Connect'. It should then be fixed!
     description:
       en_us: A GTK Broadway web UI for libvirt and virt-manager, to run virtual machines using QEMU/KVM.
       zh_cn: Libvirt 和 virt-manager 的 GTK Broadway Web UI，用于使用 QEMU/KVM 运行虚拟机。
