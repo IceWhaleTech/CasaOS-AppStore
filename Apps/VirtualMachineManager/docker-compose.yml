@@ -15,6 +15,9 @@ services:
         protocol: tcp
     volumes:
       - type: bind
+        source: /var/run/libvirt/libvirt-sock
+        target: /var/run/libvirt/libvirt-sock
+      - type: bind
         source: /var/lib/libvirt
         target: /var/lib/libvirt
       - type: bind
@@ -33,6 +36,9 @@ services:
           description:
             en_us: GUI HTTP port
       volumes:
+        - type: bind
+          source: /var/run/libvirt/libvirt-sock
+          target: /var/run/libvirt/libvirt-sock
         - type: bind
           source: /var/lib/libvirt
           target: /var/lib/libvirt
