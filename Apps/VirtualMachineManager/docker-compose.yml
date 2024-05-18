@@ -36,15 +36,15 @@ services:
           description:
             en_us: GUI HTTP port
       volumes:
-        - type: bind
-          source: /var/run/libvirt/libvirt-sock
-          target: /var/run/libvirt/libvirt-sock
-        - type: bind
-          source: /var/lib/libvirt
-          target: /var/lib/libvirt
-        - type: bind
-          source: /DATA/Downloads
-          target: /DATA/Downloads
+        - container: /var/run/libvirt/libvirt-sock
+          description:
+            en_us: Libvirt socket
+        - container: /var/lib/libvirt
+          description:
+            en_us: Libvirt directory
+        - container: /DATA/Downloads
+          description:
+            en_us: Downloads directory
     container_name: virt-manager
 x-casaos:
   architectures:
