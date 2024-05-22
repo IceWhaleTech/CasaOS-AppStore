@@ -5,7 +5,7 @@ services:
     devices:
       - /dev/kvm:/dev/kvm
     environment:
-      DARK_MODE: false
+      DARK_MODE: "false"
       HOSTS: "['qemu:///system']"
     image: mber5/virt-manager:latest
     network_mode: bridge
