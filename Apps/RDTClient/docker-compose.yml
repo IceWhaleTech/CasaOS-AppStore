@@ -1,6 +1,11 @@
 name: rdtclient
 services:
-  main_app:
+  rdtclient:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+      UMASK: "002"
     cpu_shares: 50
     command: []
     container_name: rdtclient
