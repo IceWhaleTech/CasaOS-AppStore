@@ -89,7 +89,25 @@ x-casaos:
     sv_se: Hemmet för all din underhållning.
     uk_ua: Дім для всього вашого розваги.
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Plex/thumbnail.png
-  tips: {}
+  tips: 
+    before_install:
+      en_us: |
+        1. How to access your media in CasaOS/ZimaOS using Plex?
+
+        In the Plex settings of CasaOS/ZimaOS, add the appropriate mappings in the volumes section. Under 'Host Path' on the left, add the path where your media is located on your device. Under 'Container Path' on the right, add the path in Plex, such as /Media. This way, Plex can access your media through /Media.
+
+        2. How to add a media library in Plex?
+
+        In the Plex settings, select 'Add Library', choose your media type, and then select the path where your media is located, such as /Media. This allows Plex to scan and add your media library.
+        
+      zh_cn: |
+        1. 如何在 Plex 中访问你 CasaOS/ZimaOS 中的媒体?
+        
+        在 CasaOS/ZimaOS 的 Plex 设置中的卷，添加对应的映射。在左侧的『主机』添加你的设备中的媒体所在的路径。在右侧的『容器』添加在 Plex 中的路径，如`/Media`。这样在 Plex 就能通过 `/Media` 访问到你的媒体。
+
+        2. 如何在 Plex 中添加媒体库?
+
+        在 Plex 的设置中，选择『添加媒体库』，选择你的媒体类型，然后选择你的媒体所在的路径，如`/Media`。这样 Plex 就能扫描到你的媒体库了。
   title:
     en_us: Plex
   index: /web/index.html
