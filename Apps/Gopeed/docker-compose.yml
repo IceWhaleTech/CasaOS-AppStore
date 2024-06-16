@@ -1,0 +1,67 @@
+name: gopeed
+services:
+  gopeed:
+    container_name: gopeed
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    image: liwei2633/gopeed:v1.5.7
+    ports:
+      - target: 9999
+        published: "9999"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/storage
+      - type: bind
+        source: /DATA/Downloads/$AppID/
+        target: /app/Downloads
+    network_mode: bridge
+    privileged: false
+    x-casaos:
+      ports:
+        - container: "9999"
+          description:
+            en_us: WebUI HTTP Port
+            zh_cn: WebUI HTTP端口
+          protocol: tcp
+      volumes:
+        - container: /app/storage
+          description:
+            en_us: Gopeed data folder
+            zh_cn: Gopeed数据文件夹
+        - container: /app/Downloads
+          description:
+            en_us: Gopeed download folder
+            zh_cn:
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  main: gopeed
+  author: joaobosconff
+  category: Utilities
+  description:
+    en_us: gopeed
+    pt_br: gopeed
+    zh_cn: gopeed
+  developer: GopeedLab
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gopeed/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gopeed/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gopeed/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gopeed/screenshot-3.png
+  tagline:
+    en_us: gopeed
+    pt_br: gopeed
+    zh_cn: gopeed
+  title:
+    en_us: Gopeed
+    pt_br: Gopeed
+  index: /
+  port_map: "9999"
