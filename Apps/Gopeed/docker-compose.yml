@@ -17,7 +17,7 @@ services:
         source: /DATA/AppData/$AppID/data
         target: /app/storage
       - type: bind
-        source: /DATA/Downloads/$AppID/
+        source: /DATA/Downloads
         target: /app/Downloads
     network_mode: bridge
     privileged: false
