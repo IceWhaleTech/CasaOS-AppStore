@@ -6,7 +6,7 @@ services:
             - -c
             - sh /app/start.sh
         environment:
-            LICENSE_KEY: 3vQyOplktqcDT1x9bIOphssJrtcXQResrxuaKSYlFVhPDv5ftN7DTdMEIZrWaEerNZ1Vr2xSgOuDAWidGF3uQDXvsGXDtmFcjWtpMKfHeRAnkoghThDywZW2RreeBWBE
+            LICENSE_KEY: 
             WORKDIR: /data
         image: yipengfei/movie-robot:latest
         network_mode: host
@@ -36,7 +36,14 @@ x-casaos:
     author: CasaOS Team
     category: Media
     description:
-        en_us: ""
+        en_us: |
+          Movie Robot is a video management tool that can automatically download and manage movies.
+
+          Please note that this software is a paid software, but you can try it for 30 days. You can get a trial code and purchase code at https://moviebot.fun.
+        zh_cn: |
+          Movie Robot 是一个视频管理工具，可以自动下载和管理电影。
+
+          注意本软件是一个付费软件，但是可以试用 30 天，你可以在 https://moviebot.fun 上获取试用码与购买码。
     tagline:
       en_us: Video Management
       zh_cn: 视频管理
