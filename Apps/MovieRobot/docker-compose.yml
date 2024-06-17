@@ -1,0 +1,43 @@
+name: movie-robot
+services:
+    movie-robot:
+        command:
+            - /bin/sh
+            - -c
+            - sh /app/start.sh
+        environment:
+            LICENSE_KEY: 3vQyOplktqcDT1x9bIOphssJrtcXQResrxuaKSYlFVhPDv5ftN7DTdMEIZrWaEerNZ1Vr2xSgOuDAWidGF3uQDXvsGXDtmFcjWtpMKfHeRAnkoghThDywZW2RreeBWBE
+            WORKDIR: /data
+        image: yipengfei/movie-robot:latest
+        network_mode: host
+        restart: always
+        volumes:
+            - type: bind
+              source: /DATA/AppData/$AppID/data
+              target: /data
+            - type: bind
+              source: /DATA/Media/Movies
+              target: /video
+        x-casaos:
+            envs:
+                - container: LICENSE_KEY
+                  description:
+                    en_us: ""
+            volumes:
+                - container: /data
+                  description:
+                    en_us: ""
+                - container: /video
+                  description:
+                    en_us: ""
+x-casaos:
+    architectures:
+        - amd64
+    author: CasaOS Team
+    category: Media
+    description:
+        en_us: ""
+    developer: Yee
+    icon: ""
+    main: movie-robot
+    port_map: "1329"

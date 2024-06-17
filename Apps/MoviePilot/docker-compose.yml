@@ -1,0 +1,41 @@
+name: moviepilot
+services:
+    moviepilot:
+        stdin_open: true
+        tty: true
+        container_name: moviepilot
+        hostname: moviepilot
+        network_mode: host
+        ports:
+            - target: 3000
+              published: 3000
+              protocol: tcp
+        volumes:
+            - '/DATA/Media:/media'
+            - '/DATA/AppData/$AppID/moviepilot/config:/config'
+            - '/DATA/AppData/$AppID/moviepilot/core:/moviepilot/.cache/ms-playwright'
+            - '/var/run/docker.sock:/var/run/docker.sock:ro'
+        environment:
+            - 'NGINX_PORT=3000'
+            - 'PORT=3001'
+            - 'PUID=0'
+            - 'PGID=0'
+            - 'UMASK=000'
+            - 'TZ=Asia/Shanghai'
+            - 'AUTH_SITE=iyuu'
+            - 'IYUU_SIGN=xxxx'
+            - 'SUPERUSER=admin'
+            - 'API_TOKEN=moviepilot'
+        restart: always
+        image: jxxghp/moviepilot:latest
+x-casaos:
+    architectures:
+        - amd64
+    author: CasaOS Team
+    category: Media
+    description:
+        en_us: ""
+    developer: unknown
+    icon: ""
+    main: movie-robot
+    port_map: "3000"
