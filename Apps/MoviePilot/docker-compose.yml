@@ -18,10 +18,6 @@ services:
         environment:
             - 'NGINX_PORT=3000'
             - 'PORT=3001'
-            - 'PUID=0'
-            - 'PGID=0'
-            - 'UMASK=000'
-            - 'TZ=Asia/Shanghai'
             - 'AUTH_SITE=iyuu'
             - 'IYUU_SIGN=xxxx'
             - 'SUPERUSER=admin'
@@ -33,9 +29,13 @@ x-casaos:
         - amd64
     author: CasaOS Team
     category: Media
-    description:
-        en_us: ""
     developer: unknown
-    icon: ""
-    main: movie-robot
+    tagline:
+      en_us: Video Management
+      zh_cn: 视频管理
+    title:
+      en_us: Movie Pilot
+      pt_br: Movie Pilot
+    icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MoviePilot/icon.png
+    main: moviepilot
     port_map: "3000"
