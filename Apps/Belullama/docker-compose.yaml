@@ -1,0 +1,88 @@
+name: Belullama
+services:
+  ollama:
+    cpu_shares: 90
+    command:
+      - serve
+    deploy:
+      resources:
+        limits:
+          memory: 15775M
+    expose:
+      - 11434/tcp
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - ollama --version || exit 1
+    image: ollama/ollama:latest
+    labels:
+      icon: https://github.com/jmorganca/ollama/assets/3325447/080f3a72-e2fd-4741-8070-ae79a06f943f
+    ports:
+      - target: 11434
+        published: "11434"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /
+        target: /root/.ollama
+    devices: []
+    cap_add: []
+    environment: []
+    network_mode: bridge
+    privileged: false
+    container_name: ""
+    hostname: ""
+  webui:
+    cpu_shares: 90
+    command: []
+    depends_on:
+      ollama:
+        condition: service_started
+        required: true
+    deploy:
+      resources:
+        limits:
+          memory: 15775M
+    environment:
+      - OLLAMA_BASE_URL=http://172.17.0.1:11434
+    expose:
+      - 8080/tcp
+    image: ghcr.io/ai-joe-git/open-webui:latest
+    labels:
+      icon: https://github.com/jmorganca/ollama/assets/3325447/080f3a72-e2fd-4741-8070-ae79a06f943f
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /
+        target: /app/backend/data
+    devices: []
+    cap_add: []
+    network_mode: bridge
+    privileged: false
+    container_name: ""
+    hostname: ""
+x-casaos:
+  author: ai-joe-git 
+  category: Utilities
+  description:
+    en_us: Belullama is a custom app for CasaOS that integrates the functionalities of Ollama and Open WebUI. It provides a comprehensive solution for creating and managing conversational AI applications on your own local server. With Belullama, you can leverage the power of large language models and enjoy a user-friendly interface for seamless interaction.
+  hostname: ""
+  icon: https://raw.githubusercontent.com/ai-joe-git/Belullama/main/icon.jpg
+  screenshot_link:
+    - https://raw.githubusercontent.com/ai-joe-git/Belullama/main/screenshot-1.png
+    - https://raw.githubusercontent.com/ai-joe-git/Belullama/main/screenshot-2.png
+  index: /
+  is_uncontrolled: false
+  port_map: "8080"
+  scheme: http
+  store_app_id: Belullama
+  thumbnail: https://raw.githubusercontent.com/ai-joe-git/Belullama/main/thumbnail.jpg
+  tips:
+    custom: sudo lsof -i :11434
+  title:
+    custom: Belullama
