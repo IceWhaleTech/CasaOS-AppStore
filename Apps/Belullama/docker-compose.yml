@@ -16,7 +16,7 @@ services:
         - ollama --version || exit 1
     image: ollama/ollama:latest
     labels:
-      icon: https://github.com/jmorganca/ollama/assets/3325447/080f3a72-e2fd-4741-8070-ae79a06f943f
+      icon: https://raw.githubusercontent.com/ai-joe-git/Belullama/main/icon.png
     ports:
       - target: 11434
         published: "11434"
@@ -50,7 +50,7 @@ services:
       - 8080/tcp
     image: ghcr.io/ai-joe-git/open-webui:latest
     labels:
-      icon: https://github.com/jmorganca/ollama/assets/3325447/080f3a72-e2fd-4741-8070-ae79a06f943f
+      icon: https://raw.githubusercontent.com/ai-joe-git/Belullama/main/icon.png
     ports:
       - target: 8080
         published: "8080"
@@ -72,7 +72,7 @@ x-casaos:
   description:
     en_us: Belullama is a custom app for CasaOS that integrates the functionalities of Ollama and Open WebUI. It provides a comprehensive solution for creating and managing conversational AI applications on your own local server. With Belullama, you can leverage the power of large language models and enjoy a user-friendly interface for seamless interaction.
   hostname: ""
-  icon: https://raw.githubusercontent.com/ai-joe-git/Belullama/main/icon.jpg
+  icon: https://raw.githubusercontent.com/ai-joe-git/Belullama/main/icon.png
   screenshot_link:
     - https://raw.githubusercontent.com/ai-joe-git/Belullama/main/screenshot-1.png
     - https://raw.githubusercontent.com/ai-joe-git/Belullama/main/screenshot-2.png
@@ -81,7 +81,7 @@ x-casaos:
   port_map: "8080"
   scheme: http
   store_app_id: Belullama
-  thumbnail: https://raw.githubusercontent.com/ai-joe-git/Belullama/main/thumbnail.jpg
+  thumbnail: https://raw.githubusercontent.com/ai-joe-git/Belullama/main/thumbnail.png
   tips:
     custom: sudo lsof -i :11434
   title:
