@@ -4,35 +4,39 @@ services:
         stdin_open: true
         tty: true
         container_name: moviepilot
-        hostname: moviepilot
         network_mode: host
-        ports:
-            - target: 3000
-              published: 3000
-              protocol: tcp
         volumes:
             - '/DATA/Media:/media'
             - '/DATA/AppData/$AppID/moviepilot/config:/config'
             - '/DATA/AppData/$AppID/moviepilot/core:/moviepilot/.cache/ms-playwright'
             - '/var/run/docker.sock:/var/run/docker.sock:ro'
         environment:
-            - 'NGINX_PORT=3000'
+            - 'NGINX_PORT=3005'
             - 'PORT=3001'
             - 'AUTH_SITE=iyuu'
             - 'IYUU_SIGN=xxxx'
-            - 'SUPERUSER=admin'
+            - 'SUPERUSER=casaos'
             - 'API_TOKEN=moviepilot'
         restart: always
-        image: jxxghp/moviepilot:latest
+        image: jxxghp/moviepilot:1.9.9
 x-casaos:
     architectures:
         - amd64
     author: CasaOS Team
     category: Media
-    developer: unknown
+    developer: jxxghp
     tagline:
       en_us: Video Management
       zh_cn: 视频管理
+    description:
+      en_us: |
+        Movie Pilot is a video management tool that can automatically download and manage movies.
+
+        Please note that this software is a bit complicated, you need to read the documentation: https://wiki.movie-pilot.org/configuration
+      zh_cn: |
+        Movie Pilot 是一个视频管理工具，可以自动下载和管理电影。
+
+        注意本软件比较复杂，你需要阅读文档: https://wiki.movie-pilot.org/configuration
     title:
       en_us: Movie Pilot
       pt_br: Movie Pilot
@@ -46,10 +50,10 @@ x-casaos:
           
           | Username | Password |
           |----------|----------|
-          | `admin`    | Get from log |
+          | `casaos`    | Get from log |
         zh_cn: |
           默认账号
           
           | 用户名 | 密码 |
           |----------|----------|
-          | `admin`    | 从日志中获取 |
+          | `casaos`    | 从日志中获取 |
