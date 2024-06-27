@@ -4,6 +4,10 @@ services:
         stdin_open: true
         tty: true
         container_name: moviepilot
+        deploy:
+          resources:
+            reservations:
+              memory: 256M
         network_mode: host
         volumes:
             - '/DATA/Media:/media'
@@ -32,17 +36,20 @@ x-casaos:
       en_us: |
         Movie Pilot is a video management tool that can automatically download and manage movies.
 
-        Please note that this software is a bit complicated, you need to read the documentation: https://wiki.movie-pilot.org/configuration
+        Please note that this software is a bit complicated, you need to read the [documentation](https://wiki.movie-pilot.org/configuration)
       zh_cn: |
         Movie Pilot 是一个视频管理工具，可以自动下载和管理电影。
 
-        注意本软件比较复杂，你需要阅读文档: https://wiki.movie-pilot.org/configuration
+        注意本软件比较复杂，你需要阅读[文档](https://wiki.movie-pilot.org/configuration)
     title:
       en_us: Movie Pilot
       pt_br: Movie Pilot
     icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MoviePilot/icon.png
     main: moviepilot
-    port_map: "3000"
+    screenshot_link:
+      - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MoviePilot/screenshot-1.png
+      - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MoviePilot/screenshot-2.png
+    port_map: "3005"
     tips:
       before_install:
         en_us: |
