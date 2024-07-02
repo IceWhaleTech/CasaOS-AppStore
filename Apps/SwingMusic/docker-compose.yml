@@ -1,10 +1,14 @@
 services:
   swingmusic:
-    image: ghcr.io/swingmx/swingmusic:v2.0.0.beta2
+    image: ghcr.io/swingmx/swingmusic:v1.4.8
     container_name: swingmusic
     volumes:
-      - /DATA/Media/Music:/music
-      - /DATA/AppData/$AppID/config:/config
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music
     ports:
       - "1970:1970"
     restart: unless-stopped
@@ -15,8 +19,10 @@ x-casaos:
   author: CasaOS Team
   category: Media
   description:
-    en_us: Stremio offers a secure, modern and seamless entertainment experience. With its easy-to-use interface and diverse content library, including 4K HDR support, users can enjoy their favorite movies and TV shows across all their devices. And with its commitment to security, Stremio is the ultimate choice for a worry-free, high-quality streaming experience.
-    zh_cn: Stremio提供了一个安全、现代且无缝的娱乐体验。通过其易于使用的界面和多样化的内容库，包括对4K HDR的支持，用户可以在所有设备上欣赏他们喜爱的电影和电视节目。并且凭借其对安全的承诺，Stremio是一个无忧、高质量的流媒体体验的最佳选择。
+    en_us: |
+      Swing Music is a beautifully designed, self-hosted music streaming server. Like a cooler Spotify ... but bring your own music.
+    zh_cn: |
+      Swing Music 是一款设计精美的自托管音乐流媒体服务器。就像更酷的 Spotify......但可以带来你自己的音乐。
   developer: SwingMX
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SwingMusic/icon.png
   screenshot_link:
@@ -29,12 +35,14 @@ x-casaos:
   tagline:
     en_us: Swing Music is a beautifully designed, self-hosted music streaming server. Like a cooler Spotify ... but bring your own music.
     zh_cn: Swing Music 是一款设计精美的自托管音乐流媒体服务器。就像更酷的 Spotify......但可以带来你自己的音乐。
-  tips:
+  tips: |
     before_install:
       en_us: |
-        You need to set streaming server to http://YOUR_SERVER_IP:11470 on Settings -> Streaming -> Url
+        When you first start Swing Music, it will ask you to pick music directory: Where do you want to look for music?
+        select "Specific directories" Option, and select "/music" and rescan.
       zh_cn: |
-        您需要在 "设置"->"流媒体"->"网址 "中将流媒体服务器设置为 http://您的服务器 IP:11470
+        首次启动 Swing Music 时，它会要求您选择音乐目录：您想在哪里查找音乐？
+        选择“特定目录”选项，然后选择“/music”并重新扫描。
   title:
     en_us: Swing Music
     zh_cn: Swing Music
