@@ -1,0 +1,163 @@
+name: immich
+
+services:
+  immich-server:
+    container_name: immich-server 
+    image: ghcr.io/immich-app/immich-server:v1.106.2 
+    ports: 
+      - 2283:3001
+    volumes: 
+      - /DATA/AppData/$AppID/upload:/usr/src/app/upload
+    environment: 
+      DB_HOSTNAME: immich-postgres
+      DB_USERNAME: casaos
+      DB_PASSWORD: casaos
+      DB_DATABASE_NAME: immich
+      DB_PORT: "5432"
+      REDIS_HOSTNAME: immich-redis
+      IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning:3003
+    depends_on: 
+      - redis
+      - database
+    restart: unless-stopped
+
+    networks:
+      - immich_network
+
+    x-casaos:
+      envs:
+        - container: DB_HOSTNAME
+          description:
+            en_us: "Database Hostname"
+        - container: DB_USERNAME
+          description:
+            en_us: "Database Username"
+        - container: DB_PASSWORD
+          description:
+            en_us: "Database Password"
+        - container: DB_DATABASE_NAME
+          description:
+            en_us: "Database Name"
+        - container: DB_PORT
+          description:
+            en_us: "Database Port"
+        - container: REDIS_HOSTNAME
+          description:
+            en_us: "Redis Hostname"
+        - container: IMMICH_MACHINE_LEARNING_URL
+          description:
+            en_us: "Immich Machine Learning URL"
+      volumes:
+        - container: /usr/src/app/upload
+          description:
+            en_us: "Container Path: /usr/src/app/upload"
+      ports:
+        - container: "3001"
+          description:
+            en_us: "Container Port: 3001"
+
+  immich-machine-learning:
+    container_name: immich-machine-learning 
+    image: ghcr.io/immich-app/immich-machine-learning:v1.106.2 
+    volumes: 
+      - /DATA/AppData/$AppID/model-cache:/cache
+    environment: 
+      DB_HOSTNAME: immich-postgres
+      DB_USERNAME: casaos
+      DB_PASSWORD: casaos
+      DB_DATABASE_NAME: casaos
+      DB_PORT: 5432
+      REDIS_HOSTNAME: immich-redis
+    restart: unless-stopped
+
+    networks:
+      - immich_network
+    x-casaos: 
+      envs:
+        - container: DB_HOSTNAME
+          description:
+            en_us: "Database Hostname"
+        - container: DB_USERNAME
+          description:
+            en_us: "Database Username"
+        - container: DB_PASSWORD
+          description:
+            en_us: "Database Password"
+        - container: DB_DATABASE_NAME
+          description:
+            en_us: "Database Name"
+        - container: DB_PORT
+          description:
+            en_us: "Database Port"
+        - container: REDIS_HOSTNAME
+          description:
+            en_us: "Redis Hostname"
+      volumes:
+        - container: /cache
+          description:
+            en_us: "Container Path: /cache"
+
+  redis:
+    container_name: immich-redis 
+    image: redis:6.2-alpine@sha256:70a7a5b641117670beae0d80658430853896b5ef269ccf00d1827427e3263fa3 
+    restart: always
+    networks:
+      - immich_network 
+
+  database:
+    container_name: immich-postgres 
+    image: tensorchord/pgvecto-rs:pg14-v0.2.0 
+    environment: 
+      POSTGRES_PASSWORD: casaos
+      POSTGRES_USER: casaos
+      POSTGRES_DB: immich
+      PG_DATA: /var/lib/postgresql/data
+    volumes: 
+      - /DATA/AppData/$AppID/pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+    networks:
+      - immich_network
+
+    x-casaos:
+      envs:
+        - container: POSTGRES_PASSWORD
+          description:
+            en_us: "Database Password"
+        - container: POSTGRES_USER
+          description:
+            en_us: "Database Username"
+        - container: POSTGRES_DB
+          description:
+            en_us: "Database Name"
+        - container: PG_DATA
+          description:
+            en_us: "Container Path: /var/lib/postgresql/data"
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_us: "Container Path: /var/lib/postgresql/data"
+
+networks: 
+  big_bear_immich_network:
+    driver: bridge 
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: immich-server
+  description: 
+    en_us: Self-hosted photo and video storage.
+    zh_cn: 自托管的照片和视频存储。
+  tagline: 
+    en_us: Immich
+    zh_cn: Immich
+  developer:
+  author: BigBearTechWorld
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/icon.png
+  thumbnail: ""
+  title:
+    en_us: Immich
+  category: Media
+  port_map: "2283"
