@@ -3,7 +3,8 @@ services:
   n8n:
     environment:
       TZ: $TZ
-    image: n8nio/n8n:1.16.0
+      N8N_SECURE_COOKIE: "false"
+    image: n8nio/n8n:1.49.0
     deploy:
       resources:
         reservations:
@@ -16,7 +17,7 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/$AppID/.n8n
+        source: /DATA/AppData/$AppID
         target: /home/node/.n8n
     x-casaos:
       envs:
@@ -29,18 +30,17 @@ services:
           description:
             en_us: web port
             zh_cn: web 端口
-
       volumes:
         - container: /home/node/.n8n
           description:
             en_us: n8n directory.
             zh_cn: n8n 目录。
     container_name: n8n
+
 x-casaos:
   architectures:
     - amd64
     - arm64
-    - arm
   main: n8n
   author: YoussofKhawaja
   category: Utilities
