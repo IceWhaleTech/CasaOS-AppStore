@@ -9,8 +9,8 @@ services:
           memory: 8M
     environment:
       - EXEC_DIR=/opt
-      - HTTP_PASSWORD=admin
-      - HTTP_USERNAME=password
+      - HTTP_PASSWORD=password
+      - HTTP_USERNAME=admin
       - PORT=2222
       - START_COMMAND=bash
     image: cp0204/ttydbridge:v0.0.3
