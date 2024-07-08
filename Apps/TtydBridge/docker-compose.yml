@@ -55,17 +55,15 @@ x-casaos:
   tips:
     before_install:
       en_us: >
-        If you are using ZimaOS, the login command is missing:
+        1. You can set the `HTTP_USERNAME` and `HTTP_PASSWORD` variables to modify or remove HTTP authentication.
 
-        1. Change the environment variable `START_COMMAND` to `bash` ;
-
-        2. And set the `HTTP_USERNAME` `HTTP_PASSWORD` variables to add HTTP authentication.
+        2. The default username and password are `admin` and `password`.
 
         [Official DOC](https://hub.docker.com/r/cp0204/ttydbridge)
       zh_cn: |
-        如果你正在使用 ZimaOS ，由其缺少 login 命令：
-        1. 请把环境变量 `START_COMMAND` 改为 `bash` ；
-        2. 并设置 `HTTP_USERNAME` `HTTP_PASSWORD` 变量，以增加 HTTP 鉴权。
+        1. 可以设置 `HTTP_USERNAME` `HTTP_PASSWORD` 变量，修改与删掉 HTTP 鉴权。
+
+        2. 默认的账号密码为 `admin` `password`。
 
         [官方文档](https://hub.docker.com/r/cp0204/ttydbridge)
   title:
