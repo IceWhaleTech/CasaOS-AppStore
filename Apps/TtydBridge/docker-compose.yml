@@ -25,9 +25,6 @@ services:
         target: /opt
         bind:
           create_host_path: true
-    ports: []
-    devices: []
-    cap_add: []
     network_mode: bridge
 x-casaos:
   architectures:
@@ -37,17 +34,14 @@ x-casaos:
   author: Cp0204
   category: Developer
   description:
-    en_us: ttydBridge acts as a "bridge" to the host environment, allowing you to
-      easily access and use the host terminal in a web. It is built on ttyd and
-      runs in a containerized manner, providing a secure and convenient remote
-      endpoint experience.
-    zh_cn: ttydBridge 如一座“桥”，连通了宿主机环境，让你在浏览器中轻松访问和使用宿主机终端。它基于 ttyd
-      构建，并以容器化的方式运行，提供了安全、便捷的远程终端体验。
+    en_us: |
+      ttydBridge acts as a "bridge" to the host environment, allowing you to easily access and use the host terminal in a web. It is built on ttyd and runs in a containerized manner, providing a secure and convenient remote endpoint experience.
+    zh_cn: |
+      ttydBridge 如一座“桥”，连通了宿主机环境，让你在浏览器中轻松访问和使用宿主机终端。它基于 ttyd 构建，并以容器化的方式运行，提供了安全、便捷的远程终端体验。
   developer: Cp0204
   hostname: ""
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TtydBridge/icon.png
   index: /
-  is_uncontrolled: false
   main: ttydbridge
   port_map: "2222"
   scheme: http
@@ -67,7 +61,6 @@ x-casaos:
 
         2. And set the `HTTP_USERNAME` `HTTP_PASSWORD` variables to add HTTP authentication.
 
-
         [Official DOC](https://hub.docker.com/r/cp0204/ttydbridge)
       zh_cn: |
         如果你正在使用 ZimaOS ，由其缺少 login 命令：
@@ -76,5 +69,4 @@ x-casaos:
 
         [官方文档](https://hub.docker.com/r/cp0204/ttydbridge)
   title:
-    custom: ""
     en_us: ttydBridge
