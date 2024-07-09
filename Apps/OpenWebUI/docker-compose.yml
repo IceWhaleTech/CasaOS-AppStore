@@ -1,0 +1,49 @@
+name: open-webui-ollama
+services:
+  open-webui-ollama:
+    image: ghcr.io/open-webui/open-webui:ollama
+    runtime: nvidia
+    ipc: host
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CPU_FALLBACK=true
+    deploy:
+      resources:
+        reservations:
+          memory: "512M"
+    network_mode: bridge
+    ports:
+      - target: 8080
+        published: "3020"
+        protocol: tcp
+    restart: always
+    volumes:
+      - type: bind
+        source: /DATA/AppData/open-webui-ollama/open-webui
+        target: /app/backend/data
+      - type: bind
+        source: /DATA/AppData/open-webui-ollama/ollama
+        target: /root/.ollama
+    privileged: false
+    container_name: open-webui-ollama
+x-casaos:
+  architectures:
+    - amd64
+  main: open-webui-ollama
+  developer: Tim J. Baek
+  category: Chat
+  description:
+    en_us: Open WebUI is an extensible, self-hosted interface for AI that adapts to your workflow, all while operating entirely offline.
+    zh_cn: Open WebUI 是一个可扩展的、自托管的 AI 界面，适应您的工作流程，完全离线运行。
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/screenshot-1.gif
+  tagline:
+    en_us: User-friendly WebUI for LLMs (Formerly Ollama WebUI)
+    zh_cn: 用户友好的 LLMs WebUI（前身为 Ollama WebUI）
+  scheme: http
+  store_app_id: open-webui-ollama
+  title:
+    en_us: Open WebUI
+  index: /
+  port_map: "3020"
