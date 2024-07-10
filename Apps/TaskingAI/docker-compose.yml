@@ -1,0 +1,144 @@
+services:
+  frontend:
+    image: taskingai/taskingai-console:v0.3.0
+    depends_on:
+      - backend-web
+      - backend-api
+
+  backend-inference:
+    image: taskingai/taskingai-inference:v0.2.14
+    environment:
+      AES_ENCRYPTION_KEY: ${AES_ENCRYPTION_KEY}
+      ICON_URL_PREFIX: ${HOST_URL}
+      PROJECT_ID: taskingai
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/v1/health_check"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  backend-plugin:
+    image: taskingai/taskingai-plugin:v0.2.10
+    environment:
+      AES_ENCRYPTION_KEY: ${AES_ENCRYPTION_KEY}
+      ICON_URL_PREFIX: ${HOST_URL}
+      OBJECT_STORAGE_TYPE: ${OBJECT_STORAGE_TYPE}
+      HOST_URL: ${HOST_URL}
+      S3_ENDPOINT: ${S3_ENDPOINT}
+      S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+      S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
+      S3_ACCESS_KEY_SECRET: ${S3_ACCESS_KEY_SECRET}
+      S3_BUCKET_PUBLIC_DOMAIN: ${S3_BUCKET_PUBLIC_DOMAIN}
+      PATH_TO_VOLUME: /var/lib/data
+      PROJECT_ID: taskingai
+    volumes:
+      - ./data/object_storage:/var/lib/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/v1/health_check"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  backend-api:
+    image: taskingai/taskingai-server:v0.3.0
+    environment:
+      POSTGRES_URL: postgres://postgres:TaskingAI321@db:5432/taskingai
+      REDIS_URL: redis://:TaskingAI321@cache:6379/${REDIS_DB}
+      TASKINGAI_INFERENCE_URL: http://backend-inference:8000
+      TASKINGAI_PLUGIN_URL: http://backend-plugin:8000
+      AES_ENCRYPTION_KEY: ${AES_ENCRYPTION_KEY}
+      OBJECT_STORAGE_TYPE: ${OBJECT_STORAGE_TYPE}
+      HOST_URL: ${HOST_URL}
+      S3_ENDPOINT: ${S3_ENDPOINT}
+      S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+      S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
+      S3_ACCESS_KEY_SECRET: ${S3_ACCESS_KEY_SECRET}
+      S3_BUCKET_PUBLIC_DOMAIN: ${S3_BUCKET_PUBLIC_DOMAIN}
+      PATH_TO_VOLUME: /var/lib/data
+      PROJECT_ID: taskingai
+    volumes:
+      - ./data/object_storage:/var/lib/data
+    depends_on:
+      - db
+      - cache
+      - backend-inference
+      - backend-plugin
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/v1/health_check"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  backend-web:
+    image: taskingai/taskingai-server:v0.3.0
+    environment:
+      POSTGRES_URL: postgres://postgres:TaskingAI321@db:5432/taskingai
+      REDIS_URL: redis://:TaskingAI321@cache:6379/${REDIS_DB}
+      TASKINGAI_INFERENCE_URL: http://backend-inference:8000
+      TASKINGAI_PLUGIN_URL: http://backend-plugin:8000
+      AES_ENCRYPTION_KEY: b90e4648ad699c3bdf62c0860e09eb9efc098ee75f215bf750847ae19d41e4b0
+      JWT_SECRET_KEY: dbefe42f34473990a3fa903a6a3283acdc3a910beb1ae271a6463ffa5a926bfb
+      PURPOSE: WEB
+      DEFAULT_ADMIN_USERNAME: admin
+      DEFAULT_ADMIN_PASSWORD: TaskingAI321
+      OBJECT_STORAGE_TYPE: ${OBJECT_STORAGE_TYPE}
+      HOST_URL: ${HOST_URL}
+      S3_ENDPOINT: ${S3_ENDPOINT}
+      S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+      S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
+      S3_ACCESS_KEY_SECRET: ${S3_ACCESS_KEY_SECRET}
+      S3_BUCKET_PUBLIC_DOMAIN: ${S3_BUCKET_PUBLIC_DOMAIN}
+      PATH_TO_VOLUME: /var/lib/data
+      PROJECT_ID: taskingai
+    volumes:
+      - ./data/object_storage:/var/lib/data
+    depends_on:
+      - db
+      - cache
+      - backend-inference
+      - backend-plugin
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/v1/health_check"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  db:
+    image: ankane/pgvector:v0.5.1
+    environment:
+      POSTGRES_DB: taskingai
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: TaskingAI321
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: always
+
+  cache:
+    image: redis:7-alpine
+    command: ["redis-server", "--requirepass", "TaskingAI321"]
+    volumes:
+      - ./data/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "auth", "TaskingAI321", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: always
+
+  nginx:
+    image: nginx:1.24
+    ports:
+      - "8080:80"
+      # edit this to change the port, for example to "8080:80" to use port 8080
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./data/nginx_cache:/var/cache/nginx
+    depends_on:
+      - frontend
+      - backend-web
+      - backend-api
