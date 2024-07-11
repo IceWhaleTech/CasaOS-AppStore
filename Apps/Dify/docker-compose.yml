@@ -1,4 +1,4 @@
-name: Dify
+name: dify
 services:
   api:
     image: langgenius/dify-api:0.6.13
@@ -9,7 +9,7 @@ services:
       LOG_LEVEL: INFO
       SECRET_KEY: sk-9f73s3ljTXVcMT3Blb3ljTqtsKiGHXVcMT3BlbkFJLK7U
       CONSOLE_WEB_URL: 'http://localhost:3001'
-      INIT_PASSWORD: 'admin'
+      INIT_PASSWORD: ''
       CONSOLE_API_URL: 'http://localhost:3001'
       SERVICE_API_URL: 'http://localhost:3001'
       APP_WEB_URL: 'http://localhost:3001'
@@ -230,6 +230,146 @@ networks:
   dify:
     name: dify
 
+configs:
+  nginx-default-conf:
+    file: /DATA/AppData/dify/nginx/nginx.conf
+    content: |
+      server {
+          listen 80;
+          server_name _;
+
+          location /console/api {
+            proxy_pass http://api:5001;
+            include proxy.conf;
+          }
+
+          location /api {
+            proxy_pass http://api:5001;
+            include proxy.conf;
+          }
+
+          location /v1 {
+            proxy_pass http://api:5001;
+            include proxy.conf;
+          }
+
+          location /files {
+            proxy_pass http://api:5001;
+            include proxy.conf;
+          }
+
+          location / {
+            proxy_pass http://dify:3000;
+            include proxy.conf;
+          }
+
+          # If you want to support HTTPS, please uncomment the code snippet below
+          #listen 443 ssl;
+          #ssl_certificate ./../ssl/your_cert_file.cer;
+          #ssl_certificate_key ./../ssl/your_cert_key.key;
+          #ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
+          #ssl_prefer_server_ciphers on;
+          #ssl_session_cache shared:SSL:10m;
+          #ssl_session_timeout 10m;
+      }
+  nginx-conf:
+    file: /DATA/AppData/dify/nginx/proxy.conf
+    content: |
+      user  nginx;
+      worker_processes  auto;
+
+      error_log  /var/log/nginx/error.log notice;
+      pid        /var/run/nginx.pid;
+
+      events {
+          worker_connections  1024;
+      }
+
+      http {
+          include       /etc/nginx/mime.types;
+          default_type  application/octet-stream;
+
+          log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                            '$status $body_bytes_sent "$http_referer" '
+                            '"$http_user_agent" "$http_x_forwarded_for"';
+
+          access_log  /var/log/nginx/access.log  main;
+
+          sendfile        on;
+          #tcp_nopush     on;
+
+          keepalive_timeout  65;
+
+          #gzip  on;
+          client_max_body_size 15M;
+
+          include /etc/nginx/conf.d/*.conf;
+      }
+  nginx-proxy-conf:
+    file: /DATA/AppData/dify/nginx/conf.d/default.conf
+    content: |
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_http_version 1.1;
+      proxy_set_header Connection "";
+      proxy_buffering off;
+      proxy_read_timeout 3600s;
+      proxy_send_timeout 3600s;
+  python-requirements:
+    file: /DATA/AppData/dify/sandbox/dependencies/requirements.txt
+  squid-conf:
+    file: /DATA/AppData/dify/ssrf_proxy/squid.conf
+    content: |
+      acl localnet src 0.0.0.1-0.255.255.255	# RFC 1122 "this" network (LAN)
+      acl localnet src 10.0.0.0/8		# RFC 1918 local private network (LAN)
+      acl localnet src 100.64.0.0/10		# RFC 6598 shared address space (CGN)
+      acl localnet src 169.254.0.0/16 	# RFC 3927 link-local (directly plugged) machines
+      acl localnet src 172.16.0.0/12		# RFC 1918 local private network (LAN)
+      acl localnet src 192.168.0.0/16		# RFC 1918 local private network (LAN)
+      acl localnet src fc00::/7       	# RFC 4193 local private network range
+      acl localnet src fe80::/10      	# RFC 4291 link-local (directly plugged) machines
+      acl SSL_ports port 443
+      acl Safe_ports port 80		# http
+      acl Safe_ports port 21		# ftp
+      acl Safe_ports port 443		# https
+      acl Safe_ports port 70		# gopher
+      acl Safe_ports port 210		# wais
+      acl Safe_ports port 1025-65535	# unregistered ports
+      acl Safe_ports port 280		# http-mgmt
+      acl Safe_ports port 488		# gss-http
+      acl Safe_ports port 591		# filemaker
+      acl Safe_ports port 777		# multiling http
+      acl CONNECT method CONNECT
+      http_access deny !Safe_ports
+      http_access deny CONNECT !SSL_ports
+      http_access allow localhost manager
+      http_access deny manager
+      http_access allow localhost
+      include /etc/squid/conf.d/*.conf
+      http_access deny all
+
+      ################################## Proxy Server ################################
+      http_port 3128
+      coredump_dir /var/spool/squid
+      refresh_pattern ^ftp:		1440	20%	10080
+      refresh_pattern ^gopher:	1440	0%	1440
+      refresh_pattern -i (/cgi-bin/|\?) 0	0%	0
+      refresh_pattern \/(Packages|Sources)(|\.bz2|\.gz|\.xz)$ 0 0% 0 refresh-ims
+      refresh_pattern \/Release(|\.gpg)$ 0 0% 0 refresh-ims
+      refresh_pattern \/InRelease$ 0 0% 0 refresh-ims
+      refresh_pattern \/(Translation-.*)(|\.bz2|\.gz|\.xz)$ 0 0% 0 refresh-ims
+      refresh_pattern .		0	20%	4320
+
+      # upstream proxy, set to your own upstream proxy IP to avoid SSRF attacks
+      # cache_peer 172.1.1.1 parent 3128 0 no-query no-digest no-netdb-exchange default 
+
+
+      ################################## Reverse Proxy To Sandbox ################################
+      http_port 8194 accel vhost
+      cache_peer sandbox parent 8194 0 no-query originserver
+      acl src_all src all
+      http_access allow src_all
 x-casaos:
   architectures:
     - amd64
