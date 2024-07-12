@@ -69,13 +69,17 @@ x-casaos:
   category: Network
   description:
     en_us: |
-      AdGuard Home is a network-wide software for blocking ads and tracking. After you set it up, it'll cover all your home devices, and you won't need any client-side software for that. Learn more on [our official Github repository](https://github.com/AdguardTeam/AdGuardHome).
-     
-      Deploy AdGuard Home on your Zima device, and then use it by changing the DNS address assigned by DHCP on your router to the IP address of the Zima device.
+      Difference from Traditional Ad Blockers. Unlike traditional ad-blocking plugins that work only on individual devices, AdGuard Home offers a network-wide solution. By setting it up, you can block ads and trackers across all your home devices without needing to install any additional software on each device. This means comprehensive protection with minimal effort.
+      
+      How AdGuard Home Works and How to Use It. AdGuard Home functions as a DNS server that reroutes tracking domains to a "black hole," effectively preventing your devices from connecting to these servers. This blocks ads and trackers not only on your computer but also on your smartphone and smart home devices. To start using AdGuard Home, deploy it on your device, then change the DNS address assigned by DHCP on your router to the IP address of your AdGuard Home server.
+      
+      Benefits of Deploying AdGuard Home on Zima Private Cloud. Deploying AdGuard Home on a Zima device simplifies network-wide ad and tracker blocking, providing a seamless and secure browsing experience for all your home devices. With Zima, you gain the flexibility to monitor network activity and create custom filtering rules tailored to your needs.
     zh_cn: | 
-      AdGuard Home 是一个网络范围的软件，用于阻止广告和跟踪。设置完成后，它将覆盖您的所有家庭设备，您不需要任何客户端软件。在[我们的官方Github存储库](https://github.com/AdguardTeam/AdGuardHome)上了解更多信息。
+      与传统广告拦截器的不同之处。不同于仅在单个设备上工作的传统广告拦截插件，AdGuard Home 提供了一种网络范围的解决方案。通过设置它，您可以在所有家庭设备上屏蔽广告和跟踪器，而无需在每个设备上安装额外的软件。这意味着以最少的努力获得全面的保护。
 
-      在你的 Zima 设备上部署 AdGuard Home，然后通过修改路由器上的 DHCP 分配的 DNS 地址为 Zima 设备的 IP 地址即可使用。
+      AdGuard Home 的工作原理及使用方法。AdGuard Home 作为一个 DNS 服务器，通过将跟踪域重定向到“黑洞”来有效地防止您的设备连接到这些服务器。这不仅能在您的计算机上屏蔽广告和跟踪器，还能在您的智能手机和智能家居设备上实现。要开始使用 AdGuard Home，请将其部署在您的设备上，然后将路由器通过 DHCP 分配的 DNS 地址更改为 AdGuard Home 服务器的 IP 地址。
+
+      在 Zima 私有云上部署 AdGuard Home 的好处。在 Zima 设备上部署 AdGuard Home 简化了网络范围内的广告和跟踪器拦截，为您所有的家庭设备提供无缝且安全的浏览体验。借助 Zima，您可以灵活地监控网络活动并创建适合您需求的自定义过滤规则。
     ar_sa: AdGuard Home هو برنامج شبكة واسعة لمنع الإعلانات والتتبع. بعد إعداده، سيغطي جميع أجهزة منزلك، ولن تحتاج إلى أي برنامج جانبي للعميل. تعرف على المزيد من مستودعنا الرسمي على Github.
     de_de: AdGuard Home ist eine Netzwerksoftware zum Blockieren von Werbung und Tracking. Nachdem Sie es eingerichtet haben, deckt es alle Ihre Heimgeräte ab und Sie benötigen dafür keine Client-Software. Erfahren Sie mehr in unserem offiziellen Github-Repository.
     es_es: AdGuard Home es un software de red para bloquear anuncios y rastreo. Después de configurarlo, cubrirá todos sus dispositivos en el hogar y no necesitará ningún software cliente para ello. Obtenga más información en nuestro repositorio oficial de Github.
@@ -94,8 +98,8 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AdGuardHome/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AdGuardHome/screenshot-3.png
   tagline:
-    en_us: Network-wide ads & trackers blocking DNS server
-    zh_cn: 在网络侧阻止广告与跟踪器的DNS服务器
+    en_us: Blocking ads & tracking Network-widly
+    zh_cn: 在网络侧阻止广告和跟踪
     ar_sa: خادم DNS لمنع الإعلانات والمتتبعين على نطاق الشبكة
     de_de: Netzwerkweites Werbe- und Tracker-Blockierungs-DNS-Server
     es_es: Servidor DNS de bloqueo de anuncios y rastreadores a nivel de red
