@@ -33,7 +33,7 @@ services:
       PATH_TO_VOLUME: /var/lib/data
       PROJECT_ID: taskingai
     volumes:
-      - ./data/object_storage:/var/lib/data
+      - /DATA/AppData/$AppID/data/object_storage:/var/lib/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/v1/health_check"]
       interval: 15s
@@ -55,7 +55,7 @@ services:
       PATH_TO_VOLUME: /var/lib/data
       PROJECT_ID: taskingai
     volumes:
-      - ./data/object_storage:/var/lib/data
+      - /DATA/AppData/$AppID/data/object_storage:/var/lib/data
     depends_on:
       - db
       - cache
@@ -86,7 +86,7 @@ services:
       PATH_TO_VOLUME: /var/lib/data
       PROJECT_ID: taskingai
     volumes:
-      - ./data/object_storage:/var/lib/data
+      - /DATA/AppData/$AppID/data/object_storage:/var/lib/data
     depends_on:
       - db
       - cache
@@ -107,7 +107,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: TaskingAI321
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data
+      - /DATA/AppData/$AppID/data/postgres:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -121,7 +121,7 @@ services:
     image: redis:7-alpine
     command: ["redis-server", "--requirepass", "TaskingAI321"]
     volumes:
-      - ./data/redis:/data
+      - /DATA/AppData/$AppID/data/redis:/data
     healthcheck:
       test: ["CMD", "redis-cli", "auth", "TaskingAI321", "ping"]
       interval: 5s
@@ -137,7 +137,7 @@ services:
       - "3080:80"
       # edit this to change the port, for example to "8080:80" to use port 8080
     volumes:
-      - ./data/nginx_cache:/var/cache/nginx
+      - /DATA/AppData/$AppID/data/nginx_cache:/var/cache/nginx
     depends_on:
       - frontend
       - backend-web
@@ -160,27 +160,29 @@ x-casaos:
   author: CasaOS Team
   category: Chat
   description:
-    en_us: SABnzbd is an Open Source Binary Newsreader written in Python. It's totally free, easy to use, and works practically everywhere. SABnzbd makes Usenet as simple and streamlined as possible by automating everything we can. All you have to do is add an .nzb. SABnzbd takes over from there, where it will be automatically downloaded, verified, repaired, extracted and filed away with zero human interaction. SABnzbd offers an easy setup wizard and has self-analysis tools to verify your setup.
-    zh_cn: SABnzbd是一个开源的二进制新闻阅读器，由Python编写。它完全免费，易于使用，几乎可以在任何地方使用。 SABnzbd通过自动化我们可以实现的所有内容来使Usenet尽可能简单和流畅。您所要做的就是添加一个.nzb。 SABnzbd从那里开始，它将自动下载，验证，修复，提取和归档，零人工干预。 SABnzbd提供了一个简单的安装向导，并具有自我分析工具来验证您的设置。
+    en_us: The developer-friendly cloud platform for building and running LLM agents for AI-native applications.
+    zh_cn: 开发人员友好的云平台，用于构建和运行AI原生应用程序的LLM代理。
   developer: Sabnzbd Team
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/icon.png
   screenshot_link:
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-1.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-2.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-3.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-4.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-5.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-6.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sabnzbd/screenshot-7.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/screenshot-4.png
   tagline:
-    en_us: Free and easy binary newsreader
-    zh_cn: 免费易用的二进制新闻阅读器
-  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Readarr/thumbnail.png
-  tips: {}
+    en_us: The developer-friendly cloud platform for building and running LLM agents for AI-native applications.
+    zh_cn: 开发人员友好的云平台，用于构建和运行AI原生应用程序的LLM代理。
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/thumbnail.png
+  tips: 
+    before_install:
+      en_us: |
+        | Username | Password   |
+        | -------- | ---------- |
+        | admin    | TaskingAI321 |
+
   title:
     en_us: TaskingAI
   port_map: "3080"
-
 
 configs:
   nginx_config:
