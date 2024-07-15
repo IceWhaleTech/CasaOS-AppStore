@@ -8,13 +8,14 @@ services:
       MODE: api
       LOG_LEVEL: INFO
       SECRET_KEY: sk-9f73s3ljTXVcMT3Blb3ljTqtsKiGHXVcMT3BlbkFJLK7U
-      CONSOLE_WEB_URL: 'http://localhost:3001'
-      INIT_PASSWORD: ''
-      CONSOLE_API_URL: 'http://localhost:3001'
-      SERVICE_API_URL: 'http://localhost:3001'
-      APP_WEB_URL: 'http://localhost:3001'
+      CONSOLE_WEB_URL: '10.0.0.85:5001'
+      INIT_PASSWORD: 'admin'
+      CONSOLE_API_URL: '10.0.0.85:5001'
+      SERVICE_API_URL: '10.0.0.85:5001'
+      APP_WEB_URL: ''
       FILES_URL: ''
       FILES_ACCESS_TIMEOUT: 300
+      APP_MAX_ACTIVE_REQUESTS: 0
       MIGRATION_ENABLED: 'true'
       DB_USERNAME: postgres
       DB_PASSWORD: difyai123456
@@ -51,10 +52,10 @@ services:
       - db
       - redis
     volumes:
-      - /DATA/AppData/dify/app/storage:/app/api/storage
+      - /DATA/AppData/$AppID/data/app/storage:/app/api/storage
     networks:
-      - ssrf_proxy_network
-      - dify
+      - dify_network
+      - default
 
   worker:
     image: langgenius/dify-api:0.6.13
@@ -64,13 +65,14 @@ services:
       MODE: worker
       LOG_LEVEL: INFO
       SECRET_KEY: sk-9f73s3ljTXVcMT3Blb3ljTqtsKiGHXVcMT3BlbkFJLK7U
-      CONSOLE_WEB_URL: 'http://localhost:3001'
+      CONSOLE_WEB_URL: '10.0.0.85:5001'
       INIT_PASSWORD: 'admin'
-      CONSOLE_API_URL: 'http://localhost:3001'
-      SERVICE_API_URL: 'http://localhost:3001'
-      APP_WEB_URL: 'http://localhost:3001'
+      CONSOLE_API_URL: '10.0.0.85:5001'
+      SERVICE_API_URL: '10.0.0.85:5001'
+      APP_WEB_URL: ''
       FILES_URL: ''
       FILES_ACCESS_TIMEOUT: 300
+      APP_MAX_ACTIVE_REQUESTS: 0
       MIGRATION_ENABLED: 'true'
       DB_USERNAME: postgres
       DB_PASSWORD: difyai123456
@@ -107,26 +109,19 @@ services:
       - db
       - redis
     volumes:
-      - /DATA/AppData/dify/app/storage:/app/api/storage
+      - /DATA/AppData/$AppID/data/app/storage:/app/api/storage
     networks:
-      - ssrf_proxy_network
-      - dify
+      - dify_network
+      - default
 
-  web:
+  dify:
     image: langgenius/dify-web:0.6.13
     container_name: dify-web
     restart: unless-stopped
     environment:
-      CONSOLE_API_URL: 'http://localhost:3001'
-      APP_API_URL: 'http://localhost:3001'
-    deploy:
-      resources:
-        reservations:
-          memory: 2048M
-    ports:
-      - "3001:3000"
-    networks:
-      - dify
+      CONSOLE_API_URL: "10.0.0.85:5001"
+      APP_API_URL: "10.0.0.85:5001"
+
 
   db:
     image: postgres:15-alpine
@@ -138,34 +133,29 @@ services:
       POSTGRES_DB: dify
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
-      - /DATA/AppData/dify/db/data:/var/lib/postgresql/data
+      - /DATA/AppData/$AppID/data/db/data:/var/lib/postgresql/data
     healthcheck:
       test: [ "CMD", "pg_isready" ]
       interval: 1s
       timeout: 3s
       retries: 30
-    networks:
-      - dify
 
   redis:
     image: redis:6-alpine
     container_name: dify-redis
     restart: unless-stopped
     volumes:
-      - /DATA/AppData/dify/redis/data:/data
+      - /DATA/AppData/$AppID/data/redis/data:/data
     command: redis-server --requirepass difyai123456
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
-    networks:
-      - dify
 
-  # The Weaviate vector store.
   weaviate:
     image: semitechnologies/weaviate:1.19.0
     container_name: dify-weaviate
     restart: unless-stopped
     volumes:
-      - /DATA/AppData/dify/weaviate:/var/lib/weaviate
+      - /DATA/AppData/$AppID/data/weaviate:/var/lib/weaviate
     environment:
       QUERY_DEFAULTS_LIMIT: 25
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'false'
@@ -177,8 +167,6 @@ services:
       AUTHENTICATION_APIKEY_USERS: 'hello@dify.ai'
       AUTHORIZATION_ADMINLIST_ENABLED: 'true'
       AUTHORIZATION_ADMINLIST_USERS: 'hello@dify.ai'
-    networks:
-      - dify
 
   sandbox:
     image: langgenius/dify-sandbox:0.2.1
@@ -193,47 +181,100 @@ services:
       HTTPS_PROXY: 'http://ssrf_proxy:3128'
       SANDBOX_PORT: 8194
     volumes:
-      - /DATA/AppData/dify/sandbox/dependencies:/dependencies
+      - /DATA/AppData/$AppID/data/sandbox/dependencies:/dependencies
     networks:
-      - ssrf_proxy_network
+      - dify_network
+    configs:
+      - source: dependencies
+        target: /dependencies
 
   ssrf_proxy:
     image: ubuntu/squid:latest
     container_name: dify-ssrf_proxy
     restart: unless-stopped
     volumes:
-      - /DATA/AppData/dify/ssrf_proxy/squid.conf:/etc/squid/squid.conf
+      - /DATA/AppData/$AppID/data/ssrf_proxy/squid.conf:/etc/squid/squid.conf
     networks:
-      - ssrf_proxy_network
-      - dify
+      - dify_network
+      - default
+    configs:
+      - source: squid_conf
+        target: /etc/squid/squid.conf
 
   nginx:
     image: nginx:latest
     container_name: dify-nginx
     restart: unless-stopped
     volumes:
-      - /DATA/AppData/dify/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - /DATA/AppData/dify/nginx/proxy.conf:/etc/nginx/proxy.conf
-      - /DATA/AppData/dify/nginx/conf.d:/etc/nginx/conf.d
+      - /DATA/AppData/$AppID/data/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /DATA/AppData/$AppID/data/nginx/proxy.conf:/etc/nginx/proxy.conf
+      - /DATA/AppData/$AppID/data/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - api
-      - web
-    ports:
-      - "3001:80"
-    networks:
       - dify
-    
+    ports:
+      - "3000:80"
+    configs:
+      - source: nginx_conf
+        target: /etc/nginx/nginx.conf
+      - source: nginx_proxy_conf
+        target: /etc/nginx/proxy.conf
+      - source: nginx_conf_d
+        target: /etc/nginx/conf.d/default.conf
+  
+
 networks:
-  ssrf_proxy_network:
+  dify_network:
     driver: bridge
     internal: true
-  dify:
-    name: dify
 
 configs:
-  nginx-default-conf:
-    file: /DATA/AppData/dify/nginx/nginx.conf
-    content: |
+  nginx_conf:
+    content: >
+      user  nginx;
+      worker_processes  auto;
+
+      error_log  /var/log/nginx/error.log notice;
+      pid        /var/run/nginx.pid;
+
+
+      events {
+          worker_connections  1024;
+      }
+
+
+      http {
+          include       /etc/nginx/mime.types;
+          default_type  application/octet-stream;
+
+          log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                            '$status $body_bytes_sent "$http_referer" '
+                            '"$http_user_agent" "$http_x_forwarded_for"';
+
+          access_log  /var/log/nginx/access.log  main;
+
+          sendfile        on;
+          #tcp_nopush     on;
+
+          keepalive_timeout  65;
+
+          #gzip  on;
+          client_max_body_size 15M;
+
+          include /etc/nginx/conf.d/*.conf;
+      }
+  nginx_proxy_conf:
+    content: >
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_http_version 1.1;
+      proxy_set_header Connection "";
+      proxy_buffering off;
+      proxy_read_timeout 3600s;
+      proxy_send_timeout 3600s;
+  nginx_conf_d:
+    content: >
       server {
           listen 80;
           server_name _;
@@ -272,55 +313,8 @@ configs:
           #ssl_session_cache shared:SSL:10m;
           #ssl_session_timeout 10m;
       }
-  nginx-conf:
-    file: /DATA/AppData/dify/nginx/proxy.conf
-    content: |
-      user  nginx;
-      worker_processes  auto;
-
-      error_log  /var/log/nginx/error.log notice;
-      pid        /var/run/nginx.pid;
-
-      events {
-          worker_connections  1024;
-      }
-
-      http {
-          include       /etc/nginx/mime.types;
-          default_type  application/octet-stream;
-
-          log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                            '$status $body_bytes_sent "$http_referer" '
-                            '"$http_user_agent" "$http_x_forwarded_for"';
-
-          access_log  /var/log/nginx/access.log  main;
-
-          sendfile        on;
-          #tcp_nopush     on;
-
-          keepalive_timeout  65;
-
-          #gzip  on;
-          client_max_body_size 15M;
-
-          include /etc/nginx/conf.d/*.conf;
-      }
-  nginx-proxy-conf:
-    file: /DATA/AppData/dify/nginx/conf.d/default.conf
-    content: |
-      proxy_set_header Host $host;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header X-Forwarded-Proto $scheme;
-      proxy_http_version 1.1;
-      proxy_set_header Connection "";
-      proxy_buffering off;
-      proxy_read_timeout 3600s;
-      proxy_send_timeout 3600s;
-  python-requirements:
-    file: /DATA/AppData/dify/sandbox/dependencies/requirements.txt
-  squid-conf:
-    file: /DATA/AppData/dify/ssrf_proxy/squid.conf
-    content: |
+  squid_conf:
+    content: >
       acl localnet src 0.0.0.1-0.255.255.255	# RFC 1122 "this" network (LAN)
       acl localnet src 10.0.0.0/8		# RFC 1918 local private network (LAN)
       acl localnet src 100.64.0.0/10		# RFC 6598 shared address space (CGN)
@@ -370,11 +364,16 @@ configs:
       cache_peer sandbox parent 8194 0 no-query originserver
       acl src_all src all
       http_access allow src_all
+  dependencies:
+    content: |
+
 x-casaos:
   architectures:
+    - arm64
     - amd64
-  main: web
-  developer: langgenius
+  main: dify
+  author: IceWhaleTech
+  developer: LangGenius
   category: Chat
   description:
     en_us: Dify is an open-source large language model (LLM) application development platform. It combines the concepts of Backend-as-a-Service and LLMOps to enable developers to quickly build production-grade generative AI applications. Even non-technical personnel can participate in the definition and data operations of AI applications.
@@ -391,104 +390,9 @@ x-casaos:
     ja_jp: DifyはオープンソースのLLMアプリケーション開発プラットフォームです。直感的なインターフェイスには、AIワークフロー、RAGパイプライン、エージェント機能、モデル管理、観測機能などが組み合わさっており、プロトタイプから生産まで迅速に進めることができます。
   title:
     en_us: Dify
-    en_uk: Dify
-    zh_cn: Dify
-    ja_jp: Dify
   index: /
+  port_map: "3000"
   tips:
     before_install:
-     en_us: |
-      ### 1 Prepare the necessary configuration files and directories.
-      ```shell
-      curl -fsSL  https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dify/pre-install.sh | sh
-      ```
-
-      ### 2 Setting the access port (recommended)
-
-      The application uses port `3001` by default, which you can change in the `nginx` service.
-
-      ### 3 Configure the service address (recommended)
-
-      Modify the following environment variables to your address `http://yourhost:3001` with the same port as in 2.
-
-      - `api` service
-        - APP_WEB_URL
-        - CONSOLE_API_URL
-        - CONSOLE_WEB_URL
-        - SERVICE_API_URL
-        - SERVICE_API_URL
-      - `dify` service
-        - APP_API_URL
-        - CONSOLE_API_URL
-    en_uk: |
-      ### 1 Prepare the necessary configuration files and directories.
-      ```shell
-      curl -fsSL  https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dify/pre-install.sh | sh
-      ```
-
-      ### 2 Setting the access port (recommended)
-
-      The application uses port `3001` by default, which you can change in the `nginx` service.
-
-      ### 3 Configure the service address (recommended)
-
-      Modify the following environment variables to your address `http://yourhost:3001` with the same port as in 2.
-
-      - `api` service
-        - APP_WEB_URL
-        - CONSOLE_API_URL
-        - CONSOLE_WEB_URL
-        - SERVICE_API_URL
-        - SERVICE_API_URL
-      - `web` service
-        - APP_API_URL
-        - CONSOLE_API_URL
-    zh_cn: |
-      ### 1 准备必要的配置文件和目录。
-
-      ```shell
-      curl -fsSL  https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dify/pre-install.sh | sh
-      ```
-
-      ### 2 设置访问端口（推荐）
-
-      应用默认使用端口 `3001`，您可以在 `nginx` 服务中更改。
-
-      ### 3 配置服务地址（推荐）
-
-      将以下环境变量修改为您的地址 `http://yourhost:3001`，端口与第 2 步相同。
-
-      - `api` 服务
-        - APP_WEB_URL
-        - CONSOLE_API_URL
-        - CONSOLE_WEB_URL
-        - SERVICE_API_URL
-        - SERVICE_API_URL
-      - `web` 服务
-        - APP_API_URL
-        - CONSOLE_API_URL
-    
-    ja_jp: |
-      ### 1 必要な設定ファイルとディレクトリを準備します。
-
-      ```shell
-      curl -fsSL  https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dify/pre-install.sh | sh
-      ```
-
-      ### 2 アクセスポートを設定します（推奨）
-
-      アプリケーションはデフォルトでポート `3001` を使用しています。`nginx` サービスで変更できます。
-
-      ### 3 サービスアドレスを設定します（推奨）
-
-      以下の環境変数を、2 で設定したポートと同じ `http://yourhost:3001` に変更してください。
-
-      - `api` サービス
-        - APP_WEB_URL
-        - CONSOLE_API_URL
-        - CONSOLE_WEB_URL
-        - SERVICE_API_URL
-        - SERVICE_API_URL
-      - `web` サービス
-        - APP_API_URL
-        - CONSOLE_API_URL
+      en_us: |
+        
