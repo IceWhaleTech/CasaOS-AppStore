@@ -4,6 +4,9 @@ services:
     image: ghcr.io/open-webui/open-webui:ollama
     runtime: nvidia
     ipc: host
+    environment:
+      CPU_FALLBACK: "true"
+      NVIDIA_VISIBLE_DEVICES: all
     deploy:
       resources:
         reservations:
