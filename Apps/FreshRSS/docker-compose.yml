@@ -1,9 +1,7 @@
 name: freshrss
 services:
   freshrss:
-    restart: always
-    devices:
-      - /dev/kvm:/dev/kvm
+    restart: unless-stopped
     environment:
       TZ: ""
       CRON_MIN: "1,31"
@@ -43,10 +41,10 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm/v7
     - arm64
+    - arm
   main: freshrss
-  author: freshrss
+  author: FreshRSS
   category: Utilities
   description:
     en_us: FreshRSS is a self-hosted RSS and Atom feed aggregator. It is lightweight, easy to work with, powerful, and customizable.
