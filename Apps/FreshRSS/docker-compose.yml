@@ -13,10 +13,10 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: freshrss_data
+        source: /DATA/AppData/FreshRSS/data
         target: /var/www/FreshRSS/data 
       - type: bind
-        source: freshrss_extensions
+        source: /DATA/AppData/FreshRSS/extensions
         target: /var/www/FreshRSS/extensions
     x-casaos:
       envs:
