@@ -9,7 +9,7 @@ services:
     network_mode: bridge
     ports:
       - target: 80
-        published: "8080"
+        published: "8749"
         protocol: tcp
     volumes:
       - type: bind
@@ -77,7 +77,7 @@ x-casaos:
     pt_br: Um agregador de notícias gratuito e auto-hospedável...
     sv_se: En gratis, självhanterlig nyhetsaggregator ...
     uk_ua: Безкоштовний агрегатор новин, що саморозміщується...
-  port_map: "8080"
+  port_map: "8749"
   scheme: http
   store_app_id: freshrss
   title:
