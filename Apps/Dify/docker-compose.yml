@@ -214,7 +214,7 @@ services:
       - web
       - config
     ports:
-      - "3001:80"
+      - "3701:80"
     networks:
       - dify
 
@@ -250,4 +250,4 @@ x-casaos:
   title:
     en_us: Dify
   index: /
-  port_map: "3001"
+  port_map: "3701"
