@@ -5,9 +5,15 @@ services:
     restart: unless-stopped
     image: ns2kracy/dify-config:latest
     volumes:
-      - /DATA/AppData/$AppID/data/nginx:/configs/nginx
-      - /DATA/AppData/$AppID/data/ssrf_proxy:/configs/ssrf_proxy
-      - /DATA/AppData/$AppID/data/sandbox:/configs/sandbox
+      - type: bind
+        source: /DATA/AppData/$AppID/data/nginx
+        target: /configs/nginx
+      - type: bind
+        source: /DATA/AppData/$AppID/data/ssrf_proxy
+        target: /configs/ssrf_proxy
+      - type: bind
+        source: /DATA/AppData/$AppID/data/sandbox
+        target: /configs/sandbox
     networks:
       - dify
 
@@ -235,6 +241,11 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dify/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dify/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dify/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dify/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dify/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dify/screenshot-5.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dify/thumbnail.png
   tagline:
     en_us: Dify is an open-source LLM app development platform. Dify's intuitive interface combines AI workflow, RAG pipeline, agent capabilities, model management, observability features and more, letting you quickly go from prototype to production.
     en_uk: Dify is an open-source LLM app development platform. Dify's intuitive interface combines AI workflow, RAG pipeline, agent capabilities, model management, observability features and more, letting you quickly go from prototype to production.
@@ -244,9 +255,3 @@ x-casaos:
     en_us: Dify
   index: /
   port_map: "3001"
-  tips:
-    before_install:
-      en_us: |
-        | Username | Password   |
-        | -------- | ---------- |
-        | admin    | admin |
