@@ -13,9 +13,6 @@ services:
       resources:
         reservations:
           memory: "256M"
-          devices:
-            - capabilities:
-              - gpu
     network_mode: host
     restart: unless-stopped
     volumes:
