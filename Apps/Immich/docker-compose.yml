@@ -1,0 +1,128 @@
+name: immich
+
+services:
+  immich-server:
+    container_name: immich-server
+    image: ghcr.io/immich-app/immich-server:v1.112.1
+
+    ports:
+      - 2283:3001
+    volumes:
+      - /DATA/AppData/immich/upload:/usr/src/app/upload
+    devices:
+      - /dev/dri:/dev/dri
+    environment:
+      DB_HOSTNAME: immich-postgres
+      DB_USERNAME: casaos
+      DB_PASSWORD: casaos
+      DB_DATABASE_NAME: immich
+      DB_PORT: "5432"
+      REDIS_HOSTNAME: immich-redis
+    depends_on:
+      - redis
+      - database
+    restart: unless-stopped
+    networks:
+      - immich-server
+
+    x-casaos:
+      envs:
+        - container: DB_HOSTNAME
+          description:
+            en_us: "Database Hostname"
+        - container: DB_USERNAME
+          description:
+            en_us: "Database Username"
+        - container: DB_PASSWORD
+          description:
+            en_us: "Database Password"
+        - container: DB_DATABASE_NAME
+          description:
+            en_us: "Database Name"
+        - container: DB_PORT
+          description:
+            en_us: "Database Port"
+        - container: REDIS_HOSTNAME
+          description:
+            en_us: "Redis Hostname"
+      volumes:
+        - container: /usr/src/app/upload
+          description:
+            en_us: "Container Path: /usr/src/app/upload"
+      ports:
+        - container: "3001"
+          description:
+            en_us: "Container Port: 3001"
+
+  redis:
+    container_name: immich-redis
+    image: redis:6.2-alpine@sha256:70a7a5b641117670beae0d80658430853896b5ef269ccf00d1827427e3263fa3
+    networks:
+      - immich-server
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    image: ghcr.io/immich-app/immich-machine-learning:v1.112.1
+    networks:
+      - immich-server
+    volumes:
+      - DATA/AppData/immich/data/model-cache:/cache
+    restart: always
+    healthcheck:
+      disable: false
+
+  database:
+    container_name: immich-postgres
+    image: tensorchord/pgvecto-rs:pg14-v0.2.0
+    networks:
+      - immich-server
+    environment:
+      POSTGRES_PASSWORD: casaos
+      POSTGRES_USER: casaos
+      POSTGRES_DB: immich
+      PG_DATA: /var/lib/postgresql/data
+    volumes:
+      - /DATA/AppData/immich/pgdata:/var/lib/postgresql/data
+    restart: always
+
+    x-casaos:
+      envs:
+        - container: POSTGRES_PASSWORD
+          description:
+            en_us: "Database Password"
+        - container: POSTGRES_USER
+          description:
+            en_us: "Database Username"
+        - container: POSTGRES_DB
+          description:
+            en_us: "Database Name"
+        - container: PG_DATA
+          description:
+            en_us: "Container Path: /var/lib/postgresql/data"
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_us: "Container Path: /var/lib/postgresql/data"
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: immich-server
+  description:
+    en_us: Self-hosted photo and video storage.
+  developer: "immich"
+  author: IceWhaleTech
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png
+
+  thumbnail: "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png"
+
+  title:
+    en_us: Immich
+
+  category: "Gallery"
+
+  port_map: "2283"
