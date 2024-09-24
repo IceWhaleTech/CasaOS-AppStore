@@ -1,0 +1,134 @@
+name: immich
+
+services:
+  immich-server:
+    deploy:
+      resources:
+        reservations:
+          memory: 1024M
+    container_name: immich-server
+    hostname: immich-server
+    image: altran1502/immich-server:v1.115.0
+    volumes:
+      - /DATA/Gallery/immich:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - DB_DATABASE_NAME=immich
+      - DB_PASSWORD=postgres
+      - DB_USERNAME=postgres
+    depends_on:
+      - redis
+      - database
+    ports:
+      - 2283:3001
+    restart: unless-stopped
+    healthcheck:
+      disable: false
+    networks:
+      - immich
+
+  immich-machine-learning:
+    container_name: immich-machine-learning
+    hostname: immich-machine-learning
+    image: altran1502/immich-machine-learning:v1.115.0
+    environment:
+      - DB_DATABASE_NAME=immich
+      - DB_PASSWORD=postgres
+      - DB_USERNAME=postgres
+    restart: unless-stopped
+    volumes:
+      - /DATA/AppData/immich/model-cache:/cache
+    healthcheck:
+      disable: false
+    networks:
+      - immich
+
+  redis:
+    container_name: immich-redis
+    hostname: immich-redis
+    image: redis:6.2-alpine
+    healthcheck:
+      test: redis-cli ping || exit 1
+    volumes:
+      - /DATA/AppData/immich/redis:/data
+    restart: unless-stopped
+    networks:
+      - immich
+
+  database:
+    container_name: immich-postgres
+    hostname: immich-postgres
+    image: tensorchord/pgvecto-rs:pg14-v0.2.0
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: immich
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+    volumes:
+      - /DATA/AppData/immich/pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready --dbname='immich' --username='postgres' || exit 1; Chksum="$$(psql --dbname='immich' --username='postgres' --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')"; echo "checksum failure count is $$Chksum"; [ "$$Chksum" = '0' ] || exit 1
+      interval: 5m
+      start_interval: 30s
+      start_period: 5m
+    command: ["postgres", "-c", "shared_preload_libraries=vectors.so", "-c", 'search_path="$$user", public, vectors', "-c", "logging_collector=on", "-c", "max_wal_size=2GB", "-c", "shared_buffers=512MB", "-c", "wal_compression=on"]
+    restart: unless-stopped
+    networks:
+      - immich
+
+networks:
+  immich:
+    name: immich
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: immich-server
+  store_app_id: immich
+  category: Gallery
+  author: Cp0204
+  developer: alextran1502
+  icon: https://cdn.jsdelivr.net/gh/Cp0204/CasaOS-AppStore-Play@main/Apps/immich/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/screenshot-3.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/thumbnail.png
+  description:
+    en_us: |
+      ## Immich: Revolutionizing Your Home Media Experience
+
+      Immich is here to transform the way you manage and enjoy your media files across your home TV, smartphones, and other devices. Unlike traditional photo albums or mainstream cloud services, immich offers a seamless and modern platform for organizing, sharing, and accessing your photos and videos. Imagine effortlessly backing up your precious moments from your mobile devices and viewing them instantly on your TV or sharing them with family members—immich makes it all possible.
+
+      immich stands out with its automatic backup from mobile devices, a sleek web-based interface for easy media browsing, and advanced features like face recognition and object detection. You can organize your media by location, enjoy 4K video playback, and even manage RAW photos. Plus, with multi-user support, sharing memories with friends and family is a breeze. The best part? Immich offers these powerful features for low cost, ensuring you get a premium experience without breaking the bank.
+
+      Deploying immich on a private cloud device like Zima brings unparalleled convenience. Enjoy unlimited storage capacity, blazing-fast local network speeds, and easy multi-device access. With immich on your Zima private cloud, your media is always at your fingertips, safe and secure in your home.
+    zh_cn: |
+      ## Immich：革新您的家庭媒体体验
+      
+      Immich 来了，它将彻底改变您在家庭电视、智能手机和其他设备上管理和享受媒体文件的方式。与传统相册或主流云服务不同，Immich 提供了一个无缝且现代化的平台，用于组织、分享和访问您的照片和视频。想象一下，轻松地从移动设备备份珍贵时刻，并立即在电视上观看或与家人分享——Immich 让这一切成为可能。
+      
+      Immich 以其从移动设备自动备份、时尚的网页界面方便浏览媒体，以及面部识别和物体检测等高级功能而脱颖而出。您可以按位置组织媒体，欣赏 4K 视频播放，甚至管理 RAW 格式照片。此外，多用户支持功能使与朋友和家人分享记忆变得轻而易举。最棒的是，Immich 以低成本提供这些强大的功能，确保您获得高级体验而不会花费太多。
+      
+      在像 Zima 这样的私有云设备上部署 Immich 带来了无与伦比的便利。享受无限存储容量、极快的本地网络速度和轻松的多设备访问。通过在 Zima 私有云上使用 Immich，您的媒体始终触手可及，安全可靠地存储在您的家中。
+  tagline:
+    en_us: Self-hosted media management solution
+    zh_cn: 自托管媒体管理解决方案
+  title:
+    en_us: Immich
+  tips:
+    before_install:
+      en_us: |
+        ⚠️ The project is under very active development.
+        ⚠️ Expect bugs and breaking changes.
+        ⚠️ Do not use the app as the only way to store your photos and videos.
+        ⚠️ Always follow 3-2-1 backup plan for your precious photos and videos!
+      zh_cn: |
+        ⚠️ 本项目正在 非常活跃 地开发中。
+        ⚠️ 可能存在 bug 或者随时有重大变更。
+        ⚠️ 不要把本软件作为您存储照片或视频的唯一方式。
+        ⚠️ 为了您宝贵的照片与视频，请始终遵守 3-2-1 备份方案！
+  port_map: "2283"
+  scheme: http
+  index: /
