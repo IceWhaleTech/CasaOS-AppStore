@@ -30,13 +30,11 @@ services:
   immich-machine-learning:
     container_name: immich-machine-learning
     hostname: immich-machine-learning
-  image: altran1502/immich-machine-learning:v1.115.0
+    image: altran1502/immich-machine-learning:v1.115.0
     environment:
       - DB_DATABASE_NAME=immich
       - DB_PASSWORD=postgres
       - DB_USERNAME=postgres
-      # - HTTP_PROXY=http://172.17.0.1:10809
-      # - HTTPS_PROXY=http://172.17.0.1:10809
     restart: unless-stopped
     volumes:
       - /DATA/AppData/immich/model-cache:/cache
