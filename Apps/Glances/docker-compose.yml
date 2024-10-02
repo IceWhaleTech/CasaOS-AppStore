@@ -3,6 +3,7 @@ services:
   glances:
     container_name: glances
     image: nicolargo/glances:4.1.2.1-full
+    pid: host
     deploy:
       resources:
         reservations:
