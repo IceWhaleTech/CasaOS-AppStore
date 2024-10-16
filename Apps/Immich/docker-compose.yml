@@ -87,7 +87,7 @@ services:
         '-c',
         'wal_compression=on',
       ]
-      restart: unless-stopped
+    restart: unless-stopped
     networks:
       - immich
 
