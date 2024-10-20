@@ -1,0 +1,45 @@
+name: albyhub
+services:
+  albyhub:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+      UMASK: "002"
+      WORK_DIR: /data/albyhub
+      LOG_EVENTS: true
+    command: []
+    container_name: albyhub
+    image: ghcr.io/getalby/hub:v1.10.2
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/getAlby/umbrel-community-app-store@master/alby-albyhub/images/icon.svg
+    ports:
+      - target: 8080
+        published: "58000"
+        protocol: tcp
+    restart: on-failure
+    stop_grace_period: 1m
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  architectures:                  # a list of architectures that the app supports
+      - amd64
+      - arm
+      - arm64
+  author: calganaygun
+  category: Finance
+  icon: https://cdn.jsdelivr.net/gh/getAlby/hub@master/frontend/public/icon-512.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/getAlby/umbrel-community-app-store@master/alby-albyhub/images/node.png
+    - https://cdn.jsdelivr.net/gh/getAlby/umbrel-community-app-store@master/alby-albyhub/images/store.png
+    - https://cdn.jsdelivr.net/gh/getAlby/umbrel-community-app-store@master/alby-albyhub/images/wallet.png
+  index: /
+  port_map: "58000"
+  scheme: http
+  store_app_id: albyhub
+  title:
+    en_us: Alby Hub
