@@ -1,0 +1,44 @@
+name: flowise
+services:
+  flowise:
+    image: flowiseai/flowise:2.1.2
+    restart: always
+    environment:
+      - PORT=3025
+      - DATABASE_PATH=/root/.flowise
+      - APIKEY_PATH=/root/.flowise
+      - SECRETKEY_PATH=/root/.flowise
+      - LOG_PATH=/root/.flowise/logs
+      - BLOB_STORAGE_PATH=/root/.flowise/storage
+      - FLOWISE_USERNAME=casaos
+      - FLOWISE_PASSWORD=casaos
+    ports:
+      - 3025:3025
+    volumes:
+      - /DATA/AppData/$AppID:/root/.flowise
+    entrypoint: /bin/sh -c "sleep 3; flowise start"
+
+x-casaos:
+  architectures:
+    - amd64
+  main: flowise
+  store_app_id: flowise
+  category: Developer
+  author: Flowise
+  developer: Flowise
+  icon: https://pbs.twimg.com/profile_images/1645548689757274113/dp5YMsvk_400x400.jpg
+  screenshot_link:
+    - https://flowiseai.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fproductcatalog.9d6b9124.png&w=1920&q=75
+  description:
+    en_us: "Flowise is an open source low-code tool for developers to build customized LLM orchestration flows & AI agents. Developing LLM apps often involves countless iterations. Our low-code and drag-and-drop UI approach enables quick iterations, helping you go from testing to production faster."
+  tagline:
+    en_us: "Open source low-code tool for developers to build customized LLM orchestration flow & AI agents"
+  title:
+    en_us: Flowise
+  tips:
+    before_install:
+      en_us: Default username & password is `casaos`. You can change it in the environment variables.
+    custom: null
+  port_map: "3025"
+  scheme: http
+  index: /
