@@ -1,0 +1,80 @@
+name: azuracast
+services:
+  azuracast_web:
+    container_name: azuracast_web
+    image: "ghcr.io/azuracast/azuracast:${AZURACAST_VERSION:-latest}"
+    restart: unless-stopped
+    environment:
+      - AZURACAST_HTTP_PORT=${AZURACAST_HTTP_PORT:-80}
+      - AZURACAST_HTTPS_PORT=${AZURACAST_HTTPS_PORT:-443}
+      - AZURACAST_SFTP_PORT=${AZURACAST_SFTP_PORT:-2022}
+    ports:
+      - "${AZURACAST_HTTP_PORT:-80}:${AZURACAST_HTTP_PORT:-80}"
+      - "${AZURACAST_HTTPS_PORT:-443}:${AZURACAST_HTTPS_PORT:-443}"
+      - "${AZURACAST_SFTP_PORT:-2022}:${AZURACAST_SFTP_PORT:-2022}"
+    volumes:
+      - type: bind
+        source: station_data
+        target: /var/azuracast/stations
+      - type: bind
+        source: backups
+        target: /var/azuracast/backups
+      - type: bind
+        source: db_data
+        target: /var/lib/mysql
+      - type: bind
+        source: www_uploads
+        target: /var/azuracast/storage/uploads
+      - type: bind
+        source: shoutcast2_install
+        target: /var/azuracast/storage/shoutcast2
+      - type: bind
+        source: stereo_tool_install
+        target: /var/azuracast/storage/stereo_tool
+      - type: bind
+        source: geolite_install
+        target: /var/azuracast/storage/geoip
+      - type: bind
+        source: sftpgo_data
+        target: /var/azuracast/storage/sftpgo
+      - type: bind
+        source: acme
+        target: /var/azuracast/storage/acme
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    logging:
+      options:
+        max-size: "1m"
+        max-file: "5"
+
+  azuracast_updater:
+    container_name: azuracast_updater
+    image: ghcr.io/azuracast/updater:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    logging:
+      options:
+        max-size: "1m"
+        max-file: "5"
+
+volumes:
+  db_data:
+    driver: local
+  acme:
+    driver: local
+  shoutcast2_install:
+    driver: local
+  stereo_tool_install:
+    driver: local
+  geolite_install:
+    driver: local
+  sftpgo_data:
+    driver: local
+  station_data:
+    driver: local
+  www_uploads:
+    driver: local
+  backups:
+    driver: local
