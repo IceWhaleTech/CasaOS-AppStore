@@ -1,0 +1,78 @@
+name: rocketchat
+volumes:
+  mongodb_data: { driver: local }
+
+services:
+  rocketchat:
+    image: registry.rocket.chat/rocketchat/rocket.chat:latest
+    restart: always
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.rocketchat.rule: Host(``)
+      traefik.http.routers.rocketchat.tls: "true"
+      traefik.http.routers.rocketchat.entrypoints: https
+      traefik.http.routers.rocketchat.tls.certresolver: le
+    environment:
+      MONGO_URL: "mongodb://mongodb:27017/\
+        rocketchat?replicaSet=rs0"
+      MONGO_OPLOG_URL: "mongodb://mongodb:27017/\
+        local?replicaSet=rs0"
+      ROOT_URL: http://localhost:3000
+      PORT: 3000
+      DEPLOY_METHOD: docker
+      DEPLOY_PLATFORM: 
+      REG_TOKEN:
+    depends_on:
+      - mongodb
+    expose:
+      - 3000
+    ports:
+      - "6565:3000"
+    networks:
+      - rocketchat_network
+
+  mongodb:
+    image: docker.io/bitnami/mongodb:5.0
+    restart: always
+    volumes:
+      - mongodb_data:/bitnami/mongodb
+    environment:
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_REPLICA_SET_NAME: rs0
+      MONGODB_PORT_NUMBER: 27017
+      MONGODB_INITIAL_PRIMARY_HOST: mongodb
+      MONGODB_INITIAL_PRIMARY_PORT_NUMBER: 27017
+      MONGODB_ADVERTISED_HOSTNAME: mongodb
+      MONGODB_ENABLE_JOURNAL: true
+      ALLOW_EMPTY_PASSWORD: yes
+    networks:
+      - rocketchat_network
+
+networks:
+  rocketchat_network:
+    driver: bridge
+
+x-casaos:
+  architectures:
+    - amd64
+  main: rocketchat
+  author: CasaOS Team
+  category: Chat
+  description:
+    en_us: SABnzbd is an Open Source Binary Newsreader written in Python. It's totally free, easy to use, and works practically everywhere. SABnzbd makes Usenet as simple and streamlined as possible by automating everything we can. All you have to do is add an .nzb. SABnzbd takes over from there, where it will be automatically downloaded, verified, repaired, extracted and filed away with zero human interaction. SABnzbd offers an easy setup wizard and has self-analysis tools to verify your setup.
+    zh_cn: SABnzbd是一个开源的二进制新闻阅读器，由Python编写。它完全免费，易于使用，几乎可以在任何地方使用。 SABnzbd通过自动化我们可以实现的所有内容来使Usenet尽可能简单和流畅。您所要做的就是添加一个.nzb。 SABnzbd从那里开始，它将自动下载，验证，修复，提取和归档，零人工干预。 SABnzbd提供了一个简单的安装向导，并具有自我分析工具来验证您的设置。
+  developer: Sabnzbd Team
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RocketChat/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RocketChat/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RocketChat/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RocketChat/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RocketChat/screenshot-4.png
+  tagline:
+    en_us: Free and easy binary newsreader
+    zh_cn: 免费易用的二进制新闻阅读器
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RocketChat/thumbnail.png
+  tips: {}
+  title:
+    en_us: Rocket Chat
+  port_map: "6565"
