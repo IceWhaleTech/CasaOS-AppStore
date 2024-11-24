@@ -1,0 +1,82 @@
+name: livebook
+services:
+  livebook:
+    container_name: livebook
+    image: ghcr.io/livebook-dev/livebook:0.14.5
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    network_mode: bridge
+    restart: unless-stopped
+    environment:
+      - LIVEBOOK_PORT=8090
+      - LIVEBOOK_IFRAME_PORT=8091
+      - LIVEBOOK_DEBUG=true
+      - LIVEBOOK_PASSWORD=casaos_securepass
+    ports:
+      - target: 8090
+        published: "8090"
+        protocol: tcp
+      - target: 8091
+        published: "8091"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /data
+    x-casaos:
+      envs:
+        - container: LIVEBOOK_PORT
+          description:
+            en_us: "Sets the port Livebook runs on."
+        - container: LIVEBOOK_IFRAME_PORT
+          description:
+            en_us: "When accessing Livebook over http:// and from https://livebookusercontent.com when accessing over https://."
+        - container: LIVEBOOK_DEBUG
+          description:
+            en_us: "Enables verbose logging, when set to true"
+        - container: LIVEBOOK_PASSWORD
+          description:
+            en_us: "Sets a password that must be used to access Livebook. Must be at least 12 characters. Defaults to token authentication"
+      ports:
+        - container: "8090"
+          description:
+            en_us: WebUi
+        - container: "8091"
+          description:
+            en_us: ""
+      volumes:
+        - container: /data
+          description:
+            en_us: Livebook directory
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: livebook
+  author: sebas1012
+  category: Developer
+  developer: sebas1012
+  icon: https://cdn.jsdelivr.net/gh/Sebas1012/CasaOS-AppStore@main/Apps/Livebook/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/Sebas1012/CasaOS-AppStore@main/Apps/Livebook/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/Sebas1012/CasaOS-AppStore@main/Apps/Livebook/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/Sebas1012/CasaOS-AppStore@main/Apps/Livebook/screenshot-3.png
+  scheme: http
+  hostname: ""
+  port_map: "8090"
+  index: /
+  description:
+    en_us: | 
+      Livebook is a web application for writing interactive and collaborative code notebooks.
+  tagline:
+    en_us: Livebook is a web application for writing interactive and collaborative code notebooks.
+  title:
+    en_us: Livebook
+  tips:
+    before_install:
+      en_us: |
+        Default password: `casaos_securepass`
+    
