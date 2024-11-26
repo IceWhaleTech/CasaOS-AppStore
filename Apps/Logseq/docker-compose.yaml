@@ -13,6 +13,9 @@ services:
     ports:
       - target: 3000
         published: "3325"
+        protocol: tcp   
+      - target: 12315
+        published: "12315"
         protocol: tcp
     privileged: true
     restart: unless-stopped
