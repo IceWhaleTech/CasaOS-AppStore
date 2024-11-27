@@ -59,8 +59,8 @@ services:
       CODE_MAX_STRING_ARRAY_LENGTH: "30"
       CODE_MAX_OBJECT_ARRAY_LENGTH: "30"
       CODE_MAX_NUMBER_ARRAY_LENGTH: "1000"
-      HTTP_PROXY: http://ssrf_proxy:3128
-      HTTPS_PROXY: http://ssrf_proxy:3128
+      HTTP_PROXY: "http://ssrf_proxy:3128"
+      HTTPS_PROXY: "http://ssrf_proxy:3128"
       INDEXING_MAX_SEGMENTATION_TOKENS_LENGTH: "1000"
     depends_on:
       - db
