@@ -1,24 +1,36 @@
-version: '3.7'
 name: quickdrop
 services:
   quickdrop:
     image: roastslav/quickdrop:1.0.0
     container_name: quickdrop
     ports:
-      - "8080:8080"
+      - target: 8080
+        published: "8080"
+        protocol: tcp
     volumes:
-      - quickdrop_files:/app/files
-      - quickdrop_db:/app/db
+      - type: bind
+        source: /DATA/AppData/$AppID/files
+        target: /app/files
+      - type: bind
+        source: /DATA/AppData/$AppID/db
+        target: /app/db
     environment:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
     restart: unless-stopped
-
-volumes:
-  quickdrop_files:
-  quickdrop_db:
-
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_us: WebUI HTTP port
+      volumes:
+        - container: /app/files
+          description:
+            en_us: QuickDrop files directory.
+        - container: /app/db
+          description:
+            en_us: QuickDrop database directory.
 x-casaos:
   architectures:
     - amd64
