@@ -14,7 +14,7 @@ services:
       icon: https://fileflows.com/img/logo.svg
     restart: unless-stopped
     ports: 
-      - target: 19200
+      - target: 5000
         published: "19200"
         protocol: tcp
     network_mode: bridge
