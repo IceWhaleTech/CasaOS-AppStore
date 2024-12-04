@@ -1,0 +1,61 @@
+name: tailscale
+services:
+  tailscale:
+    container_name: tailscale
+    hostname: tailscale-nas
+    image: tailscale/tailscale:v1.50.0
+    deploy:
+      resources:
+        reservations:
+          memory: "256M"
+    environment:
+      TS_ACCEPT_DNS: false
+      TS_AUTHKEY: change1234567890abcdf
+      TS_HOSTNAME: $hostname
+    volumes:
+      - /var/lib:/var/lib # State data will be stored in this directory
+      - /dev/net/tun:/dev/net/tun # Required for tailscale to work
+    cap_add: # Required for tailscale to work
+      - net_admin
+      - sys_module
+    network_mode: "host"
+    command: tailscaled
+    privileged: true
+    restart: unless-stopped
+    x-casaos:
+      envs:
+        - container: TS_ACCEPT_DNS
+          description:
+            en_us: Accept DNS configuration from the admin console. Not accepted by default.
+        - container: TS_AUTHKEY
+          description:
+            en_us: A Tailscale auth key used to authenticate the container. https://hub.docker.com/r/tailscale/tailscale#:~:text=A%20Tailscale%20auth%20key%20used%20to%20authenticate%20the%20container.
+        - container: TS_HOSTNAME
+          description:
+            en_us: Use the specified hostname for the node.
+      volumes:
+        - container: /var/lib
+          description: 
+            en_us: State data will be stored in this directory. 
+        - container: /dev/net/tun
+          description:
+            en_us: Required for Tailscale to work
+  x-casasos:
+    architectures:
+      - amd64
+      - arm
+      - arm64
+    main: tailscale
+    author: kd9lsv
+    category: Network
+    description:
+      en_us: Tailscale lets you connect your devices and users together in your own secure virtual private network. Tailscale enables encrypted point-to-point connections using the open source WireGuard protocol.
+    developer: Tailscale
+    icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tailscale/icon.png
+    screenshot_link:
+      - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tailscale/screenshot-1.png
+    tagline:
+      en_us: Private WireGuard® networks made easy
+    thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tailscale/thumbnail.png
+    title:
+      en_us: Tailscale
