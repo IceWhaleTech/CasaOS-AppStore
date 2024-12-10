@@ -1,0 +1,56 @@
+name: quickdrop
+services:
+  quickdrop:
+    image: roastslav/quickdrop:1.0.0
+    container_name: quickdrop
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/files
+        target: /app/files
+      - type: bind
+        source: /DATA/AppData/$AppID/db
+        target: /app/db
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    restart: unless-stopped
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_us: WebUI HTTP port
+      volumes:
+        - container: /app/files
+          description:
+            en_us: QuickDrop files directory.
+        - container: /app/db
+          description:
+            en_us: QuickDrop database directory.
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: quickdrop
+  author: RoastSlav
+  category: Cloud
+  description:
+    en_us: QuickDrop is a self-hosted file-sharing application that allows for anonymous uploads, download link generation, and file management with optional password protection and encryption.
+  developer: RoastSlav
+  icon: https://raw.githubusercontent.com/RoastSlav/quickdrop/master/src/main/resources/static/images/favicon.png
+  tagline:
+    en_us: Self-hosted file-sharing with enhanced security.
+  title:
+    en_us: QuickDrop
+  port_map: "8080"
+  volumes:
+    - container: /app/files
+      description:
+        en_us: Directory for uploaded files.
+    - container: /app/db
+      description:
+        en_us: Directory for database storage.
