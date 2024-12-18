@@ -38,8 +38,8 @@
         "privileged": false,
         "network_model": "bridge",
         "web_ui": {
-            "http": "8110",
-            "path": "/panel"
+            "http": "8111",
+            "path": "/"
         },
         "envs": [
             {
@@ -50,14 +50,6 @@
             }
         ],
         "ports": [
-            {
-                "container": "8000",
-                "host": "8110",
-                "type": "tcp",
-                "allocation": "preferred",
-                "configurable": "advanced",
-                "description": "WebUI HTTP Port"
-            },
             {
                 "container": "19132",
                 "host": "19132",

@@ -4,6 +4,9 @@ services:
     image: ghcr.io/open-webui/open-webui:ollama
     runtime: nvidia
     ipc: host
+    environment:
+      CPU_FALLBACK: "true"
+      NVIDIA_VISIBLE_DEVICES: all
     deploy:
       resources:
         reservations:
@@ -36,7 +39,10 @@ x-casaos:
     ja_jp: Open WebUI は、ワークフローに適応し、完全にオフラインで動作する AI のための拡張可能な自己ホスト型インターフェースです。
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/icon.png
   screenshot_link:
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/screenshot-1.gif
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/screenshot-3.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/thumbnail.png
   tagline:
     en_us: User-friendly WebUI for LLMs (Formerly Ollama WebUI)
     en_uk: User-friendly WebUI for LLMs (Formerly Ollama WebUI)

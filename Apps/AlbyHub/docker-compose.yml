@@ -1,0 +1,73 @@
+name: albyhub
+services:
+  albyhub:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+      UMASK: "002"
+      WORK_DIR: /data/albyhub
+      LOG_EVENTS: true
+    command: []
+    container_name: albyhub
+    image: ghcr.io/getalby/hub:v1.12.0
+    deploy:
+      resources:
+        reservations:
+          memory: 1024M
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/getAlby/umbrel-community-app-store@master/alby-albyhub/images/icon.svg
+    ports:
+      - target: 8080
+        published: "58000"
+        protocol: tcp
+    restart: on-failure
+    stop_grace_period: 1m
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  architectures:                  # a list of architectures that the app supports
+      - amd64
+      - arm64
+  author: calganaygun
+  category: Finance
+  description:
+    en_us: |
+      Alby Hub is the open-source, self-custodial Bitcoin Lightning wallet that puts you in control of your money, true money, currency of the internet.
+      With an integrated node, it's more than just a wallet — it's your gateway to Bitcoin. Manage channels, run apps, and take charge of your funds, all through one sleek, user-friendly interface.
+      Empower your Bitcoin journey with simplicity and sovereignty. Become sovereign.
+
+      **USEFUL LINKS**
+      - [Source Repository](https://github.com/getAlby/hub)
+      - [Support](https://getalby.com/help)
+      - [Marketing Site](https://albyhub.com/)
+      - [Community of users and developers](https://discord.getalby.com)
+  icon: https://cdn.jsdelivr.net/gh/getAlby/hub@master/frontend/public/icon-512.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/getAlby/umbrel-community-app-store@master/alby-albyhub/images/node.png
+    - https://cdn.jsdelivr.net/gh/getAlby/umbrel-community-app-store@master/alby-albyhub/images/store.png
+    - https://cdn.jsdelivr.net/gh/getAlby/umbrel-community-app-store@master/alby-albyhub/images/wallet.png
+  tagline:
+    en_us: A simple Bitcoin Lightning node with a wallet, subaccounts and NWC connections.
+    zh_cn: 一个简单的比特币闪电节点，带有钱包、子账户和NWC连接。
+    ar_sa: عقدة بسيكويت لايتنينغ بسيطة مع محفظة، وحسابات فرعية، واتصالات NWC.
+    de_de: Ein einfacher Bitcoin-Lightning-Knoten mit einer Wallet, Unterkonten und NWC-Verbindungen.
+    es_es: Un nodo de Lightning de Bitcoin simple con una cartera, subcuentas y conexiones NWC.
+    fr_fr: Un nœud Bitcoin Lightning simple avec un portefeuille, des sous-comptes et des connexions NWC.
+    hu_hu: Egy egyszerű Bitcoin Lightning csomópont pénztárcával, alszámlákkal és NWC csatlakozásokkal.
+    it_it: Un semplice nodo Bitcoin Lightning con un portafoglio, sottoconti e connessioni NWC.
+    ru_ru: Простой узел Bitcoin Lightning с кошельком, субсчетами и подключениями NWC.
+    pl_pl: Samodzielny węzeł Bitcoin Lightning z portfelem, subkontami i połączeniami NWC.
+    pt_br: Um nó Bitcoin Lightning simples com uma carteira, subcontas e conexões NWC.
+    sv_se: En enkel Bitcoin Lightning-nod med en plånbok, underkonton och NWC-anslutningar.
+    uk_ua: Простий Bitcoin Lightning-вузол з гаманцем, субрахунками та підключеннями NWC.
+  index: /
+  port_map: "58000"
+  scheme: http
+  store_app_id: albyhub
+  title:
+    en_us: Alby Hub
