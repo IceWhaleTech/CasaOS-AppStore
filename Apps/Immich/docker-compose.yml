@@ -104,7 +104,7 @@ x-casaos:
   category: Gallery
   author: Cp0204
   developer: alextran1502
-  icon: https://cdn.jsdelivr.net/gh/Cp0204/CasaOS-AppStore-Play@main/Apps/immich/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore-Play@main/Apps/immich/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/screenshot-2.png
@@ -121,11 +121,11 @@ x-casaos:
       Deploying immich on a private cloud device like Zima brings unparalleled convenience. Enjoy unlimited storage capacity, blazing-fast local network speeds, and easy multi-device access. With immich on your Zima private cloud, your media is always at your fingertips, safe and secure in your home.
     zh_cn: |
       ## Immich：革新您的家庭媒体体验
-      
+
       Immich 来了，它将彻底改变您在家庭电视、智能手机和其他设备上管理和享受媒体文件的方式。与传统相册或主流云服务不同，Immich 提供了一个无缝且现代化的平台，用于组织、分享和访问您的照片和视频。想象一下，轻松地从移动设备备份珍贵时刻，并立即在电视上观看或与家人分享——Immich 让这一切成为可能。
-      
+
       Immich 以其从移动设备自动备份、时尚的网页界面方便浏览媒体，以及面部识别和物体检测等高级功能而脱颖而出。您可以按位置组织媒体，欣赏 4K 视频播放，甚至管理 RAW 格式照片。此外，多用户支持功能使与朋友和家人分享记忆变得轻而易举。最棒的是，Immich 以低成本提供这些强大的功能，确保您获得高级体验而不会花费太多。
-      
+
       在像 Zima 这样的私有云设备上部署 Immich 带来了无与伦比的便利。享受无限存储容量、极快的本地网络速度和轻松的多设备访问。通过在 Zima 私有云上使用 Immich，您的媒体始终触手可及，安全可靠地存储在您的家中。
   tagline:
     en_us: Self-hosted media management solution
@@ -135,27 +135,27 @@ x-casaos:
   tips:
     before_install:
       en_us: |
-        *FAQ*
+        ⚠️ The project is under very active development.
+        ⚠️ Expect bugs and breaking changes.
+        ⚠️ Do not use the app as the only way to store your photos and videos.
+        ⚠️ Always follow 3-2-1 backup plan for your precious photos and videos!
 
-        Default Account
-        | Username | Password |
-        | -------- | -------- |
-        | `admin`    | `password` |
+        ## Authorized Media Files and Data
+        1. Click on the settings icon in the upper right corner of the App.
+        2. In the immich-server tab, map your album storage location in the Volumes section (default is `/DATA/Gallery/immich`).
 
-        Authorized Files and Data to PhotoPrism
-        1. Click setting via top right menu of App icon
-        2. map your device's media location in 'Host Path' and link it to PhotoPrism's 'Container Path' at /Media for seamless access.
+        For complete project documentation and installation instructions, please [refer to](https://immich.app).
       zh_cn: |
-        *FAQ*
+        ⚠️ 本项目正在 非常活跃 地开发中。
+        ⚠️ 可能存在 bug 或者随时有重大变更。
+        ⚠️ 不要把本软件作为您存储照片或视频的唯一方式。
+        ⚠️ 为了您宝贵的照片与视频，请始终遵守 3-2-1 备份方案！
 
-        默认账户
-        | 用户名 | 密码 |
-        | -------- | -------- |
-        | `admin`    | `password` |
-
-        授权文件和数据到 Immich
+        ## 授权媒体文件和数据
         1. 点击 App 图标右上角的设置
-        2. 在 'Host Path' 中映射您的设备媒体位置，并将其链接到 Immich 的 '/Media' 路径，以实现无缝访问。
+        2. 在 immich-server 选项卡 Volumes 栏目中映射您的相册储存位置（默认为 `/DATA/Gallery/immich ` ）。
+
+        完整的项目文档以及安装教程请[参见](https://immich.app)。
   port_map: "2283"
   scheme: http
   index: /
