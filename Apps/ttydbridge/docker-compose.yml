@@ -1,7 +1,6 @@
 name: ttydbridge
 services:
   ttydbridge:
-    command: []
     container_name: ttydbridge
     deploy:
       resources:
@@ -9,10 +8,10 @@ services:
           memory: 8M
     environment:
       - EXEC_DIR=/opt
-      - HTTP_PASSWORD=password
-      - HTTP_USERNAME=admin
+      # - HTTP_PASSWORD=password
+      # - HTTP_USERNAME=admin
       - PORT=2222
-      - START_COMMAND=bash
+      - START_COMMAND=login
     image: cp0204/ttydbridge:v0.0.3
     labels:
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ttydbridge/icon.png
@@ -55,15 +54,15 @@ x-casaos:
   tips:
     before_install:
       en_us: >
-        1. You can set the `HTTP_USERNAME` and `HTTP_PASSWORD` variables to modify or remove HTTP authentication.
+        1. Default to using Linux system user authentication.
 
-        2. The default username and password are `admin` and `password`.
+        2. You can increase HTTP authentication by setting the `HTTP_USERNAME` and `HTTP_PASSWORD` variables.
 
         [Official DOC](https://hub.docker.com/r/cp0204/ttydbridge)
       zh_cn: |
-        1. 可以设置 `HTTP_USERNAME` `HTTP_PASSWORD` 变量，修改与删掉 HTTP 鉴权。
+        1. 默认使用 Linux 系统用户鉴权。
 
-        2. 默认的账号密码为 `admin` `password`。
+        2. 可以通过设置 `HTTP_USERNAME` `HTTP_PASSWORD` 变量，增加 HTTP 鉴权。
 
         [官方文档](https://hub.docker.com/r/cp0204/ttydbridge)
   title:
