@@ -14,6 +14,9 @@ services:
       - type: bind
         source: /DATA/AppData/anythingllm/storage
         target: /app/server/storage
+      - type: bind
+        source: /DATA/AppData/anythingllm/storage/.env
+        target: /app/server/.env
     restart: always
     extra_hosts:
       - "host.docker.internal:host-gateway"
