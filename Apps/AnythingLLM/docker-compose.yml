@@ -2,7 +2,7 @@ version: '3.8'
 name: anythingllm
 services:
   anythingllm:
-    image: mintplexlabs/anythingllm
+    image: mintplexlabs/anythingllm:latest
     container_name: anythingllm
     ports:
       - target: 3001
@@ -14,6 +14,9 @@ services:
       - type: bind
         source: /DATA/AppData/anythingllm/storage
         target: /app/server/storage
+      - type: bind
+        source: /DATA/AppData/anythingllm/storage/.env
+        target: /app/server/.env
     restart: always
     extra_hosts:
       - "host.docker.internal:host-gateway"
