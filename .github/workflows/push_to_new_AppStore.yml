@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: remove all file except icon.png
+      - name: remove all file except docker yaml
         run: find . -type f -not \( -name '*.yml' \) -delete
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
