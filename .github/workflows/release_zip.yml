@@ -18,7 +18,8 @@ jobs:
         run: find . -iname "icon.png" | xargs rm -f
       - name: remove all app file
         run: find . -iname "appfile.json" | xargs rm -f
-
+      - name: remove all changelog
+        run: find . -iname "changelog.txt" | xargs rm -f
       - name: create a build with sysroot
         id: build
         run: |
