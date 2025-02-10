@@ -1,0 +1,144 @@
+name: outline
+services:
+  outline:
+    restart: unless-stopped
+    command: []
+    container_name: outline
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+    environment:
+      - DATABASE_URL=postgres://user:password@localhost:5432/outline
+      - DEFAULT_LANGUAGE=en_US
+      - FILE_STORAGE=local
+      - FILE_STORAGE_LOCAL_ROOT_DIR=/var/lib/outline/data
+      - FILE_STORAGE_UPLOAD_MAX_SIZE=262144000
+      - FORCE_HTTPS=false
+      - NODE_ENV=production
+      - PGSSLMODE=disable
+      - PORT=3000
+      - REDIS_URL=redis://localhost:6379
+      - SECRET_KEY=secret-key
+      - SLACK_APP_ID=slack-app-id
+      - SLACK_CLIENT_ID=slack-client-id
+      - SLACK_CLIENT_SECRET=slack-client-secret
+      - SLACK_MESSAGE_ACTIONS=true
+      - SLACK_VERIFICATION_TOKEN=slack-verification-token
+      - SMTP_FROM_EMAIL=your-email@gmail.com
+      - SMTP_HOST=smtp.google.com
+      - SMTP_PASSWORD=google-app-password
+      - SMTP_PORT=587
+      - SMTP_SECURE=false
+      - SMTP_TLS_CIPHERS=TLSv1.2
+      - SMTP_USERNAME=your-email@gmail.com
+      - URL=https://outline.yourdomain.com
+      - UTILS_SECRET=utils-secret
+      - WEB_CONCURRENCY=10
+    hostname: outline
+    image: docker.getoutline.com/outlinewiki/outline:0.78.0
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Outline/icon.png
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/outline/data
+        target: /var/lib/outline/data
+    devices: []
+    cap_add: []
+    network_mode: bridge
+    privileged: false
+    x-casaos:
+      envs:
+        - container: DATABASE_URL
+          description:
+            en_us: URL of a PostgreSQL database, be sure to replace user, password, and localhost with your own values. The database `outline` must be created before starting the Outline server.
+        - container: REDIS_URL
+          description:
+            en_us: URL of a Redis server, be sure to replace localhost with your own value.
+        - container: SECRET_KEY
+          description:
+            en_us: A secret key used to sign cookies and other sensitive data, you can generate a random key using `openssl rand -hex 32`.
+        - container: SLACK_APP_ID
+          description:
+            en_us: Slack app ID, you can get it from Slack, more info here https://docs.getoutline.com/s/hosting/doc/slack-sgMujR8J9J.
+        - container: SLACK_CLIENT_ID
+          description:
+            en_us: Slack client ID, you can get it from Slack, more info here https://docs.getoutline.com/s/hosting/doc/slack-sgMujR8J9J.
+        - container: SLACK_CLIENT_SECRET
+          description:
+            en_us: Slack client secret, you can get it from Slack, more info here https://docs.getoutline.com/s/hosting/doc/slack-sgMujR8J9J.
+        - container: SLACK_VERIFICATION_TOKEN
+          description:
+            en_us: Slack verification token, you can get it from Slack, more info here https://docs.getoutline.com/s/hosting/doc/slack-sgMujR8J9J.
+        - container: SMTP_FROM_EMAIL
+          description:
+            en_us: Email address used to send emails from Outline, more info here https://docs.getoutline.com/s/hosting/doc/smtp-cqCJyZGMIB.
+        - container: SMTP_PASSWORD
+          description:
+            en_us: In this case we are using google, so an app password is required, more info here https://knowledge.workspace.google.com/kb/how-to-create-app-passwords-000009237.
+        - container: URL
+          description:
+            en_us: URL of your Outline server, be sure to replace `outline.yourdomain.com` with your own value.
+        - container: UTILS_SECRET
+          description:
+            en_us: A secret key used to sign utility tokens, you can generate a random key using `openssl rand -hex 32`.
+      ports:
+        - container: "3000"
+          description:
+            en_us: GUI HTTP port
+      volumes:
+        - container: /var/lib/outline/data
+          description:
+            en_us: Outline data directory
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  main: outline
+  author: Roniel Lopez (roniel-rhack)
+  category: WiKi
+  description:
+    en_us: Outline is a wiki and knowledge base tool that helps your team document your knowledge and build a culture of transparency.
+    zh_cn: Outline 是一个维基和知识库工具，帮助您的团队记录知识并建立透明的文化。
+    ar_sa: Outline هو أداة ويكي وقاعدة معرفية تساعد فريقك على توثيق معرفتك وبناء ثقافة شفافة.
+    de_de: Outline ist ein Wiki- und Wissensbasis-Tool, das Ihrem Team hilft, Ihr Wissen zu dokumentieren und eine Kultur der Transparenz aufzubauen.
+    es_es: Outline es una herramienta de wiki y base de conocimientos que ayuda a su equipo a documentar su conocimiento y construir una cultura de transparencia.
+    fr_fr: Outline est un outil de wiki et de base de connaissances qui aide votre équipe à documenter vos connaissances et à construire une culture de transparence.
+    it_it: Outline è uno strumento wiki e di base di conoscenza che aiuta il tuo team a documentare le tue conoscenze e a costruire una cultura della trasparenza.
+    hu_hu: Az Outline egy wiki és tudásbázis eszköz, amely segít csapatának dokumentálni a tudását és átláthatósági kultúrát építeni.
+    ru_ru: Outline - это инструмент вики и базы знаний, который помогает вашей команде документировать знания и создавать культуру прозрачности.
+    pl_pl: Outline to narzędzie wiki i bazy wiedzy, które pomaga zespołowi dokumentować wiedzę i budować kulturę przejrzystości.
+    pt_br: Outline é uma ferramenta de wiki e base de conhecimento que ajuda sua equipe a documentar seu conhecimento e construir uma cultura de transparência.
+    sv_se: Outline är ett wiki- och kunskapsbasverktyg som hjälper ditt team att dokumentera din kunskap och by bygga en kultur av transparens.
+    uk_ua: Outline - це інструмент вікі та бази знань, який допомагає вашій команді документувати знання та створювати культуру прозорості.
+  developer: Outline
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Outline/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Outline/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Outline/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Outline/screenshot-3.png
+  tagline:
+    en_us: A wiki and knowledge base tool that helps your team document your knowledge and build a culture of transparency.
+    zh_cn: 一个维基和知识库工具，帮助您的团队记录知识并建立透明的文化。
+    ar_sa: أداة ويكي وقاعدة معرفية تساعد فريقك على توثيق معرفتك وبناء ثقافة شفافة.
+    de_de: Ein Wiki- und Wissensbasis-Tool, das Ihrem Team hilft, Ihr Wissen zu dokumentieren und eine Kultur der Transparenz aufzubauen.
+    es_es: Una herramienta de wiki y base de conocimientos que ayuda a su equipo a documentar su conocimiento y construir una cultura de transparencia.
+    fr_fr: Un outil de wiki et de base de connaissances qui aide votre équipe à documenter vos connaissances et à construire une culture de transparence.
+    it_it: Uno strumento wiki e di base di conoscenza che aiuta il tuo team a documentare le tue conoscenze e a costruire una cultura della trasparenza.
+    hu_hu: Egy wiki és tudásbázis eszköz, amely segít csapatának dokumentálni a tudását és átláthatósági kultúrát építeni.
+    ru_ru: Инструмент вики и базы знаний, который помогает вашей команде документировать знания и создавать культуру прозрачности.
+    pl_pl: Narzędzie wiki i bazy wiedzy, które pomaga zespołowi dokumentować wiedzę i budować kulturę przejrzystości.
+    pt_br: Uma ferramenta de wiki e base de conhecimento que ajuda sua equipe a documentar seu conhecimento e construir uma cultura de transparência.
+    sv_se: Ett wiki- och kunskapsbasverktyg som hjälper ditt team att dokumentera din kunskap och by bygga en kultur av transparens.
+    uk_ua: Інструмент вікі та бази знань, який допомагає вашій команді документувати знання та створювати культуру прозорості.
+  index: /
+  port_map: "3000"
+  scheme: http
+  store_app_id: outline
+  title:
+    en_us: Outline
