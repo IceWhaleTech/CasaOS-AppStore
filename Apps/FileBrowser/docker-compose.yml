@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: filebrowser/filebrowser:v2.23.0
+    image: filebrowser/filebrowser:v2.32.0
     deploy:
       resources:
         reservations:
@@ -18,8 +18,11 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/$AppID/db
-        target: /db
+        source: /DATA/AppData/$AppID/database.db
+        target: /database.db
+      - type: bind
+        source: /DATA/AppData/$AppID/.filebrowser.json
+        target: /.filebrowser.json
       - type: bind
         source: /DATA
         target: /srv
@@ -44,10 +47,14 @@ services:
             zh_cn: WebUI端口
 
       volumes:
-        - container: /db
+        - container: /database.db
           description:
-            en_us: FileBrowser database directory.
-            zh_cn: FileBrowser数据库目录
+            en_us: FileBrowser database file.
+            zh_cn: FileBrowser数据库文件
+        - container: /.filebrowser.json
+          description:
+            en_us: FileBrowser configuration file.
+            zh_cn: FileBrowser配置文件
         - container: /srv
           description:
             en_us: FileBrowser managed directory.
