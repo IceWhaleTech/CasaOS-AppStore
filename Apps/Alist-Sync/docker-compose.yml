@@ -1,7 +1,7 @@
 name: alist-sync
 services:
   alist-sync:
-    image: xjxjin/alist-sync:1.0.8
+    image: xjxjin/alist-sync:1.1.2
     container_name: alist-sync
     restart: unless-stopped
     ports:
@@ -45,6 +45,7 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist-Sync/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist-Sync/screenshot-3.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist-Sync/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist-Sync/screenshot-5.png
   tagline:
     en_us: An Alist storage synchronization tool based on the Web interface.
     zh_cn: 一个基于 Web 界面的 Alist 存储同步工具。
