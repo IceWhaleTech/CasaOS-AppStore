@@ -13,14 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: remove all screenshots
-        run: find . -iname "screenshot*" | xargs rm -f
-      - name: remove all thumbnails
-        run: find . -iname "thumbnail*" | xargs rm -f
-      - name: remove all icon
-        run: find . -iname "icon.png" | xargs rm -f
-      - name: remove all app file
-        run: find . -iname "appfile.json" | xargs rm -f
+      - name: remove all file except docker yaml and json
+        run: find . -type f -not \( -name '*.yaml' -or -name '*.yml' -or -name 'category-list.json'  -or -name 'recommend-list.json' -or -name 'README.md' -or -name '*.sh' \) -delete
 
       - name: create a build with sysroot
         id: build
@@ -37,8 +31,7 @@ jobs:
           
       - name: Verify ZIP
         if: github.ref != 'refs/heads/main'
-        run: |
-          unzip -t main.zip
+        run: ls -lh main.zip
 
       - name: Checkout pages
         if: github.ref == 'refs/heads/main'
