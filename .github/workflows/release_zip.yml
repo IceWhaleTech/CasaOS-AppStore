@@ -12,9 +12,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: remove all file except docker yaml and json
         run: find . -type f -not \( -name '*.yaml' -or -name '*.yml' -or -name 'category-list.json'  -or -name 'recommend-list.json.json' -or -name 'README.md' -or -name '*.sh' \) -delete
-      - name: remove all app file
-        run: find . -iname "appfile.json" | xargs rm -f
-
       - name: create a build with sysroot
         id: build
         run: |
