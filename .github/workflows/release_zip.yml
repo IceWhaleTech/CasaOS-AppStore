@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: remove all file except docker yaml and json
-        run: find . -type f -not \( -name '*.yaml' -or -name '*.yml' -or -name '*.json' -or -name '*.md' -or -name '*.sh' \) -delete
+        run: find . -type f -not \( -name '*.yaml' -or -name '*.yml' -or -name '*.json' -or -name 'README.md' -or -name '*.sh' \) -delete
       - name: remove all app file
         run: find . -iname "appfile.json" | xargs rm -f
 
