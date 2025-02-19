@@ -3,7 +3,7 @@ name: release zip to appstore page
 on:
   push:
     branches:
-        - main
+        - "*"
 
 jobs:
   build:
@@ -31,18 +31,26 @@ jobs:
           cp -v README.md /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
           pushd /tmp
           zip -r main.zip build
-            
+          
+      - name: Verify ZIP
+        if: github.ref != 'refs/heads/main'
+        run: |
+          unzip -t main.zip
+
       - name: Checkout pages
+        if: github.ref == 'refs/heads/main'
         uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: pages
   
       - name: Copy build to pages
+        if: github.ref == 'refs/heads/main' 
         run: |
           cp /tmp/main.zip pages/store/main.zip
       
       - name: Pushes to another repository
+        if: github.ref == 'refs/heads/main'
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB2 }}
@@ -55,6 +63,7 @@ jobs:
           target-directory: ''
 
       - name: Upload to oss
+        if: github.ref == 'refs/heads/main'
         id: upload_to_oss
         uses: tvrcgo/upload-to-oss@master
         with:
