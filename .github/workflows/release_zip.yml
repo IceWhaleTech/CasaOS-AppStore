@@ -31,7 +31,7 @@ jobs:
           
       - name: Verify ZIP
         if: github.ref != 'refs/heads/main'
-        run: ls -lh main.zip
+        run: ls -lh /tmp/main.zip
 
       - name: Checkout pages
         if: github.ref == 'refs/heads/main'
