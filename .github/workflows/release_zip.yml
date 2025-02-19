@@ -10,14 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: remove all image file
-        run: find . -iname "*.png" | xargs rm -f && find . -iname "*.jpg" | xargs rm -f && find . -iname "*.jpeg" | xargs rm -f
-      - name: remove all txt file
-        run: find . -iname "*.txt" | xargs rm -f
+      - name: remove all file except docker yaml and json
+        run: find . -type f -not \( -name '*.yaml' -or -name '*.yml' -or -name '*.json' \) -delete
       - name: remove all app file
         run: find . -iname "appfile.json" | xargs rm -f
-      - name: remove all Apple file
-        run: find . -iname ".DS_Store" | xargs rm -f
 
       - name: create a build with sysroot
         id: build
