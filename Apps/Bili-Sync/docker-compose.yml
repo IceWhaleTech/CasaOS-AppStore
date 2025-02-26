@@ -13,8 +13,6 @@ services:
     volumes:
       - /DATA/AppData/bili-sync:/app/.config/bili-sync
       - /DATA:/DATA
-    logging:
-      driver: "local"
 x-casaos:
   architectures:
     - amd64
