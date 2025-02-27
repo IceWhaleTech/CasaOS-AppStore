@@ -1,0 +1,45 @@
+name: WebDAV
+services:
+  webdav:
+    cpu_shares: 90
+    command: []
+    container_name: webdav
+    deploy:
+      resources:
+        limits:
+          memory: 15806M
+    environment:
+      - GID=1000
+      - PASSWORD=casaos
+      - TZ=Europe/Madrid
+      - UDI=1000
+      - USERNAME=casaos
+    image: ugeek/webdav:amd64
+    labels:
+      icon: https://icon.casaos.io/main/all/webdav.png
+    ports:
+      - target: 80
+        published: "5005"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /media/ZimaOS-HD/Media/Music
+        target: /media
+    devices: []
+    cap_add: []
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  author: self
+  category: self
+  hostname: ""
+  icon: https://icon.casaos.io/main/all/webdav.png
+  index: /
+  is_uncontrolled: false
+  port_map: "5005"
+  scheme: http
+  store_app_id: yourprojectname
+  title:
+    custom: webdav
+    en_us: webdav
