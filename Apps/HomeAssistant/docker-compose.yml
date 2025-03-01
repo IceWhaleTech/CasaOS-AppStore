@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: homeassistant/home-assistant:2024.5
+    image: homeassistant/home-assistant:2025.2.5
     deploy:
       resources:
         reservations:
@@ -16,6 +16,15 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/config
         target: /config
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+      - type: bind
+        source: /run/dbus
+        target: /run/dbus
+        read_only: true
+    privileged: true
     x-casaos:
       envs:
         - container: TZ
@@ -41,6 +50,7 @@ x-casaos:
   architectures:
     - amd64
     - arm64
+    - arm
   main: homeassistant
   author: CasaOS Team
   category: Home Automation
