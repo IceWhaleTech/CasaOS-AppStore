@@ -18,14 +18,12 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/$AppID/database.db
-        target: /database.db
-      - type: bind
-        source: /DATA/AppData/$AppID/.filebrowser.json
-        target: /.filebrowser.json
+        source: /DATA/AppData/$AppID
+        target: /data
       - type: bind
         source: /DATA
         target: /srv
+    entrypoint: ["/filebrowser", "-c", "/data/.filebrowser.json", "-d", "/data/database.db", "-a", "0.0.0.0", "-p", "80"]
     x-casaos:
       envs:
         - container: TZ
@@ -47,14 +45,10 @@ services:
             zh_cn: WebUI端口
 
       volumes:
-        - container: /database.db
+        - container: /data
           description:
-            en_us: FileBrowser database file.
-            zh_cn: FileBrowser数据库文件
-        - container: /.filebrowser.json
-          description:
-            en_us: FileBrowser configuration file.
-            zh_cn: FileBrowser配置文件
+            en_us: FileBrowser database & configuration file.
+            zh_cn: FileBrowser数据库和配置文件。
         - container: /srv
           description:
             en_us: FileBrowser managed directory.
