@@ -72,20 +72,12 @@
         ],
         "volumes": [
             {
-                "container": "/database.db",
-                "host": "/DATA/AppData/$AppID/database.db",
+                "container": "/data",
+                "host": "/DATA/AppData/$AppID",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
-                "description": "FileBrowser database file."
-            },
-            {
-                "container": "/.filebrowser.json",
-                "host": "/DATA/AppData/$AppID/.filebrowser.json",
-                "mode": "rw",
-                "allocation": "automatic",
-                "configurable": "no",
-                "description": "FileBrowser configuration file."
+                "description": "FileBrowser database & configuration directory."
             },
             {
                 "container": "/srv",
