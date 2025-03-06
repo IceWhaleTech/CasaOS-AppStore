@@ -18,7 +18,7 @@ services:
       - dify
 
   api:
-    image: langgenius/dify-api:1.0.0
+    image: langgenius/dify-api:0.12.1
     container_name: dify-api
     restart: unless-stopped
     environment:
@@ -72,7 +72,7 @@ services:
       - dify
 
   worker:
-    image: langgenius/dify-api:1.0.0
+    image: langgenius/dify-api:0.12.1
     container_name: dify-worker
     restart: unless-stopped
     environment:
@@ -105,7 +105,7 @@ services:
       - dify
 
   web:
-    image: langgenius/dify-web:1.0.0
+    image: langgenius/dify-web:0.12.1
     container_name: dify-web
     restart: unless-stopped
     environment:
