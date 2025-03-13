@@ -1,0 +1,87 @@
+{
+	"version": "0.25.9",
+	"title": "PocketBase",
+	"name": "pocketbase",
+	"icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/icon.png",
+	"tagline": "Open Source realtime backend in 1 file",
+	"overview": "PocketBase is an open-source backend solution that combines a real-time database, authentication, file storage, and an admin dashboard into a single, portable executable.",
+	"thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/thumbnail.png",
+	"screenshots": [
+		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/screenshot-1.png",
+		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/screenshot-2.png",
+		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/2FAuth/screenshot-3.png"
+	],
+	"category": [
+		"Developer"
+	],
+	"developer": {
+		"name": "pocketbase",
+		"website": "https://pocketbase.io",
+		"donate_text": "",
+		"donate_link": ""
+	},
+	"adaptor": {
+		"name": "CasaOS Team",
+		"website": "https://www.casaos.io",
+		"donate_text": "",
+		"donate_link": ""
+	},
+	"support": "https://discord.gg/knqAbbBbeX",
+	"website": "",
+	"container": {
+		"image": "argonptg/pocketbase:latest",
+		"shell": "sh",
+		"privileged": false,
+		"network_model": "bridge",
+		"web_ui": {
+			"http": "8090",
+			"path": "/_/"
+		},
+		"health_check": "",
+		"envs": [],
+		"ports": [
+			{
+				"container": "8090",
+				"host": "8090",
+				"type": "tcp",
+				"allocation": "automatic",
+				"configurable": "no",
+				"description": ""
+			}
+		],
+		"volumes": [
+			{
+				"container": "/pocketbase",
+				"host": "/DATA/AppData/$AppID/pb_data",
+				"mode": "rw",
+				"allocation": "automatic",
+				"configurable": "no",
+				"description": ""
+			}
+		],
+		"devices": [],
+		"constraints": {
+			"min_memory": 1024,
+			"min_storage": 2048
+		},
+		"restart_policy": "always",
+		"sysctls": [],
+		"cap_add": [],
+		"labels": [],
+		"host_name": "",
+		"cmd": []
+	},
+	"abilities": {
+		"notification": false,
+		"widgets": false,
+		"authentication": false,
+		"search": false,
+		"upnp": false
+	},
+	"tips": {},
+	"changelog": {
+		"latest_updates": "",
+		"url": ""
+	},
+	"latest_update_date": ""
+}
