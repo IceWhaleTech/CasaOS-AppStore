@@ -16,15 +16,6 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/pb_data
         target: /pb_data
-    x-casaos:
-      ports:
-        - container: "8090"
-          description:
-            en_us: ""
-      volumes:
-        - container: /pocketbase
-          description:
-            en_us: ""
     container_name: pocketbase
 x-casaos:
   architectures:
