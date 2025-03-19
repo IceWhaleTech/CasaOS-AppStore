@@ -3,23 +3,19 @@ name: release zip to appstore page
 on:
   push:
     branches:
-        - main
+        - "*"
+  pull_request:
+    branches:
+        - "*"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: remove all screenshots
-        run: find . -name "screenshot*" | xargs rm -f
-      - name: remove all thumbnails
-        run: find . -name "thumbnail*" | xargs rm -f
-      - name: remove all icon
-        run: find . -name "icon.png" | xargs rm -f
-      - name: remove all app file
-        run: find . -name "appfile.json" | xargs rm -f
-      - name: remove all changelog
-        run: find . -name "changelog.txt" | xargs rm -f
+      - uses: actions/checkout@v4
+      - name: remove all file except docker yaml and json
+        run: find . -type f -not \( -name '*.yaml' -or -name '*.yml' -or -name 'category-list.json'  -or -name 'recommend-list.json' -or -name 'README.md' -or -name '*.sh' \) -delete
+
       - name: create a build with sysroot
         id: build
         run: |
@@ -32,18 +28,25 @@ jobs:
           cp -v README.md /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
           pushd /tmp
           zip -r main.zip build
-            
+          
+      - name: Verify ZIP
+        if: github.ref != 'refs/heads/main'
+        run: ls -lh /tmp/main.zip
+
       - name: Checkout pages
+        if: github.ref == 'refs/heads/main'
         uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: pages
   
       - name: Copy build to pages
+        if: github.ref == 'refs/heads/main' 
         run: |
           cp /tmp/main.zip pages/store/main.zip
       
       - name: Pushes to another repository
+        if: github.ref == 'refs/heads/main'
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB2 }}
@@ -56,6 +59,7 @@ jobs:
           target-directory: ''
 
       - name: Upload to oss
+        if: github.ref == 'refs/heads/main'
         id: upload_to_oss
         uses: tvrcgo/upload-to-oss@master
         with:
