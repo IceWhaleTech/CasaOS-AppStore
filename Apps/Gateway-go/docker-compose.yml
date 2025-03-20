@@ -2,11 +2,11 @@ name: gateway-go
 services:
   gateway-go:
     image: openiothub/gateway-go:v0.3.18
-    network_mode: bridge
+    network_mode: host
     deploy:
       resources:
         reservations:
-          memory: "64M"
+          memory: "32M"
     labels:
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gateway-go/icon.png
     restart: unless-stopped
@@ -45,7 +45,7 @@ x-casaos:
     zh_cn: | 
       云亿连内网穿透工具的内网网关，帮助用户随时随地访问本设备所在网络，支持http和ssh等众多协议，在有条件的情况下优先使用p2p直连网络，支持安卓、iOS、Windows、macOS、Linux客户端访问。
       
-      使用云亿连客户端扫描本应用提供的二维码添加本网关，在客户端上添加主机，然后添加端口。 这样你在外面就可以通过云亿连App访问你的 CasaOS/Zima 设备了。
+      使用云亿连客户端扫描本应用提供的二维码添加本网关，在客户端上添加主机，然后添加端口。 这样你在外面就可以通过云亿连App访问你的 CasaOS/Zima 设备了。使用文档：https://docs.iothub.cloud/typical/index.html#casaoszimaos
   developer: iotserv
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gateway-go/icon.png
   screenshot_link:
