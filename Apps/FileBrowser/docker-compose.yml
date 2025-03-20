@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: filebrowser/filebrowser:v2.32.0
+    image: filebrowser/filebrowser:v2.23.0
     deploy:
       resources:
         reservations:
@@ -18,12 +18,11 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/$AppID
-        target: /data
+        source: /DATA/AppData/$AppID/db
+        target: /db
       - type: bind
         source: /DATA
         target: /srv
-    entrypoint: ["/filebrowser", "-c", "/data/.filebrowser.json", "-d", "/data/database.db", "-a", "0.0.0.0", "-p", "80"]
     x-casaos:
       envs:
         - container: TZ
@@ -45,10 +44,10 @@ services:
             zh_cn: WebUI端口
 
       volumes:
-        - container: /data
+        - container: /db
           description:
-            en_us: FileBrowser database & configuration directory.
-            zh_cn: FileBrowser数据库和配置目录。
+            en_us: FileBrowser database directory.
+            zh_cn: FileBrowser数据库目录
         - container: /srv
           description:
             en_us: FileBrowser managed directory.
