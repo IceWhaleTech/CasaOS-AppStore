@@ -1,7 +1,7 @@
 name: pocketbase
 services:
   pocketbase:
-    image: argonptg/pocketbase:0.25.9
+    image: argonptg/pocketbase:0.26.6
     deploy:
       resources:
         limits:
@@ -15,7 +15,10 @@ services:
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/pb_data
-        target: /pb_data
+        target: /pocketbase/pb_data
+      - type: bind
+        source: /DATA/AppData/$AppID/pb_migrations
+        target: /pocketbase/pb_migrations
     container_name: pocketbase
 x-casaos:
   architectures:
