@@ -24,9 +24,15 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/data
         target: /opt/om/data
-      - type: volume
-        source: om_conf
-        target: /opt/om/nginx/conf
+      - type: bind
+        source: /DATA/AppData/$AppID/sites
+        target: /opt/om/nginx/conf/sites
+      - type: bind
+        source: /DATA/AppData/$AppID/upstreams
+        target: /opt/om/nginx/conf/upstreams
+      - type: bind
+        source: /DATA/AppData/$AppID/certs
+        target: /opt/om/nginx/conf/certs
     x-casaos:
       ports:
         - container: "80"
@@ -43,9 +49,6 @@ services:
           description:
             en_us: WebUI Port
             zh_cn: WebUI 端口
-
-volumes:
-  om_conf:
 
 x-casaos:
   architectures:
