@@ -95,6 +95,30 @@
                 "allocation": "automatic",
                 "configurable": "advanced",
                 "description": "OpenResty Manager data directory."
+            },
+            {
+                "container": "/opt/om/nginx/conf/sites",
+                "host": "/DATA/AppData/$AppID/sites",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "advanced",
+                "description": "OpenResty Manager sites directory."
+            },
+            {
+                "container": "/opt/om/nginx/conf/upstreams",
+                "host": "/DATA/AppData/$AppID/upstreams",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "advanced",
+                "description": "OpenResty Manager upstreams directory."
+            },
+            {
+                "container": "/opt/om/nginx/conf/certs",
+                "host": "/DATA/AppData/$AppID/certs",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "advanced",
+                "description": "OpenResty Manager certs directory."
             }
         ],
         "devices": [],
