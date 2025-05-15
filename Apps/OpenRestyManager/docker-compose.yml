@@ -1,7 +1,7 @@
 name: openrestymanager
 services:
   openresty-manager:
-    image: uusec/openresty-manager:v1.1.1
+    image: uusec/openresty-manager:1.1.3
     container_name: openresty-manager
     deploy:
       resources:
@@ -53,6 +53,7 @@ services:
 x-casaos:
   architectures:
     - amd64
+    - arm64
   main: openrestymanager
   author: UUSEC
   category: Network
