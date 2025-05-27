@@ -8,31 +8,39 @@ services:
       volumes:
         - container: /config
           description:
-            en_us: Contains config file where cloudflare token is stored.
-            zh_cn: 包含配置文件，其中存储了 Cloudflare 令牌。
-            ar_sa: يحتوي على ملف تكوين حيث يتم تخزين رمز Cloudflare.
-            de_de: Enthält eine Konfigurationsdatei, in der das Cloudflare-Token gespeichert ist.
-            es_es: Contiene un archivo de configuración donde se almacena el token de Cloudflare.
-            fr_fr: Contient un fichier de configuration où est stocké le jeton Cloudflare.
-            hu_hu: Tartalmazza a konfigurációs fájlt, ahol a Cloudflare token van tárolva.
-            it_it: Contiene un file di configurazione in cui è memorizzato il token di Cloudflare.
-            ru_ru: Содержит файл конфигурации, в котором хранится токен Cloudflare.
-            pl_pl: Zawiera plik konfiguracyjny, w którym przechowywany jest token Cloudflare.
-            pt_br: Contém um arquivo de configuração onde o token do Cloudflare é armazenado.
+            en_US: Contains config file where cloudflare token is stored.
+            en_GB: Contains configuration file where Cloudflare token is stored.
+            it_IT: Contiene il file di configurazione in cui è memorizzato il token di Cloudflare.
+            nb_NO: Inneholder konfigurasjonsfilen der Cloudflare-tokenet er lagret.
+            zh_CN: 包含存储Cloudflare令牌的配置文件。
+            ja_JP: Cloudflareトークンが保存されている設定ファイルを含む。
+            ko_KR: Cloudflare 토큰이 저장된 구성 파일을 포함합니다.
+            fr_FR: Contient le fichier de configuration où le jeton Cloudflare est stocké.
+            de_DE: Enthält die Konfigurationsdatei, in der der Cloudflare-Token gespeichert ist.
+            sv_SE: Innehåller konfigurationsfilen där Cloudflare-token är lagrat.
+            el_GR: Περιέχει το αρχείο ρυθμίσεων όπου αποθηκεύεται το διακριτικό Cloudflare.
+            hr_HR: Sadrži konfiguracijsku datoteku u kojoj je pohranjen Cloudflare token.
+            pt_PT: Contém o ficheiro de configuração onde o token da Cloudflare está armazenado.
+            ru_RU: Содержит файл конфигурации, в котором хранится токен Cloudflare.
+            tr_TR: Cloudflare belirtecinin depolandığı yapılandırma dosyasını içerir.
       ports:
         - container: '14333'
           description:
             en_US: Token Setup WebUI
-            zh_cn: 令牌设置 WebUI
-            ar_sa: واجهة مستخدم إعداد الرمز
-            de_de: Token-Setup WebUI
-            es_es: Configuración de Token WebUI
-            fr_fr: Interface utilisateur de configuration du jeton
-            hu_hu: Token beállítás WebUI
-            it_it: Interfaccia utente di configurazione del token
-            ru_ru: Веб-интерфейс настройки токена
-            pl_pl: Interfejs użytkownika konfiguracji tokena
-            pt_br: Configuração do Token WebUI
+            en_GB: Token Setup Web Interface
+            it_IT: Interfaccia Web per la configurazione del token
+            nb_NO: Webgrensesnitt for token-oppsett
+            zh_CN: 令牌设置网页界面
+            ja_JP: トークン設定ウェブインターフェース
+            ko_KR: 토큰 설정 웹 인터페이스
+            fr_FR: Interface Web de configuration du jeton
+            de_DE: Web-Oberfläche zur Token-Einrichtung
+            sv_SE: Webbgränssnitt för token-inställning
+            el_GR: Διαδικτυακό περιβάλλον ρύθμισης διακριτικού
+            hr_HR: Web sučelje za postavljanje tokena
+            pt_PT: Interface Web de Configuração de Token
+            ru_RU: Веб-интерфейс настройки токена
+            tr_TR: Belirteç Kurulum Web Arayüzü
     ports:
       - target: 14333
         published: "14333"
