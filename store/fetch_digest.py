@@ -1,15 +1,12 @@
 import os
 import re
-import requests
-import zipfile
 import io
+import zipfile
+import requests
 import yaml
-import hashlib
-import json
-from urllib.parse import urlparse
 
-CACHE_FILE = "digest_cache.json"
-OUTPUT_FILE = "output.txt"
+OUTPUT_FILE = "digest_cache.txt"
+
 ZIP_URLS = [
     "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/store/main.zip",
     "https://play.cuse.eu.org/Cp0204-AppStore-Play.zip",
@@ -17,17 +14,8 @@ ZIP_URLS = [
     "https://casaos-appstore.paodayag.dev/linuxserver.zip",
 ]
 
-digest_cache = {}
-
-def load_cache():
-    if os.path.exists(CACHE_FILE):
-        with open(CACHE_FILE, "r") as f:
-            return json.load(f)
-    return {}
-
-def save_cache():
-    with open(CACHE_FILE, "w") as f:
-        json.dump(digest_cache, f, indent=2)
+DOCKER_USER = os.getenv("DOCKER_USERNAME", "")
+DOCKER_TOKEN = os.getenv("DOCKER_TOKEN", "")
 
 def parse_images_from_compose(yml_bytes):
     try:
@@ -40,70 +28,83 @@ def parse_images_from_compose(yml_bytes):
                     images.append(image.strip())
         return images
     except Exception as e:
-        print(f"⚠️ Failed to parse YAML: {e}")
+        print(f"⚠️ YAML Parse Error: {e}")
         return []
 
 def normalize_image_name(image):
-    # Remove ghcr.io, lscr.io, docker.io prefix
-    for prefix in ["ghcr.io/", "lscr.io/", "docker.io/"]:
-        if image.startswith(prefix):
-            image = image[len(prefix):]
-            break
-
-    # If no org, assume library/
-    if '/' not in image.split(":")[0]:
-        image = "library/" + image
-
-    # If no tag, assume latest
-    if ":" not in image:
+    if ':' not in image:
         image += ":latest"
-
     return image
 
-def get_digest(image):
-    if image in digest_cache:
-        return digest_cache[image]
-
-    normalized = normalize_image_name(image)
-    repo, tag = normalized.rsplit(":", 1)
-    registry_url = "https://registry-1.docker.io"
-    token_url = "https://auth.docker.io/token"
-
+def get_digest_ghcr(image):
     try:
-        # Step 1: Get auth token
-        token_resp = requests.get(token_url, params={
-            "service": "registry.docker.io",
-            "scope": f"repository:{repo}:pull"
-        })
-        token_resp.raise_for_status()
-        token = token_resp.json()["token"]
-
+        image = image.replace("ghcr.io/", "")
+        repo, tag = image.rsplit(":", 1)
+        token_url = f"https://ghcr.io/token?scope=repository:{repo}:pull"
+        r = requests.get(token_url)
+        r.raise_for_status()
+        token = r.json()["token"]
         headers = {
             "Authorization": f"Bearer {token}",
             "Accept": "application/vnd.docker.distribution.manifest.v2+json"
         }
-
-        manifest_url = f"{registry_url}/v2/{repo}/manifests/{tag}"
+        manifest_url = f"https://ghcr.io/v2/{repo}/manifests/{tag}"
         r = requests.get(manifest_url, headers=headers)
         r.raise_for_status()
+        return r.headers.get("Docker-Content-Digest")
+    except Exception as e:
+        print(f"⚠️ GHCR query failed for {image}: {e}")
+        return None
 
-        digest = r.headers.get("Docker-Content-Digest")
+def get_digest_dockerhub(image):
+    try:
+        stripped = re.sub(r"^(docker\.io/|ghcr\.io/|lscr\.io/)?", "", image)
+        if '/' not in stripped.split(":")[0]:
+            stripped = "library/" + stripped
+        repo, tag = stripped.rsplit(":", 1)
+
+        token_url = "https://auth.docker.io/token"
+        if DOCKER_USER and DOCKER_TOKEN:
+            r = requests.get(token_url, params={
+                "service": "registry.docker.io",
+                "scope": f"repository:{repo}:pull"
+            }, auth=(DOCKER_USER, DOCKER_TOKEN))
+        else:
+            r = requests.get(token_url, params={
+                "service": "registry.docker.io",
+                "scope": f"repository:{repo}:pull"
+            })
+        r.raise_for_status()
+        token = r.json()["token"]
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/vnd.docker.distribution.manifest.v2+json"
+        }
+        manifest_url = f"https://registry-1.docker.io/v2/{repo}/manifests/{tag}"
+        r = requests.get(manifest_url, headers=headers)
+        r.raise_for_status()
+        return r.headers.get("Docker-Content-Digest")
+    except Exception as e:
+        print(f"⚠️ DockerHub query failed for {image}: {e}")
+        return None
+
+def get_digest(image):
+    image = normalize_image_name(image)
+    if image.startswith("ghcr.io/"):
+        digest = get_digest_ghcr(image)
         if digest:
-            digest_cache[image] = digest
             return digest
         else:
-            print(f"⚠️ No digest found in headers for {image}")
-    except requests.exceptions.HTTPError as e:
-        if e.response.status_code in (401, 403):
-            print(f"⚠️ Access denied to {image}. Skipping.")
-        elif e.response.status_code == 429:
-            print(f"⚠️ Rate limited when accessing {image}. Skipping.")
-        else:
-            print(f"⚠️ Failed to get digest for {image}: {e}")
-    except Exception as e:
-        print(f"⚠️ Error getting digest for {image}: {e}")
+            # 降级为 DockerHub 查询
+            return get_digest_dockerhub(image)
+    else:
+        return get_digest_dockerhub(image)
 
-    return None
+def append_to_output(image, digest):
+    line = f"{image} {digest}"
+    with open(OUTPUT_FILE, "a") as f:
+        f.write(line + "\n")
+    print(f"✅ {line}")
 
 def process_zip(url):
     images = set()
@@ -112,46 +113,36 @@ def process_zip(url):
         r.raise_for_status()
         with zipfile.ZipFile(io.BytesIO(r.content)) as z:
             for name in z.namelist():
-                if name.endswith("docker-compose.yml") and "default.new/Apps" in name:
+                if re.search(r'/Apps/[^/]+/docker-compose\.ya?ml$', name):
                     with z.open(name) as f:
                         content = f.read()
                         imgs = parse_images_from_compose(content)
                         images.update(imgs)
     except Exception as e:
-        print(f"⚠️ Error processing {url}: {e}")
+        print(f"⚠️ Error processing zip {url}: {e}")
     return images
 
 def main():
-    global digest_cache
-    digest_cache = load_cache()
+    existing = set()
+    if os.path.exists(OUTPUT_FILE):
+        with open(OUTPUT_FILE, "r") as f:
+            for line in f:
+                parts = line.strip().split(" ")
+                if parts:
+                    existing.add(parts[0])
 
     all_images = set()
     for url in ZIP_URLS:
-        print(f"📦 Processing {url}")
+        print(f"📦 Downloading: {url}")
         imgs = process_zip(url)
         all_images.update(imgs)
 
-    output_lines = []
-    existing_lines = set()
-    if os.path.exists(OUTPUT_FILE):
-        with open(OUTPUT_FILE, "r") as f:
-            existing_lines = set(line.strip() for line in f)
-
     for image in sorted(all_images):
-        if any(image in line for line in existing_lines):
+        if image in existing:
             continue
         digest = get_digest(image)
         if digest:
-            line = f"{image} {digest}"
-            output_lines.append(line)
-            print(f"✅ {line}")
-
-    if output_lines:
-        with open(OUTPUT_FILE, "a") as f:
-            for line in output_lines:
-                f.write(line + "\n")
-
-    save_cache()
+            append_to_output(image, digest)
 
 if __name__ == "__main__":
     main()
