@@ -1,7 +1,7 @@
 name: gateway-go
 services:
   gateway-go:
-    image: openiothub/gateway-go:v0.3.18
+    image: openiothub/gateway-go:v0.3.22
     network_mode: host
     deploy:
       resources:
@@ -39,9 +39,9 @@ x-casaos:
   category: Network
   description:
     en_us: |
-      A fast reverse proxy to help you expose a local server behind a NAT or firewall to your client.
+      A fast reverse proxy to help you expose a local server behind a NAT or firewall to your client, remote access all your casaos/zimaos apps.
       
-      Use OpenIoTHub to scan the following QR code and add a gateway,then add host,add host's port,finally, enjoy remote control
+      Use OpenIoTHub to scan the following QR code add a gateway,then add host,add casaos/zimaos host's web page port,finally, enjoy remote control
     zh_cn: | 
       云亿连内网穿透工具的内网网关，帮助用户随时随地访问本设备所在网络，支持http和ssh等众多协议，在有条件的情况下优先使用p2p直连网络，支持安卓、iOS、Windows、macOS、Linux客户端访问。
       
@@ -50,11 +50,12 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gateway-go/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gateway-go/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gateway-go/screenshot-2.png
   main: gateway-go
   port_map: "34323"
   scheme: http
   tagline:
-    en_us: A fast reverse proxy to help you expose a local server behind a NAT or firewall to your client.
-    zh_cn: 简单好用的内网穿透工具
+    en_us: A third-party client for casaos and zimaOS, remote access management interface, remote access to installed applications.
+    zh_cn: 支持内网穿透，作为开源第三方客户端支持客户端远程管理casaOS、zimaOS，远程访问你的所有应用。
   title:
     en_us: gateway-go
