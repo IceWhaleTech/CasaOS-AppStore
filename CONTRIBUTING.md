@@ -65,7 +65,7 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
     ...
     ```
 
-- Language codes are case sensitive and should be in all lower case, e.g. `en_us`, `zh_cn`.
+- Language codes are case sensitive and should use the standard format, e.g. en_US, zh_CN.
 
 - There are few system wide variables can be used in `environment` and `volumes`:
 
@@ -94,19 +94,19 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
                 ...
               - container: PUID
                 description:
-                    en_us: Run Syncthing as specified uid.
+                    en_US: Run Syncthing as specified uid.
             ports:                          # description of each port
               - container: "8384"
                 description:
-                    en_us: WebUI HTTP Port
+                    en_US: WebUI HTTP Port
                 ...
             volumes:                        # description of each volume
                 - container: /config
                   description:
-                      en_us: Syncthing config directory.
+                      en_US: Syncthing config directory.
                 - container: /DATA
                   description:
-                    en_us: Syncthing Accessible Directory.
+                    en_US: Syncthing Accessible Directory.
         ```
 
     2. Compose app level
@@ -123,17 +123,17 @@ Each directory under [Apps](Apps) correspond to a CasaOS App. The directory shou
             author: CasaOS Team
             category: Backup
             description:                    # multiple locales are supported
-                en_us: Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers in real time, safely protected from prying eyes. Your data is your data alone and you deserve to choose where it is stored, whether it is shared with some third party, and how it's transmitted over the internet.
+                en_US: Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers in real time, safely protected from prying eyes. Your data is your data alone and you deserve to choose where it is stored, whether it is shared with some third party, and how it's transmitted over the internet.
             developer: Syncthing
             icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Syncthing/icon.png
             tagline:                        # multiple locales are supported
-                en_us: Free, secure, and distributed file synchronisation tool.
+                en_US: Free, secure, and distributed file synchronisation tool.
             thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.jpg
             title:                          # multiple locales are supported
-                en_us: Syncthing
+                en_US: Syncthing
             tips:
                 before_install:
-                    en_us: |
+                    en_US: |
                         (some notes for user to read prior to installation, such as preset `username` and `password` - markdown is supported!)
             index: /                        # the index page for web UI, e.g. index.html
             port_map: "8384"                # the port for web UI
