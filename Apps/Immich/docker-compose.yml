@@ -8,7 +8,7 @@ services:
           memory: 1024M
     container_name: immich-server
     hostname: immich-server
-    image: altran1502/immich-server:v1.125.7
+    image: altran1502/immich-server:v1.135.3
     volumes:
       - /DATA/Gallery/immich:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
@@ -30,7 +30,7 @@ services:
   immich-machine-learning:
     container_name: immich-machine-learning
     hostname: immich-machine-learning
-    image: altran1502/immich-machine-learning:v1.125.7
+    image: altran1502/immich-machine-learning:v1.135.3
     environment:
       DB_DATABASE_NAME: immich
       DB_PASSWORD: postgres
@@ -46,7 +46,7 @@ services:
   redis:
     container_name: immich-redis
     hostname: immich-redis
-    image: docker.io/redis:6.2-alpine@sha256:eaba718fecd1196d88533de7ba49bf903ad33664a92debb24660a922ecd9cac8
+    image: docker.io/valkey/valkey:8-bookworm@sha256:fec42f399876eb6faf9e008570597741c87ff7662a54185593e74b09ce83d177
     healthcheck:
       test: redis-cli ping || exit 1
     volumes:
