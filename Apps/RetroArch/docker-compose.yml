@@ -1,0 +1,163 @@
+name: retroarch
+services:
+  retroarch:
+    image: inglebard/retroarch-web:latest
+    container_name: retroarch
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    restart: unless-stopped
+    environment:
+      - ROOT_WWW_PATH="/var/www/html"
+    ports:
+      - "8183:80"
+    x-casaos:
+      envs:
+        - container: "ROOT_WWW_PATH"
+          description:
+            en_US: ROOT_WWW_PATH
+      ports:
+        - container: "80"
+          description:
+            en_US: WebUI HTTP Port
+            en_GB: WebUI HTTP Port
+            it_IT: Porta HTTP WebUI
+            nb_NO: WebUI HTTP-port
+            zh_CN: WebUI HTTP端口
+            ja_JP: WebUI HTTPポート
+            ko_KR: WebUI HTTP 포트
+            fr_FR: Port HTTP WebUI
+            de_DE: WebUI HTTP Port
+            sv_SE: WebUI HTTP-port
+            el_GR: Θύρα HTTP WebUI
+            hr_HR: WebUI HTTP port
+            pt_PT: Porta HTTP WebUI
+            ru_RU: HTTP порт веб-интерфейса
+            tr_TR: WebUI HTTP Portu
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: retroarch
+  category: Games
+  developer: inglebard
+  author: inglebard
+  tagline:
+    en_US: Online retro games emulator
+    en_GB: Online retro games emulator
+    it_IT: Emulatore di giochi retrò online
+    nb_NO: Nettbasert retrospill-emulator
+    zh_CN: 在线复古游戏模拟器
+    ja_JP: オンラインレトロゲームエミュレーター
+    ko_KR: 온라인 레트로 게임 에뮬레이터
+    fr_FR: Émulateur de jeux rétro en ligne
+    de_DE: Online-Retrospiele-Emulator
+    sv_SE: Online retrospel-emulator
+    el_GR: Διαδικτυακός εξομοιωτής ρετρό παιχνιδιών
+    hr_HR: Internetski emulator retro igara
+    pt_PT: Emulador de jogos retro online
+    ru_RU: Онлайн эмулятор ретро-игр
+    tr_TR: Çevrimiçi retro oyun emülatörü
+  description:
+    en_US: |
+      RetroArch-web is a web-based classic game emulator that enables users to enjoy a wide range of retro games directly in modern browsers. Supporting platforms like GBA, N64, DOS games, and NES (FC), it brings nostalgic gaming to life. Built on the open-source RetroArch project, RetroArch-web delivers robust features, including high-quality graphics rendering, audio processing, input controls, and save/load game progress, ensuring a precise and smooth emulation experience.
+
+      Designed for ease of use, RetroArch-web requires no complex software installation, running seamlessly in browsers. Its flexible configuration options let users customize controller setups, visual filters, and audio settings to suit individual preferences. With broad cross-platform compatibility, it ensures stable performance across devices, offering retro gaming enthusiasts a consistent experience on the go.
+
+      Backed by an active open-source community, RetroArch-web continually improves performance and expands supported game platforms. Whether revisiting classic arcade titles or exploring vintage console games, RetroArch-web stands out as the ideal choice for retro gamers, combining powerful emulation with a user-friendly interface.
+    en_GB: |
+      RetroArch-web is a web-based classic game emulator that allows users to play a wide variety of retro games directly in modern browsers. Supporting platforms such as GBA, N64, DOS games, and NES (FC), it brings nostalgic gaming to life. Based on the open-source RetroArch project, RetroArch-web offers robust features including high-quality graphics rendering, audio processing, input controls, and save/load game progress, ensuring a precise and smooth emulation experience.
+
+      Designed for simplicity, RetroArch-web requires no complex software installation and runs seamlessly in browsers. Its flexible configuration options allow users to customise controller setups, visual filters, and audio settings to suit individual preferences. With broad cross-platform compatibility, it ensures stable performance across devices, providing retro gaming enthusiasts with a consistent experience on the go.
+
+      Supported by an active open-source community, RetroArch-web continually improves performance and expands supported game platforms. Whether revisiting classic arcade titles or exploring vintage console games, RetroArch-web is the ideal choice for retro gamers, combining powerful emulation with a user-friendly interface.
+    it_IT: |
+      RetroArch-web è un emulatore di giochi classici basato sul web che consente agli utenti di godere di una vasta gamma di giochi retrò direttamente nei browser moderni. Supportando piattaforme come GBA, N64, giochi DOS e NES (FC), riporta in vita il fascino dei giochi nostalgici. Basato sul progetto open source RetroArch, RetroArch-web offre funzionalità avanzate, tra cui grafica di alta qualità, elaborazione audio, controlli di input e salvataggio/caricamento dei progressi di gioco, garantendo un'esperienza di emulazione precisa e fluida.
+
+      Progettato per essere facile da usare, RetroArch-web non richiede installazioni complesse e funziona perfettamente nei browser. Le sue opzioni di configurazione flessibili permettono agli utenti di personalizzare i controller, i filtri visivi e le impostazioni audio secondo le proprie preferenze. Grazie all'ampia compatibilità multipiattaforma, assicura prestazioni stabili su tutti i dispositivi, offrendo agli appassionati di giochi retrò un'esperienza coerente ovunque si trovino.
+
+      Sostenuto da una comunità open source attiva, RetroArch-web migliora continuamente le prestazioni ed espande le piattaforme di gioco supportate. Che si tratti di rivivere i classici arcade o di esplorare vecchie console, RetroArch-web si distingue come la scelta ideale per i giocatori retrò, unendo potenti capacità di emulazione a un'interfaccia intuitiva.
+    nb_NO: |
+      RetroArch-web er en nettbasert emulator for klassiske spill som lar brukere nyte et bredt utvalg av retrospill direkte i moderne nettlesere. Med støtte for plattformer som GBA, N64, DOS-spill og NES (FC), bringer den nostalgiske spillopplevelser til live. Bygget på det åpne RetroArch-prosjektet, tilbyr RetroArch-web robuste funksjoner som grafikk i høy kvalitet, lydbehandling, inndata-kontroller og lagring/lasting av spillfremgang, noe som sikrer en presis og jevn emulering.
+
+      RetroArch-web er designet for enkel bruk og krever ingen komplisert programvareinstallasjon, og kjører sømløst i nettlesere. Fleksible konfigurasjonsalternativer lar brukere tilpasse kontrolleroppsett, visuelle filtre og lydinnstillinger etter egne preferanser. Med bred plattformkompatibilitet sikrer den stabil ytelse på tvers av enheter, og gir retrospillentusiaster en konsistent opplevelse uansett hvor de er.
+
+      Støttet av et aktivt åpen kildekode-miljø, forbedres RetroArch-web kontinuerlig og utvider støtten for flere spillplattformer. Enten du vil gjenoppleve klassiske arkadespill eller utforske gamle konsollspill, er RetroArch-web det ideelle valget for retrospillere, med kraftig emulering og brukervennlig grensesnitt.
+    zh_CN: |
+      RetroArch-web 是一款基于 Web 的经典游戏模拟器，为用户提供在现代浏览器中畅玩复古游戏的便捷体验。它支持多种经典游戏平台，包括 GBA、N64、DOS 游戏和 FC（红白机）等，让玩家重温童年回忆。作为 RetroArch 开源项目的 Web 版本，RetroArch-web 继承了强大的功能，涵盖高质量的图形渲染、音频处理、输入控制以及游戏进度保存与加载，为用户带来精准流畅的模拟体验。
+
+      RetroArch-web 的设计注重简单易用，无需安装复杂软件，仅通过浏览器即可运行游戏。其灵活的配置选项允许用户自定义控制器设置、画面滤镜和音效，满足不同玩家的个性化需求。同时，它支持多平台兼容性，确保在各种设备上都能稳定运行，为复古游戏爱好者提供无缝的跨设备体验。
+
+      RetroArch-web 凭借开源社区的持续支持，不断优化性能并扩展支持的游戏平台。无论是重温经典街机游戏还是探索老式主机作品，RetroArch-web 都以其强大的模拟能力和用户友好的界面，成为复古游戏玩家的理想选择。
+    ja_JP: |
+      RetroArch-webは、ユーザーが現代のブラウザで幅広いレトロゲームを直接楽しめるウェブベースのクラシックゲームエミュレーターです。GBA、N64、DOSゲーム、NES（FC）などのプラットフォームをサポートし、懐かしいゲーム体験を蘇らせます。オープンソースのRetroArchプロジェクトを基に構築されており、高品質なグラフィックレンダリング、オーディオ処理、入力コントロール、ゲーム進行の保存/読み込みなど、強力な機能を提供し、正確でスムーズなエミュレーション体験を実現します。
+
+      RetroArch-webは使いやすさを重視して設計されており、複雑なソフトウェアのインストールは不要で、ブラウザ上でシームレスに動作します。柔軟な設定オプションにより、ユーザーはコントローラーの設定、ビジュアルフィルター、オーディオ設定を個別にカスタマイズできます。幅広いクロスプラットフォーム互換性により、さまざまなデバイスで安定したパフォーマンスを保証し、レトロゲーム愛好家に一貫した体験を提供します。
+
+      活発なオープンソースコミュニティに支えられ、RetroArch-webは継続的にパフォーマンスを向上させ、対応するゲームプラットフォームを拡大しています。クラシックなアーケードタイトルを再訪する場合でも、ヴィンテージコンソールゲームを探索する場合でも、RetroArch-webは強力なエミュレーションと使いやすいインターフェースを兼ね備えたレトロゲーマーに最適な選択肢です。
+    ko_KR: |
+      RetroArch-web은 사용자가 최신 브라우저에서 다양한 레트로 게임을 직접 즐길 수 있도록 해주는 웹 기반의 클래식 게임 에뮬레이터입니다. GBA, N64, DOS 게임, NES(FC) 등 다양한 플랫폼을 지원하여 향수를 자극하는 게임 경험을 제공합니다. 오픈 소스 RetroArch 프로젝트를 기반으로 하여 고품질 그래픽 렌더링, 오디오 처리, 입력 제어, 게임 진행 저장/불러오기 등 강력한 기능을 제공하며, 정확하고 부드러운 에뮬레이션 경험을 보장합니다.
+
+      RetroArch-web은 사용의 편리함을 위해 설계되어 복잡한 소프트웨어 설치 없이 브라우저에서 원활하게 실행됩니다. 유연한 구성 옵션을 통해 사용자는 컨트롤러 설정, 시각적 필터, 오디오 설정을 개별적으로 맞춤화할 수 있습니다. 폭넓은 크로스 플랫폼 호환성으로 다양한 기기에서 안정적인 성능을 보장하며, 레트로 게임 애호가에게 일관된 경험을 제공합니다.
+
+      활발한 오픈 소스 커뮤니티의 지원을 받아 RetroArch-web은 지속적으로 성능을 개선하고 지원하는 게임 플랫폼을 확장하고 있습니다. 고전 아케이드 게임을 다시 즐기거나 빈티지 콘솔 게임을 탐험하든, RetroArch-web은 강력한 에뮬레이션과 사용자 친화적인 인터페이스를 결합한 레트로 게이머에게 최적의 선택입니다.
+    fr_FR: |
+      RetroArch-web est un émulateur de jeux classiques basé sur le web qui permet aux utilisateurs de profiter d'une large gamme de jeux rétro directement dans les navigateurs modernes. Prise en charge de plateformes telles que GBA, N64, jeux DOS et NES (FC), il redonne vie aux jeux nostalgiques. Basé sur le projet open source RetroArch, RetroArch-web offre des fonctionnalités robustes, notamment un rendu graphique de haute qualité, un traitement audio, des contrôles d'entrée et la sauvegarde/le chargement de la progression du jeu, garantissant une expérience d'émulation précise et fluide.
+
+      Conçu pour être facile à utiliser, RetroArch-web ne nécessite aucune installation logicielle complexe et fonctionne parfaitement dans les navigateurs. Ses options de configuration flexibles permettent aux utilisateurs de personnaliser les paramètres des manettes, les filtres visuels et les réglages audio selon leurs préférences. Grâce à une large compatibilité multiplateforme, il assure des performances stables sur tous les appareils, offrant aux passionnés de jeux rétro une expérience cohérente en déplacement.
+
+      Soutenu par une communauté open source active, RetroArch-web améliore continuellement ses performances et élargit les plateformes de jeux prises en charge. Que vous revisitiez des titres d'arcade classiques ou exploriez des jeux de consoles vintage, RetroArch-web s'impose comme le choix idéal pour les amateurs de jeux rétro, alliant une émulation puissante à une interface conviviale.
+    de_DE: |
+      RetroArch-web ist ein webbasiertes Emulator für klassische Spiele, mit dem Benutzer eine Vielzahl von Retro-Spielen direkt in modernen Browsern genießen können. Unterstützt Plattformen wie GBA, N64, DOS-Spiele und NES (FC) und erweckt nostalgisches Spielen zum Leben. Basierend auf dem Open-Source-Projekt RetroArch bietet RetroArch-web leistungsstarke Funktionen wie hochwertige Grafikdarstellung, Audiobearbeitung, Eingabesteuerung und das Speichern/Laden des Spielfortschritts, um ein präzises und reibungsloses Emulationserlebnis zu gewährleisten.
+
+      RetroArch-web ist benutzerfreundlich gestaltet und erfordert keine komplexe Softwareinstallation, sondern läuft nahtlos im Browser. Flexible Konfigurationsoptionen ermöglichen es den Benutzern, Controller-Einstellungen, visuelle Filter und Audioeinstellungen individuell anzupassen. Mit breiter plattformübergreifender Kompatibilität sorgt es für stabile Leistung auf allen Geräten und bietet Retro-Gaming-Enthusiasten ein konsistentes Erlebnis unterwegs.
+
+      Unterstützt von einer aktiven Open-Source-Community verbessert RetroArch-web kontinuierlich die Leistung und erweitert die unterstützten Spieleplattformen. Ob Sie klassische Arcade-Titel erneut erleben oder Vintage-Konsolenspiele erkunden, RetroArch-web ist die ideale Wahl für Retro-Gamer und kombiniert leistungsstarke Emulation mit einer benutzerfreundlichen Oberfläche.
+    sv_SE: |
+      RetroArch-web är en webbaserad emulator för klassiska spel som gör det möjligt för användare att njuta av ett brett utbud av retrospel direkt i moderna webbläsare. Med stöd för plattformar som GBA, N64, DOS-spel och NES (FC) väcker den nostalgiska spelminnen till liv. Baserad på det öppna RetroArch-projektet erbjuder RetroArch-web robusta funktioner som högkvalitativ grafikrendering, ljudbehandling, inmatningskontroller och spara/ladda spelstatus, vilket säkerställer en exakt och smidig emuleringsupplevelse.
+
+      RetroArch-web är utformad för att vara enkel att använda och kräver ingen komplicerad programvaruinstallation, utan körs smidigt i webbläsaren. Flexibla konfigurationsalternativ gör att användare kan anpassa kontrollinställningar, visuella filter och ljudinställningar efter egna önskemål. Med bred plattforms-kompatibilitet säkerställer den stabil prestanda på alla enheter och ger retrospelsentusiaster en konsekvent upplevelse var de än är.
+
+      Med stöd av ett aktivt open source-community förbättras RetroArch-web kontinuerligt och utökar stödet för fler spelplattformar. Oavsett om du återbesöker klassiska arkadspel eller utforskar gamla konsolspel är RetroArch-web det perfekta valet för retrospelare, med kraftfull emulering och ett användarvänligt gränssnitt.
+    el_GR: |
+      Το RetroArch-web είναι ένας βασισμένος στον ιστό εξομοιωτής κλασικών παιχνιδιών που επιτρέπει στους χρήστες να απολαμβάνουν μια μεγάλη ποικιλία ρετρό παιχνιδιών απευθείας σε σύγχρονους περιηγητές. Υποστηρίζει πλατφόρμες όπως GBA, N64, DOS παιχνίδια και NES (FC), φέρνοντας στη ζωή τη νοσταλγία του gaming. Βασισμένο στο ανοιχτού κώδικα έργο RetroArch, το RetroArch-web προσφέρει ισχυρά χαρακτηριστικά, όπως απόδοση γραφικών υψηλής ποιότητας, επεξεργασία ήχου, ελέγχους εισόδου και αποθήκευση/φόρτωση προόδου παιχνιδιού, εξασφαλίζοντας ακριβή και ομαλή εμπειρία εξομοίωσης.
+
+      Σχεδιασμένο για ευκολία στη χρήση, το RetroArch-web δεν απαιτεί πολύπλοκη εγκατάσταση λογισμικού και λειτουργεί απρόσκοπτα στους περιηγητές. Οι ευέλικτες επιλογές διαμόρφωσης επιτρέπουν στους χρήστες να προσαρμόζουν τις ρυθμίσεις του χειριστηρίου, τα οπτικά φίλτρα και τις ρυθμίσεις ήχου σύμφωνα με τις προτιμήσεις τους. Με ευρεία συμβατότητα μεταξύ πλατφορμών, διασφαλίζει σταθερή απόδοση σε όλες τις συσκευές, προσφέροντας στους λάτρεις των ρετρό παιχνιδιών μια συνεπή εμπειρία εν κινήσει.
+
+      Με την υποστήριξη μιας ενεργής κοινότητας ανοιχτού κώδικα, το RetroArch-web βελτιώνει συνεχώς την απόδοση και επεκτείνει τις υποστηριζόμενες πλατφόρμες παιχνιδιών. Είτε επισκέπτεστε ξανά κλασικούς τίτλους arcade είτε εξερευνάτε παλιές κονσόλες, το RetroArch-web ξεχωρίζει ως η ιδανική επιλογή για τους ρετρό gamers, συνδυάζοντας ισχυρή εξομοίωση με φιλικό προς το χρήστη περιβάλλον.
+    hr_HR: |
+      RetroArch-web je emulator klasičnih igara temeljen na webu koji korisnicima omogućuje uživanje u širokom rasponu retro igara izravno u modernim preglednicima. Podržava platforme poput GBA, N64, DOS igara i NES (FC), oživljavajući nostalgično igranje. Temeljen na open-source projektu RetroArch, RetroArch-web nudi snažne značajke, uključujući visokokvalitetno renderiranje grafike, obradu zvuka, kontrole unosa i spremanje/učitavanje napretka igre, osiguravajući precizno i glatko iskustvo emulacije.
+
+      Dizajniran za jednostavnost korištenja, RetroArch-web ne zahtijeva složenu instalaciju softvera i radi besprijekorno u preglednicima. Fleksibilne opcije konfiguracije omogućuju korisnicima prilagodbu postavki kontrolera, vizualnih filtera i zvuka prema vlastitim željama. Sa širokom kompatibilnošću između platformi, osigurava stabilne performanse na svim uređajima, nudeći ljubiteljima retro igara dosljedno iskustvo u pokretu.
+
+      Uz podršku aktivne open-source zajednice, RetroArch-web neprestano poboljšava performanse i proširuje podržane platforme za igre. Bilo da ponovno posjećujete klasične arkadne naslove ili istražujete stare konzole, RetroArch-web se ističe kao idealan izbor za retro igrače, kombinirajući snažnu emulaciju s korisnički prijateljskim sučeljem.
+    pt_PT: |
+      O RetroArch-web é um emulador de jogos clássicos baseado na web que permite aos utilizadores desfrutar de uma vasta gama de jogos retro diretamente nos navegadores modernos. Suportando plataformas como GBA, N64, jogos DOS e NES (FC), traz à vida a nostalgia dos jogos. Baseado no projeto open source RetroArch, o RetroArch-web oferece funcionalidades robustas, incluindo renderização gráfica de alta qualidade, processamento de áudio, controlos de entrada e guardar/carregar o progresso do jogo, garantindo uma experiência de emulação precisa e suave.
+
+      Concebido para ser fácil de usar, o RetroArch-web não requer instalação de software complexa e funciona perfeitamente nos navegadores. As suas opções de configuração flexíveis permitem aos utilizadores personalizar as definições do comando, filtros visuais e definições de áudio de acordo com as preferências individuais. Com ampla compatibilidade entre plataformas, garante um desempenho estável em todos os dispositivos, oferecendo aos entusiastas de jogos retro uma experiência consistente em qualquer lugar.
+
+      Apoiado por uma comunidade open source ativa, o RetroArch-web melhora continuamente o desempenho e expande as plataformas de jogos suportadas. Quer esteja a revisitar títulos clássicos de arcada ou a explorar consolas antigas, o RetroArch-web destaca-se como a escolha ideal para os jogadores retro, combinando uma emulação poderosa com uma interface amigável.
+    ru_RU: |
+      RetroArch-web — это эмулятор классических игр на базе веб-технологий, который позволяет пользователям наслаждаться широким спектром ретро-игр прямо в современных браузерах. Поддерживаются такие платформы, как GBA, N64, DOS-игры и NES (FC), что возвращает ностальгические игровые впечатления. Основанный на проекте с открытым исходным кодом RetroArch, RetroArch-web предлагает мощные функции, включая высококачественную графику, обработку звука, управление вводом и сохранение/загрузку игрового прогресса, обеспечивая точную и плавную эмуляцию.
+
+      RetroArch-web разработан для простоты использования, не требует сложной установки программного обеспечения и работает непосредственно в браузере. Гибкие параметры конфигурации позволяют пользователям настраивать контроллеры, визуальные фильтры и аудионастройки по своему вкусу. Благодаря широкой кроссплатформенной совместимости обеспечивается стабильная работа на различных устройствах, предоставляя поклонникам ретро-игр единый опыт в любом месте.
+
+      Благодаря поддержке активного сообщества с открытым исходным кодом, RetroArch-web постоянно совершенствует производительность и расширяет поддерживаемые игровые платформы. Независимо от того, возвращаетесь ли вы к классическим аркадным играм или исследуете старые консоли, RetroArch-web — идеальный выбор для ретро-геймеров, сочетая мощную эмуляцию с удобным интерфейсом.
+    tr_TR: |
+      RetroArch-web, kullanıcıların modern tarayıcılarda doğrudan çok çeşitli retro oyunların keyfini çıkarmasını sağlayan web tabanlı bir klasik oyun emülatörüdür. GBA, N64, DOS oyunları ve NES (FC) gibi platformları destekleyerek nostaljik oyun deneyimini yeniden canlandırır. Açık kaynaklı RetroArch projesi üzerine inşa edilen RetroArch-web, yüksek kaliteli grafik işleme, ses işleme, giriş kontrolleri ve oyun ilerlemesini kaydetme/yükleme gibi güçlü özellikler sunar ve hassas ve akıcı bir emülasyon deneyimi sağlar.
+
+      Kullanım kolaylığı için tasarlanan RetroArch-web, karmaşık yazılım kurulumuna ihtiyaç duymaz ve tarayıcılarda sorunsuz çalışır. Esnek yapılandırma seçenekleri, kullanıcıların denetleyici ayarlarını, görsel filtreleri ve ses ayarlarını bireysel tercihlere göre özelleştirmesine olanak tanır. Geniş çapraz platform uyumluluğu ile cihazlar arasında istikrarlı performans sağlar ve retro oyun meraklılarına her yerde tutarlı bir deneyim sunar.
+
+      Aktif bir açık kaynak topluluğu tarafından desteklenen RetroArch-web, performansını sürekli olarak geliştirir ve desteklenen oyun platformlarını genişletir. İster klasik arcade oyunlarını yeniden ziyaret edin, ister eski konsol oyunlarını keşfedin, RetroArch-web güçlü emülasyonu ve kullanıcı dostu arayüzüyle retro oyuncular için ideal bir seçimdir.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RetroArch/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RetroArch/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RetroArch/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RetroArch/screenshot-3.png
+  thumbnail: ""
+  scheme: http
+  port_map: "8183"
+  index: /
+  title:
+    en_US: RetroArch
