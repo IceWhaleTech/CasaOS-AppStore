@@ -9,7 +9,7 @@ services:
     environment:
       - LOG_LEVEL=debug
       - TZ=$TZ
-    image: fallenbagel/jellyseerr:2.5.1
+    image: fallenbagel/jellyseerr:2.7.0
     ports:
       - mode: ingress
         target: 5055
