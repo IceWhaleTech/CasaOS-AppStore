@@ -34,39 +34,39 @@ services:
       ports:
         - container: "5000"
           description:
-            en_gb: "Web UI Port"
+            en_GB: "Web UI Port"
       envs:
         - container: TZ
           description:
-            en_gb: "TimeZone"
+            en_GB: "TimeZone"
         - container: TITLE
           description:
-            en_gb: "Title to display in headers"
+            en_GB: "Title to display in headers"
         - container: ACCOUNT_OWNER_USERNAME
           description:
-            en_gb: "The primary account username"
+            en_GB: "The primary account username"
         - container: ACCOUNT_OWNER_PASSWORD
           description:
-            en_gb: "The primary account password"
+            en_GB: "The primary account password"
         - container: ENCRYPTION_KEY
           description:
-            en_gb: "The key used to encrypt data"
+            en_GB: "The key used to encrypt data"
         - container: ENCRYPTION_SALT
           description:
-            en_gb: "The salt used to randomize the encryption"
+            en_GB: "The salt used to randomize the encryption"
       volumes:
         - container: /app/config
           description:
-            en_gb: "Path to store configuration settings"
+            en_GB: "Path to store configuration settings"
         - container: /app/wwwroot/uploads
           description:
-            en_gb: "Path to store uploaded content"
+            en_GB: "Path to store uploaded content"
         - container: /app/wwwroot/thumbnails
           description:
-            en_gb: "Path to store generated thumbnails"
+            en_GB: "Path to store generated thumbnails"
         - container: /app/wwwroot/custom_resources
           description:
-            en_gb: "Path to store uploaded logos and banners"
+            en_GB: "Path to store uploaded logos and banners"
 x-casaos:
   main: wedding-share
   architectures:
@@ -76,7 +76,7 @@ x-casaos:
   author: Cirx08
   category: Gallery
   description:
-    en_gb: |
+    en_GB: |
       WeddingShare is a very basic site with only one goal. It provides you and your guests a way to share memories of and leading up to the big day. Simply provide your guests with a link to a gallery either via a Url or even better by printing out the provided QR code and dropping it on your guests' dinner tables. Doing so will allow them to view your journey up to this point such as dress/suit shopping, viewing the venue, doing the food tasting or cake shopping, etc.
 
       You are not limited to a single gallery. You can generate multiple galleries all with their own sharable links. At this stage galleries are a bit unsecure, meaning anyone with the link has access to view and share images so I recommend keeping your share links private. To combat strangers gaining access to your galleries you can provide a secret key during setup but be advised this is a deterrent to make guessing Urls slightly harder and not an actual security catch all.
