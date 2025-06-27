@@ -69,3 +69,7 @@ jobs:
           bucket: casaos
           assets: |
             /tmp/main.zip:/store/main.zip
+            
+      - name: Refresh jsdelivr CDN cache
+        run: |
+          curl https://purge.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/store/main.zip
