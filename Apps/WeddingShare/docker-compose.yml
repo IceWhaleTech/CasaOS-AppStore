@@ -35,38 +35,181 @@ services:
         - container: "5000"
           description:
             en_GB: "Web UI Port"
+            en_US: "Web UI Port"
+            it_IT: "Web UI Porto"
+            nb_NO: "Web UI Port"
+            zh_CN: "Web UI 端口"
+            ja_JP: "Web UIポート"
+            ko_KR: "웹 UI 포트"
+            fr_FR: "Port Web UI"
+            de_DE: "Web UI Port"
+            sv_SE: "Web UI Port"
+            el_GR: "Θύρα UI ιστού"
+            hr_HR: "Web UI port"
+            pt_PT: "Porto Web UI"
+            tr_TR: "Web UI Port"
       envs:
         - container: TZ
           description:
             en_GB: "TimeZone"
+            en_US: "TimeZone"
+            it_IT: "TimeZone"
+            nb_NO: "TimeZone"
+            zh_CN: "时区"
+            ja_JP: "タイムゾーン"
+            ko_KR: "시간 영역"
+            fr_FR: "Zone temporelle"
+            de_DE: "ZeitZone"
+            sv_SE: "Timezon"
+            el_GR: "ΧρόνοςZone"
+            hr_HR: "Vremenska zona"
+            pt_PT: "TempoZone"
+            tr_TR: "TimeZone"
         - container: TITLE
           description:
             en_GB: "Title to display in headers"
+            en_US: "Title to display in headers"
+            it_IT: "Titolo da visualizzare intestazioni"
+            nb_NO: "Tittel å vise i overskrifter"
+            zh_CN: "在信头中显示的标题"
+            ja_JP: "ヘッダに表示するタイトル"
+            ko_KR: "제목 헤더에 표시"
+            fr_FR: "Titre à afficher dans les en-têtes"
+            de_DE: "Titel zur Darstellung in Headern"
+            sv_SE: "Titel att visa i rubriker"
+            el_GR: "Τίτλος για εμφάνιση στις κεφαλίδες"
+            hr_HR: "Naslov za prikaz u zaglavljima"
+            pt_PT: "Título para exibir em cabeçalhos"
+            tr_TR: "Başlıklar"
         - container: ACCOUNT_OWNER_USERNAME
           description:
             en_GB: "The primary account username"
+            en_US: "The primary account username"
+            it_IT: "Il nome utente principale dell'account"
+            nb_NO: "Hovedkontoens brukernavn"
+            zh_CN: "主账户用户名"
+            ja_JP: "プライマリアカウントのユーザー名"
+            ko_KR: "사용자 이름"
+            fr_FR: "Le nom d'utilisateur principal du compte"
+            de_DE: "Der Benutzername des Hauptkontos"
+            sv_SE: "Det primära kontoanvändarnamnet"
+            el_GR: "Το κύριο όνομα χρήστη του λογαριασμού"
+            hr_HR: "Korisničko ime primarnog računa"
+            pt_PT: "O nome de usuário da conta principal"
+            tr_TR: "Birincil hesap adı"
         - container: ACCOUNT_OWNER_PASSWORD
           description:
             en_GB: "The primary account password"
+            en_US: "The primary account password"
+            it_IT: "La password principale dell'account"
+            nb_NO: "Hovedkontopassordet"
+            zh_CN: "主账户密码"
+            ja_JP: "プライマリアカウントパスワード"
+            ko_KR: "비밀번호"
+            fr_FR: "Le mot de passe du compte principal"
+            de_DE: "Das primäre Konto-Passwort"
+            sv_SE: "Det primära kontot lösenord"
+            el_GR: "Ο κύριος κωδικός πρόσβασης λογαριασμού"
+            hr_HR: "Lozinka primarnog računa"
+            pt_PT: "A senha da conta principal"
+            tr_TR: "Birincil hesap şifresi"
         - container: ENCRYPTION_KEY
           description:
             en_GB: "The key used to encrypt data"
+            en_US: "The key used to encrypt data"
+            it_IT: "La chiave utilizzata per crittografare i dati"
+            nb_NO: "Nøkkelen som brukes til å kryptere data"
+            zh_CN: "用于加密数据的密钥"
+            ja_JP: "データを暗号化するために使用されるキー"
+            ko_KR: "데이터를 암호화하는 데 사용되는 키"
+            fr_FR: "La clé utilisée pour chiffrer les données"
+            de_DE: "Der Schlüssel zum Verschlüsseln von Daten"
+            sv_SE: "Nyckeln som används för att kryptera data"
+            el_GR: "Το κλειδί που χρησιμοποιείται για την κρυπτογράφηση δεδομένων"
+            hr_HR: "Ključ koji se koristi za šifriranje podataka"
+            pt_PT: "A chave usada para criptografar dados"
+            tr_TR: "Şifre verileri şifrelemek için kullanılan anahtar"
         - container: ENCRYPTION_SALT
           description:
             en_GB: "The salt used to randomize the encryption"
+            en_US: "The salt used to randomize the encryption"
+            it_IT: "Il sale usato per randomizzare la crittografia"
+            nb_NO: "Saltet som brukes til å randomisere krypteringen"
+            zh_CN: "用于随机加密的盐"
+            ja_JP: "暗号化をランダム化するために使用される塩"
+            ko_KR: "암호화에 사용되는 소금"
+            fr_FR: "Le sel utilisé pour randomiser le chiffrement"
+            de_DE: "Das Salz, das verwendet wird, um die Verschlüsselung zu randomisieren"
+            sv_SE: "Saltet som används för att randomisera kryptering"
+            el_GR: "Το αλάτι που χρησιμοποιείται για την τυχαιοποίηση της κρυπτογράφησης"
+            hr_HR: "Sol koja se koristi za randomizaciju enkripcije"
+            pt_PT: "O sal usado para randomizar a criptografia"
+            tr_TR: "Tuz şifrelemeyi rastgeleleştirmek için kullanılır"
       volumes:
         - container: /app/config
           description:
             en_GB: "Path to store configuration settings"
+            en_US: "Path to store configuration settings"
+            it_IT: "Percorso per memorizzare le impostazioni di configurazione"
+            nb_NO: "Sti til å lagre innstillingsinnstillinger"
+            zh_CN: "存储配置设置的路径"
+            ja_JP: "設定設定を保存するためのパス"
+            ko_KR: "설정 설정 저장 경로"
+            fr_FR: "Chemin pour stocker les paramètres de configuration"
+            de_DE: "Pfad zum Speichern von Konfigurationseinstellungen"
+            sv_SE: "Vägen att lagra konfigurationsinställningar"
+            el_GR: "Διαδρομή για την αποθήκευση ρυθμίσεων"
+            hr_HR: "Put do pohrane postavki konfiguracije"
+            pt_PT: "Caminho para armazenar configurações de configuração"
+            tr_TR: "Konfigürasyon ayarlarını depolamak için yol"
         - container: /app/wwwroot/uploads
           description:
             en_GB: "Path to store uploaded content"
+            en_US: "Path to store uploaded content"
+            it_IT: "Percorso per memorizzare i contenuti caricati"
+            nb_NO: "Sti til å lagre uploadet innhold"
+            zh_CN: "存储上传内容的路径"
+            ja_JP: "アップロードされたコンテンツを保存するパス"
+            ko_KR: "본문 바로가기"
+            fr_FR: "Chemin pour stocker le contenu téléchargé"
+            de_DE: "Pfad zum Speichern hochgeladener Inhalte"
+            sv_SE: "Vägen att lagra uppladdat innehåll"
+            el_GR: "Διαδρομή για την αποθήκευση του αναρτημένου περιεχομένου"
+            hr_HR: "Put do pohrane prenesenog sadržaja"
+            pt_PT: "Caminho para armazenar conteúdo carregado"
+            tr_TR: "Yüklemek için yol"
         - container: /app/wwwroot/thumbnails
           description:
             en_GB: "Path to store generated thumbnails"
+            en_US: "Path to store generated thumbnails"
+            it_IT: "Percorso per memorizzare miniature generate"
+            nb_NO: "Sti til å lagre genererte miniatyrbilder"
+            zh_CN: "存储生成的缩略图的路径"
+            ja_JP: "生成されたサムネイルを保存するパス"
+            ko_KR: "생성된 thumbnails를 저장하는 방법"
+            fr_FR: "Chemin pour stocker les vignettes générées"
+            de_DE: "Pfad zum Speichern generierter Miniaturansichten"
+            sv_SE: "Vägen att lagra genererade miniatyrer"
+            el_GR: "Διαδρομή για την αποθήκευση των δημιουργημένων εικόνων επισκόπησης"
+            hr_HR: "Put do pohrane generiranih minijatura"
+            pt_PT: "Caminho para armazenar miniaturas geradas"
+            tr_TR: "Dükkana giden yol"
         - container: /app/wwwroot/custom_resources
           description:
             en_GB: "Path to store uploaded logos and banners"
+            en_US: "Path to store uploaded logos and banners"
+            it_IT: "Percorso per memorizzare loghi e banner caricati"
+            nb_NO: "Sti til å lagre opplastede logoer og bannere"
+            zh_CN: "存储上传的标志和横幅的路径"
+            ja_JP: "アップロードされたロゴやバナーを保存するためのパス"
+            ko_KR: "업로드 된 로고 및 배너를 저장하는 경로"
+            fr_FR: "Chemin pour stocker les logos et bannières téléchargés"
+            de_DE: "Pfad, um hochgeladene Logos und Banner zu speichern"
+            sv_SE: "Vägen att lagra uppladdade logotyper och banners"
+            el_GR: "Διαδρομή για την αποθήκευση αναρτημένων λογότυπων και πανό"
+            hr_HR: "Put do pohrane prenesenih logotipa i bannera"
+            pt_PT: "Caminho para armazenar logotipos e banners carregados"
+            tr_TR: "Yüklemek için yol logolar ve pankartlar"
 x-casaos:
   main: wedding-share
   architectures:
@@ -85,6 +228,123 @@ x-casaos:
 
       BuyMeACoffee - https://buymeacoffee.com/cirx08
       GitHub Sponsors - https://github.com/sponsors/Cirx08
+    en_US: |
+      WeddingShare is a very basic site with only one goal. It provides you and your guests a way to share memories of and leading up to the big day. Simply provide your guests with a link to a gallery either via a Url or even better by printing out the provided QR code and dropping it on your guests' dinner tables. Doing so will allow them to view your journey up to this point such as dress/suit shopping, viewing the venue, doing the food tasting or cake shopping, etc.
+
+      You are not limited to a single gallery. You can generate multiple galleries all with their own sharable links. At this stage galleries are a bit unsecure, meaning anyone with the link has access to view and share images so I recommend keeping your share links private. To combat strangers gaining access to your galleries you can provide a secret key during setup but be advised this is a deterrent to make guessing Urls slightly harder and not an actual security catch all.
+
+      Thank you to everyone that supports this project. For anyone that hasn't yet I would be grateful if you would show some support by "buying me a coffee" through the link below. Weddings are expensive and all proceeds from this project will be going towards paying off my wedding bills.
+
+      BuyMeACoffee - https://buymeacoffee.com/cirx08
+      GitHub Sponsors - https://github.com/sponsors/Cirx08
+    it_IT: |
+      WeddingShare è un sito molto semplice con un solo obiettivo. Esso fornisce a voi e ai vostri ospiti un modo per condividere i ricordi di e fino alla grande giornata. Basta fornire ai vostri ospiti un link a una galleria sia tramite un Url o meglio, stampando il codice QR fornito e rilasciandolo sui tavoli della cena dei vostri ospiti. In questo modo permetterà loro di vedere il vostro viaggio fino a questo punto, come lo shopping vestito / abito, la visualizzazione della sede, facendo la degustazione di cibo o shopping torta, ecc
+
+      Non siete limitati a una singola galleria. È possibile generare più gallerie tutte con i propri link sharable. In questa fase le gallerie sono un po' insicure, il che significa che chiunque abbia il link ha accesso a visualizzare e condividere le immagini in modo da consiglio di mantenere i tuoi link di condivisione privati. Per combattere gli estranei che guadagnano l'accesso alle vostre gallerie è possibile fornire una chiave segreta durante la configurazione, ma è consigliabile che questo è un deterrente per rendere l'ipotesi Urls leggermente più difficile e non un vero e proprio cattura di sicurezza tutto.
+
+      Grazie a tutti coloro che sostengono questo progetto. Per chiunque non abbia ancora sarei grato se mostrassi qualche supporto "comprandomi un caffè" attraverso il link sottostante. I matrimoni sono costosi e tutti i proventi da questo progetto andranno a pagare le mie bollette nuziali.
+
+      BuyMeACoffee - https://buymeacoffee.com/cirx08
+      GitHub Sponsors - https://github.com/sponsors/Cirx08
+    nb_NO: |
+      WeddingShare er et svært grunnleggende sted med bare ett mål. Det gir deg og dine gjester en måte å dele minner om og føre opp til den store dagen. Bare gi gjestene en link til et galleri enten via en Url eller enda bedre ved å skrive ut den angitte QR-koden og slippe den på gjestenes middagsbord. Å gjøre det vil tillate dem å se reisen opp til dette punktet som kjole/drakt shopping, se på stedet, gjøre matsmaking eller kake shopping, etc.
+
+      Du er ikke begrenset til et enkelt galleri. Du kan generere flere gallerier alle med sine egne sharable lenker. På dette trinnet gallerier er litt usikre, noe som betyr at alle med linken har tilgang til å vise og dele bilder, så jeg anbefaler å holde dine aksjekoblinger private. For å bekjempe fremmede får tilgang til galleriene dine kan du gi en hemmelig nøkkel under oppsett, men bli anbefalt dette er en avskrekkende å gjøre gjetting urler litt vanskeligere og ikke en faktisk sikkerhetsfangst alle.
+
+      Takk til alle som støtter prosjektet. For alle som ikke har enda jeg ville være takknemlig hvis du ville vise litt støtte ved å kjøpe meg en kaffe" gjennom lenken nedenfor. Bryllup er dyre og alle inntekter fra dette prosjektet vil gå mot å betale av mine bryllupsregninger.
+      
+      BuyMeACoffee - https://buymeacoffee.com/cirx08
+      GitHub Sponsors - https://github.com/sponsors/Cirx08
+    zh_CN: |
+      婚礼场地是一个非常基本的场地,只有一个目标. 它为你和你的客人提供了一个方法 分享对大日子的记忆 并走向大日子 只需通过Url或更好的方式为贵宾提供与画廊的链接,印刷出所提供的QR码并放在贵宾的餐桌上. 这样可以让他们看到你的旅程一直持续到现在,比如穿衣服/穿衣服购物,参观会场,做美食品尝或蛋糕购物等.
+
+      你并不局限于一个画廊。 你可以创建多个画廊 都有它们自己的可憎链接 在这个阶段,画廊有点不安全, 意思是任何有链接的人 都可以查看和分享图像, 所以我建议保持你的共享链接的隐私。 为了对付进入你画廊的陌生人... ...你可以提供个秘密钥匙... ...但请注意...
+
+      感谢大家支持这个项目。 任何还没喝完的人 我都会很感激你能通过下面的链接 "给我买杯咖啡"来表示支持 婚礼很贵 这个项目的所有收益 都将用来偿还我的婚礼账单.
+    
+      BuyMeACoffee - https://buymeacoffee.com/cirx08
+      GitHub Sponsors - https://github.com/sponsors/Cirx08
+    ja_JP: |
+      ウェディングシェアは、一つのゴールで非常に基本的なサイトです。 思い出を共有し、大きな一日を導く方法を提供します。 ご宿泊のお客様は、Url または提供される QR コードを印刷し、ゲストのディナーテーブルにドロップすることで、ギャラリーへのリンクを張ってください。 そのためには、ドレス/スーツのショッピング、会場の鑑賞、フードテイスティングやケーキのショッピングなど、この点までの旅を眺めることができます。
+  
+      シングルギャラリーに限らず、 複数のギャラリーを、自分の鋭いリンクで生成できます。 この段階のギャラリーは、少し安全ではありません。つまり、リンクのある人は画像を表示したり共有したりできるので、共有リンクをプライベートに保つことをお勧めしています。 あなたのギャラリーへのアクセスを得る見知らぬ人と戦うために、あなたはセットアップ中に秘密鍵を提供することができますが、これはUrlsを少し難しく、実際のセキュリティキャッチを推測するための決定者であることをお勧めしました。
+
+      このプロジェクトをサポートしてくださる皆様、ありがとうございました。 こちらのリンクから「コーヒーを贈る」というサポートをいくつか紹介してもらえたら、まだ感謝しません。 結婚式は高価で、このプロジェクトからのすべての収入は、私の結婚式の請求書を払って行くつもりです.
+    
+      BuyMeACoffee - https://buymeacoffee.com/cirx08
+      GitHub Sponsors - https://github.com/sponsors/Cirx08
+    ko_KR: |
+      WeddingShare는 하나의 목표를 가진 매우 기본적인 사이트입니다. 기억을 나누고 큰 하루를 맞이하는 방법을 제공합니다. 해당 이용 후기에 달린 코멘트가 없습니다. 이렇게하면 드레스 / 슈트 쇼핑, 장소보기, 음식 시음 또는 케이크 쇼핑 등이 지점까지 여행을 볼 수 있습니다.
+
+      단일 갤러리에 한정되지 않습니다. 자신의 셰이퍼블 링크로 여러 갤러리를 생성 할 수 있습니다. 이 단계 갤러리는 비트의 불확실이며, 링크를 통해 누구든지 볼 수 있고 이미지를 공유할 수 있으므로 공유 링크를 개인에게 보관하는 것이 좋습니다. 낯선 사람에 대한 액세스를 얻기 위해 당신은 설정 중 비밀 키를 제공 할 수 있습니다하지만이 사실을 알 수 있듯이 추측하는 멸종은 약간 더 열심히하고 실제 보안은 모두 잡아.
+
+      이 프로젝트를 지원하는 모든 것에 감사하십시오. 아직없는 사람에 대해서는 아래 링크를 통해 "커피 구매"에 의해 일부 지원을 표시 할 경우 감사하겠습니다. 결혼식은 비싸고이 프로젝트의 모든 진행은 결혼식 청구서를 지불하는 것입니다.
+    
+      BuyMeACoffee - https://buymeacoffee.com/cirx08
+      GitHub Sponsors - https://github.com/sponsors/Cirx08
+    fr_FR: |
+      WeddingShare est un site très basique avec un seul but. Il vous offre ainsi que vos invités un moyen de partager des souvenirs et de mener à la grande journée. Il suffit de fournir à vos invités un lien vers une galerie soit via un Url ou encore mieux en imprimant le code QR fourni et en le laissant sur les tables de vos invités. Cela leur permettra de voir votre voyage jusqu'à ce point, comme les achats de robes/vêtements, la visite du lieu, la dégustation de nourriture ou les achats de gâteaux, etc.
+
+      Vous n'êtes pas limité à une seule galerie. Vous pouvez générer plusieurs galeries toutes avec leurs propres liens ombrageux. À ce stade, les galeries sont un peu non sécurisées, ce qui signifie que toute personne ayant le lien a accès à la vue et au partage d'images. Pour lutter contre les étrangers qui accèdent à vos galeries, vous pouvez fournir une clé secrète lors de la configuration, mais il est dissuasif de faire de la devinette Urls un peu plus difficile et pas un vrai piège de sécurité.
+
+      Merci à tous ceux qui soutiennent ce projet. Pour quelqu'un qui n'a pas encore je serais reconnaissant si vous montreriez un certain soutien en "m'achetant un café" à travers le lien ci-dessous. Les mariages sont coûteux et toutes les recettes de ce projet seront pour payer mes factures de mariage.
+    
+      BuyMeACoffee - https://buymeacoffee.com/cirx08
+      GitHub Sponsors - https://github.com/sponsors/Cirx08
+    de_DE: |
+      WeddingShare ist eine sehr grundlegende Website mit nur einem Ziel. Es bietet Ihnen und Ihren Gästen einen Weg, Erinnerungen zu teilen und bis zum großen Tag. Bieten Sie Ihren Gästen einfach einen Link zu einer Galerie entweder über einen Url oder noch besser, indem Sie den bereitgestellten QR-Code ausdrucken und auf den Esstischen Ihrer Gäste fallen. So können sie Ihre Reise bis zu diesem Punkt ansehen, wie zum Beispiel Kleid / Anzug-Shopping, Besichtigung des Ortes, die Verkostung oder Kuchen-Shopping, etc.
+
+      Sie sind nicht auf eine einzelne Galerie beschränkt. Sie können mehrere Galerien mit eigenen schattierbaren Links generieren. In dieser Phase Galerien sind ein bisschen unsicher, was bedeutet, dass jeder mit dem Link Zugang zu sehen und Bilder zu teilen hat, so empfehle ich, Ihre Share Links privat zu halten. Um Fremde zu bekämpfen, die Zugang zu Ihren Galerien erhalten, können Sie einen geheimen Schlüssel während der Einrichtung zur Verfügung stellen, aber beraten Sie dies ist ein Abschrecker, um das Erraten von Urls etwas härter zu machen und nicht eine tatsächliche Sicherheitslücke alle.
+
+      Vielen Dank an alle, die dieses Projekt unterstützen. Für jeden, der noch nicht ich wäre dankbar, wenn Sie etwas Unterstützung durch "Buying me a Kaffee" durch den untenstehenden Link zeigen würden. Hochzeiten sind teuer und alle Einnahmen aus diesem Projekt werden meine Hochzeitsrechnungen zu zahlen gehen.
+    
+      BuyMeACoffee - https://buymeacoffee.com/cirx08
+      GitHub Sponsors - https://github.com/sponsors/Cirx08
+    sv_SE: |
+      WeddingShare är en mycket grundläggande webbplats med bara ett mål. Det ger dig och dina gäster ett sätt att dela minnen och leda fram till den stora dagen. Ge bara dina gäster en länk till ett galleri antingen via en Url eller ännu bättre genom att skriva ut den medföljande QR-koden och släppa den på dina gästers middagsbord. Att göra det gör det möjligt för dem att se din resa fram till denna punkt som klänning / kost shopping, tittar på platsen, gör matprovning eller kaka shopping, etc.
+
+      Du är inte begränsad till ett enda galleri. Du kan generera flera gallerier alla med sina egna skarbara länkar. I detta skede är gallerier lite osäkra, vilket innebär att alla med länken har tillgång till vy och dela bilder så jag rekommenderar att du håller dina aktielänkar privata. För att bekämpa främlingar som får tillgång till dina gallerier kan du ge en hemlig nyckel under installationen men rekommenderas att detta är en avskräckande att göra gissning Urls något svårare och inte en verklig säkerhetsfångst.
+
+      Tack till alla som stöder detta projekt. För alla som inte har ännu skulle jag vara tacksam om du skulle visa något stöd genom att "köpa mig ett kaffe" genom länken nedan. Bröllop är dyra och alla intäkter från detta projekt kommer att gå mot att betala av mina bröllopsräkningar.
+    
+      BuyMeACoffee - https://buymeacoffee.com/cirx08
+      GitHub Sponsors - https://github.com/sponsors/Cirx08
+    el_GR: |
+      WeddingShare είναι ένα πολύ βασικό site με μόνο ένα στόχο. Παρέχει σε εσάς και στους καλεσμένους σας έναν τρόπο να μοιραστείτε αναμνήσεις και να οδηγήσετε μέχρι τη μεγάλη μέρα. Απλά παρέχουν στους επισκέπτες σας με ένα σύνδεσμο σε μια γκαλερί είτε μέσω ενός Url ή ακόμα καλύτερα εκτυπώνοντας τον παρεχόμενο κωδικό QR και ρίχνοντας το σε τραπέζια των επισκεπτών σας. Κάνοντάς το αυτό θα τους επιτρέψει να δουν το ταξίδι σας μέχρι αυτό το σημείο, όπως το ντύσιμο / κοστούμι ψώνια, την προβολή του τόπου, τη δοκιμή τροφίμων ή κέικ ψώνια, κλπ.
+
+      Δεν περιορίζεταις σε καμία γκαλερί. Μπορείτε να δημιουργήσετε πολλαπλές γκαλερί όλα με τους δικούς τους θλιμμένους συνδέσμους. Σε αυτό το στάδιο γκαλερί είναι λίγο ανασφαλής, που σημαίνει ότι οποιοσδήποτε με το σύνδεσμο έχει πρόσβαση στην προβολή και να μοιραστούν εικόνες, γι 'αυτό συνιστώ να κρατήσει το μερίδιό σας συνδέσμους ιδιωτική. Για να καταπολεμήσετε τους ξένους που αποκτούν πρόσβαση στις γκαλερί σας, μπορείτε να παράσχετε ένα μυστικό κλειδί κατά τη διάρκεια της εγκατάστασης, αλλά σας συμβουλεύουμε ότι αυτό είναι ένα αποτρεπτικό για να κάνει την εικασία Urls ελαφρώς δυσκολότερη και όχι μια πραγματική σύλληψη ασφαλείας όλα.
+
+      Ευχαριστούμε όλους όσους υποστηρίζουν αυτό το έργο. Για όποιον δεν έχει ακόμα, θα ήμουν ευγνώμων αν μου έδειχνες κάποια υποστήριξη αγοράζοντάς μου έναν καφέ" μέσω του παρακάτω συνδέσμου. Οι γάμοι είναι ακριβοί και όλα τα έσοδα από αυτό το έργο θα πάνε προς την πληρωμή των λογαριασμών του γάμου μου.
+    
+      BuyMeACoffee - https://buymeacoffee.com/cirx08
+      GitHub Sponsors - https://github.com/sponsors/Cirx08
+    hr_HR: |
+      WeddingShare je vrlo osnovna stranica s samo jednim ciljem. Pruža vama i vašim gostima način dijeljenja uspomena na veliki dan i pripreme za njega. Jednostavno svojim gostima dajte poveznicu na galeriju putem URL-a ili, još bolje, ispisom QR koda i postavljanjem na stolove vaših gostiju. To će im omogućiti da vide vaše putovanje do ove točke, kao što je kupovina haljina/odijela, razgledavanje mjesta održavanja, degustacija hrane ili kupovina kolača itd.
+
+      Niste ograničeni na jednu galeriju. Možete generirati više galerija, sve s vlastitim poveznicama za dijeljenje. U ovoj fazi galerije su malo nesigurne, što znači da svatko s poveznicom ima pristup pregledavanju i dijeljenju slika, stoga preporučujem da svoje poveznice za dijeljenje držite privatnima. Kako biste spriječili da stranci dobiju pristup vašim galerijama, možete dati tajni ključ tijekom postavljanja, ali imajte na umu da je to odvraćanje kako bi se pogađanje URL-ova malo otežalo, a ne stvarna sigurnosna kvaka.
+
+      Hvala svima koji podržavaju ovaj projekt. Za sve one koji to još nisu učinili, bio bih zahvalan ako biste pokazali podršku tako što biste mi "kupili kavu" putem poveznice ispod. Vjenčanja su skupa i sav prihod od ovog projekta ići će za plaćanje mojih vjenčanih računa.
+    
+      BuyMeACoffee - https://buymeacoffee.com/cirx08
+      GitHub Sponsors - https://github.com/sponsors/Cirx08
+    pt_PT: |
+      WeddingShare é um site muito básico com apenas um objetivo. Ele fornece a você e seus convidados uma maneira de compartilhar memórias e levando até o grande dia. Basta fornecer aos seus hóspedes um link para uma galeria, seja através de um Url ou ainda melhor, imprimindo o código QR fornecido e soltando-o nas mesas de jantar dos seus hóspedes. Fazer isso permitirá que eles vejam sua viagem até este ponto, como compras de vestido / roupa, vendo o local, fazendo a degustação de alimentos ou compras de bolo, etc.
+
+      Você não está limitado a uma única galeria. Você pode gerar várias galerias com seus próprios links rastreáveis. Nesta fase as galerias são um pouco inseguras, o que significa que qualquer pessoa com o link tem acesso a visualizar e compartilhar imagens, então eu recomendo manter seus links de compartilhamento privados. Para combater estranhos ganhando acesso às suas galerias você pode fornecer uma chave secreta durante a configuração, mas ser aconselhado que este é um dissuasor para fazer adivinhar Urls ligeiramente mais difícil e não uma segurança real captura tudo.
+
+      Obrigado a todos que apoiam este projeto. Para qualquer pessoa que ainda não tenha ficado, eu ficaria grato se você mostrasse algum apoio "comprando-me um café" através do link abaixo. Os casamentos são caros e todos os rendimentos deste projeto vão para pagar as minhas contas de casamento.
+
+      BuyMeA Comodidades - https://buymeacoffee.com/cirx08
+      GitHub Patrocinadores - https://github.com/sponsors/Cirx08
+    tr_TR: |
+      DüğünShare tek bir hedefle çok temel bir sitedir. Size ve misafirlerine büyük güne kadar anıları paylaşmanın ve liderlik etmenin bir yolunu sağlar. Sadece konuklara Url aracılığıyla bir galeriye ya da sağlanan QR kodunu yazdırarak ve konuklarınızın akşam yemeği masalarına yerleştirin. Bunu yapmak, seyahatinizi bu noktaya kadar elbise/suit alışveriş gibi görmenize, mekanı izlemek, yemek tadımı veya pasta alışverişini yapmak gibi görmenize izin verecektir.
+
+      Tek bir galeri ile sınırlı değilsiniz. Tüm birçok galeriyi kendi gölgeli bağlantıları ile üretebilirsiniz. Bu aşamada galeriler biraz güvensizdir, yani bağlantıdaki herkes görüntüye erişimine ve görüntüleri paylaşmalı, böylece paylaşım bağlantılarınızı özel tutmanızı öneririm. Yabancılarla savaşmak, kurulum sırasında gizli bir anahtar sağlayabilirsiniz, ancak bunun Urls'ı biraz daha zor tahmin etmek ve gerçek bir güvenlik yakalamamak için bir deterrent olması tavsiye edilir.
+
+      Bu projeyi destekleyen herkese teşekkür ederiz. Henüz sahip olmayan herkes için, aşağıdaki bağlantı aracılığıyla "buying me a coffee" tarafından bazı desteği gösterebilseydim. Düğünler pahalıdır ve bu projeden gelen her şey düğün faturalarımı ödemeye devam edecektir.
+    
+      BuyMeACoffee - https://buymeacoffee.com/cirx08
+      GitHub Sponsors - https://github.com/sponsors/Cirx08
   developer: Cirx08
   icon: https://cdn.jsdelivr.net/gh/Cirx08/CasaOS-AppStore@main/Apps/WeddingShare/icon.png
   screenshot_link:
@@ -93,10 +353,36 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/Cirx08/CasaOS-AppStore@main/Apps/WeddingShare/screenshot-3.jpg
     - https://cdn.jsdelivr.net/gh/Cirx08/CasaOS-AppStore@main/Apps/WeddingShare/screenshot-4.jpg
   tagline:
-    en_gb: A place for guests to view and drop pictures of the big day
+    en_GB: "A place for guests to view and drop pictures of the big day"
+    en_US: "A place for guests to view and drop pictures of the big day"
+    it_IT: "Un posto per gli ospiti per vedere e rilasciare immagini del grande giorno"
+    nb_NO: "Et sted for gjestene å se og slippe bilder av den store dagen"
+    zh_CN: "给客人看和放大日子的照片的地方"
+    ja_JP: "大きな日の写真を眺めて下ろすための場所"
+    ko_KR: "큰 날의 사진을보고 드롭하는 손님을 위한 장소"
+    fr_FR: "Un endroit pour les clients pour voir et déposer des photos du grand jour"
+    de_DE: "Ein Ort für Gäste, um Bilder vom großen Tag zu sehen und zu fallen"
+    sv_SE: "En plats för gäster att se och släppa bilder av den stora dagen"
+    el_GR: "Ένα μέρος για τους επισκέπτες να δείτε και να ρίξει φωτογραφίες της μεγάλης ημέρας"
+    hr_HR: "Mjesto gdje gosti mogu gledati i ostavljati slike s velikog dana"
+    pt_PT: "Um lugar para os hóspedes ver e soltar fotos do grande dia"
+    tr_TR: "Konukların büyük günün fotoğraflarını görüntülemek ve düşürmek için bir yer"
   thumbnail: https://cdn.jsdelivr.net/gh/Cirx08/CasaOS-AppStore@main/Apps/WeddingShare/thumbnail.png
   tips: {}
   title:
-    en_gb: WeddingShare
+    en_GB: "WeddingShare"
+    en_US: "WeddingShare"
+    it_IT: "WeddingShare"
+    nb_NO: "WeddingShare"
+    zh_CN: "WeddingShare"
+    ja_JP: "WeddingShare"
+    ko_KR: "WeddingShare"
+    fr_FR: "WeddingShare"
+    de_DE: "WeddingShare"
+    sv_SE: "WeddingShare"
+    el_GR: "WeddingShare"
+    hr_HR: "WeddingShare"
+    pt_PT: "WeddingShare"
+    tr_TR: "WeddingShare"
   index: /
   port_map: ${WEBUI_PORT:-5000}
