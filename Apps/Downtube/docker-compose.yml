@@ -1,12 +1,10 @@
+# docker-compose.yml
+name: downtube-app
 version: '3.8'
 
 services:
   app:
-    # Adicione a chave 'name' aqui, com um valor que atenda à regex [a-z0-9_-]
-    name: downtube-service # Exemplo: um nome de serviço válido
     image: pedrodev2025/downtube-app:latest
-    # Remova ou comente container_name, CasaOS pode querer gerenciar isso
-    # container_name: downtube-app
     ports:
       - "3000:3000"
     volumes:
