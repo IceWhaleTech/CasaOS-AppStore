@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  app:
+    image: pedrodev2025/downtube-app:latest
+    container_name: downtube-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ${APP_DATA_DIR}/downloads:/app/Downtube/downloads
+    restart: unless-stopped
