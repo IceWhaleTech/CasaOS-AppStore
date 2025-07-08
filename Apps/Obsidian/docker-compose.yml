@@ -10,10 +10,10 @@ services:
     network_mode: bridge
     ports:
       - target: 3000
-        published: 15323
+        published: "15323"
         protocol: tcp
       - target: 3001
-        published: 15324
+        published: "15324"
         protocol: tcp
     restart: unless-stopped
     volumes:
@@ -132,7 +132,7 @@ services:
             ru_RU: Пароль для HTTP Basic auth, abc является стандартным. Если не установлен, нет аутентификации.
             tr_TR: HTTP Basic auth şifresi, abc varsayılan değerdir. Ayarlanmamışsa, kimlik doğrulama yoktur.
       ports:
-        - container: 3000
+        - container: "3000"
           description:
             en_US: Obsidian Desktop GUI HTTP Port
             en_GB: Obsidian Desktop GUI HTTP Port
@@ -149,7 +149,7 @@ services:
             pt_PT: Porta da interface desktop Obsidian HTTP
             ru_RU: Порт интерфейса Obsidian Desktop HTTP
             tr_TR: Obsidian Masaüstü GUI HTTP Bağlantı Noktası
-        - container: 3001
+        - container: "3001"
           description:
             en_US: Obsidian Desktop GUI HTTPS Port
             en_GB: Obsidian Desktop GUI HTTPS Port

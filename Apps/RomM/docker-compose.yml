@@ -10,7 +10,7 @@ services:
     network_mode: bridge
     restart: unless-stopped
     ports:
-      - 8285:8080
+      - "8285:8080"
     environment:
       - DB_HOST=romm-db
       - DB_PORT=13386
@@ -35,7 +35,7 @@ services:
         restart: true
     x-casaos:
       ports:
-        - container: 8080
+        - container: "8080"
           description:
             en_US: WebUI HTTP Port
             en_GB: WebUI HTTP Port
