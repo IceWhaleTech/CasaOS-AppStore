@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
     ports:
       - target: 5000
-        published: 5150
+        published: "5150"
         protocol: tcp
     volumes:
       - type: bind
@@ -24,7 +24,7 @@ services:
       TZ: $TZ
     x-casaos:
       ports:
-        - container: 5000
+        - container: "5000"
           description:
             en_US: WebUI HTTP Port
             en_GB: WebUI HTTP Port

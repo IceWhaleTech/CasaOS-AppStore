@@ -14,7 +14,7 @@ services:
         target: /data
     ports:
       - target: 5006
-        published: 15006
+        published: "15006"
         protocol: tcp
     x-casaos:
       volumes:
@@ -36,7 +36,7 @@ services:
             ru_RU: Каталог Данных Actual Budget
             tr_TR: Actual Budget Veri Dizini
       ports:
-        - container: 5006
+        - container: "5006"
           description:
             en_US: Actual Budget Web Interface Port
             en_GB: Actual Budget Web Interface Port

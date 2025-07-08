@@ -14,7 +14,7 @@ services:
       - wallabag-redis
     ports:
       - target: 80
-        published: 25661
+        published: "25661"
         protocol: tcp
     restart: unless-stopped
     volumes:
@@ -281,7 +281,7 @@ services:
             ru_RU: Имя сервера
             tr_TR: Sunucu adı
       ports:
-        - container: 80
+        - container: "80"
           description:
             en_US: Wallabag HTTP Port
             en_GB: Wallabag HTTP Port

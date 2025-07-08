@@ -11,16 +11,16 @@ services:
     restart: unless-stopped
     ports:
       - target: 9000
-        published: 9000
+        published: "9000"
         protocol: tcp
       - target: 9090
-        published: 9090
+        published: "9090"
         protocol: tcp
       - target: 3483
-        published: 3483
+        published: "3483"
         protocol: tcp
       - target: 3483
-        published: 3483
+        published: "3483"
         protocol: udp
     volumes:
       - type: bind
@@ -42,10 +42,10 @@ services:
         target: /etc/timezone
         read_only: true
     environment:
-      HTTP_PORT: 9000
+      HTTP_PORT: "9000"
     x-casaos:
       ports:
-        - container: 9000
+        - container: "9000"
           description:
             en_US: WebUI HTTP Port
             en_GB: WebUI HTTP Port
@@ -62,7 +62,7 @@ services:
             pt_PT: Porta HTTP WebUI
             ru_RU: HTTP порт веб-интерфейса
             tr_TR: WebUI HTTP Portu
-        - container: 9090
+        - container: "9090"
           description:
             en_US: CLI Port
             en_GB: CLI Port
@@ -79,7 +79,7 @@ services:
             pt_PT: Porta CLI
             ru_RU: CLI порт
             tr_TR: CLI Portu
-        - container: 3483
+        - container: "3483"
           description:
             en_US: Discovery Port (TCP)
             en_GB: Discovery Port (TCP)
@@ -96,7 +96,7 @@ services:
             pt_PT: Porta Discovery (TCP)
             ru_RU: Порт обнаружения (TCP)
             tr_TR: Discovery Portu (TCP)
-        - container: 3483
+        - container: "3483"
           description:
             en_US: Discovery Port (UDP)
             en_GB: Discovery Port (UDP)
