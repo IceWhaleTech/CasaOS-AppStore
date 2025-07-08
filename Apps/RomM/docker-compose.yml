@@ -14,21 +14,21 @@ services:
     environment:
       - DB_HOST=romm-db
       - DB_PORT=13386
-      - DB_NAME=romm
-      - DB_USER=romm-user
-      - DB_PASSWD=casaos
-      - ROMM_AUTH_SECRET_KEY=""
-      - IGDB_CLIENT_ID=""
-      - IGDB_CLIENT_SECRET=""
-      - SCREENSCRAPER_USER=""
-      - SCREENSCRAPER_PASSWORD=""
-      - STEAMGRIDDB_API_KEY=""
+      - DB_NAME=romm # Should match MARIADB_DATABASE in mariadb
+      - DB_USER=romm-user # Should match MARIADB_USER in mariadb
+      - DB_PASSWD=casaos # Should match MARIADB_PASSWORD in mariadb
+      - ROMM_AUTH_SECRET_KEY="" # Generate a key with `openssl rand -hex 32`
+      - IGDB_CLIENT_ID="" # Generate an ID and SECRET in IGDB
+      - IGDB_CLIENT_SECRET="" # https://api-docs.igdb.com/#account-creation
+      - SCREENSCRAPER_USER="" # Use your ScreenScraper username and password
+      - SCREENSCRAPER_PASSWORD="" # https://docs.romm.app/latest/Getting-Started/Metadata-Providers/#screenscraper
+      - STEAMGRIDDB_API_KEY="" # https://github.com/rommapp/romm/wiki/Metadata-Providers#steamgriddb
     volumes:
-      - /DATA/AppData/$AppID/resources:/romm/resources
-      - /DATA/AppData/$AppID/redis-data:/redis-data
-      - /DATA/AppData/$AppID/library:/romm/library
-      - /DATA/AppData/$AppID/assets:/romm/assets
-      - /DATA/AppData/$AppID/config:/romm/config
+      - /DATA/AppData/$AppID/resources:/romm/resources # Resources fetched from IGDB (covers, screenshots, etc.)
+      - /DATA/AppData/$AppID/redis-data:/redis-data # Cached data for background tasks
+      - /DATA/AppData/$AppID/library:/romm/library # Your game library. Check https://github.com/rommapp/romm?tab=readme-ov-file#folder-structure for more details.
+      - /DATA/AppData/$AppID/assets:/romm/assets # Uploaded saves, states, etc.
+      - /DATA/AppData/$AppID/config:/romm/config # Path where config.yml is stored
     depends_on:
       romm-db:
         condition: service_healthy
@@ -338,7 +338,7 @@ services:
     volumes:
       - /DATA/AppData/$AppID/mysql:/var/lib/mysql
     ports:
-      - 13386:3306 # Map host port 3306 to container port 3306
+      - "13386:3306" # Map host port 3306 to container port 3306
     healthcheck:
       test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
       start_period: 30s
@@ -348,7 +348,7 @@ services:
       retries: 5
     x-casaos:
       ports:
-        - container: 3306
+        - container: "3306"
           description:
             en_US: Database Port
             en_GB: Database Port
