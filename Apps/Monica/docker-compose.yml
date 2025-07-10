@@ -5,6 +5,8 @@ services:
     container_name: monica
     deploy:
       resources:
+        limits:
+          memory: 256M
         reservations:
           memory: 256M
     restart: unless-stopped
@@ -246,7 +248,7 @@ x-casaos:
     - amd64
     - arm64
   main: monica
-  category: CRM
+  category: Utilities
   developer: monica
   author: monica
   tagline:
