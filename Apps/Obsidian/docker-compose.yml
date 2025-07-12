@@ -1,0 +1,581 @@
+name: obsidian
+services:
+  obsidian:
+    image: lscr.io/linuxserver/obsidian:1.8.10
+    container_name: obsidian
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    network_mode: bridge
+    ports:
+      - target: 3000
+        published: "15323"
+        protocol: tcp
+      - target: 3001
+        published: "15324"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: $TZ
+      CUSTOM_USER: "casaos"
+      PASSWORD: "casaos"
+    x-casaos:
+      volumes:
+        - container: /config
+          description:
+            en_US: Obsidian Configuration Directory
+            en_GB: Obsidian Configuration Directory
+            it_IT: Directory di configurazione Obsidian
+            nb_NO: Obsidian konfigurasjonskatalog
+            zh_CN: Obsidian配置目录
+            ja_JP: Obsidian設定ディレクトリ
+            ko_KR: Obsidian 설정 디렉터리
+            fr_FR: Répertoire de configuration Obsidian
+            de_DE: Obsidian Konfigurationsverzeichnis
+            sv_SE: Obsidian konfigurationskatalog
+            el_GR: Κατάλογος διαμόρφωσης Obsidian
+            hr_HR: Direktorij konfiguracije Obsidian
+            pt_PT: Diretório de configuração Obsidian
+            ru_RU: Каталог конфигурации Obsidian
+            tr_TR: Obsidian Yapılandırma Dizini
+      envs:
+        - container: PUID
+          description:
+            en_US: User ID for file permissions
+            en_GB: User ID for file permissions
+            it_IT: ID utente per i permessi dei file
+            nb_NO: Bruker-ID for filtillatelser
+            zh_CN: 文件权限的用户ID
+            ja_JP: ファイル権限のユーザーID
+            ko_KR: 파일 권한을 위한 사용자 ID
+            fr_FR: ID utilisateur pour les permissions de fichiers
+            de_DE: Benutzer-ID für Dateiberechtigungen
+            sv_SE: Användar-ID för filbehörigheter
+            el_GR: ID χρήστη για δικαιώματα αρχείων
+            hr_HR: ID korisnika za dozvole datoteka
+            pt_PT: ID do utilizador para permissões de ficheiros
+            ru_RU: ID пользователя для прав доступа к файлам
+            tr_TR: Dosya izinleri için Kullanıcı Kimliği
+        - container: PGID
+          description:
+            en_US: Group ID for file permissions
+            en_GB: Group ID for file permissions
+            it_IT: ID gruppo per i permessi dei file
+            nb_NO: Gruppe-ID for filtillatelser
+            zh_CN: 文件权限的组ID
+            ja_JP: ファイル権限のグループID
+            ko_KR: 파일 권한을 위한 그룹 ID
+            fr_FR: ID groupe pour les permissions de fichiers
+            de_DE: Gruppen-ID für Dateiberechtigungen
+            sv_SE: Grupp-ID för filbehörigheter
+            el_GR: ID ομάδας για δικαιώματα αρχείων
+            hr_HR: ID grupe za dozvole datoteka
+            pt_PT: ID do grupo para permissões de ficheiros
+            ru_RU: ID группы для прав доступа к файлам
+            tr_TR: Dosya izinleri için Grup Kimliği
+        - container: TZ
+          description:
+            en_US: System timezone
+            en_GB: System timezone
+            it_IT: Fuso orario del sistema
+            nb_NO: Systemtidssone
+            zh_CN: 系统时区
+            ja_JP: システムタイムゾーン
+            ko_KR: 시스템 시간대
+            fr_FR: Fuseau horaire du système
+            de_DE: System-Zeitzone
+            sv_SE: Systemtidszon
+            el_GR: Ζώνη ώρας συστήματος
+            hr_HR: Vremenska zona sustava
+            pt_PT: Fuso horário do sistema
+            ru_RU: Системный часовой пояс
+            tr_TR: Sistem saat dilimi
+        - container: CUSTOM_USER
+          description:
+            en_US: HTTP Basic auth username, abc is default.
+            en_GB: HTTP Basic auth username, abc is default.
+            it_IT: Nome utente per l'autenticazione HTTP, abc è predefinito.
+            nb_NO: HTTP Basic auth brukernavn, abc er standard.
+            zh_CN: HTTP 基本身份验证用户名，abc 是默认值。
+            ja_JP: HTTP 基本認証ユーザー名、abc はデフォルトです。
+            ko_KR: HTTP 기본 인증 사용자 이름, abc는 기본값입니다.
+            fr_FR: Nom d'utilisateur pour l'authentification HTTP, abc est le défaut.
+            de_DE: HTTP Basic auth Benutzername, abc ist Standard.
+            sv_SE: HTTP Basic auth användarnamn, abc är standard.
+            el_GR: Όνομα χρήστη για HTTP Basic auth, abc είναι προεπιλογή.
+            hr_HR: HTTP Basic auth korisničko ime, abc je zadano.
+            pt_PT: Nome de utilizador para autenticação HTTP, abc é o padrão.
+            ru_RU: Имя пользователя для HTTP Basic auth, abc является стандартным.
+            tr_TR: HTTP Basic auth kullanıcı adı, abc varsayılan değerdir.
+        - container: PASSWORD
+          description:
+            en_US: HTTP Basic auth password, abc is default. If unset there will be no auth.
+            en_GB: HTTP Basic auth password, abc is default. If unset there will be no auth.
+            it_IT: Password per l'autenticazione HTTP, abc è predefinito. Se non impostato, non c'è autenticazione.
+            nb_NO: HTTP Basic auth passord, abc er standard. Hvis det ikke er satt, er det ingen autentisering.
+            zh_CN: HTTP 基本身份验证密码，abc 是默认值。如果未设置，则没有身份验证。
+            ja_JP: HTTP 基本認証パスワード、abc はデフォルトです。未設定の場合、認証はありません。
+            ko_KR: HTTP 기본 인증 비밀번호, abc는 기본값입니다. 설정되지 않은 경우 인증이 없습니다.
+            fr_FR: Mot de passe pour l'authentification HTTP, abc est le défaut. Si non défini, il n'y a pas d'authentification.
+            de_DE: HTTP Basic auth Passwort, abc ist Standard. Wenn nicht gesetzt, gibt es keine Authentifizierung.
+            sv_SE: HTTP Basic auth lösenord, abc är standard. Om det inte är inställt finns ingen autentisering.
+            el_GR: Λογαριασμός HTTP Basic auth, abc είναι προεπιλογή. Αν δεν έχει οριστεί, δεν υπάρχει πιστοποίηση.
+            hr_HR: HTTP Basic auth lozinka, abc je zadano. Ako nije postavljeno, nema autentifikacije.
+            pt_PT: Senha para autenticação HTTP, abc é o padrão. Se não estiver definido, não há autenticação.
+            ru_RU: Пароль для HTTP Basic auth, abc является стандартным. Если не установлен, нет аутентификации.
+            tr_TR: HTTP Basic auth şifresi, abc varsayılan değerdir. Ayarlanmamışsa, kimlik doğrulama yoktur.
+      ports:
+        - container: "3000"
+          description:
+            en_US: Obsidian Desktop GUI HTTP Port
+            en_GB: Obsidian Desktop GUI HTTP Port
+            it_IT: Porta HTTP GUI Desktop Obsidian
+            nb_NO: Obsidian Desktop GUI HTTP-port
+            zh_CN: Obsidian桌面GUI HTTP端口
+            ja_JP: ObsidianデスクトップGUI HTTPポート
+            ko_KR: Obsidian 데스크탑 GUI HTTP 포트
+            fr_FR: Port de l'interface desktop Obsidian HTTP
+            de_DE: Obsidian Desktop GUI HTTP Port
+            sv_SE: Obsidian skrivbordsgränssnitt HTTP-port
+            el_GR: Θύρα διεπαφής περιβάλλοντος desktop Obsidian HTTP
+            hr_HR: Port desktop sučelja Obsidian HTTP
+            pt_PT: Porta da interface desktop Obsidian HTTP
+            ru_RU: Порт интерфейса Obsidian Desktop HTTP
+            tr_TR: Obsidian Masaüstü GUI HTTP Bağlantı Noktası
+        - container: "3001"
+          description:
+            en_US: Obsidian Desktop GUI HTTPS Port
+            en_GB: Obsidian Desktop GUI HTTPS Port
+            it_IT: Porta HTTPS GUI Desktop Obsidian
+            nb_NO: Obsidian Desktop GUI HTTPS-port
+            zh_CN: Obsidian桌面GUI HTTPS端口
+            ja_JP: ObsidianデスクトップGUI HTTPSポート
+            ko_KR: Obsidian 데스크탑 GUI HTTPS 포트
+            fr_FR: Port de l'interface desktop Obsidian HTTPS
+            de_DE: Obsidian Desktop GUI HTTPS Port
+            sv_SE: Obsidian skrivbordsgränssnitt HTTPS-port
+            el_GR: Θύρα διεπαφής περιβάλλοντος desktop Obsidian HTTPS
+            hr_HR: Port desktop sučelja Obsidian HTTPS
+            pt_PT: Porta da interface desktop Obsidian HTTPS
+            ru_RU: Порт интерфейса Obsidian Desktop HTTPS
+            tr_TR: Obsidian Masaüstü GUI HTTPS Bağlantı Noktası
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: obsidian
+  category: Notes
+  developer: linuxserver
+  author: CasaOS Team
+  tagline:
+    en_US: Obsidian is a knowledge management app for creating, linking, and visually organizing Markdown notes.
+    en_GB: Obsidian is a knowledge management app for creating, linking, and visually organizing Markdown notes.
+    it_IT: Obsidian è un'app di gestione della conoscenza per la creazione, il collegamento e l'organizzazione visiva di note Markdown.
+    nb_NO: Obsidian er en kunnskapsstyringsapp for å lage, koble og organisere visuelle Markdown-notater.
+    zh_CN: Obsidian 是一款知识管理应用，支持 Markdown 笔记的创建、链接与可视化组织。
+    ja_JP: Obsidian は、Markdown ノートの作成、リンク、および視覚的な整理を行うための知識管理アプリです。
+    ko_KR: Obsidian은 Markdown 노트를 작성, 연결 및 시각적으로 정리하기 위한 지식 관리 앱입니다.
+    fr_FR: Obsidian est une application de gestion de connaissances pour créer, lier et organiser visuellement des notes Markdown.
+    de_DE: Obsidian ist eine Wissensmanagement-App für das Erstellen, Verlinken und visuelle Organisieren von Markdown-Notizen.
+    sv_SE: Obsidian är en kunskapsstyringsapp för att skapa, länka och visualisera organisera Markdown-anteckningar.
+    el_GR: Το Obsidian είναι μια εφαρμογή διαχείρισης γνώσεων για τη δημιουργία, την σύνδεση και την οπτική οργάνωση σημειώσεων Markdown.
+    hr_HR: Obsidian je aplikacija za upravljanje znanjem za stvaranje, povezivanje i vizualno organiziranje Markdown bilješki.
+    pt_PT: Obsidian é uma aplicação de gestão de conhecimento para criar, ligar e organizar visualmente notas Markdown.
+    ru_RU: Obsidian — это приложение для управления знаниями, предназначенное для создания, связывания и визуальной организации заметок в формате Markdown.
+    tr_TR: Obsidian, Markdown notlarını oluşturmak, bağlamak ve görsel olarak düzenlemek için bir bilgi yönetimi uygulamasıdır.
+  description:
+    en_US: |
+      Obsidian is a self-hosted knowledge management app designed for creating, linking, and organizing notes, operating on local Markdown files, leveraging WebDAV and kasmVNC remote desktop technology to deliver a near-native experience in browsers. Its intuitive interface supports storing and editing notes on devices, ensuring full data ownership, ideal for crafting a lasting second brain.
+
+      The app's core features include robust note management and connectivity, suitable for various scenarios. Bi-directional linking connects related notes, forming a web of knowledge, while the Graph View visualizes note relationships, helping users uncover hidden connections. It supports Markdown editing with live preview for easy formatting and structuring. Hundreds of community plugins and themes offer extended functionality, such as calendars, kanban boards, PDF annotation, and advanced search, enabling tailored workflows. The Canvas feature provides infinite visual organization space, aiding students in organizing research, writers in developing stories, or professionals in managing projects. Notes are stored as standard Markdown files, openable with any text editor, ensuring future-proof portability.
+
+      It enhances usability through community-provided documentation, and whether for personal knowledge bases or team collaboration, the app's high flexibility and intuitive operation offer a modern knowledge management solution.
+
+      **Key Features:**
+      - Local storage, ensuring full data ownership
+      - Bi-directional note linking for a knowledge web
+      - Graph View for visualizing note connections
+      - Extensible plugin system for personalized needs
+      - Markdown support with live preview
+      - Infinite Canvas for visual organization
+      - Theme customization for enhanced visuals
+
+      **Learn More:**
+      - [Obsidian Official Website](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+    en_GB: |
+      Obsidian is a self-hosted knowledge management app designed for creating, linking, and organising notes, operating on local Markdown files, leveraging WebDAV and kasmVNC remote desktop technology to deliver a near-native experience in browsers. Its intuitive interface supports storing and editing notes on devices, ensuring full data ownership, ideal for crafting a lasting second brain.
+
+      The app's core features include robust note management and connectivity, suitable for various scenarios. Bi-directional linking connects related notes, forming a web of knowledge, whilst the Graph View visualises note relationships, helping users uncover hidden connections. It supports Markdown editing with live preview for easy formatting and structuring. Hundreds of community plugins and themes offer extended functionality, such as calendars, kanban boards, PDF annotation, and advanced search, enabling tailored workflows. The Canvas feature provides infinite visual organisation space, aiding students in organising research, writers in developing stories, or professionals in managing projects. Notes are stored as standard Markdown files, openable with any text editor, ensuring future-proof portability.
+
+      It enhances usability through community-provided documentation, and whether for personal knowledge bases or team collaboration, the app's high flexibility and intuitive operation offer a modern knowledge management solution.
+
+      **Key Features:**
+      - Local storage, ensuring full data ownership
+      - Bi-directional note linking for a knowledge web
+      - Graph View for visualising note connections
+      - Extensible plugin system for personalised needs
+      - Markdown support with live preview
+      - Infinite Canvas for visual organisation
+      - Theme customisation for enhanced visuals
+
+      **Learn More:**
+      - [Obsidian Official Website](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+    it_IT: |
+      Obsidian è un'app di gestione della conoscenza self-hosted progettata per creare, collegare e organizzare note, operando su file Markdown locali, sfruttando la tecnologia desktop remoto WebDAV e kasmVNC per offrire un'esperienza quasi nativa nei browser. La sua interfaccia intuitiva supporta l'archiviazione e la modifica delle note sui dispositivi, garantendo la piena proprietà dei dati, ideale per creare un secondo cervello duraturo.
+
+      Le funzionalità principali dell'app includono gestione robusta delle note e connettività, adatte a vari scenari. Il collegamento bidirezionale connette note correlate, formando una rete di conoscenza, mentre la Vista Grafico visualizza le relazioni tra le note, aiutando gli utenti a scoprire connessioni nascoste. Supporta la modifica Markdown con anteprima dal vivo per una facile formattazione e strutturazione. Centinaia di plugin e temi della community offrono funzionalità estese, come calendari, bacheche kanban, annotazioni PDF e ricerca avanzata, permettendo flussi di lavoro personalizzati. La funzione Canvas fornisce spazio di organizzazione visiva infinito, aiutando studenti nell'organizzare ricerche, scrittori nello sviluppare storie, o professionisti nella gestione progetti. Le note sono archiviate come file Markdown standard, apribili con qualsiasi editor di testo, garantendo portabilità a prova di futuro.
+
+      Migliora l'usabilità attraverso documentazione fornita dalla community, e che sia per basi di conoscenza personali o collaborazione di team, l'alta flessibilità e l'operazione intuitiva dell'app offrono una soluzione moderna di gestione della conoscenza.
+
+      **Caratteristiche Principali:**
+      - Archiviazione locale, garantendo piena proprietà dei dati
+      - Collegamento bidirezionale delle note per una rete di conoscenza
+      - Vista Grafico per visualizzare connessioni delle note
+      - Sistema di plugin estensibile per esigenze personalizzate
+      - Supporto Markdown con anteprima dal vivo
+      - Canvas infinito per organizzazione visiva
+      - Personalizzazione temi per elementi visivi migliorati
+
+      **Per saperne di più:**
+      - [Sito Web Ufficiale Obsidian](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+    nb_NO: |
+      Obsidian er en selvvertet kunnskapsstyringsapp designet for å opprette, koble og organisere notater, som opererer på lokale Markdown-filer og utnytter WebDAV og kasmVNC ekstern skrivebordsteknologi for å levere en nesten innfødt opplevelse i nettlesere. Det intuitive grensesnittet støtter lagring og redigering av notater på enheter, og sikrer full datainnehav, ideelt for å lage en varig andre hjerne.
+
+      Appens hovedfunksjoner inkluderer robust notatbehandling og tilkobling, egnet for ulike scenarier. Toveis kobling forbinder relaterte notater og danner et kunnskapsnett, mens Graf-visningen visualiserer notatforbindelser og hjelper brukere med å avdekke skjulte forbindelser. Den støtter Markdown-redigering med direkteforhåndsvisning for enkel formatering og strukturering. Hundrevis av fellesskapstillegg og temaer tilbyr utvidet funksjonalitet, som kalendere, kanban-tavler, PDF-annotasjon og avansert søk, som muliggjør skreddersydde arbeidsflyter. Canvas-funksjonen gir uendelig visuelt organisasjonsrom, som hjelper studenter med å organisere forskning, forfattere med å utvikle historier, eller fagfolk med å administrere prosjekter. Notater lagres som standard Markdown-filer, som kan åpnes med hvilken som helst tekstredigerer, noe som sikrer fremtidssikker portabilitet.
+
+      Den forbedrer brukervennligheten gjennom fellesskapstilveiebrakt dokumentasjon, og enten det er for personlige kunnskapsbaser eller teamsamarbeid, tilbyr appens høye fleksibilitet og intuitive drift en moderne kunnskapsstyringsløsning.
+
+      **Hovedfunksjoner:**
+      - Lokal lagring, sikrer full datainnehav
+      - Toveis notatkobling for et kunnskapsnett
+      - Graf-visning for visualisering av notatforbindelser
+      - Utvidbart plugin-system for personlige behov
+      - Markdown-støtte med direkteforhåndsvisning
+      - Uendelig Canvas for visuell organisering
+      - Tematilpasning for forbedret visuell opplevelse
+
+      **Lær mer:**
+      - [Obsidian Offisiell Nettside](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+    zh_CN: |
+      Obsidian 是一款自托管知识管理应用，专为创建、链接和组织笔记设计，基于本地 Markdown 文件操作，通过 WebDAV 协议和 kasmVNC 远程桌面技术，支持在浏览器中提供与本地几乎一致的流畅体验。其直观的界面支持在设备上存储和编辑笔记，确保数据完全归用户所有，适合打造持久的第二大脑。
+
+      该应用的核心功能包括强大的笔记管理和连接功能，适用于多种场景。双向链接功能将相关笔记关联起来，形成知识网络，而图谱视图以可视化方式展示笔记间的联系，帮助用户发现隐藏的概念关系。它支持实时预览的 Markdown 编辑，便于格式化和组织内容。数百种社区插件和主题提供扩展功能，如日历、看板、PDF 批注和高级搜索，让用户根据需求定制工作流程。画布功能提供无限视觉组织空间，助力学生整理研究笔记、作家构思故事或专业人士管理项目。笔记存储为标准 Markdown 文件，可用任何文本编辑器打开，确保数据未来可迁移。
+
+      它通过社区支持文档优化使用体验，无论是个人知识库还是团队协作，该应用以高灵活性和直观操作，提供现代化知识管理解决方案。
+
+      **主要功能:**
+      - 本地存储，确保数据完全归用户所有
+      - 双向笔记链接，构建知识网络
+      - 图谱视图，可视化笔记间联系
+      - 可扩展的插件系统，满足个性化需求
+      - 支持实时预览的 Markdown 编辑
+      - 无限画布，视觉化组织创意
+      - 主题自定义，提升视觉体验
+
+      **了解更多:**
+      - [Obsidian官方网站](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+    ja_JP: |
+      Obsidianは、ローカルMarkdownファイル上で動作し、WebDAVとkasmVNCリモートデスクトップ技術を活用してブラウザでネイティブに近い体験を提供する、ノートの作成、リンク、整理のために設計されたセルフホスト型ナレッジマネジメントアプリです。直感的なインターフェースはデバイス上でのノートの保存と編集をサポートし、完全なデータ所有権を確保し、持続的なセカンドブレインを構築するのに理想的です。
+
+      アプリの主要機能には、様々なシナリオに適した堅牢なノート管理と接続性が含まれます。双方向リンクは関連するノートを接続してナレッジウェブを形成し、グラフビューはノートの関係を視覚化してユーザーが隠れた接続を発見するのを助けます。ライブプレビューでのMarkdown編集をサポートし、簡単な書式設定と構造化を可能にします。数百のコミュニティプラグインとテーマがカレンダー、カンバンボード、PDF注釈、高度な検索などの拡張機能を提供し、カスタマイズされたワークフローを可能にします。Canvas機能は無限の視覚的組織スペースを提供し、学生の研究整理、作家のストーリー開発、専門家のプロジェクト管理を支援します。ノートは標準的なMarkdownファイルとして保存され、任意のテキストエディタで開くことができ、将来性のある可搬性を保証します。
+
+      コミュニティ提供のドキュメントを通じて使いやすさを向上させ、個人のナレッジベースでもチームコラボレーションでも、アプリの高い柔軟性と直感的な操作により現代的なナレッジマネジメントソリューションを提供します。
+
+      **主な機能:**
+      - ローカルストレージ、完全なデータ所有権を保証
+      - ナレッジウェブのための双方向ノートリンク
+      - ノート接続を視覚化するグラフビュー
+      - 個人のニーズに対応する拡張可能なプラグインシステム
+      - ライブプレビューでのMarkdownサポート
+      - 視覚的整理のための無限キャンバス
+      - 視覚効果を向上させるテーマカスタマイゼーション
+
+      **詳細を見る:**
+      - [Obsidian公式ウェブサイト](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+    ko_KR: |
+      Obsidian은 로컬 Markdown 파일에서 작동하며, WebDAV 및 kasmVNC 원격 데스크톱 기술을 활용하여 브라우저에서 거의 네이티브 경험을 제공하는 노트 생성, 연결 및 정리를 위해 설계된 자체 호스팅 지식 관리 앱입니다. 직관적인 인터페이스는 기기에서 노트 저장 및 편집을 지원하며, 완전한 데이터 소유권을 보장하여 지속적인 제2의 뇌를 만드는데 이상적입니다.
+
+      앱의 핵심 기능에는 다양한 시나리오에 적합한 강력한 노트 관리 및 연결성이 포함됩니다. 양방향 링크는 관련된 노트를 연결하여 지식 웹을 형성하고, 그래프 뷰는 노트 관계를 시각화하여 사용자가 숨겨진 연결을 발견하도록 돕습니다. 쉬운 서식 지정 및 구조화를 위한 실시간 미리보기가 있는 Markdown 편집을 지원합니다. 수백 개의 커뮤니티 플러그인과 테마가 달력, 칸반 보드, PDF 주석, 고급 검색과 같은 확장 기능을 제공하여 맞춤형 워크플로우를 가능하게 합니다. 캔버스 기능은 무한한 시각적 조직 공간을 제공하여 학생들의 연구 정리, 작가들의 스토리 개발, 전문가들의 프로젝트 관리를 지원합니다. 노트는 표준 Markdown 파일로 저장되어 모든 텍스트 편집기로 열 수 있어 미래 보장 이식성을 보장합니다.
+
+      커뮤니티에서 제공하는 문서를 통해 사용성을 향상시키며, 개인 지식 베이스든 팀 협업이든 앱의 높은 유연성과 직관적인 작업으로 현대적인 지식 관리 솔루션을 제공합니다.
+
+      **주요 기능:**
+      - 로컬 저장소, 완전한 데이터 소유권 보장
+      - 지식 웹을 위한 양방향 노트 연결
+      - 노트 연결을 시각화하는 그래프 뷰
+      - 개인화된 요구사항을 위한 확장 가능한 플러그인 시스템
+      - 실시간 미리보기가 있는 Markdown 지원
+      - 시각적 조직을 위한 무한 캔버스
+      - 향상된 시각 효과를 위한 테마 사용자 정의
+
+      **더 자세히 알아보기:**
+      - [Obsidian 공식 웹사이트](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+    fr_FR: |
+      Obsidian est une application de gestion des connaissances auto-hébergée conçue pour créer, lier et organiser des notes, fonctionnant sur des fichiers Markdown locaux, exploitant la technologie de bureau à distance WebDAV et kasmVNC pour offrir une expérience quasi-native dans les navigateurs. Son interface intuitive prend en charge le stockage et l'édition de notes sur les appareils, garantissant la pleine propriété des données, idéale pour créer un second cerveau durable.
+
+      Les fonctionnalités principales de l'application incluent une gestion robuste des notes et une connectivité, adaptées à divers scénarios. La liaison bidirectionnelle connecte les notes liées, formant un réseau de connaissances, tandis que la Vue Graphique visualise les relations entre les notes, aidant les utilisateurs à découvrir des connexions cachées. Elle prend en charge l'édition Markdown avec aperçu en direct pour un formatage et une structuration faciles. Des centaines de plugins et thèmes communautaires offrent des fonctionnalités étendues, telles que calendriers, tableaux kanban, annotation PDF et recherche avancée, permettant des flux de travail personnalisés. La fonctionnalité Canvas fournit un espace d'organisation visuelle infini, aidant les étudiants à organiser la recherche, les écrivains à développer des histoires, ou les professionnels à gérer des projets. Les notes sont stockées sous forme de fichiers Markdown standard, ouvrable avec n'importe quel éditeur de texte, garantissant une portabilité à l'épreuve du temps.
+
+      Elle améliore l'utilisabilité grâce à la documentation fournie par la communauté, et que ce soit pour des bases de connaissances personnelles ou la collaboration d'équipe, la haute flexibilité et l'opération intuitive de l'application offrent une solution moderne de gestion des connaissances.
+
+      **Caractéristiques principales:**
+      - Stockage local, garantissant la pleine propriété des données
+      - Liaison bidirectionnelle des notes pour un réseau de connaissances
+      - Vue Graphique pour visualiser les connexions des notes
+      - Système de plugins extensible pour les besoins personnalisés
+      - Support Markdown avec aperçu en direct
+      - Canvas infini pour l'organisation visuelle
+      - Personnalisation des thèmes pour des visuels améliorés
+
+      **En savoir plus:**
+      - [Site Web Officiel Obsidian](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+    de_DE: |
+      Obsidian ist eine selbst gehostete Wissensmanagemment-App, die zum Erstellen, Verknüpfen und Organisieren von Notizen entwickelt wurde und auf lokalen Markdown-Dateien arbeitet, wobei WebDAV- und kasmVNC-Remote-Desktop-Technologie genutzt wird, um eine nahezu native Erfahrung in Browsern zu bieten. Die intuitive Benutzeroberfläche unterstützt das Speichern und Bearbeiten von Notizen auf Geräten und gewährleistet vollständigen Datenbesitz, ideal für die Erstellung eines dauerhaften zweiten Gehirns.
+
+      Die Kernfunktionen der App umfassen robuste Notizverwaltung und Konnektivität, geeignet für verschiedene Szenarien. Bidirektionale Verknüpfung verbindet verwandte Notizen und bildet ein Wissensnetz, während die Graph-Ansicht Notizbeziehungen visualisiert und Benutzern hilft, versteckte Verbindungen zu entdecken. Sie unterstützt Markdown-Bearbeitung mit Live-Vorschau für einfache Formatierung und Strukturierung. Hunderte von Community-Plugins und Themes bieten erweiterte Funktionalität wie Kalender, Kanban-Boards, PDF-Annotation und erweiterte Suche, die maßgeschneiderte Arbeitsabläufe ermöglichen. Die Canvas-Funktion bietet unbegrenzten visuellen Organisationsraum und hilft Studenten beim Organisieren von Forschung, Schriftstellern beim Entwickeln von Geschichten oder Fachleuten beim Verwalten von Projekten. Notizen werden als Standard-Markdown-Dateien gespeichert, die mit jedem Texteditor geöffnet werden können, was zukunftssichere Portabilität gewährleistet.
+
+      Sie verbessert die Benutzerfreundlichkeit durch von der Community bereitgestellte Dokumentation, und ob für persönliche Wissensbasen oder Teamzusammenarbeit, die hohe Flexibilität und intuitive Bedienung der App bieten eine moderne Wissensmanagemment-Lösung.
+
+      **Hauptmerkmale:**
+      - Lokale Speicherung, gewährleistet vollständigen Datenbesitz
+      - Bidirektionale Notizverknüpfung für ein Wissensnetz
+      - Graph-Ansicht zur Visualisierung von Notizverbindungen
+      - Erweiterbares Plugin-System für personalisierte Bedürfnisse
+      - Markdown-Unterstützung mit Live-Vorschau
+      - Unendliche Canvas für visuelle Organisation
+      - Theme-Anpassung für verbesserte Visuals
+
+      **Mehr erfahren:**
+      - [Obsidian Offizielle Website](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+    sv_SE: |
+      Obsidian är en självvärd kunskapshanteringsapp designad för att skapa, länka och organisera anteckningar, som arbetar på lokala Markdown-filer och utnyttjar WebDAV och kasmVNC fjärrskrivbordsteknologi för att leverera en nästan inbyggd upplevelse i webbläsare. Det intuitiva gränssnittet stöder lagring och redigering av anteckningar på enheter, vilket säkerställer fullständigt dataägarskap, idealiskt för att skapa en varaktig andra hjärna.
+
+      Appens kärnfunktioner inkluderar robust anteckningshantering och anslutning, lämplig för olika scenarier. Dubbelriktad länkning förbinder relaterade anteckningar och bildar ett kunskapsnät, medan Graf-vyn visualiserar anteckningsförhållanden och hjälper användare att avslöja dolda förbindelser. Den stöder Markdown-redigering med live förhandsvisning för enkel formatering och strukturering. Hundratals community-plugins och teman erbjuder utökad funktionalitet som kalendrar, kanban-tavlor, PDF-annotering och avancerad sökning, som möjliggör skräddarsydda arbetsflöden. Canvas-funktionen ger oändligt visuellt organisationsutrymme, som hjälper studenter att organisera forskning, författare att utveckla berättelser, eller yrkesverksamma att hantera projekt. Anteckningar lagras som standard Markdown-filer, öppningsbara med vilken textredigerare som helst, vilket säkerställer framtidssäker portabilitet.
+
+      Den förbättrar användbarheten genom community-tillhandahållen dokumentation, och oavsett om det är för personliga kunskapsbaser eller teamsamarbete, erbjuder appens höga flexibilitet och intuitiva drift en modern kunskapshanteringslösning.
+
+      **Huvudfunktioner:**
+      - Lokal lagring, säkerställer fullständigt dataägarskap
+      - Dubbelriktad anteckningslänkning för ett kunskapsnät
+      - Graf-vy för visualisering av anteckningsförbindelser
+      - Utbyggbart plugin-system för personliga behov
+      - Markdown-stöd med live förhandsvisning
+      - Oändlig Canvas för visuell organisation
+      - Temaanpassning för förbättrade visuella effekter
+
+      **Läs mer:**
+      - [Obsidian Officiell Webbplats](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+    el_GR: |
+      Το Obsidian είναι μια αυτο-φιλοξενούμενη εφαρμογή διαχείρισης γνώσης σχεδιασμένη για τη δημιουργία, σύνδεση και οργάνωση σημειώσεων, λειτουργώντας σε τοπικά αρχεία Markdown, αξιοποιώντας την τεχνολογία απομακρυσμένης επιφάνειας εργασίας WebDAV και kasmVNC για να παρέχει μια σχεδόν εγγενή εμπειρία σε περιηγητές. Η διαισθητική διεπαφή του υποστηρίζει την αποθήκευση και επεξεργασία σημειώσεων σε συσκευές, διασφαλίζοντας πλήρη κυριότητα δεδομένων, ιδανική για τη δημιουργία ενός διαρκούς δεύτερου εγκεφάλου.
+
+      Τα βασικά χαρακτηριστικά της εφαρμογής περιλαμβάνουν ισχυρή διαχείριση σημειώσεων και συνδεσιμότητα, κατάλληλα για διάφορα σενάρια. Η αμφίδρομη σύνδεση συνδέει σχετικές σημειώσεις, σχηματίζοντας ένα δίκτυο γνώσης, ενώ η Προβολή Γραφήματος οπτικοποιεί τις σχέσεις σημειώσεων, βοηθώντας τους χρήστες να αποκαλύψουν κρυφές συνδέσεις. Υποστηρίζει επεξεργασία Markdown με ζωντανή προεπισκόπηση για εύκολη μορφοποίηση και δομή. Εκατοντάδες plugins και θέματα της κοινότητας προσφέρουν εκτεταμένη λειτουργικότητα όπως ημερολόγια, πίνακες kanban, σχολιασμό PDF και προηγμένη αναζήτηση, επιτρέποντας προσαρμοσμένες ροές εργασίας. Η λειτουργία Canvas παρέχει άπειρο χώρο οπτικής οργάνωσης, βοηθώντας φοιτητές να οργανώσουν έρευνα, συγγραφείς να αναπτύξουν ιστορίες, ή επαγγελματίες να διαχειριστούν έργα. Οι σημειώσεις αποθηκεύονται ως τυπικά αρχεία Markdown, που μπορούν να ανοιχτούν με οποιοδήποτε επεξεργαστή κειμένου, διασφαλίζοντας μελλοντικά ασφαλή φορητότητα.
+
+      Βελτιώνει τη χρηστικότητα μέσω τεκμηρίωσης που παρέχεται από την κοινότητα, και είτε για προσωπικές βάσεις γνώσης είτε για συνεργασία ομάδας, η υψηλή ευελιξία και η διαισθητική λειτουργία της εφαρμογής προσφέρουν μια σύγχρονη λύση διαχείρισης γνώσης.
+
+      **Βασικά Χαρακτηριστικά:**
+      - Τοπική αποθήκευση, διασφαλίζοντας πλήρη κυριότητα δεδομένων
+      - Αμφίδρομη σύνδεση σημειώσεων για ένα δίκτυο γνώσης
+      - Προβολή Γραφήματος για την οπτικοποίηση συνδέσεων σημειώσεων
+      - Επεκτάσιμο σύστημα προσθέτων για εξατομικευμένες ανάγκες
+      - Υποστήριξη Markdown με ζωντανή προεπισκόπηση
+      - Άπειρο Canvas για οπτική οργάνωση
+      - Προσαρμογή θεμάτων για βελτιωμένα οπτικά στοιχεία
+
+      **Μάθετε περισσότερα:**
+      - [Επίσημη Ιστοσελίδα Obsidian](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+    hr_HR: |
+      Obsidian je self-hosted aplikacija za upravljanje znanjem namijenjena stvaranju, povezivanju i organiziranju bilješki, radeći na lokalnim Markdown datotekama, koristeći WebDAV i kasmVNC tehnologiju udaljene radne površine za pružanje gotovo izvornog iskustva u preglednicima. Njezino intuitivno sučelje podržava pohranjivanje i uređivanje bilješki na uređajima, osiguravajući potpuno vlasništvo podataka, idealno za stvaranje trajnog drugog mozga.
+
+      Osnovne značajke aplikacije uključuju robusno upravljanje bilješkama i povezivost, prikladne za različite scenarije. Dvosmjerno povezivanje povezuje povezane bilješke, stvarajući mrežu znanja, dok Graph View vizualizira odnose bilješki, pomažući korisnicima otkrivati skrivene veze. Podržava Markdown uređivanje s uživo pretpregledom za lako oblikovanje i strukturiranje. Stotine community dodataka i tema nude proširenu funkcionalnost poput kalendara, kanban ploča, PDF anotacije i napredne pretrage, omogućavajući prilagođene radne tokove. Canvas značajka pruža beskonačan prostor za vizualnu organizaciju, pomažući studentima organizirati istraživanja, piscima razvijati priče ili stručnjacima upravljati projektima. Bilješke se pohranjuju kao standardne Markdown datoteke, otvorene s bilo kojim uređivačem teksta, osiguravajući buduću portabilnost.
+
+      Poboljšava upotrebljivost kroz dokumentaciju koju pruža zajednica, i bilo da se radi o osobnim bazama znanja ili timskoj suradnji, visoka fleksibilnost i intuitivno rukovanje aplikacije nude moderno rješenje za upravljanje znanjem.
+
+      **Ključne značajke:**
+      - Lokalno pohranjivanje, osigurava potpuno vlasništvo podataka
+      - Dvosmjerno povezivanje bilješki za mrežu znanja
+      - Graph View za vizualizaciju veza bilješki
+      - Proširivi sustav dodataka za personalizirane potrebe
+      - Markdown podrška s uživo pretpregledom
+      - Beskonačni Canvas za vizualnu organizaciju
+      - Prilagođavanje tema za poboljšane vizuale
+
+      **Saznajte više:**
+      - [Obsidian Službena Web stranica](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+    pt_PT: |
+      Obsidian é uma aplicação de gestão de conhecimento auto-hospedada concebida para criar, ligar e organizar notas, operando em ficheiros Markdown locais, aproveitando a tecnologia de ambiente de trabalho remoto WebDAV e kasmVNC para proporcionar uma experiência quase nativa em navegadores. A sua interface intuitiva suporta o armazenamento e edição de notas em dispositivos, garantindo propriedade total dos dados, ideal para criar um segundo cérebro duradouro.
+
+      As funcionalidades principais da aplicação incluem gestão robusta de notas e conectividade, adequadas para vários cenários. A ligação bidirecional conecta notas relacionadas, formando uma rede de conhecimento, enquanto a Vista de Gráfico visualiza relacionamentos de notas, ajudando utilizadores a descobrir ligações ocultas. Suporta edição Markdown com pré-visualização ao vivo para formatação e estruturação fáceis. Centenas de plugins e temas da comunidade oferecem funcionalidade estendida como calendários, quadros kanban, anotação PDF e pesquisa avançada, permitindo fluxos de trabalho personalizados. A funcionalidade Canvas fornece espaço infinito de organização visual, ajudando estudantes a organizar investigação, escritores a desenvolver histórias, ou profissionais a gerir projetos. As notas são armazenadas como ficheiros Markdown padrão, abríveis com qualquer editor de texto, garantindo portabilidade à prova de futuro.
+
+      Melhora a usabilidade através de documentação fornecida pela comunidade, e seja para bases de conhecimento pessoais ou colaboração em equipa, a alta flexibilidade e operação intuitiva da aplicação oferecem uma solução moderna de gestão de conhecimento.
+
+      **Características Principais:**
+      - Armazenamento local, garantindo propriedade total dos dados
+      - Ligação bidirecional de notas para uma rede de conhecimento
+      - Vista de Gráfico para visualizar ligações de notas
+      - Sistema de plugins extensível para necessidades personalizadas
+      - Suporte Markdown com pré-visualização ao vivo
+      - Canvas infinito para organização visual
+      - Personalização de temas para visuais melhorados
+
+      **Saiba mais:**
+      - [Site Oficial Obsidian](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+    ru_RU: |
+      Obsidian — это самохостируемое приложение для управления знаниями, предназначенное для создания, связывания и организации заметок, работающее с локальными файлами Markdown и использующее технологию удаленного рабочего стола WebDAV и kasmVNC для обеспечения почти нативного опыта в браузерах. Его интуитивный интерфейс поддерживает хранение и редактирование заметок на устройствах, обеспечивая полное владение данными, идеально подходящее для создания долговечного второго мозга.
+
+      Основные функции приложения включают надежное управление заметками и связность, подходящие для различных сценариев. Двунаправленное связывание соединяет связанные заметки, формируя сеть знаний, в то время как График-вид визуализирует отношения заметок, помогая пользователям обнаруживать скрытые связи. Оно поддерживает редактирование Markdown с живым предпросмотром для легкого форматирования и структурирования. Сотни плагинов и тем сообщества предлагают расширенную функциональность, такую как календари, доски канбан, аннотирование PDF и расширенный поиск, обеспечивая настраиваемые рабочие процессы. Функция Canvas предоставляет бесконечное пространство визуальной организации, помогая студентам организовывать исследования, писателям разрабатывать истории, или профессионалам управлять проектами. Заметки хранятся как стандартные файлы Markdown, открываемые любым текстовым редактором, обеспечивая будущую портативность.
+
+      Оно улучшает удобство использования через документацию, предоставляемую сообществом, и будь то для личных баз знаний или командного сотрудничества, высокая гибкость и интуитивная работа приложения предлагают современное решение для управления знаниями.
+
+      **Основные функции:**
+      - Локальное хранилище, обеспечивающее полное владение данными
+      - Двунаправленное связывание заметок для сети знаний
+      - График-вид для визуализации связей заметок
+      - Расширяемая система плагинов для персонализированных потребностей
+      - Поддержка Markdown с живым предпросмотром
+      - Бесконечный Canvas для визуальной организации
+      - Настройка тем для улучшенных визуальных элементов
+
+      **Узнать больше:**
+      - [Официальный сайт Obsidian](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+    tr_TR: |
+      Obsidian, yerel Markdown dosyaları üzerinde çalışan, tarayıcılarda neredeyse yerel bir deneyim sunmak için WebDAV ve kasmVNC uzak masaüstü teknolojisini kullanan, notlar oluşturmak, bağlamak ve organize etmek için tasarlanmış, kendi kendine barındırılan bir bilgi yönetimi uygulamasıdır. Sezgisel arayüzü cihazlarda not depolama ve düzenlemeyi destekler, tam veri sahipliğini sağlar, kalıcı bir ikinci beyin oluşturmak için idealdir.
+
+      Uygulamanın temel özellikleri çeşitli senaryolar için uygun güçlü not yönetimi ve bağlantıyı içerir. Çift yönlü bağlantı ilgili notları birbirine bağlayarak bir bilgi ağı oluşturur, Graf Görünümü ise not ilişkilerini görselleştirerek kullanıcıların gizli bağlantıları keşfetmesine yardımcı olur. Kolay biçimlendirme ve yapılandırma için canlı önizleme ile Markdown düzenlemeyi destekler. Yüzlerce topluluk eklentisi ve teması takvimler, kanban panoları, PDF açıklama ve gelişmiş arama gibi genişletilmiş işlevsellik sunarak özelleştirilmiş iş akışlarını mümkün kılar. Canvas özelliği sonsuz görsel organizasyon alanı sağlayarak öğrencilerin araştırma organize etmesine, yazarların hikayeler geliştirmesine veya profesyonellerin projeleri yönetmesine yardımcı olur. Notlar herhangi bir metin düzenleyici ile açılabilen standart Markdown dosyaları olarak saklanır, gelecek garantili taşınabilirlik sağlar.
+
+      Topluluk tarafından sağlanan belgeler aracılığıyla kullanılabilirliği artırır ve ister kişisel bilgi tabanları ister takım işbirliği için olsun, uygulamanın yüksek esnekliği ve sezgisel işletimi modern bir bilgi yönetimi çözümü sunar.
+
+      **Temel Özellikler:**
+      - Yerel depolama, tam veri sahipliğini sağlar
+      - Bilgi ağı için çift yönlü not bağlantısı
+      - Not bağlantılarını görselleştirmek için Grafik Görünümü
+      - Kişiselleştirilmiş ihtiyaçlar için genişletilebilir eklenti sistemi
+      - Canlı önizleme ile Markdown desteği
+      - Görsel organizasyon için sonsuz Tuval
+      - Gelişmiş görseller için tema özelleştirmesi
+
+      **Daha fazla bilgi edinin:**
+      - [Obsidian Resmi Web Sitesi](https://obsidian.md)
+      - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Obsidian/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Obsidian/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Obsidian/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Obsidian/screenshot-3.png
+  thumbnail: ""
+  tips:
+    before_install:
+      en_US: |
+        HTTP Basic Authentication Default Account
+        
+        | Username | Password |
+        |----------|----------|
+        | `casaos`    | `casaos` |
+      en_GB: |
+        HTTP Basic Authentication Default Account
+        
+        | Username | Password |
+        |----------|----------|
+        | `casaos`    | `casaos` |
+      it_IT: |
+        Account predefinito per l'autenticazione HTTP Basic
+        
+        | Nome utente | Password |
+        |-------------|----------|
+        | `casaos`    | `casaos` |
+      nb_NO: |
+        HTTP Basic Authentication standardkonto
+        
+        | Brukernavn | Passord |
+        |------------|---------|
+        | `casaos`   | `casaos` |
+      zh_CN: |
+        HTTP 基本身份验证默认账号
+        
+        | 用户名 | 密码   |
+        | -------- | ---------- |
+        | `casaos`    | `casaos` |
+      ja_JP: |
+        HTTP 基本認証のデフォルトアカウント
+        
+        | ユーザー名 | パスワード |
+        |------------|-----------|
+        | `casaos`   | `casaos`  |
+      ko_KR: |
+        HTTP 기본 인증 기본 계정
+        
+        | 사용자명 | 비밀번호 |
+        |----------|----------|
+        | `casaos` | `casaos`  |
+      fr_FR: |
+        Compte par défaut pour l'authentification HTTP Basic
+        
+        | Nom d'utilisateur | Mot de passe |
+        |-------------------|--------------|
+        | `casaos`          | `casaos`     |
+      de_DE: |
+        HTTP Basic Authentication Standardkonto
+        
+        | Benutzername | Passwort |
+        |--------------|----------|
+        | `casaos`     | `casaos` |
+      sv_SE: |
+        HTTP Basic Authentication standardkonto
+        
+        | Användarnamn | Lösenord |
+        |--------------|----------|
+        | `casaos`     | `casaos` |
+      el_GR: |
+        Προεπιλεγμένος λογαριασμός HTTP Basic Authentication
+        
+        | Όνομα χρήστη | Κωδικός |
+        |--------------|---------|
+        | `casaos`     | `casaos` |
+      hr_HR: |
+        Zadani račun za HTTP Basic Authentication
+        
+        | Korisničko ime | Lozinka |
+        |----------------|---------|
+        | `casaos`       | `casaos` |
+      pt_PT: |
+        Conta padrão para autenticação HTTP Basic
+        
+        | Nome de utilizador | Palavra-passe |
+        |--------------------|---------------|
+        | `casaos`           | `casaos`      |
+      ru_RU: |
+        Учетная запись по умолчанию для HTTP Basic Authentication
+        
+        | Имя пользователя | Пароль  |
+        |------------------|---------|
+        | `casaos`         | `casaos` |
+      tr_TR: |
+        HTTP Basic Authentication varsayılan hesap
+        
+        | Kullanıcı adı | Şifre   |
+        |---------------|---------|
+        | `casaos`      | `casaos` |
+  scheme: http
+  port_map: "15323"
+  index: /
+  title:
+    en_US: Obsidian

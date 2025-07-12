@@ -10,7 +10,7 @@ services:
     network_mode: bridge
     restart: unless-stopped
     ports:
-      - 8285:8080
+      - "8285:8080"
     environment:
       - DB_HOST=romm-db
       - DB_PORT=13386
@@ -35,7 +35,7 @@ services:
         restart: true
     x-casaos:
       ports:
-        - container: 8080
+        - container: "8080"
           description:
             en_US: WebUI HTTP Port
             en_GB: WebUI HTTP Port
@@ -338,7 +338,7 @@ services:
     volumes:
       - /DATA/AppData/$AppID/mysql:/var/lib/mysql
     ports:
-      - 13386:3306 # Map host port 3306 to container port 3306
+      - "13386:3306" # Map host port 3306 to container port 3306
     healthcheck:
       test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
       start_period: 30s
@@ -348,7 +348,7 @@ services:
       retries: 5
     x-casaos:
       ports:
-        - container: 3306
+        - container: "3306"
           description:
             en_US: Database Port
             en_GB: Database Port

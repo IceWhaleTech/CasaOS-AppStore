@@ -10,7 +10,7 @@ services:
     network_mode: bridge
     ports:
       - target: 25600
-        published: 25600
+        published: "25600"
         protocol: tcp
     restart: unless-stopped
     volumes:
