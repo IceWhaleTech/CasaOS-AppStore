@@ -1,3 +1,10 @@
+v0.5.6
+  - GUI enhancements: Separated basic and advanced options for adding nodes
+  - Minor GUI fix: Resolved an issue where adding new node(s) would fail, it now removes the placeholder node and displays an popup alert message
+  - Custom Data Directory: Users can now (optionally) specify a custom data directory path for each new node or batch of new nodes
+  - Error Response Improvement: Enhanced the GUI error response for 404 page
+  - Codebase Refactor: Conducted a refactor of the codebase and added unit tests for a few data types and private APIs
+
 v0.5.5
   - Allow the user to specify the IP the node/s should listen on. The IP can be either set from the GUI or using a new `--ip-addr` argument now supported by the CLI `nodes create` command.
 
