@@ -1,0 +1,514 @@
+name: langflow
+services:
+  langflow:
+    image: langflowai/langflow:1.5.0
+    user: "0:0"
+    pull_policy: always
+    ports:
+      - target: 7860
+        published: "17860"
+        protocol: tcp
+    depends_on:
+      - postgres
+    environment:
+      - LANGFLOW_DATABASE_URL=postgresql://langflow:langflow@postgres:5432/langflow
+      - LANGFLOW_CONFIG_DIR=/app/langflow
+    volumes:
+      - type: volume
+        source: /DATA/AppData/langflow/backend
+        target: /app/langflow
+    x-casaos:
+      ports:
+        - container: "7860"
+          description:
+            en_US: Langflow Web Interface Port
+            en_GB: Langflow Web Interface Port
+            it_IT: Langflow Web Interface Port
+            nb_NO: Langflow Web Interface Port
+            zh_CN: Langflow Web界面端口
+            ja_JP: Langflow Webインターフェースポート
+            ko_KR: Langflow Web Interface Port
+            fr_FR: Langflow Web Interface Port
+            de_DE: Langflow Web Interface Port
+            sv_SE: Langflow Web Interface Port
+            el_GR: Langflow Web Interface Port
+            hr_HR: Langflow Web Interface Port
+            pt_PT: Langflow Web Interface Port
+            ru_RU: Langflow Web Interface Port
+            tr_TR: Langflow Web Interface Port
+      volumes:
+        - container: /app/langflow
+          description:
+            en_US: Langflow Configuration and Data Storage Directory
+            en_GB: Langflow Configuration and Data Storage Directory
+            it_IT: Langflow Configuration and Data Storage Directory
+            nb_NO: Langflow Configuration and Data Storage Directory
+            zh_CN: Langflow配置和数据存储目录
+            ja_JP: Langflow設定とデータストレージディレクトリ
+            ko_KR: Langflow Configuration and Data Storage Directory
+            fr_FR: Langflow Configuration and Data Storage Directory
+            de_DE: Langflow Configuration and Data Storage Directory
+            sv_SE: Langflow Configuration and Data Storage Directory
+            el_GR: Langflow Configuration and Data Storage Directory
+            hr_HR: Langflow Configuration and Data Storage Directory
+            pt_PT: Langflow Configuration and Data Storage Directory
+            ru_RU: Langflow Configuration and Data Storage Directory
+            tr_TR: Langflow Configuration and Data Storage Directory
+      envs:
+        - container: LANGFLOW_DATABASE_URL
+          description:
+            en_US: PostgreSQL Database Connection URL
+            en_GB: PostgreSQL Database Connection URL
+            it_IT: PostgreSQL Database Connection URL
+            nb_NO: PostgreSQL Database Connection URL
+            zh_CN: PostgreSQL数据库连接URL
+            ja_JP: PostgreSQLデータベース接続URL
+            ko_KR: PostgreSQL Database Connection URL
+            fr_FR: PostgreSQL Database Connection URL
+            de_DE: PostgreSQL Database Connection URL
+            sv_SE: PostgreSQL Database Connection URL
+            el_GR: PostgreSQL Database Connection URL
+            hr_HR: PostgreSQL Database Connection URL
+            pt_PT: PostgreSQL Database Connection URL
+            ru_RU: PostgreSQL Database Connection URL
+            tr_TR: PostgreSQL Database Connection URL
+        - container: LANGFLOW_CONFIG_DIR
+          description:
+            en_US: Directory for Langflow Configuration Files
+            en_GB: Directory for Langflow Configuration Files
+            it_IT: Directory for Langflow Configuration Files
+            nb_NO: Directory for Langflow Configuration Files
+            zh_CN: Langflow配置文件目录
+            ja_JP: Langflow設定ファイルディレクトリ
+            ko_KR: Directory for Langflow Configuration Files
+            fr_FR: Directory for Langflow Configuration Files
+            de_DE: Directory for Langflow Configuration Files
+            sv_SE: Directory for Langflow Configuration Files
+            el_GR: Directory for Langflow Configuration Files
+            hr_HR: Directory for Langflow Configuration Files
+            pt_PT: Directory for Langflow Configuration Files
+            ru_RU: Directory for Langflow Configuration Files
+            tr_TR: Directory for Langflow Configuration Files
+  postgres:
+    image: postgres:16
+    environment:
+      - POSTGRES_USER=langflow
+      - POSTGRES_PASSWORD=langflow
+      - POSTGRES_DB=langflow
+    ports:
+      - target: 5432
+        published: "15432"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: /DATA/AppData/langflow/postgres
+        target: /var/lib/postgresql/data
+    x-casaos:
+      ports:
+        - container: "5432"
+          description:
+            en_US: PostgreSQL Database Port
+            en_GB: PostgreSQL Database Port
+            it_IT: PostgreSQL Database Port
+            nb_NO: PostgreSQL Database Port
+            zh_CN: PostgreSQL数据库端口
+            ja_JP: PostgreSQLデータベースポート
+            ko_KR: PostgreSQL Database Port
+            fr_FR: PostgreSQL Database Port
+            de_DE: PostgreSQL Database Port
+            sv_SE: PostgreSQL Database Port
+            el_GR: PostgreSQL Database Port
+            hr_HR: PostgreSQL Database Port
+            pt_PT: PostgreSQL Database Port
+            ru_RU: PostgreSQL Database Port
+            tr_TR: PostgreSQL Database Port
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_US: PostgreSQL Data Storage Directory
+            en_GB: PostgreSQL Data Storage Directory
+            it_IT: PostgreSQL Data Storage Directory
+            nb_NO: PostgreSQL Data Storage Directory
+            zh_CN: PostgreSQL数据存储目录
+            ja_JP: PostgreSQLデータストレージディレクトリ
+            ko_KR: PostgreSQL Data Storage Directory
+            fr_FR: PostgreSQL Data Storage Directory
+            de_DE: PostgreSQL Data Storage Directory
+            sv_SE: PostgreSQL Data Storage Directory
+            el_GR: PostgreSQL Data Storage Directory
+            hr_HR: PostgreSQL Data Storage Directory
+            pt_PT: PostgreSQL Data Storage Directory
+            ru_RU: PostgreSQL Data Storage Directory
+            tr_TR: PostgreSQL Data Storage Directory
+      envs:
+        - container: POSTGRES_USER
+          description:
+            en_US: PostgreSQL Username
+            en_GB: PostgreSQL Username
+            it_IT: PostgreSQL Username
+            nb_NO: PostgreSQL Username
+            zh_CN: PostgreSQL用户名
+            ja_JP: PostgreSQLユーザー名
+            ko_KR: PostgreSQL Username
+            fr_FR: PostgreSQL Username
+            de_DE: PostgreSQL Username
+            sv_SE: PostgreSQL Username
+            el_GR: PostgreSQL Username
+            hr_HR: PostgreSQL Username
+            pt_PT: PostgreSQL Username
+            ru_RU: PostgreSQL Username
+            tr_TR: PostgreSQL Username
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: PostgreSQL Password
+            en_GB: PostgreSQL Password
+            it_IT: PostgreSQL Password
+            nb_NO: PostgreSQL Password
+            zh_CN: PostgreSQL密码
+            ja_JP: PostgreSQLパスワード
+            ko_KR: PostgreSQL Password
+            fr_FR: PostgreSQL Password
+            de_DE: PostgreSQL Password
+            sv_SE: PostgreSQL Password
+            el_GR: PostgreSQL Password
+            hr_HR: PostgreSQL Password
+            pt_PT: PostgreSQL Password
+            ru_RU: PostgreSQL Password
+            tr_TR: PostgreSQL Password
+        - container: POSTGRES_DB
+          description:
+            en_US: PostgreSQL Database Name
+            en_GB: PostgreSQL Database Name
+            it_IT: PostgreSQL Database Name
+            nb_NO: PostgreSQL Database Name
+            zh_CN: PostgreSQL数据库名称
+            ja_JP: PostgreSQLデータベース名
+            ko_KR: PostgreSQL Database Name
+            fr_FR: PostgreSQL Database Name
+            de_DE: PostgreSQL Database Name
+            sv_SE: PostgreSQL Database Name
+            el_GR: PostgreSQL Database Name
+            hr_HR: PostgreSQL Database Name
+            pt_PT: PostgreSQL Database Name
+            ru_RU: PostgreSQL Database Name
+            tr_TR: PostgreSQL Database Name
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: langflow
+  category: AI
+  developer: langflowai
+  author: langflowai
+  tagline:
+    en_US: Open-source UI for building and debugging multi-agent and RAG applications
+    en_GB: Open-source UI for building and debugging multi-agent and RAG applications
+    it_IT: Open-source UI for building and debugging multi-agent and RAG applications
+    nb_NO: Open-source UI for building and debugging multi-agent and RAG applications
+    zh_CN: 用于构建和调试多智能体和RAG应用的开源UI
+    ja_JP: マルチエージェントおよびRAGアプリケーションの構築とデバッグのためのオープンソースUI
+    ko_KR: Open-source UI for building and debugging multi-agent and RAG applications
+    fr_FR: Open-source UI for building and debugging multi-agent and RAG applications
+    de_DE: Open-source UI for building and debugging multi-agent and RAG applications
+    sv_SE: Open-source UI for building and debugging multi-agent and RAG applications
+    el_GR: Open-source UI for building and debugging multi-agent and RAG applications
+    hr_HR: Open-source UI for building and debugging multi-agent and RAG applications
+    pt_PT: Open-source UI for building and debugging multi-agent and RAG applications
+    ru_RU: Open-source UI for building and debugging multi-agent and RAG applications
+    tr_TR: Open-source UI for building and debugging multi-agent and RAG applications
+  description:
+    en_US: |
+      Langflow is a powerful, open-source UI designed specifically for building and debugging multi-agent and Retrieval-Augmented Generation (RAG) applications. It provides a visual, drag-and-drop interface that simplifies the process of creating complex AI workflows.
+      
+      The system consists of two main components:
+      - **Langflow**: The main application providing a visual interface for building AI workflows
+      - **PostgreSQL**: A robust database system for storing application data and configurations
+      
+      **Key Features:**
+      - Visual, drag-and-drop interface for building AI workflows
+      - Support for multi-agent systems and RAG applications
+      - Integrated debugging tools for testing and optimization
+      - Persistent storage for workflows and configurations
+      - Easy deployment with Docker containers
+      
+      **Learn More:**
+      - [Langflow Official Website](https://www.langflow.org)
+      - [Langflow GitHub Repository](https://github.com/langflow-ai/langflow)
+      - [Documentation](https://docs.langflow.org)
+    en_GB: |
+      Langflow is a powerful, open-source UI designed specifically for building and debugging multi-agent and Retrieval-Augmented Generation (RAG) applications. It provides a visual, drag-and-drop interface that simplifies the process of creating complex AI workflows.
+      
+      The system consists of two main components:
+      - **Langflow**: The main application providing a visual interface for building AI workflows
+      - **PostgreSQL**: A robust database system for storing application data and configurations
+      
+      **Key Features:**
+      - Visual, drag-and-drop interface for building AI workflows
+      - Support for multi-agent systems and RAG applications
+      - Integrated debugging tools for testing and optimisation
+      - Persistent storage for workflows and configurations
+      - Easy deployment with Docker containers
+      
+      **Learn More:**
+      - [Langflow Official Website](https://www.langflow.org)
+      - [Langflow GitHub Repository](https://github.com/langflow-ai/langflow)
+      - [Documentation](https://docs.langflow.org)
+    it_IT: |
+      Langflow is a powerful, open-source UI designed specifically for building and debugging multi-agent and Retrieval-Augmented Generation (RAG) applications. It provides a visual, drag-and-drop interface that simplifies the process of creating complex AI workflows.
+      
+      The system consists of two main components:
+      - **Langflow**: The main application providing a visual interface for building AI workflows
+      - **PostgreSQL**: A robust database system for storing application data and configurations
+      
+      **Key Features:**
+      - Visual, drag-and-drop interface for building AI workflows
+      - Support for multi-agent systems and RAG applications
+      - Integrated debugging tools for testing and optimization
+      - Persistent storage for workflows and configurations
+      - Easy deployment with Docker containers
+      
+      **Learn More:**
+      - [Langflow Official Website](https://www.langflow.org)
+      - [Langflow GitHub Repository](https://github.com/langflow-ai/langflow)
+      - [Documentation](https://docs.langflow.org)
+    nb_NO: |
+      Langflow is a powerful, open-source UI designed specifically for building and debugging multi-agent and Retrieval-Augmented Generation (RAG) applications. It provides a visual, drag-and-drop interface that simplifies the process of creating complex AI workflows.
+      
+      The system consists of two main components:
+      - **Langflow**: The main application providing a visual interface for building AI workflows
+      - **PostgreSQL**: A robust database system for storing application data and configurations
+      
+      **Key Features:**
+      - Visual, drag-and-drop interface for building AI workflows
+      - Support for multi-agent systems and RAG applications
+      - Integrated debugging tools for testing and optimization
+      - Persistent storage for workflows and configurations
+      - Easy deployment with Docker containers
+      
+      **Learn More:**
+      - [Langflow Official Website](https://www.langflow.org)
+      - [Langflow GitHub Repository](https://github.com/langflow-ai/langflow)
+      - [Documentation](https://docs.langflow.org)
+    zh_CN: |
+      Langflow是一个强大的开源UI，专门设计用于构建和调试多智能体和检索增强生成（RAG）应用程序。它提供了一个可视化的拖放界面，简化了创建复杂AI工作流的过程。
+      
+      该系统由两个主要组件组成：
+      - **Langflow**: 主应用程序，提供用于构建AI工作流的可视化界面
+      - **PostgreSQL**: 用于存储应用程序数据和配置的强大数据库系统
+      
+      **主要功能：**
+      - 可视化拖放界面，用于构建AI工作流
+      - 支持多智能体系统和RAG应用程序
+      - 集成调试工具，用于测试和优化
+      - 工作流和配置的持久化存储
+      - 使用Docker容器轻松部署
+      
+      **了解更多：**
+      - [Langflow官方网站](https://www.langflow.org)
+      - [Langflow GitHub仓库](https://github.com/langflow-ai/langflow)
+      - [文档](https://docs.langflow.org)
+    ja_JP: |
+      Langflowは、マルチエージェントおよび検索拡張生成（RAG）アプリケーションの構築とデバッグに特化して設計された、強力なオープンソースUIです。複雑なAIワークフローを作成するプロセスを簡素化する、視覚的なドラッグアンドドロップインターフェースを提供します。
+      
+      このシステムは2つの主要コンポーネントで構成されています：
+      - **Langflow**: AIワークフローを構築するための視覚的インターフェースを提供するメインアプリケーション
+      - **PostgreSQL**: アプリケーションデータと設定を保存するための堅牢なデータベースシステム
+      
+      **主な機能：**
+      - AIワークフロー構築のための視覚的ドラッグアンドドロップインターフェース
+      - マルチエージェントシステムとRAGアプリケーションのサポート
+      - テストと最適化のための統合デバッグツール
+      - ワークフローと設定の永続的ストレージ
+      - Dockerコンテナによる簡単なデプロイメント
+      
+      **詳細情報：**
+      - [Langflow公式ウェブサイト](https://www.langflow.org)
+      - [Langflow GitHubリポジトリ](https://github.com/langflow-ai/langflow)
+      - [ドキュメント](https://docs.langflow.org)
+    ko_KR: |
+      Langflow is a powerful, open-source UI designed specifically for building and debugging multi-agent and Retrieval-Augmented Generation (RAG) applications. It provides a visual, drag-and-drop interface that simplifies the process of creating complex AI workflows.
+      
+      The system consists of two main components:
+      - **Langflow**: The main application providing a visual interface for building AI workflows
+      - **PostgreSQL**: A robust database system for storing application data and configurations
+      
+      **Key Features:**
+      - Visual, drag-and-drop interface for building AI workflows
+      - Support for multi-agent systems and RAG applications
+      - Integrated debugging tools for testing and optimization
+      - Persistent storage for workflows and configurations
+      - Easy deployment with Docker containers
+      
+      **Learn More:**
+      - [Langflow Official Website](https://www.langflow.org)
+      - [Langflow GitHub Repository](https://github.com/langflow-ai/langflow)
+      - [Documentation](https://docs.langflow.org)
+    fr_FR: |
+      Langflow is a powerful, open-source UI designed specifically for building and debugging multi-agent and Retrieval-Augmented Generation (RAG) applications. It provides a visual, drag-and-drop interface that simplifies the process of creating complex AI workflows.
+      
+      The system consists of two main components:
+      - **Langflow**: The main application providing a visual interface for building AI workflows
+      - **PostgreSQL**: A robust database system for storing application data and configurations
+      
+      **Key Features:**
+      - Visual, drag-and-drop interface for building AI workflows
+      - Support for multi-agent systems and RAG applications
+      - Integrated debugging tools for testing and optimization
+      - Persistent storage for workflows and configurations
+      - Easy deployment with Docker containers
+      
+      **Learn More:**
+      - [Langflow Official Website](https://www.langflow.org)
+      - [Langflow GitHub Repository](https://github.com/langflow-ai/langflow)
+      - [Documentation](https://docs.langflow.org)
+    de_DE: |
+      Langflow is a powerful, open-source UI designed specifically for building and debugging multi-agent and Retrieval-Augmented Generation (RAG) applications. It provides a visual, drag-and-drop interface that simplifies the process of creating complex AI workflows.
+      
+      The system consists of two main components:
+      - **Langflow**: The main application providing a visual interface for building AI workflows
+      - **PostgreSQL**: A robust database system for storing application data and configurations
+      
+      **Key Features:**
+      - Visual, drag-and-drop interface for building AI workflows
+      - Support for multi-agent systems and RAG applications
+      - Integrated debugging tools for testing and optimization
+      - Persistent storage for workflows and configurations
+      - Easy deployment with Docker containers
+      
+      **Learn More:**
+      - [Langflow Official Website](https://www.langflow.org)
+      - [Langflow GitHub Repository](https://github.com/langflow-ai/langflow)
+      - [Documentation](https://docs.langflow.org)
+    sv_SE: |
+      Langflow is a powerful, open-source UI designed specifically for building and debugging multi-agent and Retrieval-Augmented Generation (RAG) applications. It provides a visual, drag-and-drop interface that simplifies the process of creating complex AI workflows.
+      
+      The system consists of two main components:
+      - **Langflow**: The main application providing a visual interface for building AI workflows
+      - **PostgreSQL**: A robust database system for storing application data and configurations
+      
+      **Key Features:**
+      - Visual, drag-and-drop interface for building AI workflows
+      - Support for multi-agent systems and RAG applications
+      - Integrated debugging tools for testing and optimization
+      - Persistent storage for workflows and configurations
+      - Easy deployment with Docker containers
+      
+      **Learn More:**
+      - [Langflow Official Website](https://www.langflow.org)
+      - [Langflow GitHub Repository](https://github.com/langflow-ai/langflow)
+      - [Documentation](https://docs.langflow.org)
+    el_GR: |
+      Langflow is a powerful, open-source UI designed specifically for building and debugging multi-agent and Retrieval-Augmented Generation (RAG) applications. It provides a visual, drag-and-drop interface that simplifies the process of creating complex AI workflows.
+      
+      The system consists of two main components:
+      - **Langflow**: The main application providing a visual interface for building AI workflows
+      - **PostgreSQL**: A robust database system for storing application data and configurations
+      
+      **Key Features:**
+      - Visual, drag-and-drop interface for building AI workflows
+      - Support for multi-agent systems and RAG applications
+      - Integrated debugging tools for testing and optimization
+      - Persistent storage for workflows and configurations
+      - Easy deployment with Docker containers
+      
+      **Learn More:**
+      - [Langflow Official Website](https://www.langflow.org)
+      - [Langflow GitHub Repository](https://github.com/langflow-ai/langflow)
+      - [Documentation](https://docs.langflow.org)
+    hr_HR: |
+      Langflow is a powerful, open-source UI designed specifically for building and debugging multi-agent and Retrieval-Augmented Generation (RAG) applications. It provides a visual, drag-and-drop interface that simplifies the process of creating complex AI workflows.
+      
+      The system consists of two main components:
+      - **Langflow**: The main application providing a visual interface for building AI workflows
+      - **PostgreSQL**: A robust database system for storing application data and configurations
+      
+      **Key Features:**
+      - Visual, drag-and-drop interface for building AI workflows
+      - Support for multi-agent systems and RAG applications
+      - Integrated debugging tools for testing and optimization
+      - Persistent storage for workflows and configurations
+      - Easy deployment with Docker containers
+      
+      **Learn More:**
+      - [Langflow Official Website](https://www.langflow.org)
+      - [Langflow GitHub Repository](https://github.com/langflow-ai/langflow)
+      - [Documentation](https://docs.langflow.org)
+    pt_PT: |
+      Langflow is a powerful, open-source UI designed specifically for building and debugging multi-agent and Retrieval-Augmented Generation (RAG) applications. It provides a visual, drag-and-drop interface that simplifies the process of creating complex AI workflows.
+      
+      The system consists of two main components:
+      - **Langflow**: The main application providing a visual interface for building AI workflows
+      - **PostgreSQL**: A robust database system for storing application data and configurations
+      
+      **Key Features:**
+      - Visual, drag-and-drop interface for building AI workflows
+      - Support for multi-agent systems and RAG applications
+      - Integrated debugging tools for testing and optimization
+      - Persistent storage for workflows and configurations
+      - Easy deployment with Docker containers
+      
+      **Learn More:**
+      - [Langflow Official Website](https://www.langflow.org)
+      - [Langflow GitHub Repository](https://github.com/langflow-ai/langflow)
+      - [Documentation](https://docs.langflow.org)
+    ru_RU: |
+      Langflow is a powerful, open-source UI designed specifically for building and debugging multi-agent and Retrieval-Augmented Generation (RAG) applications. It provides a visual, drag-and-drop interface that simplifies the process of creating complex AI workflows.
+      
+      The system consists of two main components:
+      - **Langflow**: The main application providing a visual interface for building AI workflows
+      - **PostgreSQL**: A robust database system for storing application data and configurations
+      
+      **Key Features:**
+      - Visual, drag-and-drop interface for building AI workflows
+      - Support for multi-agent systems and RAG applications
+      - Integrated debugging tools for testing and optimization
+      - Persistent storage for workflows and configurations
+      - Easy deployment with Docker containers
+      
+      **Learn More:**
+      - [Langflow Official Website](https://www.langflow.org)
+      - [Langflow GitHub Repository](https://github.com/langflow-ai/langflow)
+      - [Documentation](https://docs.langflow.org)
+    tr_TR: |
+      Langflow is a powerful, open-source UI designed specifically for building and debugging multi-agent and Retrieval-Augmented Generation (RAG) applications. It provides a visual, drag-and-drop interface that simplifies the process of creating complex AI workflows.
+      
+      The system consists of two main components:
+      - **Langflow**: The main application providing a visual interface for building AI workflows
+      - **PostgreSQL**: A robust database system for storing application data and configurations
+      
+      **Key Features:**
+      - Visual, drag-and-drop interface for building AI workflows
+      - Support for multi-agent systems and RAG applications
+      - Integrated debugging tools for testing and optimization
+      - Persistent storage for workflows and configurations
+      - Easy deployment with Docker containers
+      
+      **Learn More:**
+      - [Langflow Official Website](https://www.langflow.org)
+      - [Langflow GitHub Repository](https://github.com/langflow-ai/langflow)
+      - [Documentation](https://docs.langflow.org)
+  icon: https://cdn.jsdelivr.net/gh/langflow-ai/langflow@main/docs/assets/langflow_logo.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/langflow-ai/langflow@main/docs/assets/screenshot1.png
+    - https://cdn.jsdelivr.net/gh/langflow-ai/langflow@main/docs/assets/screenshot2.png
+    - https://cdn.jsdelivr.net/gh/langflow-ai/langflow@main/docs/assets/screenshot3.png
+  thumbnail: ""
+  scheme: http
+  port_map: "17860"
+  index: /
+  title:
+    en_US: Langflow
+    en_GB: Langflow
+    it_IT: Langflow
+    nb_NO: Langflow
+    zh_CN: Langflow
+    ja_JP: Langflow
+    ko_KR: Langflow
+    fr_FR: Langflow
+    de_DE: Langflow
+    sv_SE: Langflow
+    el_GR: Langflow
+    hr_HR: Langflow
+    pt_PT: Langflow
+    ru_RU: Langflow
+    tr_TR: Langflow

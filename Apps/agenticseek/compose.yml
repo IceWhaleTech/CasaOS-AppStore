@@ -1,0 +1,955 @@
+name: agentic-seek
+services:
+  redis:
+    container_name: agenticseek-redis
+    image: docker.io/valkey/valkey:8-alpine
+    command: valkey-server --save 30 1 --loglevel warning
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: /DATA/AppData/agenticseek/redis
+        target: /data
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+    networks:
+      - agentic-seek-net
+    x-casaos:
+      volumes:
+        - container: /data
+          description:
+            en_US: Redis Data Storage Directory
+            en_GB: Redis Data Storage Directory
+            it_IT: Redis Data Storage Directory
+            nb_NO: Redis Data Storage Directory
+            zh_CN: Redis数据存储目录
+            ja_JP: Redisデータストレージディレクトリ
+            ko_KR: Redis Data Storage Directory
+            fr_FR: Redis Data Storage Directory
+            de_DE: Redis Data Storage Directory
+            sv_SE: Redis Data Storage Directory
+            el_GR: Redis Data Storage Directory
+            hr_HR: Redis Data Storage Directory
+            pt_PT: Redis Data Storage Directory
+            ru_RU: Redis Data Storage Directory
+            tr_TR: Redis Data Storage Directory
+  searxng:
+    container_name: agenticseek-searxng
+    image: docker.io/searxng/searxng:2025.8.1-3d96414
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "18080"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/agneticseek/searxng
+        target: /etc/searxng
+    environment:
+      - SEARXNG_BASE_URL=${SEARXNG_BASE_URL:-http://localhost:8080/}
+      - SEARXNG_SECRET_KEY=${SEARXNG_SECRET_KEY}
+      - UWSGI_WORKERS=4
+      - UWSGI_THREADS=4
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "1"
+    depends_on:
+      - redis
+    networks:
+      - agentic-seek-net
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_US: SearXNG Web Interface Port
+            en_GB: SearXNG Web Interface Port
+            it_IT: SearXNG Web Interface Port
+            nb_NO: SearXNG Web Interface Port
+            zh_CN: SearXNG Web界面端口
+            ja_JP: SearXNG Webインターフェースポート
+            ko_KR: SearXNG Web Interface Port
+            fr_FR: SearXNG Web Interface Port
+            de_DE: SearXNG Web Interface Port
+            sv_SE: SearXNG Web Interface Port
+            el_GR: SearXNG Web Interface Port
+            hr_HR: SearXNG Web Interface Port
+            pt_PT: SearXNG Web Interface Port
+            ru_RU: SearXNG Web Interface Port
+            tr_TR: SearXNG Web Interface Port
+      volumes:
+        - container: /etc/searxng
+          description:
+            en_US: SearXNG Configuration Directory
+            en_GB: SearXNG Configuration Directory
+            it_IT: SearXNG Configuration Directory
+            nb_NO: SearXNG Configuration Directory
+            zh_CN: SearXNG配置目录
+            ja_JP: SearXNG設定ディレクトリ
+            ko_KR: SearXNG Configuration Directory
+            fr_FR: SearXNG Configuration Directory
+            de_DE: SearXNG Configuration Directory
+            sv_SE: SearXNG Configuration Directory
+            el_GR: SearXNG Configuration Directory
+            hr_HR: SearXNG Configuration Directory
+            pt_PT: SearXNG Configuration Directory
+            ru_RU: SearXNG Configuration Directory
+            tr_TR: SearXNG Configuration Directory
+      envs:
+        - container: SEARXNG_BASE_URL
+          description:
+            en_US: Base URL for SearXNG Instance
+            en_GB: Base URL for SearXNG Instance
+            it_IT: Base URL for SearXNG Instance
+            nb_NO: Base URL for SearXNG Instance
+            zh_CN: SearXNG实例的基础URL
+            ja_JP: SearXNGインスタンスのベースURL
+            ko_KR: Base URL for SearXNG Instance
+            fr_FR: Base URL for SearXNG Instance
+            de_DE: Base URL for SearXNG Instance
+            sv_SE: Base URL for SearXNG Instance
+            el_GR: Base URL for SearXNG Instance
+            hr_HR: Base URL for SearXNG Instance
+            pt_PT: Base URL for SearXNG Instance
+            ru_RU: Base URL for SearXNG Instance
+            tr_TR: Base URL for SearXNG Instance
+        - container: SEARXNG_SECRET_KEY
+          description:
+            en_US: Secret Key for SearXNG Security
+            en_GB: Secret Key for SearXNG Security
+            it_IT: Secret Key for SearXNG Security
+            nb_NO: Secret Key for SearXNG Security
+            zh_CN: SearXNG安全密钥
+            ja_JP: SearXNGセキュリティ用秘密鍵
+            ko_KR: Secret Key for SearXNG Security
+            fr_FR: Secret Key for SearXNG Security
+            de_DE: Secret Key for SearXNG Security
+            sv_SE: Secret Key for SearXNG Security
+            el_GR: Secret Key for SearXNG Security
+            hr_HR: Secret Key for SearXNG Security
+            pt_PT: Secret Key for SearXNG Security
+            ru_RU: Secret Key for SearXNG Security
+            tr_TR: Secret Key for SearXNG Security
+        - container: UWSGI_WORKERS
+          description:
+            en_US: Number of uWSGI Worker Processes
+            en_GB: Number of uWSGI Worker Processes
+            it_IT: Number of uWSGI Worker Processes
+            nb_NO: Number of uWSGI Worker Processes
+            zh_CN: uWSGI工作进程数量
+            ja_JP: uWSGIワーカープロセス数
+            ko_KR: Number of uWSGI Worker Processes
+            fr_FR: Number of uWSGI Worker Processes
+            de_DE: Number of uWSGI Worker Processes
+            sv_SE: Number of uWSGI Worker Processes
+            el_GR: Number of uWSGI Worker Processes
+            hr_HR: Number of uWSGI Worker Processes
+            pt_PT: Number of uWSGI Worker Processes
+            ru_RU: Number of uWSGI Worker Processes
+            tr_TR: Number of uWSGI Worker Processes
+        - container: UWSGI_THREADS
+          description:
+            en_US: Number of Threads per uWSGI Worker
+            en_GB: Number of Threads per uWSGI Worker
+            it_IT: Number of Threads per uWSGI Worker
+            nb_NO: Number of Threads per uWSGI Worker
+            zh_CN: 每个uWSGI工作进程的线程数
+            ja_JP: uWSGIワーカーごとのスレッド数
+            ko_KR: Number of Threads per uWSGI Worker
+            fr_FR: Number of Threads per uWSGI Worker
+            de_DE: Number of Threads per uWSGI Worker
+            sv_SE: Number of Threads per uWSGI Worker
+            el_GR: Number of Threads per uWSGI Worker
+            hr_HR: Number of Threads per uWSGI Worker
+            pt_PT: Number of Threads per uWSGI Worker
+            ru_RU: Number of Threads per uWSGI Worker
+            tr_TR: Number of Threads per uWSGI Worker
+  frontend:
+    image: fromxiaobai/agenticseek:v1
+    ports:
+      - target: 3000
+        published: "13000"
+        protocol: tcp
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_BACKEND_URL=http://localhost:7777
+    networks:
+      - agentic-seek-net
+    x-casaos:
+      ports:
+        - container: "3000"
+          description:
+            en_US: Frontend Web Interface Port
+            en_GB: Frontend Web Interface Port
+            it_IT: Frontend Web Interface Port
+            nb_NO: Frontend Web Interface Port
+            zh_CN: 前端Web界面端口
+            ja_JP: フロントエンドWebインターフェースポート
+            ko_KR: Frontend Web Interface Port
+            fr_FR: Frontend Web Interface Port
+            de_DE: Frontend Web Interface Port
+            sv_SE: Frontend Web Interface Port
+            el_GR: Frontend Web Interface Port
+            hr_HR: Frontend Web Interface Port
+            pt_PT: Frontend Web Interface Port
+            ru_RU: Frontend Web Interface Port
+            tr_TR: Frontend Web Interface Port
+      envs:
+        - container: NODE_ENV
+          description:
+            en_US: Node.js Environment Mode
+            en_GB: Node.js Environment Mode
+            it_IT: Node.js Environment Mode
+            nb_NO: Node.js Environment Mode
+            zh_CN: Node.js环境模式
+            ja_JP: Node.js環境モード
+            ko_KR: Node.js Environment Mode
+            fr_FR: Node.js Environment Mode
+            de_DE: Node.js Environment Mode
+            sv_SE: Node.js Environment Mode
+            el_GR: Node.js Environment Mode
+            hr_HR: Node.js Environment Mode
+            pt_PT: Node.js Environment Mode
+            ru_RU: Node.js Environment Mode
+            tr_TR: Node.js Environment Mode
+        - container: CHOKIDAR_USEPOLLING
+          description:
+            en_US: Enable File Watching Polling
+            en_GB: Enable File Watching Polling
+            it_IT: Enable File Watching Polling
+            nb_NO: Enable File Watching Polling
+            zh_CN: 启用文件监视轮询
+            ja_JP: ファイル監視ポーリングを有効化
+            ko_KR: Enable File Watching Polling
+            fr_FR: Enable File Watching Polling
+            de_DE: Enable File Watching Polling
+            sv_SE: Enable File Watching Polling
+            el_GR: Enable File Watching Polling
+            hr_HR: Enable File Watching Polling
+            pt_PT: Enable File Watching Polling
+            ru_RU: Enable File Watching Polling
+            tr_TR: Enable File Watching Polling
+        - container: REACT_APP_BACKEND_URL
+          description:
+            en_US: Backend API URL for Frontend
+            en_GB: Backend API URL for Frontend
+            it_IT: Backend API URL for Frontend
+            nb_NO: Backend API URL for Frontend
+            zh_CN: 前端使用的后端API URL
+            ja_JP: フロントエンド用バックエンドAPI URL
+            ko_KR: Backend API URL for Frontend
+            fr_FR: Backend API URL for Frontend
+            de_DE: Backend API URL for Frontend
+            sv_SE: Backend API URL for Frontend
+            el_GR: Backend API URL for Frontend
+            hr_HR: Backend API URL for Frontend
+            pt_PT: Backend API URL for Frontend
+            ru_RU: Backend API URL for Frontend
+            tr_TR: Backend API URL for Frontend
+  backend:
+    container_name: backend
+    image: fromxiaobai/agenticseek-back:v1
+    ports:
+      - target: ${BACKEND_PORT:-7777}
+        published: ${BACKEND_PORT:-7777}
+        protocol: tcp
+      - target: ${OLLAMA_PORT:-11434}
+        published: ${OLLAMA_PORT:-11434}
+        protocol: tcp
+      - target: ${LM_STUDIO_PORT:-1234}
+        published: ${LM_STUDIO_PORT:-1234}
+        protocol: tcp
+      - target: ${CUSTOM_ADDITIONAL_LLM_PORT:-8000}
+        published: ${CUSTOM_ADDITIONAL_LLM_PORT:-8000}
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: ${WORK_DIR:-/DATA/AppData/agneticseek/backend}
+        target: /opt/workspace
+    command: python3 /app/api.py
+    environment:
+      - SEARXNG_BASE_URL=${SEARXNG_BASE_URL:-http://agenticseek-searxng:8080}
+      - REDIS_URL=${REDIS_BASE_URL:-redis://agenticseek-redis:6379/0}
+      - WORK_DIR=/opt/workspace
+      - BACKEND_PORT=${BACKEND_PORT}
+      - DOCKER_INTERNAL_URL=http://host.docker.internal
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - TOGETHER_API_KEY=${TOGETHER_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - HUGGINGFACE_API_KEY=${HUGGINGFACE_API_KEY}
+      - DSK_DEEPSEEK_API_KEY=${DSK_DEEPSEEK_API_KEY}
+    networks:
+      - agentic-seek-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - redis
+      - searxng
+    x-casaos:
+      ports:
+        - container: "${BACKEND_PORT:-7777}"
+          description:
+            en_US: Backend API Port
+            en_GB: Backend API Port
+            it_IT: Backend API Port
+            nb_NO: Backend API Port
+            zh_CN: 后端API端口
+            ja_JP: バックエンドAPIポート
+            ko_KR: Backend API Port
+            fr_FR: Backend API Port
+            de_DE: Backend API Port
+            sv_SE: Backend API Port
+            el_GR: Backend API Port
+            hr_HR: Backend API Port
+            pt_PT: Backend API Port
+            ru_RU: Backend API Port
+            tr_TR: Backend API Port
+        - container: "${OLLAMA_PORT:-11434}"
+          description:
+            en_US: Ollama API Port
+            en_GB: Ollama API Port
+            it_IT: Porta API Ollama
+            nb_NO: Ollama API Port
+            zh_CN: Ollama API端口
+            ja_JP: Ollama APIポート
+            ko_KR: Ollama API 포트
+            fr_FR: Port API Ollama
+            de_DE: Ollama API Port
+            sv_SE: Ollama API Port
+            el_GR: Θύρα API Ollama
+            hr_HR: Ollama API Port
+            pt_PT: Porta API Ollama
+            ru_RU: API порт Ollama
+            tr_TR: Ollama API Portu
+        - container: "${LM_STUDIO_PORT:-1234}"
+          description:
+            en_US: LM Studio Service Port
+            en_GB: LM Studio Service Port
+            it_IT: LM Studio Service Port
+            nb_NO: LM Studio Service Port
+            zh_CN: LM Studio服务端口
+            ja_JP: LM Studioサービスポート
+            ko_KR: LM Studio Service Port
+            fr_FR: LM Studio Service Port
+            de_DE: LM Studio Service Port
+            sv_SE: LM Studio Service Port
+            el_GR: LM Studio Service Port
+            hr_HR: LM Studio Service Port
+            pt_PT: LM Studio Service Port
+            ru_RU: LM Studio Service Port
+            tr_TR: LM Studio Service Port
+        - container: "${CUSTOM_ADDITIONAL_LLM_PORT:-8000}"
+          description:
+            en_US: Custom LLM Service Port
+            en_GB: Custom LLM Service Port
+            it_IT: Custom LLM Service Port
+            nb_NO: Custom LLM Service Port
+            zh_CN: 自定义LLM服务端口
+            ja_JP: カスタムLLMサービスポート
+            ko_KR: Custom LLM Service Port
+            fr_FR: Custom LLM Service Port
+            de_DE: Custom LLM Service Port
+            sv_SE: Custom LLM Service Port
+            el_GR: Custom LLM Service Port
+            hr_HR: Custom LLM Service Port
+            pt_PT: Custom LLM Service Port
+            ru_RU: Custom LLM Service Port
+            tr_TR: Custom LLM Service Port
+      volumes:
+        - container: /opt/workspace
+          description:
+            en_US: Workspace Directory for Data Storage
+            en_GB: Workspace Directory for Data Storage
+            it_IT: Workspace Directory for Data Storage
+            nb_NO: Workspace Directory for Data Storage
+            zh_CN: 用于数据存储的工作区目录
+            ja_JP: データ保存用ワークスペースディレクトリ
+            ko_KR: Workspace Directory for Data Storage
+            fr_FR: Workspace Directory for Data Storage
+            de_DE: Workspace Directory for Data Storage
+            sv_SE: Workspace Directory for Data Storage
+            el_GR: Workspace Directory for Data Storage
+            hr_HR: Workspace Directory for Data Storage
+            pt_PT: Workspace Directory for Data Storage
+            ru_RU: Workspace Directory for Data Storage
+            tr_TR: Workspace Directory for Data Storage
+      envs:
+        - container: SEARXNG_BASE_URL
+          description:
+            en_US: URL for SearXNG Service
+            en_GB: URL for SearXNG Service
+            it_IT: URL for SearXNG Service
+            nb_NO: URL for SearXNG Service
+            zh_CN: SearXNG服务的URL
+            ja_JP: SearXNGサービスのURL
+            ko_KR: URL for SearXNG Service
+            fr_FR: URL for SearXNG Service
+            de_DE: URL for SearXNG Service
+            sv_SE: URL for SearXNG Service
+            el_GR: URL for SearXNG Service
+            hr_HR: URL for SearXNG Service
+            pt_PT: URL for SearXNG Service
+            ru_RU: URL for SearXNG Service
+            tr_TR: URL for SearXNG Service
+        - container: REDIS_URL
+          description:
+            en_US: Connection URL for Redis Service
+            en_GB: Connection URL for Redis Service
+            it_IT: Connection URL for Redis Service
+            nb_NO: Connection URL for Redis Service
+            zh_CN: Redis服务的连接URL
+            ja_JP: Redisサービスの接続URL
+            ko_KR: Connection URL for Redis Service
+            fr_FR: Connection URL for Redis Service
+            de_DE: Connection URL for Redis Service
+            sv_SE: Connection URL for Redis Service
+            el_GR: Connection URL for Redis Service
+            hr_HR: Connection URL for Redis Service
+            pt_PT: Connection URL for Redis Service
+            ru_RU: Connection URL for Redis Service
+            tr_TR: Connection URL for Redis Service
+        - container: WORK_DIR
+          description:
+            en_US: Working Directory Path
+            en_GB: Working Directory Path
+            it_IT: Working Directory Path
+            nb_NO: Working Directory Path
+            zh_CN: 工作目录路径
+            ja_JP: 作業ディレクトリパス
+            ko_KR: Working Directory Path
+            fr_FR: Working Directory Path
+            de_DE: Working Directory Path
+            sv_SE: Working Directory Path
+            el_GR: Working Directory Path
+            hr_HR: Working Directory Path
+            pt_PT: Working Directory Path
+            ru_RU: Working Directory Path
+            tr_TR: Working Directory Path
+        - container: BACKEND_PORT
+          description:
+            en_US: Backend Service Port Number
+            en_GB: Backend Service Port Number
+            it_IT: Backend Service Port Number
+            nb_NO: Backend Service Port Number
+            zh_CN: 后端服务端口号
+            ja_JP: バックエンドサービスポート番号
+            ko_KR: Backend Service Port Number
+            fr_FR: Backend Service Port Number
+            de_DE: Backend Service Port Number
+            sv_SE: Backend Service Port Number
+            el_GR: Backend Service Port Number
+            hr_HR: Backend Service Port Number
+            pt_PT: Backend Service Port Number
+            ru_RU: Backend Service Port Number
+            tr_TR: Backend Service Port Number
+        - container: DOCKER_INTERNAL_URL
+          description:
+            en_US: Docker Internal Network URL
+            en_GB: Docker Internal Network URL
+            it_IT: Docker Internal Network URL
+            nb_NO: Docker Internal Network URL
+            zh_CN: Docker内部网络URL
+            ja_JP: Docker内部ネットワークURL
+            ko_KR: Docker Internal Network URL
+            fr_FR: Docker Internal Network URL
+            de_DE: Docker Internal Network URL
+            sv_SE: Docker Internal Network URL
+            el_GR: Docker Internal Network URL
+            hr_HR: Docker Internal Network URL
+            pt_PT: Docker Internal Network URL
+            ru_RU: Docker Internal Network URL
+            tr_TR: Docker Internal Network URL
+        - container: OPENAI_API_KEY
+          description:
+            en_US: OpenAI API Authentication Key
+            en_GB: OpenAI API Authentication Key
+            it_IT: OpenAI API Authentication Key
+            nb_NO: OpenAI API Authentication Key
+            zh_CN: OpenAI API认证密钥
+            ja_JP: OpenAI API認証キー
+            ko_KR: OpenAI API Authentication Key
+            fr_FR: OpenAI API Authentication Key
+            de_DE: OpenAI API Authentication Key
+            sv_SE: OpenAI API Authentication Key
+            el_GR: OpenAI API Authentication Key
+            hr_HR: OpenAI API Authentication Key
+            pt_PT: OpenAI API Authentication Key
+            ru_RU: OpenAI API Authentication Key
+            tr_TR: OpenAI API Authentication Key
+        - container: DEEPSEEK_API_KEY
+          description:
+            en_US: DeepSeek API Authentication Key
+            en_GB: DeepSeek API Authentication Key
+            it_IT: DeepSeek API Authentication Key
+            nb_NO: DeepSeek API Authentication Key
+            zh_CN: DeepSeek API认证密钥
+            ja_JP: DeepSeek API認証キー
+            ko_KR: DeepSeek API Authentication Key
+            fr_FR: DeepSeek API Authentication Key
+            de_DE: DeepSeek API Authentication Key
+            sv_SE: DeepSeek API Authentication Key
+            el_GR: DeepSeek API Authentication Key
+            hr_HR: DeepSeek API Authentication Key
+            pt_PT: DeepSeek API Authentication Key
+            ru_RU: DeepSeek API Authentication Key
+            tr_TR: DeepSeek API Authentication Key
+        - container: OPENROUTER_API_KEY
+          description:
+            en_US: OpenRouter API Authentication Key
+            en_GB: OpenRouter API Authentication Key
+            it_IT: OpenRouter API Authentication Key
+            nb_NO: OpenRouter API Authentication Key
+            zh_CN: OpenRouter API认证密钥
+            ja_JP: OpenRouter API認証キー
+            ko_KR: OpenRouter API Authentication Key
+            fr_FR: OpenRouter API Authentication Key
+            de_DE: OpenRouter API Authentication Key
+            sv_SE: OpenRouter API Authentication Key
+            el_GR: OpenRouter API Authentication Key
+            hr_HR: OpenRouter API Authentication Key
+            pt_PT: OpenRouter API Authentication Key
+            ru_RU: OpenRouter API Authentication Key
+            tr_TR: OpenRouter API Authentication Key
+        - container: TOGETHER_API_KEY
+          description:
+            en_US: Together AI API Authentication Key
+            en_GB: Together AI API Authentication Key
+            it_IT: Together AI API Authentication Key
+            nb_NO: Together AI API Authentication Key
+            zh_CN: Together AI API认证密钥
+            ja_JP: Together AI API認証キー
+            ko_KR: Together AI API Authentication Key
+            fr_FR: Together AI API Authentication Key
+            de_DE: Together AI API Authentication Key
+            sv_SE: Together AI API Authentication Key
+            el_GR: Together AI API Authentication Key
+            hr_HR: Together AI API Authentication Key
+            pt_PT: Together AI API Authentication Key
+            ru_RU: Together AI API Authentication Key
+            tr_TR: Together AI API Authentication Key
+        - container: GOOGLE_API_KEY
+          description:
+            en_US: Google API Authentication Key
+            en_GB: Google API Authentication Key
+            it_IT: Google API Authentication Key
+            nb_NO: Google API Authentication Key
+            zh_CN: Google API认证密钥
+            ja_JP: Google API認証キー
+            ko_KR: Google API Authentication Key
+            fr_FR: Google API Authentication Key
+            de_DE: Google API Authentication Key
+            sv_SE: Google API Authentication Key
+            el_GR: Google API Authentication Key
+            hr_HR: Google API Authentication Key
+            pt_PT: Google API Authentication Key
+            ru_RU: Google API Authentication Key
+            tr_TR: Google API Authentication Key
+        - container: ANTHROPIC_API_KEY
+          description:
+            en_US: Anthropic API Authentication Key
+            en_GB: Anthropic API Authentication Key
+            it_IT: Anthropic API Authentication Key
+            nb_NO: Anthropic API Authentication Key
+            zh_CN: Anthropic API认证密钥
+            ja_JP: Anthropic API認証キー
+            ko_KR: Anthropic API Authentication Key
+            fr_FR: Anthropic API Authentication Key
+            de_DE: Anthropic API Authentication Key
+            sv_SE: Anthropic API Authentication Key
+            el_GR: Anthropic API Authentication Key
+            hr_HR: Anthropic API Authentication Key
+            pt_PT: Anthropic API Authentication Key
+            ru_RU: Anthropic API Authentication Key
+            tr_TR: Anthropic API Authentication Key
+        - container: HUGGINGFACE_API_KEY
+          description:
+            en_US: HuggingFace API Authentication Key
+            en_GB: HuggingFace API Authentication Key
+            it_IT: HuggingFace API Authentication Key
+            nb_NO: HuggingFace API Authentication Key
+            zh_CN: HuggingFace API认证密钥
+            ja_JP: HuggingFace API認証キー
+            ko_KR: HuggingFace API Authentication Key
+            fr_FR: HuggingFace API Authentication Key
+            de_DE: HuggingFace API Authentication Key
+            sv_SE: HuggingFace API Authentication Key
+            el_GR: HuggingFace API Authentication Key
+            hr_HR: HuggingFace API Authentication Key
+            pt_PT: HuggingFace API Authentication Key
+            ru_RU: HuggingFace API Authentication Key
+            tr_TR: HuggingFace API Authentication Key
+        - container: DSK_DEEPSEEK_API_KEY
+          description:
+            en_US: DSK DeepSeek API Authentication Key
+            en_GB: DSK DeepSeek API Authentication Key
+            it_IT: DSK DeepSeek API Authentication Key
+            nb_NO: DSK DeepSeek API Authentication Key
+            zh_CN: DSK DeepSeek API认证密钥
+            ja_JP: DSK DeepSeek API認証キー
+            ko_KR: DSK DeepSeek API Authentication Key
+            fr_FR: DSK DeepSeek API Authentication Key
+            de_DE: DSK DeepSeek API Authentication Key
+            sv_SE: DSK DeepSeek API Authentication Key
+            el_GR: DSK DeepSeek API Authentication Key
+            hr_HR: DSK DeepSeek API Authentication Key
+            pt_PT: DSK DeepSeek API Authentication Key
+            ru_RU: DSK DeepSeek API Authentication Key
+            tr_TR: DSK DeepSeek API Authentication Key
+volumes:
+  redis-data:
+    driver: local
+networks:
+  agentic-seek-net:
+    driver: bridge
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: backend
+  category: AI
+  developer: fromxiaobai
+  author: fromxiaobai
+  tagline:
+    en_US: AI-powered search and knowledge management system
+    en_GB: AI-powered search and knowledge management system
+    it_IT: AI-powered search and knowledge management system
+    nb_NO: AI-powered search and knowledge management system
+    zh_CN: AI驱动的搜索和知识管理系统
+    ja_JP: AI駆動の検索と知識管理システム
+    ko_KR: AI-powered search and knowledge management system
+    fr_FR: AI-powered search and knowledge management system
+    de_DE: AI-powered search and knowledge management system
+    sv_SE: AI-powered search and knowledge management system
+    el_GR: AI-powered search and knowledge management system
+    hr_HR: AI-powered search and knowledge management system
+    pt_PT: AI-powered search and knowledge management system
+    ru_RU: AI-powered search and knowledge management system
+    tr_TR: AI-powered search and knowledge management system
+  description:
+    en_US: |
+      Agentic Seek is a comprehensive AI-powered search and knowledge management system that combines multiple AI models and search engines to provide intelligent information retrieval and organization capabilities.
+      
+      The system consists of four main components:
+      - **Redis**: A high-performance in-memory database used for caching and session management
+      - **SearXNG**: A privacy-respecting metasearch engine that aggregates results from multiple search engines
+      - **Frontend**: A React-based web interface providing user interaction capabilities
+      - **Backend**: A Python-based API server that integrates various AI models and services
+      
+      **Key Features:**
+      - Multi-model AI integration (OpenAI, DeepSeek, Anthropic, etc.)
+      - Privacy-focused search through SearXNG
+      - Knowledge management and organization
+      - Customizable AI model routing
+      - Docker-based deployment for easy setup
+      
+      **Learn More:**
+      - [Project Documentation](https://github.com/Fosowl/agenticSeek)
+      - [Getting Started Guide](https://github.com/Fosowl/agenticSeek/wiki)
+    en_GB: |
+      Agentic Seek is a comprehensive AI-powered search and knowledge management system that combines multiple AI models and search engines to provide intelligent information retrieval and organisation capabilities.
+      
+      The system consists of four main components:
+      - **Redis**: A high-performance in-memory database used for caching and session management
+      - **SearXNG**: A privacy-respecting metasearch engine that aggregates results from multiple search engines
+      - **Frontend**: A React-based web interface providing user interaction capabilities
+      - **Backend**: A Python-based API server that integrates various AI models and services
+      
+      **Key Features:**
+      - Multi-model AI integration (OpenAI, DeepSeek, Anthropic, etc.)
+      - Privacy-focused search through SearXNG
+      - Knowledge management and organisation
+      - Customisable AI model routing
+      - Docker-based deployment for easy setup
+      
+      **Learn More:**
+      - [Project Documentation](https://github.com/Fosowl/agenticSeek)
+      - [Getting Started Guide](https://github.com/Fosowl/agenticSeek/wiki)
+    it_IT: |
+      Agentic Seek is a comprehensive AI-powered search and knowledge management system that combines multiple AI models and search engines to provide intelligent information retrieval and organization capabilities.
+      
+      The system consists of four main components:
+      - **Redis**: A high-performance in-memory database used for caching and session management
+      - **SearXNG**: A privacy-respecting metasearch engine that aggregates results from multiple search engines
+      - **Frontend**: A React-based web interface providing user interaction capabilities
+      - **Backend**: A Python-based API server that integrates various AI models and services
+      
+      **Key Features:**
+      - Multi-model AI integration (OpenAI, DeepSeek, Anthropic, etc.)
+      - Privacy-focused search through SearXNG
+      - Knowledge management and organization
+      - Customizable AI model routing
+      - Docker-based deployment for easy setup
+      
+      **Learn More:**
+      - [Project Documentation](https://github.com/Fosowl/agenticSeek)
+      - [Getting Started Guide](https://github.com/Fosowl/agenticSeek/wiki)
+    nb_NO: |
+      Agentic Seek is a comprehensive AI-powered search and knowledge management system that combines multiple AI models and search engines to provide intelligent information retrieval and organization capabilities.
+      
+      The system consists of four main components:
+      - **Redis**: A high-performance in-memory database used for caching and session management
+      - **SearXNG**: A privacy-respecting metasearch engine that aggregates results from multiple search engines
+      - **Frontend**: A React-based web interface providing user interaction capabilities
+      - **Backend**: A Python-based API server that integrates various AI models and services
+      
+      **Key Features:**
+      - Multi-model AI integration (OpenAI, DeepSeek, Anthropic, etc.)
+      - Privacy-focused search through SearXNG
+      - Knowledge management and organization
+      - Customizable AI model routing
+      - Docker-based deployment for easy setup
+      
+      **Learn More:**
+      - [Project Documentation](https://github.com/Fosowl/agenticSeek)
+      - [Getting Started Guide](https://github.com/Fosowl/agenticSeek/wiki)
+    zh_CN: |
+      Agentic Seek是一个全面的AI驱动搜索和知识管理系统，结合了多个AI模型和搜索引擎，提供智能信息检索和组织能力。
+      
+      该系统由四个主要组件组成：
+      - **Redis**: 用于缓存和会话管理的高性能内存数据库
+      - **SearXNG**: 一个尊重隐私的元搜索引擎，聚合多个搜索引擎的结果
+      - **前端**: 基于React的Web界面，提供用户交互能力
+      - **后端**: 基于Python的API服务器，集成各种AI模型和服务
+      
+      **主要功能：**
+      - 多模型AI集成（OpenAI、DeepSeek、Anthropic等）
+      - 通过SearXNG进行隐私保护的搜索
+      - 知识管理和组织
+      - 可定制的AI模型路由
+      - 基于Docker的部署，便于设置
+      
+      **了解更多：**
+      - [项目文档](https://github.com/Fosowl/agenticSeek)
+      - [入门指南](https://github.com/Fosowl/agenticSeek/wiki)
+    ja_JP: |
+      Agentic Seekは、複数のAIモデルと検索エンジンを組み合わせて、インテリジェントな情報検索と整理機能を提供する包括的なAI駆動型検索・知識管理システムです。
+      
+      このシステムは4つの主要コンポーネントで構成されています：
+      - **Redis**: キャッシュとセッション管理に使用される高性能インメモリデータベース
+      - **SearXNG**: 複数の検索エンジンから結果を集約するプライバシーを尊重するメタ検索エンジン
+      - **フロントエンド**: ユーザーインタラクション機能を提供するReactベースのWebインターフェース
+      - **バックエンド**: 様々なAIモデルとサービスを統合するPythonベースのAPIサーバー
+      
+      **主な機能：**
+      - マルチモデルAI統合（OpenAI、DeepSeek、Anthropicなど）
+      - SearXNGによるプライバシーに配慮した検索
+      - 知識管理と整理
+      - カスタマイズ可能なAIモデルルーティング
+      - セットアップが簡単なDockerベースのデプロイメント
+      
+      **詳細情報：**
+      - [プロジェクトドキュメント](https://github.com/Fosowl/agenticSeek)
+      - [スタートガイド](https://github.com/Fosowl/agenticSeek/wiki)
+    ko_KR: |
+      Agentic Seek is a comprehensive AI-powered search and knowledge management system that combines multiple AI models and search engines to provide intelligent information retrieval and organization capabilities.
+      
+      The system consists of four main components:
+      - **Redis**: A high-performance in-memory database used for caching and session management
+      - **SearXNG**: A privacy-respecting metasearch engine that aggregates results from multiple search engines
+      - **Frontend**: A React-based web interface providing user interaction capabilities
+      - **Backend**: A Python-based API server that integrates various AI models and services
+      
+      **Key Features:**
+      - Multi-model AI integration (OpenAI, DeepSeek, Anthropic, etc.)
+      - Privacy-focused search through SearXNG
+      - Knowledge management and organization
+      - Customizable AI model routing
+      - Docker-based deployment for easy setup
+      
+      **Learn More:**
+      - [Project Documentation](https://github.com/Fosowl/agenticSeek)
+      - [Getting Started Guide](https://github.com/Fosowl/agenticSeek/wiki)
+    fr_FR: |
+      Agentic Seek is a comprehensive AI-powered search and knowledge management system that combines multiple AI models and search engines to provide intelligent information retrieval and organization capabilities.
+      
+      The system consists of four main components:
+      - **Redis**: A high-performance in-memory database used for caching and session management
+      - **SearXNG**: A privacy-respecting metasearch engine that aggregates results from multiple search engines
+      - **Frontend**: A React-based web interface providing user interaction capabilities
+      - **Backend**: A Python-based API server that integrates various AI models and services
+      
+      **Key Features:**
+      - Multi-model AI integration (OpenAI, DeepSeek, Anthropic, etc.)
+      - Privacy-focused search through SearXNG
+      - Knowledge management and organization
+      - Customizable AI model routing
+      - Docker-based deployment for easy setup
+      
+      **Learn More:**
+      - [Project Documentation](https://github.com/Fosowl/agenticSeek)
+      - [Getting Started Guide](https://github.com/Fosowl/agenticSeek/wiki)
+    de_DE: |
+      Agentic Seek is a comprehensive AI-powered search and knowledge management system that combines multiple AI models and search engines to provide intelligent information retrieval and organization capabilities.
+      
+      The system consists of four main components:
+      - **Redis**: A high-performance in-memory database used for caching and session management
+      - **SearXNG**: A privacy-respecting metasearch engine that aggregates results from multiple search engines
+      - **Frontend**: A React-based web interface providing user interaction capabilities
+      - **Backend**: A Python-based API server that integrates various AI models and services
+      
+      **Key Features:**
+      - Multi-model AI integration (OpenAI, DeepSeek, Anthropic, etc.)
+      - Privacy-focused search through SearXNG
+      - Knowledge management and organization
+      - Customizable AI model routing
+      - Docker-based deployment for easy setup
+      
+      **Learn More:**
+      - [Project Documentation](https://github.com/Fosowl/agenticSeek)
+      - [Getting Started Guide](https://github.com/Fosowl/agenticSeek/wiki)
+    sv_SE: |
+      Agentic Seek is a comprehensive AI-powered search and knowledge management system that combines multiple AI models and search engines to provide intelligent information retrieval and organization capabilities.
+      
+      The system consists of four main components:
+      - **Redis**: A high-performance in-memory database used for caching and session management
+      - **SearXNG**: A privacy-respecting metasearch engine that aggregates results from multiple search engines
+      - **Frontend**: A React-based web interface providing user interaction capabilities
+      - **Backend**: A Python-based API server that integrates various AI models and services
+      
+      **Key Features:**
+      - Multi-model AI integration (OpenAI, DeepSeek, Anthropic, etc.)
+      - Privacy-focused search through SearXNG
+      - Knowledge management and organization
+      - Customizable AI model routing
+      - Docker-based deployment for easy setup
+      
+      **Learn More:**
+      - [Project Documentation](https://github.com/Fosowl/agenticSeek)
+      - [Getting Started Guide](https://github.com/Fosowl/agenticSeek/wiki)
+    el_GR: |
+      Agentic Seek is a comprehensive AI-powered search and knowledge management system that combines multiple AI models and search engines to provide intelligent information retrieval and organization capabilities.
+      
+      The system consists of four main components:
+      - **Redis**: A high-performance in-memory database used for caching and session management
+      - **SearXNG**: A privacy-respecting metasearch engine that aggregates results from multiple search engines
+      - **Frontend**: A React-based web interface providing user interaction capabilities
+      - **Backend**: A Python-based API server that integrates various AI models and services
+      
+      **Key Features:**
+      - Multi-model AI integration (OpenAI, DeepSeek, Anthropic, etc.)
+      - Privacy-focused search through SearXNG
+      - Knowledge management and organization
+      - Customizable AI model routing
+      - Docker-based deployment for easy setup
+      
+      **Learn More:**
+      - [Project Documentation](https://github.com/Fosowl/agenticSeek)
+      - [Getting Started Guide](https://github.com/Fosowl/agenticSeek/wiki)
+    hr_HR: |
+      Agentic Seek is a comprehensive AI-powered search and knowledge management system that combines multiple AI models and search engines to provide intelligent information retrieval and organization capabilities.
+      
+      The system consists of four main components:
+      - **Redis**: A high-performance in-memory database used for caching and session management
+      - **SearXNG**: A privacy-respecting metasearch engine that aggregates results from multiple search engines
+      - **Frontend**: A React-based web interface providing user interaction capabilities
+      - **Backend**: A Python-based API server that integrates various AI models and services
+      
+      **Key Features:**
+      - Multi-model AI integration (OpenAI, DeepSeek, Anthropic, etc.)
+      - Privacy-focused search through SearXNG
+      - Knowledge management and organization
+      - Customizable AI model routing
+      - Docker-based deployment for easy setup
+      
+      **Learn More:**
+      - [Project Documentation](https://github.com/Fosowl/agenticSeek)
+      - [Getting Started Guide](https://github.com/Fosowl/agenticSeek/wiki)
+    pt_PT: |
+      Agentic Seek is a comprehensive AI-powered search and knowledge management system that combines multiple AI models and search engines to provide intelligent information retrieval and organization capabilities.
+      
+      The system consists of four main components:
+      - **Redis**: A high-performance in-memory database used for caching and session management
+      - **SearXNG**: A privacy-respecting metasearch engine that aggregates results from multiple search engines
+      - **Frontend**: A React-based web interface providing user interaction capabilities
+      - **Backend**: A Python-based API server that integrates various AI models and services
+      
+      **Key Features:**
+      - Multi-model AI integration (OpenAI, DeepSeek, Anthropic, etc.)
+      - Privacy-focused search through SearXNG
+      - Knowledge management and organization
+      - Customizable AI model routing
+      - Docker-based deployment for easy setup
+      
+      **Learn More:**
+      - [Project Documentation](https://github.com/Fosowl/agenticSeek)
+      - [Getting Started Guide](https://github.com/Fosowl/agenticSeek/wiki)
+    ru_RU: |
+      Agentic Seek is a comprehensive AI-powered search and knowledge management system that combines multiple AI models and search engines to provide intelligent information retrieval and organization capabilities.
+      
+      The system consists of four main components:
+      - **Redis**: A high-performance in-memory database used for caching and session management
+      - **SearXNG**: A privacy-respecting metasearch engine that aggregates results from multiple search engines
+      - **Frontend**: A React-based web interface providing user interaction capabilities
+      - **Backend**: A Python-based API server that integrates various AI models and services
+      
+      **Key Features:**
+      - Multi-model AI integration (OpenAI, DeepSeek, Anthropic, etc.)
+      - Privacy-focused search through SearXNG
+      - Knowledge management and organization
+      - Customizable AI model routing
+      - Docker-based deployment for easy setup
+      
+      **Learn More:**
+      - [Project Documentation](https://github.com/Fosowl/agenticSeek)
+      - [Getting Started Guide](https://github.com/Fosowl/agenticSeek/wiki)
+    tr_TR: |
+      Agentic Seek is a comprehensive AI-powered search and knowledge management system that combines multiple AI models and search engines to provide intelligent information retrieval and organization capabilities.
+      
+      The system consists of four main components:
+      - **Redis**: A high-performance in-memory database used for caching and session management
+      - **SearXNG**: A privacy-respecting metasearch engine that aggregates results from multiple search engines
+      - **Frontend**: A React-based web interface providing user interaction capabilities
+      - **Backend**: A Python-based API server that integrates various AI models and services
+      
+      **Key Features:**
+      - Multi-model AI integration (OpenAI, DeepSeek, Anthropic, etc.)
+      - Privacy-focused search through SearXNG
+      - Knowledge management and organization
+      - Customizable AI model routing
+      - Docker-based deployment for easy setup
+      
+      **Learn More:**
+      - [Project Documentation](https://github.com/Fosowl/agenticSeek)
+      - [Getting Started Guide](https://github.com/Fosowl/agenticSeek/wiki)
+  icon: https://cdn.jsdelivr.net/gh/fromxiaobai/agentic-seek@main/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/fromxiaobai/agentic-seek@main/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/fromxiaobai/agentic-seek@main/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/fromxiaobai/agentic-seek@main/screenshot-3.png
+  thumbnail: ""
+  scheme: http
+  port_map: "13000"
+  index: /
+  title:
+    en_US: Agentic Seek
+    en_GB: Agentic Seek
+    it_IT: Agentic Seek
+    nb_NO: Agentic Seek
+    zh_CN: Agentic Seek
+    ja_JP: Agentic Seek
+    ko_KR: Agentic Seek
+    fr_FR: Agentic Seek
+    de_DE: Agentic Seek
+    sv_SE: Agentic Seek
+    el_GR: Agentic Seek
+    hr_HR: Agentic Seek
+    pt_PT: Agentic Seek
+    ru_RU: Agentic Seek
+    tr_TR: Agentic Seek
