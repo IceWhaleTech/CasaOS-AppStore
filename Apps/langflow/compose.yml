@@ -9,7 +9,7 @@ services:
         published: "17860"
         protocol: tcp
     depends_on:
-      - postgres
+      - langflow-postgres
     environment:
       - LANGFLOW_DATABASE_URL=postgresql://langflow-postgres:langflow@postgres:5432/langflow
       - LANGFLOW_CONFIG_DIR=/app/langflow

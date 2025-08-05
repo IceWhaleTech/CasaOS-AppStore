@@ -68,7 +68,7 @@ services:
         max-size: "1m"
         max-file: "1"
     depends_on:
-      - redis
+      - agenticseek-redis
     networks:
       - agentic-seek-net
     x-casaos:
@@ -297,8 +297,8 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
-      - redis
-      - searxng
+      - agenticseek-redis
+      - agenticseek-searxng
     x-casaos:
       ports:
         - container: "${BACKEND_PORT:-7777}"
