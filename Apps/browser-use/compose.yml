@@ -65,7 +65,7 @@ services:
       - VNC_PASSWORD=${VNC_PASSWORD:-youvncpassword}
     volumes:
       - type: bind
-        source: /DATA/AppData/browser-use
+        source: /DATA/AppData/$AppID
         target: /app/data/chrome_data
     shm_size: '2gb'
     cap_add:
