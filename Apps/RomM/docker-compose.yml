@@ -1,19 +1,19 @@
 name: romm
 services:
   romm:
-    image: rommapp/romm:3.10.2
+    image: rommapp/romm:4.0.1
     container_name: romm
     deploy:
       resources:
         reservations:
           memory: 512M
-    network_mode: bridge
+    networks:
+      - romm-network
     restart: unless-stopped
     ports:
       - "8285:8080"
     environment:
       - DB_HOST=romm-db
-      - DB_PORT=13386
       - DB_NAME=romm # Should match MARIADB_DATABASE in mariadb
       - DB_USER=romm-user # Should match MARIADB_USER in mariadb
       - DB_PASSWD=casaos # Should match MARIADB_PASSWORD in mariadb
@@ -327,9 +327,11 @@ services:
             ru_RU: "Ключ API SteamGridDB: https://github.com/rommapp/romm/wiki/Generate-API-Keys#steamgriddb"
             tr_TR: "SteamGridDB API Anahtarı: https://github.com/rommapp/romm/wiki/Generate-API-Keys#steamgriddb"
   romm-db:
-    image: mariadb:latest
+    image: mariadb:11.8.2
     container_name: romm-db
     restart: unless-stopped
+    networks:
+      - romm-network
     environment:
       - MARIADB_ROOT_PASSWORD=casaos # Use a unique, secure password
       - MARIADB_DATABASE=romm
@@ -337,8 +339,6 @@ services:
       - MARIADB_PASSWORD=casaos
     volumes:
       - /DATA/AppData/$AppID/mysql:/var/lib/mysql
-    ports:
-      - "13386:3306" # Map host port 3306 to container port 3306
     healthcheck:
       test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
       start_period: 30s
@@ -452,6 +452,9 @@ services:
             pt_PT: Palavra-passe da base de dados
             ru_RU: Пароль базы данных
             tr_TR: Veritabanı Şifresi
+networks:
+  romm-network:
+    driver: bridge
 x-casaos:
   architectures:
     - amd64
