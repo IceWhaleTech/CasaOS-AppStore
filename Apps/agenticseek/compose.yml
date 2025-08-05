@@ -6,7 +6,7 @@ services:
     command: valkey-server --save 30 1 --loglevel warning
     restart: unless-stopped
     volumes:
-      - type: volume
+      - type: bind
         source: /DATA/AppData/$AppID/redis
         target: /data
     cap_drop:

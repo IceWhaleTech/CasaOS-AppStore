@@ -98,7 +98,7 @@ services:
         published: "15432"
         protocol: tcp
     volumes:
-      - type: volume
+      - type: bind
         source: /DATA/AppData/$AppID/postgres
         target: /var/lib/postgresql/data
     x-casaos:
