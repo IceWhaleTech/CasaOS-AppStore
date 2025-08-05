@@ -156,23 +156,6 @@ services:
             pt_PT: Host da base de dados
             ru_RU: Хост базы данных
             tr_TR: Veritabanı Sunucusu
-        - container: DB_PORT
-          description:
-            en_US: Database Port
-            en_GB: Database Port
-            it_IT: Porta del database
-            nb_NO: Databaseport
-            zh_CN: 数据库端口
-            ja_JP: データベースポート
-            ko_KR: 데이터베이스 포트
-            fr_FR: Port de base de données
-            de_DE: Datenbank-Port
-            sv_SE: Databasport
-            el_GR: Θύρα βάσης δεδομένων
-            hr_HR: Port baze podataka
-            pt_PT: Porta da base de dados
-            ru_RU: Порт базы данных
-            tr_TR: Veritabanı Portu
         - container: DB_NAME
           description:
             en_US: Database Name
@@ -347,24 +330,6 @@ services:
       timeout: 5s
       retries: 5
     x-casaos:
-      ports:
-        - container: "3306"
-          description:
-            en_US: Database Port
-            en_GB: Database Port
-            it_IT: Porta del database
-            nb_NO: Databaseport
-            zh_CN: 数据库端口
-            ja_JP: データベースポート
-            ko_KR: 데이터베이스 포트
-            fr_FR: Port de base de données
-            de_DE: Datenbank-Port
-            sv_SE: Databasport
-            el_GR: Θύρα βάσης δεδομένων
-            hr_HR: Port baze podataka
-            pt_PT: Porta da base de dados
-            ru_RU: Порт базы данных
-            tr_TR: Veritabanı Portu
       volumes:
         - container: /var/lib/mysql
           description:
