@@ -11,7 +11,7 @@ services:
     depends_on:
       - langflow-postgres
     environment:
-      - LANGFLOW_DATABASE_URL=postgresql://langflow-postgres:langflow@postgres:5432/langflow
+      - LANGFLOW_DATABASE_URL=postgresql://langflow:langflow@langflow-postgres:5432/langflow
       - LANGFLOW_CONFIG_DIR=/app/langflow
     volumes:
       - /DATA/AppData/$AppID/backend:/app/langflow
