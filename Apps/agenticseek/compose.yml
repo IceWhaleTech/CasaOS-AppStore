@@ -1,13 +1,13 @@
-name: agentic-seek
+name: agenticseek
 services:
-  redis:
+  agenticseek-redis:
     container_name: agenticseek-redis
     image: docker.io/valkey/valkey:8-alpine
     command: valkey-server --save 30 1 --loglevel warning
     restart: unless-stopped
     volumes:
       - type: volume
-        source: /DATA/AppData/agenticseek/redis
+        source: /DATA/AppData/$AppID/redis
         target: /data
     cap_drop:
       - ALL
@@ -41,7 +41,7 @@ services:
             pt_PT: Diretório de Armazenamento de Dados Redis
             ru_RU: Каталог для хранения данных Redis
             tr_TR: Redis Veri Depolama Dizini
-  searxng:
+  agenticseek-searxng:
     container_name: agenticseek-searxng
     image: docker.io/searxng/searxng:2025.8.1-3d96414
     restart: unless-stopped
@@ -51,10 +51,10 @@ services:
         protocol: tcp
     volumes:
       - type: bind
-        source: /DATA/AppData/agneticseek/searxng
+        source: /DATA/AppData/$AppID/searxng
         target: /etc/searxng
     environment:
-      - SEARXNG_BASE_URL=${SEARXNG_BASE_URL:-http://localhost:8080/}
+      - SEARXNG_BASE_URL=${SEARXNG_BASE_URL:-http://agentic-seek-net:8080/}
       - SEARXNG_SECRET_KEY=${SEARXNG_SECRET_KEY}
       - UWSGI_WORKERS=4
       - UWSGI_THREADS=4
@@ -177,7 +177,7 @@ services:
             pt_PT: Número de Threads por Worker uWSGI
             ru_RU: Количество потоков на рабочий процесс uWSGI
             tr_TR: uWSGI İşlemci Başına Thread Sayısı
-  frontend:
+  agenticseek-frontend:
     image: fromxiaobai/agenticseek:v1
     ports:
       - target: 3000
@@ -186,7 +186,7 @@ services:
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
-      - REACT_APP_BACKEND_URL=http://localhost:7777
+      - REACT_APP_BACKEND_URL=http://agentic-seek-net:7777
     networks:
       - agentic-seek-net
     x-casaos:
@@ -260,25 +260,22 @@ services:
             pt_PT: URL da API de Backend para o Frontend
             ru_RU: URL API бэкенда для фронтенда
             tr_TR: Frontend için Backend API URL'si
-  backend:
+  agenticseek-backend:
     container_name: backend
     image: fromxiaobai/agenticseek-back:v1
     ports:
-      - target: ${BACKEND_PORT:-7777}
-        published: ${BACKEND_PORT:-7777}
+      - target: 7777
+        published: 7777
         protocol: tcp
-      - target: ${OLLAMA_PORT:-11434}
-        published: ${OLLAMA_PORT:-11434}
+      - target: 11434
+        published: 11434
         protocol: tcp
-      - target: ${LM_STUDIO_PORT:-1234}
-        published: ${LM_STUDIO_PORT:-1234}
-        protocol: tcp
-      - target: ${CUSTOM_ADDITIONAL_LLM_PORT:-8000}
-        published: ${CUSTOM_ADDITIONAL_LLM_PORT:-8000}
+      - target: 1234
+        published: 1234
         protocol: tcp
     volumes:
       - type: bind
-        source: ${WORK_DIR:-/DATA/AppData/agneticseek/backend}
+        source: ${WORK_DIR:-/DATA/AppData/$AppID/backend}
         target: /opt/workspace
     command: python3 /app/api.py
     environment:
@@ -612,9 +609,6 @@ services:
             pt_PT: Chave de Autenticação da API DSK DeepSeek
             ru_RU: Ключ аутентификации API DSK DeepSeek
             tr_TR: DSK DeepSeek API Kimlik Doğrulama Anahtarı
-volumes:
-  redis-data:
-    driver: local
 networks:
   agentic-seek-net:
     driver: bridge
