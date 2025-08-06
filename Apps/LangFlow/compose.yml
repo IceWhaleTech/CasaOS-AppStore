@@ -1,6 +1,7 @@
 name: langflow
 services:
   langflow:
+    container_name: langflow
     image: langflowai/langflow:1.5.0
     user: "0:0"
     pull_policy: always
@@ -90,6 +91,7 @@ services:
             ru_RU: Directory for Langflow Configuration Files
             tr_TR: Directory for Langflow Configuration Files
   langflow-postgres:
+    container_name: langflow-postgress
     image: postgres:16
     environment:
       - POSTGRES_USER=langflow
@@ -469,11 +471,11 @@ x-casaos:
       - [Langflow Resmi Web Sitesi](https://www.langflow.org)
       - [Langflow GitHub Deposu](https://github.com/langflow-ai/langflow)
       - [Belgeler](https://docs.langflow.org)
-  icon: https://cdn.jsdelivr.net/gh/https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/icon.png
   screenshot_link:
-    - https://cdn.jsdelivr.net/gh/langflow-ai/langflow@main/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/screenshot-1.png
-    - https://cdn.jsdelivr.net/gh/langflow-ai/langflow@main/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/screenshot-2.png
-    - https://cdn.jsdelivr.net/gh/langflow-ai/langflow@main/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/screenshot-3.png
   thumbnail: ""
   scheme: http
   port_map: "17860"
