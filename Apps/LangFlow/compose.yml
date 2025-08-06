@@ -24,72 +24,72 @@ services:
           description:
             en_US: Langflow Web Interface Port
             en_GB: Langflow Web Interface Port
-            it_IT: Langflow Web Interface Port
-            nb_NO: Langflow Web Interface Port
+            it_IT: Porta Interfaccia Web di Langflow
+            nb_NO: Langflow Web-grensesnittsport
             zh_CN: Langflow Web界面端口
             ja_JP: Langflow Webインターフェースポート
-            ko_KR: Langflow Web Interface Port
-            fr_FR: Langflow Web Interface Port
-            de_DE: Langflow Web Interface Port
-            sv_SE: Langflow Web Interface Port
-            el_GR: Langflow Web Interface Port
-            hr_HR: Langflow Web Interface Port
-            pt_PT: Langflow Web Interface Port
-            ru_RU: Langflow Web Interface Port
-            tr_TR: Langflow Web Interface Port
+            ko_KR: Langflow 웹 인터페이스 포트
+            fr_FR: Port de l'interface Web Langflow
+            de_DE: Langflow Web-Schnittstellen-Port
+            sv_SE: Langflow Webgränssnittsport
+            el_GR: Θύρα Διεπαφής Web Langflow
+            hr_HR: Langflow Web Sučelje Port
+            pt_PT: Porta da Interface Web Langflow
+            ru_RU: Порт веб-интерфейса Langflow
+            tr_TR: Langflow Web Arayüzü Portu
       volumes:
         - container: /app/langflow
           description:
             en_US: Langflow Configuration and Data Storage Directory
             en_GB: Langflow Configuration and Data Storage Directory
-            it_IT: Langflow Configuration and Data Storage Directory
-            nb_NO: Langflow Configuration and Data Storage Directory
+            it_IT: Directory di Configurazione e Archiviazione Dati Langflow
+            nb_NO: Langflow Konfigurasjons- og datalagringskatalog
             zh_CN: Langflow配置和数据存储目录
             ja_JP: Langflow設定とデータストレージディレクトリ
-            ko_KR: Langflow Configuration and Data Storage Directory
-            fr_FR: Langflow Configuration and Data Storage Directory
-            de_DE: Langflow Configuration and Data Storage Directory
-            sv_SE: Langflow Configuration and Data Storage Directory
-            el_GR: Langflow Configuration and Data Storage Directory
-            hr_HR: Langflow Configuration and Data Storage Directory
-            pt_PT: Langflow Configuration and Data Storage Directory
-            ru_RU: Langflow Configuration and Data Storage Directory
-            tr_TR: Langflow Configuration and Data Storage Directory
+            ko_KR: Langflow 구성 및 데이터 저장 디렉토리
+            fr_FR: Répertoire de configuration et de stockage des données Langflow
+            de_DE: Langflow Konfigurations- und Datenspeicherverzeichnis
+            sv_SE: Langflow konfigurations- och datalagringskatalog
+            el_GR: Κατάλογος Ρυθμίσεων και Αποθήκευσης Δεδομένων Langflow
+            hr_HR: Langflow Konfiguracijski i Direktorij za Pohranu Podataka
+            pt_PT: Diretório de Configuração e Armazenamento de Dados Langflow
+            ru_RU: Каталог конфигурации и хранения данных Langflow
+            tr_TR: Langflow Yapılandırma ve Veri Depolama Dizini
       envs:
         - container: LANGFLOW_DATABASE_URL
           description:
             en_US: PostgreSQL Database Connection URL
             en_GB: PostgreSQL Database Connection URL
-            it_IT: PostgreSQL Database Connection URL
+            it_IT: URL di Connessione al Database PostgreSQL
             nb_NO: PostgreSQL Database Connection URL
             zh_CN: PostgreSQL数据库连接URL
             ja_JP: PostgreSQLデータベース接続URL
-            ko_KR: PostgreSQL Database Connection URL
-            fr_FR: PostgreSQL Database Connection URL
-            de_DE: PostgreSQL Database Connection URL
-            sv_SE: PostgreSQL Database Connection URL
-            el_GR: PostgreSQL Database Connection URL
-            hr_HR: PostgreSQL Database Connection URL
-            pt_PT: PostgreSQL Database Connection URL
-            ru_RU: PostgreSQL Database Connection URL
-            tr_TR: PostgreSQL Database Connection URL
+            ko_KR: PostgreSQL 데이터베이스 연결 URL
+            fr_FR: URL de connexion à la base de données PostgreSQL
+            de_DE: PostgreSQL-Datenbankverbindungs-URL
+            sv_SE: PostgreSQL Databasanslutnings-URL
+            el_GR: URL Σύνδεσης Βάσης Δεδομένων PostgreSQL
+            hr_HR: PostgreSQL Veza s Bazom Podataka URL
+            pt_PT: URL de Conexão ao Banco de Dados PostgreSQL
+            ru_RU: URL подключения к базе данных PostgreSQL
+            tr_TR: PostgreSQL Veritabanı Bağlantı URL'si
         - container: LANGFLOW_CONFIG_DIR
           description:
             en_US: Directory for Langflow Configuration Files
             en_GB: Directory for Langflow Configuration Files
-            it_IT: Directory for Langflow Configuration Files
-            nb_NO: Directory for Langflow Configuration Files
+            it_IT: Directory per i File di Configurazione di Langflow
+            nb_NO: Mappe for Langflow konfigurasjonsfiler
             zh_CN: Langflow配置文件目录
             ja_JP: Langflow設定ファイルディレクトリ
-            ko_KR: Directory for Langflow Configuration Files
-            fr_FR: Directory for Langflow Configuration Files
-            de_DE: Directory for Langflow Configuration Files
-            sv_SE: Directory for Langflow Configuration Files
-            el_GR: Directory for Langflow Configuration Files
-            hr_HR: Directory for Langflow Configuration Files
-            pt_PT: Directory for Langflow Configuration Files
-            ru_RU: Directory for Langflow Configuration Files
-            tr_TR: Directory for Langflow Configuration Files
+            ko_KR: Langflow 구성 파일 디렉토리
+            fr_FR: Répertoire pour les fichiers de configuration Langflow
+            de_DE: Verzeichnis für Langflow-Konfigurationsdateien
+            sv_SE: Katalog för Langflow konfigurationsfiler
+            el_GR: Κατάλογος για Αρχεία Ρυθμίσεων Langflow
+            hr_HR: Direktorij za Langflow Konfiguracijske Datoteke
+            pt_PT: Diretório para Arquivos de Configuração Langflow
+            ru_RU: Каталог для файлов конфигурации Langflow
+            tr_TR: Langflow Yapılandırma Dosyaları Dizini
   langflow-postgres:
     container_name: langflow-postgress
     image: postgres:16
@@ -109,71 +109,71 @@ services:
           description:
             en_US: PostgreSQL Data Storage Directory
             en_GB: PostgreSQL Data Storage Directory
-            it_IT: PostgreSQL Data Storage Directory
-            nb_NO: PostgreSQL Data Storage Directory
+            it_IT: Directory di Archiviazione Dati PostgreSQL
+            nb_NO: PostgreSQL Datalagringskatalog
             zh_CN: PostgreSQL数据存储目录
             ja_JP: PostgreSQLデータストレージディレクトリ
-            ko_KR: PostgreSQL Data Storage Directory
-            fr_FR: PostgreSQL Data Storage Directory
-            de_DE: PostgreSQL Data Storage Directory
-            sv_SE: PostgreSQL Data Storage Directory
-            el_GR: PostgreSQL Data Storage Directory
-            hr_HR: PostgreSQL Data Storage Directory
-            pt_PT: PostgreSQL Data Storage Directory
-            ru_RU: PostgreSQL Data Storage Directory
-            tr_TR: PostgreSQL Data Storage Directory
+            ko_KR: PostgreSQL 데이터 저장 디렉토리
+            fr_FR: Répertoire de stockage des données PostgreSQL
+            de_DE: PostgreSQL-Datenspeicherverzeichnis
+            sv_SE: PostgreSQL datalagringskatalog
+            el_GR: Κατάλογος Αποθήκευσης Δεδομένων PostgreSQL
+            hr_HR: PostgreSQL Direktorij za Pohranu Podataka
+            pt_PT: Diretório de Armazenamento de Dados PostgreSQL
+            ru_RU: Каталог хранения данных PostgreSQL
+            tr_TR: PostgreSQL Veri Depolama Dizini
       envs:
         - container: POSTGRES_USER
           description:
             en_US: PostgreSQL Username
             en_GB: PostgreSQL Username
-            it_IT: PostgreSQL Username
-            nb_NO: PostgreSQL Username
+            it_IT: Nome Utente PostgreSQL
+            nb_NO: PostgreSQL Brukernavn
             zh_CN: PostgreSQL用户名
             ja_JP: PostgreSQLユーザー名
-            ko_KR: PostgreSQL Username
-            fr_FR: PostgreSQL Username
-            de_DE: PostgreSQL Username
-            sv_SE: PostgreSQL Username
-            el_GR: PostgreSQL Username
-            hr_HR: PostgreSQL Username
-            pt_PT: PostgreSQL Username
-            ru_RU: PostgreSQL Username
-            tr_TR: PostgreSQL Username
+            ko_KR: PostgreSQL 사용자 이름
+            fr_FR: Nom d'utilisateur PostgreSQL
+            de_DE: PostgreSQL-Benutzername
+            sv_SE: PostgreSQL Användarnamn
+            el_GR: Όνομα Χρήστη PostgreSQL
+            hr_HR: PostgreSQL Korisničko Ime
+            pt_PT: Nome de Utilizador PostgreSQL
+            ru_RU: Имя пользователя PostgreSQL
+            tr_TR: PostgreSQL Kullanıcı Adı
         - container: POSTGRES_PASSWORD
           description:
             en_US: PostgreSQL Password
             en_GB: PostgreSQL Password
-            it_IT: PostgreSQL Password
-            nb_NO: PostgreSQL Password
+            it_IT: Password PostgreSQL
+            nb_NO: PostgreSQL Passord
             zh_CN: PostgreSQL密码
             ja_JP: PostgreSQLパスワード
-            ko_KR: PostgreSQL Password
-            fr_FR: PostgreSQL Password
-            de_DE: PostgreSQL Password
-            sv_SE: PostgreSQL Password
-            el_GR: PostgreSQL Password
-            hr_HR: PostgreSQL Password
-            pt_PT: PostgreSQL Password
-            ru_RU: PostgreSQL Password
-            tr_TR: PostgreSQL Password
+            ko_KR: PostgreSQL 비밀번호
+            fr_FR: Mot de passe PostgreSQL
+            de_DE: PostgreSQL-Passwort
+            sv_SE: PostgreSQL Lösenord
+            el_GR: Κωδικός Πρόσβασης PostgreSQL
+            hr_HR: PostgreSQL Zaporka
+            pt_PT: Palavra-passe PostgreSQL
+            ru_RU: Пароль PostgreSQL
+            tr_TR: PostgreSQL Şifresi
         - container: POSTGRES_DB
           description:
             en_US: PostgreSQL Database Name
             en_GB: PostgreSQL Database Name
-            it_IT: PostgreSQL Database Name
-            nb_NO: PostgreSQL Database Name
+            it_IT: Nome Database PostgreSQL
+            nb_NO: PostgreSQL Databasenavn
             zh_CN: PostgreSQL数据库名称
             ja_JP: PostgreSQLデータベース名
-            ko_KR: PostgreSQL Database Name
-            fr_FR: PostgreSQL Database Name
-            de_DE: PostgreSQL Database Name
-            sv_SE: PostgreSQL Database Name
-            el_GR: PostgreSQL Database Name
-            hr_HR: PostgreSQL Database Name
-            pt_PT: PostgreSQL Database Name
-            ru_RU: PostgreSQL Database Name
-            tr_TR: PostgreSQL Database Name
+            ko_KR: PostgreSQL 데이터베이스 이름
+            fr_FR: Nom de la base de données PostgreSQL
+            de_DE: PostgreSQL-Datenbankname
+            sv_SE: PostgreSQL Databasnamn
+            el_GR: Όνομα Βάσης Δεδομένων PostgreSQL
+            hr_HR: PostgreSQL Ime Baze Podataka
+            pt_PT: Nome da Base de Dados PostgreSQL
+            ru_RU: Имя базы данных PostgreSQL
+            tr_TR: PostgreSQL Veritabanı Adı
 networks:
   langflow-net:
     driver: bridge
