@@ -3,7 +3,7 @@ services:
     image: fromxiaobai/openhands:v1
     container_name: openhands-app
     environment:
-      - SANDBOX_RUNTIME_CONTAINER_IMAGE=${SANDBOX_RUNTIME_CONTAINER_IMAGE:-docker.all-hands.dev/all-hands-ai/runtime:0.51-nikolaik}
+      - SANDBOX_RUNTIME_CONTAINER_IMAGE=docker.all-hands.dev/all-hands-ai/runtime:0.51-nikolaik
       #- SANDBOX_USER_ID=${SANDBOX_USER_ID:-1234} # enable this only if you want a specific non-root sandbox user but you will have to manually adjust permissions of ~/.openhands for this user
       - WORKSPACE_MOUNT_PATH=/DATA/AppData/$AppID/workspace
     ports:
@@ -14,7 +14,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /DATA/AppData/$AppID/.openhands:/.openhands
       - /DATA/AppData/$AppID/workspace:/opt/workspace_base
-    pull_policy: build
     stdin_open: true
     tty: true
     x-casaos:
