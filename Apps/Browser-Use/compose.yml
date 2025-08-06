@@ -11,18 +11,10 @@ services:
           memory: 2G
     restart: unless-stopped
     ports:
-      - target: 7788
-        published: "17788"
-        protocol: tcp
-      - target: 6080
-        published: "16080"
-        protocol: tcp
-      - target: 5901
-        published: "15901"
-        protocol: tcp
-      - target: 9222
-        published: "19222"
-        protocol: tcp
+      - "17788:7788"
+      - "16080:6080"
+      - "15901:5901"
+      - "19222:9222"
     environment:
       - OPENAI_ENDPOINT=${OPENAI_ENDPOINT:-https://api.openai.com/v1}
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
@@ -48,25 +40,26 @@ services:
       - IBM_ENDPOINT=${IBM_ENDPOINT:-https://us-south.ml.cloud.ibm.com}
       - IBM_API_KEY=${IBM_API_KEY:-}
       - IBM_PROJECT_ID=${IBM_PROJECT_ID:-}
-      - ANONYMIZED_TELEMETRY=${ANONYMIZED_TELEMETRY:-false}
-      - BROWSER_USE_LOGGING_LEVEL=${BROWSER_USE_LOGGING_LEVEL:-info}
+      - ANONYMIZED_TELEMETRY=false
+      - BROWSER_USE_LOGGING_LEVEL=info
       - BROWSER_PATH=
       - BROWSER_USER_DATA=
-      - BROWSER_DEBUGGING_PORT=${BROWSER_DEBUGGING_PORT:-9222}
+      - BROWSER_DEBUGGING_PORT=9222
       - BROWSER_DEBUGGING_HOST=localhost
       - USE_OWN_BROWSER=false
       - KEEP_BROWSER_OPEN=true
       - BROWSER_CDP=${BROWSER_CDP:-}
       - DISPLAY=:99
       - PLAYWRIGHT_BROWSERS_PATH=/ms-browsers
-      - RESOLUTION=${RESOLUTION:-1920x1080x24}
-      - RESOLUTION_WIDTH=${RESOLUTION_WIDTH:-1920}
-      - RESOLUTION_HEIGHT=${RESOLUTION_HEIGHT:-1080}
-      - VNC_PASSWORD=${VNC_PASSWORD:-youvncpassword}
+      - RESOLUTION=1920x1080x24
+      - RESOLUTION_WIDTH=1920
+      - RESOLUTION_HEIGHT=1080
+      - VNC_PASSWORD=password
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID
         target: /app/data/chrome_data
+      - /tmp/.X11-unix:/tmp/.X11-unix
     shm_size: '2gb'
     cap_add:
       - SYS_ADMIN
@@ -79,7 +72,7 @@ services:
       retries: 3
     x-casaos:
       ports:
-        - container: "7788"
+        - container: "17788"
           description:
             en_US: Web UI Port
             en_GB: Web UI Port
@@ -219,7 +212,7 @@ x-casaos:
       
       **Learn More:**
       - [Browser Use GitHub Repository](https://github.com/browser-use/browser-use)
-      - [Browser Use Documentation](https://browser-use.readthedocs.io/)
+      - [Browser Use Documentation](https://docs.browser-use.com/)
     en_GB: |
       Browser Use Web UI is a powerful tool that combines AI agents with browser automation to create an intelligent web interaction system. It provides a user-friendly web interface that allows users to control and monitor AI agents as they navigate websites, fill forms, extract data, and perform complex web tasks automatically.
       
@@ -250,7 +243,7 @@ x-casaos:
       
       **Learn More:**
       - [Browser Use GitHub Repository](https://github.com/browser-use/browser-use)
-      - [Browser Use Documentation](https://browser-use.readthedocs.io/)
+      - [Browser Use Documentation](https://docs.browser-use.com/)
     it_IT: |
       Browser Use Web UI è un potente strumento che combina agenti AI con l'automazione del browser per creare un sistema intelligente di interazione web. Fornisce un'interfaccia web user-friendly che permette agli utenti di controllare e monitorare gli agenti AI mentre navigano sui siti web, compilano moduli, estraggono dati ed eseguono compiti web complessi automaticamente.
       
@@ -281,7 +274,7 @@ x-casaos:
       
       **Scopri di Più:**
       - [Repository GitHub Browser Use](https://github.com/browser-use/browser-use)
-      - [Documentazione Browser Use](https://browser-use.readthedocs.io/)
+      - [Documentazione Browser Use](https://docs.browser-use.com/)
     nb_NO: |
       Browser Use Web UI er et kraftig verktøy som kombinerer AI-agenter med nettleserautomatisering for å skape et intelligent vekselvirkningssystem for nett. Det gir et brukervennlig web-grensesnitt som lar brukere kontrollere og overvåke AI-agenter mens de navigerer på nettsteder, fyller ut skjemaer, trekker ut data og utfører komplekse nettoppgaver automatisk.
       
@@ -312,7 +305,7 @@ x-casaos:
       
       **Lær Mer:**
       - [Browser Use GitHub Repository](https://github.com/browser-use/browser-use)
-      - [Browser Use Dokumentasjon](https://browser-use.readthedocs.io/)
+      - [Browser Use Dokumentasjon](https://docs.browser-use.com/)
     zh_CN: |
       Browser Use Web UI 是一个强大的工具，它将 AI 代理与浏览器自动化相结合，创建了一个智能的 Web 交互系统。它提供了一个用户友好的 Web 界面，允许用户控制和监控 AI 代理自动导航网站、填写表单、提取数据和执行复杂的 Web 任务。
       
@@ -343,7 +336,7 @@ x-casaos:
       
       **了解更多：**
       - [Browser Use GitHub 仓库](https://github.com/browser-use/browser-use)
-      - [Browser Use 文档](https://browser-use.readthedocs.io/)
+      - [Browser Use 文档](https://docs.browser-use.com/)
     ja_JP: |
       Browser Use Web UIは、AIエージェントとブラウザ自動化を組み合わせて、インテリジェントなWeb対話システムを作成する強力なツールです。ユーザーフレンドリーなWebインターフェースを提供し、ユーザーがAIエージェントがWebサイトをナビゲートし、フォームを埋め、データを抽出し、複雑なWebタスクを自動的に実行するのを制御および監視できます。
       
@@ -374,7 +367,7 @@ x-casaos:
       
       **詳細情報：**
       - [Browser Use GitHubリポジトリ](https://github.com/browser-use/browser-use)
-      - [Browser Useドキュメント](https://browser-use.readthedocs.io/)
+      - [Browser Useドキュメント](https://docs.browser-use.com/)
     ko_KR: |
       Browser Use Web UI는 AI 에이전트와 브라우저 자동화를 결합하여 지능적인 웹 상호작용 시스템을 만드는 강력한 도구입니다. 사용자 친화적인 웹 인터페이스를 제공하여 사용자가 AI 에이전트가 웹사이트를 탐색하고, 양식을 채우고, 데이터를 추출하고, 복잡한 웹 작업을 자동으로 수행하는 것을 제어하고 모니터링할 수 있습니다.
       
@@ -405,7 +398,7 @@ x-casaos:
       
       **더 알아보기:**
       - [Browser Use GitHub 저장소](https://github.com/browser-use/browser-use)
-      - [Browser Use 문서](https://browser-use.readthedocs.io/)
+      - [Browser Use 문서](https://docs.browser-use.com/)
     fr_FR: |
       Browser Use Web UI est un outil puissant qui combine des agents IA avec l'automatisation du navigateur pour créer un système intelligent d'interaction web. Il fournit une interface web conviviale qui permet aux utilisateurs de contrôler et de surveiller les agents IA alors qu'ils naviguent sur les sites web, remplissent des formulaires, extraient des données et effectuent des tâches web complexes automatiquement.
       
@@ -436,7 +429,7 @@ x-casaos:
       
       **En Savoir Plus :**
       - [Dépôt GitHub Browser Use](https://github.com/browser-use/browser-use)
-      - [Documentation Browser Use](https://browser-use.readthedocs.io/)
+      - [Documentation Browser Use](https://docs.browser-use.com/)
     de_DE: |
       Browser Use Web UI ist ein leistungsstarkes Tool, das KI-Agenten mit Browser-Automatisierung kombiniert, um ein intelligentes Web-Interaktionssystem zu schaffen. Es bietet eine benutzerfreundliche Weboberfläche, mit der Benutzer KI-Agenten steuern und überwachen können, während sie Websites navigieren, Formulare ausfüllen, Daten extrahieren und komplexe Web-Aufgaben automatisch ausführen.
       
@@ -467,7 +460,7 @@ x-casaos:
       
       **Mehr Erfahren:**
       - [Browser Use GitHub Repository](https://github.com/browser-use/browser-use)
-      - [Browser Use Dokumentation](https://browser-use.readthedocs.io/)
+      - [Browser Use Dokumentation](https://docs.browser-use.com/)
     sv_SE: |
       Browser Use Web UI är ett kraftfullt verktyg som kombinerar AI-agenter med webbläsarautomatisering för att skapa ett intelligent webbinteraktionssystem. Det ger ett användarvänligt webbgränssnitt som låter användare kontrollera och övervaka AI-agenter medan de navigerar på webbplatser, fyller i formulär, extraherar data och utför komplexa webbuppgifter automatiskt.
       
@@ -498,7 +491,7 @@ x-casaos:
       
       **Läs Mer:**
       - [Browser Use GitHub Repository](https://github.com/browser-use/browser-use)
-      - [Browser Use Dokumentation](https://browser-use.readthedocs.io/)
+      - [Browser Use Dokumentation](https://docs.browser-use.com/)
     el_GR: |
       Το Browser Use Web UI είναι ένα ισχυρό εργαλείο που συνδυάζει παράγοντες AI με την αυτοματοποίηση προγράμματος περιήγησης για τη δημιουργία ενός ευφυούς συστήματος αλληλεπίδρασης ιστού. Παρέχει ένα φιλικό προς τον χρήστη περιβάλλον εργασίας web που επιτρέπει στους χρήστες να ελέγχουν και να παρακολουθούν τους παράγοντες AI καθώς πλοηγούνται σε ιστοσελίδες, συμπληρώνουν φόρμες, εξάγουν δεδομένα και εκτελούν αυτόματα πολύπλοκες εργασίες ιστού.
       
@@ -529,7 +522,7 @@ x-casaos:
       
       **Μάθετε Περισσότερα:**
       - [Browser Use GitHub Repository](https://github.com/browser-use/browser-use)
-      - [Browser Use Τεκμηρίωση](https://browser-use.readthedocs.io/)
+      - [Browser Use Τεκμηρίωση](https://docs.browser-use.com/)
     hr_HR: |
       Browser Use Web UI je moćan alat koji kombinira AI agente s automatizacijom preglednika za stvaranje inteligentnog sustava web interakcije. Pruža korisnički pristojno web sučelje koje omogućuje korisnicima da kontroliraju i nadziru AI agente dok oni navigiraju web stranicama, popunjavaju obrasce, izvlače podatke i izvode složene web zadatke automatski.
       
@@ -560,7 +553,7 @@ x-casaos:
       
       **Saznajte Više:**
       - [Browser Use GitHub Repozitorij](https://github.com/browser-use/browser-use)
-      - [Browser Use Dokumentacija](https://browser-use.readthedocs.io/)
+      - [Browser Use Dokumentacija](https://docs.browser-use.com/)
     pt_PT: |
       Browser Use Web UI é uma ferramenta poderosa que combina agentes de IA com automação de navegador para criar um sistema inteligente de interação web. Fornece uma interface web amigável que permite aos utilizadores controlar e monitorar agentes de IA enquanto eles navegam em sites, preenchem formulários, extraem dados e executam tarefas web complexas automaticamente.
       
@@ -591,7 +584,7 @@ x-casaos:
       
       **Saiba Mais:**
       - [Repositório GitHub Browser Use](https://github.com/browser-use/browser-use)
-      - [Documentação Browser Use](https://browser-use.readthedocs.io/)
+      - [Documentação Browser Use](https://docs.browser-use.com/)
     ru_RU: |
       Browser Use Web UI — это мощный инструмент, который объединяет ИИ-агентов с автоматизацией браузера для создания интеллектуальной системы веб-взаимодействия. Он предоставляет удобный веб-интерфейс, который позволяет пользователям контролировать и отслеживать ИИ-агентов, когда они навигируют по веб-сайтам, заполняют формы, извлекают данные и автоматически выполняют сложные веб-задачи.
       
@@ -622,7 +615,7 @@ x-casaos:
       
       **Узнать Больше:**
       - [Репозиторий GitHub Browser Use](https://github.com/browser-use/browser-use)
-      - [Документация Browser Use](https://browser-use.readthedocs.io/)
+      - [Документация Browser Use](https://docs.browser-use.com/)
     tr_TR: |
       Browser Use Web UI, AI ajanlarını tarayıcı otomasyonuyla birleştirerek akıllı bir web etkileşim sistemi oluşturan güçlü bir araçtır. Kullanıcı dostu bir web arayüzü sağlayarak kullanıcıların AI ajanlarının web sitelerinde gezinmesini, formları doldurmasını, veri çıkarmasını ve karmaşık web görevlerini otomatik olarak gerçekleştirmesini kontrol etmelerini ve izlemelerini sağlar.
       
@@ -653,15 +646,15 @@ x-casaos:
       
       **Daha Fazla Bilgi:**
       - [Browser Use GitHub Deposu](https://github.com/browser-use/browser-use)
-      - [Browser Use Belgeleme](https://browser-use.readthedocs.io/)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BrowserUse/icon.png
+      - [Browser Use Belgeleme](https://docs.browser-use.com/)
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Browser-Use/icon.png
   screenshot_link:
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BrowserUse/screenshot-1.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BrowserUse/screenshot-2.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BrowserUse/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Browser-Use/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Browser-Use/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Browser-Use/screenshot-3.png
   thumbnail: ""
   scheme: http
   port_map: "7788"
   index: /
   title:
-    en_US: Browser Use Web UI
+    en_US: Browser Use

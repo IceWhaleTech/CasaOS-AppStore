@@ -10,6 +10,8 @@ services:
         protocol: tcp
     depends_on:
       - langflow-postgres
+    networks:
+      - langflow-net
     environment:
       - LANGFLOW_DATABASE_URL=postgresql://langflow:langflow@langflow-postgres:5432/langflow
       - LANGFLOW_CONFIG_DIR=/app/langflow
@@ -93,33 +95,13 @@ services:
       - POSTGRES_USER=langflow
       - POSTGRES_PASSWORD=langflow
       - POSTGRES_DB=langflow
-    ports:
-      - target: 5432
-        published: "15432"
-        protocol: tcp
+    networks:
+      - langflow-net
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/postgres
         target: /var/lib/postgresql/data
     x-casaos:
-      ports:
-        - container: "5432"
-          description:
-            en_US: PostgreSQL Database Port
-            en_GB: PostgreSQL Database Port
-            it_IT: PostgreSQL Database Port
-            nb_NO: PostgreSQL Database Port
-            zh_CN: PostgreSQL数据库端口
-            ja_JP: PostgreSQLデータベースポート
-            ko_KR: PostgreSQL Database Port
-            fr_FR: PostgreSQL Database Port
-            de_DE: PostgreSQL Database Port
-            sv_SE: PostgreSQL Database Port
-            el_GR: PostgreSQL Database Port
-            hr_HR: PostgreSQL Database Port
-            pt_PT: PostgreSQL Database Port
-            ru_RU: PostgreSQL Database Port
-            tr_TR: PostgreSQL Database Port
       volumes:
         - container: /var/lib/postgresql/data
           description:
@@ -190,6 +172,9 @@ services:
             pt_PT: PostgreSQL Database Name
             ru_RU: PostgreSQL Database Name
             tr_TR: PostgreSQL Database Name
+networks:
+  langflow-net:
+    driver: bridge
 x-casaos:
   architectures:
     - amd64
@@ -484,11 +469,11 @@ x-casaos:
       - [Langflow Resmi Web Sitesi](https://www.langflow.org)
       - [Langflow GitHub Deposu](https://github.com/langflow-ai/langflow)
       - [Belgeler](https://docs.langflow.org)
-  icon: https://cdn.jsdelivr.net/gh/langflow-ai/langflow@main/docs/assets/langflow_logo.png
+  icon: https://cdn.jsdelivr.net/gh/https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/icon.png
   screenshot_link:
-    - https://cdn.jsdelivr.net/gh/langflow-ai/langflow@main/docs/assets/screenshot1.png
-    - https://cdn.jsdelivr.net/gh/langflow-ai/langflow@main/docs/assets/screenshot2.png
-    - https://cdn.jsdelivr.net/gh/langflow-ai/langflow@main/docs/assets/screenshot3.png
+    - https://cdn.jsdelivr.net/gh/langflow-ai/langflow@main/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/langflow-ai/langflow@main/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/langflow-ai/langflow@main/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/screenshot-3.png
   thumbnail: ""
   scheme: http
   port_map: "17860"

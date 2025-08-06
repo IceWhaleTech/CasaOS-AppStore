@@ -9,12 +9,6 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/redis
         target: /data
-    cap_drop:
-      - ALL
-    cap_add:
-      - SETGID
-      - SETUID
-      - DAC_OVERRIDE
     logging:
       driver: "json-file"
       options:
@@ -178,6 +172,7 @@ services:
             ru_RU: Количество потоков на рабочий процесс uWSGI
             tr_TR: uWSGI İşlemci Başına Thread Sayısı
   agenticseek-frontend:
+    container_name: agenticseek-frontend
     image: fromxiaobai/agenticseek:v1
     ports:
       - target: 3000
@@ -186,7 +181,11 @@ services:
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
-      - REACT_APP_BACKEND_URL=http://agentic-seek-net:7777
+      - REACT_APP_BACKEND_URL=http://agenticseek-backend:7777
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/screenshots
+        target: /app/screenshots
     networks:
       - agentic-seek-net
     x-casaos:
@@ -261,28 +260,26 @@ services:
             ru_RU: URL API бэкенда для фронтенда
             tr_TR: Frontend için Backend API URL'si
   agenticseek-backend:
-    container_name: backend
+    container_name: agenticseek-backend
     image: fromxiaobai/agenticseek-back:v1
     ports:
       - target: 7777
         published: 7777
         protocol: tcp
-      - target: 11434
-        published: 11434
-        protocol: tcp
+
       - target: 1234
         published: 1234
         protocol: tcp
     volumes:
       - type: bind
-        source: ${WORK_DIR:-/DATA/AppData/$AppID/backend}
+        source: /DATA/AppData/$AppID/backend
         target: /opt/workspace
     command: python3 /app/api.py
     environment:
-      - SEARXNG_BASE_URL=${SEARXNG_BASE_URL:-http://agenticseek-searxng:8080}
-      - REDIS_URL=${REDIS_BASE_URL:-redis://agenticseek-redis:6379/0}
+      - SEARXNG_BASE_URL=http://agenticseek-searxng:8080
+      - REDIS_URL=redis://agenticseek-redis:6379/0
       - WORK_DIR=/opt/workspace
-      - BACKEND_PORT=${BACKEND_PORT}
+      - BACKEND_PORT=7777
       - DOCKER_INTERNAL_URL=http://host.docker.internal
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
@@ -301,7 +298,7 @@ services:
       - agenticseek-searxng
     x-casaos:
       ports:
-        - container: "${BACKEND_PORT:-7777}"
+        - container: "7777"
           description:
             en_US: Backend API Port
             en_GB: Backend API Port
@@ -615,7 +612,7 @@ networks:
 x-casaos:
   architectures:
     - amd64
-  main: backend
+  main: agenticseek-backend
   category: AI
   developer: fromxiaobai
   author: fromxiaobai
