@@ -1,0 +1,738 @@
+name: khoj
+services:
+  database:
+    image: docker.io/pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/khoj_db
+        target: /var/lib/postgresql/data/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - khoj_network
+    x-casaos:
+      volumes:
+        - container: /var/lib/postgresql/data/
+          description:
+            en_US: Database Storage Directory
+            en_GB: Database Storage Directory
+            it_IT: Directory di Archiviazione Database
+            nb_NO: Database Lagringskatalog
+            zh_CN: 数据库存储目录
+            ja_JP: データベースストレージディレクトリ
+            ko_KR: 데이터베이스 스토리지 디렉터리
+            fr_FR: Répertoire de Stockage Base de Données
+            de_DE: Datenbank-Speicherverzeichnis
+            sv_SE: Databas Lagringskatalog
+            el_GR: Κατάλογος Αποθήκευσης Βάσης Δεδομένων
+            hr_HR: Direktorij za Pohranu Baze Podataka
+            pt_PT: Diretório de Armazenamento da Base de Dados
+            ru_RU: Каталог хранения базы данных
+            tr_TR: Veritabanı Depolama Dizini
+      envs:
+        - container: POSTGRES_USER
+          description:
+            en_US: Database User
+            en_GB: Database User
+            it_IT: Utente Database
+            nb_NO: Database Bruker
+            zh_CN: 数据库用户
+            ja_JP: データベースユーザー
+            ko_KR: 데이터베이스 사용자
+            fr_FR: Utilisateur de base de données
+            de_DE: Datenbankbenutzer
+            sv_SE: Databas Användare
+            el_GR: Χρήστης Βάσης Δεδομένων
+            hr_HR: Korisnik Baze Podataka
+            pt_PT: Utilizador da Base de Dados
+            ru_RU: Пользователь базы данных
+            tr_TR: Veritabanı Kullanıcısı
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: Database Password
+            en_GB: Database Password
+            it_IT: Password Database
+            nb_NO: Database Passord
+            zh_CN: 数据库密码
+            ja_JP: データベースパスワード
+            ko_KR: 데이터베이스 비밀번호
+            fr_FR: Mot de passe de base de données
+            de_DE: Datenbankpasswort
+            sv_SE: Databas Lösenord
+            el_GR: Κωδικός Πρόσβασης Βάσης Δεδομένων
+            hr_HR: Lozinka Baze Podataka
+            pt_PT: Palavra-passe da Base de Dados
+            ru_RU: Пароль базы данных
+            tr_TR: Veritabanı Şifresi
+        - container: POSTGRES_DB
+          description:
+            en_US: Database Name
+            en_GB: Database Name
+            it_IT: Nome Database
+            nb_NO: Database Navn
+            zh_CN: 数据库名称
+            ja_JP: データベース名
+            ko_KR: 데이터베이스 이름
+            fr_FR: Nom de base de données
+            de_DE: Datenbankname
+            sv_SE: Databas Namn
+            el_GR: Όνομα Βάσης Δεδομένων
+            hr_HR: Ime Baze Podataka
+            pt_PT: Nome da Base de Dados
+            ru_RU: Имя базы данных
+            tr_TR: Veritabanı Adı
+  sandbox:
+    image: ghcr.io/khoj-ai/terrarium:latest
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 2
+    networks:
+      - khoj_network
+  search:
+    image: docker.io/searxng/searxng:latest
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/khoj_search
+        target: /etc/searxng
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8080/
+    networks:
+      - khoj_network
+    x-casaos:
+      volumes:
+        - container: /etc/searxng
+          description:
+            en_US: SearxNG Configuration Directory
+            en_GB: SearxNG Configuration Directory
+            it_IT: Directory di Configurazione SearxNG
+            nb_NO: SearxNG Konfigurasjonskatalog
+            zh_CN: SearxNG 配置目录
+            ja_JP: SearxNG 設定ディレクトリ
+            ko_KR: SearxNG 구성 디렉터리
+            fr_FR: Répertoire de Configuration SearxNG
+            de_DE: SearxNG Konfigurationsverzeichnis
+            sv_SE: SearxNG Konfigurationskatalog
+            el_GR: Κατάλογος Διαμόρφωσης SearxNG
+            hr_HR: Direktorij Konfiguracije SearxNG
+            pt_PT: Diretório de Configuração SearxNG
+            ru_RU: Каталог конфигурации SearxNG
+            tr_TR: SearxNG Yapılandırma Dizini
+      envs:
+        - container: SEARXNG_BASE_URL
+          description:
+            en_US: SearxNG Base URL
+            en_GB: SearxNG Base URL
+            it_IT: URL Base SearxNG
+            nb_NO: SearxNG Basis URL
+            zh_CN: SearxNG 基础 URL
+            ja_JP: SearxNG ベースURL
+            ko_KR: SearxNG 기본 URL
+            fr_FR: URL de Base SearxNG
+            de_DE: SearxNG Basis-URL
+            sv_SE: SearxNG Bas URL
+            el_GR: Βασική διεύθυνση URL SearxNG
+            hr_HR: Osnovni URL SearxNG-a
+            pt_PT: URL Base do SearxNG
+            ru_RU: Базовый URL SearxNG
+            tr_TR: SearxNG Temel URL'si
+  computer:
+    container_name: khoj-computer
+    image: ghcr.io/khoj-ai/khoj-computer:latest
+    ports:
+      - "5900:5900"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/khoj_computer
+        target: /home/operator
+    networks:
+      - khoj_network
+    x-casaos:
+      ports:
+        - container: "5900"
+          description:
+            en_US: Computer VNC Port
+            en_GB: Computer VNC Port
+            it_IT: Porta VNC Computer
+            nb_NO: Datamaskin VNC Port
+            zh_CN: 计算机 VNC 端口
+            ja_JP: コンピュータ VNC ポート
+            ko_KR: 컴퓨터 VNC 포트
+            fr_FR: Port VNC Ordinateur
+            de_DE: Computer VNC Port
+            sv_SE: Dator VNC Port
+            el_GR: Θύρα VNC Υπολογιστή
+            hr_HR: VNC Port Računala
+            pt_PT: Porta VNC do Computador
+            ru_RU: Порт VNC компьютера
+            tr_TR: Bilgisayar VNC Portu
+      volumes:
+        - container: /home/operator
+          description:
+            en_US: Computer Storage Directory
+            en_GB: Computer Storage Directory
+            it_IT: Directory di Archiviazione Computer
+            nb_NO: Datamaskin Lagringskatalog
+            zh_CN: 计算机存储目录
+            ja_JP: コンピュータストレージディレクトリ
+            ko_KR: 컴퓨터 스토리지 디렉터리
+            fr_FR: Répertoire de Stockage Ordinateur
+            de_DE: Computer-Speicherverzeichnis
+            sv_SE: Dator Lagringskatalog
+            el_GR: Κατάλογος Αποθήκευσης Υπολογιστή
+            hr_HR: Direktorij za Pohranu Računala
+            pt_PT: Diretório de Armazenamento do Computador
+            ru_RU: Каталог хранения компьютера
+            tr_TR: Bilgisayar Depolama Dizini
+  server:
+    restart: unless-stopped
+    depends_on:
+      database:
+        condition: service_healthy
+    image: ghcr.io/khoj-ai/khoj:latest
+    ports:
+      - target: 42110
+        published: "42110"
+        protocol: tcp
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    working_dir: /app
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/khoj_config
+        target: /root/.khoj/
+      - type: bind
+        source: /DATA/AppData/$AppID/khoj_models
+        target: /root/.cache/torch/sentence_transformers
+      - type: bind
+        source: /DATA/AppData/$AppID/khoj_models
+        target: /root/.cache/huggingface
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=database
+      - POSTGRES_PORT=5432
+      - KHOJ_DJANGO_SECRET_KEY=secret
+      - KHOJ_DEBUG=False
+      - KHOJ_TERRARIUM_URL=http://sandbox:8080
+      - KHOJ_SEARXNG_URL=http://search:8080
+    command: --host="0.0.0.0" --port=42110 -vv --anonymous-mode --non-interactive
+    networks:
+      - khoj_network
+    x-casaos:
+      ports:
+        - container: "42110"
+          description:
+            en_US: WebUI HTTP Port
+            en_GB: WebUI HTTP Port
+            it_IT: Porta HTTP WebUI
+            nb_NO: WebUI HTTP Port
+            zh_CN: WebUI HTTP端口
+            ja_JP: WebUI HTTPポート
+            ko_KR: WebUI HTTP 포트
+            fr_FR: Port HTTP WebUI
+            de_DE: WebUI HTTP Port
+            sv_SE: WebUI HTTP Port
+            el_GR: Θύρα HTTP WebUI
+            hr_HR: WebUI HTTP Port
+            pt_PT: Porta HTTP WebUI
+            ru_RU: HTTP порт WebUI
+            tr_TR: WebUI HTTP Portu
+      volumes:
+        - container: /root/.khoj/
+          description:
+            en_US: Khoj Configuration Directory
+            en_GB: Khoj Configuration Directory
+            it_IT: Directory di Configurazione Khoj
+            nb_NO: Khoj Konfigurasjonskatalog
+            zh_CN: Khoj 配置目录
+            ja_JP: Khoj 設定ディレクトリ
+            ko_KR: Khoj 구성 디렉터리
+            fr_FR: Répertoire de Configuration Khoj
+            de_DE: Khoj Konfigurationsverzeichnis
+            sv_SE: Khoj Konfigurationskatalog
+            el_GR: Κατάλογος Διαμόρφωσης Khoj
+            hr_HR: Direktorij Konfiguracije Khoja
+            pt_PT: Diretório de Configuração do Khoj
+            ru_RU: Каталог конфигурации Khoj
+            tr_TR: Khoj Yapılandırma Dizini
+        - container: /root/.cache/torch/sentence_transformers
+          description:
+            en_US: Sentence Transformers Cache Directory
+            en_GB: Sentence Transformers Cache Directory
+            it_IT: Directory Cache Trasformatori Frase
+            nb_NO: Setningsomformere Cache Katalog
+            zh_CN: 句子转换器缓存目录
+            ja_JP: 文章変換キャッシュディレクトリ
+            ko_KR: 문장 변환기 캐시 디렉터리
+            fr_FR: Répertoire de Cache Transformers de Phrases
+            de_DE: Sentence Transformers Cache-Verzeichnis
+            sv_SE: Meningstransformatorer Cache Katalog
+            el_GR: Κατάλογος Μνήμης Transformers Προτάσεων
+            hr_HR: Direktorij Predmemorije Transformatora Rečenica
+            pt_PT: Diretório de Cache de Transformadores de Frases
+            ru_RU: Каталог кэша преобразователей предложений
+            tr_TR: Cümle Dönüştürücüleri Önbellek Dizini
+        - container: /root/.cache/huggingface
+          description:
+            en_US: HuggingFace Cache Directory
+            en_GB: HuggingFace Cache Directory
+            it_IT: Directory Cache HuggingFace
+            nb_NO: HuggingFace Cache Katalog
+            zh_CN: HuggingFace 缓存目录
+            ja_JP: HuggingFace キャッシュディレクトリ
+            ko_KR: HuggingFace 캐시 디렉터리
+            fr_FR: Répertoire de Cache HuggingFace
+            de_DE: HuggingFace Cache-Verzeichnis
+            sv_SE: HuggingFace Cache Katalog
+            el_GR: Κατάλογος Μνήμης HuggingFace
+            hr_HR: Direktorij Predmemorije HuggingFacea
+            pt_PT: Diretório de Cache do HuggingFace
+            ru_RU: Каталог кэша HuggingFace
+            tr_TR: HuggingFace Önbellek Dizini
+      envs:
+        - container: POSTGRES_DB
+          description:
+            en_US: Database Name
+            en_GB: Database Name
+            it_IT: Nome Database
+            nb_NO: Database Navn
+            zh_CN: 数据库名称
+            ja_JP: データベース名
+            ko_KR: 데이터베이스 이름
+            fr_FR: Nom de base de données
+            de_DE: Datenbankname
+            sv_SE: Databas Namn
+            el_GR: Όνομα Βάσης Δεδομένων
+            hr_HR: Ime Baze Podataka
+            pt_PT: Nome da Base de Dados
+            ru_RU: Имя базы данных
+            tr_TR: Veritabanı Adı
+        - container: POSTGRES_USER
+          description:
+            en_US: Database User
+            en_GB: Database User
+            it_IT: Utente Database
+            nb_NO: Database Bruker
+            zh_CN: 数据库用户
+            ja_JP: データベースユーザー
+            ko_KR: 데이터베이스 사용자
+            fr_FR: Utilisateur de base de données
+            de_DE: Datenbankbenutzer
+            sv_SE: Databas Användare
+            el_GR: Χρήστης Βάσης Δεδομένων
+            hr_HR: Korisnik Baze Podataka
+            pt_PT: Utilizador da Base de Dados
+            ru_RU: Пользователь базы данных
+            tr_TR: Veritabanı Kullanıcısı
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: Database Password
+            en_GB: Database Password
+            it_IT: Password Database
+            nb_NO: Database Passord
+            zh_CN: 数据库密码
+            ja_JP: データベースパスワード
+            ko_KR: 데이터베이스 비밀번호
+            fr_FR: Mot de passe de base de données
+            de_DE: Datenbankpasswort
+            sv_SE: Databas Lösenord
+            el_GR: Κωδικός Πρόσβασης Βάσης Δεδομένων
+            hr_HR: Lozinka Baze Podataka
+            pt_PT: Palavra-passe da Base de Dados
+            ru_RU: Пароль базы данных
+            tr_TR: Veritabanı Şifresi
+        - container: POSTGRES_HOST
+          description:
+            en_US: Database Host
+            en_GB: Database Host
+            it_IT: Host Database
+            nb_NO: Database Vert
+            zh_CN: 数据库主机
+            ja_JP: データベースホスト
+            ko_KR: 데이터베이스 호스트
+            fr_FR: Hôte de base de données
+            de_DE: Datenbankhost
+            sv_SE: Databas Värd
+            el_GR: Κεντρικός Υπολογιστής Βάσης Δεδομένων
+            hr_HR: Domaćin Baze Podataka
+            pt_PT: Anfitrião da Base de Dados
+            ru_RU: Хост базы данных
+            tr_TR: Veritabanı Ana Bilgisayarı
+        - container: POSTGRES_PORT
+          description:
+            en_US: Database Port
+            en_GB: Database Port
+            it_IT: Porta Database
+            nb_NO: Database Port
+            zh_CN: 数据库端口
+            ja_JP: データベースポート
+            ko_KR: 데이터베이스 포트
+            fr_FR: Port de base de données
+            de_DE: Datenbankport
+            sv_SE: Databas Port
+            el_GR: Θύρα Βάσης Δεδομένων
+            hr_HR: Port Baze Podataka
+            pt_PT: Porta da Base de Dados
+            ru_RU: Порт базы данных
+            tr_TR: Veritabanı Portu
+        - container: KHOJ_DJANGO_SECRET_KEY
+          description:
+            en_US: Django Secret Key
+            en_GB: Django Secret Key
+            it_IT: Chiave Segreta Django
+            nb_NO: Django Hemmelig Nøkkel
+            zh_CN: Django 密钥
+            ja_JP: Django シークレットキー
+            ko_KR: Django 비밀 키
+            fr_FR: Clé Secrète Django
+            de_DE: Django Geheimschlüssel
+            sv_SE: Django Hemlig Nyckel
+            el_GR: Μυστικό Κλειδί Django
+            hr_HR: Tajni Ključ Djangaa
+            pt_PT: Chave Secreta do Django
+            ru_RU: Секретный ключ Django
+            tr_TR: Django Gizli Anahtarı
+        - container: KHOJ_DEBUG
+          description:
+            en_US: Debug Mode
+            en_GB: Debug Mode
+            it_IT: Modalità Debug
+            nb_NO: Feilsøkingsmodus
+            zh_CN: 调试模式
+            ja_JP: デバッグモード
+            ko_KR: 디버그 모드
+            fr_FR: Mode Débogage
+            de_DE: Debug-Modus
+            sv_SE: Felsökningsläge
+            el_GR: Λειτουργία Αποσφαλμάτωσης
+            hr_HR: Način rada za ispravljanje pogrešaka
+            pt_PT: Modo de Depuração
+            ru_RU: Режим отладки
+            tr_TR: Hata Ayıklama Modu
+        - container: KHOJ_ADMIN_EMAIL
+          description:
+            en_US: Admin Email
+            en_GB: Admin Email
+            it_IT: Email Amministratore
+            nb_NO: Administrator E-post
+            zh_CN: 管理员邮箱
+            ja_JP: 管理者メール
+            ko_KR: 관리자 이메일
+            fr_FR: Email Administrateur
+            de_DE: Admin-E-Mail
+            sv_SE: Admin E-post
+            el_GR: Email Διαχειριστή
+            hr_HR: E-mail administratora
+            pt_PT: Email do Administrador
+            ru_RU: Электронная почта администратора
+            tr_TR: Yönetici E-postası
+        - container: KHOJ_ADMIN_PASSWORD
+          description:
+            en_US: Admin Password
+            en_GB: Admin Password
+            it_IT: Password Amministratore
+            nb_NO: Administrator Passord
+            zh_CN: 管理员密码
+            ja_JP: 管理者パスワード
+            ko_KR: 관리자 비밀번호
+            fr_FR: Mot de passe Administrateur
+            de_DE: Admin-Passwort
+            sv_SE: Admin Lösenord
+            el_GR: Κωδικός Διαχειριστή
+            hr_HR: Lozinka administratora
+            pt_PT: Palavra-passe do Administrador
+            ru_RU: Пароль администратора
+            tr_TR: Yönetici Şifresi
+        - container: KHOJ_TERRARIUM_URL
+          description:
+            en_US: Terrarium URL
+            en_GB: Terrarium URL
+            it_IT: URL Terrarium
+            nb_NO: Terrarium URL
+            zh_CN: Terrarium URL
+            ja_JP: Terrarium URL
+            ko_KR: Terrarium URL
+            fr_FR: URL Terrarium
+            de_DE: Terrarium URL
+            sv_SE: Terrarium URL
+            el_GR: URL Terrarium
+            hr_HR: Terrarium URL
+            pt_PT: URL do Terrarium
+            ru_RU: URL Terrarium
+            tr_TR: Terrarium URL'si
+        - container: KHOJ_SEARXNG_URL
+          description:
+            en_US: SearxNG URL
+            en_GB: SearxNG URL
+            it_IT: URL SearxNG
+            nb_NO: SearxNG URL
+            zh_CN: SearxNG URL
+            ja_JP: SearxNG URL
+            ko_KR: SearxNG URL
+            fr_FR: URL SearxNG
+            de_DE: SearxNG URL
+            sv_SE: SearxNG URL
+            el_GR: URL SearxNG
+            hr_HR: SearxNG URL
+            pt_PT: URL do SearxNG
+            ru_RU: URL SearxNG
+            tr_TR: SearxNG URL'si
+networks:
+  khoj_network:
+    driver: bridge
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: server
+  category: AI
+  developer: Khoj AI
+  author: Khoj AI
+  tagline:
+    en_US: An AI copilot for your second brain.
+    en_GB: An AI copilot for your second brain.
+    it_IT: Un copilota AI per il tuo secondo cervello.
+    nb_NO: En AI-kopilot for din andre hjerne.
+    zh_CN: 你第二大脑的 AI 副驾驶。
+    ja_JP: あなたの第二の脳のための AI コパイロット。
+    ko_KR: 당신의 두 번째 뇌를 위한 AI 코파일럿.
+    fr_FR: Un copilote IA pour votre deuxième cerveau.
+    de_DE: Ein KI-Copilot für dein zweites Gehirn.
+    sv_SE: En AI-kopilot för din andra hjärna.
+    el_GR: Ένας copilot AI για τον δεύτερο εγκέφαλό σας.
+    hr_HR: AI kopilot za vaš drugi mozak.
+    pt_PT: Um copiloto de IA para o seu segundo cérebro.
+    ru_RU: AI-копилот для вашего второго мозга.
+    tr_TR: İkinci beyniniz için bir AI ko-pilotu.
+  description:
+    en_US: |
+      Khoj is an open-source AI copilot for your second brain. It helps you think, organize, and access your information more efficiently. Khoj integrates with your existing tools like Obsidian, Emacs, and Notion to provide a seamless experience.
+      
+      **Key Features:**
+      - Natural language search across all your notes and documents
+      - Chat with your notes using AI
+      - Connect to the internet for up-to-date information
+      - Run code snippets to process your data
+      - Private and secure - your data never leaves your machine
+      - Extensible with plugins and custom integrations
+      
+      **Learn More:**
+      - [Khoj Official Website](https://khoj.dev)
+      - [Khoj GitHub Repository](https://github.com/khoj-ai/khoj)
+    en_GB: |
+      Khoj is an open-source AI copilot for your second brain. It helps you think, organise, and access your information more efficiently. Khoj integrates with your existing tools like Obsidian, Emacs, and Notion to provide a seamless experience.
+      
+      **Key Features:**
+      - Natural language search across all your notes and documents
+      - Chat with your notes using AI
+      - Connect to the internet for up-to-date information
+      - Run code snippets to process your data
+      - Private and secure - your data never leaves your machine
+      - Extensible with plugins and custom integrations
+      
+      **Learn More:**
+      - [Khoj Official Website](https://khoj.dev)
+      - [Khoj GitHub Repository](https://github.com/khoj-ai/khoj)
+    it_IT: |
+      Khoj è un copilota AI open-source per il tuo secondo cervello. Ti aiuta a pensare, organizzare e accedere alle tue informazioni in modo più efficiente. Khoj si integra con i tuoi strumenti esistenti come Obsidian, Emacs e Notion per fornire un'esperienza senza soluzione di continuità.
+      
+      **Funzionalità Principali:**
+      - Ricerca in linguaggio naturale in tutte le tue note e documenti
+      - Chatta con le tue note usando l'AI
+      - Connettiti a Internet per informazioni aggiornate
+      - Esegui snippet di codice per elaborare i tuoi dati
+      - Privato e sicuro - i tuoi dati non lasciano mai la tua macchina
+      - Estensibile con plugin e integrazioni personalizzate
+      
+      **Ulteriori Informazioni:**
+      - [Sito Ufficiale Khoj](https://khoj.dev)
+      - [Repository GitHub Khoj](https://github.com/khoj-ai/khoj)
+    nb_NO: |
+      Khoj er en åpen kildekode AI-kopilot for din andre hjerne. Den hjelper deg å tenke, organisere og få tilgang til informasjonen din mer effektivt. Khoj integreres med dine eksisterende verktøy som Obsidian, Emacs og Notion for å gi en sømløs opplevelse.
+      
+      **Nøkkelfunksjoner:**
+      - Naturlig språksøk på tvers av alle dine notater og dokumenter
+      - Chat med notatene dine ved hjelp av AI
+      - Koble til internett for oppdatert informasjon
+      - Kjør kodebiter for å behandle dataene dine
+      - Privat og sikkert - dataene dine forlater aldri maskinen din
+      - Utvidbar med plugins og tilpassede integrasjoner
+      
+      **Lær mer:**
+      - [Khoj Offisiell Nettside](https://khoj.dev)
+      - [Khoj GitHub Repository](https://github.com/khoj-ai/khoj)
+    zh_CN: |
+      Khoj 是你第二大脑的开源 AI 副驾驶。它帮助你更高效地思考、组织和获取信息。Khoj 与你现有的工具如 Obsidian、Emacs 和 Notion 集成，提供无缝体验。
+      
+      **主要功能：**
+      - 跨所有笔记和文档的自然语言搜索
+      - 使用 AI 与你的笔记聊天
+      - 连接到互联网获取最新信息
+      - 运行代码片段处理你的数据
+      - 私密安全 - 你的数据永远不会离开你的机器
+      - 可通过插件和自定义集成扩展
+      
+      **了解更多：**
+      - [Khoj 官方网站](https://khoj.dev)
+      - [Khoj GitHub 仓库](https://github.com/khoj-ai/khoj)
+    ja_JP: |
+      Khoj は、あなたの第二の脳のためのオープンソース AI コパイロットです。情報をより効率的に考え、整理、アクセスするのに役立ちます。Khoj は、Obsidian、Emacs、Notion などの既存のツールと統合し、シームレスな体験を提供します。
+      
+      **主な機能：**
+      - すべてのノートとドキュメントをまたぐ自然言語検索
+      - AI を使用してノートとチャット
+      - 最新の情報のためにインターネットに接続
+      - データを処理するコードスニペットを実行
+      - プライベートで安全 - データはマシンから出ません
+      - プラグインとカスタム統合で拡張可能
+      
+      **詳しくはこちら：**
+      - [Khoj 公式ウェブサイト](https://khoj.dev)
+      - [Khoj GitHub リポジトリ](https://github.com/khoj-ai/khoj)
+    ko_KR: |
+      Khoj는 두 번째 뇌를 위한 오픈 소스 AI 코파일럿입니다. 정보를 보다 효율적으로 생각하고, 정리하고, 접근할 수 있도록 도와줍니다. Khoj는 Obsidian, Emacs, Notion과 같은 기존 도구와 통합되어 원활한 경험을 제공합니다.
+      
+      **주요 기능:**
+      - 모든 노트와 문서에 걸친 자연어 검색
+      - AI를 사용하여 노트와 채팅
+      - 최신 정보를 위해 인터넷에 연결
+      - 데이터를 처리하기 위한 코드 스니펫 실행
+      - 개인적이고 안전함 - 데이터는 절대로 기기에서 나가지 않음
+      - 플러그인과 사용자 정의 통합으로 확장 가능
+      
+      **더 알아보기:**
+      - [Khoj 공식 웹사이트](https://khoj.dev)
+      - [Khoj GitHub 저장소](https://github.com/khoj-ai/khoj)
+    fr_FR: |
+      Khoj est un copilote IA open-source pour votre deuxième cerveau. Il vous aide à penser, organiser et accéder à vos informations plus efficacement. Khoj s'intègre à vos outils existants comme Obsidian, Emacs et Notion pour fournir une expérience fluide.
+      
+      **Fonctionnalités Clés :**
+      - Recherche en langage naturel dans toutes vos notes et documents
+      - Chattez avec vos notes en utilisant l'IA
+      - Connectez-vous à Internet pour des informations à jour
+      - Exécutez des extraits de code pour traiter vos données
+      - Privé et sécurisé - vos données ne quittent jamais votre machine
+      - Extensible avec des plugins et des intégrations personnalisées
+      
+      **En Savoir Plus :**
+      - [Site Officiel Khoj](https://khoj.dev)
+      - [Dépôt GitHub Khoj](https://github.com/khoj-ai/khoj)
+    de_DE: |
+      Khoj ist ein Open-Source-KI-Copilot für dein zweites Gehirn. Es hilft dir, effizienter zu denken, zu organisieren und auf deine Informationen zuzugreifen. Khoj integriert sich in deine bestehenden Tools wie Obsidian, Emacs und Notion, um ein nahtloses Erlebnis zu bieten.
+      
+      **Hauptfunktionen:**
+      - Natürlichsprachsuche über alle deine Notizen und Dokumente
+      - Chatte mit deinen Notizen mithilfe von KI
+      - Verbinde dich mit dem Internet für aktuelle Informationen
+      - Führe Code-Snippets aus, um deine Daten zu verarbeiten
+      - Privat und sicher - deine Daten verlassen nie deinen Computer
+      - Erweiterbar mit Plugins und benutzerdefinierten Integrationen
+      
+      **Erfahre Mehr:**
+      - [Khoj Offizielle Website](https://khoj.dev)
+      - [Khoj GitHub Repository](https://github.com/khoj-ai/khoj)
+    sv_SE: |
+      Khoj är en open-source AI-kopilot för din andra hjärna. Den hjälper dig att tänka, organisera och komma åt din information mer effektivt. Khoj integrerar med dina befintliga verktyg som Obsidian, Emacs och Notion för att ge en sömlös upplevelse.
+      
+      **Nyckelfunktioner:**
+      - Naturligt språksökning över alla dina anteckningar och dokument
+      - Chatta med dina anteckningar med hjälp av AI
+      - Anslut till internet för uppdaterad information
+      - Kör kodsnuttar för att bearbeta dina data
+      - Privat och säkert - dina data lämnar aldrig din maskin
+      - Utökningsbar med plugins och anpassade integrationer
+      
+      **Läs mer:**
+      - [Khoj Officiell Webbplats](https://khoj.dev)
+      - [Khoj GitHub Repository](https://github.com/khoj-ai/khoj)
+    el_GR: |
+      Το Khoj είναι ένας copilot AI ανοιχτού κώδικα για τον δεύτερο εγκέφαλό σας. Σας βοηθά να σκέφτεστε, να οργανώνετε και να έχετε πρόσβαση στις πληροφορίες σας πιο αποτελεσματικά. Το Khoj ενσωματώνεται με τα υπάρχοντα εργαλεία σας όπως Obsidian, Emacs και Notion για να παρέχει μια αδιάκοπη εμπειρία.
+      
+      **Βασικά Χαρακτηριστικά:**
+      - Αναζήτηση φυσικής γλώσσας σε όλες τις σημειώσεις και τα έγγραφά σας
+      - Συνομιλήστε με τις σημειώσεις σας χρησιμοποιώντας AI
+      - Συνδεθείτε στο διαδίκτυο για ενημερωμένες πληροφορίες
+      - Εκτελέστε αποσπάσματα κώδικα για να επεξεργαστείτε τα δεδομένα σας
+      - Ιδιωτικό και ασφαλές - τα δεδομένα σας δεν φεύγουν ποτέ από τη μηχανή σας
+      - Επεκτάσιμο με plugins και προσαρμοσμένες ενσωματώσεις
+      
+      **Μάθετε Περισσότερα:**
+      - [Επίσημη Ιστοσελίδα Khoj](https://khoj.dev)
+      - [Αποθετήριο GitHub Khoj](https://github.com/khoj-ai/khoj)
+    hr_HR: |
+      Khoj je AI kopilot otvorenog koda za vaš drugi mozak. Pomaže vam da mislite, organizirate i pristupate svojim informacijama učinkovitije. Khoj se integrira s vašim postojećim alatima poput Obsidiana, Emacsa i Notiona kako bi pružio besprijekornu iskustvo.
+      
+      **Ključne Značajke:**
+      - Pretraživanje prirodnim jezikom u svim vašim bilješkama i dokumentima
+      - Razgovarajte s vašim bilješkama koristeći AI
+      - Povežite se s internetom za ažurirane informacije
+      - Pokrenite isječke koda za obradu vaših podataka
+      - Privatno i sigurno - vaši podaci nikada ne napuštaju vašu mašinu
+      - Proširivo s dodacima i prilagođenim integracijama
+      
+      **Saznajte Više:**
+      - [Khoj Službena Web Stranica](https://khoj.dev)
+      - [Khoj GitHub Repozitorij](https://github.com/khoj-ai/khoj)
+    pt_PT: |
+      Khoj é um copiloto de IA de código aberto para o seu segundo cérebro. Ajuda-o a pensar, organizar e aceder às suas informações de forma mais eficiente. Khoj integra-se com as suas ferramentas existentes como Obsidian, Emacs e Notion para proporcionar uma experiência perfeita.
+      
+      **Características Principais:**
+      - Pesquisa em linguagem natural em todas as suas notas e documentos
+      - Converse com as suas notas usando IA
+      - Conecte-se à internet para informações atualizadas
+      - Execute fragmentos de código para processar os seus dados
+      - Privado e seguro - os seus dados nunca saem da sua máquina
+      - Extensível com plugins e integrações personalizadas
+      
+      **Saiba Mais:**
+      - [Website Oficial Khoj](https://khoj.dev)
+      - [Repositório GitHub Khoj](https://github.com/khoj-ai/khoj)
+    ru_RU: |
+      Khoj - это AI-копилот с открытым исходным кодом для вашего второго мозга. Он помогает вам более эффективно думать, организовывать и получать доступ к информации. Khoj интегрируется с вашими существующими инструментами, такими как Obsidian, Emacs и Notion, чтобы обеспечить бесперебойную работу.
+      
+      **Ключевые Особенности:**
+      - Поиск на естественном языке по всем вашим заметкам и документам
+      - Чат с вашими заметками с помощью AI
+      - Подключение к интернету для получения актуальной информации
+      - Запуск фрагментов кода для обработки ваших данных
+      - Частный и безопасный - ваши данные никогда не покидают вашу машину
+      - Расширяемый с помощью плагинов и пользовательских интеграций
+      
+      **Узнать Больше:**
+      - [Официальный Сайт Khoj](https://khoj.dev)
+      - [GitHub Репозиторий Khoj](https://github.com/khoj-ai/khoj)
+    tr_TR: |
+      Khoj, ikinci beyniniz için açık kaynaklı bir AI ko-pilotudur. Bilgilerinizi daha verimli düşünmenize, düzenlemenize ve erişmenize yardımcı olur. Khoj, sorunsuz bir deneyim sunmak için Obsidian, Emacs ve Notion gibi mevcut araçlarınızla entegre olur.
+      
+      **Temel Özellikler:**
+      - Tüm notlarınız ve belgelerinizde doğal dil araması
+      - AI kullanarak notlarınızla sohbet edin
+      - Güncel bilgiler için internete bağlanın
+      - Verilerinizi işlemek için kod parçacıklarını çalıştırın
+      - Özel ve güvenli - verileriniz asla makinenizden ayrılmaz
+      - Eklentiler ve özel entegrasyonlarla genişletilebilir
+      
+      **Daha Fazla Bilgi:**
+      - [Khoj Resmi Web Sitesi](https://khoj.dev)
+      - [Khoj GitHub Deposu](https://github.com/khoj-ai/khoj)
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Khoj/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Khoj/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Khoj/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Khoj/screenshot-3.png
+  thumbnail: ""
+  scheme: ""
+  port_map: "42110"
+  index: /
+  title:
+    en_US: Khoj
