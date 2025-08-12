@@ -1,6 +1,7 @@
 name: khoj
 services:
-  database:
+  khoj-database:
+    container_name: khoj-databese
     image: docker.io/pgvector/pgvector:pg17
     environment:
       POSTGRES_USER: postgres
@@ -88,7 +89,8 @@ services:
             pt_PT: Nome da Base de Dados
             ru_RU: Имя базы данных
             tr_TR: Veritabanı Adı
-  sandbox:
+  khoj-sandbox:
+    container_name: khoj-sandbox
     image: ghcr.io/khoj-ai/terrarium:latest
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/health"]
@@ -97,7 +99,8 @@ services:
       retries: 2
     networks:
       - khoj_network
-  search:
+  khoj-search:
+    container_name: khoj-search
     image: docker.io/searxng/searxng:latest
     volumes:
       - type: bind
@@ -144,7 +147,7 @@ services:
             pt_PT: URL Base do SearxNG
             ru_RU: Базовый URL SearxNG
             tr_TR: SearxNG Temel URL'si
-  computer:
+  khoj-computer:
     container_name: khoj-computer
     image: ghcr.io/khoj-ai/khoj-computer:latest
     ports:
@@ -192,10 +195,11 @@ services:
             pt_PT: Diretório de Armazenamento do Computador
             ru_RU: Каталог хранения компьютера
             tr_TR: Bilgisayar Depolama Dizini
-  server:
+  khoj-server:
+    container_name: khoj-server
     restart: unless-stopped
     depends_on:
-      database:
+      khoj-database:
         condition: service_healthy
     image: ghcr.io/khoj-ai/khoj:latest
     ports:
@@ -219,12 +223,12 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_HOST=database
+      - POSTGRES_HOST=khoj-database
       - POSTGRES_PORT=5432
       - KHOJ_DJANGO_SECRET_KEY=secret
       - KHOJ_DEBUG=False
-      - KHOJ_TERRARIUM_URL=http://sandbox:8080
-      - KHOJ_SEARXNG_URL=http://search:8080
+      - KHOJ_TERRARIUM_URL=http://khoj-sandbox:8080
+      - KHOJ_SEARXNG_URL=http://khoj-search:8080
     command: --host="0.0.0.0" --port=42110 -vv --anonymous-mode --non-interactive
     networks:
       - khoj_network
@@ -494,7 +498,7 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  main: server
+  main: khoj-server
   category: AI
   developer: Khoj AI
   author: Khoj AI
