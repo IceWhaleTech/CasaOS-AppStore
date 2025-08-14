@@ -20,7 +20,7 @@ services:
         source: /DATA/AppData/$AppID/media
         target: /home/nonroot/pdfding/media
     environment:
-      - HOST_NAME=$(hostname -I | awk '{print $1}')
+      - HOST_NAME=*
       - SECRET_KEY=your_secret_key_here
       - CSRF_COOKIE_SECURE=FALSE
       - SESSION_COOKIE_SECURE=FALSE
