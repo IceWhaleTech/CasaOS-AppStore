@@ -1,19 +1,19 @@
 name: romm
 services:
   romm:
-    image: rommapp/romm:3.10.2
+    image: rommapp/romm:4.0.1
     container_name: romm
     deploy:
       resources:
         reservations:
           memory: 512M
-    network_mode: bridge
+    networks:
+      - romm-network
     restart: unless-stopped
     ports:
       - "8285:8080"
     environment:
       - DB_HOST=romm-db
-      - DB_PORT=13386
       - DB_NAME=romm # Should match MARIADB_DATABASE in mariadb
       - DB_USER=romm-user # Should match MARIADB_USER in mariadb
       - DB_PASSWD=casaos # Should match MARIADB_PASSWORD in mariadb
@@ -156,23 +156,6 @@ services:
             pt_PT: Host da base de dados
             ru_RU: Хост базы данных
             tr_TR: Veritabanı Sunucusu
-        - container: DB_PORT
-          description:
-            en_US: Database Port
-            en_GB: Database Port
-            it_IT: Porta del database
-            nb_NO: Databaseport
-            zh_CN: 数据库端口
-            ja_JP: データベースポート
-            ko_KR: 데이터베이스 포트
-            fr_FR: Port de base de données
-            de_DE: Datenbank-Port
-            sv_SE: Databasport
-            el_GR: Θύρα βάσης δεδομένων
-            hr_HR: Port baze podataka
-            pt_PT: Porta da base de dados
-            ru_RU: Порт базы данных
-            tr_TR: Veritabanı Portu
         - container: DB_NAME
           description:
             en_US: Database Name
@@ -327,9 +310,11 @@ services:
             ru_RU: "Ключ API SteamGridDB: https://github.com/rommapp/romm/wiki/Generate-API-Keys#steamgriddb"
             tr_TR: "SteamGridDB API Anahtarı: https://github.com/rommapp/romm/wiki/Generate-API-Keys#steamgriddb"
   romm-db:
-    image: mariadb:latest
+    image: mariadb:11.8.2
     container_name: romm-db
     restart: unless-stopped
+    networks:
+      - romm-network
     environment:
       - MARIADB_ROOT_PASSWORD=casaos # Use a unique, secure password
       - MARIADB_DATABASE=romm
@@ -337,8 +322,6 @@ services:
       - MARIADB_PASSWORD=casaos
     volumes:
       - /DATA/AppData/$AppID/mysql:/var/lib/mysql
-    ports:
-      - "13386:3306" # Map host port 3306 to container port 3306
     healthcheck:
       test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
       start_period: 30s
@@ -347,24 +330,6 @@ services:
       timeout: 5s
       retries: 5
     x-casaos:
-      ports:
-        - container: "3306"
-          description:
-            en_US: Database Port
-            en_GB: Database Port
-            it_IT: Porta del database
-            nb_NO: Databaseport
-            zh_CN: 数据库端口
-            ja_JP: データベースポート
-            ko_KR: 데이터베이스 포트
-            fr_FR: Port de base de données
-            de_DE: Datenbank-Port
-            sv_SE: Databasport
-            el_GR: Θύρα βάσης δεδομένων
-            hr_HR: Port baze podataka
-            pt_PT: Porta da base de dados
-            ru_RU: Порт базы данных
-            tr_TR: Veritabanı Portu
       volumes:
         - container: /var/lib/mysql
           description:
@@ -452,6 +417,9 @@ services:
             pt_PT: Palavra-passe da base de dados
             ru_RU: Пароль базы данных
             tr_TR: Veritabanı Şifresi
+networks:
+  romm-network:
+    driver: bridge
 x-casaos:
   architectures:
     - amd64
@@ -485,17 +453,43 @@ x-casaos:
 
       It can be flexibly deployed on personal servers or NAS devices, with official apps for Playnite and muOS enhancing cross-device access. Users can upload, update, or delete games via the Web interface, with community support documentation expanding functionality. Whether managing a personal retro game library or sharing with others, the app's intuitive interface and high customizability deliver a modern game management platform, meeting diverse needs.
     
+      **Key Features:**
+      - Scan and enhance your game library with metadata from IGDB, Screenscraper and MobyGames
+      - Fetch custom artwork from SteamGridDB
+      - Display your achievements from Retroachievements
+      - Metadata available for 400+ platforms
+      - Play games directly from the browser using EmulatorJS and RuffleRS
+      - Share your library with friends with limited access and permissions
+      - Official apps for Playnite and muOS
+      - Supports multi-disk games, DLCs, mods, hacks, patches, and manuals
+      - Parse and filter by tags in filenames
+      - View, upload, update, and delete games from any modern web browser
+
       **Learn More:**
-
       - [RomM Official Website](https://romm.app)
-
       - [RomM GitHub Repository](https://github.com/rommapp/romm)
     en_GB: |
       RomM is a self-hosted game collection management app designed for emulator enthusiasts, offering a convenient way to scan, enrich, browse, and play games. Its responsive Web interface allows users to manage collections via any modern browser, supporting over 400 platforms, ideal for retro gaming fans building personal game libraries.
 
       The app's core features include robust library management and seamless gameplay. It fetches metadata from IGDB, Screenscraper, and MobyGames, and custom artwork from SteamGridDB, enhancing the visual appeal of collections. Users can play games directly in the browser using EmulatorJS and RuffleRS, with support for multi-disk games, DLCs, patches, and manuals. It also enables parsing and filtering by filename tags for tailored organisation. Additionally, it supports multi-user accounts with limited access permissions, allowing library sharing with friends and displaying RetroAchievements.
 
-      It can be flexibly deployed on personal servers or NAS devices, with official apps for Playnite and muOS enhancing cross-device access. Users can upload, update, or delete games via the Web interface, with community support documentation expanding functionality. Whether managing a personal retro game library or sharing with others, the app's intuitive interface and high customisability deliver a modern game management platform, meeting diverse needs.
+      It can be flexibly deployed on personal servers or NAS devices, with official apps for Playnite and muOS enhancing cross-device access. Users can upload, update, or delete games via the Web interface, with community support documentation expanding functionality. Whether managing a personal retro game library or sharing with others, the app's intuitive interface and high customisability deliver a modern game management platform, meeting diverse nee
+      
+      **Key Features:**
+      - Scan and enhance your game library with metadata from IGDB, Screenscraper and MobyGames
+      - Fetch custom artwork from SteamGridDB
+      - Display your achievements from Retroachievements
+      - Metadata available for 400+ platforms
+      - Play games directly from the browser using EmulatorJS and RuffleRS
+      - Share your library with friends with limited access and permissions
+      - Official apps for Playnite and muOS
+      - Supports multi-disk games, DLCs, mods, hacks, patches, and manuals
+      - Parse and filter by tags in filenames
+      - View, upload, update, and delete games from any modern web browser
+
+      **Learn More:**
+      - [RomM Official Website](https://romm.app)
+      - [RomM GitHub Repository](https://github.com/rommapp/romm)
     it_IT: |
       RomM è un'app di gestione di raccolte di giochi self-hosted progettata per gli appassionati di emulatori, offrendo un modo pratico per scansionare, arricchire, sfogliare e giocare. L'interfaccia Web reattiva consente agli utenti di gestire le raccolte tramite qualsiasi browser moderno, supportando oltre 400 piattaforme, ideale per i fan del retrogaming che vogliono costruire una libreria personale.
 
@@ -503,10 +497,20 @@ x-casaos:
 
       Può essere distribuito su server personali o dispositivi NAS, con app ufficiali per Playnite e muOS che migliorano l'accesso multi-dispositivo. Gli utenti possono caricare, aggiornare o eliminare giochi tramite l'interfaccia Web, con documentazione di supporto della community che amplia le funzionalità. Che si tratti di gestire una libreria di giochi retrò personale o di condividerla con altri, l'interfaccia intuitiva e l'elevata personalizzazione offrono una piattaforma di gestione moderna per soddisfare ogni esigenza.
     
+      **Caratteristiche Principali:**
+      - Scansiona e migliora la tua libreria di giochi con metadati da IGDB, Screenscraper e MobyGames
+      - Ottieni grafiche personalizzate da SteamGridDB
+      - Visualizza i tuoi risultati da Retroachievements
+      - Metadati disponibili per oltre 400 piattaforme
+      - Gioca direttamente dal browser usando EmulatorJS e RuffleRS
+      - Condividi la tua libreria con amici con accesso e permessi limitati
+      - App ufficiali per Playnite e muOS
+      - Supporta giochi multi-disco, DLC, mod, hack, patch e manuali
+      - Analizza e filtra per tag nei nomi dei file
+      - Visualizza, carica, aggiorna ed elimina giochi da qualsiasi browser moderno
+
       **Per saperne di più:**
-
       - [Sito ufficiale RomM](https://romm.app)
-
       - [Repository GitHub di RomM](https://github.com/rommapp/romm)
     nb_NO: |
       RomM er en selvhostet spillbibliotek-administrasjonsapp designet for emulatorentusiaster, og tilbyr en praktisk måte å skanne, berike, bla gjennom og spille spill. Det responsive webgrensesnittet lar brukere administrere samlinger via enhver moderne nettleser, med støtte for over 400 plattformer – ideelt for retrospillfans som bygger personlige spillbiblioteker.
@@ -515,10 +519,20 @@ x-casaos:
 
       Den kan distribueres fleksibelt på personlige servere eller NAS-enheter, med offisielle apper for Playnite og muOS som forbedrer tilgang på tvers av enheter. Brukere kan laste opp, oppdatere eller slette spill via webgrensesnittet, med fellesskapsdokumentasjon som utvider funksjonaliteten. Enten du administrerer et personlig retrospillbibliotek eller deler med andre, gir appens intuitive grensesnitt og høye tilpasningsmuligheter en moderne plattform for spilladministrasjon som dekker ulike behov.
     
+      **Hovedfunksjoner:**
+      - Skann og forbedre spillbiblioteket ditt med metadata fra IGDB, Screenscraper og MobyGames
+      - Hent tilpassede illustrasjoner fra SteamGridDB
+      - Vis prestasjonene dine fra Retroachievements
+      - Metadata tilgjengelig for 400+ plattformer
+      - Spill spill direkte fra nettleseren ved å bruke EmulatorJS og RuffleRS
+      - Del biblioteket ditt med venner med begrenset tilgang og tillatelser
+      - Offisielle apper for Playnite og muOS
+      - Støtter flerdiskspill, DLC-er, modifikasjoner, hacks, oppdateringer og manualer
+      - Analyser og filtrer etter tagger i filnavn
+      - Se, last opp, oppdater og slett spill fra enhver moderne nettleser
+
       **Lær mer:**
-
       - [RomM offisiell nettside](https://romm.app)
-
       - [RomM GitHub-repository](https://github.com/rommapp/romm)
     zh_CN: |
       RomM 是一款自托管的游戏收藏管理应用，专为模拟器玩家设计，提供便捷的方式扫描、丰富、浏览和玩游戏。其响应式 Web 界面让用户通过任何现代浏览器管理收藏，支持 400 多个平台，适合复古游戏爱好者打造个人游戏库。
@@ -527,10 +541,20 @@ x-casaos:
 
       它可灵活部署于个人服务器或 NAS 设备，支持 Playnite 和 muOS 的官方应用，增强跨设备体验。用户可通过 Web 界面随时上传、更新或删除游戏，社区提供的支持文档进一步扩展功能。无论是管理个人复古游戏库还是与他人分享，该应用以直观界面和高自定义性，提供现代化游戏管理平台，满足多样化需求。
     
+      **主要功能：**
+      - 使用来自 IGDB、Screenscraper 和 MobyGames 的元数据扫描和增强您的游戏库
+      - 从 SteamGridDB 获取自定义艺术图片
+      - 显示您在 Retroachievements 上的成就
+      - 为 400+ 个平台提供元数据
+      - 使用 EmulatorJS 和 RuffleRS 直接在浏览器中玩游戏
+      - 与朋友分享您的游戏库，具有有限的访问权限
+      - Playnite 和 muOS 的官方应用
+      - 支持多磁盘游戏、DLC、模组、破解、补丁和手册
+      - 按文件名中的标签解析和过滤
+      - 从任何现代网络浏览器查看、上传、更新和删除游戏
+
       **了解更多：**
-
       - [RomM 官方网站](https://romm.app)
-
       - [RomM GitHub 仓库](https://github.com/rommapp/romm)
     ja_JP: |
       RomMは、エミュレータ愛好家向けに設計されたセルフホスト型ゲームコレクション管理アプリであり、ゲームのスキャン、充実、閲覧、プレイを便利に行えます。レスポンシブなWebインターフェースにより、ユーザーはあらゆる最新ブラウザからコレクションを管理でき、400以上のプラットフォームに対応しているため、レトロゲームファンが個人のゲームライブラリを構築するのに最適です。
@@ -539,10 +563,20 @@ x-casaos:
 
       PlayniteやmuOSの公式アプリにより、個人サーバーやNASデバイスに柔軟に導入でき、クロスデバイスアクセスが強化されます。Webインターフェースを通じてゲームのアップロード、更新、削除が可能で、コミュニティによるサポートドキュメントで機能が拡張されます。個人のレトロゲームライブラリを管理する場合でも、他者と共有する場合でも、直感的なインターフェースと高いカスタマイズ性により、多様なニーズに応える現代的なゲーム管理プラットフォームを提供します。
     
+      **主な機能:**
+      - IGDB、Screenscraper、MobyGamesからのメタデータでゲームライブラリをスキャンして強化
+      - SteamGridDBからカスタムアートワークを取得
+      - Retroachievementsからの実績を表示
+      - 400以上のプラットフォームでメタデータが利用可能
+      - EmulatorJSとRuffleRSを使ってブラウザから直接ゲームをプレイ
+      - 限定アクセスと権限でライブラリを友達と共有
+      - PlayniteとmuOSの公式アプリ
+      - マルチディスクゲーム、DLC、MOD、ハック、パッチ、マニュアルをサポート
+      - ファイル名のタグで解析とフィルタリング
+      - 任意のモダンウェブブラウザからゲームの表示、アップロード、更新、削除
+
       **詳細を見る：**
-
       - [RomM 公式ウェブサイト](https://romm.app)
-
       - [RomM GitHub リポジトリ](https://github.com/rommapp/romm)
     ko_KR: |
       RomM은 에뮬레이터 애호가를 위해 설계된 셀프호스팅 게임 컬렉션 관리 앱으로, 게임을 스캔, 보강, 탐색 및 플레이할 수 있는 편리한 방법을 제공합니다. 반응형 웹 인터페이스를 통해 사용자는 모든 최신 브라우저에서 컬렉션을 관리할 수 있으며, 400개 이상의 플랫폼을 지원하여 레트로 게임 팬이 개인 게임 라이브러리를 구축하는 데 이상적입니다.
@@ -551,10 +585,20 @@ x-casaos:
 
       Playnite 및 muOS의 공식 앱을 통해 개인 서버나 NAS 장치에 유연하게 배포할 수 있으며, 크로스 디바이스 액세스가 향상됩니다. 웹 인터페이스를 통해 게임을 업로드, 업데이트 또는 삭제할 수 있으며, 커뮤니티 지원 문서로 기능이 확장됩니다. 개인 레트로 게임 라이브러리를 관리하거나 다른 사람과 공유하든, 앱의 직관적인 인터페이스와 높은 맞춤화 기능은 다양한 요구를 충족하는 현대적인 게임 관리 플랫폼을 제공합니다.
     
+      **주요 기능:**
+      - IGDB, Screenscraper 및 MobyGames의 메타데이터로 게임 라이브러리를 스캔하고 강화
+      - SteamGridDB에서 사용자 정의 아트워크 가져오기
+      - Retroachievements에서 업적 표시
+      - 400개 이상의 플랫폼에 대한 메타데이터 제공
+      - EmulatorJS 및 RuffleRS를 사용하여 브라우저에서 직접 게임 플레이
+      - 제한된 액세스 및 권한으로 친구와 라이브러리 공유
+      - Playnite 및 muOS용 공식 앱
+      - 멀티디스크 게임, DLC, 모드, 핵, 패치 및 매뉴얼 지원
+      - 파일명의 태그로 구문 분석 및 필터링
+      - 모든 최신 웹 브라우저에서 게임 보기, 업로드, 업데이트 및 삭제
+
       **더 자세히 알아보기：**
-
       - [RomM 공식 웹사이트](https://romm.app)
-
       - [RomM GitHub 저장소](https://github.com/rommapp/romm)
     fr_FR: |
       RomM est une application de gestion de collections de jeux auto-hébergée conçue pour les passionnés d'émulateurs, offrant un moyen pratique de scanner, enrichir, parcourir et jouer à des jeux. Son interface Web réactive permet aux utilisateurs de gérer leurs collections via n'importe quel navigateur moderne, prenant en charge plus de 400 plateformes, idéale pour les amateurs de jeux rétro souhaitant constituer leur propre bibliothèque.
@@ -563,10 +607,20 @@ x-casaos:
 
       Elle peut être déployée de manière flexible sur des serveurs personnels ou des appareils NAS, avec des applications officielles pour Playnite et muOS améliorant l'accès multi-appareils. Les utilisateurs peuvent télécharger, mettre à jour ou supprimer des jeux via l'interface Web, avec une documentation communautaire élargissant les fonctionnalités. Que vous gériez une bibliothèque de jeux rétro personnelle ou que vous la partagiez avec d'autres, l'interface intuitive et la grande personnalisation de l'application offrent une plateforme de gestion moderne répondant à des besoins variés.
     
+      **Fonctionnalités Principales :**
+      - Scannez et améliorez votre bibliothèque de jeux avec des métadonnées d'IGDB, Screenscraper et MobyGames
+      - Récupérez des illustrations personnalisées depuis SteamGridDB
+      - Affichez vos succès depuis Retroachievements
+      - Métadonnées disponibles pour plus de 400 plateformes
+      - Jouez aux jeux directement depuis le navigateur en utilisant EmulatorJS et RuffleRS
+      - Partagez votre bibliothèque avec des amis avec un accès et des permissions limités
+      - Applications officielles pour Playnite et muOS
+      - Supporte les jeux multi-disques, DLC, mods, hacks, patches et manuels
+      - Analysez et filtrez par balises dans les noms de fichiers
+      - Visualisez, téléchargez, mettez à jour et supprimez des jeux depuis n'importe quel navigateur moderne
+
       **En savoir plus :**
-
       - [Site officiel de RomM](https://romm.app)
-
       - [Dépôt GitHub de RomM](https://github.com/rommapp/romm)
     de_DE: |
       RomM ist eine selbstgehostete App zur Verwaltung von Spielesammlungen, die für Emulator-Enthusiasten entwickelt wurde und eine bequeme Möglichkeit bietet, Spiele zu scannen, anzureichern, zu durchsuchen und zu spielen. Die reaktionsschnelle Weboberfläche ermöglicht es Benutzern, Sammlungen über jeden modernen Browser zu verwalten und unterstützt über 400 Plattformen – ideal für Retro-Gaming-Fans, die persönliche Spielbibliotheken aufbauen möchten.
@@ -575,10 +629,20 @@ x-casaos:
 
       Sie kann flexibel auf persönlichen Servern oder NAS-Geräten bereitgestellt werden, mit offiziellen Apps für Playnite und muOS, die den geräteübergreifenden Zugriff verbessern. Benutzer können Spiele über die Weboberfläche hochladen, aktualisieren oder löschen, wobei die Community-Dokumentation die Funktionalität erweitert. Ob Sie eine persönliche Retro-Spielbibliothek verwalten oder mit anderen teilen, die intuitive Benutzeroberfläche und die hohe Anpassungsfähigkeit der App bieten eine moderne Plattform für das Spielmanagement, die unterschiedlichen Anforderungen gerecht wird.
     
+      **Hauptmerkmale:**
+      - Scannen und verbessern Sie Ihre Spielebibliothek mit Metadaten von IGDB, Screenscraper und MobyGames
+      - Holen Sie sich benutzerdefinierte Grafiken von SteamGridDB
+      - Zeigen Sie Ihre Erfolge von Retroachievements an
+      - Metadaten für über 400 Plattformen verfügbar
+      - Spielen Sie Spiele direkt im Browser mit EmulatorJS und RuffleRS
+      - Teilen Sie Ihre Bibliothek mit Freunden mit eingeschränktem Zugang und Berechtigungen
+      - Offizielle Apps für Playnite und muOS
+      - Unterstützt Multi-Disk-Spiele, DLCs, Mods, Hacks, Patches und Handbücher
+      - Analysieren und filtern Sie nach Tags in Dateinamen
+      - Betrachten, hochladen, aktualisieren und löschen Sie Spiele von jedem modernen Webbrowser
+
       **Mehr erfahren:**
-
       - [RomM Offizielle Website](https://romm.app)
-
       - [RomM GitHub Repository](https://github.com/rommapp/romm)
     sv_SE: |
       RomM är en självhostad app för hantering av spelbibliotek, utformad för emulatorentusiaster och erbjuder ett smidigt sätt att skanna, berika, bläddra och spela spel. Det responsiva webbgränssnittet gör att användare kan hantera samlingar via valfri modern webbläsare och stöder över 400 plattformar – perfekt för retrospelsfantaster som bygger personliga spelbibliotek.
@@ -587,10 +651,20 @@ x-casaos:
 
       Den kan distribueras flexibelt på personliga servrar eller NAS-enheter, med officiella appar för Playnite och muOS som förbättrar åtkomsten mellan enheter. Användare kan ladda upp, uppdatera eller ta bort spel via webbgränssnittet, med gemenskapsdokumentation som utökar funktionaliteten. Oavsett om du hanterar ett personligt retrospelsbibliotek eller delar med andra, ger appens intuitiva gränssnitt och höga anpassningsbarhet en modern plattform för spelhantering som möter olika behov.
     
+      **Huvudfunktioner:**
+      - Skanna och förbättra ditt spelbibliotek med metadata från IGDB, Screenscraper och MobyGames
+      - Hämta anpassad konst från SteamGridDB
+      - Visa dina prestationer från Retroachievements
+      - Metadata tillgänglig för 400+ plattformar
+      - Spela spel direkt från webbläsaren med EmulatorJS och RuffleRS
+      - Dela ditt bibliotek med vänner med begränsad åtkomst och behörigheter
+      - Officiella appar för Playnite och muOS
+      - Stöder multidiskspel, DLC:er, mods, hacks, patchar och manualer
+      - Analysera och filtrera efter taggar i filnamn
+      - Visa, ladda upp, uppdatera och ta bort spel från alla moderna webbläsare
+
       **Läs mer:**
-
       - [RomM officiella webbplats](https://romm.app)
-
       - [RomM GitHub-repository](https://github.com/rommapp/romm)
     el_GR: |
       Το RomM είναι μια εφαρμογή διαχείρισης συλλογών παιχνιδιών με αυτοφιλοξενία, σχεδιασμένη για λάτρεις των εξομοιωτών, προσφέροντας έναν εύκολο τρόπο σάρωσης, εμπλουτισμού, περιήγησης και παιχνιδιού. Η ευέλικτη διεπαφή Web επιτρέπει στους χρήστες να διαχειρίζονται συλλογές μέσω οποιουδήποτε σύγχρονου προγράμματος περιήγησης, υποστηρίζοντας πάνω από 400 πλατφόρμες – ιδανικό για λάτρεις των ρετρό παιχνιδιών που δημιουργούν προσωπικές βιβλιοθήκες.
@@ -599,10 +673,20 @@ x-casaos:
 
       Μπορεί να αναπτυχθεί ευέλικτα σε προσωπικούς διακομιστές ή συσκευές NAS, με επίσημες εφαρμογές για Playnite και muOS που ενισχύουν την πρόσβαση μεταξύ συσκευών. Οι χρήστες μπορούν να ανεβάζουν, να ενημερώνουν ή να διαγράφουν παιχνίδια μέσω της διεπαφής Web, με τεκμηρίωση υποστήριξης της κοινότητας που επεκτείνει τη λειτουργικότητα. Είτε διαχειρίζεστε μια προσωπική βιβλιοθήκη ρετρό παιχνιδιών είτε τη μοιράζεστε με άλλους, η διαισθητική διεπαφή και η υψηλή προσαρμοστικότητα της εφαρμογής προσφέρουν μια σύγχρονη πλατφόρμα διαχείρισης παιχνιδιών που καλύπτει ποικίλες ανάγκες.
     
+      **Βασικά Χαρακτηριστικά:**
+      - Σαρώστε και βελτιώστε τη βιβλιοθήκη παιχνιδιών σας με μεταδεδομένα από IGDB, Screenscraper και MobyGames
+      - Λάβετε προσαρμοσμένα γραφικά από το SteamGridDB
+      - Εμφανίστε τα επιτεύγματά σας από το Retroachievements
+      - Μεταδεδομένα διαθέσιμα για πάνω από 400 πλατφόρμες
+      - Παίξτε παιχνίδια απευθείας από το πρόγραμμα περιήγησης χρησιμοποιώντας EmulatorJS και RuffleRS
+      - Μοιραστείτε τη βιβλιοθήκη σας με φίλους με περιορισμένη πρόσβαση και δικαιώματα
+      - Επίσημες εφαρμογές για Playnite και muOS
+      - Υποστηρίζει παιχνίδια πολλαπλών δίσκων, DLC, mods, hacks, patches και εγχειρίδια
+      - Ανάλυση και φιλτράρισμα με βάση ετικέτες σε ονόματα αρχείων
+      - Προβολή, ανέβασμα, ενημέρωση και διαγραφή παιχνιδιών από οποιοδήποτε σύγχρονο πρόγραμμα περιήγησης
+
       **Μάθετε περισσότερα:**
-
       - [Επίσημη ιστοσελίδα RomM](https://romm.app)
-
       - [Αποθετήριο GitHub του RomM](https://github.com/rommapp/romm)
     hr_HR: |
       RomM je aplikacija za upravljanje kolekcijama igara s vlastitim hostingom, dizajnirana za ljubitelje emulatora, koja nudi praktičan način za skeniranje, obogaćivanje, pregledavanje i igranje igara. Njegovo responzivno web sučelje omogućuje korisnicima upravljanje kolekcijama putem bilo kojeg modernog preglednika, uz podršku za više od 400 platformi – idealno za ljubitelje retro igara koji grade osobne biblioteke.
@@ -611,10 +695,20 @@ x-casaos:
 
       Može se fleksibilno implementirati na osobnim poslužiteljima ili NAS uređajima, uz službene aplikacije za Playnite i muOS koje poboljšavaju pristup na više uređaja. Korisnici mogu učitavati, ažurirati ili brisati igre putem web sučelja, a dokumentacija zajednice proširuje funkcionalnost. Bilo da upravljate osobnom retro kolekcijom igara ili je dijelite s drugima, intuitivno sučelje i visoka prilagodljivost aplikacije nude modernu platformu za upravljanje igrama koja zadovoljava raznolike potrebe.
     
+      **Ključne Značajke:**
+      - Skenirajte i poboljšajte svoju biblioteku igara s metapodacima iz IGDB-a, Screenscrapera i MobyGamesa
+      - Dohvatite prilagođene grafike sa SteamGridDB-a
+      - Prikažite svoja postignuća s Retroachievementsa
+      - Metapodaci dostupni za više od 400 platformi
+      - Igrajte igre izravno iz preglednika koristeći EmulatorJS i RuffleRS
+      - Podijelite svoju biblioteku s prijateljima s ograničenim pristupom i dozvolama
+      - Službene aplikacije za Playnite i muOS
+      - Podržava igre na više diskova, DLC-ove, modifikacije, hackove, zakrpe i priručnike
+      - Analizirajte i filtrirajte prema oznakama u nazivima datoteka
+      - Pregledajte, učitajte, ažurirajte i brišite igre iz bilo kojeg modernog web preglednika
+
       **Saznajte više:**
-
       - [RomM službena web stranica](https://romm.app)
-
       - [RomM GitHub repozitorij](https://github.com/rommapp/romm)
     pt_PT: |
       O RomM é uma aplicação de gestão de coleções de jogos auto-hospedada, concebida para entusiastas de emuladores, oferecendo uma forma conveniente de digitalizar, enriquecer, navegar e jogar jogos. A sua interface Web responsiva permite aos utilizadores gerir coleções através de qualquer navegador moderno, suportando mais de 400 plataformas – ideal para fãs de jogos retro que constroem bibliotecas pessoais.
@@ -623,10 +717,20 @@ x-casaos:
 
       Pode ser implementado de forma flexível em servidores pessoais ou dispositivos NAS, com aplicações oficiais para Playnite e muOS que melhoram o acesso entre dispositivos. Os utilizadores podem carregar, atualizar ou eliminar jogos através da interface Web, com documentação de suporte da comunidade que expande a funcionalidade. Quer esteja a gerir uma biblioteca pessoal de jogos retro ou a partilhá-la com outros, a interface intuitiva e a elevada personalização da aplicação oferecem uma plataforma de gestão de jogos moderna que responde a diversas necessidades.
     
+      **Funcionalidades Principais:**
+      - Digitalize e melhore a sua biblioteca de jogos com metadados do IGDB, Screenscraper e MobyGames
+      - Obtenha arte personalizada do SteamGridDB
+      - Exiba as suas conquistas do Retroachievements
+      - Metadados disponíveis para mais de 400 plataformas
+      - Jogue jogos diretamente do navegador usando EmulatorJS e RuffleRS
+      - Partilhe a sua biblioteca com amigos com acesso e permissões limitadas
+      - Aplicações oficiais para Playnite e muOS
+      - Suporta jogos multi-disco, DLCs, mods, hacks, patches e manuais
+      - Analise e filtre por tags em nomes de ficheiros
+      - Visualize, carregue, atualize e elimine jogos de qualquer navegador moderno
+
       **Saiba mais:**
-
       - [Site oficial do RomM](https://romm.app)
-
       - [Repositório GitHub do RomM](https://github.com/rommapp/romm)
     ru_RU: |
       RomM — это приложение для самостоятельного управления коллекциями игр, созданное для энтузиастов эмуляторов, предлагающее удобный способ сканировать, обогащать, просматривать и играть в игры. Его адаптивный веб-интерфейс позволяет пользователям управлять коллекциями через любой современный браузер, поддерживает более 400 платформ — идеально для поклонников ретро-игр, создающих личные игровые библиотеки.
@@ -635,10 +739,20 @@ x-casaos:
 
       Приложение может гибко развертываться на личных серверах или NAS-устройствах, с официальными приложениями для Playnite и muOS, расширяющими доступ между устройствами. Пользователи могут загружать, обновлять или удалять игры через веб-интерфейс, а документация сообщества расширяет функциональность. Независимо от того, управляете ли вы личной ретро-игровой библиотекой или делитесь ею с другими, интуитивно понятный интерфейс и высокая настраиваемость приложения обеспечивают современную платформу для управления играми, отвечающую разнообразным потребностям.
     
+      **Ключевые Особенности:**
+      - Сканируйте и улучшайте свою игровую библиотеку с метаданными из IGDB, Screenscraper и MobyGames
+      - Получайте пользовательские иллюстрации из SteamGridDB
+      - Отображайте свои достижения из Retroachievements
+      - Метаданные доступны для более чем 400 платформ
+      - Играйте в игры прямо из браузера, используя EmulatorJS и RuffleRS
+      - Делитесь своей библиотекой с друзьями с ограниченным доступом и разрешениями
+      - Официальные приложения для Playnite и muOS
+      - Поддерживает игры на нескольких дисках, DLC, моды, хаки, патчи и руководства
+      - Разбор и фильтрация по тегам в именах файлов
+      - Просматривайте, загружайте, обновляйте и удаляйте игры из любого современного веб-браузера
+
       **Узнать больше:**
-
       - [Официальный сайт RomM](https://romm.app)
-
       - [GitHub репозиторий RomM](https://github.com/rommapp/romm)
     tr_TR: |
       RomM, emülatör meraklıları için tasarlanmış, oyunları taramak, zenginleştirmek, göz atmak ve oynamak için kullanışlı bir yol sunan kendi kendine barındırılan bir oyun koleksiyonu yönetim uygulamasıdır. Duyarlı Web arayüzü sayesinde kullanıcılar, herhangi bir modern tarayıcıdan koleksiyonlarını yönetebilir ve 400'den fazla platformu destekler; bu da kişisel oyun kütüphaneleri oluşturan retro oyun hayranları için idealdir.
@@ -647,10 +761,20 @@ x-casaos:
 
       Playnite ve muOS için resmi uygulamalarla kişisel sunucularda veya NAS cihazlarında esnek bir şekilde dağıtılabilir, cihazlar arası erişimi artırır. Kullanıcılar, Web arayüzü üzerinden oyun yükleyebilir, güncelleyebilir veya silebilir ve topluluk destekli belgelerle işlevsellik genişletilebilir. İster kişisel bir retro oyun kütüphanesini yönetin ister başkalarıyla paylaşın, uygulamanın sezgisel arayüzü ve yüksek özelleştirilebilirliği, çeşitli ihtiyaçları karşılayan modern bir oyun yönetim platformu sunar.
     
+      **Ana Özellikler:**
+      - IGDB, Screenscraper ve MobyGames'ten meta verilerle oyun kütüphanenizi tarayın ve geliştirin
+      - SteamGridDB'den özel sanat eserlerini alın
+      - Retroachievements'tan başarılarınızı görüntüleyin
+      - 400+ platform için meta veriler mevcut
+      - EmulatorJS ve RuffleRS kullanarak oyunları doğrudan tarayıcıdan oynayın
+      - Kütüphanenizi arkadaşlarınızla sınırlı erişim ve izinlerle paylaşın
+      - Playnite ve muOS için resmi uygulamalar
+      - Çoklu disk oyunları, DLC'ler, modlar, hackler, yamalar ve kılavuzları destekler
+      - Dosya adlarındaki etiketlere göre ayrıştır ve filtrele
+      - Herhangi bir modern web tarayıcısından oyunları görüntüleyin, yükleyin, güncelleyin ve silin
+
       **Daha fazla bilgi edinin:**
-
       - [RomM resmi web sitesi](https://romm.app)
-
       - [RomM GitHub deposu](https://github.com/rommapp/romm)
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RomM/icon.png
   screenshot_link:
