@@ -16,8 +16,9 @@ services:
         reservations:
           memory: "256M"
           devices:
-            - capabilities:
-              - gpu
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     network_mode: host
     restart: unless-stopped
     volumes:
