@@ -20,8 +20,9 @@ services:
         reservations:
           memory: "256M"
           devices:
-            - capabilities:
-              - gpu
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     network_mode: bridge
     ports:
       - target: 8096
