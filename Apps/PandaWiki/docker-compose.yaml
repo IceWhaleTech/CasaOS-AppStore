@@ -1,0 +1,387 @@
+name: pandawiki
+services:
+  caddy:
+    container_name: panda-wiki-caddy
+    restart: always
+    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-caddy:2.10-alpine
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./data/caddy/caddy_config:/config
+      - ./data/caddy/caddy_data:/data
+      - ./data/caddy/run:/var/run/caddy
+    environment:
+      - CADDY_ADMIN=unix//var/run/caddy/caddy-admin.sock
+    network_mode: host
+  nginx:
+    container_name: panda-wiki-nginx
+    depends_on:
+      - api
+    restart: always
+    image: fromxiaobai/pandawiki-nginx:v1
+    ports:
+      - "2443:8080"
+    volumes:
+      - ./data/nginx/ssl:/etc/nginx/ssl
+    networks:
+      panda-wiki:
+        ipv4_address: "169.254.15.111"
+  app:
+    container_name: panda-wiki-app
+    restart: always
+    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-app:v3.2.3
+    networks:
+      panda-wiki:
+        ipv4_address: "169.254.15.112"
+  api:
+    container_name: panda-wiki-api
+    depends_on:
+      - postgres
+      - nats
+      - caddy
+      - raglite
+    restart: always
+    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-api:v3.2.3
+    volumes:
+      - ./data/caddy/run:/app/run
+      - ./data/nginx/ssl:/app/etc/nginx/ssl
+      - ./data/conf/api:/data
+    environment:
+      - NATS_PASSWORD=ATscTmkj9aFVo6OT4Q8zi6Y1oo1CTWeR
+      - POSTGRES_PASSWORD=ID2RdXrhX6SXqiGlvIhvDvBubWtxsIAf
+      - REDIS_PASSWORD=pY6A5mB0mrJCeSSHc4XxRXcYbsimR4OM
+      - S3_SECRET_KEY=lplgBPvsJrs3A1omrHqz3SsEkQxHknWl
+      - JWT_SECRET=SjQk5iwQdBWXxQnclsxFYExzHzxmaSlc
+      - ADMIN_PASSWORD=ikTs4Tv1JDcpGDd5GGBSP33pB5AwKYpU
+    networks:
+      panda-wiki:
+        ipv4_address: "169.254.15.2"
+  consumer:
+    container_name: panda-wiki-consumer
+    depends_on:
+      - nats
+      - api
+    restart: always
+    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-consumer:v3.2.3
+    environment:
+      - NATS_PASSWORD=ATscTmkj9aFVo6OT4Q8zi6Y1oo1CTWeR
+      - POSTGRES_PASSWORD=ID2RdXrhX6SXqiGlvIhvDvBubWtxsIAf
+      - REDIS_PASSWORD=pY6A5mB0mrJCeSSHc4XxRXcYbsimR4OM
+      - S3_SECRET_KEY=lplgBPvsJrs3A1omrHqz3SsEkQxHknWl
+      - JWT_SECRET=SjQk5iwQdBWXxQnclsxFYExzHzxmaSlc
+    networks:
+      panda-wiki:
+        ipv4_address: "169.254.15.3"
+  postgres:
+    container_name: panda-wiki-postgres
+    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-postgres:17.5
+    restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "panda-wiki", "-d", "panda-wiki"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    environment:
+      - POSTGRES_USER=panda-wiki
+      - POSTGRES_PASSWORD=ID2RdXrhX6SXqiGlvIhvDvBubWtxsIAf
+      - POSTGRES_DB=panda-wiki
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    networks:
+      panda-wiki:
+        ipv4_address: "169.254.15.10"
+  redis:
+    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-redis:7.4.2-alpine
+    container_name: panda-wiki-redis
+    restart: always
+    command: ["redis-server", "--requirepass", "pY6A5mB0mrJCeSSHc4XxRXcYbsimR4OM", "--appendonly", "yes", "--appendfilename", "appendonly.aof", "--save", "900 1", "--save", "300 10", "--save", "60 10000"]
+    volumes:
+      - ./data/redis:/data
+    networks:
+      panda-wiki:
+        ipv4_address: "169.254.15.11"
+  minio:
+    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-minio:RELEASE.2025-04-22T22-12-26Z-cpuv1
+    container_name: panda-wiki-minio
+    restart: always
+    command: ["minio", "server", "/data", "--console-address", ":9001"]
+    volumes:
+      - ./data/minio:/data
+    environment:
+      - MINIO_ACCESS_KEY=s3panda-wiki
+      - MINIO_SECRET_KEY=lplgBPvsJrs3A1omrHqz3SsEkQxHknWl
+    networks:
+      panda-wiki:
+        ipv4_address: "169.254.15.12"
+  nats:
+    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-nats:2.11.3-alpine
+    container_name: panda-wiki-nats
+    restart: always
+    command: ["nats-server", "-c", "/etc/nats/nats.conf", "--user", "panda-wiki", "--pass", "ATscTmkj9aFVo6OT4Q8zi6Y1oo1CTWeR"]
+    volumes:
+      - ./data/nats:/data
+    networks:
+      panda-wiki:
+        ipv4_address: "169.254.15.13"
+  qdrant:
+    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-qdrant:v1.14.1
+    container_name: panda-wiki-qdrant
+    restart: always
+    volumes:
+      - ./data/qdrant:/qdrant/storage
+    environment:
+      - QDRANT__SERVICE__API_KEY=2XPDb3fNKt4f3AFr5iEABkrRotDbNQGf
+    networks:
+      panda-wiki:
+        ipv4_address: "169.254.15.14"
+  crawler:
+    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-crawler:v0.8.1
+    container_name: panda-wiki-crawler
+    restart: always
+    init: true
+    environment:
+      - S3_ENDPOINT=panda-wiki-minio:9000
+      - S3_ACCESS_KEY=s3panda-wiki
+      - S3_SECRET_KEY=lplgBPvsJrs3A1omrHqz3SsEkQxHknWl
+    networks:
+      panda-wiki:
+        ipv4_address: "169.254.15.17"
+  raglite:
+    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/chaitin/panda-wiki-raglite:1-2-15
+    container_name: panda-wiki-raglit
+    restart: always
+    volumes:
+      - ./data/raglite:/data
+    environment:
+      - GIN_MODE=release
+      - DATABASE_HOST=panda-wiki-postgres
+      - DATABASE_USER=panda-wiki
+      - DATABASE_PASSWORD=ID2RdXrhX6SXqiGlvIhvDvBubWtxsIAf
+      - MINIO_HOST=panda-wiki-minio:9000
+      - MINIO_USER=s3panda-wiki
+      - MINIO_PASSWORD=lplgBPvsJrs3A1omrHqz3SsEkQxHknWl
+      - QDRANT_HOST=panda-wiki-qdrant
+      - QDRANT_API_KEY=2XPDb3fNKt4f3AFr5iEABkrRotDbNQGf
+    depends_on:
+      - postgres
+      - minio
+      - qdrant
+    networks:
+      panda-wiki:
+        ipv4_address: "169.254.15.18"
+
+networks:
+  panda-wiki:
+    ipam:
+      driver: default
+      config:
+        - subnet: "169.254.15.0/24"
+
+x-casaos:
+  architectures:
+    - amd64
+  main: nginx
+  category: AI
+  title:
+    en_US: PandaWiki
+    zh_CN: PandaWiki
+  developer: chaitin
+  author: chaitin
+  tagline:
+    en_US: A powerful self-hosted wiki system for knowledge management
+    en_GB: A powerful self-hosted wiki system for knowledge management
+    it_IT: Un potente sistema wiki self-hosted per la gestione della conoscenza
+    nb_NO: Et kraftfull selvhostet wiki-system for kunnskapsstyring
+    zh_CN: 强大的自托管知识管理系统
+    ja_JP: ナレッジマネジメントのための強力なセルフホスト型Wikiシステム
+    ko_KR: 지식 관리를 위한 강력한 자체 호스팅 위키 시스템
+    fr_FR: Un système wiki auto-hébergé puissant pour la gestion des connaissances
+    de_DE: Ein leistungsstarkes selbstgehostetes Wiki-System für Wissensmanagement
+    sv_SE: Ett kraftfullt självhostat wiki-system för kunskapsstyring
+    el_GR: Ένα ισχυρό αυτο-φιλοξενούμενο σύστημα wiki για διαχείριση γνώσεων
+    hr_HR: Moćan samohostirani wiki sustav za upravljanje znanjem
+    pt_PT: Um sistema wiki auto-hospedado poderoso para gestão de conhecimento
+    ru_RU: Мощная система самоуправляемого wiki для управления знаниями
+    tr_TR: Bilgi yönetimi için güçlü kendi kendine barındırılan wiki sistemi
+  description:
+    en_US: |
+      PandaWiki is a comprehensive self-hosted wiki platform designed for knowledge management and collaboration. It provides a rich set of features including document editing, search capabilities, and integration with various data sources.
+
+      Key features include:
+      - Rich text editing with markdown support
+      - Powerful search and indexing
+      - Multi-user collaboration
+      - File and media management
+      - RESTful API for integrations
+      - Customizable themes and plugins
+
+      Built with modern technologies and microservices architecture, PandaWiki offers high performance, scalability, and reliability for enterprise and personal use.
+    en_GB: |
+      PandaWiki is a comprehensive self-hosted wiki platform designed for knowledge management and collaboration. It provides a rich set of features including document editing, search capabilities, and integration with various data sources.
+
+      Key features include:
+      - Rich text editing with markdown support
+      - Powerful search and indexing
+      - Multi-user collaboration
+      - File and media management
+      - RESTful API for integrations
+      - Customizable themes and plugins
+
+      Built with modern technologies and microservices architecture, PandaWiki offers high performance, scalability, and reliability for enterprise and personal use.
+    it_IT: |
+      PandaWiki è una piattaforma wiki completa auto-ospitata progettata per la gestione della conoscenza e la collaborazione. Fornisce un ricco set di funzionalità tra cui modifica documenti, capacità di ricerca e integrazione con varie fonti di dati.
+
+      Le caratteristiche principali includono:
+      - Modifica testo ricco con supporto markdown
+      - Ricerca e indicizzazione potenti
+      - Collaborazione multi-utente
+      - Gestione file e media
+      - API RESTful per integrazioni
+      - Temi e plugin personalizzabili
+
+      Costruito con tecnologie moderne e architettura a microservizi, PandaWiki offre alte prestazioni, scalabilità e affidabilità per uso aziendale e personale.
+    nb_NO: |
+      PandaWiki er en omfattende selvhostet wiki-plattform designet for kunnskapsstyring og samarbeid. Den gir et rikt sett med funksjoner inkludert dokumentredigering, søkekapasiteter og integrasjon med ulike datakilder.
+
+      Nøkkelfunksjoner inkluderer:
+      - Rik tekstredigering med markdown-støtte
+      - Kraftfull søk og indeksering
+      - Multi-bruker samarbeid
+      - Fil- og mediehåndtering
+      - RESTful API for integrasjoner
+      - Tilpassbare temaer og plugins
+
+      Bygget med moderne teknologier og mikroservice-arkitektur, tilbyr PandaWiki høy ytelse, skalerbarhet og pålitelighet for bedrifter og personlig bruk.
+    zh_CN: |
+      PandaWiki 是一个全面的自托管 wiki 平台，专为知识管理和协作而设计。它提供丰富的功能集，包括文档编辑、搜索能力和与各种数据源的集成。
+
+      主要功能包括：
+      - 支持 markdown 的富文本编辑
+      - 强大的搜索和索引
+      - 多用户协作
+      - 文件和媒体管理
+      - 用于集成的 RESTful API
+      - 可定制的主题和插件
+
+      采用现代技术和微服务架构构建，PandaWiki 为企业和个人使用提供高性能、可扩展性和可靠性。
+    ja_JP: |
+      PandaWikiは、ナレッジマネジメントとコラボレーション向けに設計された包括的なセルフホスト型Wikiプラットフォームです。文書編集、検索機能、さまざまなデータソースとの統合を含む豊富な機能セットを提供します。
+
+      主な機能：
+      - Markdownをサポートしたリッチテキスト編集
+      - 強力な検索とインデックス作成
+      - マルチユーザーコラボレーション
+      - ファイルとメディア管理
+      - 統合のためのRESTful API
+      - カスタマイズ可能なテーマとプラグイン
+
+      最新のテクノロジーとマイクロサービスアーキテクチャで構築されたPandaWikiは、エンタープライズおよびパーソナルユースに高性能、スケーラビリティ、信頼性を提供します。
+    ko_KR: |
+      PandaWiki는 지식 관리 및 협업을 위해 설계된 포괄적인 자체 호스팅 위키 플랫폼입니다. 문서 편집, 검색 기능 및 다양한 데이터 소스와의 통합을 포함한 풍부한 기능 세트를 제공합니다.
+
+      주요 기능:
+      - 마크다운을 지원하는 리치 텍스트 편집
+      - 강력한 검색 및 인덱싱
+      - 다중 사용자 협업
+      - 파일 및 미디어 관리
+      - 통합을 위한 RESTful API
+      - 사용자 정의 가능한 테마 및 플러그인
+
+      최신 기술과 마이크로 서비스 아키텍처로 구축된 PandaWiki는 기업 및 개인 사용을 위해 고성능, 확장성 및 신뢰성을 제공합니다.
+    fr_FR: |
+      PandaWiki est une plateforme wiki complète auto-hébergée conçue pour la gestion des connaissances et la collaboration. Elle fournit un riche ensemble de fonctionnalités incluant l'édition de documents, les capacités de recherche et l'intégration avec diverses sources de données.
+
+      Les principales fonctionnalités incluent :
+      - Édition de texte riche avec prise en charge de Markdown
+      - Recherche et indexation puissantes
+      - Collaboration multi-utilisateurs
+      - Gestion de fichiers et médias
+      - API RESTful pour les intégrations
+      - Thèmes et plugins personnalisables
+
+      Construit avec des technologies modernes et une architecture de microservices, PandaWiki offre des performances élevées, une évolutivité et une fiabilité pour un usage professionnel et personnel.
+    de_DE: |
+      PandaWiki ist eine umfassende selbstgehostete Wiki-Plattform, die für Wissensmanagement und Zusammenarbeit entwickelt wurde. Sie bietet eine Vielzahl von Funktionen, einschließlich Dokumentenbearbeitung, Suchfunktionen und Integration mit verschiedenen Datenquellen.
+
+      Zu den Hauptfunktionen gehören:
+      - Rich-Text-Bearbeitung mit Markdown-Unterstützung
+      - Leistungsstarke Suche und Indizierung
+      - Multi-User-Zusammenarbeit
+      - Datei- und Medienverwaltung
+      - RESTful API für Integrationen
+      - Anpassbare Themen und Plugins
+
+      Mit modernen Technologien und Microservices-Architektur aufgebaut, bietet PandaWiki hohe Leistung, Skalierbarkeit und Zuverlässigkeit für Unternehmens- und Privatnutzung.
+    sv_SE: |
+      PandaWiki är en omfattande självhostad wiki-plattform utformad för kunskapsstyring och samarbete. Den ger en rik uppsättning funktioner inklusive dokumentredigering, sökkapacitet och integration med olika datakällor.
+
+      Huvudfunktioner inkluderar:
+      - Rik textredigering med markdown-stöd
+      - Kraftfull sökning och indexering
+      - Multi-användarsamarbete
+      - Fil- och mediehantering
+      - RESTful API för integrationer
+      - Anpassbara teman och plugins
+
+      Byggd med moderna teknologier och mikroservice-arkitektur erbjuder PandaWiki hög prestanda, skalbarhet och tillförlitlighet för företags- och personlig användning.
+    el_GR: |
+      Το PandaWiki είναι μια ολοκληρωμένη αυτο-φιλοξενούμενη πλατφόρμα wiki που έχει σχεδιαστεί για τη διαχείριση γνώσεων και τη συνεργασία. Παρέχει ένα πλούσιο σύνολο χαρακτηριστικών, συμπεριλαμβανομένης της επεξεργασίας εγγράφων, των δυνατοτήτων αναζήτησης και της ενσωμάτωσης με διάφορες πηγές δεδομένων.
+
+      Τα κύρια χαρακτηριστικά περιλαμβάνουν:
+      - Επεξεργασία εμπλουτισμένου κειμένου με υποστήριξη markdown
+      - Ισχυρή αναζήτηση και ευρετηρίαση
+      - Συνεργασία πολλαπλών χρηστών
+      - Διαχείριση αρχείων και μέσων
+      - RESTful API για ενσωματώσεις
+      - Προσαρμόσιμα θέματα και plugins
+
+      Χτισμένο με σύγχρονες τεχνολογίες και αρχιτεκτονική μικροϋπηρεσιών, το PandaWiki προσφέρει υψηλές επιδόσεις, επεκτασιμότητα και αξιοπιστία για επιχειρησιακή και προσωπική χρήση.
+    hr_HR: |
+      PandaWiki je sveobuhvatna samohostirana wiki platforma dizajnirana za upravljanje znanjem i suradnju. Pruža bogat skup značajki uključujući uređivanje dokumenata, mogućnosti pretraživanja i integraciju s različitim izvorima podataka.
+
+      Ključne značajke uključuju:
+      - Uređivanje obogaćenog teksta s podrškom za markdown
+      - Moćno pretraživanje i indeksiranje
+      - Suradnja više korisnika
+      - Upravljanje datotekama i medijima
+      - RESTful API za integracije
+      - Prilagodljive teme i dodaci
+
+      Izgrađen s modernim tehnologijama i mikroservisnom arhitekturom, PandaWiki nudi visoke performanse, skalabilnost i pouzdanost za poslovnu i osobnu upotrebu.
+    pt_PT: |
+      O PandaWiki é uma plataforma wiki abrangente auto-hospedada projetada para gestão de conhecimento e colaboração. Fornece um rico conjunto de funcionalidades, incluindo edição de documentos, capacidades de pesquisa e integração com várias fontes de dados.
+
+      As principais funcionalidades incluem:
+      - Edição de texto rico com suporte markdown
+      - Pesquisa e indexação poderosas
+      - Colaboração multi-utilizador
+      - Gestão de ficheiros e média
+      - API RESTful para integrações
+      - Temas e plugins personalizáveis
+
+      Construído com tecnologias modernas e arquitetura de microsserviços, o PandaWiki oferece alto desempenho, escalabilidade e confiabilidade para uso empresarial e pessoal.
+    ru_RU: |
+      PandaWiki - это всеобъемлющая самоуправляемая платформа wiki, разработанная для управления знаниями и совместной работы. Она предоставляет богатый набор функций, включая редактирование документов, возможности поиска и интеграцию с различными источниками данных.
+
+      Ключевые особенности включают:
+      - Редактирование форматированного текста с поддержкой markdown
+      - Мощный поиск и индексация
+      - Совместная работа нескольких пользователей
+      - Управление файлами и медиа
+      - RESTful API для интеграций
+      - Настраиваемые темы и плагины
+
+      Построенный на современных технологиях и архитектуре микросервисов, PandaWiki предлагает высокую производительность, масштабируемость и надежность для корпоративного и личного использования.
+    tr_TR: |
+      PandaWiki, bilgi yönetimi ve işbirliği için tasarlanmış kapsamlı bir kendi kendine barındırılan wiki platformudur. Belge düzenleme, arama yetenekleri ve çeşitli veri kaynaklarıyla entegrasyon dahil olmak üzere zengin bir özellik seti sağlar.
+
+      Temel özellikler şunları içerir:
+      - Markdown desteğiyle zengin metin düzenleme
+      - Güçlü arama ve indeksleme
+      - Çok kullanıcılı işbirliği
+      - Dosya ve medya yönetimi
+      - Entegrasyonlar için RESTful API
+      - Özelleştirilebilir temalar ve eklentiler
+
+      Modern teknolojiler ve mikroservis mimarisi ile oluşturulmuş olan PandaWiki, kurumsal ve kişisel kullanım için yüksek performans, ölçeklenebilirlik ve güvenilirlik sunar.
