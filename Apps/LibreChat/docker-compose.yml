@@ -8,10 +8,14 @@ services:
       - librechat-mongodb
       - librechat-rag-api
     image: ghcr.io/danny-avila/librechat-dev:latest
-    restart: always
+    restart: unless-stopped
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
+      - ASSISTANTS_API_KEY=user_provided
+      - OPENAI_API_KEY=user_provided
+      - GOOGLE_KEY=user_provided
+      - ANTHROPIC_API_KEY=user_provided
       - HOST=0.0.0.0
       - PORT=3080
       - DOMAIN_CLIENT=http://0.0.0.0:3080
@@ -80,6 +84,10 @@ services:
         target: /app/api/logs
     networks:
       - librechat-net
+    deploy:
+      resources:
+        reservations:
+          memory: 1024M
     x-casaos:
       ports:
         - container: "3080"
@@ -325,7 +333,7 @@ services:
   librechat-mongodb:
     container_name: librechat-mongodb
     image: mongo:6.0
-    restart: always
+    restart: unless-stopped
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/data-node
@@ -333,6 +341,10 @@ services:
     command: ["mongod", "--noauth"]
     networks:
       - librechat-net
+    deploy:
+      resources:
+        reservations:
+          memory: 1024M
     x-casaos:
       volumes:
         - container: /data/db
@@ -352,7 +364,6 @@ services:
             pt_PT: Diretório de Dados MongoDB
             ru_RU: Каталог данных MongoDB
             tr_TR: MongoDB Veri Dizini
-      envs:
         - container: MONGO_INITDB_ROOT_USERNAME
           description:
             en_US: MongoDB Root Username
@@ -390,7 +401,7 @@ services:
   librechat-meilisearch:
     container_name: librechat-meilisearch
     image: getmeili/meilisearch:v1.12.3
-    restart: always
+    restart: unless-stopped
     user: "1000:1000"
     environment:
       - MEILI_HOST=http://librechat-meilisearch:7700
@@ -474,17 +485,21 @@ services:
             ru_RU: Главный ключ MeiliSearch
             tr_TR: MeiliSearch Ana Anahtarı
   librechat-vectordb:
-    container_name: librechat-vectordb
+    container_name: librechat-envs:vectordb
     image: ankane/pgvector:latest
     environment:
       POSTGRES_DB: mydatabase
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
-    restart: always
+    restart: unless-stopped
     volumes:
       - /DATA/AppData/$AppID/postgresql/data:/var/lib/postgresql/data
     networks:
       - librechat-net
+    deploy:
+      resources:
+        reservations:
+          memory: 500M
     x-casaos:
       envs:
         - container: POSTGRES_DB
@@ -544,11 +559,15 @@ services:
     environment:
       - DB_HOST=librechat-vectordb
       - RAG_PORT=8000
-    restart: always
+    restart: unless-stopped
     depends_on:
       - librechat-vectordb
     networks:
       - librechat-net
+    deploy:
+      resources:
+        reservations:
+          memory: 1024M
     x-casaos:
       envs:
         - container: DB_HOST
@@ -585,8 +604,6 @@ services:
             pt_PT: Porta de Serviço RAG
             ru_RU: Порт службы RAG
             tr_TR: RAG Hizmet Bağlantı Noktası
-volumes:
-  pgdata2:
 networks:
   librechat-net:
     driver: bridge
