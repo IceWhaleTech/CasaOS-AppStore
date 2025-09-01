@@ -49,10 +49,6 @@ services:
             sv_SE: Dator Lagringskatalog
             tr_TR: Bilgisayar Depolama Dizini
             zh_CN: 计算机存储目录
-    devices: []
-    cap_add: []
-    command: []
-    environment: []
     networks:
       - khoj_network
     privileged: false
@@ -62,6 +58,8 @@ services:
       resources:
         limits:
           memory: 7656M
+        # reservations:
+        #   memory: 
   khoj-database:
     container_name: khoj-databese
     environment:
@@ -78,7 +76,8 @@ services:
     image: docker.io/pgvector/pgvector:pg17
     volumes:
       - type: bind
-        source: /DATA/AppData/$AppID/khoj_db
+        #source: /DATA/AppData/b/khoj_db
+        source: ./db
         target: /var/lib/postgresql/data
     x-casaos:
       envs:
@@ -151,10 +150,6 @@ services:
             sv_SE: Databas Lagringskatalog
             tr_TR: Veritabanı Depolama Dizini
             zh_CN: 数据库存储目录
-    ports: []
-    devices: []
-    cap_add: []
-    command: []
     networks:
       - khoj_network
     privileged: false
@@ -174,12 +169,6 @@ services:
       interval: 30s
       retries: 2
     image: ghcr.io/khoj-ai/terrarium:latest
-    ports: []
-    volumes: []
-    devices: []
-    cap_add: []
-    command: []
-    environment: []
     networks:
       - khoj_network
     privileged: false
@@ -261,15 +250,16 @@ services:
         condition: service_healthy
         required: true
     environment:
-      - KHOJ_ADMIN_EMAIL=123@1.com
+      - KHOJ_ADMIN_EMAIL=123
       - KHOJ_ADMIN_PASSWORD=123
-      - KHOJ_DEBUG=False
-      - KHOJ_DEFAULT_CHAT_MODEL=DeepSeek-V3-0324
+      - KHOJ_NO_HTTPS=True
+      - KHOJ_DEBUG=True
+      - KHOJ_DEFAULT_CHAT_MODEL=llama3.1
       - KHOJ_DJANGO_SECRET_KEY=secret
       - KHOJ_SEARXNG_URL=http://khoj-search:8080
       - KHOJ_TERRARIUM_URL=http://khoj-sandbox:8080
-      - OPENAI_API_KEY=7a8f99a6-f943-41a4-9db0-b98daa89c8db
-      - OPENAI_BASE_URL=https://api.sambanova.ai/v1
+      # - OPENAI_API_KEY=7a8f99a6-f943-41a4-9db0-b98daa89c8db
+      - OPENAI_BASE_URL=http://host.docker.internal:11434/v1/
       - POSTGRES_DB=postgres
       - POSTGRES_HOST=khoj-database
       - POSTGRES_PASSWORD=postgres
@@ -562,7 +552,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 7656M
+          memory: 2048M
+        reservations:
+          memory: 1024M
 networks:
   khoj_network:
     name: khoj_khoj_network
@@ -984,6 +976,7 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Khoj/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Khoj/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Khoj/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Khoj/screenshot-4.png
   tagline:
     de_DE: Ein KI-Copilot für dein zweites Gehirn.
     el_GR: Ένας copilot AI για τον δεύτερο εγκέφαλό σας.
