@@ -1,0 +1,91 @@
+name: maybe
+services:
+  maybe-web:
+    container_name: maybe-web
+    image: ghcr.io/maybe-finance/maybe:latest
+    volumes:
+      - /DATA/AppData/$AppID/app/storage:/rails/storage
+    ports:
+      - 23000:3000
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: maybe_user
+      POSTGRES_PASSWORD: maybe_password
+      POSTGRES_DB: maybe_production
+      SECRET_KEY_BASE: a7523c3d0ae56415046ad8abae168d71074a79534a7062258f8d1d51ac2f76d3c3bc86d86b6b0b307df30d9a6a90a2066a3fa9e67c5e6f374dbd7dd4e0778e13
+      SELF_HOSTED: "true"
+      RAILS_FORCE_SSL: "false"
+      RAILS_ASSUME_SSL: "false"
+      DB_HOST: maybe-db
+      DB_PORT: 5432
+      REDIS_URL: redis://maybe-redis:6379/1
+    # NOTE: enabling OpenAI will incur costs when you use AI-related features in the app (chat, rules).  Make sure you have set appropriate spend limits on your account before adding this.
+      OPENAI_ACCESS_TOKEN: ${OPENAI_ACCESS_TOKEN}
+    depends_on:
+      maybe-db:
+        condition: service_healthy
+      maybe-redis:
+        condition: service_healthy
+    networks:
+      - maybe_net
+
+  maybe-worker:
+    container_name: maybe-worker
+    image: ghcr.io/maybe-finance/maybe:latest
+    command: bundle exec sidekiq
+    restart: unless-stopped
+    depends_on:
+      maybe-redis:
+        condition: service_healthy
+    environment:
+      POSTGRES_USER: maybe_user
+      POSTGRES_PASSWORD: maybe_password
+      POSTGRES_DB: maybe_production
+      SECRET_KEY_BASE: a7523c3d0ae56415046ad8abae168d71074a79534a7062258f8d1d51ac2f76d3c3bc86d86b6b0b307df30d9a6a90a2066a3fa9e67c5e6f374dbd7dd4e0778e13
+      SELF_HOSTED: "true"
+      RAILS_FORCE_SSL: "false"
+      RAILS_ASSUME_SSL: "false"
+      DB_HOST: maybe-db
+      DB_PORT: 5432
+      REDIS_URL: redis://maybe-redis:6379/1
+    # NOTE: enabling OpenAI will incur costs when you use AI-related features in the app (chat, rules).  Make sure you have set appropriate spend limits on your account before adding this.
+      OPENAI_ACCESS_TOKEN: ${OPENAI_ACCESS_TOKEN}
+    networks:
+      - maybe_net
+
+  maybe-db:
+    container_name: maybe-db
+    image: postgres:16
+    restart: unless-stopped
+    volumes:
+      - /DATA/AppData/$AppID/pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: maybe_user
+      POSTGRES_PASSWORD: maybe_password
+      POSTGRES_DB: maybe_production
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - maybe_net
+
+  maybe-redis:
+    container_name: maybe-redis
+    image: redis:latest
+    restart: unless-stopped
+    volumes:
+      - /DATA/AppData/$AppID/redis/data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - maybe_net
+
+networks:
+  maybe_net:
+    driver: bridge
+
