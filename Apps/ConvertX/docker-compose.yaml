@@ -18,7 +18,7 @@ services:
         source: /DATA/AppData/$AppID/data
         target: /app/data
     networks:
-      - convertx-net
+      network_mode: bridge
     x-casaos:
       ports:
         - container: "3000"
@@ -91,9 +91,7 @@ services:
             pt_PT: Permitir Ligações HTTP
             ru_RU: Разрешить HTTP-подключения
             tr_TR: HTTP Bağlantılarına İzin Ver
-networks:
-  convertx-net:
-    driver: bridge
+
     
 x-casaos:
   architectures:
@@ -376,12 +374,12 @@ x-casaos:
       **Daha Fazla Bilgi Edinin:**
       - [ConvertX GitHub Deposu](https://github.com/c4illin/convertx)
     screenshot_link:
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ConvertX/screenshot-1.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ConvertX/screenshot-2.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ConvertX/screenshot-3.png
+      - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ConvertX/screenshot-1.png
+      - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ConvertX/screenshot-2.png
+      - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ConvertX/screenshot-3.png
     icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ConvertX/icon.png
-    port_map: '3333'
+    port_map: "3333"
     index: /
-    scheme: 'http'
+    scheme: http
     title:
       en_US: ConvertX
