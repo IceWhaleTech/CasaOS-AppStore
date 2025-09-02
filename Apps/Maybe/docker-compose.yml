@@ -32,7 +32,7 @@ services:
   maybe-worker:
     container_name: maybe-worker
     image: ghcr.io/maybe-finance/maybe:latest
-    command: bundle exec sidekiq
+    command: [ 'bundle', 'exec' ,'sidekiq']
     restart: unless-stopped
     depends_on:
       maybe-redis:
