@@ -145,7 +145,7 @@ services:
 
   maybe-redis:
     container_name: maybe-redis
-    image: redis:latest
+    image: redis:8.2.1-alpine3.22
     restart: unless-stopped
     volumes:
       - type: bind
@@ -230,7 +230,6 @@ x-casaos:
       - Cash flow analysis
       
       **Learn More:**
-      - [Maybe Official Website](https://maybe.finance/)
       - [Maybe GitHub Repository](https://github.com/maybe-finance/maybe)
     en_GB: |
       Maybe is a personal finance management application designed to help you track your expenses, income, and investments in one place. With an intuitive interface and powerful features, Maybe makes it easy to understand your financial situation and make informed decisions about your money.
@@ -251,7 +250,6 @@ x-casaos:
       - Cash flow analysis
       
       **Learn More:**
-      - [Maybe Official Website](https://maybe.finance/)
       - [Maybe GitHub Repository](https://github.com/maybe-finance/maybe)
     it_IT: |
       Maybe è un'applicazione di gestione finanziaria personale progettata per aiutarti a monitorare spese, redditi e investimenti in un unico posto. Con un'interfaccia intuitiva e funzionalità potenti, Maybe rende facile comprendere la tua situazione finanziaria e prendere decisioni informate sul tuo denaro.
@@ -272,7 +270,6 @@ x-casaos:
       - Analisi del flusso di cassa
       
       **Scopri di Più:**
-      - [Sito Web Ufficiale Maybe](https://maybe.finance/)
       - [Repository GitHub Maybe](https://github.com/maybe-finance/maybe)
     nb_NO: |
       Maybe er en applikasjon for personlig finansforvaltning designet for å hjelpe deg med å spore utgifter, inntekter og investeringer på ett sted. Med et intuitivt grensesnitt og kraftfulle funksjoner, gjør Maybe det enkelt å forstå din finansielle situasjon og ta informerte beslutninger om pengene dine.
@@ -293,7 +290,6 @@ x-casaos:
       - Kontantstrømanalyse
       
       **Lær Mer:**
-      - [Maybe Offisiell Nettside](https://maybe.finance/)
       - [Maybe GitHub Repository](https://github.com/maybe-finance/maybe)
     zh_CN: |
       Maybe是一款个人理财管理应用，旨在帮助您在一个地方跟踪您的支出、收入和投资。凭借直观的界面和强大的功能，Maybe让您轻松了解自己的财务状况，并对您的资金做出明智的决策。
@@ -314,7 +310,6 @@ x-casaos:
       - 现金流分析
       
       **了解更多：**
-      - [Maybe官方网站](https://maybe.finance/)
       - [Maybe GitHub仓库](https://github.com/maybe-finance/maybe)
     ja_JP: |
       Maybeは、支出、収入、投資を一か所で追跡するために設計された個人ファイナンス管理アプリケーションです。直感的なインターフェースと強力な機能により、Maybeは財政状況を理解し、資金について情報に基づいた意思決定を容易にします。
@@ -335,7 +330,6 @@ x-casaos:
       - キャッシュフロー分析
       
       **詳細情報：**
-      - [Maybe公式ウェブサイト](https://maybe.finance/)
       - [Maybe GitHubリポジトリ](https://github.com/maybe-finance/maybe)
     ko_KR: |
       Maybe는 지출, 수입, 투자를 한곳에서 추적할 수 있도록 설계된 개인 재무 관리 애플리케이션입니다. 직관적인 인터페이스와 강력한 기능을 통해 Maybe는 재정 상황을 이해하고 자금에 대한 정보에 입각한 결정을 내리는 것을 쉽게 만듭니다.
@@ -356,7 +350,6 @@ x-casaos:
       - 현금 흐름 분석
       
       **더 알아보기:**
-      - [Maybe 공식 웹사이트](https://maybe.finance/)
       - [Maybe GitHub 저장소](https://github.com/maybe-finance/maybe)
     fr_FR: |
       Maybe est une application de gestion financière personnelle conçue pour vous aider à suivre vos dépenses, revenus et investissements en un seul endroit. Avec une interface intuitive et des fonctionnalités puissantes, Maybe facilite la compréhension de votre situation financière et la prise de décisions éclairées concernant votre argent.
@@ -377,7 +370,6 @@ x-casaos:
       - Analyse de la trésorerie
       
       **En Savoir Plus :**
-      - [Site Web Officiel Maybe](https://maybe.finance/)
       - [Dépôt GitHub Maybe](https://github.com/maybe-finance/maybe)
     de_DE: |
       Maybe ist eine Anwendung zur persönlichen Finanzverwaltung, die entwickelt wurde, um Ihnen zu helfen, Ausgaben, Einkommen und Investitionen an einem Ort zu verfolgen. Mit einer intuitiven Benutzeroberfläche und leistungsstarken Funktionen macht Maybe es einfach, Ihre finanzielle Situation zu verstehen und fundierte Entscheidungen über Ihr Geld zu treffen.
@@ -398,7 +390,6 @@ x-casaos:
       - Cashflow-Analyse
       
       **Mehr Erfahren:**
-      - [Maybe Offizielle Website](https://maybe.finance/)
       - [Maybe GitHub Repository](https://github.com/maybe-finance/maybe)
     sv_SE: |
       Maybe är en applikation för personlig finanshantering designad för att hjälpa dig att spara utgifter, inkomster och investeringar på ett ställe. Med ett intuitivt gränssnitt och kraftfulla funktioner gör Maybe det enkelt att förstå din finansiella situation och fatta välgrundade beslut om dina pengar.
@@ -419,7 +410,6 @@ x-casaos:
       - Kassaflödesanalys
       
       **Läs Mer:**
-      - [Maybe Officiell Webbplats](https://maybe.finance/)
       - [Maybe GitHub Repository](https://github.com/maybe-finance/maybe)
     el_GR: |
       Το Maybe είναι μια εφαρμογή διαχείρισης προσωπικών οικονομικών σχεδιασμένη για να σας βοηθήσει να παρακολουθείτε τα έξοδα, τα έσοδα και τις επενδύσεις σας σε ένα μέρος. Με ένα διαισθητικό περιβάλλον και ισχυρές λειτουργίες, το Maybe καθιστά εύκολη την κατανόηση της οικονομικής σας κατάστασης και τη λήψη ενημερωμένων αποφάσεων για τα χρήματά σας.
@@ -440,7 +430,6 @@ x-casaos:
       - Ανάλυση ταμειακών ροών
       
       **Μάθετε Περισσότερα:**
-      - [Επίσημη Ιστοσελίδα Maybe](https://maybe.finance/)
       - [Αποθετήριο GitHub Maybe](https://github.com/maybe-finance/maybe)
     hr_HR: |
       Maybe je aplikacija za upravljanje osobnim financijama dizajnirana da vam pomogne pratiti troškove, prihode i investicije na jednom mjestu. S intuitivnim sučeljem i moćnim značajkama, Maybe olakšava razumijevanje vaše financijske situacije i donošenje informiranih odluka o novcu.
@@ -461,7 +450,6 @@ x-casaos:
       - Analiza novčanog tijeka
       
       **Saznajte Više:**
-      - [Maybe Službena Web Stranica](https://maybe.finance/)
       - [Maybe GitHub Repozitorij](https://github.com/maybe-finance/maybe)
     pt_PT: |
       Maybe é uma aplicação de gestão financeira pessoal concebida para o ajudar a acompanhar as suas despesas, rendimentos e investimentos num só lugar. Com uma interface intuitiva e funcionalidades poderosas, o Maybe torna fácil compreender a sua situação financeira e tomar decisões informadas sobre o seu dinheiro.
@@ -482,7 +470,6 @@ x-casaos:
       - Análise de fluxo de caixa
       
       **Saiba Mais:**
-      - [Site Oficial Maybe](https://maybe.finance/)
       - [Repositório GitHub Maybe](https://github.com/maybe-finance/maybe)
     ru_RU: |
       Maybe — это приложение для управления личными финансами, разработанное, чтобы помочь вам отслеживать расходы, доходы и инвестиции в одном месте. С интуитивно понятным интерфейсом и мощными функциями Maybe облегчает понимание вашего финансового положения и принятие обоснованных решений о ваших деньгах.
@@ -503,7 +490,6 @@ x-casaos:
       - Анализ движения денежных средств
       
       **Узнать Больше:**
-      - [Официальный Сайт Maybe](https://maybe.finance/)
       - [GitHub Репозиторий Maybe](https://github.com/maybe-finance/maybe)
     tr_TR: |
       Maybe, harcamalarınızı, gelirlerinizi ve yatırımlarınızı tek bir yerde takip etmenize yardımcı olmak için tasarlanmış kişisel finans yönetimi uygulamasıdır. Sezgisel arayüzü ve güçlü özellikleriyle Maybe, finansal durumunuzu anlamanızı ve paranız hakkında bilinçli kararlar almanızı kolaylaştırır.
@@ -524,7 +510,6 @@ x-casaos:
       - Nakit akışı analizi
       
       **Daha Fazla Bilgi:**
-      - [Maybe Resmi Web Sitesi](https://maybe.finance/)
       - [Maybe GitHub Deposu](https://github.com/maybe-finance/maybe)
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Maybe/icon.png
   screenshot_link:
