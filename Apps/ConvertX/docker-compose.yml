@@ -17,8 +17,7 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/data
         target: /app/data
-    networks:
-      network_mode: bridge
+    network_mode: bridge
     x-casaos:
       ports:
         - container: "3000"
