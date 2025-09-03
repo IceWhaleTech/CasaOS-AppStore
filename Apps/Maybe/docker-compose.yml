@@ -113,7 +113,7 @@ services:
       POSTGRES_PASSWORD: maybe_password
       POSTGRES_DB: maybe_production
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+      test: [ "CMD-SHELL", "pg_isready -U maybe_user -d maybe_production" ]
       interval: 5s
       timeout: 5s
       retries: 5
