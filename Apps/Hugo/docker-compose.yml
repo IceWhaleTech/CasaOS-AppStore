@@ -23,7 +23,7 @@ services:
     command: ["server", "--bind=0.0.0.0"]
     x-casaos:
       ports:
-        - container: 1313
+        - container: "1313"
           description:
             en_US: WebUI HTTP Port
             en_GB: WebUI HTTP Port
