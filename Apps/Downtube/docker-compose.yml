@@ -1,0 +1,12 @@
+# docker-compose.yml
+name: downtube-app
+version: '3.8'
+
+services:
+  app:
+    image: pedrodev2025/downtube-app:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ${APP_DATA_DIR}/downloads:/app/Downtube/downloads
+    restart: unless-stopped
