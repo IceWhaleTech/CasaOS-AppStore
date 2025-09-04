@@ -485,8 +485,8 @@ services:
             ru_RU: Главный ключ MeiliSearch
             tr_TR: MeiliSearch Ana Anahtarı
   librechat-vectordb:
-    container_name: librechat-envs:vectordb
-    image: ankane/pgvector:latest
+    container_name: librechat-vectordb
+    image: ankane/pgvector:v0.5.1
     environment:
       POSTGRES_DB: mydatabase
       POSTGRES_USER: myuser
@@ -555,7 +555,7 @@ services:
             tr_TR: PostgreSQL Şifresi
   librechat-rag-api:
     container_name: librechat-rag-api
-    image: ghcr.io/danny-avila/librechat-rag-api-dev-lite:latest
+    image: ghcr.io/danny-avila/librechat-rag-api-dev-lite:v0.6.0
     environment:
       - DB_HOST=librechat-vectordb
       - RAG_PORT=8000
