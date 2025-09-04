@@ -23,7 +23,7 @@ services:
     command: ["server", "--bind=0.0.0.0"]
     x-casaos:
       ports:
-        - container: 1313
+        - container: "1313"
           description:
             en_US: WebUI HTTP Port
             en_GB: WebUI HTTP Port
@@ -114,6 +114,28 @@ x-casaos:
       - Embedded web server for real-time development previews
       - Rich ecosystem of themes and plugins
 
+
+      **Prerequisites for Using Hugo:**
+      
+      1. Open command line, navigate to `/DATA/AppData/hugo/project` directory
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. Initialize the `project` directory as an empty Git repository
+      
+      ```git init```
+      
+      3. Download the Ananke theme
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. Specify the current theme
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. Restart Hugo
+
+
       **Learn More:**
       - [Hugo Official Website](https://gohugo.io/)
       - [Hugo GitHub](https://github.com/gohugoio/hugo)
@@ -130,6 +152,28 @@ x-casaos:
       - Flexible framework with multilingual and taxonomy systems
       - Embedded web server for real-time development previews
       - Rich ecosystem of themes and plugins
+
+
+      **Prerequisites for Using Hugo:**
+      
+      1. Open command line, navigate to `/DATA/AppData/hugo/project` directory
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. Initialise the `project` directory as an empty Git repository
+      
+      ```git init```
+      
+      3. Download the Ananke theme
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. Specify the current theme
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. Restart Hugo
+
 
       **Learn More:**
       - [Hugo Official Website](https://gohugo.io/)
@@ -148,6 +192,28 @@ x-casaos:
       - Server web integrato per anteprime di sviluppo in tempo reale
       - Ricco ecosistema di temi e plugin
 
+
+      **Prerequisiti per Utilizzare Hugo:**
+      
+      1. Aprire la riga di comando, navigare nella directory `/DATA/AppData/hugo/project`
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. Inizializzare la directory `project` come repository Git vuoto
+      
+      ```git init```
+      
+      3. Scaricare il tema Ananke
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. Specificare il tema corrente
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. Riavviare Hugo
+
+
       **Scopri di Più:**
       - [Sito Ufficiale Hugo](https://gohugo.io/)
       - [Hugo GitHub](https://github.com/gohugoio/hugo)
@@ -164,6 +230,28 @@ x-casaos:
       - Fleksibelt rammeverk med flerspråklige og taksonomi-systemer
       - Innebygd webserver for sanntids utviklingsforhåndsvisninger
       - Rikt økosystem av temaer og plugins
+
+
+      **Forutsetninger for å Bruke Hugo:**
+      
+      1. Åpne kommandolinje, naviger til `/DATA/AppData/hugo/project` katalog
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. Initialiser `project` katalog som en tom Git repository
+      
+      ```git init```
+      
+      3. Last ned Ananke tema
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. Spesifiser gjeldende tema
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. Start Hugo på nytt
+
 
       **Lær Mer:**
       - [Hugo Offisielle Nettside](https://gohugo.io/)
@@ -182,6 +270,28 @@ x-casaos:
       - 嵌入式 Web 服务器，实时预览开发变化
       - 丰富的主题和插件生态系统
 
+
+      **使用 Hugo 的前提条件：**
+      
+      1. 打开命令行, 进入 `/DATA/AppData/hugo/project` 目录
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. 将 `porject` 目录初始化为空的 Git 存储库
+      
+      ```git init```
+      
+      3. 下载 Ananke 主题
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. 指定当前主题
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. 重启 Hugo
+
+
       **了解更多：**
       - [Hugo 官方网站](https://gohugo.io/)
       - [Hugo GitHub](https://github.com/gohugoio/hugo)
@@ -198,6 +308,28 @@ x-casaos:
       - 多言語・タクソノミーシステムを備えた柔軟なフレームワーク
       - リアルタイム開発プレビュー用組み込みWebサーバー
       - 豊富なテーマとプラグインのエコシステム
+
+
+      **Hugoを使用するための前提条件：**
+      
+      1. コマンドラインを開き、`/DATA/AppData/hugo/project` ディレクトリに移動
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. `project` ディレクトリを空のGitリポジトリとして初期化
+      
+      ```git init```
+      
+      3. Anankeテーマをダウンロード
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. 現在のテーマを指定
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. Hugoを再起動
+
 
       **詳細はこちら：**
       - [Hugo公式ウェブサイト](https://gohugo.io/)
@@ -216,6 +348,28 @@ x-casaos:
       - 실시간 개발 미리보기용 내장 웹 서버
       - 풍부한 테마 및 플러그인 생태계
 
+
+      **Hugo 사용을 위한 전제 조건:**
+      
+      1. 명령줄을 열고 `/DATA/AppData/hugo/project` 디렉토리로 이동
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. `project` 디렉토리를 빈 Git 저장소로 초기화
+      
+      ```git init```
+      
+      3. Ananke 테마 다운로드
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. 현재 테마 지정
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. Hugo 재시작
+
+
       **자세히 알아보기:**
       - [Hugo 공식 웹사이트](https://gohugo.io/)
       - [Hugo GitHub](https://github.com/gohugoio/hugo)
@@ -232,6 +386,28 @@ x-casaos:
       - Framework flexible avec systèmes multilingues et de taxonomie
       - Serveur web intégré pour aperçus de développement en temps réel
       - Riche écosystème de thèmes et plugins
+
+
+      **Prérequis pour Utiliser Hugo :**
+      
+      1. Ouvrir la ligne de commande, naviguer vers le répertoire `/DATA/AppData/hugo/project`
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. Initialiser le répertoire `project` comme un dépôt Git vide
+      
+      ```git init```
+      
+      3. Télécharger le thème Ananke
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. Spécifier le thème actuel
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. Redémarrer Hugo
+
 
       **En Savoir Plus :**
       - [Site Officiel Hugo](https://gohugo.io/)
@@ -250,6 +426,28 @@ x-casaos:
       - Eingebetteter Webserver für Echtzeit-Entwicklungsvorschauen
       - Reiches Ökosystem von Themes und Plugins
 
+
+      **Voraussetzungen für die Verwendung von Hugo:**
+      
+      1. Kommandozeile öffnen, zum Verzeichnis `/DATA/AppData/hugo/project` navigieren
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. Das `project` Verzeichnis als leeres Git-Repository initialisieren
+      
+      ```git init```
+      
+      3. Das Ananke-Theme herunterladen
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. Das aktuelle Theme spezifizieren
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. Hugo neu starten
+
+
       **Mehr Erfahren:**
       - [Hugo Offizielle Website](https://gohugo.io/)
       - [Hugo GitHub](https://github.com/gohugoio/hugo)
@@ -266,6 +464,28 @@ x-casaos:
       - Flexibelt ramverk med flerspråkiga och taxonomisystem
       - Inbäddad webbserver för realtidsutvecklingsförhandsvisningar
       - Rikt ekosystem av teman och plugins
+
+
+      **Förutsättningar för att Använda Hugo:**
+      
+      1. Öppna kommandoraden, navigera till `/DATA/AppData/hugo/project` katalog
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. Initiera `project` katalogen som ett tomt Git-repository
+      
+      ```git init```
+      
+      3. Ladda ner Ananke-temat
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. Specificera det aktuella temat
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. Starta om Hugo
+
 
       **Lär Dig Mer:**
       - [Hugo Officiell Webbplats](https://gohugo.io/)
@@ -284,6 +504,28 @@ x-casaos:
       - Ενσωματωμένος διακομιστής ιστού για προεπισκοπήσεις ανάπτυξης πραγματικού χρόνου
       - Πλούσιο οικοσύστημα θεμάτων και προσθέτων
 
+
+      **Προαπαιτούμενα για τη Χρήση του Hugo:**
+      
+      1. Ανοίξτε τη γραμμή εντολών, πλοηγηθείτε στον κατάλογο `/DATA/AppData/hugo/project`
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. Αρχικοποιήστε τον κατάλογο `project` ως κενό αποθετήριο Git
+      
+      ```git init```
+      
+      3. Κατεβάστε το θέμα Ananke
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. Καθορίστε το τρέχον θέμα
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. Επανεκκινήστε το Hugo
+
+
       **Μάθετε Περισσότερα:**
       - [Επίσημος Ιστότοπος Hugo](https://gohugo.io/)
       - [Hugo GitHub](https://github.com/gohugoio/hugo)
@@ -300,6 +542,28 @@ x-casaos:
       - Fleksibilan okvir s višejezičnim i taksonomskim sustavima
       - Ugrađeni web poslužitelj za preglede razvoja u stvarnom vremenu
       - Bogat ekosustav tema i dodataka
+
+
+      **Preduvjeti za Korištenje Hugo-a:**
+      
+      1. Otvorite naredbeni redak, idite u direktorij `/DATA/AppData/hugo/project`
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. Inicijalizirajte direktorij `project` kao prazan Git repozitorij
+      
+      ```git init```
+      
+      3. Preuzmite Ananke temu
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. Specificirajte trenutnu temu
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. Ponovno pokrenite Hugo
+
 
       **Saznajte Više:**
       - [Hugo Službena Web Stranica](https://gohugo.io/)
@@ -318,6 +582,28 @@ x-casaos:
       - Servidor web incorporado para pré-visualizações de desenvolvimento em tempo real
       - Rico ecossistema de temas e plugins
 
+
+      **Pré-requisitos para Usar Hugo:**
+      
+      1. Abrir linha de comandos, navegar para o directório `/DATA/AppData/hugo/project`
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. Inicializar o directório `project` como um repositório Git vazio
+      
+      ```git init```
+      
+      3. Descarregar o tema Ananke
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. Especificar o tema actual
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. Reiniciar Hugo
+
+
       **Saber Mais:**
       - [Website Oficial Hugo](https://gohugo.io/)
       - [Hugo GitHub](https://github.com/gohugoio/hugo)
@@ -335,6 +621,28 @@ x-casaos:
       - Встроенный веб-сервер для предварительного просмотра разработки в реальном времени
       - Богатая экосистема тем и плагинов
 
+
+      **Предварительные Требования для Использования Hugo:**
+      
+      1. Открыть командную строку, перейти в каталог `/DATA/AppData/hugo/project`
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. Инициализировать каталог `project` как пустой Git-репозиторий
+      
+      ```git init```
+      
+      3. Скачать тему Ananke
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. Указать текущую тему
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. Перезапустить Hugo
+
+
       **Узнать Больше:**
       - [Официальный Сайт Hugo](https://gohugo.io/)
       - [Hugo GitHub](https://github.com/gohugoio/hugo)
@@ -351,6 +659,28 @@ x-casaos:
       - Çok dilli ve taksonomi sistemleri ile esnek çerçeve
       - Gerçek zamanlı geliştirme önizlemeleri için gömülü web sunucusu
       - Zengin tema ve eklenti ekosistemi
+
+
+      **Hugo Kullanımı için Ön Koşullar:**
+      
+      1. Komut satırını açın, `/DATA/AppData/hugo/project` dizinine gidin
+      
+      ```cd /DATA/AppData/hugo/project```
+      
+      2. `project` dizinini boş bir Git deposu olarak başlatın
+      
+      ```git init```
+      
+      3. Ananke temasını indirin
+      
+      ```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```
+      
+      4. Mevcut temayı belirtin
+      
+      ```echo "theme = 'ananke'" >> hugo.toml```
+      
+      5. Hugo'yu yeniden başlatın
+
 
       **Daha Fazla Bilgi:**
       - [Hugo Resmi Web Sitesi](https://gohugo.io/)

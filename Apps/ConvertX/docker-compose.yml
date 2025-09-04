@@ -1,0 +1,384 @@
+name: convertx
+services:
+  convertx:
+    image: c4illin/convertx:v0.14.1
+    container_name: convertx
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 500M
+    ports:
+      - "3333:3000"
+    environment:
+      - JWT_SECRET=aLongAndSecretStringUsedToSignTheJSONWebToken1234
+      - HTTP_ALLOWED=true
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    network_mode: bridge
+    x-casaos:
+      ports:
+        - container: "3000"
+          description:
+            en_US: WebUI HTTP Port
+            en_GB: WebUI HTTP Port
+            it_IT: Porta HTTP WebUI
+            nb_NO: WebUI HTTP Port
+            zh_CN: WebUI HTTP端口
+            ja_JP: WebUI HTTPポート
+            ko_KR: WebUI HTTP 포트
+            fr_FR: Port HTTP WebUI
+            de_DE: WebUI HTTP Port
+            sv_SE: WebUI HTTP Port
+            el_GR: Θύρα HTTP WebUI
+            hr_HR: WebUI HTTP Port
+            pt_PT: Porta HTTP WebUI
+            ru_RU: HTTP порт WebUI
+            tr_TR: WebUI HTTP Portu
+      volumes:
+        - container: /app/data
+          description:
+            en_US: ConvertX Application Data Directory
+            en_GB: ConvertX Application Data Directory
+            it_IT: Directory Dati Applicazione ConvertX
+            nb_NO: ConvertX Applikasjon Datakatalog
+            zh_CN: ConvertX应用数据目录
+            ja_JP: ConvertXアプリケーションデータディレクトリ
+            ko_KR: ConvertX 애플리케이션 데이터 디렉터리
+            fr_FR: Répertoire de Données Application ConvertX
+            de_DE: ConvertX Anwendungsdatenverzeichnis
+            sv_SE: ConvertX Applikation Datakatalog
+            el_GR: Κατάλογος Δεδομένων Εφαρμογής ConvertX
+            hr_HR: ConvertX Aplikacija Direktorij za Podatke
+            pt_PT: Diretório de Dados da Aplicação ConvertX
+            ru_RU: Каталог данных приложения ConvertX
+            tr_TR: ConvertX Uygulama Veri Dizini
+      envs:
+        - container: JWT_SECRET
+          description:
+            en_US: JWT Secret Key
+            en_GB: JWT Secret Key
+            it_IT: Chiave Segreta JWT
+            nb_NO: JWT Hemmelignøkkel
+            zh_CN: JWT密钥
+            ja_JP: JWTシークレットキー
+            ko_KR: JWT 시크릿 키
+            fr_FR: Clé Secrète JWT
+            de_DE: JWT Geheimschlüssel
+            sv_SE: JWT Hemlig Nyckel
+            el_GR: Μυστικό Κλειδί JWT
+            hr_HR: JWT Tajni Ključ
+            pt_PT: Chave Secreta JWT
+            ru_RU: JWT секретный ключ
+            tr_TR: JWT Gizli Anahtar
+        - container: HTTP_ALLOWED
+          description:
+            en_US: Allow HTTP Connections
+            en_GB: Allow HTTP Connections
+            it_IT: Consenti Connessioni HTTP
+            nb_NO: Tillat HTTP Tilkoblinger
+            zh_CN: 允许HTTP连接
+            ja_JP: HTTP接続を許可
+            ko_KR: HTTP 연결 허용
+            fr_FR: Autoriser les Connexions HTTP
+            de_DE: HTTP-Verbindungen erlauben
+            sv_SE: Tillåt HTTP Anslutningar
+            el_GR: Επιτρέψτε Συνδέσεις HTTP
+            hr_HR: Dozvoli HTTP Veze
+            pt_PT: Permitir Ligações HTTP
+            ru_RU: Разрешить HTTP-подключения
+            tr_TR: HTTP Bağlantılarına İzin Ver
+
+    
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: convertx
+  category: Utilities
+  developer: c4illin
+  author: c4illin
+  tagline:
+    en_US: A versatile file conversion tool that supports multiple formats.
+    en_GB: A versatile file conversion tool that supports multiple formats.
+    it_IT: Uno strumento di conversione file versatile che supporta più formati.
+    nb_NO: Et allsidig filkonverteringsverktøy som støtter flere formater.
+    zh_CN: 一款支持多种格式的多功能文件转换工具。
+    ja_JP: 複数のフォーマットをサポートする多目的ファイル変換ツール。
+    ko_KR: 다양한 형식을 지원하는 다용도 파일 변환 도구입니다.
+    fr_FR: Un outil de conversion de fichiers polyvalent prenant en charge plusieurs formats.
+    de_DE: Ein vielseitiges Dateikonvertierungstool, das mehrere Formate unterstützt.
+    sv_SE: Ett mångsidigt filkonverteringsverktyg som stöder flera format.
+    el_GR: Ένα ευέλικτο εργαλείο μετατροπής αρχείων που υποστηρίζει πολλαπλές μορφές.
+    hr_HR: Svestran alat za pretvaranje datoteka koji podržava više formata.
+    pt_PT: Uma ferramenta de conversão de arquivos versátil que suporta múltiplos formatos.
+    ru_RU: Универсальный инструмент для преобразования файлов, поддерживающий несколько форматов.
+    tr_TR: Çoklu formatları desteklayan çok yönlü bir dosya dönüştürme aracı.
+  description:
+    en_US: |
+      ConvertX is a self-hosted file conversion service that allows users to convert files between different formats through an intuitive web interface. It supports a wide range of file types including documents, images, videos, and audio files, making it a comprehensive solution for all your file conversion needs.
+
+      The service is designed with simplicity and ease of use in mind. Users can simply upload their files, select the desired output format, and let ConvertX handle the conversion process. The web interface provides a clean and user-friendly experience, with drag-and-drop support and batch conversion capabilities.
+
+      ConvertX runs entirely on your own infrastructure, ensuring that your files remain private and secure. There's no need to upload sensitive documents to third-party services, giving you full control over your data. The service is containerized for easy deployment and can be integrated into existing home server setups.
+
+      **Key Features:**
+      - Support for multiple file formats (documents, images, videos, audio)
+      - Intuitive web interface with drag-and-drop support
+      - Batch conversion capabilities
+      - Self-hosted for privacy and security
+      - Containerized for easy deployment
+      - No file size limitations
+      
+      **Learn More:**
+      - [ConvertX GitHub Repository](https://github.com/c4illin/convertx)
+    en_GB: |
+      ConvertX is a self-hosted file conversion service that allows users to convert files between different formats through an intuitive web interface. It supports a wide range of file types including documents, images, videos, and audio files, making it a comprehensive solution for all your file conversion needs.
+
+      The service is designed with simplicity and ease of use in mind. Users can simply upload their files, select the desired output format, and let ConvertX handle the conversion process. The web interface provides a clean and user-friendly experience, with drag-and-drop support and batch conversion capabilities.
+
+      ConvertX runs entirely on your own infrastructure, ensuring that your files remain private and secure. There's no need to upload sensitive documents to third-party services, giving you full control over your data. The service is containerised for easy deployment and can be integrated into existing home server setups.
+
+      **Key Features:**
+      - Support for multiple file formats (documents, images, videos, audio)
+      - Intuitive web interface with drag-and-drop support
+      - Batch conversion capabilities
+      - Self-hosted for privacy and security
+      - Containerised for easy deployment
+      - No file size limitations
+      
+      **Learn More:**
+      - [ConvertX GitHub Repository](https://github.com/c4illin/convertx)
+    it_IT: |
+      ConvertX è un servizio di conversione file self-hosted che permette agli utenti di convertire file tra diversi formati attraverso un'interfaccia web intuitiva. Supporta un'ampia gamma di tipi di file inclusi documenti, immagini, video e file audio, rendendolo una soluzione completa per tutte le tue esigenze di conversione file.
+
+      Il servizio è progettato con semplicità e facilità d'uso in mente. Gli utenti possono semplicemente caricare i loro file, selezionare il formato di output desiderato e lasciare che ConvertX gestisca il processo di conversione. L'interfaccia web fornisce un'esperienza pulita e user-friendly, con supporto drag-and-drop e capacità di conversione batch.
+
+      ConvertX funziona interamente sulla tua infrastruttura, garantendo che i tuoi file rimangano privati e sicuri. Non c'è bisogno di caricare documenti sensibili su servizi di terze parti, dandoti pieno controllo sui tuoi dati. Il servizio è containerizzato per una facile distribuzione e può essere integrato in configurazioni di home server esistenti.
+
+      **Funzionalità Principali:**
+      - Supporto per più formati di file (documenti, immagini, video, audio)
+      - Interfaccia web intuitiva con supporto drag-and-drop
+      - Capacità di conversione batch
+      - Self-hosted per privacy e sicurezza
+      - Containerizzato per facile distribuzione
+      - Nessuna limitazione sulle dimensioni dei file
+      
+      **Ulteriori Informazioni:**
+      - [Repository GitHub ConvertX](https://github.com/c4illin/convertx)
+    nb_NO: |
+      ConvertX er en selvhostet filkonverteringstjeneste som lar brukere konvertere filer mellom ulike formater gjennom et intuitivt webgrensesnitt. Den støtter et bredt spekter av filtyper inkludert dokumenter, bilder, videoer og lydfiler, noe som gjør den til en omfattende løsning for alle dine filkonverteringsbehov.
+
+      Tjenesten er designet med enkelhet og brukervennlighet i tankene. Brukere kan enkelt laste opp filene sine, velge ønsket utdataformat og la ConvertX håndtere konverteringsprosessen. Webgrensesnittet gir en ren og brukervennlig opplevelse, med dra-og-slipp-støtte og batchkonverteringsmuligheter.
+
+      ConvertX kjører helt på din egen infrastruktur, noe som sikrer at filene dine forblir private og sikre. Det er ikke nødvendig å laste opp sensitive dokumenter til tredjepartstjenester, noe som gir deg full kontroll over dataene dine. Tjenesten er containerisert for enkel distribusjon og kan integreres i eksisterende hjemmeserveroppsett.
+
+      **Nøkkelfunksjoner:**
+      - Støtte for flere filformater (dokumenter, bilder, videoer, lyd)
+      - Intuitivt webgrensesnitt med dra-og-slipp-støtte
+      - Batchkonverteringsmuligheter
+      - Selvhostet for personvern og sikkerhet
+      - Containerisert for enkel distribusjon
+      - Ingen begrensninger på filstørrelse
+      
+      **Lær mer:**
+      - [ConvertX GitHub Repository](https://github.com/c4illin/convertx)
+    zh_CN: |
+      ConvertX 是一款自托管的文件转换服务，允许用户通过直观的 Web 界面在不同格式之间转换文件。它支持广泛的文件类型，包括文档、图像、视频和音频文件，使其成为满足您所有文件转换需求的综合解决方案。
+
+      该服务的设计注重简单性和易用性。用户只需上传文件，选择所需的输出格式，然后让 ConvertX 处理转换过程。Web 界面提供干净友好的用户体验，支持拖放和批量转换功能。
+
+      ConvertX 完全在您自己的基础设施上运行，确保您的文件保持私密和安全。无需将敏感文档上传到第三方服务，让您完全控制自己的数据。该服务采用容器化设计，便于部署，并可集成到现有的家庭服务器设置中。
+
+      **主要功能：**
+      - 支持多种文件格式（文档、图像、视频、音频）
+      - 直观的 Web 界面，支持拖放
+      - 批量转换功能
+      - 自托管，保护隐私和安全
+      - 容器化，便于部署
+      - 无文件大小限制
+      
+      **了解更多：**
+      - [ConvertX GitHub 仓库](https://github.com/c4illin/convertx)
+    ja_JP: |
+      ConvertXは、直感的なWebインターフェースを通じてユーザーが異なる形式間でファイルを変換できる自己ホスト型のファイル変換サービスです。ドキュメント、画像、ビデオ、オーディオファイルなど、幅広いファイルタイプをサポートしており、すべてのファイル変換ニーズに対応する総合的なソリューションです。
+
+      このサービスは、シンプルさと使いやすさを念頭に設計されています。ユーザーはファイルをアップロードし、目的の出力形式を選択するだけで、ConvertXが変換プロセスを処理します。Webインターフェースは、ドラッグアンドドロップサポートとバッチ変換機能を備えた、クリーンでユーザーフレンドリーな体験を提供します。
+
+      ConvertXは完全に独自のインフラストラクチャで実行されるため、ファイルのプライバシーとセキュリティが確保されます。機密文書をサードパーティサービスにアップロードする必要がなく、データを完全に制御できます。このサービスはコンテナ化されており、簡単にデプロイでき、既存のホームサーバーセットアップに統合できます。
+
+      **主な機能：**
+      - 複数のファイル形式をサポート（ドキュメント、画像、ビデオ、オーディオ）
+      - ドラッグアンドドロップサポート付きの直感的なWebインターフェース
+      - バッチ変換機能
+      - プライバシーとセキュリティのための自己ホスト型
+      - 簡単なデプロイのためのコンテナ化
+      - ファイルサイズ制限なし
+      
+      **詳細情報：**
+      - [ConvertX GitHubリポジトリ](https://github.com/c4illin/convertx)
+    ko_KR: |
+      ConvertX는 직관적인 웹 인터페이스를 통해 사용자가 다양한 형식 간에 파일을 변환할 수 있는 셀프 호스팅 파일 변환 서비스입니다. 문서, 이미지, 비디오, 오디오 파일을 포함한 광범위한 파일 유형을 지원하여 모든 파일 변환 요구 사항에 대한 포괄적인 솔루션을 제공합니다.
+
+      이 서비스는 단순성과 사용 편의성을 염두에 두고 설계되었습니다. 사용자는 파일을 업로드하고 원하는 출력 형식을 선택하기만 하면 ConvertX가 변환 프로세스를 처리합니다. 웹 인터페이스는 드래그 앤 드롭 지원과 일괄 변환 기능을 갖춘 깨끗하고 사용자 친화적인 경험을 제공합니다.
+
+      ConvertX는 완전히 자체 인프라에서 실행되어 파일의 프라이버시와 보안을 보장합니다. 민감한 문서를 제3자 서비스에 업로드할 필요가 없어 데이터를 완전히 제어할 수 있습니다. 이 서비스는 컨테이너화되어 배포가 쉽고 기존 홈 서버 설정에 통합될 수 있습니다.
+
+      **주요 기능:**
+      - 다양한 파일 형식 지원(문서, 이미지, 비디오, 오디오)
+      - 드래그 앤 드롭 지원 직관적인 웹 인터페이스
+      - 일괄 변환 기능
+      - 프라이버시와 보안을 위한 셀프 호스팅
+      - 쉬운 배포를 위한 컨테이너화
+      - 파일 크기 제한 없음
+      
+      **자세히 알아보기:**
+      - [ConvertX GitHub 저장소](https://github.com/c4illin/convertx)
+    fr_FR: |
+      ConvertX est un service de conversion de fichiers auto-hébergé qui permet aux utilisateurs de convertir des fichiers entre différents formats via une interface web intuitive. Il prend en charge une large gamme de types de fichiers, y compris les documents, les images, les vidéos et les fichiers audio, en faisant une solution complète pour tous vos besoins de conversion de fichiers.
+
+      Le service est conçu en pensant à la simplicité et à la facilité d'utilisation. Les utilisateurs peuvent simplement télécharger leurs fichiers, sélectionner le format de sortie souhaité et laisser ConvertX gérer le processus de conversion. L'interface web offre une expérience propre et conviviale, avec prise en charge du glisser-déposer et capacités de conversion par lots.
+
+      ConvertX fonctionne entièrement sur votre propre infrastructure, garantissant que vos fichiers restent privés et sécurisés. Il n'est pas nécessaire de télécharger des documents sensibles vers des services tiers, vous donnant un contrôle total sur vos données. Le service est conteneurisé pour un déploiement facile et peut être intégré dans des configurations de serveurs domestiques existantes.
+
+      **Fonctionnalités Clés :**
+      - Prise en charge de plusieurs formats de fichiers (documents, images, vidéos, audio)
+      - Interface web intuitive avec prise en charge du glisser-déposer
+      - Capacités de conversion par lots
+      - Auto-hébergé pour la confidentialité et la sécurité
+      - Conteneurisé pour un déploiement facile
+      - Aucune limitation de taille de fichier
+      
+      **En Savoir Plus :**
+      - [Dépôt GitHub ConvertX](https://github.com/c4illin/convertx)
+    de_DE: |
+      ConvertX ist ein selbstgehosteter Dateikonvertierungsdienst, der Benutzern ermöglicht, Dateien über eine intuitive Weboberfläche zwischen verschiedenen Formaten zu konvertieren. Er unterstützt eine breite Palette von Dateitypen, einschließlich Dokumenten, Bildern, Videos und Audiodateien, was ihn zu einer umfassenden Lösung für alle Ihre Dateikonvertierungsbedürfnisse macht.
+
+      Der Dienst wurde mit Einfachheit und Benutzerfreundlichkeit im Sinn entwickelt. Benutzer können einfach ihre Dateien hochladen, das gewünschte Ausgabeformat auswählen und ConvertX den Konvertierungsprozess überlassen. Die Weboberfläche bietet ein sauberes und benutzerfreundliches Erlebnis mit Drag-and-Drop-Unterstützung und Stapelkonvertierungsfunktionen.
+
+      ConvertX läuft vollständig auf Ihrer eigenen Infrastruktur, wodurch sichergestellt wird, dass Ihre Dateien privat und sicher bleiben. Es ist nicht erforderlich, vertrauliche Dokumente an Drittanbieterdienste hochzuladen, was Ihnen volle Kontrolle über Ihre Daten gibt. Der Dienst ist containerisiert für eine einfache Bereitstellung und kann in bestehende Heimserver-Setups integriert werden.
+
+      **Hauptfunktionen:**
+      - Unterstützung für mehrere Dateiformate (Dokumente, Bilder, Videos, Audio)
+      - Intuitive Weboberfläche mit Drag-and-Drop-Unterstützung
+      - Stapelkonvertierungsfunktionen
+      - Selbstgehostet für Privatsphäre und Sicherheit
+      - Containerisiert für einfache Bereitstellung
+      - Keine Dateigrößenbeschränkungen
+      
+      **Mehr Erfahren:**
+      - [ConvertX GitHub Repository](https://github.com/c4illin/convertx)
+    sv_SE: |
+      ConvertX är en självhostad filkonverteringstjänst som låter användare konvertera filer mellan olika format genom ett intuitivt webbgränssnitt. Den stöder ett brett utbud av filtyper inklusive dokument, bilder, videor och ljudfiler, vilket gör den till en omfattande lösning för alla dina filkonverteringsbehov.
+
+      Tjänsten är designad med enkelhet och användarvänlighet i åtanke. Användare kan enkelt ladda upp sina filer, välja önskat utdataformat och låta ConvertX hantera konverteringsprocessen. Webbgränssnittet ger en ren och användarvänlig upplevelse med dra-och-släpp-stöd och batchkonverteringsmöjligheter.
+
+      ConvertX körs helt på din egen infrastruktur, vilket säkerställer att dina filer förblir privata och säkra. Det finns inget behov av att ladda upp känsliga dokument till tredjepartstjänster, vilket ger dig full kontroll över dina data. Tjänsten är containeriserad för enkel distribution och kan integreras i befintliga hemserverinstallationer.
+
+      **Huvudfunktioner:**
+      - Stöd för flera filformat (dokument, bilder, videor, ljud)
+      - Intuitivt webbgränssnitt med dra-och-släpp-stöd
+      - Batchkonverteringsmöjligheter
+      - Självhostat för integritet och säkerhet
+      - Containeriserat för enkel distribution
+      - Inga filstorleksbegränsningar
+      
+      **Lär Dig Mer:**
+      - [ConvertX GitHub Repository](https://github.com/c4illin/convertx)
+    el_GR: |
+      Το ConvertX είναι μια αυτο-φιλοξενούμενη υπηρεσία μετατροπής αρχείων που επιτρέπει στους χρήστες να μετατρέπουν αρχεία μεταξύ διαφορετικών μορφών μέσω μιας διαισθητικής διεπαφής Ιστού. Υποστηρίζει ένα ευρύ φάσμα τύπων αρχείων συμπεριλαμβανομένων εγγράφων, εικόνων, βίντεο και αρχείων ήχου, καθιστώντας το μια ολοκληρωμένη λύση για όλες τις ανάγκες μετατροπής αρχείων σας.
+
+      Η υπηρεσία έχει σχεδιαστεί με απλότητα και ευκολία χρήσης κατά νου. Οι χρήστες μπορούν απλώς να ανεβάσουν τα αρχεία τους, να επιλέξουν την επιθυμητή μορφή εξόδου και να αφήσουν το ConvertX να διαχειριστεί τη διαδικασία μετατροπής. Η διεπαφή Ιστού παρέχει μια καθαρή και φιλική προς τον χρήστη εμπειρία, με υποστήριξη σύρσης και απόθεσης και δυνατότητες μαζικής μετατροπής.
+
+      Το ConvertX εκτελείται εξ ολοκλήρου στη δική σας υποδομή, διασφαλίζοντας ότι τα αρχεία σας παραμένουν ιδιωτικά και ασφαλή. Δεν υπάρχει ανάγκη να ανεβάσετε ευαίσθητα έγγραφα σε υπηρεσίες τρίτων, δίνοντάς σας πλήρη έλεγχο των δεδομένων σας. Η υπηρεσία είναι εμπορευματοποιημένη για εύκολη ανάπτυξη και μπορεί να ενσωματωθεί σε υπάρχουσες διαμορφώσεις οικιακού διακομιστή.
+
+      **Βασικά Χαρακτηριστικά:**
+      - Υποστήριξη για πολλαπλές μορφές αρχείων (έγγραφα, εικόνες, βίντεο, ήχος)
+      - Διαισθητική διεπαφή Ιστού με υποστήριξη σύρσης και απόθεσης
+      - Δυνατότητες μαζικής μετατροπής
+      - Αυτο-φιλοξενούμενο για ιδιωτικότητα και ασφάλεια
+      - Εμπορευματοποιημένο για εύκολη ανάπτυξη
+      - Καμία περιορισμός μεγέθους αρχείου
+      
+      **Μάθετε Περισσότερα:**
+      - [ConvertX GitHub Repository](https://github.com/c4illin/convertx)
+    hr_HR: |
+      ConvertX je samohostovana usluga pretvaranja datoteka koja korisnicima omogućuje pretvaranje datoteka između različitih formata kroz intuitivno web sučelje. Podržava širok raspon tipova datoteka uključujući dokumente, slike, videozapise i audio datoteke, čineći je sveobuhvatnim rješenjem za sve vaše potrebe pretvaranja datoteka.
+
+      Usluga je dizajnirana s jednostavnošću i lakoćom korištenja na umu. Korisnici mogu jednostavno učitati svoje datoteke, odabrati željeni izlazni format i prepustiti ConvertX-u da rukuje procesom pretvaranja. Web sučelje pruža čisto i korisnički prijateljsko iskustvo, s podrškom za povlačenje i ispuštanje te mogućnošću grupnog pretvaranja.
+
+      ConvertX se izvodi u potpunosti na vlastitoj infrastrukturi, osiguravajući da vaše datoteke ostanu privatne i sigurne. Nema potrebe učitavati osjetljive dokumente na usluge trećih strana, dajući vam punu kontrolu nad vašim podacima. Usluga je kontejnerizirana za lako implementiranje i može se integrirati u postojeće postavke kućnog poslužitelja.
+
+      **Ključne Značajke:**
+      - Podrška za više formata datoteka (dokumenti, slike, videozapisi, audio)
+      - Intuitivno web sučelje s podrškom za povlačenje i ispuštanje
+      - Mogućnosti grupnog pretvaranja
+      - Samohostovano za privatnost i sigurnost
+      - Kontejnerizirano za lako implementiranje
+      - Nema ograničenja veličine datoteke
+      
+      **Saznajte Više:**
+      - [ConvertX GitHub Repository](https://github.com/c4illin/convertx)
+    pt_PT: |
+      ConvertX é um serviço de conversão de ficheiros auto-hospedado que permite aos utilizadores converter ficheiros entre diferentes formatos através de uma interface web intuitiva. Suporta uma vasta gama de tipos de ficheiros incluindo documentos, imagens, vídeos e ficheiros de áudio, tornando-o uma solução abrangente para todas as suas necessidades de conversão de ficheiros.
+
+      O serviço é concebido com simplicidade e facilidade de utilização em mente. Os utilizadores podem simplesmente carregar os seus ficheiros, selecionar o formato de saída desejado e deixar o ConvertX tratar do processo de conversão. A interface web proporciona uma experiência limpa e amigável, com suporte para arrastar e largar e capacidades de conversão em lote.
+
+      ConvertX funciona inteiramente na sua própria infraestrutura, garantindo que os seus ficheiros permanecem privados e seguros. Não há necessidade de carregar documentos sensíveis para serviços de terceiros, dando-lhe controlo total sobre os seus dados. O serviço é contentorizado para fácil implementação e pode ser integrado em configurações existentes de servidores domésticos.
+
+      **Características Principais:**
+      - Suporte para múltiplos formatos de ficheiros (documentos, imagens, vídeos, áudio)
+      - Interface web intuitiva com suporte para arrastar e largar
+      - Capacidades de conversão em lote
+      - Auto-hospedado para privacidade e segurança
+      - Contentorizado para fácil implementação
+      - Sem limitações de tamanho de ficheiro
+      
+      **Saiba Mais:**
+      - [ConvertX GitHub Repository](https://github.com/c4illin/convertx)
+    ru_RU: |
+      ConvertX - это самостоятельный сервис преобразования файлов, который позволяет пользователям конвертировать файлы между различными форматами через интуитивно понятный веб-интерфейс. Он поддерживает широкий спектр типов файлов, включая документы, изображения, видео и аудиофайлы, что делает его комплексным решением для всех ваших потребностей в преобразовании файлов.
+
+      Сервис разработан с учетом простоты и легкости использования. Пользователи могут просто загрузить свои файлы, выбрать желаемый выходной формат и позволить ConvertX обработать процесс преобразования. Веб-интерфейс обеспечивает чистый и удобный опыт работы с поддержкой перетаскивания и возможностями пакетного преобразования.
+
+      ConvertX работает полностью на вашей собственной инфраструктуре, обеспечивая конфиденциальность и безопасность ваших файлов. Нет необходимости загружать конфиденциальные документы в сторонние сервисы, что дает вам полный контроль над вашими данными. Сервис контейнеризирован для легкого развертывания и может быть интегрирован в существующие настройки домашнего сервера.
+
+      **Ключевые особенности:**
+      - Поддержка множества форматов файлов (документы, изображения, видео, аудио)
+      - Интуитивно понятный веб-интерфейс с поддержкой перетаскивания
+      - Возможности пакетного преобразования
+      - Самостоятельный хостинг для конфиденциальности и безопасности
+      - Контейнеризирован для легкого развертывания
+      - Нет ограничений на размер файла
+      
+      **Узнать больше:**
+      - [Репозиторий ConvertX на GitHub](https://github.com/c4illin/convertx)
+    tr_TR: |
+      ConvertX, kullanıcıların sezgisel bir web arayüzü aracılığıyla farklı formatlar arasında dosya dönüştürmesine olanak tanıyan kendi kendine barındırılan bir dosya dönüştürme hizmetidir. Belgeleri, görüntüleri, videoları ve ses dosyalarını içeren geniş bir dosya türü yelpazesini destekleyerek, tüm dosya dönüştürme ihtiyaçlarınız için kapsamlı bir çözüm sunar.
+
+      Hizmet, basitlik ve kullanım kolaylığı göz önünde bulundurularak tasarlanmıştır. Kullanıcılar dosyalarını basitçe yükleyebilir, istedikleri çıktı formatını seçebilir ve dönüştürme işlemini ConvertX'in halletmesine izin verebilir. Web arayüzü, sürükle ve bırak desteği ve toplu dönüştürme yetenekleriyle temiz ve kullanıcı dostu bir deneyim sunar.
+
+      ConvertX tamamen kendi altyapınızda çalışır, dosyalarınızın özel ve güvende kalmasını sağlar. Hassas belgeleri üçüncü taraf hizmetlere yüklemenize gerek yoktur, bu da verileriniz üzerinde tam kontrol sahibi olmanızı sağlar. Hizmet, kolay dağıtım için konteynerleştirilmiştir ve mevcut ev sunucu kurulumlarına entegre edilebilir.
+
+      **Önemli Özellikler:**
+      - Çoklu dosya formatı desteği (belgeler, görüntüler, videolar, ses)
+      - Sürükle ve bırak destekli sezgisel web arayüzü
+      - Toplu dönüştürme yetenekleri
+      - Gizlilik ve güvenlik için kendi kendine barındırılan
+      - Kolay dağıtım için konteynerleştirilmiş
+      - Dosya boyutu sınırlaması yok
+      
+      **Daha Fazla Bilgi Edinin:**
+      - [ConvertX GitHub Deposu](https://github.com/c4illin/convertx)
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ConvertX/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ConvertX/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ConvertX/screenshot-3.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ConvertX/icon.png
+  port_map: "3333"
+  index: /
+  scheme: http
+  title:
+    en_US: ConvertX
