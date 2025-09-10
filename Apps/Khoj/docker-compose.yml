@@ -77,7 +77,7 @@ services:
         # reservations:
         #   memory: 
   khoj-database:
-    container_name: khoj-databese
+    container_name: khoj-database
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=postgres
@@ -90,7 +90,7 @@ services:
     image: docker.io/pgvector/pgvector:pg15
     volumes:
       - type: bind
-        source: /DATA/AppData/AppID/khoj_db
+        source: /DATA/AppData/$AppID/khoj_db
         #source: ./db
         target: /var/lib/postgresql/data
     x-casaos:
