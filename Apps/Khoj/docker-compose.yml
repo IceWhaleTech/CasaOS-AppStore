@@ -87,13 +87,12 @@ services:
       timeout: 10s
       interval: 30s
       retries: 5
-    image: docker.io/pgvector/pgvector:pg17
+    image: docker.io/pgvector/pgvector:pg15
     volumes:
       - type: bind
         source: /DATA/AppData/AppID/khoj_db
         #source: ./db
         target: /var/lib/postgresql/data
-    command: [postgres,-U,postgres]
     x-casaos:
       envs:
         - container: POSTGRES_USER
