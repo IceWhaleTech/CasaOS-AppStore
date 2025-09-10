@@ -12,6 +12,22 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/khoj_computer
         target: /home/operator
+    command:
+      - "/bin/sh"
+      - "-c"
+      - >
+        export XDG_RUNTIME_DIR=/run/user/$$(id -u);
+        sudo mkdir -p $${XDG_RUNTIME_DIR} &&
+        sudo chown $$(id -u):$$(id -g) $${XDG_RUNTIME_DIR} &&
+        sudo chmod 0700 $${XDG_RUNTIME_DIR};
+        Xvfb $$DISPLAY -screen 0 $${WIDTH}x$${HEIGHT}x24 -dpi 96 -auth /home/$USERNAME/.Xauthority >/dev/null 2>&1 &
+        sleep 1;
+        xauth add $$DISPLAY . $$(mcookie);
+        x11vnc -display $$DISPLAY -forever -rfbauth /home/$USERNAME/.vncpass -listen 0.0.0.0 -rfbport 5900 >/dev/null 2>&1 &
+        eval $$(dbus-launch --sh-syntax) &&
+        startxfce4 &
+        sleep 2 && echo 'Container running!' &&
+        tail -f /dev/null
     x-casaos:
       ports:
         - container: "5900"
