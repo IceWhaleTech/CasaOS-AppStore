@@ -9,15 +9,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: remove all screenshots
-        run: find . -name "screenshot*" | xargs rm -f
+        run: find . -iname "screenshot*" | xargs rm -f
       - name: remove all thumbnails
-        run: find . -name "thumbnail*" | xargs rm -f
+        run: find . -iname "thumbnail*" | xargs rm -f
       - name: remove all icon
-        run: find . -name "icon.png" | xargs rm -f
+        run: find . -iname "icon.png" | xargs rm -f
       - name: remove all app file
-        run: find . -name "appfile.json" | xargs rm -f
+        run: find . -iname "appfile.json" | xargs rm -f
         
       - name: create a build with sysroot
         id: build

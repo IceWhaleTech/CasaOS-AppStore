@@ -14,14 +14,15 @@ services:
       TZ: $TZ
       CPU_FALLBACK: "true"
       NVIDIA_VISIBLE_DEVICES: all
-    image: linuxserver/jellyfin:10.9.11
+    image: linuxserver/jellyfin:10.10.6
     deploy:
       resources:
         reservations:
           memory: "256M"
           devices:
-            - capabilities:
-              - gpu
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     network_mode: bridge
     ports:
       - target: 8096

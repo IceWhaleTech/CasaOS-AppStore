@@ -13,14 +13,15 @@ services:
       TZ: $TZ
       CPU_FALLBACK: "true"
       NVIDIA_VISIBLE_DEVICES: all
-    image: linuxserver/emby:4.8.8
+    image: linuxserver/emby:4.8.10
     deploy:
       resources:
         reservations:
           memory: 256M
           devices:
-            - capabilities:
-              - gpu
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     network_mode: bridge
     ports:
       - target: 8096
