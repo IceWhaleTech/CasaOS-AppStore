@@ -1,0 +1,98 @@
+{
+    "version": "1.0",
+    "title": "October CMS",
+    "name": "october-cms",
+    "icon": "",
+    "tagline": "The Laravel-based CMS for creators",
+    "overview": "October CMS is a free, open-source, self-hosted CMS platform based on the Laravel PHP framework. It is designed to be simple, flexible, and developer-friendly.",
+    "thumbnail": "",
+    "screenshots": [
+        "",
+        "",
+        ""
+    ],
+    "category": [
+        "Web",
+        "CMS"
+    ],
+    "developer": {
+        "name": "October CMS",
+        "website": "https://octobercms.com",
+        "donate_text": "Support",
+        "donate_link": "https://octobercms.com/premium"
+    },
+    "adaptor": {
+        "name": "CasaOS Community",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "https://github.com/octobercms/october/issues",
+    "website": "https://octobercms.com",
+    "container": {
+        "image": "octobercms/october-dev:latest",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "80",
+            "path": "/backend"
+        },
+        "envs": [
+            {
+                "key": "DB_TYPE",
+                "value": "sqlite",
+                "configurable": "advanced",
+                "description": "Database type (sqlite or mysql)"
+            }
+        ],
+        "ports": [
+            {
+                "container": "80",
+                "host": "8080",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "basic",
+                "description": "Web UI Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/var/www/html",
+                "host": "/DATA/AppData/$AppID/www",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "basic",
+                "description": "October CMS installation folder"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 512,
+            "min_storage": 1024
+        },
+        "restart_policy": "unless-stopped",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": [
+            {
+                "content": "After installation, access the web interface to configure October CMS."
+            }
+        ]
+    },
+    "changelog": {
+        "latest_updates": "Initial CasaOS Version",
+        "url": ""
+    },
+    "latest_update_date": "1736035200"
+}

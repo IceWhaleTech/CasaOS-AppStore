@@ -1,0 +1,41 @@
+name: OctoberCMS
+services:
+  main_app:
+    cpu_shares: 10
+    command: []
+    deploy:
+      resources:
+        limits:
+          memory: 8249196544
+        reservations:
+          devices: []
+    image: octobercms/october-dev:latest
+    labels:
+      icon: https://icon.casaos.io/main/all/october-dev.png
+    ports:
+      - target: 80
+        published: "8080"
+        protocol: tcp
+      - target: 3306
+        published: "3306"
+        protocol: tcp
+    restart: unless-stopped
+    volumes: []
+    devices: []
+    cap_add: []
+    environment: []
+    network_mode: bridge
+    privileged: false
+    container_name: ""
+x-casaos:
+  author: self
+  category: self
+  hostname: ""
+  icon: https://icon.casaos.io/main/all/october-dev.png
+  index: /backend
+  is_uncontrolled: false
+  port_map: "8080"
+  scheme: http
+  store_app_id: OctoberCMS
+  title:
+    custom: October CMS
