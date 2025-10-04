@@ -2,13 +2,6 @@ name: octobercms
 services:
   main_app:
     cpu_shares: 10
-    command: []
-    deploy:
-      resources:
-        limits:
-          memory: 8249196544
-        reservations:
-          devices: []
     image: octobercms/october-dev:latest
     labels:
       icon: https://icon.casaos.io/main/all/october-dev.png
@@ -20,13 +13,8 @@ services:
         published: "3306"
         protocol: tcp
     restart: unless-stopped
-    volumes: []
-    devices: []
-    cap_add: []
-    environment: []
     network_mode: bridge
     privileged: false
-    container_name: ""
 x-casaos:
   author: self
   category: self
