@@ -11,7 +11,7 @@ services:
       - CONCURRENT_ITEMS=2
       - DOWNLOADER=
       - SELECTED_PROJECT=auto
-    image: atdr.meo.ws/archiveteam/warrior-dockerfile:20250829.01
+    image: atdr.meo.ws/archiveteam/warrior-dockerfile:latest
     labels:
       icon: https://wiki.archiveteam.org/images/thumb/f/f3/Archive_team.png/100px-Archive_team.png
     logging:
@@ -55,7 +55,7 @@ x-casaos:
     en_US: Global internet archival and content backup efforts.
   tips:
     before_install:
-      en_us: We strongly encourage users to use the `latest` version tag to keep up with the latest crawling algorithms.
+      en_us: We strongly encourage users to use the `latest` version tag to keep up with the latest crawling API and algorithms.
   title:
     custom: Warrior
   index: /
