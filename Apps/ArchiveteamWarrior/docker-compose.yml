@@ -9,9 +9,9 @@ services:
           memory: 256M
     environment:
       - CONCURRENT_ITEMS=2
-      - DOWNLOADER=USERNAME
+      - DOWNLOADER=
       - SELECTED_PROJECT=auto
-    image: atdr.meo.ws/archiveteam/warrior-dockerfile:0.10.3
+    image: atdr.meo.ws/archiveteam/warrior-dockerfile:latest
     labels:
       icon: https://wiki.archiveteam.org/images/thumb/f/f3/Archive_team.png/100px-Archive_team.png
     logging:
@@ -24,21 +24,21 @@ services:
         published: "8001"
         protocol: tcp
     restart: unless-stopped
-    x-casaos:
-      envs:
-        - container: CONCURRENT_ITEMS
-          description:
-            en_us: "How many items should the warrior download at a time? (Max: 6)"
-        - container: DOWNLOADER
-          description:
-            en_us: "We use your nickname to show your results on our tracker. Letters and numbers only."
-        - container: SELECTED_PROJECT
-          description:
-            en_us: "Your warrior will automatically work on the current ArchiveTeam project."
+    envs:
+      - container: CONCURRENT_ITEMS
+        description:
+          en_us: "How many items should the warrior download at a time? (Max: 6)"
+      - container: DOWNLOADER
+        description:
+          en_us: "We use your nickname to show your results on our tracker. Letters and numbers only."
+      - container: SELECTED_PROJECT
+        description:
+          en_us: "Your warrior will automatically work on the current ArchiveTeam project."
     volumes:
       - type: bind
-        source: /DATA/AppData/archive-warrior
+        source: /DATA/AppData/archiveteam-warrior
         target: /warrior
+
 x-casaos:
   author: ArchiveTeam
   architectures:
@@ -47,14 +47,7 @@ x-casaos:
   category: Utilities
   description:
     en_US: |
-      Archive Team is a loose collective of rogue archivists, programmers, writers and loudmouths dedicated to saving our digital heritage. Since 2009 this variant force of nature has caught wind of shutdowns, shutoffs, mergers, and plain old deletions - and done our best to save the history before it's lost forever. Along the way, we've gotten attention, resistance, [press and discussion]https://wiki.archiveteam.org/index.php/In_The_Media(), but most importantly, we've gotten the message out: **IT DOESN'T HAVE TO BE THIS WAY**. 
-
-     The Archive Team's Warrior is a virtual archiving appliance. You can run it to help with the Archive Team archiving efforts. It will download sites and upload them to our archive — and it’s really easy to do!
-
-     **Learn More:**
-     - [ArchiveTeam's Wiki](https://wiki.archiveteam.org/index.php/Main_Page)
-     - [ArchiveTeam's Warrior](https://wiki.archiveteam.org/index.php/ArchiveTeam_Warrior)
-     - [ArchiveTeam's Warrior dockerfile Github repository](https://github.com/ArchiveTeam/warrior-dockerfile)
+      Archive Team is a loose collective of rogue archivists, programmers, writers and loudmouths dedicated to saving our digital heritage. Since 2009 this variant force of nature has caught wind of shutdowns, shutoffs, mergers, and plain old deletions - and done our best to save the history before it's lost forever. Along the way, we've gotten attention, resistance, [press and discussion]https://wiki.archiveteam.org/index.php/In_The_Media(), but most importantly, we've gotten the message out: **IT DOESN'T HAVE TO BE THIS WAY**. The Archive Team Warrior is a virtual archiving appliance. You can run it to help with the Archive Team archiving efforts. It will download sites and upload them to our archive—and it’s really easy to do!
 
   developer: ArchiveTeam
   icon: https://wiki.archiveteam.org/images/thumb/f/f3/Archive_team.png/100px-Archive_team.png
@@ -62,6 +55,5 @@ x-casaos:
   tagline:
     en_US: Global internet archival and content backup efforts.
   title:
-    custom: ArchiveTeam's Warrior
+    custom: Warrior
   index: /
-
