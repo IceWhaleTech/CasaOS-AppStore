@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: henriquesebastiao/downtify:0.3.1
+    image: henriquesebastiao/downtify:1.0.0
     deploy:
       resources:
         reservations:
@@ -52,6 +52,7 @@ x-casaos:
   screenshot_link:
     - https://raw.githubusercontent.com/henriquesebastiao/downtify/refs/heads/main/assets/screenshot-1.png
     - https://raw.githubusercontent.com/henriquesebastiao/downtify/refs/heads/main/assets/screenshot-2.png
+    - https://raw.githubusercontent.com/henriquesebastiao/downtify/refs/heads/main/assets/screenshot-3.png
   tagline:
     en_us: Download Spotify music with album art and metadata
     pt_br: Baixe músicas do Spotify com a capa do álbum e metadados
