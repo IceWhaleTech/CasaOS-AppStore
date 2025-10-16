@@ -2,7 +2,7 @@ name: sure
 services:
   sure-web:
     container_name: sure-web
-    image: ghcr.io/we-promise/sure:latest
+    image: ghcr.io/we-promise/sure:0.6.3
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/app/storage
@@ -77,9 +77,13 @@ services:
 
   sure-worker:
     container_name: sure-worker
-    image: ghcr.io/we-promise/sure:latest
+    image: ghcr.io/we-promise/sure:0.6.3
     command: [ 'bundle', 'exec' ,'sidekiq']
     restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/app/storage
+        target: /rails/storage
     depends_on:
       sure-redis:
         condition: service_healthy
