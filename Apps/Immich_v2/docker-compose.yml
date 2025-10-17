@@ -6,7 +6,7 @@ services:
         reservations:
           memory: 1024M
     container_name: immich-server-v2
-    image: ghcr.io/immich-app/immich-server:v2.0.1
+    image: ghcr.io/immich-app/immich-server:v2.1.0
     volumes:
       - /DATA/Gallery/immich:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
@@ -30,7 +30,7 @@ services:
 
   immich-machine-learning-v2:
     container_name: immich-machine-learning-v2
-    image: ghcr.io/immich-app/immich-machine-learning:v2.0.1
+    image: ghcr.io/immich-app/immich-machine-learning:v2.1.0
     environment:
       DB_HOSTNAME: immich-postgres-v2
       DB_PORT: 5432
