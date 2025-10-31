@@ -25,7 +25,7 @@ services:
     image: icewhaletech/ragflow:v0.21.1
     ports:
       - target: 9380
-        published: "$AppID_API_PORT"
+        published: "9380"
         protocol: tcp
       - target: 80
         published: "30080"
