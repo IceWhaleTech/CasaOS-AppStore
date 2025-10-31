@@ -919,7 +919,7 @@ services:
       - bootstrap.memory_lock=false
       - cluster.routing.allocation.disk.watermark.flood_stage=2gb
       - cluster.routing.allocation.disk.watermark.high=3gb
-      - cluster.routing.alallocation.disk.watermark.low=5gb
+      - cluster.routing.allocation.disk.watermark.low=5gb
       - discovery.type=single-node
       - http.port=9201
       - node.name=opensearch01
