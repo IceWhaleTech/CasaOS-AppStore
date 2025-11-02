@@ -787,7 +787,8 @@ services:
         - -pinfini_rag_flow
       timeout: 10s
       interval: 10s
-      retries: 3
+      retries: 10
+      start_period: 90s
     image: icewhaletech/ragflow-mysql:8.0.39
     ports:
       - target: 3306
@@ -1361,6 +1362,7 @@ x-casaos:
   description:
     de_DE: |
       RagFlow ist eine Open-Source-RAG-Engine (Retrieval-Augmented Generation), die auf tiefem Dokumentenverständnis basiert. Sie ermöglicht es Benutzern, ihr eigenes privates ChatGPT zu erstellen, indem sie die Leistungsfähigkeit großer Sprachmodelle und tiefgreifender Dokumentenanalysefähigkeiten nutzt. RagFlow unterstützt verschiedene Dokumentformate, einschließlich PDF, Word, Markdown und mehr, und ermöglicht es Benutzern, intelligente Frage-Antwort-Systeme auf der Grundlage ihrer eigenen Dokumente zu erstellen.
+
       **Hauptfunktionen:**
       - Tiefes Dokumentenverständnis mit erweiterten Analysefähigkeiten
       - Unterstützung für mehrere Dokumentformate (PDF, Word, Markdown, etc.)
@@ -1368,10 +1370,12 @@ x-casaos:
       - Anpassbare RAG-Workflows für verschiedene Anwendungsfälle
       - Integration mit beliebten großen Sprachmodellen
       - Webbasierte Oberfläche für einfache Verwaltung und Interaktion
+
       **Hardware-Anforderungen:**
       - CPU >= 4 Kerne
       - RAM >= 16 GB
       - Festplatte >= 50 GB
+
       **Mehr Erfahren:**
       - [RagFlow Offizielle Website](https://ragflow.io)
       - [RagFlow GitHub Repository](https://github.com/infiniflow/ragflow)
@@ -1393,6 +1397,7 @@ x-casaos:
       - [RagFlow GitHub Repository](https://github.com/infiniflow/ragflow)
     en_GB: |
       RagFlow is an open-source RAG (Retrieval-Augmented Generation) engine based on deep document understanding. It enables users to build their own private ChatGPT by leveraging the power of large language models and deep document parsing capabilities. RagFlow supports various document formats including PDF, Word, Markdown, and more, allowing users to create intelligent question-answering systems based on their own documents.
+      
       **Key Features:**
       - Deep document understanding with advanced parsing capabilities
       - Support for multiple document formats (PDF, Word, Markdown, etc.)
@@ -1400,15 +1405,18 @@ x-casaos:
       - Customisable RAG workflows for different use cases
       - Integration with popular large language models
       - Web-based interface for easy management and interaction
+
       **Hardware Requirements:**
       - CPU >= 4 cores
       - RAM >= 16 GB
       - Disk >= 50 GB
+      
       **Learn More:**
       - [RagFlow Official Website](https://ragflow.io)
       - [RagFlow GitHub Repository](https://github.com/infiniflow/ragflow)
     en_US: |
       RagFlow is an open-source RAG (Retrieval-Augmented Generation) engine based on deep document understanding. It enables users to build their own private ChatGPT by leveraging the power of large language models and deep document parsing capabilities. RagFlow supports various document formats including PDF, Word, Markdown, and more, allowing users to create intelligent question-answering systems based on their own documents.
+      
       **Key Features:**
       - Deep document understanding with advanced parsing capabilities
       - Support for multiple document formats (PDF, Word, Markdown, etc.)
@@ -1416,15 +1424,18 @@ x-casaos:
       - Customizable RAG workflows for different use cases
       - Integration with popular large language models
       - Web-based interface for easy management and interaction
+      
       **Hardware Requirements:**
       - CPU >= 4 cores
       - RAM >= 16 GB
       - Disk >= 50 GB
+      
       **Learn More:**
       - [RagFlow Official Website](https://ragflow.io)
       - [RagFlow GitHub Repository](https://github.com/infiniflow/ragflow)
     fr_FR: |
       RagFlow est un moteur RAG (Retrieval-Augmented Generation) open source basé sur la compréhension approfondie de documents. Il permet aux utilisateurs de construire leur propre ChatGPT privé en exploitant la puissance des grands modèles de langage et des capacités d'analyse approfondie de documents. RagFlow prend en charge divers formats de documents, notamment PDF, Word, Markdown, etc., permettant aux utilisateurs de créer des systèmes de questions-réponses intelligents basés sur leurs propres documents.
+      
       **Caractéristiques Clés :**
       - Compréhension approfondie des documents avec des capacités d'analyse avancées
       - Prise en charge de plusieurs formats de documents (PDF, Word, Markdown, etc.)
@@ -1432,15 +1443,18 @@ x-casaos:
       - Flux de travail RAG personnalisables pour différents cas d'utilisation
       - Intégration avec les grands modèles de langage populaires
       - Interface Web pour une gestion et une interaction faciles
+      
       **Exigences Matérielles :**
       - CPU >= 4 cœurs
       - RAM >= 16 GB
       - Disque >= 50 GB
+      
       **En Savoir Plus :**
       - [Site Officiel RagFlow](https://ragflow.io)
       - [Dépôt GitHub RagFlow](https://github.com/infiniflow/ragflow)
     hr_HR: |
       RagFlow je open-source RAG (Retrieval-Augmented Generation) motor temeljen na dubokom razumijevanju dokumenata. Omogućuje korisnicima da izgrade svoj privatni ChatGPT iskorištavajući moć velikih jezičnih modela i duboke mogućnosti analize dokumenata. RagFlow podržava različite formate dokumenata, uključujući PDF, Word, Markdown i više, omogućujući korisnicima da stvore inteligentne sustave pitanja-odgovora temeljene na vlastitim dokumentima.
+      
       **Ključne Značajke:**
       - Duboko razumijevanje dokumenata s naprednim mogućnostima analize
       - Podrška za više formata dokumenata (PDF, Word, Markdown, itd.)
@@ -1448,15 +1462,18 @@ x-casaos:
       - Prilagodljivi RAG tijekovi rada za različite slučajeve upotrebe
       - Integracija s popularnim velikim jezičnim modelima
       - Web-sučelje za jednostavno upravljanje i interakciju
+      
       **Hardverski Zahtjevi:**
       - CPU >= 4 jezgre
       - RAM >= 16 GB
       - Disk >= 50 GB
+      
       **Saznajte Više:**
       - [RagFlow Službena Web Stranica](https://ragflow.io)
       - [RagFlow GitHub Repozitorij](https://github.com/infiniflow/ragflow)
     it_IT: |
       RagFlow è un motore RAG (Retrieval-Augmented Generation) open source basato sulla comprensione approfondita dei documenti. Consente agli utenti di creare il proprio ChatGPT privato sfruttando la potenza dei modelli linguistici di grandi dimensioni e le capacità di analisi approfondita dei documenti. RagFlow supporta vari formati di documenti, tra cui PDF, Word, Markdown e altri, consentendo agli utenti di creare sistemi di domanda-risposta intelligenti basati sui propri documenti.
+      
       **Caratteristiche Principali:**
       - Comprensione approfondita dei documenti con capacità di analisi avanzate
       - Supporto per più formati di documenti (PDF, Word, Markdown, ecc.)
@@ -1464,15 +1481,18 @@ x-casaos:
       - Flussi di lavoro RAG personalizzabili per diversi casi d'uso
       - Integrazione con modelli linguistici di grandi dimensioni popolari
       - Interfaccia web per una facile gestione e interazione
+      
       **Requisiti Hardware:**
       - CPU >= 4 core
       - RAM >= 16 GB
       - Disco >= 50 GB
+      
       **Ulteriori Informazioni:**
       - [Sito Ufficiale RagFlow](https://ragflow.io)
       - [Repository GitHub RagFlow](https://github.com/infiniflow/ragflow)
     ja_JP: |
       RagFlowは、深い文書理解に基づいたオープンソースのRAG（検索強化生成）エンジンです。大規模言語モデルの力と深い文書解析機能を活用して、ユーザーが独自のプライベートChatGPTを構築できるようにします。RagFlowは、PDF、Word、Markdownなどを含むさまざまな文書形式をサポートし、ユーザーが独自の文書に基づいてインテリジェントな質問応答システムを作成できるようにします。
+      
       **主な機能：**
       - 高度な解析機能を備えた深い文書理解
       - 複数の文書形式のサポート（PDF、Word、Markdownなど）
@@ -1480,15 +1500,18 @@ x-casaos:
       - さまざまなユースケースに対応したカスタマイズ可能なRAGワークフロー
       - 人気の大規模言語モデルとの統合
       - 簡単な管理と対話のためのWebベースのインターフェース
+      
       **ハードウェア要件：**
       - CPU >= 4コア
       - RAM >= 16 GB
       - ディスク >= 50 GB
+      
       **詳細情報：**
       - [RagFlow公式ウェブサイト](https://ragflow.io)
       - [RagFlow GitHubリポジトリ](https://github.com/infiniflow/ragflow)
     ko_KR: |
       RagFlow는 심층 문서 이해를 기반으로 하는 오픈소스 RAG(검색 증강 생성) 엔진입니다. 대규모 언어 모델의 힘과 심층 문서 구문 분석 기능을 활용하여 사용자가 자신만의 개인 ChatGPT를 구축할 수 있도록 합니다. RagFlow는 PDF, Word, Markdown 등 다양한 문서 형식을 지원하며, 사용자가 자신의 문서를 기반으로 지능적인 질문-답변 시스템을 만들 수 있도록 합니다.
+      
       **주요 기능:**
       - 고급 구문 분석 기능을 갖춘 심층 문서 이해
       - 다양한 문서 형식 지원(PDF, Word, Markdown 등)
@@ -1496,15 +1519,18 @@ x-casaos:
       - 다양한 사용 사례에 맞춤화 가능한 RAG 워크플로우
       - 인기 있는 대규모 언어 모델과의 통합
       - 쉬운 관리 및 상호작용을 위한 웹 기반 인터페이스
+      
       **하드웨어 요구 사항:**
       - CPU >= 4코어
       - RAM >= 16 GB
       - 디스크 >= 50 GB
+      
       **자세히 알아보기:**
       - [RagFlow 공식 웹사이트](https://ragflow.io)
       - [RagFlow GitHub 저장소](https://github.com/infiniflow/ragflow)
     nb_NO: |
       RagFlow er en åpen kildekode RAG (Retrieval-Augmented Generation) motor basert på dyp dokumentforståelse. Den gjør det mulig for brukere å bygge sitt eget private ChatGPT ved å utnytte kraften i store språkmodeller og dyp dokumentanalysekapasiteter. RagFlow støtter ulike dokumentformater, inkludert PDF, Word, Markdown og mer, og lar brukere lage intelligente spørsmål-svar-systemer basert på sine egne dokumenter.
+      
       **Nøkkelegenskaper:**
       - Dyp dokumentforståelse med avanserte analysekapasiteter
       - Støtte for flere dokumentformater (PDF, Word, Markdown, etc.)
@@ -1512,15 +1538,18 @@ x-casaos:
       - Tilpassbare RAG-arbeidsflyter for forskjellige brukstilfeller
       - Integrasjon med populære store språkmodeller
       - Webbasert grensesnitt for enkel administrasjon og interaksjon
+      
       **Maskinvarekrav:**
       - CPU >= 4 kjerner
       - RAM >= 16 GB
       - Disk >= 50 GB
+      
       **Lær Mer:**
       - [RagFlow Offisiell Nettside](https://ragflow.io)
       - [RagFlow GitHub Repository](https://github.com/infiniflow/ragflow)
     pt_PT: |
       RagFlow é um motor RAG (Retrieval-Augmented Generation) de código aberto baseado na compreensão profunda de documentos. Permite aos utilizadores construir o seu próprio ChatGPT privado, aproveitando o poder dos grandes modelos de linguagem e das capacidades de análise profunda de documentos. RagFlow suporta vários formatos de documentos, incluindo PDF, Word, Markdown e mais, permitindo aos utilizadores criar sistemas inteligentes de pergunta-resposta baseados nos seus próprios documentos.
+      
       **Características Principais:**
       - Compreensão profunda de documentos com capacidades de análise avançadas
       - Suporte para múltiplos formatos de documentos (PDF, Word, Markdown, etc.)
@@ -1528,15 +1557,18 @@ x-casaos:
       - Fluxos de trabalho RAG personalizáveis para diferentes casos de uso
       - Integração com populares grandes modelos de linguagem
       - Interface baseada na Web para fácil gestão e interação
+      
       **Requisitos de Hardware:**
       - CPU >= 4 núcleos
       - RAM >= 16 GB
       - Disco >= 50 GB
+      
       **Saiba Mais:**
       - [Website Oficial RagFlow](https://ragflow.io)
       - [Repositório GitHub RagFlow](https://github.com/infiniflow/ragflow)
     ru_RU: |
       RagFlow — это механизм RAG (Retrieval-Augmented Generation) с открытым исходным кодом, основанный на глубоком понимании документов. Он позволяет пользователям создавать свой собственный частный ChatGPT, используя возможности больших языковых моделей и глубокого анализа документов. RagFlow поддерживает различные форматы документов, включая PDF, Word, Markdown и другие, что позволяет пользователям создавать интеллектуальные системы вопросов-ответов на основе собственных документов.
+      
       **Ключевые Особенности:**
       - Глубокое понимание документов с расширенными возможностями анализа
       - Поддержка различных форматов документов (PDF, Word, Markdown и т.д.)
@@ -1544,15 +1576,18 @@ x-casaos:
       - Настраиваемые рабочие процессы RAG для различных случаев использования
       - Интеграция с популярными большими языковыми моделями
       - Веб-интерфейс для удобного управления и взаимодействия
+      
       **Требования к оборудованию:**
       - CPU >= 4 ядра
       - RAM >= 16 GB
       - Диск >= 50 GB
+      
       **Узнать Больше:**
       - [Официальный сайт RagFlow](https://ragflow.io)
       - [Репозиторий GitHub RagFlow](https://github.com/infiniflow/ragflow)
     sv_SE: |
       RagFlow är en öppen källkods RAG (Retrieval-Augmented Generation) motor baserad på djup dokumentförståelse. Den gör det möjligt för användare att bygga sitt eget privata ChatGPT genom att utnyttja kraften i stora språkmodeller och djupa dokumentanalysförmågor. RagFlow stöder olika dokumentformat, inklusive PDF, Word, Markdown och mer, vilket gör det möjligt för användare att skapa intelligenta fråga-svar-system baserade på sina egna dokument.
+      
       **Nyckelfunktioner:**
       - Djup dokumentförståelse med avancerade analysförmågor
       - Stöd för flera dokumentformat (PDF, Word, Markdown, etc.)
@@ -1560,15 +1595,18 @@ x-casaos:
       - Anpassningsbara RAG-arbetsflöden för olika användningsfall
       - Integration med populära stora språkmodeller
       - Webbaserat gränssnitt för enkel hantering och interaktion
+      
       **Hårdvarukrav:**
       - CPU >= 4 kärnor
       - RAM >= 16 GB
       - Disk >= 50 GB
+      
       **Läs Mer:**
       - [RagFlow Officiell Webbplats](https://ragflow.io)
       - [RagFlow GitHub Repository](https://github.com/infiniflow/ragflow)
     tr_TR: |
       RagFlow, derin belge anlayışına dayalı açık kaynaklı bir RAG (Retrieval-Augmented Generation) motorudur. Kullanıcıların büyük dil modellerinin gücünü ve derin belge ayrıştırma yeteneklerini kullanarak kendi özel ChatGPT'lerini oluşturmalarını sağlar. RagFlow, PDF, Word, Markdown ve daha fazlası dahil olmak üzere çeşitli belge formatlarını destekler ve kullanıcıların kendi belgelerine dayalı akıllı soru-cevap sistemleri oluşturmasına olanak tanır.
+      
       **Temel Özellikler:**
       - Gelişmiş ayrıştırma yetenekleriyle derin belge anlayışı
       - Çeşitli belge formatları için destek (PDF, Word, Markdown, vb.)
@@ -1576,15 +1614,18 @@ x-casaos:
       - Farklı kullanım durumları için özelleştirilebilir RAG iş akışları
       - Popüler büyük dil modelleriyle entegrasyon
       - Kolay yönetim ve etkileşim için web tabanlı arayüz
+      
       **Donanım Gereksinimleri:**
       - CPU >= 4 çekirdek
       - RAM >= 16 GB
       - Disk >= 50 GB
+      
       **Daha Fazla Bilgi:**
       - [RagFlow Resmi Web Sitesi](https://ragflow.io)
       - [RagFlow GitHub Deposu](https://github.com/infiniflow/ragflow)
     zh_CN: |
       RagFlow是一个基于深度文档理解的开源RAG（检索增强生成）引擎。它使用户能够利用大语言模型和深度文档解析功能构建自己的私有ChatGPT。RagFlow支持多种文档格式，包括PDF、Word、Markdown等，允许用户基于自己的文档创建智能问答系统。
+      
       **主要功能：**
       - 具备高级解析能力的深度文档理解
       - 支持多种文档格式（PDF、Word、Markdown等）
@@ -1592,10 +1633,12 @@ x-casaos:
       - 针对不同用例的可定制RAG工作流
       - 与流行的大语言模型集成
       - 基于Web的界面，便于管理和交互
+      
       **硬件要求：**
       - CPU >= 4 核
       - RAM >= 16 GB
       - Disk >= 50 GB
+      
       **了解更多：**
       - [RagFlow官方网站](https://ragflow.io)
       - [RagFlow GitHub仓库](https://github.com/infiniflow/ragflow)
