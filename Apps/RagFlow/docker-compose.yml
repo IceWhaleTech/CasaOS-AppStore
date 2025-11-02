@@ -8,10 +8,8 @@ services:
         required: true
     deploy:
       resources:
-        limits:
-          memory: 7656M
         reservations:
-          memory: "2147483648"
+          memory: 16G
     environment:
       - ES_HOST=ragflow-es01
       - INFINITY_HOST=ragflow-infinity
@@ -321,10 +319,8 @@ services:
     container_name: ragflow-es01
     deploy:
       resources:
-        limits:
-          memory: 7656M
         reservations:
-          memory: "1073741824"
+          memory: 2G
     environment:
       - ELASTIC_PASSWORD=infini_rag_flow
       - TZ=$TZ
@@ -608,8 +604,8 @@ services:
     cpu_shares: 90
     deploy:
       resources:
-        limits:
-          memory: 7656M
+        reservations:
+          memory: 2G
   ragflow-minio:
     command:
       - server
@@ -619,10 +615,8 @@ services:
     container_name: ragflow-minio
     deploy:
       resources:
-        limits:
-          memory: 7656M
         reservations:
-          memory: "536870912"
+          memory: 1G
     environment:
       - MINIO_ROOT_PASSWORD=infini_rag_flow
       - MINIO_ROOT_USER=rag_flow
@@ -770,10 +764,8 @@ services:
     container_name: ragflow-mysql
     deploy:
       resources:
-        limits:
-          memory: 7656M
         reservations:
-          memory: "536870912"
+          memory: 256M
     environment:
       - MYSQL_PASSWORD=infini_rag_flow
       - MYSQL_ROOT_PASSWORD=mysql
@@ -896,10 +888,8 @@ services:
     container_name: ragflow-opensearch-01
     deploy:
       resources:
-        limits:
-          memory: 7656M
         reservations:
-          memory: "1073741824"
+          memory: 1G
     environment:
       - OPENSEARCH_INITIAL_ADMIN_PASSWORD=infini_rag_flow_OS_01
       - OPENSEARCH_PASSWORD=infini_rag_flow_OS_01
@@ -1104,10 +1094,8 @@ services:
     container_name: ragflow-redis
     deploy:
       resources:
-        limits:
-          memory: 7656M
         reservations:
-          memory: "134217728"
+          memory: 256M
     healthcheck:
       test:
         - CMD
@@ -1177,7 +1165,7 @@ services:
         limits:
           memory: 7656M
         reservations:
-          memory: "536870912"
+          memory: 512M
     environment:
       - SANDBOX_BASE_NODEJS_IMAGE=infiniflow/sandbox-base-nodejs:latest
       - SANDBOX_BASE_PYTHON_IMAGE=infiniflow/sandbox-base-python:latest
