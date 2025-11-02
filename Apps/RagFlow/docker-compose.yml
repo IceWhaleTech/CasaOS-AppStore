@@ -9,7 +9,7 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 16G
+          memory: 8G
     environment:
       - ES_HOST=ragflow-es01
       - INFINITY_HOST=ragflow-infinity
@@ -320,7 +320,7 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 2G
+          memory: 3G
     environment:
       - ELASTIC_PASSWORD=infini_rag_flow
       - TZ=$TZ
@@ -605,7 +605,7 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 2G
+          memory: 1.5G
   ragflow-minio:
     command:
       - server
@@ -616,7 +616,7 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 1G
+          memory: 512M
     environment:
       - MINIO_ROOT_PASSWORD=infini_rag_flow
       - MINIO_ROOT_USER=rag_flow
@@ -765,7 +765,7 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 256M
+          memory: 512M
     environment:
       - MYSQL_PASSWORD=infini_rag_flow
       - MYSQL_ROOT_PASSWORD=mysql
@@ -889,7 +889,7 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 1G
+          memory: 2G
     environment:
       - OPENSEARCH_INITIAL_ADMIN_PASSWORD=infini_rag_flow_OS_01
       - OPENSEARCH_PASSWORD=infini_rag_flow_OS_01
@@ -1095,7 +1095,7 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 256M
+          memory: 512M
     healthcheck:
       test:
         - CMD
