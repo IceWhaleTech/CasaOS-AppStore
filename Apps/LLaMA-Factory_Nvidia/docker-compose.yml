@@ -16,6 +16,7 @@ services:
     deploy:
       resources:
         reservations:
+          memory: 6G
           devices:
             - driver: nvidia
               count: "all"
@@ -59,10 +60,7 @@ x-casaos:
       - Quantisierung und Modellexport
 
       **Hardwareanforderungen:**
-      - CPU: 4 Kerne oder mehr empfohlen
-      - RAM: 16GB+ (abhängig von der Modellgröße)
       - GPU: NVIDIA GPU mit CUDA-Unterstützung erforderlich
-      - Festplatte: 50GB+ für Modelle und Datasets
 
       **Weitere Informationen:**
       - [GitHub Repository](https://github.com/hiyouga/LLaMA-Factory)
@@ -79,10 +77,7 @@ x-casaos:
       - Κβαντοποίηση και εξαγωγή μοντέλων
 
       **Απαιτήσεις Υλικού:**
-      - CPU: 4 πυρήνες ή περισσότεροι συνιστώνται
-      - RAM: 16GB+ (ανάλογα με το μέγεθος του μοντέλου)
       - GPU: Απαιτείται NVIDIA GPU με υποστήριξη CUDA
-      - Δίσκος: 50GB+ για μοντέλα και σύνολα δεδομένων
 
       **Περισσότερες Πληροφορίες:**
       - [Αποθετήριο GitHub](https://github.com/hiyouga/LLaMA-Factory)
@@ -99,10 +94,7 @@ x-casaos:
       - Quantization and model export capabilities
 
       **Hardware Requirements:**
-      - CPU: 4 cores or more recommended
-      - RAM: 16GB+ (depending on model size)
       - GPU: NVIDIA GPU with CUDA support required
-      - Disk: 50GB+ for models and datasets
 
       **Learn More:**
       - [GitHub Repository](https://github.com/hiyouga/LLaMA-Factory)
@@ -119,10 +111,7 @@ x-casaos:
       - Quantization and model export capabilities
 
       **Hardware Requirements:**
-      - CPU: 4 cores or more recommended
-      - RAM: 16GB+ (depending on model size)
       - GPU: NVIDIA GPU with CUDA support required
-      - Disk: 50GB+ for models and datasets
 
       **Learn More:**
       - [GitHub Repository](https://github.com/hiyouga/LLaMA-Factory)
@@ -139,10 +128,7 @@ x-casaos:
       - Capacités de quantification et d'exportation de modèles
 
       **Configuration Matérielle Requise:**
-      - CPU: 4 cœurs ou plus recommandés
-      - RAM: 16GB+ (selon la taille du modèle)
       - GPU: GPU NVIDIA avec support CUDA requis
-      - Disque: 50GB+ pour les modèles et les ensembles de données
 
       **En Savoir Plus:**
       - [Dépôt GitHub](https://github.com/hiyouga/LLaMA-Factory)
@@ -159,10 +145,7 @@ x-casaos:
       - Mogućnosti kvantizacije i izvoza modela
 
       **Hardverski Zahtjevi:**
-      - CPU: 4 jezgre ili više preporučeno
-      - RAM: 16GB+ (ovisno o veličini modela)
       - GPU: Potreban NVIDIA GPU s CUDA podrškom
-      - Disk: 50GB+ za modele i skupove podataka
 
       **Saznajte Više:**
       - [GitHub Repozitorij](https://github.com/hiyouga/LLaMA-Factory)
@@ -179,10 +162,7 @@ x-casaos:
       - Capacità di quantizzazione ed esportazione modelli
 
       **Requisiti Hardware:**
-      - CPU: 4 core o più raccomandati
-      - RAM: 16GB+ (a seconda delle dimensioni del modello)
       - GPU: GPU NVIDIA con supporto CUDA richiesta
-      - Disco: 50GB+ per modelli e dataset
 
       **Ulteriori Informazioni:**
       - [Repository GitHub](https://github.com/hiyouga/LLaMA-Factory)
@@ -199,10 +179,7 @@ x-casaos:
       - 量子化とモデルエクスポート機能
 
       **ハードウェア要件:**
-      - CPU: 4コア以上を推奨
-      - RAM: 16GB以上(モデルサイズによる)
       - GPU: CUDA対応のNVIDIA GPUが必要
-      - ディスク: モデルとデータセット用に50GB以上
 
       **詳細情報:**
       - [GitHubリポジトリ](https://github.com/hiyouga/LLaMA-Factory)
@@ -219,10 +196,7 @@ x-casaos:
       - 양자화 및 모델 내보내기 기능
 
       **하드웨어 요구사항:**
-      - CPU: 4코어 이상 권장
-      - RAM: 16GB 이상(모델 크기에 따라 다름)
       - GPU: CUDA 지원 NVIDIA GPU 필요
-      - 디스크: 모델 및 데이터셋용 50GB 이상
 
       **더 알아보기:**
       - [GitHub 저장소](https://github.com/hiyouga/LLaMA-Factory)
@@ -239,10 +213,7 @@ x-casaos:
       - Kvantisering og modelleksport
 
       **Maskinvarekrav:**
-      - CPU: 4 kjerner eller mer anbefalt
-      - RAM: 16GB+ (avhengig av modellstørrelse)
       - GPU: NVIDIA GPU med CUDA-støtte påkrevd
-      - Disk: 50GB+ for modeller og datasett
 
       **Lær Mer:**
       - [GitHub Repository](https://github.com/hiyouga/LLaMA-Factory)
@@ -259,10 +230,7 @@ x-casaos:
       - Capacidades de quantização e exportação de modelos
 
       **Requisitos de Hardware:**
-      - CPU: 4 núcleos ou mais recomendado
-      - RAM: 16GB+ (dependendo do tamanho do modelo)
       - GPU: GPU NVIDIA com suporte CUDA necessária
-      - Disco: 50GB+ para modelos e conjuntos de dados
 
       **Saiba Mais:**
       - [Repositório GitHub](https://github.com/hiyouga/LLaMA-Factory)
@@ -279,10 +247,7 @@ x-casaos:
       - Возможности квантования и экспорта моделей
 
       **Требования к Оборудованию:**
-      - ЦП: рекомендуется 4 ядра или более
-      - ОЗУ: 16 ГБ+ (в зависимости от размера модели)
-      - ГП: требуется NVIDIA GPU с поддержкой CUDA
-      - Диск: 50 ГБ+ для моделей и наборов данных
+      - GPU: требуется NVIDIA GPU с поддержкой CUDA
 
       **Узнать Больше:**
       - [Репозиторий GitHub](https://github.com/hiyouga/LLaMA-Factory)
@@ -299,10 +264,7 @@ x-casaos:
       - Kvantisering och modellexport
 
       **Hårdvarukrav:**
-      - CPU: 4 kärnor eller mer rekommenderas
-      - RAM: 16GB+ (beroende på modellstorlek)
       - GPU: NVIDIA GPU med CUDA-stöd krävs
-      - Disk: 50GB+ för modeller och dataset
 
       **Läs Mer:**
       - [GitHub Repository](https://github.com/hiyouga/LLaMA-Factory)
@@ -319,10 +281,7 @@ x-casaos:
       - Kuantizasyon ve model dışa aktarma yetenekleri
 
       **Donanım Gereksinimleri:**
-      - CPU: 4 çekirdek veya daha fazlası önerilir
-      - RAM: 16GB+ (model boyutuna bağlı olarak)
       - GPU: CUDA desteği olan NVIDIA GPU gerekli
-      - Disk: Modeller ve veri kümeleri için 50GB+
 
       **Daha Fazla Bilgi:**
       - [GitHub Deposu](https://github.com/hiyouga/LLaMA-Factory)
@@ -339,11 +298,8 @@ x-casaos:
       - 量化和模型导出功能
 
       **硬件要求:**
-      - CPU: 建议4核或更多
-      - 内存: 16GB以上(取决于模型大小)
       - GPU: 需要支持CUDA的NVIDIA GPU
-      - 磁盘: 50GB以上用于模型和数据集
-
+      
       **了解更多:**
       - [GitHub Repository](https://github.com/hiyouga/LLaMA-Factory)
       - [官方文档](https://llamafactory.readthedocs.io/)
@@ -353,7 +309,6 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LLaMA-Factory_Nvidia/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LLaMA-Factory_Nvidia/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LLaMA-Factory_Nvidia/screenshot-3.png
-  
   tagline:
     de_DE: Einheitliche LLM-Feinabstimmung mit 100+ Modellen
     el_GR: Ενοποιημένη ρύθμιση LLM με 100+ μοντέλα
