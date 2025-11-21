@@ -16,6 +16,7 @@ services:
     deploy:
       resources:
         reservations:
+          memory: 6G
           devices:
             - driver: nvidia
               count: "all"
@@ -59,14 +60,11 @@ x-casaos:
       - Quantisierung und Modellexport
 
       **Hardwareanforderungen:**
-      - CPU: 4 Kerne oder mehr empfohlen
-      - RAM: 16GB+ (abhängig von der Modellgröße)
       - GPU: NVIDIA GPU mit CUDA-Unterstützung erforderlich
-      - Festplatte: 50GB+ für Modelle und Datasets
 
-      **Offizielle Ressourcen:**
-      - GitHub: https://github.com/hiyouga/LLaMA-Factory
-      - Dokumentation: https://llamafactory.readthedocs.io/
+      **Weitere Informationen:**
+      - [GitHub Repository](https://github.com/hiyouga/LLaMA-Factory)
+      - [Dokumentation](https://llamafactory.readthedocs.io/)
     el_GR: |
       Το LLaMA Factory είναι ένα ολοκληρωμένο πλαίσιο για την εκπαίδευση μεγάλων γλωσσικών μοντέλων (LLMs) με υποστήριξη για πάνω από 100 μοντέλα. Παρέχει μια φιλική προς το χρήστη διεπαφή ιστού και ισχυρές μεθόδους εκπαίδευσης όπως LoRA, QLoRA και πλήρης εκπαίδευση παραμέτρων.
 
@@ -79,14 +77,11 @@ x-casaos:
       - Κβαντοποίηση και εξαγωγή μοντέλων
 
       **Απαιτήσεις Υλικού:**
-      - CPU: 4 πυρήνες ή περισσότεροι συνιστώνται
-      - RAM: 16GB+ (ανάλογα με το μέγεθος του μοντέλου)
       - GPU: Απαιτείται NVIDIA GPU με υποστήριξη CUDA
-      - Δίσκος: 50GB+ για μοντέλα και σύνολα δεδομένων
 
-      **Επίσημοι Πόροι:**
-      - GitHub: https://github.com/hiyouga/LLaMA-Factory
-      - Τεκμηρίωση: https://llamafactory.readthedocs.io/
+      **Περισσότερες Πληροφορίες:**
+      - [Αποθετήριο GitHub](https://github.com/hiyouga/LLaMA-Factory)
+      - [Τεκμηρίωση](https://llamafactory.readthedocs.io/)
     en_GB: |
       LLaMA Factory is a comprehensive framework for fine-tuning Large Language Models (LLMs) with support for over 100 models. It provides a user-friendly web interface and powerful training methods including LoRA, QLoRA, and full-parameter training.
 
@@ -99,14 +94,11 @@ x-casaos:
       - Quantization and model export capabilities
 
       **Hardware Requirements:**
-      - CPU: 4 cores or more recommended
-      - RAM: 16GB+ (depending on model size)
       - GPU: NVIDIA GPU with CUDA support required
-      - Disk: 50GB+ for models and datasets
 
-      **Official Resources:**
-      - GitHub: https://github.com/hiyouga/LLaMA-Factory
-      - Documentation: https://llamafactory.readthedocs.io/
+      **Learn More:**
+      - [GitHub Repository](https://github.com/hiyouga/LLaMA-Factory)
+      - [Documentation](https://llamafactory.readthedocs.io/)
     en_US: |
       LLaMA Factory is a comprehensive framework for fine-tuning Large Language Models (LLMs) with support for over 100 models. It provides a user-friendly web interface and powerful training methods including LoRA, QLoRA, and full-parameter training.
 
@@ -119,14 +111,11 @@ x-casaos:
       - Quantization and model export capabilities
 
       **Hardware Requirements:**
-      - CPU: 4 cores or more recommended
-      - RAM: 16GB+ (depending on model size)
       - GPU: NVIDIA GPU with CUDA support required
-      - Disk: 50GB+ for models and datasets
 
-      **Official Resources:**
-      - GitHub: https://github.com/hiyouga/LLaMA-Factory
-      - Documentation: https://llamafactory.readthedocs.io/
+      **Learn More:**
+      - [GitHub Repository](https://github.com/hiyouga/LLaMA-Factory)
+      - [Documentation](https://llamafactory.readthedocs.io/)
     fr_FR: |
       LLaMA Factory est un framework complet pour l'ajustement fin des grands modèles de langage (LLMs) avec prise en charge de plus de 100 modèles. Il fournit une interface web conviviale et des méthodes d'entraînement puissantes, notamment LoRA, QLoRA et l'entraînement complet des paramètres.
 
@@ -139,14 +128,11 @@ x-casaos:
       - Capacités de quantification et d'exportation de modèles
 
       **Configuration Matérielle Requise:**
-      - CPU: 4 cœurs ou plus recommandés
-      - RAM: 16GB+ (selon la taille du modèle)
       - GPU: GPU NVIDIA avec support CUDA requis
-      - Disque: 50GB+ pour les modèles et les ensembles de données
 
-      **Ressources Officielles:**
-      - GitHub: https://github.com/hiyouga/LLaMA-Factory
-      - Documentation: https://llamafactory.readthedocs.io/
+      **En Savoir Plus:**
+      - [Dépôt GitHub](https://github.com/hiyouga/LLaMA-Factory)
+      - [Documentation](https://llamafactory.readthedocs.io/)
     hr_HR: |
       LLaMA Factory je sveobuhvatan okvir za fino podešavanje velikih jezičnih modela (LLMs) s podrškom za preko 100 modela. Pruža korisničko sučelje i snažne metode obuke uključujući LoRA, QLoRA i potpunu obuku parametara.
 
@@ -159,14 +145,11 @@ x-casaos:
       - Mogućnosti kvantizacije i izvoza modela
 
       **Hardverski Zahtjevi:**
-      - CPU: 4 jezgre ili više preporučeno
-      - RAM: 16GB+ (ovisno o veličini modela)
       - GPU: Potreban NVIDIA GPU s CUDA podrškom
-      - Disk: 50GB+ za modele i skupove podataka
 
-      **Službeni Resursi:**
-      - GitHub: https://github.com/hiyouga/LLaMA-Factory
-      - Dokumentacija: https://llamafactory.readthedocs.io/
+      **Saznajte Više:**
+      - [GitHub Repozitorij](https://github.com/hiyouga/LLaMA-Factory)
+      - [Dokumentacija](https://llamafactory.readthedocs.io/)
     it_IT: |
       LLaMA Factory è un framework completo per il fine-tuning di Large Language Models (LLMs) con supporto per oltre 100 modelli. Fornisce un'interfaccia web user-friendly e potenti metodi di addestramento tra cui LoRA, QLoRA e addestramento a parametri completi.
 
@@ -179,14 +162,11 @@ x-casaos:
       - Capacità di quantizzazione ed esportazione modelli
 
       **Requisiti Hardware:**
-      - CPU: 4 core o più raccomandati
-      - RAM: 16GB+ (a seconda delle dimensioni del modello)
       - GPU: GPU NVIDIA con supporto CUDA richiesta
-      - Disco: 50GB+ per modelli e dataset
 
-      **Risorse Ufficiali:**
-      - GitHub: https://github.com/hiyouga/LLaMA-Factory
-      - Documentazione: https://llamafactory.readthedocs.io/
+      **Ulteriori Informazioni:**
+      - [Repository GitHub](https://github.com/hiyouga/LLaMA-Factory)
+      - [Documentazione](https://llamafactory.readthedocs.io/)
     ja_JP: |
       LLaMA Factoryは、100以上のモデルをサポートする大規模言語モデル(LLMs)のファインチューニング用の包括的なフレームワークです。ユーザーフレンドリーなWebインターフェースと、LoRA、QLoRA、フルパラメータトレーニングなどの強力なトレーニング手法を提供します。
 
@@ -199,14 +179,11 @@ x-casaos:
       - 量子化とモデルエクスポート機能
 
       **ハードウェア要件:**
-      - CPU: 4コア以上を推奨
-      - RAM: 16GB以上(モデルサイズによる)
       - GPU: CUDA対応のNVIDIA GPUが必要
-      - ディスク: モデルとデータセット用に50GB以上
 
-      **公式リソース:**
-      - GitHub: https://github.com/hiyouga/LLaMA-Factory
-      - ドキュメント: https://llamafactory.readthedocs.io/
+      **詳細情報:**
+      - [GitHubリポジトリ](https://github.com/hiyouga/LLaMA-Factory)
+      - [ドキュメント](https://llamafactory.readthedocs.io/)
     ko_KR: |
       LLaMA Factory는 100개 이상의 모델을 지원하는 대규모 언어 모델(LLMs) 파인튜닝을 위한 포괄적인 프레임워크입니다. 사용자 친화적인 웹 인터페이스와 LoRA, QLoRA, 전체 매개변수 학습을 포함한 강력한 학습 방법을 제공합니다.
 
@@ -219,16 +196,13 @@ x-casaos:
       - 양자화 및 모델 내보내기 기능
 
       **하드웨어 요구사항:**
-      - CPU: 4코어 이상 권장
-      - RAM: 16GB 이상(모델 크기에 따라 다름)
       - GPU: CUDA 지원 NVIDIA GPU 필요
-      - 디스크: 모델 및 데이터셋용 50GB 이상
 
-      **공식 리소스:**
-      - GitHub: https://github.com/hiyouga/LLaMA-Factory
-      - 문서: https://llamafactory.readthedocs.io/
+      **더 알아보기:**
+      - [GitHub 저장소](https://github.com/hiyouga/LLaMA-Factory)
+      - [문서](https://llamafactory.readthedocs.io/)
     nb_NO: |
-      LLaMA Factory er et omfattende rammeverk for finjustering av store språkmodeller (LLMs) med støtte for over 100 modeller. Det tilbyr et brukervennlig webgrensesnitt og kraftige treningsmetoder inkludert LoRA, QLoRA og fullparametertrening.
+      LLaMA Factory er et omfattende rammeverk for finjustering av store språkmodeller (LLMs) med støtte for over 100 modeller. Det tilbyr et brukervennlig webgrensesnitt og kraftfulle treningsmetoder inkludert LoRA, QLoRA og fullparametertrening.
 
       **Nøkkelfunksjoner:**
       - Støtte for 100+ LLMs inkludert LLaMA, Mistral, Qwen og mer
@@ -239,14 +213,11 @@ x-casaos:
       - Kvantisering og modelleksport
 
       **Maskinvarekrav:**
-      - CPU: 4 kjerner eller mer anbefalt
-      - RAM: 16GB+ (avhengig av modellstørrelse)
       - GPU: NVIDIA GPU med CUDA-støtte påkrevd
-      - Disk: 50GB+ for modeller og datasett
 
-      **Offisielle Ressurser:**
-      - GitHub: https://github.com/hiyouga/LLaMA-Factory
-      - Dokumentasjon: https://llamafactory.readthedocs.io/
+      **Lær Mer:**
+      - [GitHub Repository](https://github.com/hiyouga/LLaMA-Factory)
+      - [Dokumentasjon](https://llamafactory.readthedocs.io/)
     pt_PT: |
       LLaMA Factory é uma estrutura abrangente para ajuste fino de Modelos de Linguagem Grandes (LLMs) com suporte para mais de 100 modelos. Fornece uma interface web amigável e métodos de treino poderosos, incluindo LoRA, QLoRA e treino de parâmetros completos.
 
@@ -259,14 +230,11 @@ x-casaos:
       - Capacidades de quantização e exportação de modelos
 
       **Requisitos de Hardware:**
-      - CPU: 4 núcleos ou mais recomendado
-      - RAM: 16GB+ (dependendo do tamanho do modelo)
       - GPU: GPU NVIDIA com suporte CUDA necessária
-      - Disco: 50GB+ para modelos e conjuntos de dados
 
-      **Recursos Oficiais:**
-      - GitHub: https://github.com/hiyouga/LLaMA-Factory
-      - Documentação: https://llamafactory.readthedocs.io/
+      **Saiba Mais:**
+      - [Repositório GitHub](https://github.com/hiyouga/LLaMA-Factory)
+      - [Documentação](https://llamafactory.readthedocs.io/)
     ru_RU: |
       LLaMA Factory — это комплексная платформа для тонкой настройки больших языковых моделей (LLMs) с поддержкой более 100 моделей. Она предоставляет удобный веб-интерфейс и мощные методы обучения, включая LoRA, QLoRA и полное обучение параметров.
 
@@ -279,14 +247,11 @@ x-casaos:
       - Возможности квантования и экспорта моделей
 
       **Требования к Оборудованию:**
-      - ЦП: рекомендуется 4 ядра или более
-      - ОЗУ: 16 ГБ+ (в зависимости от размера модели)
-      - ГП: требуется NVIDIA GPU с поддержкой CUDA
-      - Диск: 50 ГБ+ для моделей и наборов данных
+      - GPU: требуется NVIDIA GPU с поддержкой CUDA
 
-      **Официальные Ресурсы:**
-      - GitHub: https://github.com/hiyouga/LLaMA-Factory
-      - Документация: https://llamafactory.readthedocs.io/
+      **Узнать Больше:**
+      - [Репозиторий GitHub](https://github.com/hiyouga/LLaMA-Factory)
+      - [Документация](https://llamafactory.readthedocs.io/)
     sv_SE: |
       LLaMA Factory är ett omfattande ramverk för finjustering av stora språkmodeller (LLMs) med stöd för över 100 modeller. Det tillhandahåller ett användarvänligt webbgränssnitt och kraftfulla träningsmetoder inklusive LoRA, QLoRA och fullständig parameterträning.
 
@@ -299,14 +264,11 @@ x-casaos:
       - Kvantisering och modellexport
 
       **Hårdvarukrav:**
-      - CPU: 4 kärnor eller mer rekommenderas
-      - RAM: 16GB+ (beroende på modellstorlek)
       - GPU: NVIDIA GPU med CUDA-stöd krävs
-      - Disk: 50GB+ för modeller och dataset
 
-      **Officiella Resurser:**
-      - GitHub: https://github.com/hiyouga/LLaMA-Factory
-      - Dokumentation: https://llamafactory.readthedocs.io/
+      **Läs Mer:**
+      - [GitHub Repository](https://github.com/hiyouga/LLaMA-Factory)
+      - [Dokumentation](https://llamafactory.readthedocs.io/)
     tr_TR: |
       LLaMA Factory, 100'den fazla modeli destekleyen Büyük Dil Modelleri (LLMs) için kapsamlı bir ince ayar çerçevesidir. LoRA, QLoRA ve tam parametre eğitimi dahil olmak üzere kullanıcı dostu bir web arayüzü ve güçlü eğitim yöntemleri sağlar.
 
@@ -319,14 +281,11 @@ x-casaos:
       - Kuantizasyon ve model dışa aktarma yetenekleri
 
       **Donanım Gereksinimleri:**
-      - CPU: 4 çekirdek veya daha fazlası önerilir
-      - RAM: 16GB+ (model boyutuna bağlı olarak)
       - GPU: CUDA desteği olan NVIDIA GPU gerekli
-      - Disk: Modeller ve veri kümeleri için 50GB+
 
-      **Resmi Kaynaklar:**
-      - GitHub: https://github.com/hiyouga/LLaMA-Factory
-      - Dokümantasyon: https://llamafactory.readthedocs.io/
+      **Daha Fazla Bilgi:**
+      - [GitHub Deposu](https://github.com/hiyouga/LLaMA-Factory)
+      - [Dokümantasyon](https://llamafactory.readthedocs.io/)
     zh_CN: |
       LLaMA Factory 是一个全面的大语言模型(LLMs)微调框架,支持超过100个模型。它提供了用户友好的Web界面和强大的训练方法,包括LoRA、QLoRA和全参数训练。
 
@@ -339,11 +298,8 @@ x-casaos:
       - 量化和模型导出功能
 
       **硬件要求:**
-      - CPU: 建议4核或更多
-      - 内存: 16GB以上(取决于模型大小)
       - GPU: 需要支持CUDA的NVIDIA GPU
-      - 磁盘: 50GB以上用于模型和数据集
-
+      
       **了解更多:**
       - [GitHub Repository](https://github.com/hiyouga/LLaMA-Factory)
       - [官方文档](https://llamafactory.readthedocs.io/)
@@ -353,7 +309,6 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LLaMA-Factory_Nvidia/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LLaMA-Factory_Nvidia/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LLaMA-Factory_Nvidia/screenshot-3.png
-  
   tagline:
     de_DE: Einheitliche LLM-Feinabstimmung mit 100+ Modellen
     el_GR: Ενοποιημένη ρύθμιση LLM με 100+ μοντέλα
