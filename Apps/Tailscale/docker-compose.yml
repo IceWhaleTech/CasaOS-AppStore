@@ -21,13 +21,7 @@ services:
     cap_add:
       - NET_ADMIN
       - NET_RAW
-    entrypoint:
-      - /bin/sh
-      - -c
-      - |
-        tailscaled --state=/var/lib/tailscale/tailscaled.state &
-        sleep 10
-        tailscale web --listen 0.0.0.0:5252
+    entrypoint: /bin/sh -c "tailscaled --state=/var/lib/tailscale/tailscaled.state & sleep 10; tailscale web --listen 0.0.0.0:5252"
     x-casaos:
       volumes:
         - container: /var/lib/tailscale
