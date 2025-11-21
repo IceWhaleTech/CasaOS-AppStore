@@ -1,0 +1,599 @@
+name: deepseek-ocr
+
+services:
+  backend:
+    image: deepseek_ocr_backend:v1
+    container_name: deepseek-ocr-backend
+    environment:
+      # API Configuration
+      API_HOST: "0.0.0.0"
+      API_PORT: "8000"
+
+      # Frontend Configuration
+      FRONTEND_PORT: "3000"
+
+      # Model Configuration
+      MODEL_NAME: "deepseek-ai/DeepSeek-OCR"
+      HF_HOME: "/models"
+
+      # Upload Configuration
+      MAX_UPLOAD_SIZE_MB: "100"
+
+      # Processing Configuration
+      BASE_SIZE: "1024"
+      IMAGE_SIZE: "640"
+      CROP_MODE: "true"
+    volumes:
+      - /DATA/AppData/$Appid/models:/models
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    shm_size: "4g"
+    ports:
+      - target: 8000
+        published: "8000"
+        protocol: tcp
+    networks:
+      - ocr-network
+    x-casaos:
+      envs:
+        - container: API_HOST
+          description:
+            de_DE: API-Host
+            el_GR: Κεντρικός Υπολογιστής API
+            en_GB: API Host
+            en_US: API Host
+            fr_FR: Hôte API
+            hr_HR: API Host
+            it_IT: Host API
+            ja_JP: APIホスト
+            ko_KR: API 호스트
+            nb_NO: API Vert
+            pt_PT: Anfitrião API
+            ru_RU: Хост API
+            sv_SE: API Värd
+            tr_TR: API Ana Bilgisayarı
+            zh_CN: API主机
+        - container: API_PORT
+          description:
+            de_DE: API-Port
+            el_GR: Θύρα API
+            en_GB: API Port
+            en_US: API Port
+            fr_FR: Port API
+            hr_HR: API Port
+            it_IT: Porta API
+            ja_JP: APIポート
+            ko_KR: API 포트
+            nb_NO: API Port
+            pt_PT: Porta API
+            ru_RU: Порт API
+            sv_SE: API Port
+            tr_TR: API Portu
+            zh_CN: API端口
+        - container: FRONTEND_PORT
+          description:
+            de_DE: Frontend-Port
+            el_GR: Θύρα Frontend
+            en_GB: Frontend Port
+            en_US: Frontend Port
+            fr_FR: Port Frontend
+            hr_HR: Frontend Port
+            it_IT: Porta Frontend
+            ja_JP: フロントエンドポート
+            ko_KR: 프론트엔드 포트
+            nb_NO: Frontend Port
+            pt_PT: Porta Frontend
+            ru_RU: Порт Frontend
+            sv_SE: Frontend Port
+            tr_TR: Frontend Portu
+            zh_CN: 前端端口
+        - container: MODEL_NAME
+          description:
+            de_DE: Modellname
+            el_GR: Όνομα Μοντέλου
+            en_GB: Model Name
+            en_US: Model Name
+            fr_FR: Nom du Modèle
+            hr_HR: Naziv Modela
+            it_IT: Nome Modello
+            ja_JP: モデル名
+            ko_KR: 모델 이름
+            nb_NO: Modellnavn
+            pt_PT: Nome do Modelo
+            ru_RU: Имя модели
+            sv_SE: Modellnamn
+            tr_TR: Model Adı
+            zh_CN: 模型名称
+        - container: HF_HOME
+          description:
+            de_DE: Hugging Face Home-Verzeichnis
+            el_GR: Κατάλογος Home Hugging Face
+            en_GB: Hugging Face Home Directory
+            en_US: Hugging Face Home Directory
+            fr_FR: Répertoire Hugging Face Home
+            hr_HR: Hugging Face Home Direktorij
+            it_IT: Directory Home Hugging Face
+            ja_JP: Hugging Faceホームディレクトリ
+            ko_KR: Hugging Face 홈 디렉터리
+            nb_NO: Hugging Face Hjemmekatalog
+            pt_PT: Diretório Home Hugging Face
+            ru_RU: Каталог Hugging Face Home
+            sv_SE: Hugging Face Hemma-katalog
+            tr_TR: Hugging Face Ana Dizini
+            zh_CN: Hugging Face主目录
+        - container: MAX_UPLOAD_SIZE_MB
+          description:
+            de_DE: Maximale Upload-Größe (MB)
+            el_GR: Μέγιστο Μέγεθος Ανεβάσματος (MB)
+            en_GB: Max Upload Size (MB)
+            en_US: Max Upload Size (MB)
+            fr_FR: Taille Maximale de Téléversement (MB)
+            hr_HR: Maks. Veličina Učitavanja (MB)
+            it_IT: Dimensione Max Upload (MB)
+            ja_JP: 最大アップロードサイズ (MB)
+            ko_KR: 최대 업로드 크기 (MB)
+            nb_NO: Maks Opplastingsstørrelse (MB)
+            pt_PT: Tamanho Máx. de Upload (MB)
+            ru_RU: Максимальный размер загрузки (MB)
+            sv_SE: Max Upplastningsstorlek (MB)
+            tr_TR: Maksimum Yükleme Boyutu (MB)
+            zh_CN: 最大上传大小 (MB)
+        - container: BASE_SIZE
+          description:
+            de_DE: Basisgröße
+            el_GR: Βασικό Μέγεθος
+            en_GB: Base Size
+            en_US: Base Size
+            fr_FR: Taille de Base
+            hr_HR: Osnovna Veličina
+            it_IT: Dimensione Base
+            ja_JP: ベースサイズ
+            ko_KR: 기본 크기
+            nb_NO: Basestørrelse
+            pt_PT: Tamanho Base
+            ru_RU: Базовый размер
+            sv_SE: Basstorlek
+            tr_TR: Temel Boyut
+            zh_CN: 基础大小
+        - container: IMAGE_SIZE
+          description:
+            de_DE: Bildgröße
+            el_GR: Μέγεθος Εικόνας
+            en_GB: Image Size
+            en_US: Image Size
+            fr_FR: Taille d'Image
+            hr_HR: Veličina Slike
+            it_IT: Dimensione Immagine
+            ja_JP: 画像サイズ
+            ko_KR: 이미지 크기
+            nb_NO: Bilde Størrelse
+            pt_PT: Tamanho da Imagem
+            ru_RU: Размер изображения
+            sv_SE: Bildstorlek
+            tr_TR: Görüntü Boyutu
+            zh_CN: 图像大小
+        - container: CROP_MODE
+          description:
+            de_DE: Zuschneidungsmodus
+            el_GR: Λειτουργία Περιστροφής
+            en_GB: Crop Mode
+            en_US: Crop Mode
+            fr_FR: Mode Recadrage
+            hr_HR: Način Orezivanja
+            it_IT: Modalità Ritaglio
+            ja_JP: クロップモード
+            ko_KR: 자르기 모드
+            nb_NO: Beskjæringsmodus
+            pt_PT: Modo de Corte
+            ru_RU: Режим обрезки
+            sv_SE: Beskärningsläge
+            tr_TR: Kırpma Modu
+            zh_CN: 裁剪模式
+      ports:
+        - container: "8000"
+          description:
+            de_DE: Backend API Port
+            el_GR: Θύρα API Backend
+            en_GB: Backend API Port
+            en_US: Backend API Port
+            fr_FR: Port API Backend
+            hr_HR: Backend API Port
+            it_IT: Porta API Backend
+            ja_JP: Backend APIポート
+            ko_KR: Backend API 포트
+            nb_NO: Backend API Port
+            pt_PT: Porta API Backend
+            ru_RU: Порт API Backend
+            sv_SE: Backend API Port
+            tr_TR: Backend API Portu
+            zh_CN: Backend API端口
+      volumes:
+        - container: /models
+          description:
+            de_DE: Modelle-Verzeichnis
+            el_GR: Κατάλογος Μοντέλων
+            en_GB: Models Directory
+            en_US: Models Directory
+            fr_FR: Répertoire des Modèles
+            hr_HR: Direktorij Modela
+            it_IT: Directory Modelli
+            ja_JP: モデルディレクトリ
+            ko_KR: 모델 디렉터리
+            nb_NO: Modellkatalog
+            pt_PT: Diretório de Modelos
+            ru_RU: Каталог моделей
+            sv_SE: Modellkatalog
+            tr_TR: Modeller Dizini
+            zh_CN: 模型目录
+
+  frontend:
+    image: fromxiaobai/deepseek_ocr_frontend-app:v1
+    container_name: deepseek-ocr-frontend
+    ports:
+      - target: 80
+        published: "23000"
+        protocol: tcp
+    depends_on:
+      - backend
+    networks:
+      - ocr-network
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            de_DE: Frontend Web Port
+            el_GR: Θύρα Web Frontend
+            en_GB: Frontend Web Port
+            en_US: Frontend Web Port
+            fr_FR: Port Web Frontend
+            hr_HR: Frontend Web Port
+            it_IT: Porta Web Frontend
+            ja_JP: フロントエンドWebポート
+            ko_KR: 프론트엔드 웹 포트
+            nb_NO: Frontend Web Port
+            pt_PT: Porta Web Frontend
+            ru_RU: Порт Web Frontend
+            sv_SE: Frontend Web Port
+            tr_TR: Frontend Web Portu
+            zh_CN: 前端Web端口
+
+networks:
+  ocr-network:
+    driver: bridge
+
+x-casaos:
+  architectures:
+    - amd64
+  author: DeepSeek OCR
+  category: AI
+  description:
+    de_DE: |
+      DeepSeek OCR ist ein leistungsstarkes Open-Source-OCR-Tool (Optical Character Recognition), das auf dem fortschrittlichen DeepSeek-AI-Modell basiert. Es ermöglicht die präzise Extraktion von Text aus Bildern und Dokumentenscans über eine benutzerfreundliche Weboberfläche und API. Unterstützt verschiedene Bildformate und bietet Konfigurationen für Bildgröße, Zuschneiden und Upload-Limits.
+
+      **Hauptfunktionen:**
+      - Hochgenaue Text-Erkennung mit DeepSeek-OCR-Modell
+      - Web-Frontend und REST-API für einfache Integration
+      - GPU-Beschleunigung für schnelle Verarbeitung
+      - Anpassbare Parameter wie Bildgröße und Max-Upload
+      - Hugging Face Modelle Unterstützung
+
+      **Hardware-Anforderungen:**
+      - CPU >= 2 Kerne
+      - RAM >= 16 GB
+      - Festplatte >= 50 GB (für Modelle und Daten)
+      - NVIDIA GPU mit >= 8 GB VRAM für optimale Leistung
+
+      **Mehr Erfahren:**
+      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [DeepSeek-OCR Modell (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    el_GR: |
+      Το DeepSeek OCR είναι ένα ισχυρό εργαλείο OCR (Optical Character Recognition) ανοιχτού κώδικα βασισμένο στο προηγμένο μοντέλο DeepSeek-AI. Επιτρέπει την ακριβή εξαγωγή κειμένου από εικόνες και σαρώσεις εγγράφων μέσω φιλικής προς τον χρήστη web διεπαφής και API. Υποστηρίζει διάφορες μορφές εικόνων και προσφέρει ρυθμίσεις για μέγεθος εικόνας, περικοπή και όρια ανεβάσματος.
+
+      **Κύρια Χαρακτηριστικά:**
+      - Υψηλή ακρίβεια αναγνώρισης κειμένου με μοντέλο DeepSeek-OCR
+      - Web Frontend και REST API για εύκολη ενσωμάτωση
+      - Επιτάχυνση GPU για γρήγορη επεξεργασία
+      - Παραμετροποιήσιμες επιλογές όπως μέγεθος εικόνας και Max Upload
+      - Υποστήριξη μοντέλων Hugging Face
+
+      **Απαιτήσεις Υλικού:**
+      - CPU >= 2 πυρήνες
+      - RAM >= 16 GB
+      - Δίσκος >= 50 GB (για μοντέλα και δεδομένα)
+      - NVIDIA GPU με >= 8 GB VRAM για βέλτιστη απόδοση
+
+      **Μάθετε Περισσότερα:**
+      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [DeepSeek-OCR Μοντέλο (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    en_GB: |
+      DeepSeek OCR is a powerful open-source OCR (Optical Character Recognition) tool based on the advanced DeepSeek-AI model. It enables accurate text extraction from images and document scans via a user-friendly web interface and API. Supports various image formats and offers configurations for image size, cropping, and upload limits.
+
+      **Key Features:**
+      - High-accuracy text recognition with DeepSeek-OCR model
+      - Web frontend and REST API for easy integration
+      - GPU acceleration for fast processing
+      - Customisable parameters like image size and max upload
+      - Hugging Face models support
+
+      **Hardware Requirements:**
+      - CPU >= 2 cores
+      - RAM >= 16 GB
+      - Disk >= 50 GB (for models and data)
+      - NVIDIA GPU with >= 8 GB VRAM for optimal performance
+
+      **Learn More:**
+      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [DeepSeek-OCR Model (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    en_US: |
+      DeepSeek OCR is a powerful open-source OCR (Optical Character Recognition) tool based on the advanced DeepSeek-AI model. It enables accurate text extraction from images and document scans via a user-friendly web interface and API. Supports various image formats and offers configurations for image size, cropping, and upload limits.
+
+      **Key Features:**
+      - High-accuracy text recognition with DeepSeek-OCR model
+      - Web frontend and REST API for easy integration
+      - GPU acceleration for fast processing
+      - Customizable parameters like image size and max upload
+      - Hugging Face models support
+
+      **Hardware Requirements:**
+      - CPU >= 2 cores
+      - RAM >= 16 GB
+      - Disk >= 50 GB (for models and data)
+      - NVIDIA GPU with >= 8 GB VRAM for optimal performance
+
+      **Learn More:**
+      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [DeepSeek-OCR Model (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    fr_FR: |
+      DeepSeek OCR est un outil OCR (Reconnaissance Optique de Caractères) open source puissant basé sur le modèle avancé DeepSeek-AI. Il permet l'extraction précise de texte à partir d'images et de scans de documents via une interface web conviviale et une API. Prend en charge divers formats d'images et offre des configurations pour la taille d'image, le recadrage et les limites de téléversement.
+
+      **Fonctionnalités Clés:**
+      - Reconnaissance de texte haute précision avec le modèle DeepSeek-OCR
+      - Frontend web et API REST pour une intégration facile
+      - Accélération GPU pour un traitement rapide
+      - Paramètres personnalisables comme la taille d'image et le téléversement max
+      - Support des modèles Hugging Face
+
+      **Exigences Matérielles:**
+      - CPU >= 2 cœurs
+      - RAM >= 16 GB
+      - Disque >= 50 GB (pour modèles et données)
+      - GPU NVIDIA avec >= 8 GB de VRAM pour des performances optimales
+
+      **En Savoir Plus:**
+      - [Application DeepSeek OCR (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [Modèle DeepSeek-OCR (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    hr_HR: |
+      DeepSeek OCR je moćan alat za OCR (Optical Character Recognition) otvorenog koda temeljen na naprednom modelu DeepSeek-AI. Omogućuje precizno izvlačenje teksta iz slika i skeniranih dokumenata putem korisničkog web sučelja i API-ja. Podržava različite formate slika i nudi konfiguracije za veličinu slike, rezanje i limite učitavanja.
+
+      **Ključne Značajke:**
+      - Visoka točnost prepoznavanja teksta s DeepSeek-OCR modelom
+      - Web frontend i REST API za laku integraciju
+      - GPU ubrzanje za brzu obradu
+      - Prilagodivi parametri poput veličine slike i max upload
+      - Podrška za Hugging Face modele
+
+      **Hardverski Zahtjevi:**
+      - CPU >= 2 jezgre
+      - RAM >= 16 GB
+      - Disk >= 50 GB (za modele i podatke)
+      - NVIDIA GPU s >= 8 GB VRAM-a za optimalne performanse
+
+      **Saznajte Više:**
+      - [DeepSeek OCR aplikacija (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [DeepSeek-OCR model (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    it_IT: |
+      DeepSeek OCR è uno strumento OCR (Optical Character Recognition) open source potente basato sul modello avanzato DeepSeek-AI. Consente l'estrazione precisa del testo da immagini e scansioni di documenti tramite un'interfaccia web user-friendly e API. Supporta vari formati immagine e offre configurazioni per dimensione immagine, ritaglio e limiti di upload.
+
+      **Funzionalità Principali:**
+      - Riconoscimento testo ad alta precisione con modello DeepSeek-OCR
+      - Frontend web e API REST per integrazione facile
+      - Accelerazione GPU per elaborazione veloce
+      - Parametri personalizzabili come dimensione immagine e max upload
+      - Supporto modelli Hugging Face
+
+      **Requisiti Hardware:**
+      - CPU >= 2 core
+      - RAM >= 16 GB
+      - Disco >= 50 GB (per modelli e dati)
+      - GPU NVIDIA con >= 8 GB di VRAM per prestazioni ottimali
+
+      **Scopri di Più:**
+      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [Modello DeepSeek-OCR (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    ja_JP: |
+      DeepSeek OCRは、先進的なDeepSeek-AIモデルに基づく強力なオープンソースOCR（Optical Character Recognition）ツールです。ユーザー友好なWebインターフェースとAPI経由で、画像やドキュメントスキャンから正確にテキストを抽出します。さまざまな画像形式をサポートし、画像サイズ、クロップ、アップロード制限の設定を提供します。
+
+      **主な機能：**
+      - DeepSeek-OCRモデルによる高精度テキスト認識
+      - WebフロントエンドとREST APIによる簡単統合
+      - GPUアクセラレーションによる高速処理
+      - 画像サイズや最大アップロードなどのカスタマイズ可能パラメータ
+      - Hugging Faceモデルのサポート
+
+      **ハードウェア要件：**
+      - CPU >= 2コア
+      - メモリ >= 16 GB
+      - ディスク容量 >= 50 GB（モデルおよびデータ用）
+      - VRAM >= 8 GB を備えた NVIDIA GPU（推奨）
+
+      **詳細情報：**
+      - [DeepSeek OCR アプリ (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [DeepSeek-OCR モデル (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    ko_KR: |
+      DeepSeek OCR은 고급 DeepSeek-AI 모델을 기반으로 한 강력한 오픈소스 OCR(광학 문자 인식) 도구입니다. 사용자 친화적인 웹 인터페이스와 API를 통해 이미지와 문서 스캔에서 정확한 텍스트 추출을 가능하게 합니다. 다양한 이미지 형식을 지원하며 이미지 크기, 자르기, 업로드 제한 등의 구성 옵션을 제공합니다.
+
+      **주요 기능:**
+      - DeepSeek-OCR 모델의 고정밀 텍스트 인식
+      - 쉬운 통합을 위한 웹 프론트엔드 및 REST API
+      - 빠른 처리를 위한 GPU 가속
+      - 이미지 크기 및 최대 업로드와 같은 사용자 지정 매개변수
+      - Hugging Face 모델 지원
+
+      **하드웨어 요구 사항:**
+      - CPU >= 2코어
+      - RAM >= 16 GB
+      - 디스크 >= 50 GB (모델 및 데이터용)
+      - VRAM >= 8 GB를 갖춘 NVIDIA GPU (최적 성능 권장)
+
+      **자세히 알아보기:**
+      - [DeepSeek OCR 앱 (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [DeepSeek-OCR 모델 (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    nb_NO: |
+      DeepSeek OCR er et kraftig open-source OCR-verktøy (Optical Character Recognition) basert på det avanserte DeepSeek-AI-modellen. Det muliggjør nøyaktig tekstuttrekking fra bilder og documentskanninger via et brukervennlig web-grensesnitt og API. Støtter ulike bildeformater og tilbyr konfigurasjoner for bildestørrelse, beskjæring og opplastingsgrenser.
+
+      **Nøkkelegenskaper:**
+      - Høy nøyaktighet tekstgjenkjenning med DeepSeek-OCR-modell
+      - Web-frontend og REST API for enkel integrasjon
+      - GPU-akselerasjon for rask prosessering
+      - Tilpassbare parametere som bildestørrelse og max upload
+      - Hugging Face-modellstøtte
+
+      **Maskinvarekrav:**
+      - CPU >= 2 kjerner
+      - RAM >= 16 GB
+      - Disk >= 50 GB (for modeller og data)
+      - NVIDIA GPU med >= 8 GB VRAM for optimal ytelse
+
+      **Lær Mer:**
+      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [DeepSeek-OCR-modell (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    pt_PT: |
+      DeepSeek OCR é uma ferramenta OCR (Reconhecimento Ótico de Caracteres) open source poderosa baseada no modelo avançado DeepSeek-AI. Permite a extração precisa de texto de imagens e digitalizações de documentos via interface web amigável ao usuário e API. Suporta vários formatos de imagem e oferece configurações para tamanho de imagem, corte e limites de upload.
+
+      **Funcionalidades Principais:**
+      - Reconhecimento de texto de alta precisão com modelo DeepSeek-OCR
+      - Frontend web e API REST para integração fácil
+      - Aceleração GPU para processamento rápido
+      - Parâmetros personalizáveis como tamanho de imagem e upload máx
+      - Suporte a modelos Hugging Face
+
+      **Requisitos de Hardware:**
+      - CPU >= 2 núcleos
+      - RAM >= 16 GB
+      - Disco >= 50 GB (para modelos e dados)
+      - GPU NVIDIA com >= 8 GB de VRAM para desempenho ótimo
+
+      **Saiba Mais:**
+      - [Aplicação DeepSeek OCR (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [Modelo DeepSeek-OCR (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    ru_RU: |
+      DeepSeek OCR — мощный инструмент OCR (Optical Character Recognition) с открытым исходным кодом на базе продвинутой модели DeepSeek-AI. Позволяет точно извлекать текст из изображений и сканов документов через удобный веб-интерфейс и API. Поддерживает различные форматы изображений и предлагает настройки размера изображения, обрезки и лимитов загрузки.
+
+      **Ключевые Особенности:**
+      - Высокоточное распознавание текста с моделью DeepSeek-OCR
+      - Веб-фронтенд и REST API для легкой интеграции
+      - Ускорение GPU для быстрой обработки
+      - Настраиваемые параметры, такие как размер изображения и max upload
+      - Поддержка моделей Hugging Face
+
+      **Требования к оборудованию:**
+      - CPU >= 2 ядра
+      - RAM >= 16 GB
+      - Диск >= 50 GB (для моделей и данных)
+      - NVIDIA GPU с >= 8 GB видеопамяти (VRAM) для оптимальной производительности
+
+      **Узнать Больше:**
+      - [Приложение DeepSeek OCR (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [Модель DeepSeek-OCR (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    sv_SE: |
+      DeepSeek OCR är ett kraftfullt open source OCR-verktyg (Optical Character Recognition) baserat på den avancerade DeepSeek-AI-modellen. Det möjliggör exakt textutvinning från bilder och documentskanningar via ett användarvänligt webbgränssnitt och API. Stödjer olika bildformat och erbjuder konfigurationer för bildstorlek, beskärning och uppladdningsgränser.
+
+      **Nyckelfunktioner:**
+      - Hög noggrannhet textigenkänning med DeepSeek-OCR-modell
+      - Webb-frontend och REST API för enkel integration
+      - GPU-acceleration för snabb bearbetning
+      - Anpassningsbara parametrar som bildstorlek och max upload
+      - Hugging Face-modellstöd
+
+      **Hårdvarukrav:**
+      - CPU >= 2 kärnor
+      - RAM >= 16 GB
+      - Disk >= 50 GB (för modeller och data)
+      - NVIDIA GPU med >= 8 GB VRAM för optimal prestanda
+
+      **Läs Mer:**
+      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [DeepSeek-OCR-modell (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    tr_TR: |
+      DeepSeek OCR, gelişmiş DeepSeek-AI modeline dayalı güçlü açık kaynaklı bir OCR (Optik Karakter Tanıma) aracıdır. Kullanıcı dostu web arayüzü ve API aracılığıyla görüntülerden ve belge taramalarından doğru metin çıkarma sağlar. Çeşitli görüntü formatlarını destekler ve görüntü boyutu, kırpma ve yükleme limitleri için yapılandırmalar sunar.
+
+      **Temel Özellikler:**
+      - DeepSeek-OCR modeli ile yüksek doğrulukta metin tanıma
+      - Kolay entegrasyon için web ön yüz ve REST API
+      - Hızlı işlem için GPU hızlandırma
+      - Görüntü boyutu ve maksimum yükleme gibi özelleştirilebilir parametreler
+      - Hugging Face modelleri desteği
+
+      **Donanım Gereksinimleri:**
+      - CPU >= 2 çekirdek
+      - RAM >= 16 GB
+      - Disk >= 50 GB (modeller ve veriler için)
+      - >= 8 GB VRAM'e sahip NVIDIA GPU (optimal performans için)
+
+      **Daha Fazla Bilgi:**
+      - [DeepSeek OCR Uygulaması (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [DeepSeek-OCR Modeli (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    zh_CN: |
+      DeepSeek OCR 是一个基于先进 DeepSeek-AI 模型的强大开源 OCR（光学字符识别）工具。它通过用户友好的 Web 界面和 API 从图像和文档扫描中实现精确文本提取。支持多种图像格式，并提供图像大小、裁剪和上传限制配置。
+
+      **主要功能：**
+      - 使用 DeepSeek-OCR 模型的高精度文本识别
+      - Web 前端和 REST API，便于集成
+      - GPU 加速，实现快速处理
+      - 图像大小和最大上传等可自定义参数
+      - 支持 Hugging Face 模型
+
+      **硬件要求：**
+      - CPU ≥ 2 核
+      - 内存 ≥ 16 GB
+      - 磁盘空间 ≥ 50 GB（用于模型和数据）
+      - 具有 ≥ 8 GB 显存的 NVIDIA GPU（推荐，用于获得最佳性能）
+
+      **了解更多：**
+      - [DeepSeek OCR 应用（GitHub）](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [DeepSeek-OCR 模型仓库（GitHub）](https://github.com/deepseek-ai/DeepSeek-OCR)
+  developer: DeepSeek
+  icon: ""
+  index: /
+  main: frontend
+  port_map: "23000"
+  scheme: http
+  screenshot_link: []
+  tagline:
+    de_DE: "Leistungsstarkes OCR mit DeepSeek AI"
+    el_GR: "Ισχυρό OCR με DeepSeek AI"
+    en_GB: "Powerful OCR powered by DeepSeek AI"
+    en_US: "Powerful OCR powered by DeepSeek AI"
+    fr_FR: "OCR puissant propulsé par DeepSeek AI"
+    hr_HR: "Moćan OCR napajan DeepSeek AI"
+    it_IT: "OCR potente alimentato da DeepSeek AI"
+    ja_JP: "DeepSeek AI搭載の強力なOCR"
+    ko_KR: "DeepSeek AI 기반 강력한 OCR"
+    nb_NO: "Kraftig OCR drevet av DeepSeek AI"
+    pt_PT: "OCR poderoso alimentado por DeepSeek AI"
+    ru_RU: "Мощный OCR на базе DeepSeek AI"
+    sv_SE: "Kraftfull OCR drivet av DeepSeek AI"
+    tr_TR: "DeepSeek AI ile Güçlü OCR"
+    zh_CN: "DeepSeek AI 驱动的强大 OCR"
+  thumbnail: ""
+  title:
+    de_DE: DeepSeek OCR
+    el_GR: DeepSeek OCR
+    en_GB: DeepSeek OCR
+    en_US: DeepSeek OCR
+    fr_FR: DeepSeek OCR
+    hr_HR: DeepSeek OCR
+    it_IT: DeepSeek OCR
+    ja_JP: DeepSeek OCR
+    ko_KR: DeepSeek OCR
+    nb_NO: DeepSeek OCR
+    pt_PT: DeepSeek OCR
+    ru_RU: DeepSeek OCR
+    sv_SE: DeepSeek OCR
+    tr_TR: DeepSeek OCR
+    zh_CN: DeepSeek OCR
