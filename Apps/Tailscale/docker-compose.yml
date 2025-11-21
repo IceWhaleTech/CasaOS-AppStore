@@ -17,13 +17,17 @@ services:
         source: /dev/net/tun
         target: /dev/net/tun
     environment:
-      TS_AUTHKEY: ""
-      TS_HOSTNAME: ""
-      TS_ROUTES: ""
       TS_STATE_DIR: /var/lib/tailscale
     cap_add:
       - NET_ADMIN
       - NET_RAW
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        tailscaled --state=/var/lib/tailscale/tailscaled.state &
+        sleep 10
+        tailscale web --listen 0.0.0.0:5252
     x-casaos:
       volumes:
         - container: /var/lib/tailscale
@@ -476,7 +480,7 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tailscale/screenshot-1.png
   thumbnail: ""
   scheme: ""
-  port_map: ""
+  port_map: "5252"
   index: /
   title:
     en_US: Tailscale
