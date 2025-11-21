@@ -1,0 +1,102 @@
+name: proxmox-backup-server
+services:
+  pbs:
+    container_name: pbs
+    deploy:
+      resources:
+        reservations:
+          memory: "64M"
+    environment:
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      - TZ=$TZ
+    image: ayufan/proxmox-backup-server:latest
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProxmoxBackupServer/icon.png 
+    privileged: true
+    restart: unless-stopped
+    tmpfs:
+      - /run
+    ports:
+      - target: 8007
+        published: "8007"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/etc
+        target: /etc/proxmox-backup
+      - type: bind
+        source: /DATA/AppData/$AppID/log
+        target: /var/log/proxmox-backup
+      - type: bind
+        source: /DATA/AppData/$AppID/lib
+        target: /var/lib/proxmox-backup
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /mnt/pbs
+    network_mode: bridge
+    x-casaos:
+      ports:
+        - container: "8007"
+          description:
+            en_us: WebUI HTTP Port
+            ru_ru: Порт веб интерфейса
+            zh_cn: WebUI HTTP端口
+      volumes:
+        - container: /DATA/AppData/$AppID/etc
+          description:
+            en_us: Directory for config files.
+            ru_ru: Папка для фалов настроек.
+        - container: /DATA/AppData/$AppID/log
+          description:
+            en_us: Directory log files.
+            ru_ru: Папка для логов.
+        - container: /DATA/AppData/$AppID/lib
+          description:
+            en_us: Directory for libraries.
+            ru_ru: Папка для хранения бибилотек.
+        - container: /mnt/pbs
+          description:
+            en_us: Directory to store backup data.
+            ru_ru: Папка где будут хранится бэкапы.
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  author: Serhioromano
+  category: Backup
+  description:
+    en_US: |
+      PBS is a backup server for Proxmox VE. It is unofficial image (there is not official).
+      
+      - Point last drive to a folder where you plan your CT and VM to be backed up. In container it is `/mnt/pbs`.
+      - After installation, login with name `admin` and password `pbspbs`.
+      - Create Datastore and point to `/mnt/pbs`.
+      - To connect to PVE you will need a fingerprint. To get it, got to container terminal and run command `proxmox-backup-manager cert info | grep Fingerprint`
+    ru_ru: |
+      PBS это сервер для хранения резервных копий с Proxmox VE. Это не официальный образ (официального не существует).
+      
+      - Привяжите последний диск к папке где будут хранится резервые копии контейнеров и виртуальных машин. В контейнере это `/mnt/pbs`.
+      - После установки ваторизуйтесь с именем `admin` пароль `pbspbs`.
+      - Создайте Datastore в директории `/mnt/pbs`.
+      - Чтобы подключить к PVE потребуется fingerprint. Чтобы его получить, зайдите в терминал контейнера, и выполлните команду `proxmox-backup-manager cert info | grep Fingerprint`.
+
+  developer: ayufan
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProxmoxBackupServer/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProxmoxBackupServer/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProxmoxBackupServer/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProxmoxBackupServer/screenshot-3.png
+  main: pbs
+  port_map: "8007"
+  scheme: http
+  tagline:
+    en_US: Server to backup CT and VM from PVE
+    ru_ru: Сервер для бэкапов контейнеров и виртуалок с PVE
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProxmoxBackupServer/thumbnail.png
+  tips:
+    before_install:
+      en_US: After installation, login with name `admin` and password `pbspbs`.
+      ru_ru: После устанвоки лонинитесь пользователем `admin` пароль `pbspbs`.
+  title:
+    en_us: PBS
