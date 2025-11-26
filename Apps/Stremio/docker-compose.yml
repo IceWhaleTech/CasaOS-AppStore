@@ -9,6 +9,8 @@ services:
     environment:
       - NO_CORS=1
       - AUTO_SERVER_URL=1
+    devices:
+      - /dev/dri:/dev/dri
     image: tsaridas/stremio-docker:v1.2.5
     volumes:
       - type: bind
