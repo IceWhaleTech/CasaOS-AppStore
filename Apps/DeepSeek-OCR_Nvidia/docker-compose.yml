@@ -1,4 +1,4 @@
-name: deepseek-ocr
+name: deepseek-ocr-nvidia
 
 services:
   backend:
@@ -273,6 +273,13 @@ x-casaos:
   category: AI
   description:
     de_DE: |
+      **Voraussetzungen:**
+      - ZimaOS Version 1.5.2 oder höher, oder NVIDIA Open Driver Version 580 oder höher
+      - CPU >= 2 Kerne
+      - RAM >= 16 GB
+      - Festplatte >= 50 GB (für Modelle und Daten)
+      - NVIDIA GPU mit >= 8 GB VRAM für optimale Leistung
+
       DeepSeek OCR ist ein leistungsstarkes Open-Source-OCR-Tool (Optical Character Recognition), das auf dem fortschrittlichen DeepSeek-AI-Modell basiert. Es ermöglicht die präzise Extraktion von Text aus Bildern und Dokumentenscans über eine benutzerfreundliche Weboberfläche und API. Unterstützt verschiedene Bildformate und bietet Konfigurationen für Bildgröße, Zuschneiden und Upload-Limits.
 
       **Hauptfunktionen:**
@@ -282,16 +289,17 @@ x-casaos:
       - Anpassbare Parameter wie Bildgröße und Max-Upload
       - Hugging Face Modelle Unterstützung
 
-      **Hardware-Anforderungen:**
-      - CPU >= 2 Kerne
-      - RAM >= 16 GB
-      - Festplatte >= 50 GB (für Modelle und Daten)
-      - NVIDIA GPU mit >= 8 GB VRAM für optimale Leistung
-
       **Mehr Erfahren:**
       - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
       - [DeepSeek-OCR Modell (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
     el_GR: |
+      **Προαπαιτούμενα:**
+      - ZimaOS έκδοση 1.5.2 ή υψηλότερη, ή NVIDIA Open Driver έκδοση 580 ή υψηλότερη
+      - CPU >= 2 πυρήνες
+      - RAM >= 16 GB
+      - Δίσκος >= 50 GB (για μοντέλα και δεδομένα)
+      - NVIDIA GPU με >= 8 GB VRAM για βέλτιστη απόδοση
+
       Το DeepSeek OCR είναι ένα ισχυρό εργαλείο OCR (Optical Character Recognition) ανοιχτού κώδικα βασισμένο στο προηγμένο μοντέλο DeepSeek-AI. Επιτρέπει την ακριβή εξαγωγή κειμένου από εικόνες και σαρώσεις εγγράφων μέσω φιλικής προς τον χρήστη web διεπαφής και API. Υποστηρίζει διάφορες μορφές εικόνων και προσφέρει ρυθμίσεις για μέγεθος εικόνας, περικοπή και όρια ανεβάσματος.
 
       **Κύρια Χαρακτηριστικά:**
@@ -301,16 +309,17 @@ x-casaos:
       - Παραμετροποιήσιμες επιλογές όπως μέγεθος εικόνας και Max Upload
       - Υποστήριξη μοντέλων Hugging Face
 
-      **Απαιτήσεις Υλικού:**
-      - CPU >= 2 πυρήνες
-      - RAM >= 16 GB
-      - Δίσκος >= 50 GB (για μοντέλα και δεδομένα)
-      - NVIDIA GPU με >= 8 GB VRAM για βέλτιστη απόδοση
-
       **Μάθετε Περισσότερα:**
       - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
       - [DeepSeek-OCR Μοντέλο (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
     en_GB: |
+      **Prerequisites:**
+      - ZimaOS version 1.5.2 or higher, or NVIDIA Open Driver version 580 or higher
+      - CPU >= 2 cores
+      - RAM >= 16 GB
+      - Disk >= 50 GB (for models and data)
+      - NVIDIA GPU with >= 8 GB VRAM for optimal performance
+
       DeepSeek OCR is a powerful open-source OCR (Optical Character Recognition) tool based on the advanced DeepSeek-AI model. It enables accurate text extraction from images and document scans via a user-friendly web interface and API. Supports various image formats and offers configurations for image size, cropping, and upload limits.
 
       **Key Features:**
@@ -320,16 +329,17 @@ x-casaos:
       - Customisable parameters like image size and max upload
       - Hugging Face models support
 
-      **Hardware Requirements:**
+      **Learn More:**
+      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
+      - [DeepSeek-OCR Model (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+    en_US: |
+      **Prerequisites:**
+      - ZimaOS version 1.5.2 or higher, or NVIDIA Open Driver version 580 or higher
       - CPU >= 2 cores
       - RAM >= 16 GB
       - Disk >= 50 GB (for models and data)
       - NVIDIA GPU with >= 8 GB VRAM for optimal performance
 
-      **Learn More:**
-      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [DeepSeek-OCR Model (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
-    en_US: |
       DeepSeek OCR is a powerful open-source OCR (Optical Character Recognition) tool based on the advanced DeepSeek-AI model. It enables accurate text extraction from images and document scans via a user-friendly web interface and API. Supports various image formats and offers configurations for image size, cropping, and upload limits.
 
       **Key Features:**
@@ -339,16 +349,17 @@ x-casaos:
       - Customizable parameters like image size and max upload
       - Hugging Face models support
 
-      **Hardware Requirements:**
-      - CPU >= 2 cores
-      - RAM >= 16 GB
-      - Disk >= 50 GB (for models and data)
-      - NVIDIA GPU with >= 8 GB VRAM for optimal performance
-
       **Learn More:**
       - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
       - [DeepSeek-OCR Model (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
     fr_FR: |
+      **Prérequis:**
+      - ZimaOS version 1.5.2 ou supérieure, ou NVIDIA Open Driver version 580 ou supérieure
+      - CPU >= 2 cœurs
+      - RAM >= 16 GB
+      - Disque >= 50 GB (pour les modèles et données)
+      - GPU NVIDIA avec >= 8 GB de VRAM pour des performances optimales
+
       DeepSeek OCR est un outil OCR (Reconnaissance Optique de Caractères) open source puissant basé sur le modèle avancé DeepSeek-AI. Il permet l'extraction précise de texte à partir d'images et de scans de documents via une interface web conviviale et une API. Prend en charge divers formats d'images et offre des configurations pour la taille d'image, le recadrage et les limites de téléversement.
 
       **Fonctionnalités Clés:**
@@ -358,16 +369,17 @@ x-casaos:
       - Paramètres personnalisables comme la taille d'image et le téléversement max
       - Support des modèles Hugging Face
 
-      **Exigences Matérielles:**
-      - CPU >= 2 cœurs
-      - RAM >= 16 GB
-      - Disque >= 50 GB (pour modèles et données)
-      - GPU NVIDIA avec >= 8 GB de VRAM pour des performances optimales
-
       **En Savoir Plus:**
       - [Application DeepSeek OCR (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
       - [Modèle DeepSeek-OCR (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
     hr_HR: |
+      **Preduvjeti:**
+      - ZimaOS verzija 1.5.2 ili novija, ili NVIDIA Open Driver verzija 580 ili novija
+      - CPU >= 2 jezgre
+      - RAM >= 16 GB
+      - Disk >= 50 GB (za modele i podatke)
+      - NVIDIA GPU s >= 8 GB VRAM-a za optimalne performanse
+
       DeepSeek OCR je moćan alat za OCR (Optical Character Recognition) otvorenog koda temeljen na naprednom modelu DeepSeek-AI. Omogućuje precizno izvlačenje teksta iz slika i skeniranih dokumenata putem korisničkog web sučelja i API-ja. Podržava različite formate slika i nudi konfiguracije za veličinu slike, rezanje i limite učitavanja.
 
       **Ključne Značajke:**
@@ -377,16 +389,17 @@ x-casaos:
       - Prilagodivi parametri poput veličine slike i max upload
       - Podrška za Hugging Face modele
 
-      **Hardverski Zahtjevi:**
-      - CPU >= 2 jezgre
-      - RAM >= 16 GB
-      - Disk >= 50 GB (za modele i podatke)
-      - NVIDIA GPU s >= 8 GB VRAM-a za optimalne performanse
-
       **Saznajte Više:**
       - [DeepSeek OCR aplikacija (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
       - [DeepSeek-OCR model (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
     it_IT: |
+      **Prerequisiti:**
+      - ZimaOS versione 1.5.2 o superiore, o NVIDIA Open Driver versione 580 o superiore
+      - CPU >= 2 core
+      - RAM >= 16 GB
+      - Disco >= 50 GB (per modelli e dati)
+      - GPU NVIDIA con >= 8 GB di VRAM per prestazioni ottimali
+
       DeepSeek OCR è uno strumento OCR (Optical Character Recognition) open source potente basato sul modello avanzato DeepSeek-AI. Consente l'estrazione precisa del testo da immagini e scansioni di documenti tramite un'interfaccia web user-friendly e API. Supporta vari formati immagine e offre configurazioni per dimensione immagine, ritaglio e limiti di upload.
 
       **Funzionalità Principali:**
@@ -396,16 +409,17 @@ x-casaos:
       - Parametri personalizzabili come dimensione immagine e max upload
       - Supporto modelli Hugging Face
 
-      **Requisiti Hardware:**
-      - CPU >= 2 core
-      - RAM >= 16 GB
-      - Disco >= 50 GB (per modelli e dati)
-      - GPU NVIDIA con >= 8 GB di VRAM per prestazioni ottimali
-
       **Scopri di Più:**
       - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
       - [Modello DeepSeek-OCR (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
     ja_JP: |
+      **前提条件:**
+      - ZimaOSバージョン1.5.2以上、またはNVIDIA Open Driverバージョン580以上
+      - CPU >= 2コア
+      - メモリ >= 16 GB
+      - ディスク容量 >= 50 GB（モデルおよびデータ用）
+      - VRAM >= 8 GB を備えた NVIDIA GPU（推奨）
+
       DeepSeek OCRは、先進的なDeepSeek-AIモデルに基づく強力なオープンソースOCR（Optical Character Recognition）ツールです。ユーザー友好なWebインターフェースとAPI経由で、画像やドキュメントスキャンから正確にテキストを抽出します。さまざまな画像形式をサポートし、画像サイズ、クロップ、アップロード制限の設定を提供します。
 
       **主な機能：**
@@ -415,16 +429,17 @@ x-casaos:
       - 画像サイズや最大アップロードなどのカスタマイズ可能パラメータ
       - Hugging Faceモデルのサポート
 
-      **ハードウェア要件：**
-      - CPU >= 2コア
-      - メモリ >= 16 GB
-      - ディスク容量 >= 50 GB（モデルおよびデータ用）
-      - VRAM >= 8 GB を備えた NVIDIA GPU（推奨）
-
       **詳細情報：**
       - [DeepSeek OCR アプリ (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
       - [DeepSeek-OCR モデル (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
     ko_KR: |
+      **필수 조건:**
+      - ZimaOS 버전 1.5.2 이상, 또는 NVIDIA Open Driver 버전 580 이상
+      - CPU >= 2코어
+      - RAM >= 16 GB
+      - 디스크 >= 50 GB (모델 및 데이터용)
+      - VRAM >= 8 GB를 갖춘 NVIDIA GPU (최적 성능 권장)
+
       DeepSeek OCR은 고급 DeepSeek-AI 모델을 기반으로 한 강력한 오픈소스 OCR(광학 문자 인식) 도구입니다. 사용자 친화적인 웹 인터페이스와 API를 통해 이미지와 문서 스캔에서 정확한 텍스트 추출을 가능하게 합니다. 다양한 이미지 형식을 지원하며 이미지 크기, 자르기, 업로드 제한 등의 구성 옵션을 제공합니다.
 
       **주요 기능:**
@@ -434,16 +449,17 @@ x-casaos:
       - 이미지 크기 및 최대 업로드와 같은 사용자 지정 매개변수
       - Hugging Face 모델 지원
 
-      **하드웨어 요구 사항:**
-      - CPU >= 2코어
-      - RAM >= 16 GB
-      - 디스크 >= 50 GB (모델 및 데이터용)
-      - VRAM >= 8 GB를 갖춘 NVIDIA GPU (최적 성능 권장)
-
       **자세히 알아보기:**
       - [DeepSeek OCR 앱 (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
       - [DeepSeek-OCR 모델 (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
     nb_NO: |
+      **Forutsetninger:**
+      - ZimaOS versjon 1.5.2 eller høyere, eller NVIDIA Open Driver versjon 580 eller høyere
+      - CPU >= 2 kjerner
+      - RAM >= 16 GB
+      - Disk >= 50 GB (for modeller og data)
+      - NVIDIA GPU med >= 8 GB VRAM for optimal ytelse
+
       DeepSeek OCR er et kraftig open-source OCR-verktøy (Optical Character Recognition) basert på det avanserte DeepSeek-AI-modellen. Det muliggjør nøyaktig tekstuttrekking fra bilder og documentskanninger via et brukervennlig web-grensesnitt og API. Støtter ulike bildeformater og tilbyr konfigurasjoner for bildestørrelse, beskjæring og opplastingsgrenser.
 
       **Nøkkelegenskaper:**
@@ -453,16 +469,17 @@ x-casaos:
       - Tilpassbare parametere som bildestørrelse og max upload
       - Hugging Face-modellstøtte
 
-      **Maskinvarekrav:**
-      - CPU >= 2 kjerner
-      - RAM >= 16 GB
-      - Disk >= 50 GB (for modeller og data)
-      - NVIDIA GPU med >= 8 GB VRAM for optimal ytelse
-
       **Lær Mer:**
       - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
       - [DeepSeek-OCR-modell (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
     pt_PT: |
+      **Pré-requisitos:**
+      - ZimaOS versão 1.5.2 ou superior, ou NVIDIA Open Driver versão 580 ou superior
+      - CPU >= 2 núcleos
+      - RAM >= 16 GB
+      - Disco >= 50 GB (para modelos e dados)
+      - GPU NVIDIA com >= 8 GB de VRAM para desempenho ótimo
+
       DeepSeek OCR é uma ferramenta OCR (Reconhecimento Ótico de Caracteres) open source poderosa baseada no modelo avançado DeepSeek-AI. Permite a extração precisa de texto de imagens e digitalizações de documentos via interface web amigável ao usuário e API. Suporta vários formatos de imagem e oferece configurações para tamanho de imagem, corte e limites de upload.
 
       **Funcionalidades Principais:**
@@ -472,16 +489,17 @@ x-casaos:
       - Parâmetros personalizáveis como tamanho de imagem e upload máx
       - Suporte a modelos Hugging Face
 
-      **Requisitos de Hardware:**
-      - CPU >= 2 núcleos
-      - RAM >= 16 GB
-      - Disco >= 50 GB (para modelos e dados)
-      - GPU NVIDIA com >= 8 GB de VRAM para desempenho ótimo
-
       **Saiba Mais:**
       - [Aplicação DeepSeek OCR (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
       - [Modelo DeepSeek-OCR (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
     ru_RU: |
+      **Предварительные требования:**
+      - ZimaOS версии 1.5.2 или выше, или NVIDIA Open Driver версии 580 или выше
+      - CPU >= 2 ядра
+      - RAM >= 16 GB
+      - Диск >= 50 GB (для моделей и данных)
+      - NVIDIA GPU с >= 8 GB видеопамяти (VRAM) для оптимальной производительности
+
       DeepSeek OCR — мощный инструмент OCR (Optical Character Recognition) с открытым исходным кодом на базе продвинутой модели DeepSeek-AI. Позволяет точно извлекать текст из изображений и сканов документов через удобный веб-интерфейс и API. Поддерживает различные форматы изображений и предлагает настройки размера изображения, обрезки и лимитов загрузки.
 
       **Ключевые Особенности:**
@@ -491,16 +509,17 @@ x-casaos:
       - Настраиваемые параметры, такие как размер изображения и max upload
       - Поддержка моделей Hugging Face
 
-      **Требования к оборудованию:**
-      - CPU >= 2 ядра
-      - RAM >= 16 GB
-      - Диск >= 50 GB (для моделей и данных)
-      - NVIDIA GPU с >= 8 GB видеопамяти (VRAM) для оптимальной производительности
-
       **Узнать Больше:**
       - [Приложение DeepSeek OCR (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
       - [Модель DeepSeek-OCR (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
     sv_SE: |
+      **Förutsättningar:**
+      - ZimaOS version 1.5.2 eller högre, eller NVIDIA Open Driver version 580 eller högre
+      - CPU >= 2 kärnor
+      - RAM >= 16 GB
+      - Disk >= 50 GB (för modeller och data)
+      - NVIDIA GPU med >= 8 GB VRAM för optimal prestanda
+
       DeepSeek OCR är ett kraftfullt open source OCR-verktyg (Optical Character Recognition) baserat på den avancerade DeepSeek-AI-modellen. Det möjliggör exakt textutvinning från bilder och documentskanningar via ett användarvänligt webbgränssnitt och API. Stödjer olika bildformat och erbjuder konfigurationer för bildstorlek, beskärning och uppladdningsgränser.
 
       **Nyckelfunktioner:**
@@ -510,16 +529,17 @@ x-casaos:
       - Anpassningsbara parametrar som bildstorlek och max upload
       - Hugging Face-modellstöd
 
-      **Hårdvarukrav:**
-      - CPU >= 2 kärnor
-      - RAM >= 16 GB
-      - Disk >= 50 GB (för modeller och data)
-      - NVIDIA GPU med >= 8 GB VRAM för optimal prestanda
-
       **Läs Mer:**
       - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
       - [DeepSeek-OCR-modell (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
     tr_TR: |
+      **Ön Koşullar:**
+      - ZimaOS sürüm 1.5.2 veya üstü, veya NVIDIA Open Driver sürüm 580 veya üstü
+      - CPU >= 2 çekirdek
+      - RAM >= 16 GB
+      - Disk >= 50 GB (modeller ve veriler için)
+      - >= 8 GB VRAM'e sahip NVIDIA GPU (optimal performans için)
+
       DeepSeek OCR, gelişmiş DeepSeek-AI modeline dayalı güçlü açık kaynaklı bir OCR (Optik Karakter Tanıma) aracıdır. Kullanıcı dostu web arayüzü ve API aracılığıyla görüntülerden ve belge taramalarından doğru metin çıkarma sağlar. Çeşitli görüntü formatlarını destekler ve görüntü boyutu, kırpma ve yükleme limitleri için yapılandırmalar sunar.
 
       **Temel Özellikler:**
@@ -529,16 +549,17 @@ x-casaos:
       - Görüntü boyutu ve maksimum yükleme gibi özelleştirilebilir parametreler
       - Hugging Face modelleri desteği
 
-      **Donanım Gereksinimleri:**
-      - CPU >= 2 çekirdek
-      - RAM >= 16 GB
-      - Disk >= 50 GB (modeller ve veriler için)
-      - >= 8 GB VRAM'e sahip NVIDIA GPU (optimal performans için)
-
       **Daha Fazla Bilgi:**
       - [DeepSeek OCR Uygulaması (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
       - [DeepSeek-OCR Modeli (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
     zh_CN: |
+      **前置条件:**
+      - ZimaOS版本1.5.2及以上，或者NVIDIA Open Driver版本580及以上
+      - CPU ≥ 2 核
+      - 内存 ≥ 16 GB
+      - 磁盘空间 ≥ 50 GB（用于模型和数据）
+      - 具有 ≥ 8 GB 显存的 NVIDIA GPU（推荐，用于获得最佳性能）
+
       DeepSeek OCR 是一个基于先进 DeepSeek-AI 模型的强大开源 OCR（光学字符识别）工具。它通过用户友好的 Web 界面和 API 从图像和文档扫描中实现精确文本提取。支持多种图像格式，并提供图像大小、裁剪和上传限制配置。
 
       **主要功能：**
@@ -547,12 +568,6 @@ x-casaos:
       - GPU 加速，实现快速处理
       - 图像大小和最大上传等可自定义参数
       - 支持 Hugging Face 模型
-
-      **硬件要求：**
-      - CPU ≥ 2 核
-      - 内存 ≥ 16 GB
-      - 磁盘空间 ≥ 50 GB（用于模型和数据）
-      - 具有 ≥ 8 GB 显存的 NVIDIA GPU（推荐，用于获得最佳性能）
 
       **了解更多：**
       - [DeepSeek OCR 应用（GitHub）](https://github.com/LumiVerseHR/deepseek-ocr-app)
