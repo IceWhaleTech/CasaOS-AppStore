@@ -1,7 +1,7 @@
 name: deepseek-ocr-nvidia
 
 services:
-  backend:
+  deepseek-ocr-backend:
     image: deepseek_ocr_backend:v1
     container_name: deepseek-ocr-backend
     environment:
@@ -24,7 +24,7 @@ services:
       IMAGE_SIZE: "640"
       CROP_MODE: "true"
     volumes:
-      - /DATA/AppData/$Appid/models:/models
+      - /DATA/AppData/$AppID/models:/models
     deploy:
       resources:
         reservations:
@@ -32,13 +32,14 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
+          memory: 8G
     shm_size: "4g"
     ports:
       - target: 8000
         published: "8000"
         protocol: tcp
     networks:
-      - ocr-network
+      - deepseek-ocr-network
     x-casaos:
       envs:
         - container: API_HOST
@@ -231,17 +232,21 @@ services:
             tr_TR: Modeller Dizini
             zh_CN: 模型目录
 
-  frontend:
+  deepseek-ocr-frontend:
     image: fromxiaobai/deepseek_ocr_frontend-app:v1
     container_name: deepseek-ocr-frontend
     ports:
       - target: 80
         published: "23000"
         protocol: tcp
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
     depends_on:
-      - backend
+      - deepseek-ocr-backend
     networks:
-      - ocr-network
+      - deepseek-ocr-network
     x-casaos:
       ports:
         - container: "80"
@@ -290,8 +295,8 @@ x-casaos:
       - Hugging Face Modelle Unterstützung
 
       **Mehr Erfahren:**
-      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [DeepSeek-OCR Modell (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [DeepSeek OCR App (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)
+
     el_GR: |
       **Προαπαιτούμενα:**
       - ZimaOS έκδοση 1.5.2 ή υψηλότερη, ή NVIDIA Open Driver έκδοση 580 ή υψηλότερη
@@ -310,8 +315,8 @@ x-casaos:
       - Υποστήριξη μοντέλων Hugging Face
 
       **Μάθετε Περισσότερα:**
-      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [DeepSeek-OCR Μοντέλο (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [DeepSeek OCR App (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)
+
     en_GB: |
       **Prerequisites:**
       - ZimaOS version 1.5.2 or higher, or NVIDIA Open Driver version 580 or higher
@@ -330,8 +335,8 @@ x-casaos:
       - Hugging Face models support
 
       **Learn More:**
-      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [DeepSeek-OCR Model (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [DeepSeek OCR App (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)
+
     en_US: |
       **Prerequisites:**
       - ZimaOS version 1.5.2 or higher, or NVIDIA Open Driver version 580 or higher
@@ -350,8 +355,8 @@ x-casaos:
       - Hugging Face models support
 
       **Learn More:**
-      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [DeepSeek-OCR Model (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [DeepSeek OCR App (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)
+
     fr_FR: |
       **Prérequis:**
       - ZimaOS version 1.5.2 ou supérieure, ou NVIDIA Open Driver version 580 ou supérieure
@@ -370,8 +375,8 @@ x-casaos:
       - Support des modèles Hugging Face
 
       **En Savoir Plus:**
-      - [Application DeepSeek OCR (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [Modèle DeepSeek-OCR (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [Application DeepSeek OCR (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)
+
     hr_HR: |
       **Preduvjeti:**
       - ZimaOS verzija 1.5.2 ili novija, ili NVIDIA Open Driver verzija 580 ili novija
@@ -390,8 +395,8 @@ x-casaos:
       - Podrška za Hugging Face modele
 
       **Saznajte Više:**
-      - [DeepSeek OCR aplikacija (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [DeepSeek-OCR model (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [DeepSeek OCR aplikacija (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)
+
     it_IT: |
       **Prerequisiti:**
       - ZimaOS versione 1.5.2 o superiore, o NVIDIA Open Driver versione 580 o superiore
@@ -410,8 +415,8 @@ x-casaos:
       - Supporto modelli Hugging Face
 
       **Scopri di Più:**
-      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [Modello DeepSeek-OCR (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [DeepSeek OCR App (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)
+
     ja_JP: |
       **前提条件:**
       - ZimaOSバージョン1.5.2以上、またはNVIDIA Open Driverバージョン580以上
@@ -430,8 +435,8 @@ x-casaos:
       - Hugging Faceモデルのサポート
 
       **詳細情報：**
-      - [DeepSeek OCR アプリ (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [DeepSeek-OCR モデル (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [DeepSeek OCR アプリ (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)
+
     ko_KR: |
       **필수 조건:**
       - ZimaOS 버전 1.5.2 이상, 또는 NVIDIA Open Driver 버전 580 이상
@@ -450,8 +455,8 @@ x-casaos:
       - Hugging Face 모델 지원
 
       **자세히 알아보기:**
-      - [DeepSeek OCR 앱 (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [DeepSeek-OCR 모델 (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [DeepSeek OCR 앱 (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)
+
     nb_NO: |
       **Forutsetninger:**
       - ZimaOS versjon 1.5.2 eller høyere, eller NVIDIA Open Driver versjon 580 eller høyere
@@ -470,8 +475,8 @@ x-casaos:
       - Hugging Face-modellstøtte
 
       **Lær Mer:**
-      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [DeepSeek-OCR-modell (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [DeepSeek OCR App (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)
+
     pt_PT: |
       **Pré-requisitos:**
       - ZimaOS versão 1.5.2 ou superior, ou NVIDIA Open Driver versão 580 ou superior
@@ -490,8 +495,8 @@ x-casaos:
       - Suporte a modelos Hugging Face
 
       **Saiba Mais:**
-      - [Aplicação DeepSeek OCR (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [Modelo DeepSeek-OCR (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [Aplicação DeepSeek OCR (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)
+
     ru_RU: |
       **Предварительные требования:**
       - ZimaOS версии 1.5.2 или выше, или NVIDIA Open Driver версии 580 или выше
@@ -510,8 +515,8 @@ x-casaos:
       - Поддержка моделей Hugging Face
 
       **Узнать Больше:**
-      - [Приложение DeepSeek OCR (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [Модель DeepSeek-OCR (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [Приложение DeepSeek OCR (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)
+
     sv_SE: |
       **Förutsättningar:**
       - ZimaOS version 1.5.2 eller högre, eller NVIDIA Open Driver version 580 eller högre
@@ -530,8 +535,8 @@ x-casaos:
       - Hugging Face-modellstöd
 
       **Läs Mer:**
-      - [DeepSeek OCR App (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [DeepSeek-OCR-modell (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [DeepSeek OCR App (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)
+
     tr_TR: |
       **Ön Koşullar:**
       - ZimaOS sürüm 1.5.2 veya üstü, veya NVIDIA Open Driver sürüm 580 veya üstü
@@ -550,8 +555,8 @@ x-casaos:
       - Hugging Face modelleri desteği
 
       **Daha Fazla Bilgi:**
-      - [DeepSeek OCR Uygulaması (GitHub)](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [DeepSeek-OCR Modeli (GitHub)](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [DeepSeek OCR Uygulaması (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)
+
     zh_CN: |
       **前置条件:**
       - ZimaOS版本1.5.2及以上，或者NVIDIA Open Driver版本580及以上
@@ -570,15 +575,15 @@ x-casaos:
       - 支持 Hugging Face 模型
 
       **了解更多：**
-      - [DeepSeek OCR 应用（GitHub）](https://github.com/LumiVerseHR/deepseek-ocr-app)
-      - [DeepSeek-OCR 模型仓库（GitHub）](https://github.com/deepseek-ai/DeepSeek-OCR)
+      - [DeepSeek OCR 应用（GitHub）](https://github.com/rdumasia303/deepseek_ocr_app)
+
   developer: DeepSeek
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DeepSeek-OCR_Nvidia/icon.png
   screenshot_link: 
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DeepSeek-OCR_Nvidia/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DeepSeek-OCR_Nvidia/screenshot-2.png
   index: /
-  main: frontend
+  main: deepseek-ocr-frontend
   port_map: "23000"
   scheme: http
   tagline:
