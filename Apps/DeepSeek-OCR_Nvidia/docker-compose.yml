@@ -1,10 +1,8 @@
-
-
 name: deepseek-ocr-nvidia
 
 services:
   deepseek-ocr-backend:
-    image: deepseek_ocr_backend:v1
+    image: icewhaletech/deepseek-ocr-backend:v2.2.0
     container_name: deepseek-ocr-backend
     environment:
       # API Configuration
@@ -235,7 +233,7 @@ services:
             zh_CN: 模型目录
 
   deepseek-ocr-frontend:
-    image: fromxiaobai/deepseek_ocr_frontend-app:v2
+    image: icewhaletech/deepseek-ocr-frontend:v2.2.0
     container_name: deepseek-ocr-frontend
     ports:
       - target: 80
@@ -276,18 +274,19 @@ networks:
 x-casaos:
   architectures:
     - amd64
-  author: DeepSeek OCR
+  author: CasaOS Team
   category: AI
   description:
     de_DE: |
       DeepSeek OCR ist ein leistungsstarkes Open-Source-OCR-Tool (Optical Character Recognition), das auf dem fortschrittlichen DeepSeek-AI-Modell basiert. Es ermöglicht die präzise Extraktion von Text aus Bildern und Dokumentenscans über eine benutzerfreundliche Weboberfläche und API. Unterstützt verschiedene Bildformate und bietet Konfigurationen für Bildgröße, Zuschneiden und Upload-Limits.
 
       **Hauptfunktionen:**
-      - Hochgenaue Text-Erkennung mit DeepSeek-OCR-Modell
-      - Web-Frontend und REST-API für einfache Integration
-      - GPU-Beschleunigung für schnelle Verarbeitung
-      - Anpassbare Parameter wie Bildgröße und Max-Upload
-      - Hugging Face Modelle Unterstützung
+      - Hochgenaue Texterkennung mit DeepSeek-OCR, unterstützt Bilder und mehrseitige PDF-Dokumente
+      - Behält das Dokumentenlayout einschließlich Tabellen, Formeln und strukturierter Formatierung bei
+      - Web-Frontend (React) und REST-API (FastAPI) für einfache Nutzung und Systemintegration
+      - Exportieren Sie Ergebnisse in Markdown, HTML, DOCX oder JSON-Formate
+      - Automatische Extraktion und Einbettung von Bildern aus PDF-Dateien
+      - GPU-Beschleunigung und Docker-Bereitstellung für schnelle und skalierbare Verarbeitung
 
       **Voraussetzungen:**
       - ZimaOS Version 1.5.2 oder höher, oder NVIDIA Open Driver Version 580 oder höher
@@ -300,11 +299,12 @@ x-casaos:
       Το DeepSeek OCR είναι ένα ισχυρό εργαλείο OCR (Optical Character Recognition) ανοιχτού κώδικα βασισμένο στο προηγμένο μοντέλο DeepSeek-AI. Επιτρέπει την ακριβή εξαγωγή κειμένου από εικόνες και σαρώσεις εγγράφων μέσω φιλικής προς τον χρήστη web διεπαφής και API. Υποστηρίζει διάφορες μορφές εικόνων και προσφέρει ρυθμίσεις για μέγεθος εικόνας, περικοπή και όρια ανεβάσματος.
 
       **Κύρια Χαρακτηριστικά:**
-      - Υψηλή ακρίβεια αναγνώρισης κειμένου με μοντέλο DeepSeek-OCR
-      - Web Frontend και REST API για εύκολη ενσωμάτωση
-      - Επιτάχυνση GPU για γρήγορη επεξεργασία
-      - Παραμετροποιήσιμες επιλογές όπως μέγεθος εικόνας και Max Upload
-      - Υποστήριξη μοντέλων Hugging Face
+      - Υψηλή ακρίβεια αναγνώρισης κειμένου με DeepSeek-OCR, υποστηρίζει εικόνες και πολύσελιδα έγγραφα PDF
+      - Διατηρεί τη διάταξη του εγγράφου συμπεριλαμβανομένων πινάκων, τύπων και δομημένης μορφοποίησης
+      - Web Frontend (React) και REST API (FastAPI) για εύκολη χρήση και ενσωμάτωση συστήματος
+      - Εξαγωγή αποτελεσμάτων σε μορφές Markdown, HTML, DOCX ή JSON
+      - Αυτόματη εξαγωγή και ενσωμάτωση εικόνων από αρχεία PDF
+      - Επιτάχυνση GPU και ανάπτυξη Docker για γρήγορη και κλιμακούμενη επεξεργασία
 
       **Προαπαιτούμενα:**
       - ZimaOS έκδοση 1.5.2 ή υψηλότερη, ή NVIDIA Open Driver έκδοση 580 ή υψηλότερη
@@ -317,11 +317,12 @@ x-casaos:
       DeepSeek OCR is a powerful open-source OCR (Optical Character Recognition) tool based on the advanced DeepSeek-AI model. It enables accurate text extraction from images and document scans via a user-friendly web interface and API. Supports various image formats and offers configurations for image size, cropping, and upload limits.
 
       **Key Features:**
-      - High-accuracy text recognition with DeepSeek-OCR model
-      - Web frontend and REST API for easy integration
-      - GPU acceleration for fast processing
-      - Customisable parameters like image size and max upload
-      - Hugging Face models support
+      - High-accuracy text recognition with DeepSeek-OCR, supporting images and multi-page PDF documents
+      - Preserves document layout including tables, formulas, and structural formatting
+      - Web frontend (React) and REST API (FastAPI) for easy usage and system integration
+      - Export results to Markdown, HTML, DOCX, or JSON formats
+      - Automatic extraction and embedding of images from PDF files
+      - GPU acceleration and Docker deployment for fast and scalable processing
 
       **Prerequisites:**
       - ZimaOS version 1.5.2 or higher, or NVIDIA Open Driver version 580 or higher
@@ -334,11 +335,12 @@ x-casaos:
       DeepSeek OCR is a powerful open-source OCR (Optical Character Recognition) tool based on the advanced DeepSeek-AI model. It enables accurate text extraction from images and document scans via a user-friendly web interface and API. Supports various image formats and offers configurations for image size, cropping, and upload limits.
 
       **Key Features:**
-      - High-accuracy text recognition with DeepSeek-OCR model
-      - Web frontend and REST API for easy integration
-      - GPU acceleration for fast processing
-      - Customizable parameters like image size and max upload
-      - Hugging Face models support
+      - High-accuracy text recognition with DeepSeek-OCR, supporting images and multi-page PDF documents
+      - Preserves document layout including tables, formulas, and structural formatting
+      - Web frontend (React) and REST API (FastAPI) for easy usage and system integration
+      - Export results to Markdown, HTML, DOCX, or JSON formats
+      - Automatic extraction and embedding of images from PDF files
+      - GPU acceleration and Docker deployment for fast and scalable processing
 
       **Prerequisites:**
       - ZimaOS version 1.5.2 or higher, or NVIDIA Open Driver version 580 or higher
@@ -351,11 +353,12 @@ x-casaos:
       DeepSeek OCR est un outil OCR (Reconnaissance Optique de Caractères) open source puissant basé sur le modèle avancé DeepSeek-AI. Il permet l'extraction précise de texte à partir d'images et de scans de documents via une interface web conviviale et une API. Prend en charge divers formats d'images et offre des configurations pour la taille d'image, le recadrage et les limites de téléversement.
 
       **Fonctionnalités Clés:**
-      - Reconnaissance de texte haute précision avec le modèle DeepSeek-OCR
-      - Frontend web et API REST pour une intégration facile
-      - Accélération GPU pour un traitement rapide
-      - Paramètres personnalisables comme la taille d'image et le téléversement max
-      - Support des modèles Hugging Face
+      - Reconnaissance de texte haute précision avec DeepSeek-OCR, supportant les images et les documents PDF multipages
+      - Préserve la mise en page du document y compris les tableaux, les formules et le formatage structurel
+      - Frontend web (React) et API REST (FastAPI) pour une utilisation facile et l'intégration système
+      - Exporter les résultats aux formats Markdown, HTML, DOCX ou JSON
+      - Extraction et intégration automatiques d'images à partir de fichiers PDF
+      - Accélération GPU et déploiement Docker pour un traitement rapide et évolutif
 
       **Prérequis:**
       - ZimaOS version 1.5.2 ou supérieure, ou NVIDIA Open Driver version 580 ou supérieure
@@ -368,11 +371,12 @@ x-casaos:
       DeepSeek OCR je moćan alat za OCR (Optical Character Recognition) otvorenog koda temeljen na naprednom modelu DeepSeek-AI. Omogućuje precizno izvlačenje teksta iz slika i skeniranih dokumenata putem korisničkog web sučelja i API-ja. Podržava različite formate slika i nudi konfiguracije za veličinu slike, rezanje i limite učitavanja.
 
       **Ključne Značajke:**
-      - Visoka točnost prepoznavanja teksta s DeepSeek-OCR modelom
-      - Web frontend i REST API za laku integraciju
-      - GPU ubrzanje za brzu obradu
-      - Prilagodivi parametri poput veličine slike i max upload
-      - Podrška za Hugging Face modele
+      - Visoka točnost prepoznavanja teksta s DeepSeek-OCR, podržava slike i višestranične PDF dokumente
+      - Očuvava izgled dokumenta uključujući tablice, formule i strukturno formatiranje
+      - Web frontend (React) i REST API (FastAPI) za lako korištenje i integraciju sustava
+      - Izvoz rezultata u Markdown, HTML, DOCX ili JSON formate
+      - Automatsko izvlačenje i ugradnja slika iz PDF datoteka
+      - GPU ubrzanje i Docker implementacija za brzo i skalabilno procesiranje
 
       **Preduvjeti:**
       - ZimaOS verzija 1.5.2 ili novija, ili NVIDIA Open Driver verzija 580 ili novija
@@ -385,11 +389,12 @@ x-casaos:
       DeepSeek OCR è uno strumento OCR (Optical Character Recognition) open source potente basato sul modello avanzato DeepSeek-AI. Consente l'estrazione precisa del testo da immagini e scansioni di documenti tramite un'interfaccia web user-friendly e API. Supporta vari formati immagine e offre configurazioni per dimensione immagine, ritaglio e limiti di upload.
 
       **Funzionalità Principali:**
-      - Riconoscimento testo ad alta precisione con modello DeepSeek-OCR
-      - Frontend web e API REST per integrazione facile
-      - Accelerazione GPU per elaborazione veloce
-      - Parametri personalizzabili come dimensione immagine e max upload
-      - Supporto modelli Hugging Face
+      - Riconoscimento testo ad alta precisione con DeepSeek-OCR, supporta immagini e documenti PDF multipagina
+      - Mantiene il layout del documento inclusi tabelle, formule e formattazione strutturale
+      - Frontend web (React) e API REST (FastAPI) per facile utilizzo e integrazione del sistema
+      - Esporta risultati in formati Markdown, HTML, DOCX o JSON
+      - Estrazione e incorporamento automatici di immagini da file PDF
+      - Accelerazione GPU e distribuzione Docker per elaborazione rapida e scalabile
 
       **Prerequisiti:**
       - ZimaOS versione 1.5.2 o superiore, o NVIDIA Open Driver versione 580 o superiore
@@ -402,11 +407,12 @@ x-casaos:
       DeepSeek OCRは、先進的なDeepSeek-AIモデルに基づく強力なオープンソースOCR（Optical Character Recognition）ツールです。ユーザー友好なWebインターフェースとAPI経由で、画像やドキュメントスキャンから正確にテキストを抽出します。さまざまな画像形式をサポートし、画像サイズ、クロップ、アップロード制限の設定を提供します。
 
       **主な機能：**
-      - DeepSeek-OCRモデルによる高精度テキスト認識
-      - WebフロントエンドとREST APIによる簡単統合
-      - GPUアクセラレーションによる高速処理
-      - 画像サイズや最大アップロードなどのカスタマイズ可能パラメータ
-      - Hugging Faceモデルのサポート
+      - DeepSeek-OCRによる高精度テキスト認識、画像と複数ページのPDFドキュメントをサポート
+      - 表、数式、構造的フォーマットを含むドキュメントレイアウトを保持
+      - 簡単な使用とシステム統合のためのWebフロントエンド（React）とREST API（FastAPI）
+      - Markdown、HTML、DOCX、またはJSON形式で結果をエクスポート
+      - PDFファイルからの画像の自動抽出と埋め込み
+      - 高速でスケーラブルな処理のためのGPUアクセラレーションとDockerデプロイメント
 
       **前提条件:**
       - ZimaOSバージョン1.5.2以上、またはNVIDIA Open Driverバージョン580以上
@@ -419,11 +425,12 @@ x-casaos:
       DeepSeek OCR은 고급 DeepSeek-AI 모델을 기반으로 한 강력한 오픈소스 OCR(광학 문자 인식) 도구입니다. 사용자 친화적인 웹 인터페이스와 API를 통해 이미지와 문서 스캔에서 정확한 텍스트 추출을 가능하게 합니다. 다양한 이미지 형식을 지원하며 이미지 크기, 자르기, 업로드 제한 등의 구성 옵션을 제공합니다.
 
       **주요 기능:**
-      - DeepSeek-OCR 모델의 고정밀 텍스트 인식
-      - 쉬운 통합을 위한 웹 프론트엔드 및 REST API
-      - 빠른 처리를 위한 GPU 가속
-      - 이미지 크기 및 최대 업로드와 같은 사용자 지정 매개변수
-      - Hugging Face 모델 지원
+      - DeepSeek-OCR의 고정밀 텍스트 인식, 이미지와 다중 페이지 PDF 문서 지원
+      - 표, 수식, 구조적 서식을 포함한 문서 레이아웃 보존
+      - 쉬운 사용 및 시스템 통합을 위한 웹 프론트엔드(React) 및 REST API(FastAPI)
+      - Markdown, HTML, DOCX 또는 JSON 형식으로 결과 내보내기
+      - PDF 파일에서 이미지 자동 추출 및 임베딩
+      - 빠르고 확장 가능한 처리를 위한 GPU 가속 및 Docker 배포
 
       **필수 조건:**
       - ZimaOS 버전 1.5.2 이상, 또는 NVIDIA Open Driver 버전 580 이상
@@ -436,11 +443,12 @@ x-casaos:
       DeepSeek OCR er et kraftig open-source OCR-verktøy (Optical Character Recognition) basert på det avanserte DeepSeek-AI-modellen. Det muliggjør nøyaktig tekstuttrekking fra bilder og documentskanninger via et brukervennlig web-grensesnitt og API. Støtter ulike bildeformater og tilbyr konfigurasjoner for bildestørrelse, beskjæring og opplastingsgrenser.
 
       **Nøkkelegenskaper:**
-      - Høy nøyaktighet tekstgjenkjenning med DeepSeek-OCR-modell
-      - Web-frontend og REST API for enkel integrasjon
-      - GPU-akselerasjon for rask prosessering
-      - Tilpassbare parametere som bildestørrelse og max upload
-      - Hugging Face-modellstøtte
+      - Høy nøyaktighet tekstgjenkjenning med DeepSeek-OCR, støtter bilder og flersidige PDF-dokumenter
+      - Bevarer dokumentlayout inkludert tabeller, formler og strukturert formatering
+      - Web-frontend (React) og REST API (FastAPI) for enkel bruk og systemintegrasjon
+      - Eksporter resultater til Markdown, HTML, DOCX eller JSON-formater
+      - Automatisk uttrekking og innbygging av bilder fra PDF-filer
+      - GPU-akselerasjon og Docker-distribusjon for rask og skalerbar behandling
 
       **Forutsetninger:**
       - ZimaOS versjon 1.5.2 eller høyere, eller NVIDIA Open Driver versjon 580 eller høyere
@@ -453,11 +461,12 @@ x-casaos:
       DeepSeek OCR é uma ferramenta OCR (Reconhecimento Ótico de Caracteres) open source poderosa baseada no modelo avançado DeepSeek-AI. Permite a extração precisa de texto de imagens e digitalizações de documentos via interface web amigável ao usuário e API. Suporta vários formatos de imagem e oferece configurações para tamanho de imagem, corte e limites de upload.
 
       **Funcionalidades Principais:**
-      - Reconhecimento de texto de alta precisão com modelo DeepSeek-OCR
-      - Frontend web e API REST para integração fácil
-      - Aceleração GPU para processamento rápido
-      - Parâmetros personalizáveis como tamanho de imagem e upload máx
-      - Suporte a modelos Hugging Face
+      - Reconhecimento de texto de alta precisão com DeepSeek-OCR, suportando imagens e documentos PDF de múltiplas páginas
+      - Preserva o layout do documento incluindo tabelas, fórmulas e formatação estrutural
+      - Frontend web (React) e API REST (FastAPI) para uso fácil e integração do sistema
+      - Exporte resultados para formatos Markdown, HTML, DOCX ou JSON
+      - Extração e incorporação automáticas de imagens de arquivos PDF
+      - Aceleração GPU e implantação Docker para processamento rápido e escalável
 
       **Pré-requisitos:**
       - ZimaOS versão 1.5.2 ou superior, ou NVIDIA Open Driver versão 580 ou superior
@@ -470,11 +479,12 @@ x-casaos:
       DeepSeek OCR — мощный инструмент OCR (Optical Character Recognition) с открытым исходным кодом на базе продвинутой модели DeepSeek-AI. Позволяет точно извлекать текст из изображений и сканов документов через удобный веб-интерфейс и API. Поддерживает различные форматы изображений и предлагает настройки размера изображения, обрезки и лимитов загрузки.
 
       **Ключевые Особенности:**
-      - Высокоточное распознавание текста с моделью DeepSeek-OCR
-      - Веб-фронтенд и REST API для легкой интеграции
-      - Ускорение GPU для быстрой обработки
-      - Настраиваемые параметры, такие как размер изображения и max upload
-      - Поддержка моделей Hugging Face
+      - Высокоточное распознавание текста с DeepSeek-OCR, поддерживает изображения и многостраничные PDF-документы
+      - Сохраняет макет документа, включая таблицы, формулы и структурное форматирование
+      - Веб-фронтенд (React) и REST API (FastAPI) для простого использования и интеграции системы
+      - Экспорт результатов в форматы Markdown, HTML, DOCX или JSON
+      - Автоматическое извлечение и встраивание изображений из PDF-файлов
+      - Ускорение GPU и развертывание Docker для быстрой и масштабируемой обработки
 
       **Предварительные требования:**
       - ZimaOS версии 1.5.2 или выше, или NVIDIA Open Driver версии 580 или выше
@@ -487,11 +497,12 @@ x-casaos:
       DeepSeek OCR är ett kraftfullt open source OCR-verktyg (Optical Character Recognition) baserat på den avancerade DeepSeek-AI-modellen. Det möjliggör exakt textutvinning från bilder och documentskanningar via ett användarvänligt webbgränssnitt och API. Stödjer olika bildformat och erbjuder konfigurationer för bildstorlek, beskärning och uppladdningsgränser.
 
       **Nyckelfunktioner:**
-      - Hög noggrannhet textigenkänning med DeepSeek-OCR-modell
-      - Webb-frontend och REST API för enkel integration
-      - GPU-acceleration för snabb bearbetning
-      - Anpassningsbara parametrar som bildstorlek och max upload
-      - Hugging Face-modellstöd
+      - Hög noggrannhet textigenkänning med DeepSeek-OCR, stöder bilder och flersidiga PDF-dokument
+      - Bevarar dokumentlayout inklusive tabeller, formler och strukturerad formatering
+      - Webb-frontend (React) och REST API (FastAPI) för enkel användning och systemintegration
+      - Exportera resultat till Markdown, HTML, DOCX eller JSON-format
+      - Automatisk extrahering och inbäddning av bilder från PDF-filer
+      - GPU-acceleration och Docker-distribution för snabb och skalbar bearbetning
 
       **Förutsättningar:**
       - ZimaOS version 1.5.2 eller högre, eller NVIDIA Open Driver version 580 eller högre
@@ -504,11 +515,12 @@ x-casaos:
       DeepSeek OCR, gelişmiş DeepSeek-AI modeline dayalı güçlü açık kaynaklı bir OCR (Optik Karakter Tanıma) aracıdır. Kullanıcı dostu web arayüzü ve API aracılığıyla görüntülerden ve belge taramalarından doğru metin çıkarma sağlar. Çeşitli görüntü formatlarını destekler ve görüntü boyutu, kırpma ve yükleme limitleri için yapılandırmalar sunar.
 
       **Temel Özellikler:**
-      - DeepSeek-OCR modeli ile yüksek doğrulukta metin tanıma
-      - Kolay entegrasyon için web ön yüz ve REST API
-      - Hızlı işlem için GPU hızlandırma
-      - Görüntü boyutu ve maksimum yükleme gibi özelleştirilebilir parametreler
-      - Hugging Face modelleri desteği
+      - DeepSeek-OCR ile yüksek doğrulukta metin tanıma, görüntüleri ve çok sayfalı PDF belgelerini destekler
+      - Tablolar, formüller ve yapısal biçimlendirme dahil olmak üzere belge düzenini korur
+      - Kolay kullanım ve sistem entegrasyonu için web ön yüz (React) ve REST API (FastAPI)
+      - Sonuçları Markdown, HTML, DOCX veya JSON formatlarında dışa aktar
+      - PDF dosyalarından görüntülerin otomatik çıkarılması ve gömülmesi
+      - Hızlı ve ölçeklenebilir işlem için GPU hızlandırma ve Docker dağıtımı
 
       **Ön Koşullar:**
       - ZimaOS sürüm 1.5.2 veya üstü, veya NVIDIA Open Driver sürüm 580 veya üstü
@@ -521,11 +533,12 @@ x-casaos:
       DeepSeek OCR 是一个基于先进 DeepSeek-AI 模型的强大开源 OCR（光学字符识别）工具。它通过用户友好的 Web 界面和 API 从图像和文档扫描中实现精确文本提取。支持多种图像格式，并提供图像大小、裁剪和上传限制配置。
 
       **主要功能：**
-      - 使用 DeepSeek-OCR 模型的高精度文本识别
-      - Web 前端和 REST API，便于集成
-      - GPU 加速，实现快速处理
-      - 图像大小和最大上传等可自定义参数
-      - 支持 Hugging Face 模型
+      - 使用 DeepSeek-OCR 的高精度文本识别，支持图像和多页 PDF 文档
+      - 保留文档布局，包括表格、公式和结构化格式
+      - Web 前端（React）和 REST API（FastAPI），便于使用和系统集成
+      - 将结果导出为 Markdown、HTML、DOCX 或 JSON 格式
+      - 从 PDF 文件中自动提取和嵌入图像
+      - GPU 加速和 Docker 部署，实现快速和可扩展的处理
 
       **前置条件:**
       - ZimaOS版本1.5.2及以上，或者NVIDIA Open Driver版本580及以上
@@ -534,7 +547,7 @@ x-casaos:
       **了解更多：**
       - [DeepSeek OCR 应用（GitHub）](https://github.com/rdumasia303/deepseek_ocr_app)
 
-  developer: DeepSeek
+  developer: rdumasia303
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DeepSeek-OCR_Nvidia/icon.png
   screenshot_link: 
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DeepSeek-OCR_Nvidia/screenshot-1.png
@@ -559,20 +572,36 @@ x-casaos:
     sv_SE: "Kraftfull OCR drivet av DeepSeek AI"
     tr_TR: "DeepSeek AI ile Güçlü OCR"
     zh_CN: "DeepSeek AI 驱动的强大 OCR"
-  thumbnail: ""
-  title:
-    de_DE: DeepSeek OCR
-    el_GR: DeepSeek OCR
-    en_GB: DeepSeek OCR
-    en_US: DeepSeek OCR
-    fr_FR: DeepSeek OCR
-    hr_HR: DeepSeek OCR
-    it_IT: DeepSeek OCR
-    ja_JP: DeepSeek OCR
-    ko_KR: DeepSeek OCR
-    nb_NO: DeepSeek OCR
-    pt_PT: DeepSeek OCR
-    ru_RU: DeepSeek OCR
-    sv_SE: DeepSeek OCR
-    tr_TR: DeepSeek OCR
-    zh_CN: DeepSeek OCR
+tips:
+    before_install:
+      de_DE: Der erste Start lädt das Modell (~5–10 GB) herunter; das kann einige Zeit dauern.
+      el_GR: Η πρώτη εκτέλεση θα κατεβάσει το μοντέλο (~5-10GB), οπότε ίσως χρειαστεί λίγη ώρα.
+      en_GB: The first run will download the model (~5-10GB), which may take some time.
+      en_US: The first run will download the model (~5-10GB), which may take some time.
+      fr_FR: Lors de la première exécution, le modèle (~5-10 Go) sera téléchargé, ce qui peut prendre un certain temps.
+      hr_HR: Prvo pokretanje preuzet će model (~5-10 GB), što može potrajati neko vrijeme.
+      it_IT: Al primo avvio verrà scaricato il modello (~5-10 GB), operazione che può richiedere un po' di tempo.
+      ja_JP: 初回起動時にモデル（約5～10GB）がダウンロードされるため、完了まで時間がかかる場合があります。
+      ko_KR: 첫 실행 시 모델(~5~10GB)을 다운로드하므로 다소 시간이 걸릴 수 있습니다.
+      nb_NO: Første gang du kjører appen lastes modellen ned (~5–10 GB), noe som kan ta litt tid.
+      pt_PT: Na primeira execução será transferido o modelo (~5-10GB), o que pode demorar algum tempo.
+      ru_RU: При первом запуске будет загружена модель (~5–10 ГБ); это может занять некоторое время.
+      sv_SE: Vid första körningen laddas modellen ned (~5–10 GB), vilket kan ta en stund.
+      tr_TR: İlk çalıştırmada model (~5-10GB) indirileceği için biraz zaman alabilir.
+      zh_CN: 首次运行会下载模型（约 5-10GB），可能需要一些时间。
+title:
+  de_DE: DeepSeek OCR(Nvidia GPU)
+  el_GR: DeepSeek OCR(Nvidia GPU)
+  en_GB: DeepSeek OCR(Nvidia GPU)
+  en_US: DeepSeek OCR(Nvidia GPU)
+  fr_FR: DeepSeek OCR(Nvidia GPU)
+  hr_HR: DeepSeek OCR(Nvidia GPU)
+  it_IT: DeepSeek OCR(Nvidia GPU)
+  ja_JP: DeepSeek OCR(Nvidia GPU)
+  ko_KR: DeepSeek OCR(Nvidia GPU)
+  nb_NO: DeepSeek OCR(Nvidia GPU)
+  pt_PT: DeepSeek OCR(Nvidia GPU)
+  ru_RU: DeepSeek OCR(Nvidia GPU)
+  sv_SE: DeepSeek OCR(Nvidia GPU)
+  tr_TR: DeepSeek OCR(Nvidia GPU)
+  zh_CN: DeepSeek OCR(Nvidia GPU)
