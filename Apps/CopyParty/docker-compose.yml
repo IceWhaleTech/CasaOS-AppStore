@@ -1,0 +1,154 @@
+services:
+  copyparty:
+    image: copyparty/ac:latest
+    container_name: copyparty
+    user: 1000:1000
+    ports:
+    - 3923:3923
+    volumes:
+    - ./:/cfg:z
+    - /DATA/Appdata/$AppID/folder:/w:z
+    environment:
+      LD_PRELOAD: /usr/lib/libmimalloc-secure.so.NOPE
+      PYTHONUNBUFFERED: 1
+    stop_grace_period: 15s
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - wget --spider -q 127.0.0.1:3923/?reset=/._
+      interval: 1m
+      timeout: 2s
+      retries: 5
+      start_period: 15s
+    x-casaos:
+      envs:
+      - container: LD_PRELOAD
+        description:
+          de_DE: ''
+          el_GR: ''
+          en_GB: ''
+          en_US: ''
+          fr_FR: ''
+          hr_HR: ''
+          it_IT: ''
+          ja_JP: ''
+          ko_KR: ''
+          nb_NO: ''
+          pt_PT: ''
+          ru_RU: ''
+          sv_SE: ''
+          tr_TR: ''
+          zh_CN: ''
+      - container: PYTHONUNBUFFERED
+        description:
+          de_DE: ''
+          el_GR: ''
+          en_GB: ''
+          en_US: ''
+          fr_FR: ''
+          hr_HR: ''
+          it_IT: ''
+          ja_JP: ''
+          ko_KR: ''
+          nb_NO: ''
+          pt_PT: ''
+          ru_RU: ''
+          sv_SE: ''
+          tr_TR: ''
+          zh_CN: ''
+      ports:
+      - container: '3923'
+        description:
+          de_DE: ''
+          el_GR: ''
+          en_GB: ''
+          en_US: ''
+          fr_FR: ''
+          hr_HR: ''
+          it_IT: ''
+          ja_JP: ''
+          ko_KR: ''
+          nb_NO: ''
+          pt_PT: ''
+          ru_RU: ''
+          sv_SE: ''
+          tr_TR: ''
+          zh_CN: ''
+      volumes:
+      - container: /cfg
+        description:
+          de_DE: ''
+          el_GR: ''
+          en_GB: ''
+          en_US: ''
+          fr_FR: ''
+          hr_HR: ''
+          it_IT: ''
+          ja_JP: ''
+          ko_KR: ''
+          nb_NO: ''
+          pt_PT: ''
+          ru_RU: ''
+          sv_SE: ''
+          tr_TR: ''
+          zh_CN: ''
+      - container: /w
+        description:
+          de_DE: ''
+          el_GR: ''
+          en_GB: ''
+          en_US: ''
+          fr_FR: ''
+          hr_HR: ''
+          it_IT: ''
+          ja_JP: ''
+          ko_KR: ''
+          nb_NO: ''
+          pt_PT: ''
+          ru_RU: ''
+          sv_SE: ''
+          tr_TR: ''
+          zh_CN: ''
+x-casaos:
+  title:
+    de_DE: ''
+    el_GR: ''
+    en_GB: ''
+    en_US: ''
+    fr_FR: ''
+    hr_HR: ''
+    it_IT: ''
+    ja_JP: ''
+    ko_KR: ''
+    nb_NO: ''
+    pt_PT: ''
+    ru_RU: ''
+    sv_SE: ''
+    tr_TR: ''
+    zh_CN: ''
+  tagline:
+    de_DE: ''
+    el_GR: ''
+    en_GB: ''
+    en_US: ''
+    fr_FR: ''
+    hr_HR: ''
+    it_IT: ''
+    ja_JP: ''
+    ko_KR: ''
+    nb_NO: ''
+    pt_PT: ''
+    ru_RU: ''
+    sv_SE: ''
+    tr_TR: ''
+    zh_CN: ''
+  description:
+    en_US: ''
+  category: Utilities
+  author: copyparty
+  main: copyparty
+  port_map: '3923'
+  architectures:
+  - amd64
+  index: /
+  scheme: http
