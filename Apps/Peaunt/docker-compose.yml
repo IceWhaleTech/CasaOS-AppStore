@@ -2,12 +2,12 @@ name: peanut
 
 services:
   peanut:
-    image: brandawg93/peanut:latest
+    image: brandawg93/peanut:5.19.1
     container_name: PeaNUT
     restart: unless-stopped
     volumes:
       - type: bind
-        source: /DATA/AppData/$Appid/config
+        source: /DATA/AppData/$AppID/config
         target: /config
     ports:
       - target: 8080
@@ -350,11 +350,15 @@ x-casaos:
 
   category: Utilities
   author: brandawg93
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Peanut/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Peanut/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Peanut/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Peanut/screenshot-3.png
   main: peanut
   port_map: "8084"
   architectures:
     - amd64
     - arm64
-    - arm/v7
   index: /
   scheme: http
