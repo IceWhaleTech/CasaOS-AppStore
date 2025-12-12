@@ -16,8 +16,9 @@ services:
     environment:
       WEB_PORT: 8080
     deploy:
-      reservation:
-        memory: 256M
+      resources:
+        reservations:
+          memory: 256M
     x-casaos:
       envs:
         - container: WEB_PORT
