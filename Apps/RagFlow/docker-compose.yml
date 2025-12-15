@@ -911,7 +911,7 @@ services:
       timeout: 10s
       interval: 10s
       retries: 120
-    image: hub.icert.top/opensearchproject/opensearch:2.19.1
+    image: opensearchproject/opensearch:2.19.1
     ports:
       - target: 9201
         published: "9201"
