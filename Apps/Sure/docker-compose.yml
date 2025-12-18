@@ -2,7 +2,7 @@ name: sure
 services:
   sure-web:
     container_name: sure-web
-    image: ghcr.io/we-promise/sure:0.6.3
+    image: ghcr.io/we-promise/sure:0.6.5-hotfix.1
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/app/storage
@@ -77,7 +77,7 @@ services:
 
   sure-worker:
     container_name: sure-worker
-    image: ghcr.io/we-promise/sure:0.6.3
+    image: ghcr.io/we-promise/sure:0.6.5-hotfix.1
     command: [ 'bundle', 'exec' ,'sidekiq']
     restart: unless-stopped
     volumes:
