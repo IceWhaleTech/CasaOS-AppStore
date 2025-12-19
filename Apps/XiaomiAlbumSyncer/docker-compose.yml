@@ -1,0 +1,40 @@
+name: xiaomi-album-syncer
+
+services:
+  xiaomi-album-syncer:
+    image: coolfan1024/xiaomi-album-syncer:0.8.2
+    container_name: xiaomi-album-syncer
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/download
+        target: /app/download
+      - type: bind
+        source: /DATA/AppData/$AppID/db
+        target: /app/db
+    restart: unless-stopped
+
+x-casaos:
+    architectures:
+        - amd64
+        - arm64
+    main: xiaomi-album-syncer
+    author: github.com/coooolfan
+    category: Backup
+    description:
+        en_US: Xiaomi Album Syncer is a tool to sync photos from Xiaomi cloud to your local computer.
+        zh_CN: 小米相册同步器是一款将小米云相册同步到本地电脑的工具。
+    developer: github.com/coooolfan
+    icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/XiaomiAlbumSyncer/icon.png
+    tagline:
+        en_US: Xiaomi Album Syncer is a tool to sync photos from Xiaomi cloud to your local computer.
+        zh_CN: 小米相册同步器是一款将小米云相册同步到本地电脑的工具。
+    thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/XiaomiAlbumSyncer/thumbnail.jpg
+    title:
+        en_US: Xiaomi Album Syncer
+        zh_CN: 小米相册同步器
+    index: /
+    port_map: "8080"
