@@ -6,7 +6,7 @@ services:
     container_name: xiaomi-album-syncer
     ports:
       - target: 8080
-        published: "8080"
+        published: ${WEBUI_PORT}
         protocol: tcp
     volumes:
       - type: bind
@@ -37,4 +37,4 @@ x-casaos:
         en_US: Xiaomi Album Syncer
         zh_CN: 小米相册同步器
     index: /
-    port_map: "8080"
+    port_map: ${WEBUI_PORT}
