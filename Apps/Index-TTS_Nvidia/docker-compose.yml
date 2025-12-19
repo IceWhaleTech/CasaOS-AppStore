@@ -1,7 +1,7 @@
-name: index-tts_nvidia
+name: index-tts-nvidia
 
 services:
-  index-tts:
+  index-tts-nvidia:
     image: icewhaletech/index-tts:2.0
     container_name: index-tts
     restart: unless-stopped
@@ -18,8 +18,7 @@ services:
           devices:
             - driver: nvidia
               count: all
-              capabilities:
-                - gpu
+              capabilities: [gpu]
     x-casaos:
       envs:
         - container: NVIDIA_VISIBLE_DEVICES
@@ -470,7 +469,7 @@ x-casaos:
   category: Uitlities
   author: index-tts
   developer: icewhaletech
-  main: index-tts
+  main: index-tts-nvidia
   port_map: "7867"
   architectures:
     - amd64
