@@ -1,79 +1,55 @@
-name: index-tts-nvidia
+name: index-tts
 
 services:
-  index-tts-nvidia:
+  index-tts:
     image: icewhaletech/index-tts:2.0
     container_name: index-tts
     restart: unless-stopped
     ports:
       - target: 7860
-        published: "7867"
+        published: "17869"
         protocol: tcp
-    environment:
-      NVIDIA_VISIBLE_DEVICES: all
     deploy:
       resources:
         reservations:
           memory: 8G
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
     x-casaos:
-      envs:
-        - container: NVIDIA_VISIBLE_DEVICES
-          description:
-            de_DE: Sichtbare NVIDIA-Geräte für GPU-Beschleunigung
-            el_GR: Ορατές συσκευές NVIDIA για επιτάχυνση GPU
-            en_GB: Visible NVIDIA devices for GPU acceleration
-            en_US: Visible NVIDIA devices for GPU acceleration
-            fr_FR: Appareils NVIDIA visibles pour l'accélération GPU
-            hr_HR: Vidljivi NVIDIA uređaji za GPU ubrzanje
-            it_IT: Dispositivi NVIDIA visibili per l'accelerazione GPU
-            ja_JP: GPUアクセラレーション用の可視NVIDIAデバイス
-            ko_KR: GPU 가속을 위한 가시적 NVIDIA 장치
-            nb_NO: Synlige NVIDIA-enheter for GPU-akselerasjon
-            pt_PT: Dispositivos NVIDIA visíveis para aceleração de GPU
-            ru_RU: Видимые устройства NVIDIA для ускорения GPU
-            sv_SE: Synliga NVIDIA-enheter för GPU-acceleration
-            tr_TR: GPU hızlandırması için görünür NVIDIA cihazları
-            zh_CN: 用于GPU加速的可见NVIDIA设备
       ports:
         - container: "7860"
           description:
-            de_DE: Gradio WebUI-Port
-            el_GR: Θύρα Gradio WebUI
-            en_GB: Gradio WebUI port
-            en_US: Gradio WebUI port
-            fr_FR: Port Gradio WebUI
-            hr_HR: Gradio WebUI luka
-            it_IT: Porta Gradio WebUI
-            ja_JP: Gradio WebUIポート
-            ko_KR: Gradio WebUI 포트
-            nb_NO: Gradio WebUI-port
-            pt_PT: Porta Gradio WebUI
-            ru_RU: Порт Gradio WebUI
-            sv_SE: Gradio WebUI-port
-            tr_TR: Gradio WebUI portu
-            zh_CN: Gradio WebUI端口
+            de_DE: WebUI HTTP Port
+            el_GR: Θύρα WebUI HTTP
+            en_GB: WebUI HTTP Port
+            en_US: WebUI HTTP Port
+            fr_FR: Port WebUI HTTP
+            hr_HR: WebUI HTTP Port
+            it_IT: Porta WebUI HTTP
+            ja_JP: WebUI HTTPポート
+            ko_KR: WebUI HTTP 포트
+            nb_NO: WebUI HTTP Port
+            pt_PT: Porta WebUI HTTP
+            ru_RU: Порт WebUI HTTP
+            sv_SE: WebUI HTTP Port
+            tr_TR: WebUI HTTP Portu
+            zh_CN: WebUI HTTP端口
 
 x-casaos:
   title:
-    de_DE: Index-TTS(Nvidia GPU)
-    el_GR: Index-TTS(Nvidia GPU)
-    en_GB: Index-TTS(Nvidia GPU)
-    en_US: Index-TTS(Nvidia GPU)
-    fr_FR: Index-TTS(Nvidia GPU)
-    hr_HR: Index-TTS(Nvidia GPU)
-    it_IT: Index-TTS(Nvidia GPU)
-    ja_JP: Index-TTS(Nvidia GPU)
-    ko_KR: Index-TTS(Nvidia GPU)
-    nb_NO: Index-TTS(Nvidia GPU)
-    pt_PT: Index-TTS(Nvidia GPU)
-    ru_RU: Index-TTS(Nvidia GPU)
-    sv_SE: Index-TTS(Nvidia GPU)
-    tr_TR: Index-TTS(Nvidia GPU)
-    zh_CN: Index-TTS(Nvidia GPU)
+    de_DE: Index-TTS
+    el_GR: Index-TTS
+    en_GB: Index-TTS
+    en_US: Index-TTS
+    fr_FR: Index-TTS
+    hr_HR: Index-TTS
+    it_IT: Index-TTS
+    ja_JP: Index-TTS
+    ko_KR: Index-TTS
+    nb_NO: Index-TTS
+    pt_PT: Index-TTS
+    ru_RU: Index-TTS
+    sv_SE: Index-TTS
+    tr_TR: Index-TTS
+    zh_CN: Index-TTS
   tagline:
     de_DE: Text-zu-Sprache mit Gradio WebUI
     el_GR: Μετατροπή κειμένου σε ομιλία με Gradio WebUI
@@ -100,10 +76,6 @@ x-casaos:
       - Zero-Shot TTS-Fähigkeit zur Rekonstruktion von Stimmen ohne spezifisches Training
       - Interaktive Gradio WebUI zur einfachen Bedienung aller Funktionen
 
-      **Voraussetzungen:**
-      - NVIDIA GPU mit ≥ 8 GB VRAM (empfohlen für optimale Leistung)
-      - NVIDIA CUDA Toolkit Version ≥ 12.8
-
       **Mehr Erfahren:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
@@ -115,10 +87,6 @@ x-casaos:
       - Ακριβής έλεγχος διάρκειας για τέλεια συγχρονισμό ήχου-εικόνας
       - Ικανότητα Zero-Shot TTS για ανακατασκευή φωνών χωρίς συγκεκριμένη εκπαίδευση
       - Διαδραστική Gradio WebUI για εύκολη χρήση όλων των λειτουργιών
-
-      **Προαπαιτούμενα:**
-      - NVIDIA GPU με ≥ 8 GB VRAM (συνιστάται για βέλτιστη απόδοση)
-      - NVIDIA CUDA Toolkit έκδοση ≥ 12.8
 
       **Μάθετε Περισσότερα:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -132,10 +100,6 @@ x-casaos:
       - Zero-Shot TTS capability for reconstructing voices without specific training
       - Interactive Gradio WebUI for easy operation of all features
 
-      **Prerequisites:**
-      - NVIDIA GPU with ≥ 8 GB VRAM (recommended for optimal performance)
-      - NVIDIA CUDA Toolkit version ≥ 12.8
-
       **Learn More:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
@@ -147,10 +111,6 @@ x-casaos:
       - Precise duration control for perfect audio-video synchronization
       - Zero-Shot TTS capability for reconstructing voices without specific training
       - Interactive Gradio WebUI for easy operation of all features
-
-      **Prerequisites:**
-      - NVIDIA GPU with ≥ 8 GB VRAM (recommended for optimal performance)
-      - NVIDIA CUDA Toolkit version ≥ 12.8
 
       **Learn More:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -164,10 +124,6 @@ x-casaos:
       - Capacité Zero-Shot TTS pour reconstruire des voix sans formation spécifique
       - Interface Web Gradio interactive pour une utilisation facile de toutes les fonctionnalités
 
-      **Prérequis:**
-      - GPU NVIDIA avec ≥ 8 GB de VRAM (recommandé pour des performances optimales)
-      - NVIDIA CUDA Toolkit version ≥ 12.8
-
       **En Savoir Plus:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
@@ -179,10 +135,6 @@ x-casaos:
       - Precizna kontrola trajanja za savršenu sinkronizaciju zvuka i slike
       - Zero-Shot TTS sposobnost za rekonstrukciju glasova bez specifične obuke
       - Interaktivna Gradio WebUI za lako korištenje svih funkcija
-
-      **Preduvjeti:**
-      - NVIDIA GPU s ≥ 8 GB VRAM-a (preporučeno za optimalnu performansu)
-      - NVIDIA CUDA Toolkit verzija ≥ 12.8
 
       **Saznajte Više:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -196,10 +148,6 @@ x-casaos:
       - Capacità Zero-Shot TTS per ricostruire voci senza addestramento specifico
       - Interfaccia Web Gradio interattiva per un facile utilizzo di tutte le funzionalità
 
-      **Prerequisiti:**
-      - GPU NVIDIA con ≥ 8 GB di VRAM (consigliato per prestazioni ottimali)
-      - NVIDIA CUDA Toolkit versione ≥ 12.8
-
       **Scopri di Più:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
@@ -211,10 +159,6 @@ x-casaos:
       - 完璧な音声同期のための精密な時間制御
       - 特定のトレーニングなしで音声を再構築するZero-Shot TTS機能
       - すべての機能を簡単に操作できる対話型Gradio WebUI
-
-      **前提条件：**
-      - ≥ 8 GBのVRAMを搭載したNVIDIA GPU（最適なパフォーマンスのため推奨）
-      - NVIDIA CUDA Toolkitバージョン ≥ 12.8
 
       **詳細情報：**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -228,10 +172,6 @@ x-casaos:
       - 특정 훈련 없이 음성을 재구성하는 Zero-Shot TTS 기능
       - 모든 기능을 쉽게 조작할 수 있는 대화형 Gradio WebUI
 
-      **전제 조건:**
-      - ≥ 8GB VRAM을 갖춘 NVIDIA GPU (최적의 성능을 위해 권장)
-      - NVIDIA CUDA Toolkit 버전 ≥ 12.8
-
       **자세히 알아보기:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
@@ -243,10 +183,6 @@ x-casaos:
       - Presis varighetskontroll for perfekt lyd-video-synkronisering
       - Zero-Shot TTS-evne for å rekonstruere stemmer uten spesifikk trening
       - Interaktiv Gradio WebUI for enkel bruk av alle funksjoner
-
-      **Forutsetninger:**
-      - NVIDIA GPU med ≥ 8 GB VRAM (anbefalt for optimal ytelse)
-      - NVIDIA CUDA Toolkit versjon ≥ 12.8
 
       **Lær Mer:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -260,10 +196,6 @@ x-casaos:
       - Capacidade Zero-Shot TTS para reconstruir vozes sem treinamento específico
       - Interface Web Gradio interativa para fácil operação de todos os recursos
 
-      **Pré-requisitos:**
-      - GPU NVIDIA com ≥ 8 GB de VRAM (recomendado para desempenho ideal)
-      - NVIDIA CUDA Toolkit versão ≥ 12.8
-
       **Saiba Mais:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
@@ -275,10 +207,6 @@ x-casaos:
       - Точный контроль длительности для идеальной синхронизации аудио и видео
       - Возможность Zero-Shot TTS для реконструкции голосов без специального обучения
       - Интерактивный интерфейс Gradio WebUI для легкой работы со всеми функциями
-
-      **Предварительные требования:**
-      - GPU NVIDIA с ≥ 8 ГБ видеопамяти (рекомендуется для оптимальной производительности)
-      - NVIDIA CUDA Toolkit версии ≥ 12.8
 
       **Узнать Больше:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -292,10 +220,6 @@ x-casaos:
       - Zero-Shot TTS-förmåga för att rekonstruera röster utan specifik träning
       - Interaktiv Gradio WebUI för enkel användning av alla funktioner
 
-      **Förutsättningar:**
-      - NVIDIA GPU med ≥ 8 GB VRAM (rekommenderas för optimal prestanda)
-      - NVIDIA CUDA Toolkit version ≥ 12.8
-
       **Läs Mer:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
@@ -307,10 +231,6 @@ x-casaos:
       - Mükemmel ses-video senkronizasyonu için hassas süre kontrolü
       - Özel eğitim olmadan sesleri yeniden oluşturma Zero-Shot TTS yeteneği
       - Tüm özellikleri kolayca kullanmak için etkileşimli Gradio WebUI
-
-      **Ön Koşullar:**
-      - ≥ 8 GB VRAM'e sahip NVIDIA GPU (optimal performans için önerilir)
-      - NVIDIA CUDA Toolkit sürüm ≥ 12.8
 
       **Daha Fazla Bilgi:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -324,23 +244,19 @@ x-casaos:
       - 零样本TTS能力，无需特定训练即可重建声音
       - 交互式Gradio WebUI，轻松操作所有功能
 
-       **前置条件:**
-      - 具有 ≥ 8 GB 显存的 NVIDIA GPU（推荐，用于获得最佳性能）
-      - NVIDIA CUDA Toolkit 版本 ≥ 12.8
-
       **了解更多：**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
   category: Utilities
   author: index-tts
   developer: icewhaletech
-  main: index-tts-nvidia
-  port_map: "7867"
+  main: index-tts
+  port_map: "17869"
   architectures:
     - amd64
   index: /
   scheme: http
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS/icon.png
   screenshot_link:
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-1.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-2.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS/screenshot-3.png
