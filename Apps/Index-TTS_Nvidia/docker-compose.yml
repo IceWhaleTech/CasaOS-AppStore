@@ -1,7 +1,7 @@
-name: index-tts_nvidia
+name: index-tts-nvidia
 
 services:
-  index-tts:
+  index-tts-nvidia:
     image: icewhaletech/index-tts:2.0
     container_name: index-tts
     restart: unless-stopped
@@ -18,8 +18,7 @@ services:
           devices:
             - driver: nvidia
               count: all
-              capabilities:
-                - gpu
+              capabilities: [gpu]
     x-casaos:
       envs:
         - container: NVIDIA_VISIBLE_DEVICES
@@ -470,7 +469,7 @@ x-casaos:
   category: Utilities
   author: index-tts
   developer: icewhaletech
-  main: index-tts
+  main: index-tts-nvidia
   port_map: "7867"
   architectures:
     - amd64
@@ -479,5 +478,5 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-1.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-2.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-3.jpg
