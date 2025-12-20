@@ -1,0 +1,481 @@
+name: index-tts-nvidia
+
+services:
+  index-tts-nvidia:
+    image: icewhaletech/index-tts:2.0
+    container_name: index-tts
+    restart: unless-stopped
+    ports:
+      - target: 7860
+        published: "7867"
+        protocol: tcp
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+    deploy:
+      resources:
+        reservations:
+          memory: 8G
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    x-casaos:
+      envs:
+        - container: NVIDIA_VISIBLE_DEVICES
+          description:
+            de_DE: Sichtbare NVIDIA-Geräte für GPU-Beschleunigung
+            el_GR: Ορατές συσκευές NVIDIA για επιτάχυνση GPU
+            en_GB: Visible NVIDIA devices for GPU acceleration
+            en_US: Visible NVIDIA devices for GPU acceleration
+            fr_FR: Appareils NVIDIA visibles pour l'accélération GPU
+            hr_HR: Vidljivi NVIDIA uređaji za GPU ubrzanje
+            it_IT: Dispositivi NVIDIA visibili per l'accelerazione GPU
+            ja_JP: GPUアクセラレーション用の可視NVIDIAデバイス
+            ko_KR: GPU 가속을 위한 가시적 NVIDIA 장치
+            nb_NO: Synlige NVIDIA-enheter for GPU-akselerasjon
+            pt_PT: Dispositivos NVIDIA visíveis para aceleração de GPU
+            ru_RU: Видимые устройства NVIDIA для ускорения GPU
+            sv_SE: Synliga NVIDIA-enheter för GPU-acceleration
+            tr_TR: GPU hızlandırması için görünür NVIDIA cihazları
+            zh_CN: 用于GPU加速的可见NVIDIA设备
+      ports:
+        - container: "7860"
+          description:
+            de_DE: Gradio WebUI-Port
+            el_GR: Θύρα Gradio WebUI
+            en_GB: Gradio WebUI port
+            en_US: Gradio WebUI port
+            fr_FR: Port Gradio WebUI
+            hr_HR: Gradio WebUI luka
+            it_IT: Porta Gradio WebUI
+            ja_JP: Gradio WebUIポート
+            ko_KR: Gradio WebUI 포트
+            nb_NO: Gradio WebUI-port
+            pt_PT: Porta Gradio WebUI
+            ru_RU: Порт Gradio WebUI
+            sv_SE: Gradio WebUI-port
+            tr_TR: Gradio WebUI portu
+            zh_CN: Gradio WebUI端口
+
+x-casaos:
+  title:
+    de_DE: Index-TTS(Nvidia GPU)
+    el_GR: Index-TTS(Nvidia GPU)
+    en_GB: Index-TTS(Nvidia GPU)
+    en_US: Index-TTS(Nvidia GPU)
+    fr_FR: Index-TTS(Nvidia GPU)
+    hr_HR: Index-TTS(Nvidia GPU)
+    it_IT: Index-TTS(Nvidia GPU)
+    ja_JP: Index-TTS(Nvidia GPU)
+    ko_KR: Index-TTS(Nvidia GPU)
+    nb_NO: Index-TTS(Nvidia GPU)
+    pt_PT: Index-TTS(Nvidia GPU)
+    ru_RU: Index-TTS(Nvidia GPU)
+    sv_SE: Index-TTS(Nvidia GPU)
+    tr_TR: Index-TTS(Nvidia GPU)
+    zh_CN: Index-TTS(Nvidia GPU)
+  tagline:
+    de_DE: Text-zu-Sprache mit Gradio WebUI
+    el_GR: Μετατροπή κειμένου σε ομιλία με Gradio WebUI
+    en_GB: Text to Speech with Gradio WebUI
+    en_US: Text to Speech with Gradio WebUI
+    fr_FR: Synthèse vocale avec Gradio WebUI
+    hr_HR: Pretvaranje teksta u govor s Gradio WebUI
+    it_IT: Sintesi vocale con Gradio WebUI
+    ja_JP: Gradio WebUI付きテキスト読み上げ
+    ko_KR: Gradio WebUI가 포함된 텍스트 음성 변환
+    nb_NO: Tekst til tale med Gradio WebUI
+    pt_PT: Texto para fala com Gradio WebUI
+    ru_RU: Синтез речи с Gradio WebUI
+    sv_SE: Text-till-tal med Gradio WebUI
+    tr_TR: Gradio WebUI ile Metinden Sese
+    zh_CN: 基于 Gradio 的文本转语音服务
+  description:
+    de_DE: |
+      IndexTTS2 ist ein fortschrittliches Text-zu-Sprache-Modell, das sich auf emotionale Ausdrucksfähigkeit und präzise Dauersteuerung spezialisiert hat. Es ist eine verbesserte Version seines Vorgängers IndexTTS v1.5 mit bedeutenden Fortschritten in der Emotionskontrolle und semantischen Verarbeitung.
+
+      **Hauptfunktionen:**
+      - Unabhängiges Emotionskontrollsystem mit vier Eingabemethoden
+      - Präzise Dauersteuerung für perfekte Audio-Video-Synchronisation
+      - Zero-Shot TTS-Fähigkeit zur Rekonstruktion von Stimmen ohne spezifisches Training
+      - Interaktive Gradio WebUI zur einfachen Bedienung aller Funktionen
+
+      **Emotionssteuerungsmethoden:**
+      - Sprecherstimme (Standard): Referenzaudio für Tonfarbe und Emotion
+      - Stil-Referenzaudio: Separates Audio zur Angabe der Emotion
+      - 8D-Emotionsvektor: Direkte Steuerung von 8 Emotionsdimensionen
+      - Textbeschreibung: Natürliche Sprachbeschreibungen mit QwenEmotion-Modell
+
+      **Hardware-Anforderungen:**
+      - NVIDIA GPU mit mindestens 12 GB VRAM
+      - NVIDIA CUDA Toolkit 12.8 oder neuer (für CUDA-Nutzung)
+      - FP16-Inferenzmodus für reduzierten VRAM-Verbrauch und höhere Geschwindigkeit
+      - CPU-Modus als Fallback, wenn keine Hardwarebeschleunigung erkannt wird
+      - Optionale DeepSpeed-Optimierung für verbesserte Leistung
+
+      **Mehr Erfahren:**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+
+    el_GR: |
+      Το IndexTTS2 είναι ένα προηγμένο μοντέλο μετατροπής κειμένου σε ομιλία που εστιάζει στη συναισθηματική έκφραση και τον ακριβή έλεγχο διάρκειας. Είναι μια βελτιωμένη έκδοση του προκατόχου του IndexTTS v1.5 με σημαντικές βελτιώσεις στον έλεγχο συναισθημάτων και την σημασιολογική επεξεργασία.
+
+      **Κύρια Χαρακτηριστικά:**
+      - Ανεξάρτητο σύστημα ελέγχου συναισθημάτων με τέσσερις μεθόδους εισαγωγής
+      - Ακριβής έλεγχος διάρκειας για τέλεια συγχρονισμό ήχου-εικόνας
+      - Ικανότητα Zero-Shot TTS για ανακατασκευή φωνών χωρίς συγκεκριμένη εκπαίδευση
+      - Διαδραστική Gradio WebUI για εύκολη χρήση όλων των λειτουργιών
+
+      **Μέθοδοι Ελέγχου Συναισθημάτων:**
+      - Φωνή Ομιλητή (προεπιλογή): Αναφορά ήχου για χρωματισμό και συναίσθημα
+      - Αναφορά Ύφους Ήχου: Ξεχωριστός ήχος για καθορισμό συναισθήματος
+      - Διανυσμα Συναισθήματος 8D: Άμεσος έλεγχος 8 διαστάσεων συναισθημάτων
+      - Περιγραφή Κειμένου: Περιγραφές φυσικής γλώσσας με μοντέλο QwenEmotion
+
+      **Απαιτήσεις Υλικού:**
+      - NVIDIA GPU με τουλάχιστον 12 GB VRAM
+      - NVIDIA CUDA Toolkit 12.8 ή νεότερη έκδοση (για χρήση CUDA)
+      - Λειτουργία συμπερασμού FP16 για μειωμένη κατανάλωση VRAM και αυξημένη ταχύτητα
+      - Λειτουργία CPU ως εναλλακτική όταν δεν εντοπιστεί επιτάχυνση υλικού
+      - Προαιρετική βελτιστοποίηση DeepSpeed για βελτιωμένη απόδοση
+
+      **Μάθετε Περισσότερα:**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+
+    en_GB: |
+      IndexTTS2 is an advanced text-to-speech model focused on emotional expression and precise duration control. It is an upgraded version of its predecessor IndexTTS v1.5 with significant improvements in emotion control and semantic processing.
+
+      **Key Features:**
+      - Independent emotion control system with four input methods
+      - Precise duration control for perfect audio-video synchronisation
+      - Zero-Shot TTS capability for reconstructing voices without specific training
+      - Interactive Gradio WebUI for easy operation of all features
+
+      **Emotion Control Methods:**
+      - Speaker Voice (default): Reference audio for both timbre and emotion
+      - Style Reference Audio: Separate audio to specify emotion
+      - 8D Emotion Vector: Direct control over 8 emotion dimensions
+      - Text Description: Natural language descriptions with QwenEmotion model
+
+      **Hardware Requirements:**
+      - NVIDIA GPU with at least 12 GB VRAM
+      - NVIDIA CUDA Toolkit 12.8 or newer (for CUDA usage)
+      - FP16 inference mode for reduced VRAM usage and increased speed
+      - CPU mode as fallback when no hardware acceleration is detected
+      - Optional DeepSpeed optimisation for improved performance
+
+      **Learn More:**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+
+    en_US: |
+      IndexTTS2 is an advanced text-to-speech model focused on emotional expression and precise duration control. It is an upgraded version of its predecessor IndexTTS v1.5 with significant improvements in emotion control and semantic processing.
+
+      **Key Features:**
+      - Independent emotion control system with four input methods
+      - Precise duration control for perfect audio-video synchronization
+      - Zero-Shot TTS capability for reconstructing voices without specific training
+      - Interactive Gradio WebUI for easy operation of all features
+
+      **Emotion Control Methods:**
+      - Speaker Voice (default): Reference audio for both timbre and emotion
+      - Style Reference Audio: Separate audio to specify emotion
+      - 8D Emotion Vector: Direct control over 8 emotion dimensions
+      - Text Description: Natural language descriptions with QwenEmotion model
+
+      **Hardware Requirements:**
+      - NVIDIA GPU with at least 12 GB VRAM
+      - NVIDIA CUDA Toolkit 12.8 or newer (for CUDA usage)
+      - FP16 inference mode for reduced VRAM usage and increased speed
+      - CPU mode as fallback when no hardware acceleration is detected
+      - Optional DeepSpeed optimization for improved performance
+
+      **Learn More:**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+
+    fr_FR: |
+      IndexTTS2 est un modèle de synthèse vocale avancé axé sur l'expression émotionnelle et le contrôle précis de la durée. Il s'agit d'une version améliorée de son prédécesseur IndexTTS v1.5 avec des améliorations significatives dans le contrôle des émotions et le traitement sémantique.
+
+      **Fonctionnalités Clés:**
+      - Système de contrôle émotionnel indépendant avec quatre méthodes d'entrée
+      - Contrôle précis de la durée pour une synchronisation audio-vidéo parfaite
+      - Capacité Zero-Shot TTS pour reconstruire des voix sans formation spécifique
+      - Interface Web Gradio interactive pour une utilisation facile de toutes les fonctionnalités
+
+      **Méthodes de Contrôle Émotionnel:**
+      - Voix du locuteur (par défaut): Audio de référence pour le timbre et l'émotion
+      - Audio de référence de style: Audio séparé pour spécifier l'émotion
+      - Vecteur d'émotion 8D: Contrôle direct sur 8 dimensions émotionnelles
+      - Description textuelle: Descriptions en langage naturel avec le modèle QwenEmotion
+
+      **Configuration Matérielle Requise:**
+      - GPU NVIDIA avec au moins 12 GB de VRAM
+      - NVIDIA CUDA Toolkit 12.8 ou plus récent (pour l'utilisation de CUDA)
+      - Mode d'inférence FP16 pour une utilisation réduite de VRAM et une vitesse accrue
+      - Mode CPU comme solution de secours lorsqu'aucune accélération matérielle n'est détectée
+      - Optimisation DeepSpeed optionnelle pour des performances améliorées
+
+      **En Savoir Plus:**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+
+    hr_HR: |
+      IndexTTS2 je napredni model pretvaranja teksta u govor koji se fokusira na emocionalni izraz i preciznu kontrolu trajanja. To je nadograđena verzija svog prethodnika IndexTTS v1.5 s značajnim poboljšanjima u kontroli emocija i semantičkoj obradi.
+
+      **Ključne Značajke:**
+      - Neovisan sustav kontrole emocija s četiri metode unosa
+      - Precizna kontrola trajanja za savršenu sinkronizaciju zvuka i slike
+      - Zero-Shot TTS sposobnost za rekonstrukciju glasova bez specifične obuke
+      - Interaktivna Gradio WebUI za lako korištenje svih funkcija
+
+      **Metode Kontrole Emocija:**
+      - Glas govornika (zadano): Referentni audio za boju i emociju
+      - Referentni audio stila: Odvojeni audio za određivanje emocije
+      - 8D vektor emocija: Izravna kontrola nad 8 dimenzija emocija
+      - Tekstualni opis: Opisi prirodnog jezika s QwenEmotion modelom
+
+      **Hardverski Zahtjevi:**
+      - NVIDIA GPU s najmanje 12 GB VRAM-a
+      - NVIDIA CUDA Toolkit 12.8 ili noviji (za CUDA korištenje)
+      - FP16 način zaključivanja za smanjenu potrošnju VRAM-a i povećanu brzinu
+      - CPU način kao zamjena kada se ne detektira hardversko ubrzanje
+      - Opcionalna DeepSpeed optimizacija za poboljšanu performansu
+
+      **Saznajte Više:**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+
+    it_IT: |
+      IndexTTS2 è un modello avanzato di sintesi vocale focalizzato sull'espressione emotiva e sul controllo preciso della durata. È una versione migliorata del suo predecessore IndexTTS v1.5 con significativi miglioramenti nel controllo delle emozioni e nell'elaborazione semantica.
+
+      **Funzionalità Principali:**
+      - Sistema di controllo emotivo indipendente con quattro metodi di input
+      - Controllo preciso della durata per una perfetta sincronizzazione audio-video
+      - Capacità Zero-Shot TTS per ricostruire voci senza addestramento specifico
+      - Interfaccia Web Gradio interattiva per un facile utilizzo di tutte le funzionalità
+
+      **Metodi di Controllo Emotivo:**
+      - Voce del parlante (predefinito): Audio di riferimento per timbro ed emozione
+      - Audio di riferimento dello stile: Audio separato per specificare l'emozione
+      - Vettore emotivo 8D: Controllo diretto su 8 dimensioni emotive
+      - Descrizione testuale: Descrizioni in linguaggio naturale con il modello QwenEmotion
+
+      **Requisiti Hardware:**
+      - GPU NVIDIA con almeno 12 GB di VRAM
+      - NVIDIA CUDA Toolkit 12.8 o più recente (per l'utilizzo di CUDA)
+      - Modalità di inferenza FP16 per ridotto utilizzo di VRAM e velocità aumentata
+      - Modalità CPU come fallback quando non viene rilevata accelerazione hardware
+      - Ottimizzazione DeepSpeed opzionale per prestazioni migliorate
+
+      **Scopri di Più:**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+
+    ja_JP: |
+      IndexTTS2は、感情表現と精密な時間制御に焦点を当てた高度なテキスト読み上げモデルです。これは前身であるIndexTTS v1.5のアップグレード版で、感情制御と意味処理において大幅な改善がなされています。
+
+      **主な機能：**
+      - 4つの入力方法を持つ独立した感情制御システム
+      - 完璧な音声同期のための精密な時間制御
+      - 特定のトレーニングなしで音声を再構築するZero-Shot TTS機能
+      - すべての機能を簡単に操作できる対話型Gradio WebUI
+
+      **感情制御方法：**
+      - 話者の声（デフォルト）：音色と感情の両方のための参照音声
+      - スタイル参照音声：感情を指定するための別の音声
+      - 8D感情ベクトル：8つの感情次元の直接制御
+      - テキスト記述：QwenEmotionモデルによる自然言語記述
+
+      **ハードウェア要件：**
+      - 少なくとも12GBのVRAMを搭載したNVIDIA GPU
+      - NVIDIA CUDA Toolkit 12.8以降（CUDA使用の場合）
+      - VRAM使用量を削減し速度を向上させるFP16推論モード
+      - ハードウェアアクセラレーションが検出されない場合のCPUモード
+      - パフォーマンス向上のためのオプションのDeepSpeed最適化
+
+      **詳細情報：**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+
+    ko_KR: |
+      IndexTTS2는 감정 표현과 정밀한 시간 제어에 초점을 맞춘 고급 텍스트 음성 변환 모델입니다. 이것은 전신인 IndexTTS v1.5의 업그레이드 버전으로, 감정 제어와 의미 처리에서 상당한 개선이 이루어졌습니다.
+
+      **주요 기능:**
+      - 4가지 입력 방법을 갖춘 독립적인 감정 제어 시스템
+      - 완벽한 오디오-비디오 동기화를 위한 정밀한 시간 제어
+      - 특정 훈련 없이 음성을 재구성하는 Zero-Shot TTS 기능
+      - 모든 기능을 쉽게 조작할 수 있는 대화형 Gradio WebUI
+
+      **감정 제어 방법:**
+      - 화자 음성(기본값): 음색과 감정 모두를 위한 참조 오디오
+      - 스타일 참조 오디오: 감정을 지정하기 위한 별도의 오디오
+      - 8D 감정 벡터: 8가지 감정 차원에 대한 직접 제어
+      - 텍스트 설명: QwenEmotion 모델을 통한 자연어 설명
+
+      **하드웨어 요구사항:**
+      - 최소 12GB VRAM을 갖춘 NVIDIA GPU
+      - NVIDIA CUDA Toolkit 12.8 이상(CUDA 사용 시)
+      - VRAM 사용량을 줄이고 속도를 높이는 FP16 추론 모드
+      - 하드웨어 가속이 감지되지 않을 때의 CPU 모드
+      - 성능 향상을 위한 선택적 DeepSpeed 최적화
+
+      **자세히 알아보기:**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+
+    nb_NO: |
+      IndexTTS2 er en avansert tekst-til-tale-modell som fokuserer på emosjonelt uttrykk og presis varighetskontroll. Det er en oppgradert versjon av sin forgjenger IndexTTS v1.5 med betydelige forbedringer i emosjonskontroll og semantisk behandling.
+
+      **Nøkkelegenskaper:**
+      - Uavhengig emosjonskontrollsystem med fire inndatametoder
+      - Presis varighetskontroll for perfekt lyd-video-synkronisering
+      - Zero-Shot TTS-evne for å rekonstruere stemmer uten spesifikk trening
+      - Interaktiv Gradio WebUI for enkel bruk av alle funksjoner
+
+      **Emosjonskontrollmetoder:**
+      - Talestemme (standard): Referanselyd for både klangfarge og følelse
+      - Stilreferanselyd: Separat lyd for å spesifisere følelse
+      - 8D Følelsesvektor: Direkte kontroll over 8 følelsesdimensjoner
+      - Tekstbeskrivelse: Naturlige språkbeskrivelser med QwenEmotion-modellen
+
+      **Maskinvarekrav:**
+      - NVIDIA GPU med minst 12 GB VRAM
+      - NVIDIA CUDA Toolkit 12.8 eller nyere (for CUDA-bruk)
+      - FP16 inferensmodus for redusert VRAM-bruk og økt hastighet
+      - CPU-modus som reserve når ingen maskinvareakselerasjon oppdages
+      - Valgfri DeepSpeed-optimalisering for forbedret ytelse
+
+      **Lær Mer:**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+
+    pt_PT: |
+      IndexTTS2 é um modelo avançado de texto para fala focado na expressão emocional e controle preciso de duração. É uma versão aprimorada de seu antecessor IndexTTS v1.5 com melhorias significativas no controle de emoções e processamento semântico.
+
+      **Funcionalidades Principais:**
+      - Sistema de controle emocional independente com quatro métodos de entrada
+      - Controle preciso de duração para sincronização perfeita de áudio-vídeo
+      - Capacidade Zero-Shot TTS para reconstruir vozes sem treinamento específico
+      - Interface Web Gradio interativa para fácil operação de todos os recursos
+
+      **Métodos de Controle Emocional:**
+      - Voz do Falante (padrão): Áudio de referência para timbre e emoção
+      - Áudio de Referência de Estilo: Áudio separado para especificar emoção
+      - Vetor de Emoção 8D: Controle direto sobre 8 dimensões emocionais
+      - Descrição de Texto: Descrições de linguagem natural com modelo QwenEmotion
+
+      **Requisitos de Hardware:**
+      - GPU NVIDIA com pelo menos 12 GB de VRAM
+      - NVIDIA CUDA Toolkit 12.8 ou mais recente (para uso de CUDA)
+      - Modo de inferência FP16 para uso reduzido de VRAM e velocidade aumentada
+      - Modo CPU como alternativa quando nenhuma aceleração de hardware é detectada
+      - Otimização DeepSpeed opcional para desempenho aprimorado
+
+      **Saiba Mais:**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+
+    ru_RU: |
+      IndexTTS2 - это продвинутая модель синтеза речи, ориентированная на эмоциональное выражение и точный контроль длительности. Это улучшенная версия своего предшественника IndexTTS v1.5 со значительными улучшениями в контроле эмоций и семантической обработке.
+
+      **Ключевые Особенности:**
+      - Независимая система контроля эмоций с четырьмя методами ввода
+      - Точный контроль длительности для идеальной синхронизации аудио и видео
+      - Возможность Zero-Shot TTS для реконструкции голосов без специального обучения
+      - Интерактивный интерфейс Gradio WebUI для легкой работы со всеми функциями
+
+      **Методы Контроля Эмоций:**
+      - Голос диктора (по умолчанию): эталонный аудиофайл для тембра и эмоций
+      - Эталонный аудиофайл стиля: отдельный аудиофайл для указания эмоции
+      - 8D-вектор эмоций: прямой контроль над 8 эмоциональными измерениями
+      - Текстовое описание: описания на естественном языке с моделью QwenEmotion
+
+      **Требования к Оборудованию:**
+      - GPU NVIDIA с минимум 12 ГБ видеопамяти
+      - NVIDIA CUDA Toolkit 12.8 или новее (для использования CUDA)
+      - Режим вывода FP16 для уменьшения использования видеопамяти и увеличения скорости
+      - Режим CPU как запасной вариант, когда не обнаружено аппаратное ускорение
+      - Опциональная оптимизация DeepSpeed для улучшения производительности
+
+      **Узнать Больше:**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+
+    sv_SE: |
+      IndexTTS2 är en avancerad text-till-tal-modell som fokuserar på känslouttryck och precis kontroll av varaktighet. Det är en uppgraderad version av sin föregångare IndexTTS v1.5 med betydande förbättringar i känslokontroll och semantisk bearbetning.
+
+      **Nyckelfunktioner:**
+      - Oberoende känslkontrollsystem med fyra inmatningsmetoder
+      - Precis kontroll av varaktighet för perfekt ljud-videosynkronisering
+      - Zero-Shot TTS-förmåga för att rekonstruera röster utan specifik träning
+      - Interaktiv Gradio WebUI för enkel användning av alla funktioner
+
+      **Känslkontrollmetoder:**
+      - Talarröst (standard): Referensljud för både klangfärg och känsla
+      - Stilreferensljud: Separat ljud för att specificera känsla
+      - 8D Känslvektor: Direkt kontroll över 8 känslodimensioner
+      - Textbeskrivning: Naturliga språkbeskrivningar med QwenEmotion-modellen
+
+      **Hårdvarukrav:**
+      - NVIDIA GPU med minst 12 GB VRAM
+      - NVIDIA CUDA Toolkit 12.8 eller nyare (för CUDA-användning)
+      - FP16 inferensläge för minskat VRAM-användning och ökad hastighet
+      - CPU-läge som reserv när ingen hårdvaruacceleration upptäcks
+      - Valfri DeepSpeed-optimering för förbättrad prestanda
+
+      **Läs Mer:**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+
+    tr_TR: |
+      IndexTTS2, duygusal ifade ve hassas süre kontrolüne odaklanmış gelişmiş bir metinden sese modelidir. Bu, selefi IndexTTS v1.5'in yükseltilmiş bir versiyonudur ve duygu kontrolü ile anlamsal işlemede önemli iyileştirmeler içerir.
+
+      **Temel Özellikler:**
+      - Dört giriş yöntemine sahip bağımsız duygu kontrol sistemi
+      - Mükemmel ses-video senkronizasyonu için hassas süre kontrolü
+      - Özel eğitim olmadan sesleri yeniden oluşturma Zero-Shot TTS yeteneği
+      - Tüm özellikleri kolayca kullanmak için etkileşimli Gradio WebUI
+
+      **Duygu Kontrol Yöntemleri:**
+      - Konuşmacı Sesi (varsayılan): Ton rengi ve duygu için referans ses
+      - Stil Referans Ses: Duyguyu belirtmek için ayrı bir ses
+      - 8B Duygu Vektörü: 8 duygu boyutu üzerinde doğrudan kontrol
+      - Metin Açıklaması: QwenEmotion modeli ile doğal dil açıklamaları
+
+      **Donanım Gereksinimleri:**
+      - En az 12 GB VRAM'e sahip NVIDIA GPU
+      - NVIDIA CUDA Toolkit 12.8 veya daha yenisi (CUDA kullanımı için)
+      - Azaltılmış VRAM kullanımı ve artırılmış hız için FP16 çıkarım modu
+      - Donanım ivmesi algılanmadığında yedek olarak CPU modu
+      - Geliştirilmiş performans için isteğe bağlı DeepSpeed optimizasyonu
+
+      **Daha Fazla Bilgi:**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+
+    zh_CN: |
+      IndexTTS2 是一个专注于情感表达和精确时长控制的先进文本转语音模型。它是其前身 IndexTTS v1.5 的升级版，在情感控制和语义处理方面有显著改进。
+
+      **主要功能：**
+      - 独立情感控制系统，支持四种输入方式
+      - 精确时长控制，实现完美音视频同步
+      - 零样本TTS能力，无需特定训练即可重建声音
+      - 交互式Gradio WebUI，轻松操作所有功能
+
+      **情感控制方法：**
+      - 说话者语音（默认）：同时提供音色和情感的参考音频
+      - 风格参考音频：使用单独的音频文件指定情感
+      - 8D情感向量：直接通过8维向量精确指定情感强度
+      - 文本描述：使用QwenEmotion模型将自然语言的情感描述转换为情感向量
+
+      **硬件要求：**
+      - NVIDIA GPU，至少12GB显存
+      - 如使用NVIDIA CUDA，需要CUDA Toolkit 12.8或更新版本
+      - 推荐使用FP16推理模式，显著减少显存使用并提高速度
+      - 当未检测到硬件加速时，将回退到CPU模式运行
+      - 可选使用DeepSpeed优化，提高推理速度
+
+      **了解更多：**
+      - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
+  category: Utilities
+  author: index-tts
+  developer: icewhaletech
+  main: index-tts-nvidia
+  port_map: "7867"
+  architectures:
+    - amd64
+  index: /
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-3.jpg
