@@ -1,0 +1,38 @@
+name: 2048-level
+services:
+  2048-game:
+    image: damarcreative/2048-level:1.0.0
+    container_name: 2048-level
+    restart: unless-stopped
+    ports:
+      - target: 80
+        published: "$WEBUI_PORT"
+        protocol: tcp
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  main: 2048-game
+  author: "Damar Jati"
+  category: Games
+  description:
+    en_us: |
+      A modified version of 2048 with an added leveling system and a fresh layout. 
+      Challenge yourself to reach higher milestones beyond the classic 2048!
+  developer: "Gabriele Cirulli"
+  icon: https://raw.githubusercontent.com/Damarcreative/2048-level/refs/heads/master/meta/apple-touch-icon.png
+  tagline:
+    en_us: 2048 with Leveling System - Can you reach the top?
+  thumbnail: https://raw.githubusercontent.com/Damarcreative/2048-level/refs/heads/master/meta/apple-touch-icon.png
+  title:
+    en_us: "2048 Level Edition"
+  index: /
+  port_map: "$WEBUI_PORT"
