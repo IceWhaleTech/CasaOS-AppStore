@@ -6,8 +6,13 @@ services:
     restart: unless-stopped
     ports:
       - target: 80
-        published: "$WEBUI_PORT"
+        published: ${WEBUI_PORT:-2048}
         protocol: tcp
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_us: Web UI Port
     networks:
       - default
 
@@ -28,11 +33,11 @@ x-casaos:
       A modified version of 2048 with an added leveling system and a fresh layout. 
       Challenge yourself to reach higher milestones beyond the classic 2048!
   developer: "Gabriele Cirulli"
-  icon: https://raw.githubusercontent.com/Damarcreative/2048-level/refs/heads/master/meta/apple-touch-icon.png
+  icon: https://raw.githubusercontent.com/Damarcreative/2048-level/master/Apps/2048-level/icon.png
   tagline:
     en_us: 2048 with Leveling System - Can you reach the top?
-  thumbnail: https://raw.githubusercontent.com/Damarcreative/2048-level/refs/heads/master/meta/apple-touch-icon.png
+  thumbnail: https://raw.githubusercontent.com/Damarcreative/2048-level/master/Apps/2048-level/icon.png
   title:
     en_us: "2048 Level Edition"
   index: /
-  port_map: "$WEBUI_PORT"
+  port_map: ${WEBUI_PORT:-2048}
