@@ -51,198 +51,333 @@ x-casaos:
     tr_TR: Index-TTS
     zh_CN: Index-TTS
   tagline:
-    de_DE: Text-zu-Sprache mit Gradio WebUI
-    el_GR: Μετατροπή κειμένου σε ομιλία με Gradio WebUI
-    en_GB: Text to Speech with Gradio WebUI
-    en_US: Text to Speech with Gradio WebUI
-    fr_FR: Synthèse vocale avec Gradio WebUI
-    hr_HR: Pretvaranje teksta u govor s Gradio WebUI
-    it_IT: Sintesi vocale con Gradio WebUI
-    ja_JP: Gradio WebUI付きテキスト読み上げ
-    ko_KR: Gradio WebUI가 포함된 텍스트 음성 변환
-    nb_NO: Tekst til tale med Gradio WebUI
-    pt_PT: Texto para fala com Gradio WebUI
-    ru_RU: Синтез речи с Gradio WebUI
-    sv_SE: Text-till-tal med Gradio WebUI
-    tr_TR: Gradio WebUI ile Metinden Sese
-    zh_CN: 基于 Gradio 的文本转语音服务
+    de_DE: Ein kontrollierbares und effizientes Zero-Shot-Text-zu-Sprache-System auf Industrieniveau
+    el_GR: Ένα ελεγχόμενο και αποδοτικό σύστημα μετατροπής κειμένου σε ομιλία βιομηχανικού επιπέδου χωρίς εκπαίδευση
+    en_GB: An industrial-level controllable and efficient zero-shot text-to-speech system
+    en_US: An Industrial-Level Controllable and Efficient Zero-Shot Text-To-Speech System
+    fr_FR: Un système de synthèse vocale zéro-shot contrôlable et efficace de niveau industriel
+    hr_HR: Kontrolirani i učinkoviti zero-shot sustav pretvaranja teksta u govor industrijske razine
+    it_IT: Un sistema di sintesi vocale zero-shot controllabile ed efficiente di livello industriale
+    ja_JP: 工業レベルの制御可能で効率的なゼロショットテキスト読み上げシステム
+    ko_KR: 산업 수준의 제어 가능하고 효율적인 제로샷 텍스트 음성 변환 시스템
+    nb_NO: Et kontrollerbart og effektivt zero-shot tekst-til-tale-system på industrinivå
+    pt_PT: Um sistema de texto para fala zero-shot controlável e eficiente de nível industrial
+    ru_RU: Контролируемая и эффективная система синтеза речи с нулевым обучением промышленного уровня
+    sv_SE: Ett kontrollerbart och effektivt zero-shot text-till-tal-system på industrinivå
+    tr_TR: Endüstriyel seviyede kontrol edilebilir ve verimli sıfır örnekli metinden sese sistemi
+    zh_CN: 工业级可控高效的零样本文本转语音系统
   description:
     de_DE: |
-      IndexTTS2 ist ein fortschrittliches Text-zu-Sprache-Modell, das sich auf emotionale Ausdrucksfähigkeit und präzise Dauersteuerung spezialisiert hat. Es ist eine verbesserte Version seines Vorgängers IndexTTS v1.5 mit bedeutenden Fortschritten in der Emotionskontrolle und semantischen Verarbeitung.
+      IndexTTS2 ist ein fortschrittliches Zero-Shot-Text-zu-Sprache-Modell, das innovativ eine vollständige Entkopplung von emotionaler Ausdrucksfähigkeit und Sprecher-Identität realisiert. Das Modell unterstützt präzise Sprachdauerkontrolle und multimodale Emotionskontrolle, wobei es die Zielstimme beibehalten und gleichzeitig die angegebene emotionale Intonation präzise wiedergeben kann.
+
+      Das Modell verwendet ein dreistufiges Trainingsparadigma und führt GPT-Latent-Repräsentationen ein, um hervorragende Sprachklarheit und Stabilität auch bei hoher emotionaler Ausdrucksfähigkeit zu gewährleisten. Durch den auf Qwen basierenden Soft-Instruction-Mechanismus können Benutzer die emotionalen Merkmale der generierten Sprache einfach mit natürlichsprachlichen Beschreibungen steuern.
+
+      In Multi-Dataset-Evaluierungen übertrifft IndexTTS2 bestehende Zero-Shot-TTS-Modelle in Schlüsselmetriken wie Wortfehlerrate, Sprecher-Ähnlichkeit und emotionaler Wiedergabetreue und bietet branchenführende Sprachsynthesequalität.
 
       **Hauptfunktionen:**
-      - Unabhängiges Emotionskontrollsystem mit vier Eingabemethoden
-      - Präzise Dauersteuerung für perfekte Audio-Video-Synchronisation
-      - Zero-Shot TTS-Fähigkeit zur Rekonstruktion von Stimmen ohne spezifisches Training
-      - Interaktive Gradio WebUI zur einfachen Bedienung aller Funktionen
+      - Zero-Shot TTS-Fähigkeit zur Nachbildung beliebiger Stimmen ohne Training
+      - Unabhängige Kontrolle von Emotion und Timbre mit multimodaler Emotionseingabe
+      - Präzise Dauerkontrolle zur expliziten Token-Anzahl-Spezifikation für perfekte Audio-Video-Synchronisation
+      - Natürlichsprachliche Emotionskontrolle zur Steuerung der Sprachgenerierung durch Textbeschreibungen
+
+       **Zusätzliche Hinweise:**
+      - Diese Anwendung läuft standardmäßig auf der CPU. Für NVIDIA GPU-Nutzung wählen Sie "Custom Install" und aktivieren Sie die GPU-Option (unterstützt in ZimaOS 1.5.0 und höher)
+      - Bei NVIDIA GPU-Nutzung wird ≥ 8 GB VRAM benötigt (empfohlen für optimale Leistung)
+      - Bei NVIDIA GPU-Nutzung wird NVIDIA CUDA Toolkit Version ≥ 12.8 benötigt
 
       **Mehr Erfahren:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
     el_GR: |
-      Το IndexTTS2 είναι ένα προηγμένο μοντέλο μετατροπής κειμένου σε ομιλία που εστιάζει στη συναισθηματική έκφραση και τον ακριβή έλεγχο διάρκειας. Είναι μια βελτιωμένη έκδοση του προκατόχου του IndexTTS v1.5 με σημαντικές βελτιώσεις στον έλεγχο συναισθημάτων και την σημασιολογική επεξεργασία.
+      Το IndexTTS2 είναι ένα προηγμένο μοντέλο μετατροπής κειμένου σε ομιλία χωρίς εκπαίδευση (zero-shot), που υλοποιεί καινοτόμα την πλήρη αποσύζευξη της συναισθηματικής έκφρασης και της ταυτότητας του ομιλητή. Το μοντέλο υποστηρίζει ακριβή έλεγχο διάρκειας φωνής και πολυτροπικό έλεγχο συναισθημάτων, μπορώντας να διατηρήσει την φωνή-στόχο ενώ αναπαράγει με ακρίβεια τον καθορισμένο συναισθηματικό τόνο.
+
+      Το μοντέλο χρησιμοποιεί ένα τριφασικό παράδειγμα εκπαίδευσης και εισάγει αναπαραστάσεις λανθάνουσας GPT, εξασφαλίζοντας εξαιρετική σαφήνεια και σταθερότητα φωνής ακόμη και με υψηλή συναισθηματική έκφραση. Μέσω του μηχανισμού μαλακών οδηγιών βασισμένου στο Qwen, οι χρήστες μπορούν να ελέγχουν εύκολα τα συναισθηματικά χαρακτηριστικά της παραγόμενης φωνής χρησιμοποιώντας περιγραφές φυσικής γλώσσας.
+
+      Σε αξιολογήσεις πολλαπλών συνόλων δεδομένων, το IndexTTS2 ξεπερνά τα υπάρχοντα μοντέλα zero-shot TTS σε βασικές μετρήσεις όπως ποσοστό λάθους λέξεων, ομοιότητα ομιλητή και πιστότητα συναισθήματος, παρέχοντας ποιότητα σύνθεσης φωνής κορυφαίου επιπέδου.
 
       **Κύρια Χαρακτηριστικά:**
-      - Ανεξάρτητο σύστημα ελέγχου συναισθημάτων με τέσσερις μεθόδους εισαγωγής
-      - Ακριβής έλεγχος διάρκειας για τέλεια συγχρονισμό ήχου-εικόνας
-      - Ικανότητα Zero-Shot TTS για ανακατασκευή φωνών χωρίς συγκεκριμένη εκπαίδευση
-      - Διαδραστική Gradio WebUI για εύκολη χρήση όλων των λειτουργιών
+      - Ικανότητα Zero-Shot TTS για αναπαραγωγή οποιασδήποτε φωνής χωρίς εκπαίδευση
+      - Ανεξάρτητος έλεγχος συναισθήματος και χροιάς με πολυτροπική εισαγωγή συναισθημάτων
+      - Ακριβής έλεγχος διάρκειας με ρητή καθορισμό αριθμού tokens για τέλειο συγχρονισμό ήχου-βίντεο
+      - Έλεγχος συναισθημάτων με φυσική γλώσσα για καθοδήγηση της παραγωγής φωνής μέσω περιγραφών κειμένου
+
+       **Πρόσθετες Πληροφορίες:**
+      - Αυτή η εφαρμογή εκτελείται από προεπιλογή στην CPU. Για χρήση NVIDIA GPU, επιλέξτε "Custom Install" και ενεργοποιήστε την επιλογή GPU (υποστηρίζεται σε ZimaOS 1.5.0 και νεότερα)
+      - Για χρήση NVIDIA GPU, απαιτείται ≥ 8 GB VRAM (συνιστάται για βέλτιστη απόδοση)
+      - Για χρήση NVIDIA GPU, απαιτείται NVIDIA CUDA Toolkit έκδοση ≥ 12.8
 
       **Μάθετε Περισσότερα:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
     en_GB: |
-      IndexTTS2 is an advanced text-to-speech model focused on emotional expression and precise duration control. It is an upgraded version of its predecessor IndexTTS v1.5 with significant improvements in emotion control and semantic processing.
+      IndexTTS2 is an advanced zero-shot text-to-speech model that innovatively achieves complete decoupling of emotional expression and speaker identity. The model supports precise speech duration control and multimodal emotion control, capable of maintaining the target timbre whilst accurately reproducing the specified emotional intonation.
+
+      The model employs a three-stage training paradigm and introduces GPT latent representations, ensuring excellent speech clarity and stability even under high emotional expression. Through the Qwen-based soft instruction mechanism, users can easily control the emotional characteristics of generated speech using natural language descriptions.
+
+      In multi-dataset evaluations, IndexTTS2 surpasses existing zero-shot TTS models in key metrics such as word error rate, speaker similarity, and emotion fidelity, providing industry-leading speech synthesis quality.
 
       **Key Features:**
-      - Independent emotion control system with four input methods
-      - Precise duration control for perfect audio-video synchronisation
-      - Zero-Shot TTS capability for reconstructing voices without specific training
-      - Interactive Gradio WebUI for easy operation of all features
+      - Zero-shot TTS capability to replicate any timbre without training
+      - Independent control of emotion and timbre with multimodal emotion input
+      - Precise duration control with explicit token count specification for perfect audio-video synchronisation
+      - Natural language-based emotion control to guide speech generation through text descriptions
+
+       **Additional Notes:**
+      - This application runs on CPU by default. For NVIDIA GPU usage, select "Custom Install" and enable the GPU option (supported in ZimaOS 1.5.0 and above)
+      - For NVIDIA GPU usage, ≥ 8 GB VRAM is required (recommended for optimal performance)
+      - For NVIDIA GPU usage, NVIDIA CUDA Toolkit version ≥ 12.8 is required
 
       **Learn More:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
     en_US: |
-      IndexTTS2 is an advanced text-to-speech model focused on emotional expression and precise duration control. It is an upgraded version of its predecessor IndexTTS v1.5 with significant improvements in emotion control and semantic processing.
+      IndexTTS2 is an advanced zero-shot text-to-speech model that innovatively achieves complete decoupling of emotional expression and speaker identity. The model supports precise speech duration control and multimodal emotion control, capable of maintaining the target timbre while accurately reproducing the specified emotional intonation.
+
+      The model employs a three-stage training paradigm and introduces GPT latent representations, ensuring excellent speech clarity and stability even under high emotional expression. Through the Qwen-based soft instruction mechanism, users can easily control the emotional characteristics of generated speech using natural language descriptions.
+
+      In multi-dataset evaluations, IndexTTS2 surpasses existing zero-shot TTS models in key metrics such as word error rate, speaker similarity, and emotion fidelity, providing industry-leading speech synthesis quality.
 
       **Key Features:**
-      - Independent emotion control system with four input methods
-      - Precise duration control for perfect audio-video synchronization
-      - Zero-Shot TTS capability for reconstructing voices without specific training
-      - Interactive Gradio WebUI for easy operation of all features
+      - Zero-shot TTS capability to replicate any timbre without training
+      - Independent control of emotion and timbre with multimodal emotion input
+      - Precise duration control with explicit token count specification for perfect audio-video synchronization
+      - Natural language-based emotion control to guide speech generation through text descriptions
+
+       **Additional Notes:**
+      - This application runs on CPU by default. For NVIDIA GPU usage, select "Custom Install" and enable the GPU option (supported in ZimaOS 1.5.0 and above)
+      - For NVIDIA GPU usage, ≥ 8 GB VRAM is required (recommended for optimal performance)
+      - For NVIDIA GPU usage, NVIDIA CUDA Toolkit version ≥ 12.8 is required
 
       **Learn More:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
     fr_FR: |
-      IndexTTS2 est un modèle de synthèse vocale avancé axé sur l'expression émotionnelle et le contrôle précis de la durée. Il s'agit d'une version améliorée de son prédécesseur IndexTTS v1.5 avec des améliorations significatives dans le contrôle des émotions et le traitement sémantique.
+      IndexTTS2 est un modèle avancé de synthèse vocale zéro-shot qui réalise de manière innovante un découplage complet entre l'expression émotionnelle et l'identité du locuteur. Le modèle prend en charge un contrôle précis de la durée de la parole et un contrôle émotionnel multimodal, capable de maintenir le timbre cible tout en reproduisant avec précision l'intonation émotionnelle spécifiée.
+
+      Le modèle emploie un paradigme d'entraînement en trois étapes et introduit des représentations latentes GPT, garantissant une excellente clarté et stabilité de la parole même en cas d'expression émotionnelle élevée. Grâce au mécanisme d'instruction souple basé sur Qwen, les utilisateurs peuvent facilement contrôler les caractéristiques émotionnelles de la parole générée en utilisant des descriptions en langage naturel.
+
+      Dans les évaluations multi-ensembles de données, IndexTTS2 surpasse les modèles TTS zéro-shot existants dans des métriques clés telles que le taux d'erreur de mots, la similarité du locuteur et la fidélité émotionnelle, offrant une qualité de synthèse vocale de premier plan dans l'industrie.
 
       **Fonctionnalités Clés:**
-      - Système de contrôle émotionnel indépendant avec quatre méthodes d'entrée
-      - Contrôle précis de la durée pour une synchronisation audio-vidéo parfaite
-      - Capacité Zero-Shot TTS pour reconstruire des voix sans formation spécifique
-      - Interface Web Gradio interactive pour une utilisation facile de toutes les fonctionnalités
+      - Capacité TTS zéro-shot pour reproduire n'importe quel timbre sans entraînement
+      - Contrôle indépendant de l'émotion et du timbre avec entrée émotionnelle multimodale
+      - Contrôle précis de la durée avec spécification explicite du nombre de tokens pour une synchronisation audio-vidéo parfaite
+      - Contrôle émotionnel basé sur le langage naturel pour guider la génération vocale par descriptions textuelles
+
+       **Notes Supplémentaires:**
+      - Cette application s'exécute par défaut sur le CPU. Pour utiliser le GPU NVIDIA, sélectionnez "Custom Install" et activez l'option GPU (pris en charge dans ZimaOS 1.5.0 et supérieur)
+      - Pour l'utilisation du GPU NVIDIA, ≥ 8 GB de VRAM sont requis (recommandé pour des performances optimales)
+      - Pour l'utilisation du GPU NVIDIA, NVIDIA CUDA Toolkit version ≥ 12.8 est requis
 
       **En Savoir Plus:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
     hr_HR: |
-      IndexTTS2 je napredni model pretvaranja teksta u govor koji se fokusira na emocionalni izraz i preciznu kontrolu trajanja. To je nadograđena verzija svog prethodnika IndexTTS v1.5 s značajnim poboljšanjima u kontroli emocija i semantičkoj obradi.
+      IndexTTS2 je napredni zero-shot model pretvaranja teksta u govor koji inovativno postiže potpuno razdvajanje emocionalnog izraza i identiteta govornika. Model podržava preciznu kontrolu trajanja govora i multimodalnu kontrolu emocija, sposoban zadržati ciljni timbar dok točno reproducira specificirani emocionalni ton.
+
+      Model koristi trofaznu paradigmu treniranja i uvodi GPT latentne reprezentacije, osiguravajući izvrsnu jasnoću i stabilnost govora čak i pod visokim emocionalnim izrazom. Kroz mehanizam mekih uputa temeljen na Qwen-u, korisnici mogu lako kontrolirati emocionalne karakteristike generiranog govora koristeći opise prirodnog jezika.
+
+      U evaluacijama na više skupova podataka, IndexTTS2 nadmašuje postojeće zero-shot TTS modele u ključnim metrikama kao što su stopa pogreške riječi, sličnost govornika i emocionalna vjernost, pružajući vodeću kvalitetu sinteze govora u industriji.
 
       **Ključne Značajke:**
-      - Neovisan sustav kontrole emocija s četiri metode unosa
-      - Precizna kontrola trajanja za savršenu sinkronizaciju zvuka i slike
-      - Zero-Shot TTS sposobnost za rekonstrukciju glasova bez specifične obuke
-      - Interaktivna Gradio WebUI za lako korištenje svih funkcija
+      - Zero-shot TTS sposobnost za repliciranje bilo kojeg timbra bez treniranja
+      - Neovisna kontrola emocija i timbra s multimodalnim emocionalnim unosom
+      - Precizna kontrola trajanja s eksplicitnom specifikacijom broja tokena za savršenu audio-video sinkronizaciju
+      - Kontrola emocija temeljena na prirodnom jeziku za usmjeravanje generiranja govora kroz tekstualne opise
+
+       **Dodatne Napomene:**
+      - Ova aplikacija radi na CPU-u prema zadanim postavkama. Za korištenje NVIDIA GPU-a, odaberite "Custom Install" i omogućite GPU opciju (podržano u ZimaOS 1.5.0 i novijim verzijama)
+      - Za korištenje NVIDIA GPU-a, potrebno je ≥ 8 GB VRAM-a (preporučeno za optimalnu performansu)
+      - Za korištenje NVIDIA GPU-a, potreban je NVIDIA CUDA Toolkit verzija ≥ 12.8
 
       **Saznajte Više:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
     it_IT: |
-      IndexTTS2 è un modello avanzato di sintesi vocale focalizzato sull'espressione emotiva e sul controllo preciso della durata. È una versione migliorata del suo predecessore IndexTTS v1.5 con significativi miglioramenti nel controllo delle emozioni e nell'elaborazione semantica.
+      IndexTTS2 è un modello avanzato di sintesi vocale zero-shot che realizza in modo innovativo un completo disaccoppiamento tra espressione emotiva e identità del parlante. Il modello supporta il controllo preciso della durata del parlato e il controllo emotivo multimodale, capace di mantenere il timbro target mentre riproduce accuratamente l'intonazione emotiva specificata.
+
+      Il modello impiega un paradigma di addestramento a tre fasi e introduce rappresentazioni latenti GPT, garantendo eccellente chiarezza e stabilità del parlato anche in condizioni di alta espressione emotiva. Attraverso il meccanismo di istruzioni morbide basato su Qwen, gli utenti possono facilmente controllare le caratteristiche emotive del parlato generato utilizzando descrizioni in linguaggio naturale.
+
+      Nelle valutazioni multi-dataset, IndexTTS2 supera i modelli TTS zero-shot esistenti in metriche chiave come tasso di errore delle parole, somiglianza del parlante e fedeltà emotiva, fornendo qualità di sintesi vocale leader del settore.
 
       **Funzionalità Principali:**
-      - Sistema di controllo emotivo indipendente con quattro metodi di input
-      - Controllo preciso della durata per una perfetta sincronizzazione audio-video
-      - Capacità Zero-Shot TTS per ricostruire voci senza addestramento specifico
-      - Interfaccia Web Gradio interattiva per un facile utilizzo di tutte le funzionalità
+      - Capacità TTS zero-shot per replicare qualsiasi timbro senza addestramento
+      - Controllo indipendente di emozione e timbro con input emotivo multimodale
+      - Controllo preciso della durata con specifica esplicita del conteggio dei token per perfetta sincronizzazione audio-video
+      - Controllo emotivo basato sul linguaggio naturale per guidare la generazione vocale attraverso descrizioni testuali
+
+       **Note Aggiuntive:**
+      - Questa applicazione viene eseguita su CPU per impostazione predefinita. Per l'uso della GPU NVIDIA, selezionare "Custom Install" e abilitare l'opzione GPU (supportato in ZimaOS 1.5.0 e versioni successive)
+      - Per l'uso della GPU NVIDIA, sono richiesti ≥ 8 GB di VRAM (consigliato per prestazioni ottimali)
+      - Per l'uso della GPU NVIDIA, è richiesto NVIDIA CUDA Toolkit versione ≥ 12.8
 
       **Scopri di Più:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
     ja_JP: |
-      IndexTTS2は、感情表現と精密な時間制御に焦点を当てた高度なテキスト読み上げモデルです。これは前身であるIndexTTS v1.5のアップグレード版で、感情制御と意味処理において大幅な改善がなされています。
+      IndexTTS2は、感情表現と話者アイデンティティの完全な分離を革新的に実現した高度なゼロショットテキスト読み上げモデルです。このモデルは、精密な音声時間制御とマルチモーダル感情制御をサポートし、ターゲット音色を維持しながら指定された感情的イントネーションを正確に再現できます。
+
+      このモデルは3段階のトレーニングパラダイムを採用し、GPT潜在表現を導入することで、高い感情表現下でも優れた音声明瞭性と安定性を確保します。Qwenベースのソフトインストラクション機構により、ユーザーは自然言語記述を使用して生成音声の感情特性を簡単に制御できます。
+
+      複数データセット評価において、IndexTTS2は単語誤り率、話者類似度、感情忠実度などの主要指標で既存のゼロショットTTSモデルを上回り、業界最先端の音声合成品質を提供します。
 
       **主な機能：**
-      - 4つの入力方法を持つ独立した感情制御システム
-      - 完璧な音声同期のための精密な時間制御
-      - 特定のトレーニングなしで音声を再構築するZero-Shot TTS機能
-      - すべての機能を簡単に操作できる対話型Gradio WebUI
+      - トレーニングなしで任意の音色を再現するゼロショットTTS機能
+      - マルチモーダル感情入力による感情と音色の独立制御
+      - 完璧な音声・映像同期のための明示的トークン数指定による精密な時間制御
+      - テキスト記述による音声生成をガイドする自然言語ベースの感情制御
+
+       **補足説明：**
+      - このアプリケーションはデフォルトでCPUで実行されます。NVIDIA GPUを使用する場合は、「Custom Install」を選択してGPUオプションを有効にしてください（ZimaOS 1.5.0以上でサポート）
+      - NVIDIA GPUを使用する場合、≥ 8 GBのVRAMが必要です（最適なパフォーマンスのため推奨）
+      - NVIDIA GPUを使用する場合、NVIDIA CUDA Toolkitバージョン ≥ 12.8が必要です
 
       **詳細情報：**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
     ko_KR: |
-      IndexTTS2는 감정 표현과 정밀한 시간 제어에 초점을 맞춘 고급 텍스트 음성 변환 모델입니다. 이것은 전신인 IndexTTS v1.5의 업그레이드 버전으로, 감정 제어와 의미 처리에서 상당한 개선이 이루어졌습니다.
+      IndexTTS2는 감정 표현과 화자 신원의 완전한 분리를 혁신적으로 구현한 고급 제로샷 텍스트 음성 변환 모델입니다. 이 모델은 정밀한 음성 지속 시간 제어와 다중 모달 감정 제어를 지원하며, 대상 음색을 유지하면서 지정된 감정적 억양을 정확하게 재현할 수 있습니다.
+
+      이 모델은 3단계 훈련 패러다임을 채택하고 GPT 잠재 표현을 도입하여 높은 감정 표현에서도 우수한 음성 명료도와 안정성을 보장합니다. Qwen 기반 소프트 인스트럭션 메커니즘을 통해 사용자는 자연어 설명을 사용하여 생성된 음성의 감정적 특성을 쉽게 제어할 수 있습니다.
+
+      다중 데이터셋 평가에서 IndexTTS2는 단어 오류율, 화자 유사성, 감정 충실도와 같은 주요 지표에서 기존 제로샷 TTS 모델을 능가하며 업계 최고 수준의 음성 합성 품질을 제공합니다.
 
       **주요 기능:**
-      - 4가지 입력 방법을 갖춘 독립적인 감정 제어 시스템
-      - 완벽한 오디오-비디오 동기화를 위한 정밀한 시간 제어
-      - 특정 훈련 없이 음성을 재구성하는 Zero-Shot TTS 기능
-      - 모든 기능을 쉽게 조작할 수 있는 대화형 Gradio WebUI
+      - 훈련 없이 모든 음색을 복제하는 제로샷 TTS 기능
+      - 다중 모달 감정 입력을 통한 감정과 음색의 독립적 제어
+      - 완벽한 오디오-비디오 동기화를 위한 명시적 토큰 수 지정을 통한 정밀한 지속 시간 제어
+      - 텍스트 설명을 통해 음성 생성을 안내하는 자연어 기반 감정 제어
+
+       **추가 참고사항:**
+      - 이 애플리케이션은 기본적으로 CPU에서 실행됩니다. NVIDIA GPU를 사용하려면 "Custom Install"을 선택하고 GPU 옵션을 활성화하세요 (ZimaOS 1.5.0 이상에서 지원)
+      - NVIDIA GPU 사용 시 ≥ 8GB VRAM이 필요합니다 (최적의 성능을 위해 권장)
+      - NVIDIA GPU 사용 시 NVIDIA CUDA Toolkit 버전 ≥ 12.8이 필요합니다
 
       **자세히 알아보기:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
     nb_NO: |
-      IndexTTS2 er en avansert tekst-til-tale-modell som fokuserer på emosjonelt uttrykk og presis varighetskontroll. Det er en oppgradert versjon av sin forgjenger IndexTTS v1.5 med betydelige forbedringer i emosjonskontroll og semantisk behandling.
+      IndexTTS2 er en avansert zero-shot tekst-til-tale-modell som innovativt oppnår fullstendig frakobling av emosjonelt uttrykk og taler-identitet. Modellen støtter presis kontroll av talelengde og multimodal emosjonskontroll, i stand til å opprettholde målklangfargen samtidig som den nøyaktig gjengir den spesifiserte emosjonelle intonasjonen.
+
+      Modellen benytter et tre-trinns treningsparadigme og introduserer GPT latente representasjoner, som sikrer utmerket taleklårhet og stabilitet selv under høyt emosjonelt uttrykk. Gjennom den Qwen-baserte myke instruksjonsmekanismen kan brukere enkelt kontrollere de emosjonelle egenskapene til generert tale ved hjelp av naturlige språkbeskrivelser.
+
+      I multi-datasett-evalueringer overgår IndexTTS2 eksisterende zero-shot TTS-modeller i nøkkelberegninger som ordfeilvurdering, talerlighet og emosjonell troskap, og leverer bransjeledende talekvalitet.
 
       **Nøkkelegenskaper:**
-      - Uavhengig emosjonskontrollsystem med fire inndatametoder
-      - Presis varighetskontroll for perfekt lyd-video-synkronisering
-      - Zero-Shot TTS-evne for å rekonstruere stemmer uten spesifikk trening
-      - Interaktiv Gradio WebUI for enkel bruk av alle funksjoner
+      - Zero-shot TTS-evne for å replikere hvilken som helst klangfarge uten trening
+      - Uavhengig kontroll av emosjon og klangfarge med multimodal emosjonsinntasting
+      - Presis varighetskontroll med eksplisitt token-antallspesifikasjon for perfekt lyd-video-synkronisering
+      - Naturlig språkbasert emosjonskontroll for å veilede talegenerering gjennom tekstbeskrivelser
+
+       **Tilleggsmerknader:**
+      - Denne applikasjonen kjører på CPU som standard. For bruk av NVIDIA GPU, velg "Custom Install" og aktiver GPU-alternativet (støttet i ZimaOS 1.5.0 og nyere)
+      - For bruk av NVIDIA GPU kreves ≥ 8 GB VRAM (anbefalt for optimal ytelse)
+      - For bruk av NVIDIA GPU kreves NVIDIA CUDA Toolkit versjon ≥ 12.8
 
       **Lær Mer:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
     pt_PT: |
-      IndexTTS2 é um modelo avançado de texto para fala focado na expressão emocional e controle preciso de duração. É uma versão aprimorada de seu antecessor IndexTTS v1.5 com melhorias significativas no controle de emoções e processamento semântico.
+      IndexTTS2 é um modelo avançado de texto para fala zero-shot que alcança inovadoramente o desacoplamento completo entre expressão emocional e identidade do falante. O modelo suporta controle preciso da duração da fala e controle emocional multimodal, capaz de manter o timbre alvo enquanto reproduz com precisão a entonação emocional especificada.
+
+      O modelo emprega um paradigma de treinamento em três fases e introduz representações latentes GPT, garantindo excelente clareza e estabilidade da fala mesmo sob alta expressão emocional. Através do mecanismo de instrução suave baseado em Qwen, os usuários podem facilmente controlar as características emocionais da fala gerada usando descrições em linguagem natural.
+
+      Em avaliações multi-conjuntos de dados, IndexTTS2 supera os modelos TTS zero-shot existentes em métricas-chave como taxa de erro de palavras, similaridade do falante e fidelidade emocional, fornecendo qualidade de síntese de fala líder da indústria.
 
       **Funcionalidades Principais:**
-      - Sistema de controle emocional independente com quatro métodos de entrada
-      - Controle preciso de duração para sincronização perfeita de áudio-vídeo
-      - Capacidade Zero-Shot TTS para reconstruir vozes sem treinamento específico
-      - Interface Web Gradio interativa para fácil operação de todos os recursos
+      - Capacidade TTS zero-shot para replicar qualquer timbre sem treinamento
+      - Controle independente de emoção e timbre com entrada emocional multimodal
+      - Controle preciso de duração com especificação explícita de contagem de tokens para sincronização perfeita de áudio-vídeo
+      - Controle emocional baseado em linguagem natural para guiar a geração de fala através de descrições textuais
+
+       **Notas Adicionais:**
+      - Esta aplicação executa em CPU por padrão. Para uso de GPU NVIDIA, selecione "Custom Install" e ative a opção GPU (suportado no ZimaOS 1.5.0 e superior)
+      - Para uso de GPU NVIDIA, é necessário ≥ 8 GB de VRAM (recomendado para desempenho ideal)
+      - Para uso de GPU NVIDIA, é necessário NVIDIA CUDA Toolkit versão ≥ 12.8
 
       **Saiba Mais:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
     ru_RU: |
-      IndexTTS2 - это продвинутая модель синтеза речи, ориентированная на эмоциональное выражение и точный контроль длительности. Это улучшенная версия своего предшественника IndexTTS v1.5 со значительными улучшениями в контроле эмоций и семантической обработке.
+      IndexTTS2 - это продвинутая модель синтеза речи с нулевым обучением (zero-shot), которая инновационно реализует полное разделение эмоционального выражения и личности говорящего. Модель поддерживает точный контроль длительности речи и мультимодальный контроль эмоций, способна сохранять целевой тембр при точном воспроизведении указанной эмоциональной интонации.
+
+      Модель использует трёхэтапную парадигму обучения и вводит GPT латентные представления, обеспечивая отличную чёткость и стабильность речи даже при высоком эмоциональном выражении. Благодаря механизму мягких инструкций на основе Qwen, пользователи могут легко контролировать эмоциональные характеристики генерируемой речи с помощью описаний на естественном языке.
+
+      В оценках на множестве наборов данных IndexTTS2 превосходит существующие модели TTS с нулевым обучением по ключевым метрикам, таким как частота ошибок слов, схожесть говорящего и точность эмоций, предоставляя ведущее в отрасли качество синтеза речи.
 
       **Ключевые Особенности:**
-      - Независимая система контроля эмоций с четырьмя методами ввода
-      - Точный контроль длительности для идеальной синхронизации аудио и видео
-      - Возможность Zero-Shot TTS для реконструкции голосов без специального обучения
-      - Интерактивный интерфейс Gradio WebUI для легкой работы со всеми функциями
+      - Возможность TTS с нулевым обучением для воспроизведения любого тембра без обучения
+      - Независимый контроль эмоций и тембра с мультимодальным эмоциональным вводом
+      - Точный контроль длительности с явным указанием количества токенов для идеальной синхронизации аудио-видео
+      - Эмоциональный контроль на основе естественного языка для управления генерацией речи через текстовые описания
+
+       **Дополнительные Примечания:**
+      - Это приложение по умолчанию работает на CPU. Для использования GPU NVIDIA выберите "Custom Install" и включите опцию GPU (поддерживается в ZimaOS 1.5.0 и выше)
+      - Для использования GPU NVIDIA требуется ≥ 8 ГБ видеопамяти (рекомендуется для оптимальной производительности)
+      - Для использования GPU NVIDIA требуется NVIDIA CUDA Toolkit версии ≥ 12.8
 
       **Узнать Больше:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
     sv_SE: |
-      IndexTTS2 är en avancerad text-till-tal-modell som fokuserar på känslouttryck och precis kontroll av varaktighet. Det är en uppgraderad version av sin föregångare IndexTTS v1.5 med betydande förbättringar i känslokontroll och semantisk bearbetning.
+      IndexTTS2 - это продвинутая модель синтеза речи с нулевым обучением (zero-shot), которая инновационно реализует полное разделение эмоционального выражения и личности говорящего. Модель поддерживает точный контроль длительности речи и мультимодальный контроль эмоций, способна сохранять целевой тембр при точном воспроизведении указанной эмоциональной интонации.
 
-      **Nyckelfunktioner:**
-      - Oberoende känslkontrollsystem med fyra inmatningsmetoder
-      - Precis kontroll av varaktighet för perfekt ljud-videosynkronisering
-      - Zero-Shot TTS-förmåga för att rekonstruera röster utan specifik träning
-      - Interaktiv Gradio WebUI för enkel användning av alla funktioner
+      Модель использует трёхэтапную парадигму обучения и вводит GPT латентные представления, обеспечивая отличную чёткость и стабильность речи даже при высоком эмоциональном выражении. Благодаря механизму мягких инструкций на основе Qwen, пользователи могут легко контролировать эмоциональные характеристики генерируемой речи с помощью описаний на естественном языке.
+
+      В оценках на множестве наборов данных IndexTTS2 превосходит существующие модели TTS с нулевым обучением по ключевым метрикам, таким как частота ошибок слов, схожесть говорящего и точность эмоций, предоставляя ведущее в отрасли качество синтеза речи.
+
+      **Ключевые Особенности:**
+      - Возможность TTS с нулевым обучением для воспроизведения любого тембра без обучения
+      - Независимый контроль эмоций и тембра с мультимодальным эмоциональным вводом
+      - Точный контроль длительности с явным указанием количества токенов для идеальной синхронизации аудио-видео
+      - Эмоциональный контроль на основе естественного языка для управления генерацией речи через текстовые описания
+
+       **Ytterligare Anmärkningar:**
+      - Denna applikation körs på CPU som standard. För NVIDIA GPU-användning, välj "Custom Install" och aktivera GPU-alternativet (stöds i ZimaOS 1.5.0 och senare)
+      - För NVIDIA GPU-användning krävs ≥ 8 GB VRAM (rekommenderas för optimal prestanda)
+      - För NVIDIA GPU-användning krävs NVIDIA CUDA Toolkit version ≥ 12.8
 
       **Läs Mer:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
     tr_TR: |
-      IndexTTS2, duygusal ifade ve hassas süre kontrolüne odaklanmış gelişmiş bir metinden sese modelidir. Bu, selefi IndexTTS v1.5'in yükseltilmiş bir versiyonudur ve duygu kontrolü ile anlamsal işlemede önemli iyileştirmeler içerir.
+      IndexTTS2, duygusal ifade ile konuşmacı kimliğinin tam ayrıştırılmasını yenilikçi bir şekilde gerçekleştiren gelişmiş bir sıfır örnekli (zero-shot) metinden sese modelidir. Model, hassas konuşma süresi kontrolünü ve çok modlu duygu kontrolünü destekler, hedef tınıyı korurken belirtilen duygusal tonlamayı doğru bir şekilde yeniden üretebilir.
+
+      Model, üç aşamalı bir eğitim paradigması kullanır ve GPT gizli gösterimleri sunar, yüksek duygusal ifade altında bile mükemmel konuşma netliği ve kararlılığı sağlar. Qwen tabanlı yumuşak talimat mekanizması sayesinde, kullanıcılar doğal dil açıklamaları kullanarak üretilen konuşmanın duygusal özelliklerini kolayca kontrol edebilirler.
+
+      Çoklu veri kümesi değerlendirmelerinde, IndexTTS2, kelime hata oranı, konuşmacı benzerliği ve duygu sadakati gibi temel metriklerde mevcut sıfır örnekli TTS modellerini aşarak sektör lideri konuşma sentez kalitesi sunmaktadır.
 
       **Temel Özellikler:**
-      - Dört giriş yöntemine sahip bağımsız duygu kontrol sistemi
-      - Mükemmel ses-video senkronizasyonu için hassas süre kontrolü
-      - Özel eğitim olmadan sesleri yeniden oluşturma Zero-Shot TTS yeteneği
-      - Tüm özellikleri kolayca kullanmak için etkileşimli Gradio WebUI
+      - Eğitim olmadan herhangi bir tınıyı çoğaltmak için sıfır örnekli TTS yeteneği
+      - Çok modlu duygu girişi ile duygu ve tınının bağımsız kontrolü
+      - Mükemmel ses-video senkronizasyonu için açık token sayısı belirtimi ile hassas süre kontrolü
+      - Metin açıklamaları aracılığıyla konuşma üretimini yönlendirmek için doğal dil tabanlı duygu kontrolü
+
+       **Ek Notlar:**
+      - Bu uygulama varsayılan olarak CPU üzerinde çalışır. NVIDIA GPU kullanımı için "Custom Install" seçeneğini seçin ve GPU seçeneğini etkinleştirin (ZimaOS 1.5.0 ve üzeri sürümlerde desteklenir)
+      - NVIDIA GPU kullanımı için ≥ 8 GB VRAM gereklidir (optimal performans için önerilir)
+      - NVIDIA GPU kullanımı için NVIDIA CUDA Toolkit sürüm ≥ 12.8 gereklidir
 
       **Daha Fazla Bilgi:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
 
     zh_CN: |
-      IndexTTS2 是一个专注于情感表达和精确时长控制的先进文本转语音模型。它是其前身 IndexTTS v1.5 的升级版，在情感控制和语义处理方面有显著改进。
+      IndexTTS2 是一个先进的零样本文本转语音模型，创新性地实现了情感表达与说话人身份的完全解耦。模型支持精确的语音时长控制和多模态情感控制，能够在保持目标音色的同时准确还原指定的情感语调。
+
+      该模型采用三阶段训练范式并引入GPT潜在表示，确保在高情感表达下仍能保持出色的语音清晰度和稳定性。通过基于Qwen的软指令机制，用户可以使用自然语言描述轻松控制生成语音的情感特征。
+
+      在多数据集评测中，IndexTTS2在词错误率、说话人相似度和情感保真度等关键指标上均超越现有零样本TTS模型，提供了业界领先的语音合成质量。
 
       **主要功能：**
-      - 独立情感控制系统，支持四种输入方式
-      - 精确时长控制，实现完美音视频同步
-      - 零样本TTS能力，无需特定训练即可重建声音
-      - 交互式Gradio WebUI，轻松操作所有功能
+      - 零样本TTS能力，无需训练即可复刻任意音色
+      - 情感与音色独立控制，支持多模态情感输入
+      - 精确时长控制，可显式指定token数量实现完美音视频同步
+      - 基于自然语言的情感控制，通过文本描述引导语音生成
+
+       **补充说明:**
+      - 该应用默认调用 CPU 运行，如果需要调用 NVIDIA GPU，请选择 “Custom Install” 安装，并勾选 GPU 选项（ZimaOS 1.5.0 及以上版本支持）
+      - 若调用 NVIDIA GPU，则需要具有 ≥ 8 GB 显存（推荐，用于获得最佳性能）
+      - 若调用 NVIDIA GPU，则需要 NVIDIA CUDA Toolkit 版本 ≥ 12.8
 
       **了解更多：**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -260,3 +395,35 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS/screenshot-3.png
+  tips:
+    before_install:
+      de_DE: |
+        Diese Anwendung läuft standardmäßig auf der CPU. Für NVIDIA GPU-Nutzung klicken Sie in Ihrem Dashboard auf die Einstellungen dieser Anwendung und aktivieren Sie die GPU-Option (unterstützt in ZimaOS 1.5.0 und höher)
+      el_GR: |
+        Αυτή η εφαρμογή εκτελείται από προεπιλογή στην CPU. Για χρήση NVIDIA GPU, κάντε κλικ στις ρυθμίσεις της εφαρμογής στο Dashboard σας και ενεργοποιήστε την επιλογή GPU (υποστηρίζεται σε ZimaOS 1.5.0 και νεότερα)
+      en_GB: |
+        This application runs on CPU by default. For NVIDIA GPU usage, click the settings option for this application in your Dashboard and enable the GPU option (supported in ZimaOS 1.5.0 and above)
+      en_US: |
+        This application runs on CPU by default. For NVIDIA GPU usage, click the settings option for this application in your Dashboard and enable the GPU option (supported in ZimaOS 1.5.0 and above)
+      fr_FR: |
+        Cette application s'exécute par défaut sur le CPU. Pour utiliser le GPU NVIDIA, cliquez sur l'option des paramètres de cette application dans votre Dashboard et activez l'option GPU (pris en charge dans ZimaOS 1.5.0 et supérieur)
+      hr_HR: |
+        Ova aplikacija radi na CPU-u prema zadanim postavkama. Za korištenje NVIDIA GPU-a, kliknite opciju postavki za ovu aplikaciju u vašem Dashboard-u i omogućite GPU opciju (podržano u ZimaOS 1.5.0 i novijim verzijama)
+      it_IT: |
+        Questa applicazione viene eseguita su CPU per impostazione predefinita. Per l'uso della GPU NVIDIA, fare clic sull'opzione delle impostazioni per questa applicazione nel Dashboard e abilitare l'opzione GPU (supportato in ZimaOS 1.5.0 e versioni successive)
+      ja_JP: |
+        このアプリケーションはデフォルトでCPUで実行されます。NVIDIA GPUを使用する場合は、ダッシュボードでこのアプリケーションの設定オプションをクリックし、GPUオプションを有効にしてください（ZimaOS 1.5.0以上でサポート）
+      ko_KR: |
+        이 애플리케이션은 기본적으로 CPU에서 실행됩니다. NVIDIA GPU를 사용하려면 대시보드에서 이 애플리케이션의 설정 옵션을 클릭하고 GPU 옵션을 활성화하세요 (ZimaOS 1.5.0 이상에서 지원)
+      nb_NO: |
+        Denne applikasjonen kjører på CPU som standard. For bruk av NVIDIA GPU, klikk på innstillingsalternativet for denne applikasjonen i Dashboard-et ditt og aktiver GPU-alternativet (støttet i ZimaOS 1.5.0 og nyere)
+      pt_PT: |
+        Esta aplicação executa em CPU por padrão. Para uso de GPU NVIDIA, clique na opção de configurações desta aplicação no seu Dashboard e ative a opção GPU (suportado no ZimaOS 1.5.0 e superior)
+      ru_RU: |
+        Это приложение работает на CPU по умолчанию. Для использования GPU NVIDIA нажмите на опцию настроек этого приложения в вашей панели управления и включите опцию GPU (поддерживается в ZimaOS 1.5.0 и выше)
+      sv_SE: |
+        Denna applikation körs på CPU som standard. För NVIDIA GPU-användning, klicka på inställningsalternativet för denna applikation i din Dashboard och aktivera GPU-alternativet (stöds i ZimaOS 1.5.0 och senare)
+      tr_TR: |
+        Bu uygulama varsayılan olarak CPU üzerinde çalışır. NVIDIA GPU kullanımı için Dashboard'unuzda bu uygulamanın ayarlar seçeneğine tıklayın ve GPU seçeneğini etkinleştirin (ZimaOS 1.5.0 ve üzeri sürümlerde desteklenir)
+      zh_CN: |
+        该应用默认调用 CPU 运行，如果需要调用 NVIDIA GPU，请在 Dashboard 中点击该应用的设置选项，勾选 GPU（ZimaOS 1.5.0 及以上版本支持）
