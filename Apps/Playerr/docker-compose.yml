@@ -1,0 +1,37 @@
+services:
+  playerr:
+    image: maikboarder/playerr:latest
+    container_name: playerr
+    ports:
+      - "2727:2727"
+    volumes:
+      - /DATA/AppData/playerr/config:/app/config
+      - /DATA/Media/Games:/media
+    restart: unless-stopped
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: playerr
+  icon: https://raw.githubusercontent.com/Maikboarder/Playerr/master/frontend/src/assets/app_logo.png
+  screenshot_link:
+    - https://raw.githubusercontent.com/Maikboarder/Playerr/master/screenshots/Library.png
+    - https://raw.githubusercontent.com/Maikboarder/Playerr/master/screenshots/GameDetails.png
+    - https://raw.githubusercontent.com/Maikboarder/Playerr/master/screenshots/SteamProfile.png
+  title:
+    en_us: Playerr
+    es_es: Playerr
+  tagline:
+    en_us: Self-Hosted Game Library Manager & PVR
+    es_es: Gestor de Biblioteca de Videojuegos & PVR
+  author: Maikboarder
+  category: Media
+  developer: Maikboarder
+  description:
+    en_us: "Inspired by the workflow of Radarr and Sonarr, Playerr is designed to be the definitive solution for video game enthusiasts who self-host their libraries. It bridges the gap between your local digital assets and the vast world of gaming metadata. Features include intelligent library scanning, IGDB/Steam integration, and automated download management."
+    es_es: "Inspirado en el flujo de trabajo de Radarr y Sonarr, Playerr es la solución definitiva para gestionar bibliotecas de videojuegos locales. Conecta tus archivos digitales con metadatos de IGDB y Steam. Incluye escaneo inteligente, gestión de descargas automatizada y una interfaz moderna."
+  port_map: "2727"
+  scheme: http
+  index: /
+  website: https://playerr.app
