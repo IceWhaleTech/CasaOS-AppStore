@@ -1,79 +1,55 @@
-name: index-tts-nvidia
+name: index-tts
 
 services:
-  index-tts-nvidia:
+  index-tts:
     image: icewhaletech/index-tts:2.0
     container_name: index-tts
     restart: unless-stopped
     ports:
       - target: 7860
-        published: "7867"
+        published: "17869"
         protocol: tcp
-    environment:
-      NVIDIA_VISIBLE_DEVICES: all
     deploy:
       resources:
         reservations:
           memory: 8G
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
     x-casaos:
-      envs:
-        - container: NVIDIA_VISIBLE_DEVICES
-          description:
-            de_DE: Sichtbare NVIDIA-Geräte für GPU-Beschleunigung
-            el_GR: Ορατές συσκευές NVIDIA για επιτάχυνση GPU
-            en_GB: Visible NVIDIA devices for GPU acceleration
-            en_US: Visible NVIDIA devices for GPU acceleration
-            fr_FR: Appareils NVIDIA visibles pour l'accélération GPU
-            hr_HR: Vidljivi NVIDIA uređaji za GPU ubrzanje
-            it_IT: Dispositivi NVIDIA visibili per l'accelerazione GPU
-            ja_JP: GPUアクセラレーション用の可視NVIDIAデバイス
-            ko_KR: GPU 가속을 위한 가시적 NVIDIA 장치
-            nb_NO: Synlige NVIDIA-enheter for GPU-akselerasjon
-            pt_PT: Dispositivos NVIDIA visíveis para aceleração de GPU
-            ru_RU: Видимые устройства NVIDIA для ускорения GPU
-            sv_SE: Synliga NVIDIA-enheter för GPU-acceleration
-            tr_TR: GPU hızlandırması için görünür NVIDIA cihazları
-            zh_CN: 用于GPU加速的可见NVIDIA设备
       ports:
         - container: "7860"
           description:
-            de_DE: Gradio WebUI-Port
-            el_GR: Θύρα Gradio WebUI
-            en_GB: Gradio WebUI port
-            en_US: Gradio WebUI port
-            fr_FR: Port Gradio WebUI
-            hr_HR: Gradio WebUI luka
-            it_IT: Porta Gradio WebUI
-            ja_JP: Gradio WebUIポート
-            ko_KR: Gradio WebUI 포트
-            nb_NO: Gradio WebUI-port
-            pt_PT: Porta Gradio WebUI
-            ru_RU: Порт Gradio WebUI
-            sv_SE: Gradio WebUI-port
-            tr_TR: Gradio WebUI portu
-            zh_CN: Gradio WebUI端口
+            de_DE: WebUI HTTP Port
+            el_GR: Θύρα WebUI HTTP
+            en_GB: WebUI HTTP Port
+            en_US: WebUI HTTP Port
+            fr_FR: Port WebUI HTTP
+            hr_HR: WebUI HTTP Port
+            it_IT: Porta WebUI HTTP
+            ja_JP: WebUI HTTPポート
+            ko_KR: WebUI HTTP 포트
+            nb_NO: WebUI HTTP Port
+            pt_PT: Porta WebUI HTTP
+            ru_RU: Порт WebUI HTTP
+            sv_SE: WebUI HTTP Port
+            tr_TR: WebUI HTTP Portu
+            zh_CN: WebUI HTTP端口
 
 x-casaos:
   title:
-    de_DE: Index-TTS(Nvidia GPU)
-    el_GR: Index-TTS(Nvidia GPU)
-    en_GB: Index-TTS(Nvidia GPU)
-    en_US: Index-TTS(Nvidia GPU)
-    fr_FR: Index-TTS(Nvidia GPU)
-    hr_HR: Index-TTS(Nvidia GPU)
-    it_IT: Index-TTS(Nvidia GPU)
-    ja_JP: Index-TTS(Nvidia GPU)
-    ko_KR: Index-TTS(Nvidia GPU)
-    nb_NO: Index-TTS(Nvidia GPU)
-    pt_PT: Index-TTS(Nvidia GPU)
-    ru_RU: Index-TTS(Nvidia GPU)
-    sv_SE: Index-TTS(Nvidia GPU)
-    tr_TR: Index-TTS(Nvidia GPU)
-    zh_CN: Index-TTS(Nvidia GPU)
+    de_DE: Index-TTS
+    el_GR: Index-TTS
+    en_GB: Index-TTS
+    en_US: Index-TTS
+    fr_FR: Index-TTS
+    hr_HR: Index-TTS
+    it_IT: Index-TTS
+    ja_JP: Index-TTS
+    ko_KR: Index-TTS
+    nb_NO: Index-TTS
+    pt_PT: Index-TTS
+    ru_RU: Index-TTS
+    sv_SE: Index-TTS
+    tr_TR: Index-TTS
+    zh_CN: Index-TTS
   tagline:
     de_DE: Ein kontrollierbares und effizientes Zero-Shot-Text-zu-Sprache-System auf Industrieniveau
     el_GR: Ένα ελεγχόμενο και αποδοτικό σύστημα μετατροπής κειμένου σε ομιλία βιομηχανικού επιπέδου χωρίς εκπαίδευση
@@ -104,9 +80,10 @@ x-casaos:
       - Präzise Dauerkontrolle zur expliziten Token-Anzahl-Spezifikation für perfekte Audio-Video-Synchronisation
       - Natürlichsprachliche Emotionskontrolle zur Steuerung der Sprachgenerierung durch Textbeschreibungen
 
-      **Voraussetzungen:**
-      - NVIDIA GPU mit ≥ 8 GB VRAM (empfohlen für optimale Leistung)
-      - NVIDIA CUDA Toolkit Version ≥ 12.8
+       **Zusätzliche Hinweise:**
+      - Diese Anwendung läuft standardmäßig auf der CPU. Für NVIDIA GPU-Nutzung wählen Sie "Custom Install" und aktivieren Sie die GPU-Option (unterstützt in ZimaOS 1.5.0 und höher)
+      - Bei NVIDIA GPU-Nutzung wird ≥ 8 GB VRAM benötigt (empfohlen für optimale Leistung)
+      - Bei NVIDIA GPU-Nutzung wird NVIDIA CUDA Toolkit Version ≥ 12.8 benötigt
 
       **Mehr Erfahren:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -124,9 +101,10 @@ x-casaos:
       - Ακριβής έλεγχος διάρκειας με ρητή καθορισμό αριθμού tokens για τέλειο συγχρονισμό ήχου-βίντεο
       - Έλεγχος συναισθημάτων με φυσική γλώσσα για καθοδήγηση της παραγωγής φωνής μέσω περιγραφών κειμένου
 
-      **Προαπαιτούμενα:**
-      - NVIDIA GPU με ≥ 8 GB VRAM (συνιστάται για βέλτιστη απόδοση)
-      - NVIDIA CUDA Toolkit έκδοση ≥ 12.8
+       **Πρόσθετες Πληροφορίες:**
+      - Αυτή η εφαρμογή εκτελείται από προεπιλογή στην CPU. Για χρήση NVIDIA GPU, επιλέξτε "Custom Install" και ενεργοποιήστε την επιλογή GPU (υποστηρίζεται σε ZimaOS 1.5.0 και νεότερα)
+      - Για χρήση NVIDIA GPU, απαιτείται ≥ 8 GB VRAM (συνιστάται για βέλτιστη απόδοση)
+      - Για χρήση NVIDIA GPU, απαιτείται NVIDIA CUDA Toolkit έκδοση ≥ 12.8
 
       **Μάθετε Περισσότερα:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -144,9 +122,10 @@ x-casaos:
       - Precise duration control with explicit token count specification for perfect audio-video synchronisation
       - Natural language-based emotion control to guide speech generation through text descriptions
 
-      **Prerequisites:**
-      - NVIDIA GPU with ≥ 8 GB VRAM (recommended for optimal performance)
-      - NVIDIA CUDA Toolkit version ≥ 12.8
+       **Additional Notes:**
+      - This application runs on CPU by default. For NVIDIA GPU usage, select "Custom Install" and enable the GPU option (supported in ZimaOS 1.5.0 and above)
+      - For NVIDIA GPU usage, ≥ 8 GB VRAM is required (recommended for optimal performance)
+      - For NVIDIA GPU usage, NVIDIA CUDA Toolkit version ≥ 12.8 is required
 
       **Learn More:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -164,9 +143,10 @@ x-casaos:
       - Precise duration control with explicit token count specification for perfect audio-video synchronization
       - Natural language-based emotion control to guide speech generation through text descriptions
 
-      **Prerequisites:**
-      - NVIDIA GPU with ≥ 8 GB VRAM (recommended for optimal performance)
-      - NVIDIA CUDA Toolkit version ≥ 12.8
+       **Additional Notes:**
+      - This application runs on CPU by default. For NVIDIA GPU usage, select "Custom Install" and enable the GPU option (supported in ZimaOS 1.5.0 and above)
+      - For NVIDIA GPU usage, ≥ 8 GB VRAM is required (recommended for optimal performance)
+      - For NVIDIA GPU usage, NVIDIA CUDA Toolkit version ≥ 12.8 is required
 
       **Learn More:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -184,9 +164,10 @@ x-casaos:
       - Contrôle précis de la durée avec spécification explicite du nombre de tokens pour une synchronisation audio-vidéo parfaite
       - Contrôle émotionnel basé sur le langage naturel pour guider la génération vocale par descriptions textuelles
 
-      **Prérequis:**
-      - GPU NVIDIA avec ≥ 8 GB de VRAM (recommandé pour des performances optimales)
-      - NVIDIA CUDA Toolkit version ≥ 12.8
+       **Notes Supplémentaires:**
+      - Cette application s'exécute par défaut sur le CPU. Pour utiliser le GPU NVIDIA, sélectionnez "Custom Install" et activez l'option GPU (pris en charge dans ZimaOS 1.5.0 et supérieur)
+      - Pour l'utilisation du GPU NVIDIA, ≥ 8 GB de VRAM sont requis (recommandé pour des performances optimales)
+      - Pour l'utilisation du GPU NVIDIA, NVIDIA CUDA Toolkit version ≥ 12.8 est requis
 
       **En Savoir Plus:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -204,9 +185,10 @@ x-casaos:
       - Precizna kontrola trajanja s eksplicitnom specifikacijom broja tokena za savršenu audio-video sinkronizaciju
       - Kontrola emocija temeljena na prirodnom jeziku za usmjeravanje generiranja govora kroz tekstualne opise
 
-      **Preduvjeti:**
-      - NVIDIA GPU s ≥ 8 GB VRAM-a (preporučeno za optimalnu performansu)
-      - NVIDIA CUDA Toolkit verzija ≥ 12.8
+       **Dodatne Napomene:**
+      - Ova aplikacija radi na CPU-u prema zadanim postavkama. Za korištenje NVIDIA GPU-a, odaberite "Custom Install" i omogućite GPU opciju (podržano u ZimaOS 1.5.0 i novijim verzijama)
+      - Za korištenje NVIDIA GPU-a, potrebno je ≥ 8 GB VRAM-a (preporučeno za optimalnu performansu)
+      - Za korištenje NVIDIA GPU-a, potreban je NVIDIA CUDA Toolkit verzija ≥ 12.8
 
       **Saznajte Više:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -224,9 +206,10 @@ x-casaos:
       - Controllo preciso della durata con specifica esplicita del conteggio dei token per perfetta sincronizzazione audio-video
       - Controllo emotivo basato sul linguaggio naturale per guidare la generazione vocale attraverso descrizioni testuali
 
-      **Prerequisiti:**
-      - GPU NVIDIA con ≥ 8 GB di VRAM (consigliato per prestazioni ottimali)
-      - NVIDIA CUDA Toolkit versione ≥ 12.8
+       **Note Aggiuntive:**
+      - Questa applicazione viene eseguita su CPU per impostazione predefinita. Per l'uso della GPU NVIDIA, selezionare "Custom Install" e abilitare l'opzione GPU (supportato in ZimaOS 1.5.0 e versioni successive)
+      - Per l'uso della GPU NVIDIA, sono richiesti ≥ 8 GB di VRAM (consigliato per prestazioni ottimali)
+      - Per l'uso della GPU NVIDIA, è richiesto NVIDIA CUDA Toolkit versione ≥ 12.8
 
       **Scopri di Più:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -244,9 +227,10 @@ x-casaos:
       - 完璧な音声・映像同期のための明示的トークン数指定による精密な時間制御
       - テキスト記述による音声生成をガイドする自然言語ベースの感情制御
 
-      **前提条件：**
-      - ≥ 8 GBのVRAMを搭載したNVIDIA GPU（最適なパフォーマンスのため推奨）
-      - NVIDIA CUDA Toolkitバージョン ≥ 12.8
+       **補足説明：**
+      - このアプリケーションはデフォルトでCPUで実行されます。NVIDIA GPUを使用する場合は、「Custom Install」を選択してGPUオプションを有効にしてください（ZimaOS 1.5.0以上でサポート）
+      - NVIDIA GPUを使用する場合、≥ 8 GBのVRAMが必要です（最適なパフォーマンスのため推奨）
+      - NVIDIA GPUを使用する場合、NVIDIA CUDA Toolkitバージョン ≥ 12.8が必要です
 
       **詳細情報：**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -264,9 +248,10 @@ x-casaos:
       - 완벽한 오디오-비디오 동기화를 위한 명시적 토큰 수 지정을 통한 정밀한 지속 시간 제어
       - 텍스트 설명을 통해 음성 생성을 안내하는 자연어 기반 감정 제어
 
-      **전제 조건:**
-      - ≥ 8GB VRAM을 갖춘 NVIDIA GPU (최적의 성능을 위해 권장)
-      - NVIDIA CUDA Toolkit 버전 ≥ 12.8
+       **추가 참고사항:**
+      - 이 애플리케이션은 기본적으로 CPU에서 실행됩니다. NVIDIA GPU를 사용하려면 "Custom Install"을 선택하고 GPU 옵션을 활성화하세요 (ZimaOS 1.5.0 이상에서 지원)
+      - NVIDIA GPU 사용 시 ≥ 8GB VRAM이 필요합니다 (최적의 성능을 위해 권장)
+      - NVIDIA GPU 사용 시 NVIDIA CUDA Toolkit 버전 ≥ 12.8이 필요합니다
 
       **자세히 알아보기:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -284,9 +269,10 @@ x-casaos:
       - Presis varighetskontroll med eksplisitt token-antallspesifikasjon for perfekt lyd-video-synkronisering
       - Naturlig språkbasert emosjonskontroll for å veilede talegenerering gjennom tekstbeskrivelser
 
-      **Forutsetninger:**
-      - NVIDIA GPU med ≥ 8 GB VRAM (anbefalt for optimal ytelse)
-      - NVIDIA CUDA Toolkit versjon ≥ 12.8
+       **Tilleggsmerknader:**
+      - Denne applikasjonen kjører på CPU som standard. For bruk av NVIDIA GPU, velg "Custom Install" og aktiver GPU-alternativet (støttet i ZimaOS 1.5.0 og nyere)
+      - For bruk av NVIDIA GPU kreves ≥ 8 GB VRAM (anbefalt for optimal ytelse)
+      - For bruk av NVIDIA GPU kreves NVIDIA CUDA Toolkit versjon ≥ 12.8
 
       **Lær Mer:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -304,9 +290,10 @@ x-casaos:
       - Controle preciso de duração com especificação explícita de contagem de tokens para sincronização perfeita de áudio-vídeo
       - Controle emocional baseado em linguagem natural para guiar a geração de fala através de descrições textuais
 
-      **Pré-requisitos:**
-      - GPU NVIDIA com ≥ 8 GB de VRAM (recomendado para desempenho ideal)
-      - NVIDIA CUDA Toolkit versão ≥ 12.8
+       **Notas Adicionais:**
+      - Esta aplicação executa em CPU por padrão. Para uso de GPU NVIDIA, selecione "Custom Install" e ative a opção GPU (suportado no ZimaOS 1.5.0 e superior)
+      - Para uso de GPU NVIDIA, é necessário ≥ 8 GB de VRAM (recomendado para desempenho ideal)
+      - Para uso de GPU NVIDIA, é necessário NVIDIA CUDA Toolkit versão ≥ 12.8
 
       **Saiba Mais:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -324,9 +311,10 @@ x-casaos:
       - Точный контроль длительности с явным указанием количества токенов для идеальной синхронизации аудио-видео
       - Эмоциональный контроль на основе естественного языка для управления генерацией речи через текстовые описания
 
-      **Предварительные требования:**
-      - GPU NVIDIA с ≥ 8 ГБ видеопамяти (рекомендуется для оптимальной производительности)
-      - NVIDIA CUDA Toolkit версии ≥ 12.8
+       **Дополнительные Примечания:**
+      - Это приложение по умолчанию работает на CPU. Для использования GPU NVIDIA выберите "Custom Install" и включите опцию GPU (поддерживается в ZimaOS 1.5.0 и выше)
+      - Для использования GPU NVIDIA требуется ≥ 8 ГБ видеопамяти (рекомендуется для оптимальной производительности)
+      - Для использования GPU NVIDIA требуется NVIDIA CUDA Toolkit версии ≥ 12.8
 
       **Узнать Больше:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -344,9 +332,10 @@ x-casaos:
       - Точный контроль длительности с явным указанием количества токенов для идеальной синхронизации аудио-видео
       - Эмоциональный контроль на основе естественного языка для управления генерацией речи через текстовые описания
 
-      **Förutsättningar:**
-      - NVIDIA GPU med ≥ 8 GB VRAM (rekommenderas för optimal prestanda)
-      - NVIDIA CUDA Toolkit version ≥ 12.8
+       **Ytterligare Anmärkningar:**
+      - Denna applikation körs på CPU som standard. För NVIDIA GPU-användning, välj "Custom Install" och aktivera GPU-alternativet (stöds i ZimaOS 1.5.0 och senare)
+      - För NVIDIA GPU-användning krävs ≥ 8 GB VRAM (rekommenderas för optimal prestanda)
+      - För NVIDIA GPU-användning krävs NVIDIA CUDA Toolkit version ≥ 12.8
 
       **Läs Mer:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -364,9 +353,10 @@ x-casaos:
       - Mükemmel ses-video senkronizasyonu için açık token sayısı belirtimi ile hassas süre kontrolü
       - Metin açıklamaları aracılığıyla konuşma üretimini yönlendirmek için doğal dil tabanlı duygu kontrolü
 
-      **Ön Koşullar:**
-      - ≥ 8 GB VRAM'e sahip NVIDIA GPU (optimal performans için önerilir)
-      - NVIDIA CUDA Toolkit sürüm ≥ 12.8
+       **Ek Notlar:**
+      - Bu uygulama varsayılan olarak CPU üzerinde çalışır. NVIDIA GPU kullanımı için "Custom Install" seçeneğini seçin ve GPU seçeneğini etkinleştirin (ZimaOS 1.5.0 ve üzeri sürümlerde desteklenir)
+      - NVIDIA GPU kullanımı için ≥ 8 GB VRAM gereklidir (optimal performans için önerilir)
+      - NVIDIA GPU kullanımı için NVIDIA CUDA Toolkit sürüm ≥ 12.8 gereklidir
 
       **Daha Fazla Bilgi:**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
@@ -384,24 +374,57 @@ x-casaos:
       - 精确时长控制，可显式指定token数量实现完美音视频同步
       - 基于自然语言的情感控制，通过文本描述引导语音生成
 
-       **前置条件:**
-      - 具有 ≥ 8 GB 显存的 NVIDIA GPU（推荐，用于获得最佳性能）
-      - NVIDIA CUDA Toolkit 版本 ≥ 12.8
+       **补充说明:**
+      - 该应用默认调用 CPU 运行，如果需要调用 NVIDIA GPU，请选择 “Custom Install” 安装，并勾选 GPU 选项（ZimaOS 1.5.0 及以上版本支持）
+      - 若调用 NVIDIA GPU，则需要具有 ≥ 8 GB 显存（推荐，用于获得最佳性能）
+      - 若调用 NVIDIA GPU，则需要 NVIDIA CUDA Toolkit 版本 ≥ 12.8
 
       **了解更多：**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
   category: Utilities
   author: index-tts
   developer: icewhaletech
-  main: index-tts-nvidia
-  port_map: "7867"
+  main: index-tts
+  port_map: "17869"
   architectures:
     - amd64
   index: /
   scheme: http
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS/icon.png
   screenshot_link:
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-1.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-2.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-3.png
-  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/thumbnail.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS/screenshot-3.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS/thumbnail.png
+  tips:
+    before_install:
+      de_DE: |
+        Diese Anwendung läuft standardmäßig auf der CPU. Für NVIDIA GPU-Nutzung klicken Sie in Ihrem Dashboard auf die Einstellungen dieser Anwendung und aktivieren Sie die GPU-Option (unterstützt in ZimaOS 1.5.0 und höher)
+      el_GR: |
+        Αυτή η εφαρμογή εκτελείται από προεπιλογή στην CPU. Για χρήση NVIDIA GPU, κάντε κλικ στις ρυθμίσεις της εφαρμογής στο Dashboard σας και ενεργοποιήστε την επιλογή GPU (υποστηρίζεται σε ZimaOS 1.5.0 και νεότερα)
+      en_GB: |
+        This application runs on CPU by default. For NVIDIA GPU usage, click the settings option for this application in your Dashboard and enable the GPU option (supported in ZimaOS 1.5.0 and above)
+      en_US: |
+        This application runs on CPU by default. For NVIDIA GPU usage, click the settings option for this application in your Dashboard and enable the GPU option (supported in ZimaOS 1.5.0 and above)
+      fr_FR: |
+        Cette application s'exécute par défaut sur le CPU. Pour utiliser le GPU NVIDIA, cliquez sur l'option des paramètres de cette application dans votre Dashboard et activez l'option GPU (pris en charge dans ZimaOS 1.5.0 et supérieur)
+      hr_HR: |
+        Ova aplikacija radi na CPU-u prema zadanim postavkama. Za korištenje NVIDIA GPU-a, kliknite opciju postavki za ovu aplikaciju u vašem Dashboard-u i omogućite GPU opciju (podržano u ZimaOS 1.5.0 i novijim verzijama)
+      it_IT: |
+        Questa applicazione viene eseguita su CPU per impostazione predefinita. Per l'uso della GPU NVIDIA, fare clic sull'opzione delle impostazioni per questa applicazione nel Dashboard e abilitare l'opzione GPU (supportato in ZimaOS 1.5.0 e versioni successive)
+      ja_JP: |
+        このアプリケーションはデフォルトでCPUで実行されます。NVIDIA GPUを使用する場合は、ダッシュボードでこのアプリケーションの設定オプションをクリックし、GPUオプションを有効にしてください（ZimaOS 1.5.0以上でサポート）
+      ko_KR: |
+        이 애플리케이션은 기본적으로 CPU에서 실행됩니다. NVIDIA GPU를 사용하려면 대시보드에서 이 애플리케이션의 설정 옵션을 클릭하고 GPU 옵션을 활성화하세요 (ZimaOS 1.5.0 이상에서 지원)
+      nb_NO: |
+        Denne applikasjonen kjører på CPU som standard. For bruk av NVIDIA GPU, klikk på innstillingsalternativet for denne applikasjonen i Dashboard-et ditt og aktiver GPU-alternativet (støttet i ZimaOS 1.5.0 og nyere)
+      pt_PT: |
+        Esta aplicação executa em CPU por padrão. Para uso de GPU NVIDIA, clique na opção de configurações desta aplicação no seu Dashboard e ative a opção GPU (suportado no ZimaOS 1.5.0 e superior)
+      ru_RU: |
+        Это приложение работает на CPU по умолчанию. Для использования GPU NVIDIA нажмите на опцию настроек этого приложения в вашей панели управления и включите опцию GPU (поддерживается в ZimaOS 1.5.0 и выше)
+      sv_SE: |
+        Denna applikation körs på CPU som standard. För NVIDIA GPU-användning, klicka på inställningsalternativet för denna applikation i din Dashboard och aktivera GPU-alternativet (stöds i ZimaOS 1.5.0 och senare)
+      tr_TR: |
+        Bu uygulama varsayılan olarak CPU üzerinde çalışır. NVIDIA GPU kullanımı için Dashboard'unuzda bu uygulamanın ayarlar seçeneğine tıklayın ve GPU seçeneğini etkinleştirin (ZimaOS 1.5.0 ve üzeri sürümlerde desteklenir)
+      zh_CN: |
+        该应用默认调用 CPU 运行，如果需要调用 NVIDIA GPU，请在 Dashboard 中点击该应用的设置选项，勾选 GPU（ZimaOS 1.5.0 及以上版本支持）
