@@ -1,0 +1,353 @@
+name: psitransfer
+services:
+  psitransfer:
+    image: psitrax/psitransfer
+    container_name: psitransfer
+    ports:
+    - 13001:3000
+    environment:
+      PSITRANSFER_ADMIN_PASS: secret
+    volumes:
+    - /DATA/AppData/$AppID/data:/data
+    restart: unless-stopped
+    x-casaos:
+      envs:
+      - container: PSITRANSFER_ADMIN_PASS
+        description:
+          de_DE: Passwort für den Administrator-Account.
+          el_GR: Κωδικός πρόσβασης για τον λογαριασμό διαχειριστή.
+          en_GB: Password for the administrator account.
+          en_US: Password for the administrator account.
+          fr_FR: Mot de passe pour le compte administrateur.
+          hr_HR: Lozinka za administratorski račun.
+          it_IT: Password per l\ account amministratore.
+          ja_JP: 管理者アカウントのパスワード。
+          ko_KR: 관리자 계정의 비밀번호.
+          nb_NO: Passord for administratorkontoen.
+          pt_PT: Palavra-passe para a conta de administrador.
+          ru_RU: Пароль для учетной записи администратора.
+          sv_SE: Lösenord för administratörskontot.
+          tr_TR: Yönetici hesabı için şifre.
+          zh_CN: 管理员账户的密码。
+      ports:
+      - container: 3000
+        description:
+          de_DE: Web-UI und API-Port.
+          el_GR: Θύρα για το Web UI και το API.
+          en_GB: Web UI and API port.
+          en_US: Web UI and API port.
+          fr_FR: Port pour l\interface Web et l\API.
+          hr_HR: Web UI i API port.
+          it_IT: Porta per l\interfaccia Web e l\API.
+          ja_JP: Web UIとAPIのポート。
+          ko_KR: 웹 UI 및 API 포트.
+          nb_NO: Web UI og API-port.
+          pt_PT: Porta da interface Web e API.
+          ru_RU: Порт для веб-интерфейса и API.
+          sv_SE: Port för webbgränssnitt och API.
+          tr_TR: Web arayüzü ve API portu.
+          zh_CN: Web界面和API端口。
+      volumes:
+      - container: /data
+        description:
+          de_DE: Speicherort für hochgeladene Dateien und Anwendungsdaten.
+          el_GR: Τοποθεσία αποθήκευσης για τα αρχεία που ανέβηκαν και τα δεδομένα της εφαρμογής.
+          en_GB: Storage location for uploaded files and application data.
+          en_US: Storage location for uploaded files and application data.
+          fr_FR: Emplacement de stockage pour les fichiers téléchargés et les données de l\application.
+          hr_HR: Lokacija za pohranu prenesenih datoteka i podataka aplikacije.
+          it_IT: Posizione di archiviazione per i file caricati e i dati dell\applicazione.
+          ja_JP: アップロードされたファイルとアプリケーションデータの保存場所。
+          ko_KR: 업로드된 파일과 애플리케이션 데이터의 저장 위치.
+          nb_NO: Lagringsplass for opplastede filer og applikasjonsdata.
+          pt_PT: Local de armazenamento para ficheiros carregados e dados da aplicação.
+          ru_RU: Место хранения загруженных файлов и данных приложения.
+          sv_SE: Lagringsplats för uppladdade filer och applikationsdata.
+          tr_TR: Yüklenen dosyaların ve uygulama verilerinin depolama konumu.
+          zh_CN: 上传文件和应用数据的存储位置。
+x-casaos:
+  title:
+    de_DE: PsiTransfer
+    el_GR: PsiTransfer
+    en_GB: PsiTransfer
+    en_US: PsiTransfer
+    fr_FR: PsiTransfer
+    hr_HR: PsiTransfer
+    it_IT: PsiTransfer
+    ja_JP: PsiTransfer
+    ko_KR: PsiTransfer
+    nb_NO: PsiTransfer
+    pt_PT: PsiTransfer
+    ru_RU: PsiTransfer
+    sv_SE: PsiTransfer
+    tr_TR: PsiTransfer
+    zh_CN: PsiTransfer
+  tagline:
+    de_DE: Ein einfacher, quelloffener Dateifreigabe-Host.
+    el_GR: Ένας απλός, ανοιχτού κώδικα host διαμοιρασμού αρχείων.
+    en_GB: A simple, open-source file sharing host.
+    en_US: A simple, open-source file sharing host.
+    fr_FR: Un hôte simple et open source pour le partage de fichiers.
+    hr_HR: Jednostavan host za dijeljenje datoteka otvorenog koda.
+    it_IT: Un host per la condivisione di file semplice e open source.
+    ja_JP: シンプルなオープンソースのファイル共有ホスト。
+    ko_KR: 간단한 오픈 소스 파일 공유 호스트.
+    nb_NO: En enkel, åpen kildekode fil-delingsvert.
+    pt_PT: Um host de partilha de ficheiros simples e de código aberto.
+    ru_RU: Простой хост для обмена файлами с открытым исходным кодом.
+    sv_SE: En enkel, öppen källkods-fildelningsvärd.
+    tr_TR: Basit, açık kaynaklı bir dosya paylaşım barındırma hizmeti.
+    zh_CN: 一个简单、开源的文件分享托管服务。
+  description:
+    de_DE: |
+      ## 应用简介
+      PsiTransfer ist ein einfacher, selbstgehosteter Open-Source-Dateifreigabedienst, der es Ihnen ermöglicht, Dateien sicher und einfach zu teilen, ohne dass eine Registrierung erforderlich ist.
+
+      ## 功能描述
+      - **Keine Registrierung erforderlich**: Teilen Sie Dateien sofort, ohne ein Konto erstellen zu müssen.
+      - **Datenschutz & Kontrolle**: Alle Dateien werden auf Ihrem eigenen Server gespeichert, sodass Sie die volle Kontrolle über Ihre Daten behalten.
+      - **Passwortschutz**: Schützen Sie Ihre geteilten Dateien mit einem Passwort für zusätzlichen Schutz.
+      - **Ablaufdatum für Uploads**: Legen Sie fest, nach wie viel Zeit ein Upload automatisch gelöscht wird, um Speicherplatz zu sparen.
+      - **Admin-Panel**: Verwalten Sie alle Uploads über ein einfaches Admin-Panel.
+      - **Drop-off-Ziel**: Ermöglicht das Senden von Dateien an eine vordefinierte E-Mail-Adresse (falls konfiguriert).
+      - **Responsive Web-UI**: Eine saubere und benutzerfreundliche Oberfläche, die auf allen Geräten funktioniert.
+
+      ## 应用文档
+      Für weitere Informationen, Konfigurationsdetails und Unterstützung besuchen Sie bitte die offizielle Projektseite.
+      - **GitHub Repository**: [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+    el_GR: |
+      ## Εισαγωγή Εφαρμογής
+      Το PsiTransfer είναι μια απλή, αυτο-φιλοξενούμενη υπηρεσία διαμοιρασμού αρχείων ανοιχτού κώδικα που σας επιτρέπει να μοιράζεστε αρχεία με ασφάλεια και ευκολία, χωρίς να απαιτείται εγγραφή.
+
+      ## Περιγραφή Λειτουργιών
+      - **Χωρίς Εγγραφή**: Μοιραστείτε αρχεία αμέσως, χωρίς να χρειάζεται να δημιουργήσετε λογαριασμό.
+      - **Ιδιωτικότητα & Έλεγχος**: Όλα τα αρχεία αποθηκεύονται στον δικό σας server, διατηρώντας τον πλήρη έλεγχο των δεδομένων σας.
+      - **Προστασία με Κωδικό**: Προστατέψτε τα κοινόχρηστα αρχεία σας με κωδικό πρόσβασης για επιπλέον ασφάλεια.
+      - **Ημερομηνία Λήξης για τα Ανεβάσματα**: Ορίστε πόσο χρόνο θα παραμείνει ένα upload πριν διαγραφεί αυτόματα.
+      - **Πίνακας Διαχειριστή**: Διαχειριστείτε όλα τα uploads μέσω ενός απλού πίνακα διαχειριστή.
+      - **Responsive Web UI**: Μια καθαρή και φιλική προς τον χρήστη διεπαφή που λειτουργεί σε όλες τις συσκευές.
+
+      ## Τεκμηρίωση Εφαρμογής
+      Για περισσότερες πληροφορίες, λεπτομέρειες διαμόρφωσης και υποστήριξη, επισκεφθείτε την επίσημη σελίδα του έργου.
+      - **GitHub Repository**: [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+    en_GB: |
+      ## Application Introduction
+      PsiTransfer is a simple, self-hosted open-source file sharing service that allows you to share files securely and easily without requiring registration.
+
+      ## Feature Description
+      - **No Registration Required**: Share files instantly without needing to create an account.
+      - **Privacy & Control**: All files are stored on your own server, giving you full control over your data.
+      - **Password Protection**: Protect your shared files with a password for added security.
+      - **Upload Expiration**: Set uploads to expire after a certain amount of time to save storage space.
+      - **Admin Panel**: Manage all uploads through a simple admin panel.
+      - **Drop-off Target**: Allows sending files to a predefined email address (if configured).
+      - **Responsive Web UI**: A clean and user-friendly interface that works on all devices.
+
+      ## Application Documentation
+      For more information, configuration details, and support, please visit the official project page.
+      - **GitHub Repository**: [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+    en_US: |
+      ## Application Introduction
+      PsiTransfer is a simple, self-hosted open-source file sharing service that allows you to share files securely and easily without requiring registration.
+
+      ## Feature Description
+      - **No Registration Required**: Share files instantly without needing to create an account.
+      - **Privacy & Control**: All files are stored on your own server, giving you full control over your data.
+      - **Password Protection**: Protect your shared files with a password for added security.
+      - **Upload Expiration**: Set uploads to expire after a certain amount of time to save storage space.
+      - **Admin Panel**: Manage all uploads through a simple admin panel.
+      - **Drop-off Target**: Allows sending files to a predefined email address (if configured).
+      - **Responsive Web UI**: A clean and user-friendly interface that works on all devices.
+
+      ## Application Documentation
+      For more information, configuration details, and support, please visit the official project page.
+      - **GitHub Repository**: [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+    fr_FR: |
+      ## Introduction à l'application
+      PsiTransfer est un service de partage de fichiers open-source simple et auto-hébergé qui vous permet de partager des fichiers en toute sécurité et facilement, sans inscription requise.
+
+      ## Description des fonctionnalités
+      - **Aucune inscription requise** : Partagez des fichiers instantanément sans avoir à créer de compte.
+      - **Confidentialité et contrôle** : Tous les fichiers sont stockés sur votre propre serveur, vous donnant un contrôle total sur vos données.
+      - **Protection par mot de passe** : Protégez vos fichiers partagés avec un mot de passe pour une sécurité accrue.
+      - **Expiration des téléversements** : Définissez une date d'expiration pour les téléversements afin d'économiser de l'espace de stockage.
+      - **Panneau d'administration** : Gérez tous les téléversements via un panneau d'administration simple.
+      - **Cible de dépôt** : Permet d'envoyer des fichiers à une adresse e-mail prédéfinie (si configuré).
+      - **Interface Web responsive** : Une interface propre et conviviale qui fonctionne sur tous les appareils.
+
+      ## Documentation de l'application
+      Pour plus d'informations, de détails sur la configuration et du support, veuillez visiter la page officielle du projet.
+      - **Dépôt GitHub** : [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+    hr_HR: |
+      ## Uvod u aplikaciju
+      PsiTransfer je jednostavna, samostalno hostana usluga dijeljenja datoteka otvorenog koda koja vam omogućuje sigurno i lako dijeljenje datoteka bez potrebe za registracijom.
+
+      ## Opis funkcija
+      - **Nije potrebna registracija**: Dijelite datoteke trenutno bez potrebe za stvaranjem računa.
+      - **Privatnost i kontrola**: Sve datoteke se pohranjuju na vaš vlastiti server, dajući vam punu kontrolu nad vašim podacima.
+      - **Zaštita lozinkom**: Zaštitite svoje dijeljene datoteke lozinkom za dodatnu sigurnost.
+      - **Istek otpremanja**: Postavite da se otpremanja isteknu nakon određenog vremena kako biste uštedjeli prostor za pohranu.
+      - **Admin panel**: Upravljajte svim otpremanjima putem jednostavnog admin panela.
+      - **Ciljna adresa za predaju**: Omogućuje slanje datoteka na unaprijed definiranu adresu e-pošte (ako je konfigurirano).
+      - **Responsive Web UI**: Čisto i korisnički prijateljsko sučelje koje radi na svim uređajima.
+
+      ## Dokumentacija aplikacije
+      Za više informacija, detalje o konfiguraciji i podršku, posjetite službenu stranicu projekta.
+      - **GitHub Repozitorij**: [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+    it_IT: |
+      ## Introduzione all'Applicazione
+      PsiTransfer è un servizio di condivisione di file open source, semplice e auto-hospitato, che ti consente di condividere file in modo sicuro e facile senza richiedere la registrazione.
+
+      ## Descrizione delle Funzionalità
+      - **Nessuna Registrazione Richiesta**: Condividi file istantaneamente senza bisogno di creare un account.
+      - **Privacy e Controllo**: Tutti i file vengono archiviati sul tuo server, dandoti il pieno controllo sui tuoi dati.
+      - **Protezione con Password**: Proteggi i tuoi file condivisi con una password per una maggiore sicurezza.
+      - **Scadenza dei Caricamenti**: Imposta una data di scadenza per i caricamenti per risparmiare spazio di archiviazione.
+      - **Pannello di Amministrazione**: Gestisci tutti i caricamenti tramite un semplice pannello di amministrazione.
+      - **Destinazione Drop-off**: Consente di inviare file a un indirizzo email predefinito (se configurato).
+      - **Interfaccia Web Responsive**: Un'interfaccia pulita e user-friendly che funziona su tutti i dispositivi.
+
+      ## Documentazione dell'Applicazione
+      Per ulteriori informazioni, dettagli sulla configurazione e supporto, visita la pagina ufficiale del progetto.
+      - **Repository GitHub**: [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+    ja_JP: |
+      ## アプリケーション紹介
+      PsiTransferは、登録不要で安全かつ簡単にファイルを共有できる、シンプルで自己ホスト型のオープンソースファイル共有サービスです。
+
+      ## 機能説明
+      - **登録不要**: アカウント作成なしで、すぐにファイルを共有できます。
+      - **プライバシーとコントロール**: すべてのファイルはご自身のサーバーに保存され、データを完全にコントロールできます。
+      - **パスワード保護**: 共有ファイルにパスワードを設定して、セキュリティを強化できます。
+      - **アップロードの有効期限**: ストレージ容量を節約するため、アップロードに有効期限を設定できます。
+      - **管理パネル**: シンプルな管理パネルですべてのアップロードを管理できます。
+      - **ドロップオフターゲット**: 設定すれば、事前定義されたメールアドレスにファイルを送信できます。
+      - **レスポンシブWeb UI**: すべてのデバイスで動作する、クリーンでユーザーフレンドリーなインターフェース。
+
+      ## アプリケーションドキュメント
+      詳細情報、設定方法、サポートについては、公式プロジェクトページをご覧ください。
+      - **GitHubリポジトリ**: [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+    ko_KR: |
+      ## 애플리케이션 소개
+      PsiTransfer는 등록 없이 안전하고 쉽게 파일을 공유할 수 있는, 간단한 자체 호스팅 오픈 소스 파일 공유 서비스입니다.
+
+      ## 기능 설명
+      - **등록 필요 없음**: 계정 생성 없이 즉시 파일을 공유할 수 있습니다.
+      - **개인정보 보호 및 제어**: 모든 파일은 사용자 자신의 서버에 저장되어 데이터에 대한 완전한 제어권을 가집니다.
+      - **비밀번호 보호**: 추가 보안을 위해 공유 파일에 비밀번호를 설정할 수 있습니다.
+      - **업로드 만료**: 저장 공간을 절약하기 위해 업로드에 만료 기간을 설정할 수 있습니다.
+      - **관리자 패널**: 간단한 관리자 패널을 통해 모든 업로드를 관리할 수 있습니다.
+      **드롭오프 대상**: 설정 시, 미리 정의된 이메일 주소로 파일을 보낼 수 있습니다.
+      - **반응형 웹 UI**: 모든 기기에서 작동하는 깔끔하고 사용자 친화적인 인터페이스.
+
+      ## 애플리케이션 문서
+      더 자세한 정보, 구성 세부 사항 및 지원을 위해 공식 프로젝트 페이지를 방문하십시오.
+      - **GitHub 저장소**: [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+    nb_NO: |
+      ## Applikasjonsintroduksjon
+      PsiTransfer er en enkel, selv-hostet open-source fil-delings-tjeneste som lar deg dele filer sikkert og enkelt uten å kreve registrering.
+
+      **Funksjonsbeskrivelse**
+      - **Ingen registrering kreves**: Del filer umiddelbart uten å måtte opprette en konto.
+      - **Personvern og kontroll**: Alle filer lagres på din egen server, og gir deg full kontroll over dine data.
+      - **Passordbeskyttelse**: Beskytt dine delte filer med et passord for økt sikkerhet.
+      - **Utløp for opplasting**: Sett opplastinger til å utløpe etter en viss tid for å spare lagringsplass.
+      - **Admin-panel**: Administrer alle opplastinger gjennom et enkelt admin-panel.
+      - **Drop-off-mål**: Lar deg sende filer til en forhåndsdefinert e-postadresse (hvis konfigurert).
+      - **Responsiv web-grensesnitt**: Et rent og brukervennlig grensesnitt som fungerer på alle enheter.
+
+      ## Applikasjonsdokumentasjon
+      For mer informasjon, konfigurasjonsdetaljer og støtte, vennligst besøk den offisielle prosjektsiden.
+      - **GitHub Repository**: [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+    pt_PT: |
+      ## Introdução da Aplicação
+      O PsiTransfer é um serviço de partilha de ficheiros de código aberto, simples e auto-hospedado, que lhe permite partilhar ficheiros de forma segura e fácil sem exigir registo.
+
+      ## Descrição das Funcionalidades
+      - **Não Requer Registo**: Partilhe ficheiros instantaneamente sem precisar de criar uma conta.
+      - **Privacidade e Controlo**: Todos os ficheiros são armazenados no seu próprio servidor, dando-lhe controlo total sobre os seus dados.
+      - **Proteção por Palavra-passe**: Proteja os seus ficheiros partilhados com uma palavra-passe para maior segurança.
+      - **Expiração de Carregamentos**: Defina os carregamentos para expirarem após um certo período de tempo para economizar espaço de armazenamento.
+      - **Painel de Administração**: Gerencie todos os carregamentos através de um painel de administração simples.
+      - **Destino de Entrega**: Permite enviar ficheiros para um endereço de e-mail pré-definido (se configurado).
+      - **Interface Web Responsiva**: Uma interface limpa e amigável que funciona em todos os dispositivos.
+
+      ## Documentação da Aplicação
+      Para mais informações, detalhes de configuração e suporte, por favor visite a página oficial do projeto.
+      - **Repositório GitHub**: [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+    ru_RU: |
+      ## Введение в приложение
+      PsiTransfer — это простой, размещаемый у себя хостинг-сервис для обмена файлами с открытым исходным кодом, который позволяет безопасно и легко обмениваться файлами без необходимости регистрации.
+
+      ## Описание функций
+      - **Регистрация не требуется**: Мгновенно делитесь файлами без необходимости создания учетной записи.
+      - **Конфиденциальность и контроль**: Все файлы хранятся на вашем собственном сервере, что дает вам полный контроль над вашими данными.
+      - **Защита паролем**: Защитите свои общие файлы паролем для дополнительной безопасности.
+      - **Срок действия загрузок**: Установите срок действия загрузок, чтобы сэкономить место для хранения.
+      - **Панель администратора**: Управляйте всеми загрузками через простую панель администратора.
+      - **Целевой адрес для отправки**: Позволяет отправлять файлы на заранее определенный адрес электронной почты (если настроено).
+      - **Адаптивный веб-интерфейс**: Чистый и удобный интерфейс, который работает на всех устройствах.
+
+      ## Документация приложения
+      Для получения дополнительной информации, сведений о конфигурации и поддержки, пожалуйста, посетите официальную страницу проекта.
+      - **Репозиторий GitHub**: [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+    sv_SE: |
+      ## Applikationsintroduktion
+      PsiTransfer är en enkel, självhostad öppen källkods-fildelningstjänst som låter dig dela filer säkert och enkelt utan att kräva registrering.
+
+      ## Funktionsbeskrivning
+      - **Ingen Registrering Krävs**: Dela filer direkt utan att behöva skapa ett konto.
+      - **Sekretess & Kontroll**: Alla filer lagras på din egen server, vilket ger dig full kontroll över dina data.
+      - **Lösenordsskydd**: Skydda dina delade filer med ett lösenord för ökad säkerhet.
+      - **Utgångstid för Uppladdningar**: Ställ in uppladdningar att löpa ut efter en viss tid för att spara lagringsutrymme.
+      - **Adminpanel**: Hantera alla uppladdningar via en enkel adminpanel.
+      - **Drop-off-mål**: Tillåter sändning av filer till en fördefinierad e-postadress (om konfigurerat).
+      - **Responsiv Webgränssnitt**: Ett rent och användarvänligt gränssnitt som fungerar på alla enheter.
+
+      ## Applikationsdokumentation
+      För mer information, konfigurationsdetaljer och support, besök den officiella projektsidan.
+      - **GitHub Repository**: [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+    tr_TR: |
+      ## Uygulama Tanıtımı
+      PsiTransfer, kayıt gerektirmeksizin dosyaları güvenli ve kolay bir şekilde paylaşmanıza olanak tanıyan, basit, kendi kendine barındırılan açık kaynaklı bir dosya paylaşım hizmetidir.
+
+      ## Özellik Açıklaması
+      - **Kayıt Gerekmez**: Hesap oluşturmanıza gerek kalmadan dosyaları anında paylaşın.
+      - **Gizlilik ve Kontrol**: Tüm dosyalar kendi sunucunuzda saklanır, bu da verilerinizin tam kontrolünü size verir.
+      - **Parola Koruması**: Ek güvenlik için paylaşılan dosyalarınızı bir parola ile koruyun.
+      - **Yükleme Süresi Dolma**: Depolama alanından tasarruf etmek için yüklemelerin belirli bir süre sonra sona ermesini sağlayın.
+      - **Yönetici Paneli**: Tüm yüklemeleri basit bir yönetici paneli üzerinden yönetin.
+      - **Bırakma Hedefi**: (yapılandırılmışsa) dosyaları önceden tanımlanmış bir e-posta adresine göndermenizi sağlar.
+      - **Duyarlı Web Arayüzü**: Tüm cihazlarda çalışan temiz ve kullanıcı dostu bir arayüz.
+
+      ## Uygulama Belgeleri
+      Daha fazla bilgi, yapılandırma ayrıntıları ve destek için lütfen resmi proje sayfasını ziyaret edin.
+      - **GitHub Deposu**: [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+    zh_CN: |
+      ## 应用简介
+      PsiTransfer 是一个简单、自托管的开源文件分享服务，让您无需注册即可安全、轻松地分享文件。
+
+      ## 功能描述
+      - **无需注册**：无需创建账户，即可即时分享文件。
+      - **隐私与控制**：所有文件都存储在您自己的服务器上，让您完全掌控自己的数据。
+      - **密码保护**：可为分享的文件设置密码，增强安全性。
+      - **上传有效期**：可设置上传文件在特定时间后自动过期，以节省存储空间。
+      - **管理面板**：通过简洁的管理面板管理所有上传文件。
+      - **投递目标**：允许将文件发送到预定义的电子邮件地址（需配置）。
+      - **响应式Web界面**：界面简洁友好，可在所有设备上完美运行。
+
+      ## 应用文档
+      欲获取更多信息、配置详情和技术支持，请访问官方项目页面。
+      - **GitHub 仓库**: [https://github.com/psi-4ward/psitransfer](https://github.com/psi-4ward/psitransfer)
+  category: Utilities
+  author: psitrax
+  developer: psitrax
+  architectures:
+  - amd64
+  - arm64
+  icon: 
+  thumbnail: 
+  screenshot_link: []
+  index: /
+  main: psitransfer
+  port_map: '13001'
+  scheme: http
