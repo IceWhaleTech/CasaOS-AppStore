@@ -1,7 +1,7 @@
 name: tailscale
 services:
   tailscale:
-    image: tailscale/tailscale:v1.84.3
+    image: tailscale/tailscale:v1.90.8
     container_name: tailscale
     deploy:
       resources:
@@ -17,13 +17,11 @@ services:
         source: /dev/net/tun
         target: /dev/net/tun
     environment:
-      TS_AUTHKEY: ""
-      TS_HOSTNAME: ""
-      TS_ROUTES: ""
       TS_STATE_DIR: /var/lib/tailscale
     cap_add:
       - NET_ADMIN
       - NET_RAW
+    entrypoint: /bin/sh -c "tailscaled --state=/var/lib/tailscale/tailscaled.state & sleep 10; tailscale web --listen 0.0.0.0:5252"
     x-casaos:
       volumes:
         - container: /var/lib/tailscale
@@ -61,57 +59,6 @@ services:
             ru_RU: TUN устройство для VPN
             tr_TR: VPN için TUN Cihazı
       envs:
-        - container: TS_AUTHKEY
-          description:
-            en_US: Tailscale Authentication Key
-            en_GB: Tailscale Authentication Key
-            it_IT: Chiave di autenticazione Tailscale
-            nb_NO: Tailscale autentiseringsnøkkel
-            zh_CN: Tailscale认证密钥
-            ja_JP: Tailscale認証キー
-            ko_KR: Tailscale 인증 키
-            fr_FR: Clé d'authentification Tailscale
-            de_DE: Tailscale Authentifizierungsschlüssel
-            sv_SE: Tailscale autentiseringsnyckel
-            el_GR: Κλειδί πιστοποίησης Tailscale
-            hr_HR: Ključ za autentifikaciju Tailscale
-            pt_PT: Chave de autenticação Tailscale
-            ru_RU: Ключ аутентификации Tailscale
-            tr_TR: Tailscale Kimlik Doğrulama Anahtarı
-        - container: TS_HOSTNAME
-          description:
-            en_US: Tailscale Hostname
-            en_GB: Tailscale Hostname
-            it_IT: Nome host Tailscale
-            nb_NO: Tailscale vertsnavn
-            zh_CN: Tailscale主机名
-            ja_JP: Tailscaleホスト名
-            ko_KR: Tailscale 호스트명
-            fr_FR: Nom d'hôte Tailscale
-            de_DE: Tailscale Hostname
-            sv_SE: Tailscale värdnamn
-            el_GR: Όνομα κεντρικού υπολογιστή Tailscale
-            hr_HR: Ime hosta Tailscale
-            pt_PT: Nome do host Tailscale
-            ru_RU: Имя хоста Tailscale
-            tr_TR: Tailscale Ana Bilgisayar Adı
-        - container: TS_ROUTES
-          description:
-            en_US: Tailscale Routes
-            en_GB: Tailscale Routes
-            it_IT: Route Tailscale
-            nb_NO: Tailscale-ruter
-            zh_CN: Tailscale路由
-            ja_JP: Tailscaleルート
-            ko_KR: Tailscale 라우트
-            fr_FR: Routes Tailscale
-            de_DE: Tailscale Routen
-            sv_SE: Tailscale-rutter
-            el_GR: Διαδρομές Tailscale
-            hr_HR: Rute Tailscale
-            pt_PT: Rotas Tailscale
-            ru_RU: Маршруты Tailscale
-            tr_TR: Tailscale Rotaları
         - container: TS_STATE_DIR
           description:
             en_US: Tailscale State Directory Path
@@ -476,7 +423,7 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tailscale/screenshot-1.png
   thumbnail: ""
   scheme: ""
-  port_map: ""
+  port_map: "5252"
   index: /
   title:
     en_US: Tailscale
