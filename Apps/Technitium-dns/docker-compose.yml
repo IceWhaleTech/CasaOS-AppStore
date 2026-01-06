@@ -1,0 +1,79 @@
+name: dns-server
+
+services:
+  dns-server:
+    cpu_shares: 90
+    container_name: dns-server
+    environment:
+      - DNS_SERVER_DOMAIN=dns-server
+      - DNS_SERVER_LOG_USING_LOCAL_TIME=true
+      - DNS_SERVER_RECURSION=AllowOnlyForPrivateNetworks
+      - DNS_SERVER_WEB_SERVICE_HTTP_PORT=${WEBUI_PORT:-5380}
+    image: technitium/dns-server:14.3.0
+    labels:
+      icon: "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Technitium-dns/icon.png"
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/dns-server/config
+        target: /etc/dns
+    network_mode: host
+    privileged: false
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  main: dns-server
+  author: "mazama923"
+  developer: "Shreyas Zare"
+  category: "Network"
+  icon: "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Technitium-dns/icon.png"
+  index: "/"
+  is_uncontrolled: false
+  port_map: ${WEBUI_PORT:-5380}
+  scheme: http
+  hostname: ""
+  title:
+    en_us: Technitium DNS Server
+    fr_fr: Serveur DNS Technitium
+  description:
+    en_us: "Open source DNS & DHCP server with privacy features, ad-blocking, and zones management."
+    fr_fr: "Serveur DNS & DHCP open source avec blocage pubs, privacy et gestion de zones."
+  tagline:
+    en_us: "Advanced self-hosted DNS resolver for home labs."
+    fr_fr: "Résolveur DNS auto-hébergé avancé pour homelab."
+  volumes:
+    - container: "/etc/dns"
+      host: "/DATA/AppData/dns-server/config"
+      description:
+        en_us: "Config and data persistence for Technitium DNS."
+        fr_fr: "Configuration et persistance des données"
+  ports:
+    - container: ${WEBUI_PORT:-5380}
+      description:
+        en_us: "Web dashboard (HTTP)"
+        fr_fr: "Interface web (HTTP)"
+    - container: "53"
+      description:
+        en_us: "DNS service (TCP/UDP)"
+        fr_fr: "Service DNS (TCP/UDP)"
+    - container: "67/udp"
+      description:
+        en_us: "DHCP server (optional)"
+        fr_fr: "Serveur DHCP (optionnel)"
+  tips:
+    before_install:
+      en_us: |
+        ## 🔐 **Change the admin password!**
+
+        **By default:**
+        - User : `admin`
+        - Password : `admin`
+      fr_fr: |
+        ## 🔐 **Modifiez le mot de passe admin !**
+
+        **Par défaut :**
+        - User : `admin`
+        - Password : `admin`
