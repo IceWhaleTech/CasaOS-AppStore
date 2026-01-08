@@ -7,6 +7,7 @@ services:
       resources:
         reservations:
           memory: 512M
+    shm_size: "1gb"
     network_mode: bridge
     ports:
       - target: 3000
@@ -24,8 +25,6 @@ services:
       PUID: 1000
       PGID: 1000
       TZ: $TZ
-      CUSTOM_USER: "casaos"
-      PASSWORD: "casaos"
     x-casaos:
       volumes:
         - container: /config
@@ -97,40 +96,6 @@ services:
             pt_PT: Fuso horário do sistema
             ru_RU: Системный часовой пояс
             tr_TR: Sistem saat dilimi
-        - container: CUSTOM_USER
-          description:
-            en_US: HTTP Basic auth username, abc is default.
-            en_GB: HTTP Basic auth username, abc is default.
-            it_IT: Nome utente per l'autenticazione HTTP, abc è predefinito.
-            nb_NO: HTTP Basic auth brukernavn, abc er standard.
-            zh_CN: HTTP 基本身份验证用户名，abc 是默认值。
-            ja_JP: HTTP 基本認証ユーザー名、abc はデフォルトです。
-            ko_KR: HTTP 기본 인증 사용자 이름, abc는 기본값입니다.
-            fr_FR: Nom d'utilisateur pour l'authentification HTTP, abc est le défaut.
-            de_DE: HTTP Basic auth Benutzername, abc ist Standard.
-            sv_SE: HTTP Basic auth användarnamn, abc är standard.
-            el_GR: Όνομα χρήστη για HTTP Basic auth, abc είναι προεπιλογή.
-            hr_HR: HTTP Basic auth korisničko ime, abc je zadano.
-            pt_PT: Nome de utilizador para autenticação HTTP, abc é o padrão.
-            ru_RU: Имя пользователя для HTTP Basic auth, abc является стандартным.
-            tr_TR: HTTP Basic auth kullanıcı adı, abc varsayılan değerdir.
-        - container: PASSWORD
-          description:
-            en_US: HTTP Basic auth password, abc is default. If unset there will be no auth.
-            en_GB: HTTP Basic auth password, abc is default. If unset there will be no auth.
-            it_IT: Password per l'autenticazione HTTP, abc è predefinito. Se non impostato, non c'è autenticazione.
-            nb_NO: HTTP Basic auth passord, abc er standard. Hvis det ikke er satt, er det ingen autentisering.
-            zh_CN: HTTP 基本身份验证密码，abc 是默认值。如果未设置，则没有身份验证。
-            ja_JP: HTTP 基本認証パスワード、abc はデフォルトです。未設定の場合、認証はありません。
-            ko_KR: HTTP 기본 인증 비밀번호, abc는 기본값입니다. 설정되지 않은 경우 인증이 없습니다.
-            fr_FR: Mot de passe pour l'authentification HTTP, abc est le défaut. Si non défini, il n'y a pas d'authentification.
-            de_DE: HTTP Basic auth Passwort, abc ist Standard. Wenn nicht gesetzt, gibt es keine Authentifizierung.
-            sv_SE: HTTP Basic auth lösenord, abc är standard. Om det inte är inställt finns ingen autentisering.
-            el_GR: Λογαριασμός HTTP Basic auth, abc είναι προεπιλογή. Αν δεν έχει οριστεί, δεν υπάρχει πιστοποίηση.
-            hr_HR: HTTP Basic auth lozinka, abc je zadano. Ako nije postavljeno, nema autentifikacije.
-            pt_PT: Senha para autenticação HTTP, abc é o padrão. Se não estiver definido, não há autenticação.
-            ru_RU: Пароль для HTTP Basic auth, abc является стандартным. Если не установлен, нет аутентификации.
-            tr_TR: HTTP Basic auth şifresi, abc varsayılan değerdir. Ayarlanmamışsa, kimlik doğrulama yoktur.
       ports:
         - container: "3000"
           description:
@@ -482,100 +447,8 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Obsidian/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Obsidian/screenshot-3.png
   thumbnail: ""
-  tips:
-    before_install:
-      en_US: |
-        HTTP Basic Authentication Default Account
-        
-        | Username | Password |
-        |----------|----------|
-        | `casaos`    | `casaos` |
-      en_GB: |
-        HTTP Basic Authentication Default Account
-        
-        | Username | Password |
-        |----------|----------|
-        | `casaos`    | `casaos` |
-      it_IT: |
-        Account predefinito per l'autenticazione HTTP Basic
-        
-        | Nome utente | Password |
-        |-------------|----------|
-        | `casaos`    | `casaos` |
-      nb_NO: |
-        HTTP Basic Authentication standardkonto
-        
-        | Brukernavn | Passord |
-        |------------|---------|
-        | `casaos`   | `casaos` |
-      zh_CN: |
-        HTTP 基本身份验证默认账号
-        
-        | 用户名 | 密码   |
-        | -------- | ---------- |
-        | `casaos`    | `casaos` |
-      ja_JP: |
-        HTTP 基本認証のデフォルトアカウント
-        
-        | ユーザー名 | パスワード |
-        |------------|-----------|
-        | `casaos`   | `casaos`  |
-      ko_KR: |
-        HTTP 기본 인증 기본 계정
-        
-        | 사용자명 | 비밀번호 |
-        |----------|----------|
-        | `casaos` | `casaos`  |
-      fr_FR: |
-        Compte par défaut pour l'authentification HTTP Basic
-        
-        | Nom d'utilisateur | Mot de passe |
-        |-------------------|--------------|
-        | `casaos`          | `casaos`     |
-      de_DE: |
-        HTTP Basic Authentication Standardkonto
-        
-        | Benutzername | Passwort |
-        |--------------|----------|
-        | `casaos`     | `casaos` |
-      sv_SE: |
-        HTTP Basic Authentication standardkonto
-        
-        | Användarnamn | Lösenord |
-        |--------------|----------|
-        | `casaos`     | `casaos` |
-      el_GR: |
-        Προεπιλεγμένος λογαριασμός HTTP Basic Authentication
-        
-        | Όνομα χρήστη | Κωδικός |
-        |--------------|---------|
-        | `casaos`     | `casaos` |
-      hr_HR: |
-        Zadani račun za HTTP Basic Authentication
-        
-        | Korisničko ime | Lozinka |
-        |----------------|---------|
-        | `casaos`       | `casaos` |
-      pt_PT: |
-        Conta padrão para autenticação HTTP Basic
-        
-        | Nome de utilizador | Palavra-passe |
-        |--------------------|---------------|
-        | `casaos`           | `casaos`      |
-      ru_RU: |
-        Учетная запись по умолчанию для HTTP Basic Authentication
-        
-        | Имя пользователя | Пароль  |
-        |------------------|---------|
-        | `casaos`         | `casaos` |
-      tr_TR: |
-        HTTP Basic Authentication varsayılan hesap
-        
-        | Kullanıcı adı | Şifre   |
-        |---------------|---------|
-        | `casaos`      | `casaos` |
-  scheme: http
-  port_map: "15323"
+  scheme: https
+  port_map: "15324"
   index: /
   title:
     en_US: Obsidian
