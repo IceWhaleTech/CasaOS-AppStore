@@ -1,0 +1,89 @@
+{
+    "version": "2.0",
+    "title": "ArchiveBox",
+    "name": "archivebox",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ArchiveBox/icon.png",
+    "tagline": "Self-hosted internet archiving solution",
+    "overview": "ArchiveBox is a powerful, self-hosted internet archiving solution that allows you to create your own personal archive of web pages, PDFs, videos, and more. It functions as a personal internet archive, saving content in multiple formats for long-term preservation.\n\nThe system consists of multiple components:\n- **ArchiveBox**: The main application providing the web interface and archiving capabilities\n- **Sonic**: A fast search backend for full-text search across archived content\n- **ArchiveBox Scheduler**: A background service for scheduled archiving tasks\n- **NoVNC**: A web-based VNC client for browser-based archiving\n\n**Key Features:**\n- Save web pages in multiple formats (HTML, PDF, screenshots, etc.)\n- Full-text search across all archived content\n- Scheduled archiving of websites and RSS feeds\n- Browser-based archiving with NoVNC\n- User authentication and access control\n- Extract and save media files (videos, audio, PDFs, etc.)\n\n**Learn More:**\n- [ArchiveBox Official Website](https://archivebox.io)\n- [ArchiveBox GitHub Repository](https://github.com/ArchiveBox/ArchiveBox)\n- [ArchiveBox Documentation](https://github.com/ArchiveBox/ArchiveBox/wiki)\n",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ArchiveBox/thumbnail.jpg",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ArchiveBox/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ArchiveBox/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ArchiveBox/screenshot-3.png"
+    ],
+    "category": [
+        "Utilities"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "archivebox/archivebox:0.7.3",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "8000",
+                "host": "18010",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "ArchiveBox Web Interface Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/data",
+                "host": "/DATA/AppData/$AppID/data",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "ArchiveBox Data Directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

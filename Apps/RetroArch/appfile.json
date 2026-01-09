@@ -1,0 +1,80 @@
+{
+    "version": "2.0",
+    "title": "RetroArch",
+    "name": "retroarch",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RetroArch/icon.png",
+    "tagline": "Online retro games emulator",
+    "overview": "RetroArch-web is a web-based classic game emulator that enables users to enjoy a wide range of retro games directly in modern browsers. Supporting platforms like GBA, N64, DOS games, and NES (FC), it brings nostalgic gaming to life. Built on the open-source RetroArch project, RetroArch-web delivers robust features, including high-quality graphics rendering, audio processing, input controls, and save/load game progress, ensuring a precise and smooth emulation experience.\n\nDesigned for ease of use, RetroArch-web requires no complex software installation, running seamlessly in browsers. Its flexible configuration options let users customize controller setups, visual filters, and audio settings to suit individual preferences. With broad cross-platform compatibility, it ensures stable performance across devices, offering retro gaming enthusiasts a consistent experience on the go.\n\nBacked by an active open-source community, RetroArch-web continually improves performance and expands supported game platforms. Whether revisiting classic arcade titles or exploring vintage console games, RetroArch-web stands out as the ideal choice for retro gamers, combining powerful emulation with a user-friendly interface.\n\n**Key Features:**\n- Polished interface for browsing game collections with thumbnails and animated backgrounds\n- Supports multiple emulators and game engines for running classic games and discs\n- Next-frame response time for near-native hardware low-latency experience\n- Highly configurable settings to tweak game performance and display options\n- Automatic controller configuration for easy multiplayer gaming\n- Shaders to enhance old game rendering and mimic CRT monitor effects\n- Netplay for multiplayer gaming and spectator mode\n- Achievements system to unlock trophies and badges in classic games\n- Recording and streaming for capturing gameplay or live streaming\n\n**Learn More:**\n- [RetroArch Official Website](https://www.retroarch.com)\n- [RetroArch GitHub Repository](https://github.com/libretro/RetroArch)\n",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RetroArch/thumbnail.jpg",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RetroArch/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RetroArch/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RetroArch/screenshot-3.png"
+    ],
+    "category": [
+        "Games"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "inglebard/retroarch-web:latest",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "80",
+                "host": "8183",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            }
+        ],
+        "volumes": [],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

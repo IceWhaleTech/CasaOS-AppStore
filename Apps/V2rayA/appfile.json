@@ -1,0 +1,96 @@
+{
+    "version": "2.0",
+    "title": "V2rayA",
+    "name": "v2raya",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/V2rayA/icon.png",
+    "tagline": "A web GUI client of Project V which supports VMess, VLESS, SS, SSR, Trojan, Tuic and Juicity protocols",
+    "overview": "v2rayA is a V2Ray client supporting global transparent proxy, compatible with SS, SSR, Trojan (trojan-go), Tuic, and Juicity protocols. Designed for simplicity, it meets most user needs, ideal for scenarios requiring efficient proxy services.\n\nCore features include global transparent proxy and multi-outbound load balancing with traffic splitting. It provides proxy services for nearly all applications without requiring application-specific proxy support. Support for creating and connecting multiple outbound nodes ensures load balancing and efficient traffic splitting for optimal network performance.\n\nIt offers RoutingA, a custom routing language for V2Ray, providing powerful and convenient traffic splitting support. Multiple strategies address DNS pollution, with advanced settings enabling customized configurations. With simplicity and functionality at the core, the platform delivers a modern solution for proxy management.\n\n**Key Features:**\n- Web-based GUI for easy configuration and management\n- Support for multiple protocols: VMess, VLESS, SS, SSR, Trojan, Tuic, Juicity\n- Global transparent proxy for seamless application proxy services\n- Multi-outbound load balancing and traffic splitting\n- RoutingA custom routing for convenient traffic splitting\n- Multiple DNS pollution mitigation strategies with advanced custom settings\n\n**Learn More:**\n- [V2rayA Official Website](https://v2raya.org/)\n- [V2rayA GitHub](https://github.com/v2rayA/v2rayA)\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/V2rayA/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/V2rayA/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/V2rayA/screenshot-3.png"
+    ],
+    "category": [
+        "Network"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "mzz2017/v2raya:v2.2.6.7",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [],
+        "volumes": [
+            {
+                "container": "/lib/modules",
+                "host": "/lib/modules",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Kernel Modules Directory"
+            },
+            {
+                "container": "/etc/resolv.conf",
+                "host": "/etc/resolv.conf",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "DNS Configuration File"
+            },
+            {
+                "container": "/etc/v2raya",
+                "host": "/DATA/AppData/$AppID",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "V2rayA Configuration Directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

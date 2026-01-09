@@ -1,168 +1,168 @@
 {
-	"version": "2.0",
-	"title": "Emby",
-	"name": "emby",
-	"icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/icon.png",
-	"tagline": "TAKE YOUR MEDIA ANYWHERE WITH EMBY",
-	"overview": "Bringing all of your home videos, music, and photos together into one place has never been easier. Your personal Emby Server automatically converts and streams your media on-the-fly to play on any device.",
-	"thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/thumbnail.png",
-	"screenshots": [
-		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-1.png",
-		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-2.png",
-		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-3.png"
-	],
-	"category": [
-		"Media"
-	],
-	"developer": {
-		"name": "linuxserver",
-		"website": "https://emby.media/",
-		"donate_text": "",
-		"donate_link": ""
-	},
-	"adaptor": {
-		"name": "CasaOS Team",
-		"website": "https://www.casaos.io",
-		"donate_text": "",
-		"donate_link": ""
-	},
-	"support": "https://discord.gg/knqAbbBbeX",
-	"website": "https://www.casaos.io",
-	"container": {
-		"image": "linuxserver/emby:4.7.13",
-		"shell": "sh",
-		"privileged": false,
-		"network_model": "bridge",
-		"web_ui": {
-			"http": "8096",
-			"path": "/"
-		},
-		"health_check": "",
-		"envs": [
-			{
-				"key": "PUID",
-				"value": "1000",
-				"description": "",
-				"configurable": "no"
-			},
-			{
-				"key": "PGID",
-				"value": "1000",
-				"description": "",
-				"configurable": "no"
-			},
-			{
-				"key": "TZ",
-				"value": "$TZ",
-				"description": "",
-				"configurable": "no"
-			}
-		],
-		"ports": [
-			{
-				"container": "8096",
-				"host": "8096",
-				"type": "tcp",
-				"allocation": "automatic",
-				"configurable": "no",
-				"description": ""
-			},
-			{
-				"container": "8920",
-				"host": "8920",
-				"type": "tcp",
-				"allocation": "automatic",
-				"configurable": "no",
-				"description": ""
-			}
-		],
-		"volumes": [
-			{
-				"container": "/config",
-				"host": "/DATA/AppData/$AppID/config",
-				"mode": "rw",
-				"allocation": "automatic",
-				"configurable": "no",
-				"description": ""
-			},
-			{
-				"container": "/data/tvshows",
-				"host": "/DATA/Media/TV Shows",
-				"mode": "rw",
-				"allocation": "automatic",
-				"configurable": "no",
-				"description": ""
-			},
-			{
-				"container": "/data/movies",
-				"host": "/DATA/Media/Movies",
-				"mode": "rw",
-				"allocation": "automatic",
-				"configurable": "no",
-				"description": ""
-			}
-		],
-		"devices": [
-			{
-				"container": "/dev/dri",
-				"host": "/dev/dri",
-				"allocation": "optional",
-				"configurable": "no",
-				"description": ""
-			},
-			{
-				"container": "/dev/vchiq",
-				"host": "/dev/vchiq",
-				"allocation": "optional",
-				"configurable": "no",
-				"description": ""
-			},
-			{
-				"container": "/dev/video10",
-				"host": "/dev/video10",
-				"allocation": "optional",
-				"configurable": "no",
-				"description": ""
-			},
-			{
-				"container": "/dev/video11",
-				"host": "/dev/video11",
-				"allocation": "optional",
-				"configurable": "no",
-				"description": ""
-			},
-			{
-				"container": "/dev/video12",
-				"host": "/dev/video12",
-				"allocation": "optional",
-				"configurable": "no",
-				"description": ""
-			}
-		],
-		"constraints": {
-			"min_memory": 64,
-			"min_storage": 128
-		},
-		"restart_policy": "unless-stopped",
-		"sysctls": [],
-		"cap_add": [],
-		"labels": [],
-		"host_name": "",
-		"cmd": []
-	},
-	"abilities": {
-		"notification": false,
-		"widgets": false,
-		"authentication": false,
-		"search": false,
-		"upnp": false
-	},
-	"tips": {
-		"before_install": []
-	},
-	"changelog": {
-		"latest_updates": "",
-		"url": ""
-	},
-	"latest_update_date": ""
+    "version": "2.0",
+    "title": "Emby",
+    "name": "emby",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/icon.png",
+    "tagline": "Emby brings together your personal videos, music, photos, and live television.",
+    "overview": "Emby is a personal media management platform that brings home videos, music, and photos together, automatically converting and streaming to any device. An intuitive design makes it ideal for users to enjoy media content anytime, anywhere, meeting family entertainment and media management needs.\n\nCore features include cross-device media streaming and easy access. It supports real-time conversion and streaming of personal media to any device for seamless playback. A connection service enables easy media access while away from home. Live TV functionality supports streaming, managing DVR, and accessing a library of recordings. Mobile sync delivers media to smartphones and tablets for offline access, automatically updating new content.\n\nIt offers parental controls to restrict children's content access, set schedules and time limits, and remotely monitor sessions. Chromecast support enables easy streaming of videos, music, photos, and Live TV. Content is presented elegantly, enhancing visual experience. Cloud sync supports backup, archiving, and multi-resolution storage for optimized streaming. Web-based media management facilitates editing metadata, images, and searching subtitles, while DLNA integration auto-detects network devices for content streaming. With convenience and versatility at the core, the platform delivers a modern media management solution.\n\n**Key Features:**\n- Automatic conversion and streaming of media to any device\n- Easy access via connection service while away from home\n- Live TV streaming, DVR management, and recording library access\n- Mobile sync to smartphones and tablets for offline access\n- Parental controls with content restrictions, schedules, and remote monitoring\n- Chromecast support for streaming videos, music, photos, and Live TV\n- Cloud sync for backup and multi-resolution storage\n- Web-based media management for editing metadata and searching subtitles\n- DLNA integration for auto-detecting network devices and streaming content\n\n**Learn More:**\n- [Emby Official Website](https://emby.media/)\n",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/thumbnail.png",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-3.png"
+    ],
+    "category": [
+        "Media"
+    ],
+    "developer": {
+        "name": "linuxserver",
+        "website": "https://emby.media/",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "https://discord.gg/knqAbbBbeX",
+    "website": "https://www.casaos.io",
+    "container": {
+        "image": "linuxserver/emby:4.9.1",
+        "shell": "sh",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "8096",
+            "path": "/"
+        },
+        "health_check": "",
+        "envs": [
+            {
+                "key": "PUID",
+                "value": "1000",
+                "description": "",
+                "configurable": "no"
+            },
+            {
+                "key": "PGID",
+                "value": "1000",
+                "description": "",
+                "configurable": "no"
+            },
+            {
+                "key": "TZ",
+                "value": "$TZ",
+                "description": "",
+                "configurable": "no"
+            }
+        ],
+        "ports": [
+            {
+                "container": "8096",
+                "host": "8096",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": ""
+            },
+            {
+                "container": "8920",
+                "host": "8920",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": ""
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/config",
+                "host": "/DATA/AppData/$AppID/config",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": ""
+            },
+            {
+                "container": "/data/tvshows",
+                "host": "/DATA/Media/TV Shows",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": ""
+            },
+            {
+                "container": "/data/movies",
+                "host": "/DATA/Media/Movies",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": ""
+            }
+        ],
+        "devices": [
+            {
+                "container": "/dev/dri",
+                "host": "/dev/dri",
+                "allocation": "optional",
+                "configurable": "no",
+                "description": ""
+            },
+            {
+                "container": "/dev/vchiq",
+                "host": "/dev/vchiq",
+                "allocation": "optional",
+                "configurable": "no",
+                "description": ""
+            },
+            {
+                "container": "/dev/video10",
+                "host": "/dev/video10",
+                "allocation": "optional",
+                "configurable": "no",
+                "description": ""
+            },
+            {
+                "container": "/dev/video11",
+                "host": "/dev/video11",
+                "allocation": "optional",
+                "configurable": "no",
+                "description": ""
+            },
+            {
+                "container": "/dev/video12",
+                "host": "/dev/video12",
+                "allocation": "optional",
+                "configurable": "no",
+                "description": ""
+            }
+        ],
+        "constraints": {
+            "min_memory": 64,
+            "min_storage": 128
+        },
+        "restart_policy": "unless-stopped",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
 }

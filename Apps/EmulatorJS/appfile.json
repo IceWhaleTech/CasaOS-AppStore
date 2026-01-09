@@ -1,1 +1,84 @@
-{"host":"","protocol":"http","port_map":"88","cpu_shares":10,"restart":"unless-stopped","label":"Emulatorjs","position":false,"index":"","icon":"https://icon.casaos.io/main/all/emulatorjs.png","network_model":"bridge","image":"lscr.io/linuxserver/emulatorjs:latest","description":"","origin":"custom","ports":[{"container":"3000","host":"3000","protocol":"tcp","desc":"","type":0},{"container":"4001","host":"4001","protocol":"tcp","desc":"","type":0},{"container":"80","host":"88","protocol":"tcp","desc":"","type":0}],"volumes":[{"container":"/config","host":"/DATA/AppData/emulatorjs/config","type":0,"desc":""},{"container":"/data","host":"/DATA/AppData/emulatorjs/data","type":0,"desc":""},{"container":"/data/nes/roms","host":"/ROMS/nes","type":0,"desc":""}],"envs":[{"container":"PUID","host":"1000","desc":"","type":0},{"container":"PGID","host":"1000","desc":"","type":0},{"container":"TZ","host":"Etc/UTC","desc":"","type":0},{"container":"SUBFOLDER","host":"/","desc":"","type":0}],"devices":[],"cap_add":[],"cmd":[],"privileged":false,"host_name":"Emulatorjs","container_name":"Emulatorjs","appstore_id":0,"custom_id":"b6898c3c-92f4-4bc3-94cd-1581cde8c8ec","enable_upnp":false,"version":"1.0"}
+{
+    "version": "1.0",
+    "title": "",
+    "name": "",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/EmulatorJS/icon.png",
+    "tagline": "",
+    "overview": "EmulatorJS is a Docker-based emulator application that can simulate various operating systems and device environments within containers for development, testing, and learning purposes.",
+    "thumbnail": "",
+    "screenshots": [],
+    "category": [
+        "Utilities"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "linuxserver/emulatorjs:1.9.2",
+        "shell": "",
+        "privileged": false,
+        "network_model": "",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "80",
+                "host": "88",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "Play Game"
+            },
+            {
+                "container": "3000",
+                "host": "3001",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "Manage ROMS"
+            }
+        ],
+        "volumes": [],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

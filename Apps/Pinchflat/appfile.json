@@ -1,0 +1,96 @@
+{
+    "version": "2.0",
+    "title": "Pinchflat",
+    "name": "pinchflat",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pinchflat/icon.png",
+    "tagline": "Your next YouTube media manager",
+    "overview": "Pinchflat is a self-hosted app for downloading YouTube content built using yt-dlp. It's designed to be lightweight, self-contained, and easy to use. You set up rules for how to download content from YouTube channels or playlists and it'll do the rest, periodically checking for new content.\n\nKey features include:\n- Self-contained - just one Docker container with no external dependencies\n- Powerful naming system so content is stored where and how you want it\n- Easy-to-use web interface with presets to get you started right away\n- First-class support for media center apps like Plex, Jellyfin, and Kodi\n- Supports serving RSS feeds to your favourite podcast app\n- Automatically downloads new content from channels and playlists\n- Supports downloading audio content\n- Custom rules for handling YouTube Shorts and livestreams\n- Apprise support for notifications\n- Optionally automatically delete old content\n- Advanced options like setting cutoff dates and filtering by title\n- Reliable hands-off operation\n- Can pass cookies to YouTube to download your private playlists\n- Sponsorblock integration\n- Supports running custom scripts when after downloading/deleting media\n\nPerfect for people who want to download content for use with a media center app or for those who want to archive media!\n",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pinchflat/thumbnail.jpg",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pinchflat/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pinchflat/screenshot-2.png"
+    ],
+    "category": [
+        "Media"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "ghcr.io/kieraneglin/pinchflat:latest",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "8945",
+                "host": "8945",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/config",
+                "host": "/DATA/AppData/$AppID/config",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Pinchflat config directory."
+            },
+            {
+                "container": "/downloads",
+                "host": "/DATA/Media/Downloads",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Pinchflat downloads directory."
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

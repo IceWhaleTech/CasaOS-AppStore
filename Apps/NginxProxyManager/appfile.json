@@ -3,8 +3,8 @@
     "title": "Nginx Proxy Manager",
     "name": "nginxproxymanager",
     "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/icon.png",
-    "tagline": "Just what the name says",
-    "overview": "Managing Nginx proxy hosts with a simple, powerful interface.",
+    "tagline": "Managing Nginx proxy hosts with a simple, powerful interface.",
+    "overview": "Nginx Proxy Manager is a simple, powerful tool to help you host multiple websites on a single server.",
     "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/thumbnail.png",
     "screenshots": [
         "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/screenshot-1.jpg",
@@ -17,19 +17,19 @@
     "developer": {
         "name": "Nginx Proxy Manager",
         "website": "https://nginxproxymanager.com/",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "adaptor": {
         "name": "CasaOS Team",
         "website": "https://www.casaos.io",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "support": "https://discord.gg/knqAbbBbeX",
     "website": "https://www.casaos.io",
     "container": {
-        "image": "jc21/nginx-proxy-manager:latest",
+        "image": "jc21/nginx-proxy-manager:2.13.5",
         "shell": "sh",
         "privileged": false,
         "network_model": "bridge",
@@ -44,7 +44,7 @@
                 "container": "80",
                 "host": "80",
                 "type": "tcp",
-                "allocation": "required",
+                "allocation": "preferred",
                 "configurable": "advanced",
                 "description": "Nginx HTTP Port"
             },
@@ -52,7 +52,7 @@
                 "container": "443",
                 "host": "443",
                 "type": "tcp",
-                "allocation": "required",
+                "allocation": "preferred",
                 "configurable": "advanced",
                 "description": "Nginx HTTPS Port"
             },
@@ -61,7 +61,7 @@
                 "host": "81",
                 "type": "tcp",
                 "allocation": "preferred",
-                "configurable": "basic",
+                "configurable": "advanced",
                 "description": "WebUI Port"
             }
         ],
@@ -71,7 +71,7 @@
                 "host": "/DATA/AppData/$AppID/data",
                 "mode": "rw",
                 "allocation": "automatic",
-                "configurable": "advanced",
+                "configurable": "no",
                 "description": "Nginx Proxy Manager data directory."
             },
             {
@@ -79,7 +79,7 @@
                 "host": "/DATA/AppData/$AppID/etc/letsencrypt",
                 "mode": "rw",
                 "allocation": "automatic",
-                "configurable": "advanced",
+                "configurable": "no",
                 "description": "Nginx Proxy Manager letsencrypt directory."
             }
         ],
@@ -91,7 +91,9 @@
         "restart_policy": "unless-stopped",
         "sysctls": [],
         "cap_add": [],
-        "labels": []
+        "labels": [],
+        "host_name": "",
+        "cmd": []
     },
     "abilities": {
         "notification": false,
@@ -103,16 +105,16 @@
     "tips": {
         "before_install": [
             {
-                "content":"⚠️ Warning!"
+                "content": "⚠️ Warning!"
             },
             {
-                "content":"This is a technical app, please make sure you know what you are doing."
+                "content": "This is a technical app, please make sure you know what you are doing."
             },
             {
-                "content":"Nginx Proxy Manager occupies ports 80 and 443 by default for built-in Nginx use. It occupies port 81 for the admin page."
+                "content": "Nginx Proxy Manager occupies ports 80 and 443 by default for built-in Nginx use. It occupies port 81 for the admin page."
             },
             {
-                "content":"Please change the CasaOS WebUI port to a port other than 80/81/443. And pay attention to whether the ports conflict with other apps. Otherwise, it may cause your CasaOS to run abnormally."
+                "content": "Please change the CasaOS WebUI port to a port other than 80/81/443. And pay attention to whether the ports conflict with other apps. Otherwise, it may cause your CasaOS to run abnormally."
             },
             {
                 "content": ""

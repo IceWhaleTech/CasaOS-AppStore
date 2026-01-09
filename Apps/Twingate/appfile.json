@@ -4,10 +4,9 @@
     "name": "twingate-connector",
     "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Twingate/icon.png",
     "tagline": "Twingate Connector for CasaOS",
-    "overview": "It's a connector for Twingate",
+    "overview": "It's a connector for Twingate\".",
     "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Twingate/thumbnail.png",
-    "screenshots": [
-    ],
+    "screenshots": [],
     "category": [
         "Network"
     ],
@@ -30,7 +29,10 @@
         "shell": "",
         "privileged": false,
         "network_model": "default",
-        "web_ui": {},
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
         "health_check": "",
         "envs": [
             {
@@ -65,7 +67,9 @@
             }
         ],
         "cap_add": [],
-        "labels": []
+        "labels": [],
+        "host_name": "",
+        "cmd": []
     },
     "abilities": {
         "notification": false,

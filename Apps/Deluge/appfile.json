@@ -18,19 +18,19 @@
     "developer": {
         "name": "Deluge Team",
         "website": "https://deluge-torrent.org/",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "adaptor": {
         "name": "CasaOS Team",
         "website": "https://www.casaos.io",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "support": "https://discord.gg/knqAbbBbeX",
     "website": "https://www.casaos.io",
     "container": {
-        "image": "linuxserver/deluge:latest",
+        "image": "linuxserver/deluge:2.2.0",
         "shell": "bash",
         "privileged": false,
         "network_model": "bridge",
@@ -85,7 +85,7 @@
             {
                 "container": "6881",
                 "host": "6881",
-                "type": "udp",
+                "type": "tcp",
                 "allocation": "preferred",
                 "configurable": "advanced",
                 "description": "Inbound torrent traffic (UDP)"
@@ -105,7 +105,7 @@
                 "host": "/DATA",
                 "mode": "rw",
                 "allocation": "automatic",
-                "configurable": "advanced",
+                "configurable": "no",
                 "description": "Deluge Accessible directory."
             }
         ],
@@ -117,7 +117,9 @@
         "restart_policy": "unless-stopped",
         "sysctls": [],
         "cap_add": [],
-        "labels": []
+        "labels": [],
+        "host_name": "",
+        "cmd": []
     },
     "abilities": {
         "notification": false,

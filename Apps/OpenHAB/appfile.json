@@ -18,19 +18,19 @@
     "developer": {
         "name": "openHAB",
         "website": "https://www.openhab.org/",
-        "donate_text": "Donate", 
+        "donate_text": "Donate",
         "donate_link": "https://www.openhab.org/about/donate.html"
     },
     "adaptor": {
         "name": "CasaOS Team",
         "website": "https://www.casaos.io",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "support": "https://discord.gg/knqAbbBbeX",
     "website": "https://www.casaos.io",
     "container": {
-        "image": "openhab/openhab:latest-debian",
+        "image": "openhab/openhab:4.3.3",
         "shell": "bash",
         "privileged": false,
         "network_model": "host",
@@ -38,6 +38,7 @@
             "http": "8080",
             "path": "/"
         },
+        "health_check": "",
         "envs": [
             {
                 "key": "CRYPTO_POLICY",
@@ -63,7 +64,7 @@
             {
                 "container": "/etc/localtime",
                 "host": "/etc/localtime",
-                "mode": "ro",
+                "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
                 "description": "Ties the time of the container to the host's time, read only so the container cannot change the host's time."
@@ -71,14 +72,14 @@
             {
                 "container": "/etc/timezone",
                 "host": "/etc/timezone",
-                "mode": "ro",
+                "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
                 "description": "Ties the timezone of the container to the host's time zone, read only so the container cannot change the host's time zone."
             },
             {
                 "container": "/opt/openhab/addons",
-                "host": "/DATA/AppData/$AppID/addons",
+                "host": "/DATA/AppData/$AppID/opt/openhab/addons",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
@@ -86,21 +87,20 @@
             },
             {
                 "container": "/opt/openhab/conf",
-                "host": "/DATA/AppData/$AppID/conf",
+                "host": "/DATA/AppData/$AppID/opt/openhab/conf",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
-                "description": "Location of the conf folder for openHAB configurations (Note: you must create these folders on the host before running the container)."
+                "description": "Location of the conf folder for openHAB configurations (Note: you must create these folders on the host before running the container).\n"
             },
             {
                 "container": "/opt/openhab/userdata",
-                "host": "/DATA/AppData/$AppID/userdata",
+                "host": "/DATA/AppData/$AppID/opt/openhab/userdata",
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
                 "description": "Location for logs, cache, persistence databases, etc."
             }
-            
         ],
         "devices": [],
         "constraints": {
@@ -110,7 +110,9 @@
         "restart_policy": "unless-stopped",
         "sysctls": [],
         "cap_add": [],
-        "labels": []
+        "labels": [],
+        "host_name": "",
+        "cmd": []
     },
     "abilities": {
         "notification": false,
@@ -119,8 +121,10 @@
         "search": false,
         "upnp": false
     },
-    "tips": {},
-    "changelog":{
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
         "latest_updates": "",
         "url": ""
     },

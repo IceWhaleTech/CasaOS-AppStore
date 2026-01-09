@@ -1,0 +1,137 @@
+{
+    "version": "2.0",
+    "title": "RagFlow",
+    "name": "ragflow",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RagFlow/icon.png",
+    "tagline": "RagFlow is an open-source RAG engine based on deep document understanding.",
+    "overview": "RagFlow is an open-source RAG (Retrieval-Augmented Generation) engine based on deep document understanding. It enables users to build their own private ChatGPT by leveraging the power of large language models and deep document parsing capabilities. RagFlow supports various document formats including PDF, Word, Markdown, and more, allowing users to create intelligent question-answering systems based on their own documents.\n\n**Key Features:**\n- Deep document understanding with advanced parsing capabilities\n- Support for multiple document formats (PDF, Word, Markdown, etc.)\n- Private knowledge base with data security assurance\n- Customizable RAG workflows for different use cases\n- Integration with popular large language models\n- Web-based interface for easy management and interaction\n\n**Hardware Requirements:**\n- CPU >= 4 cores\n- RAM >= 16 GB\n- Disk >= 50 GB\n\n**Learn More:**\n- [RagFlow Official Website](https://ragflow.io)\n- [RagFlow GitHub Repository](https://github.com/infiniflow/ragflow)\n",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RagFlow/thumbnail.jpg",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RagFlow/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RagFlow/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RagFlow/screenshot-3.png"
+    ],
+    "category": [
+        "AI"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "icewhaletech/ragflow:v0.21.1",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "9380",
+                "host": "9380",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "RagFlow API Port"
+            },
+            {
+                "container": "80",
+                "host": "30080",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "RagFlow HTTP Port"
+            },
+            {
+                "container": "443",
+                "host": "10443",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "RagFlow HTTPS Port"
+            },
+            {
+                "container": "5678",
+                "host": "5678",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "RagFlow Debug Port"
+            },
+            {
+                "container": "5679",
+                "host": "5679",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "RagFlow WebSocket Port"
+            },
+            {
+                "container": "9382",
+                "host": "9382",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "RagFlow MCP Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/ragflow/logs",
+                "host": "/DATA/AppData/$AppID/ragflow-logs",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "RagFlow Logs Directory"
+            },
+            {
+                "container": "/ragflow/history_data_agent",
+                "host": "/DATA/AppData/$AppID/history_data_agent",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "RagFlow History Data Directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

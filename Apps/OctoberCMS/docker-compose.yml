@@ -13,11 +13,32 @@ services:
         published: "3306"
         protocol: tcp
     restart: unless-stopped
+    x-casaos:
+      envs:
+        - container: DB_TYPE
+          description:
+            en_us: Database type (sqlite or mysql)
+      ports:
+        - container: "80"
+          description:
+            en_us: Web UI Port
+      volumes:
+        - container: /var/www/html
+          description:
+            en_us: October CMS installation folder
     network_mode: bridge
     privileged: false
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/www
+        target: /var/www/html
 x-casaos:
-  author: self
-  category: self
+  architectures:
+    - amd64
+    - arm64
+  main: main_app
+  author: CasaOS Community
+  category: Content Management
   hostname: ""
   icon: https://icon.casaos.io/main/all/october-dev.png
   index: /backend
@@ -26,4 +47,11 @@ x-casaos:
   scheme: http
   store_app_id: octobercms
   title:
-    custom: October CMS
+    en_us: October CMS
+  tagline:
+    en_us: The Laravel-based CMS for creators
+  description:
+    en_us: October CMS is a free, open-source, self-hosted CMS platform based on the Laravel PHP framework. It is designed to be simple, flexible, and developer-friendly.
+  developer: October CMS
+  screenshot_link: []
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OctoberCMS/thumbnail.png

@@ -21,19 +21,19 @@
     "developer": {
         "name": "Crafty Team",
         "website": "https://gitlab.com/crafty-controller/crafty-team",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "adaptor": {
         "name": "Chàra Rose",
         "website": "https://chara.cloud",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "support": "https://discord.gg/knqAbbBbeX",
     "website": "https://www.casaos.io",
     "container": {
-        "image": "arcadiatechnology/crafty-4",
+        "image": "registry.gitlab.com/crafty-controller/crafty-4:4.4.11",
         "shell": "bash",
         "privileged": false,
         "network_model": "bridge",
@@ -41,6 +41,7 @@
             "http": "8111",
             "path": "/"
         },
+        "health_check": "",
         "envs": [
             {
                 "key": "TZ",
@@ -52,106 +53,106 @@
         "ports": [
             {
                 "container": "19132",
-                "host": "19132",
-                "type": "udp",
-                "allocation": "required",
-                "configurable": "no",
+                "host": "",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Minecraft Bedrock listening Port (UDP)"
             },
             {
                 "container": "25565",
-                "host": "25565",
+                "host": "",
                 "type": "tcp",
-                "allocation": "required",
-                "configurable": "no",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Minecraft listening Port (TCP)"
             },
             {
                 "container": "25566",
-                "host": "25566",
+                "host": "",
                 "type": "tcp",
-                "allocation": "required",
-                "configurable": "no",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Minecraft listening Port (TCP)"
             },
             {
                 "container": "25567",
-                "host": "25567",
+                "host": "",
                 "type": "tcp",
-                "allocation": "required",
-                "configurable": "no",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Minecraft listening Port (TCP)"
             },
             {
                 "container": "25568",
-                "host": "25568",
+                "host": "",
                 "type": "tcp",
-                "allocation": "required",
-                "configurable": "no",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Minecraft listening Port (TCP)"
             },
             {
                 "container": "25569",
-                "host": "25569",
+                "host": "",
                 "type": "tcp",
-                "allocation": "required",
-                "configurable": "no",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Minecraft listening Port (TCP)"
             },
             {
                 "container": "25570",
-                "host": "25570",
+                "host": "",
                 "type": "tcp",
-                "allocation": "required",
-                "configurable": "no",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Minecraft listening Port (TCP)"
             },
             {
                 "container": "25565",
-                "host": "25565",
-                "type": "udp",
-                "allocation": "required",
-                "configurable": "no",
+                "host": "",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Minecraft listening Port (UDP)"
             },
             {
                 "container": "25566",
-                "host": "25566",
-                "type": "udp",
-                "allocation": "required",
-                "configurable": "no",
+                "host": "",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Minecraft listening Port (UDP)"
             },
             {
                 "container": "25567",
-                "host": "25567",
-                "type": "udp",
-                "allocation": "required",
-                "configurable": "no",
+                "host": "",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Minecraft listening Port (UDP)"
             },
             {
                 "container": "25568",
-                "host": "25568",
-                "type": "udp",
-                "allocation": "required",
-                "configurable": "no",
+                "host": "",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Minecraft listening Port (UDP)"
             },
             {
                 "container": "25569",
-                "host": "25569",
-                "type": "udp",
-                "allocation": "required",
-                "configurable": "no",
+                "host": "",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Minecraft listening Port (UDP)"
             },
             {
                 "container": "25570",
-                "host": "25570",
-                "type": "udp",
-                "allocation": "required",
-                "configurable": "no",
+                "host": "",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Minecraft listening Port (UDP)"
             }
         ],
@@ -205,7 +206,9 @@
         "restart_policy": "unless-stopped",
         "sysctls": [],
         "cap_add": [],
-        "labels": []
+        "labels": [],
+        "host_name": "",
+        "cmd": []
     },
     "abilities": {
         "notification": false,
@@ -214,5 +217,12 @@
         "search": false,
         "upnp": false
     },
-    "tips": {}
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
 }

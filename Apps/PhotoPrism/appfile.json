@@ -3,8 +3,8 @@
     "title": "PhotoPrism",
     "name": "photoprism",
     "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/icon.png",
-    "tagline": "Browsing, organizing & sharing your photo collection",
-    "overview": "PhotoPrism® is an AI-powered app for browsing, organizing & sharing your photo collection. It makes use of the latest technologies to tag and find pictures automatically without getting in your way. You can run it at home, on a private server, or in the cloud.",
+    "tagline": "Browse Your Life in Images",
+    "overview": "Your AI-Powered Photos App for the Decentralized Web\n\nPhotoPrism brings the magic of AI to your home TV, phone, and multiple devices, revolutionizing the way you manage and share your photos. Unlike traditional photo albums that require manual organization, PhotoPrism automatically tags and finds your pictures, making it easier than ever to relive your memories. Whether you're showing family photos on your TV or sharing vacation snapshots on your phone, PhotoPrism makes the experience seamless and enjoyable.\n\nPhotoPrism offers a host of features designed to enhance your photo management experience. With powerful search capabilities, automatic tagging, and a user-friendly interface, you'll find it easy to keep your photo collection organized. The app is free to use, with premium options available for those seeking additional features and support. Users can expect a smooth, intuitive experience that blends cutting-edge technology with everyday convenience.\n\nDeploying PhotoPrism on Zima private cloud devices offers unparalleled convenience. Enjoy unlimited storage capacity, the speed of your local network, and access from multiple devices without the need for the internet. It's the perfect solution for NAS enthusiasts who value privacy and performance.\n",
     "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/thumbnail.png",
     "screenshots": [
         "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/screenshot-1.jpg",
@@ -17,19 +17,19 @@
     "developer": {
         "name": "PhotoPrism",
         "website": "https://photoprism.app/",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "adaptor": {
         "name": "CasaOS Team",
         "website": "https://www.casaos.io",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "support": "https://discord.gg/knqAbbBbeX",
     "website": "https://www.casaos.io",
     "container": {
-        "image": "photoprism/photoprism:latest",
+        "image": "photoprism/photoprism:250228",
         "shell": "bash",
         "privileged": false,
         "network_model": "bridge",
@@ -82,7 +82,7 @@
                 "host": "/DATA/Gallery",
                 "mode": "rw",
                 "allocation": "automatic",
-                "configurable": "advanced",
+                "configurable": "no",
                 "description": "PhotoPrism originals directory."
             }
         ],
@@ -94,7 +94,9 @@
         "restart_policy": "unless-stopped",
         "sysctls": [],
         "cap_add": [],
-        "labels": []
+        "labels": [],
+        "host_name": "",
+        "cmd": []
     },
     "abilities": {
         "notification": false,

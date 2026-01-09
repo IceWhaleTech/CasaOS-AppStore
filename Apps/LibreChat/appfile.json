@@ -1,0 +1,105 @@
+{
+    "version": "2.0",
+    "title": "LibreChat",
+    "name": "librechat",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreChat/icon.png",
+    "tagline": "A full-featured, open-source AI chat interface",
+    "overview": "LibreChat is a full-featured, open-source AI chat interface that allows users to interact with multiple AI models through a unified platform. It supports various AI providers and offers advanced features like conversation management, plugin support, and customizable interfaces.\n**Key Features:**\n- Support for multiple AI models and providers\n- Conversation history and management\n- Plugin system for extended functionality\n- Customizable themes and interfaces\n- User authentication and management\n- API integrations for various services\n- Search functionality with MeiliSearch\n- RAG (Retrieval-Augmented Generation) support\n- File upload and processing capabilities\n- Multi-language support\n**Learn More:**\n- [LibreChat Official Website](https://www.librechat.ai)\n- [LibreChat GitHub Repository](https://github.com/danny-avila/LibreChat)\n\n** extra: **\nYou can refer to the [Custom AI Endpoints](https://www.librechat.ai/docs/configuration/librechat_yaml/ai_endpoints) documentation to configure the relevant files for calling the APIs of Anyscale, ApiPie, Cohere, Deepseek, Databricks, Fireworks, Groq, HuggingFace, Mistral, OpenRouter, Perplexity, ShuttleAI, TogetherAI, Unify, and xAI.\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreChat/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreChat/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreChat/screenshot-3.png"
+    ],
+    "category": [
+        "AI"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "ghcr.io/danny-avila/librechat-dev:latest",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "3080",
+                "host": "3080",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/app/client/public/images",
+                "host": "/DATA/AppData/$AppID/images",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Images Directory"
+            },
+            {
+                "container": "/app/uploads",
+                "host": "/DATA/AppData/$AppID/uploads",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Uploads Directory"
+            },
+            {
+                "container": "/app/api/logs",
+                "host": "/DATA/AppData/$AppID/logs",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Logs Directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

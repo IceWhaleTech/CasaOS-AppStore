@@ -1,0 +1,93 @@
+{
+    "version": "2.0",
+    "title": "Mongo",
+    "name": "mongo",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Mongo/icon.png",
+    "tagline": "A free and open-source cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with schemata.",
+    "overview": "MongoDB is a free and open-source cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with schemata. MongoDB is developed by MongoDB Inc., and is published under a combination of the Server Side Public License and the Apache License.",
+    "thumbnail": "",
+    "screenshots": [],
+    "category": [
+        "Developer"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "mongo:8.2.2",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "27017",
+                "host": "27017",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "MongoDB Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/data/configdb",
+                "host": "/DATA/AppData/mongo/data/configdb",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "MongoDB Config"
+            },
+            {
+                "container": "/data/db",
+                "host": "/DATA/AppData/mongo/data/db",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "MongoDB Database file"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

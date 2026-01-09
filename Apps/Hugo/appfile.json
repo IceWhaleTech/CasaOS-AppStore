@@ -1,0 +1,97 @@
+{
+    "version": "2.0",
+    "title": "Hugo",
+    "name": "hugo",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hugo/icon.png",
+    "tagline": "The world's fastest framework for building websites",
+    "overview": "Hugo is a high-speed static site generation platform written in Go, optimized for speed and designed for flexibility. Advanced templating system and fast asset pipelines render a complete website in seconds, ideal for creating documentation sites, landing pages, and various project websites.\n\nCore features include optimized speed and a flexible framework. Concurrency in Go enables rapid rendering, supporting image processing (convert, resize, crop, rotate, adjust colors, apply filters, overlay text/images, extract EXIF data), JavaScript bundling (tree shaking, code splitting), Sass processing, and TailwindCSS support. Multilingual support and taxonomy system make it suitable for diverse sites like documentation, news, or events.\n\nIt includes an embedded web server for real-time previews of content, structure, and style changes during development. Frequent releases ensure ongoing feature enhancements, keeping it cutting-edge. With efficiency and flexibility at the core, the platform delivers a modern static site generation solution.\n\n**Key Features:**\n- High-speed rendering, generating sites in seconds\n- Fast asset pipelines: image processing, JavaScript bundling, Sass, and TailwindCSS support\n- Flexible framework with multilingual and taxonomy systems\n- Embedded web server for real-time development previews\n- Rich ecosystem of themes and plugins\n\n\n**Prerequisites for Using Hugo:**\n\n1. Open command line, navigate to `/DATA/AppData/hugo/project` directory\n\n```cd /DATA/AppData/hugo/project```\n\n2. Initialize the `project` directory as an empty Git repository\n\n```git init```\n\n3. Download the Ananke theme\n\n```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```\n\n4. Specify the current theme\n\n```echo \"theme = 'ananke'\" >> hugo.toml```\n\n5. Restart Hugo\n\n\n**Learn More:**\n- [Hugo Official Website](https://gohugo.io/)\n- [Hugo GitHub](https://github.com/gohugoio/hugo)\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hugo/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hugo/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hugo/screenshot-3.png"
+    ],
+    "category": [
+        "Developer"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "ghcr.io/gohugoio/hugo:v0.152.2",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "1313",
+                "host": "1313",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/project",
+                "host": "/DATA/AppData/$AppID/project",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Hugo Project Directory"
+            },
+            {
+                "container": "/cache",
+                "host": "/DATA/AppData/$AppID/cache",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Hugo Cache Directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

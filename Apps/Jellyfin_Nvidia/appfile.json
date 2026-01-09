@@ -1,0 +1,125 @@
+{
+    "version": "2.0",
+    "title": "Jellyfin_Nvidia",
+    "name": "jellyfin_nvidia",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/icon.png",
+    "tagline": "The personal Media System",
+    "overview": "Imagine having all your movies, TV shows, and music at your fingertips, ready on any device. Jellyfin transforms your media collection into a personalized entertainment hub, surpassing traditional photo albums. Your media is accessible anywhere and beautifully organized.\n\nJellyfin is free and open-source, offering high-quality streaming, detailed metadata, and personalized recommendations. Multiple users can have their own media libraries.\n\nDeploying Jellyfin on private cloud devices like Zima provides virtually unlimited storage, seamless streaming, and secure, multi-device access. It's perfect for NAS enthusiasts looking to enhance their home media setup.\n",
+    "thumbnail": "",
+    "screenshots": [],
+    "category": [
+        "Media"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "linuxserver/jellyfin:10.10.6",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "8096",
+                "host": "8097",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            },
+            {
+                "container": "8920",
+                "host": "8921",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTPS Port"
+            },
+            {
+                "container": "7359",
+                "host": "7359",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "Jellyfin auto-discovery Port"
+            },
+            {
+                "container": "1900",
+                "host": "1901",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "Jellyfin DLNA Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/config",
+                "host": "/DATA/AppData/$AppID/config",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Jellyfin config directory."
+            },
+            {
+                "container": "/Media",
+                "host": "/DATA/Media",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Jellyfin Media directory."
+            },
+            {
+                "container": "/opt/vc/lib",
+                "host": "/opt/vc/lib",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "OpenMax libs"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

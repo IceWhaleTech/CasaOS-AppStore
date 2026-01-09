@@ -1,105 +1,107 @@
 {
-	"version": "0.14.0",
-	"title": "Memos",
-	"name": "Memos",
-	"icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/icon.png",
-	"tagline": "A lightweight, self-hosted memo hub. Open Source and Free forever.",
-	"overview": "A lightweight, self-hosted memo hub. Open Source and Free forever.",
-	"thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/thumbnail.png",
-	"screenshots": [
-		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/screenshot-1.png",
-		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/screenshot-2.png"
-	],
-	"category": ["Notes"],
-	"developer": {
-		"name": "usememos Team",
-		"website": "https://github.com/usememos/memos/graphs/contributors",
-		"donate_text": "",
-		"donate_link": ""
-	},
-	"adaptor": {
-		"name": "usememos Team",
-		"website": "https://github.com/orgs/usememos/people",
-		"donate_text": "",
-		"donate_link": ""
-	},
-	"support": "",
-	"website": "",
-	"container": {
-		"image": "neosmemo/memos:latest",
-		"shell": "sh",
-		"privileged": false,
-		"network_model": "bridge",
-		"web_ui": {
-			"http": "5230",
-			"path": ""
-		},
-		"health_check": "",
-		"envs": [
-			{
-				"key": "PUID",
-				"value": "1000",
-				"description": "",
-				"configurable": "no"
-			},
-			{
-				"key": "PGID",
-				"value": "1000",
-				"description": "",
-				"configurable": "no"
-			},
-			{
-				"key": "TZ",
-				"value": "$TZ",
-				"description": "",
-				"configurable": "no"
-			}
-		],
-		"ports": [
-			{
-				"container": "5230",
-				"host": "5230",
-				"type": "tcp",
-				"allocation": "automatic",
-				"configurable": "no",
-				"description": "Memos HTTP Port"
-			}
-		],
-		"volumes": [
-			{
-				"container": "/var/opt/memos",
-				"host": "/DATA/AppData/memos/memos",
-				"mode": "rw",
-				"allocation": "automatic",
-				"configurable": "no",
-				"description": "memos data directory"
-			},
-		],
-		"devices": [],
-		"constraints": {
-			"min_memory": 64,
-			"min_storage": 128
-		},
-		"restart_policy": "unless-stopped",
-		"sysctls": [],
-		"cap_add": [],
-		"labels": [],
-		"host_name": "Memos",
-		"cmd": []
-	},
-	"abilities": {
-		"notification": false,
-		"widgets": false,
-		"authentication": false,
-		"search": false,
-		"upnp": false
-	},
-	"tips": {
-		"before_install": []
-	},
-	"changelog": {
-		"latest_updates": "",
-		"url": ""
-	},
-	"latest_update_date": ""
+    "version": "0.14.0",
+    "title": "Memos",
+    "name": "Memos",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/icon.png",
+    "tagline": "Memos is a lightweight, self-hosted memo hub. Open Source and Free forever.",
+    "overview": "Memos is a lightweight, open-source, self-hosted note-taking application that offers a secure and streamlined solution for users prioritizing privacy and data control. All notes are stored on the user’s own server, eliminating risks associated with third-party cloud services. Its minimalist Web interface supports Markdown syntax and tag-based organization, enabling effortless capture of ideas, personal knowledge management, or small-scale team collaboration. The open-source design ensures transparency, long-term maintainability, and no subscription costs, making it ideal for users seeking data ownership and cost efficiency.\n\nDesigned for simplicity and efficiency, Memos caters to a variety of use cases. Whether jotting down daily thoughts, organizing study notes, or sharing task memos in small teams, Memos delivers a seamless experience through its intuitive tag system and Markdown formatting. Accessible via any web browser, it requires no proprietary clients or complex setup, allowing users to manage notes anytime, anywhere.\n\nWhether used for long-term personal knowledge archiving or as a lightweight tool for team collaboration, Memos offers a secure, flexible, and user-friendly solution, empowering users to maintain full control over their data while enjoying a streamlined note-taking experience.\n",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/thumbnail.png",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/screenshot-2.png"
+    ],
+    "category": [
+        "Notes"
+    ],
+    "developer": {
+        "name": "usememos Team",
+        "website": "https://github.com/usememos/memos/graphs/contributors",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "usememos Team",
+        "website": "https://github.com/orgs/usememos/people",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "neosmemo/memos:0.25",
+        "shell": "sh",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "5230",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [
+            {
+                "key": "PUID",
+                "value": "1000",
+                "description": "",
+                "configurable": "no"
+            },
+            {
+                "key": "PGID",
+                "value": "1000",
+                "description": "",
+                "configurable": "no"
+            },
+            {
+                "key": "TZ",
+                "value": "$TZ",
+                "description": "",
+                "configurable": "no"
+            }
+        ],
+        "ports": [
+            {
+                "container": "5230",
+                "host": "5230",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/var/opt/memos",
+                "host": "/DATA/AppData/memos/memos",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "memos data directory."
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 64,
+            "min_storage": 128
+        },
+        "restart_policy": "unless-stopped",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "Memos",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
 }

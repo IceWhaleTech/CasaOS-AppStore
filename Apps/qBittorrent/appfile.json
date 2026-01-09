@@ -3,8 +3,8 @@
     "title": "qBittorrent",
     "name": "qbittorrent",
     "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/qBittorrent/icon.png",
-    "tagline": "Free BitTorrent downloader",
-    "overview": "The qBittorrent project aims to provide an open-source software alternative to µTorrent.",
+    "tagline": "P2P bittorrent download",
+    "overview": "**Elevate Your Home Media Experience**. qBittorrent transforms your home media setup with a polished interface reminiscent of µTorrent, minus the ads. Unlike traditional download tools, it offers a streamlined, efficient, and ad-free experience. This makes it a perfect fit for those seeking a hassle-free way to manage and enjoy their media collections at home.\n\n**Feature-Rich and User-Friendly**. With qBittorrent, you gain access to a well-integrated and extensible search engine, allowing simultaneous searches across multiple torrent sites, and category-specific searches for books, music, and software. Its support for RSS feeds with advanced filters, magnet links, encrypted connections, and more, ensures you have complete control over your downloads. Available on all major platforms and in around 70 languages, qBittorrent is both versatile and accessible.\n\n**Seamless Integration with Private Clouds like Zima**. Deploying qBittorrent on private cloud devices such as Zima offers unparalleled convenience. Enjoy virtually unlimited storage, enhanced privacy for your data, and local network speeds that make downloading and streaming effortless. This setup ensures that your media library is always at your fingertips, securely and swiftly.\n",
     "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/qBittorrent/thumbnail.jpg",
     "screenshots": [
         "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/qBittorrent/screenshot-1.jpg",
@@ -16,19 +16,19 @@
     "developer": {
         "name": "qBittorrent",
         "website": "https://www.qbittorrent.org/",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "adaptor": {
         "name": "CasaOS Team",
         "website": "https://www.casaos.io",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "support": "https://discord.gg/knqAbbBbeX",
     "website": "https://www.casaos.io",
     "container": {
-        "image": "hotio/qbittorrent:latest",
+        "image": "ghcr.io/hotio/qbittorrent:release-5.0.4",
         "shell": "bash",
         "privileged": false,
         "network_model": "bridge",
@@ -66,7 +66,7 @@
         "ports": [
             {
                 "container": "8080",
-                "host": "8080",
+                "host": "8181",
                 "type": "tcp",
                 "allocation": "preferred",
                 "configurable": "advanced",
@@ -87,7 +87,7 @@
                 "host": "/DATA",
                 "mode": "rw",
                 "allocation": "automatic",
-                "configurable": "advanced",
+                "configurable": "no",
                 "description": "qBittorrent Accessible directory."
             }
         ],
@@ -99,7 +99,9 @@
         "restart_policy": "unless-stopped",
         "sysctls": [],
         "cap_add": [],
-        "labels": []
+        "labels": [],
+        "host_name": "",
+        "cmd": []
     },
     "abilities": {
         "notification": false,

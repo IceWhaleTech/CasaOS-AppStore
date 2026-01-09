@@ -4,7 +4,7 @@
     "name": "pihole",
     "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/icon.png",
     "tagline": "Network-wide Ad Blocking",
-    "overview": "Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server.",
+    "overview": "Pi-hole is a network-wide ad-blocking platform for Linux hardware, using DNS sinkhole technology to protect devices from unwanted content without requiring client-side software. Designed for home or enterprise networks, it offers efficient ad blocking and network optimization.\n\nCore features include network-wide ad blocking and content blocking in non-browser environments. It uses DNS sinkhole to block ads, covering mobile apps and smart TVs. Caching DNS queries speeds up everyday browsing. A command-line interface ensures interoperability with reliable control options.\n\nIt provides an intuitive web interface dashboard for viewing and managing system status. An optional DHCP server function automatically protects all devices. Capable of handling high query volumes on server-grade hardware, it supports ad blocking over IPv4 and IPv6. With efficiency and versatility at the core, the platform delivers a modern network protection solution.\n\n**Key Features:**\n- Network-wide ad blocking via DNS sinkhole technology\n- Blocking content in non-browser environments, including mobile apps and smart TVs\n- Caching DNS queries to speed up browsing\n- Command-line interface for interoperability\n- Intuitive web interface dashboard for system viewing and control\n- Optional DHCP server function for automatic device protection\n- Ad blocking support for IPv4 and IPv6\n\n**Learn More:**\n- [Pi-hole Official Website](https://pi-hole.net/)\n- [Pi-hole GitHub](https://github.com/pi-hole/pi-hole)\n",
     "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/thumbnail.jpg",
     "screenshots": [
         "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pihole/screenshot-1.jpg",
@@ -17,19 +17,19 @@
     "developer": {
         "name": "Pi-hole",
         "website": "https://pi-hole.net/",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "adaptor": {
         "name": "CasaOS Team",
         "website": "https://www.casaos.io",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "support": "https://discord.gg/knqAbbBbeX",
     "website": "https://www.casaos.io",
     "container": {
-        "image": "pihole/pihole:latest",
+        "image": "pihole/pihole:2025.11.1",
         "shell": "bash",
         "privileged": false,
         "network_model": "bridge",
@@ -37,6 +37,7 @@
             "http": "80",
             "path": "/admin"
         },
+        "health_check": "",
         "envs": [
             {
                 "key": "TZ",
@@ -68,7 +69,7 @@
                 "container": "80",
                 "host": "8800",
                 "type": "tcp",
-                "allocation": "automatic",
+                "allocation": "preferred",
                 "configurable": "advanced",
                 "description": "WebUI HTTP Port"
             },
@@ -76,33 +77,25 @@
                 "container": "53",
                 "host": "53",
                 "type": "tcp",
-                "allocation": "required",
-                "configurable": "no",
-                "description": "Pihole DNS port"
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "Pi-hole DNS port"
             },
             {
                 "container": "53",
                 "host": "53",
-                "type": "udp",
-                "allocation": "required",
-                "configurable": "no",
-                "description": "Pihole DNS port"
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "Pi-hole DNS port"
             },
             {
-                "container": "67",
-                "host": "67",
-                "type": "udp",
-                "allocation": "optional",
-                "configurable": "no",
-                "description": "Pihole DHCP IPv4 port"
-            },
-            {
-                "container": "547",
-                "host": "547",
-                "type": "udp",
-                "allocation": "optional",
-                "configurable": "no",
-                "description": "Pihole DHCP IPv6 port"
+                "container": "443",
+                "host": "8443",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "Pi-hole HTTPS port"
             }
         ],
         "volumes": [
@@ -112,15 +105,7 @@
                 "mode": "rw",
                 "allocation": "automatic",
                 "configurable": "no",
-                "description": "Pi-hole /etc/pihole directory."
-            },
-            {
-                "container": "/etc/dnsmasq.d",
-                "host": "/DATA/AppData/$AppID/etc/dnsmasq.d/",
-                "mode": "rw",
-                "allocation": "automatic",
-                "configurable": "no",
-                "description": "Pi-hole /etc/dnsmasq.d directory."
+                "description": "Pi-hole /etc/pihole directory"
             }
         ],
         "devices": [],
@@ -131,7 +116,9 @@
         "restart_policy": "unless-stopped",
         "sysctls": [],
         "cap_add": [],
-        "labels": []
+        "labels": [],
+        "host_name": "",
+        "cmd": []
     },
     "abilities": {
         "notification": false,
@@ -148,7 +135,7 @@
             }
         ]
     },
-    "changelog":{
+    "changelog": {
         "latest_updates": "",
         "url": ""
     },

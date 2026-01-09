@@ -1,0 +1,109 @@
+{
+    "version": "2.0",
+    "title": "Emby_Nvidia",
+    "name": "emby_nvidia",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/icon.png",
+    "tagline": "TAKE YOUR MEDIA ANYWHERE WITH EMBY",
+    "overview": "Bringing all of your home videos, music, and photos together into one place has never been easier. Your personal Emby Server automatically converts and streams your media on-the-fly to play on any device.",
+    "thumbnail": "",
+    "screenshots": [],
+    "category": [
+        "Media"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "linuxserver/emby:4.9.1",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "8096",
+                "host": "8096",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": ""
+            },
+            {
+                "container": "8920",
+                "host": "8920",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": ""
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/config",
+                "host": "/DATA/AppData/$AppID/config",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": ""
+            },
+            {
+                "container": "/data/tvshows",
+                "host": "/DATA/Media/TV Shows",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": ""
+            },
+            {
+                "container": "/data/movies",
+                "host": "/DATA/Media/Movies",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": ""
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

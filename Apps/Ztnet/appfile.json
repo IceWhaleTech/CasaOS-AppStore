@@ -1,0 +1,85 @@
+{
+    "version": "2.0",
+    "title": "Ztnet",
+    "name": "ztnet",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ztnet/icon.png",
+    "tagline": "Self-hosted ZeroTier network controller with web UI for centralized management.",
+    "overview": "ZTNET is a powerful ZeroTier network management tool that simplifies network configuration and management through an intuitive Web interface, ideal for teams and individual users. Its modern design and rich features provide an efficient solution for building secure, scalable virtual networks.\n\nThe tool centers on an intuitive Web interface and organization with multi-user support. Developed in TypeScript, it acts as an intermediary between users and the ZeroTier Controller API, enabling collaborative network management within organizations to streamline team tasks. Integration with ZeroTier Central API allows direct management of networks, nodes, and members through a user-friendly interface, enhancing configuration efficiency.\n\nIt supports custom private root servers to create isolated network environments, improving privacy and control. Personalized user spaces enable users to independently create and manage networks. Support for 6plane and rfc4193 IPv6 addressing enriches enterprise or personal networking capabilities. Compatibility with ARM64 and AMD64 architectures ensures broad device support. The tool focuses on user-friendly and flexible design to deliver a modern network management experience.\n\n**Key Features:**\n- Intuitive Web interface for simplified ZeroTier network management\n- Organization and multi-user support for team collaboration\n- Integration with ZeroTier Central API for managing networks and nodes\n- Custom private root server for enhanced privacy and control\n- Personalized user spaces for independent network creation and management\n- Support for 6plane and rfc4193 IPv6 addressing\n- Compatibility with ARM64 and AMD64 architectures for diverse devices\n\n**Learn More:**\n- [ZTnet Official Website](https://ztnet.network/)\n- [ZTnet GitHub](https://github.com/sinamics/ztnet)\n",
+    "thumbnail": "",
+    "screenshots": [],
+    "category": [
+        "Network"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "sinamics/ztnet:0.7.5",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "3000",
+                "host": "3050",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/var/lib/zerotier-one",
+                "host": "/var/lib/zerotier-one",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "ZeroTier One Directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

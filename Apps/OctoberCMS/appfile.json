@@ -2,18 +2,13 @@
     "version": "1.0",
     "title": "October CMS",
     "name": "octobercms",
-    "icon": "",
+    "icon": "https://avatars.githubusercontent.com/u/7463690?s=200&v=4",
     "tagline": "The Laravel-based CMS for creators",
     "overview": "October CMS is a free, open-source, self-hosted CMS platform based on the Laravel PHP framework. It is designed to be simple, flexible, and developer-friendly.",
-    "thumbnail": "",
-    "screenshots": [
-        "",
-        "",
-        ""
-    ],
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OctoberCMS/thumbnail.png",
+    "screenshots": [],
     "category": [
-        "Web",
-        "CMS"
+        "self"
     ],
     "developer": {
         "name": "October CMS",
@@ -38,6 +33,7 @@
             "http": "80",
             "path": "/backend"
         },
+        "health_check": "",
         "envs": [
             {
                 "key": "DB_TYPE",
@@ -74,7 +70,9 @@
         "restart_policy": "unless-stopped",
         "sysctls": [],
         "cap_add": [],
-        "labels": []
+        "labels": [],
+        "host_name": "",
+        "cmd": []
     },
     "abilities": {
         "notification": false,

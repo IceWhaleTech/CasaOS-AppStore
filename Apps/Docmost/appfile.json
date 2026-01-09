@@ -1,0 +1,96 @@
+{
+    "version": "2.0",
+    "title": "Docmost",
+    "name": "docmost",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Docmost/icon.png",
+    "tagline": "A modern wiki and knowledge base for teams",
+    "overview": "Docmost is a self-hosted collaborative wiki and documentation tool designed for real-time collaboration, allowing multiple users to edit the same page simultaneously without conflicts. Its intuitive interface is ideal for teams managing knowledge bases, project documentation, or wikis, offering an efficient knowledge creation and sharing experience.\n\nThe tool's core features include real-time collaborative editing and space organization. It supports multiple users editing pages in real time for seamless collaboration and organizes pages into 'spaces' for teams, projects, or departments, each with independent permission settings. A rich text editor with Markdown shortcuts simplifies content creation. Built-in Draw.io, Excalidraw, and Mermaid tools provide robust diagramming capabilities.\n\nIt offers permissions management, assigning access via user groups for content security. Pages can be publicly shared via links for external access. Comments enhance communication and feedback, while page history tracks changes. Features like nested navigation, quick search, file attachments, and Markdown/HTML import/export are supported. The tool’s collaboration and flexibility deliver a modern documentation solution.\n\n**Key Features:**\n- Real-time collaborative editing for multiple users\n- Spaces for organizing pages by team, project or department\n- Permissions management with user group access control\n- Rich text editor with Markdown shortcuts\n- Built-in Draw.io, Excalidraw, Mermaid diagramming tools\n- Public page sharing via links\n- Page comments for communication and feedback\n- Page history, nested navigation, search, and file attachments\n\n**Learn More:**\n- [Docmost Official Website](https://docmost.com/)\n- [Docmost GitHub](https://github.com/docmost/docmost)\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Docmost/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Docmost/screenshot-10.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Docmost/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Docmost/screenshot-3.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Docmost/screenshot-4.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Docmost/screenshot-5.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Docmost/screenshot-6.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Docmost/screenshot-7.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Docmost/screenshot-8.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Docmost/screenshot-9.png"
+    ],
+    "category": [
+        "Notes"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "docmost/docmost:0.21.0",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "3000",
+                "host": "3000",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/app/data/storage",
+                "host": "/DATA/AppData/$AppID/storage",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Docmost Data Storage Directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

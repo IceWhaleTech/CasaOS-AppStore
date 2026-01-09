@@ -12,26 +12,24 @@
         "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/screenshot-3.jpg"
     ],
     "category": [
-        "Cloud",
-        "Utilities",
-        "Documents"
+        "Cloud"
     ],
     "developer": {
         "name": "File Browser",
         "website": "https://filebrowser.org/",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "adaptor": {
         "name": "CasaOS Team",
         "website": "https://www.casaos.io",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "support": "https://discord.gg/knqAbbBbeX",
     "website": "https://www.casaos.io",
     "container": {
-        "image": "filebrowser/filebrowser:latest",
+        "image": "filebrowser/filebrowser:v2.49.0",
         "shell": "sh",
         "privileged": false,
         "network_model": "bridge",
@@ -63,9 +61,9 @@
         "ports": [
             {
                 "container": "80",
-                "host": "80",
+                "host": "10180",
                 "type": "tcp",
-                "allocation": "automatic",
+                "allocation": "preferred",
                 "configurable": "advanced",
                 "description": "WebUI Port"
             }
@@ -84,7 +82,7 @@
                 "host": "/DATA",
                 "mode": "rw",
                 "allocation": "automatic",
-                "configurable": "advanced",
+                "configurable": "no",
                 "description": "FileBrowser managed directory."
             }
         ],
@@ -96,7 +94,9 @@
         "restart_policy": "unless-stopped",
         "sysctls": [],
         "cap_add": [],
-        "labels": []
+        "labels": [],
+        "host_name": "",
+        "cmd": []
     },
     "abilities": {
         "notification": false,
@@ -106,7 +106,7 @@
         "upnp": false
     },
     "tips": {
-        "before_install":[
+        "before_install": [
             {
                 "content": "Default Account"
             },

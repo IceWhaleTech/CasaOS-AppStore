@@ -1,0 +1,113 @@
+{
+    "version": "2.0",
+    "title": "Audiobookshelf",
+    "name": "audiobookshelf",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Audiobookshelf/icon.png",
+    "tagline": "Audiobookshelf is a self-hosted audiobook and podcast server.",
+    "overview": "Audiobookshelf is a self-hosted media server designed for managing and streaming audiobooks, podcasts, and e-books, offering a secure and flexible solution for personal media libraries. Its lightweight architecture and intuitive Web interface (available as a Progressive Web App, PWA) enable seamless access from any browser, while beta Android and iOS apps support offline listening, catering to privacy-focused media enthusiasts.\n\nThe app supports on-the-fly streaming of all audio formats and provides robust management tools, including automatic metadata and cover art fetching from multiple sources, bulk drag-and-drop uploads for books and podcasts, and chapter editing with lookup via the Audnexus API. Users can search and subscribe to podcasts with auto-downloading episodes or manage content via open RSS feeds. It supports multi-user access with custom permissions, ensuring individual playback progress syncs across devices. Additionally, it offers audio tools (like merging files into m4b or embedding metadata) and experimental e-book support (epub, pdf, cbr, cbz), with the ability to send e-books to devices like Kindle.\n\nIt automatically detects library updates, eliminating manual rescans, and includes daily automated backups to safeguard metadata. Chromecast support (on Web and Android apps) enhances streaming capabilities, while an active community provides support documentation for continuous improvements. Whether for personal collections or family sharing, the app's intuitive interface and versatile features deliver a modern media management platform, meeting diverse needs.\n\n**Key Features:**\n- Multi-user support w/ custom permissions\n- Keeps progress per user and syncs across devices\n- Lookup and apply metadata and cover art from several providers\n- Audiobook chapter editor w/ chapter lookup\n- Audiobook tools: Embed metadata in audio files & merge multiple audio files to a single m4b\n- Search and add podcasts to download episodes w/ auto-download\n- Open RSS feeds for audiobooks and podcast episodes\n- Backups with automated backup scheduling\n- Basic ebook support and ereader (epub, pdf, cbr, cbz) + send to device (i.e. Kindle)\n\n**Learn More:**\n- [Audiobookshelf Official Website](https://audiobookshelf.org)\n- [Audiobookshelf GitHub Repository](https://github.com/advplyr/audiobookshelf)\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Audiobookshelf/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Audiobookshelf/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Audiobookshelf/screenshot-3.png"
+    ],
+    "category": [
+        "Media"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "ghcr.io/advplyr/audiobookshelf:2.30.0",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "80",
+                "host": "13378",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/audiobooks",
+                "host": "/DATA/Media/Audiobooks",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Audiobooks directory"
+            },
+            {
+                "container": "/podcasts",
+                "host": "/DATA/Media/Podcasts",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Podcasts directory"
+            },
+            {
+                "container": "/config",
+                "host": "/DATA/AppData/$AppID/config",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Configuration directory"
+            },
+            {
+                "container": "/metadata",
+                "host": "/DATA/AppData/$AppID/metadata",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Metadata directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

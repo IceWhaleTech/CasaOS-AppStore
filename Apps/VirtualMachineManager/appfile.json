@@ -1,0 +1,104 @@
+{
+    "version": "2.0",
+    "title": "VirtualMachineManager",
+    "name": "virtualmachinemanager",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VirtualMachineManager/icon.png",
+    "tagline": "A GTK Broadway web UI for libvirt and virt-manager.",
+    "overview": "A GTK Broadway web UI for libvirt and virt-manager, to run virtual machines using QEMU/KVM.",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VirtualMachineManager/thumbnail.jpg",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VirtualMachineManager/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VirtualMachineManager/screenshot-2.png"
+    ],
+    "category": [
+        "Utilities"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "mber5/virt-manager:latest",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "80",
+                "host": "8185",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "GUI HTTP port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/var/run/libvirt/libvirt-sock",
+                "host": "/var/run/libvirt/libvirt-sock",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Libvirt socket"
+            },
+            {
+                "container": "/var/lib/libvirt",
+                "host": "/var/lib/libvirt",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Libvirt directory"
+            },
+            {
+                "container": "/DATA/Downloads",
+                "host": "/DATA/Downloads",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Downloads directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

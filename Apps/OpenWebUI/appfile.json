@@ -1,0 +1,71 @@
+{
+    "version": "2.0",
+    "title": "OpenWebUI",
+    "name": "openwebui",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/icon.png",
+    "tagline": "User-friendly WebUI for LLMs (Formerly Ollama WebUI)",
+    "overview": "Open WebUI is a feature-rich, user-friendly self-hosted AI platform designed for fully offline operation, supporting multiple large language model runners and API integration. Its intuitive Web interface provides powerful AI deployment capabilities, ideal for developers, researchers, and AI enthusiasts building localized intelligent applications.\n\nThe tool's core features include local model execution and Retrieval Augmented Generation (RAG). It supports Ollama and OpenAI-compatible APIs (e.g., LMStudio, GroqCloud), enabling seamless model switching and multi-model conversations. RAG enhances chat experiences through local document loading or web search integration (e.g., SearXNG, Google PSE). Granular permissions and role-based access control (RBAC) ensure security with customized user role management.\n\nIt supports Markdown and LaTeX for enriched interactions and offers hands-free voice and video call features for dynamic communication. Image generation integration (e.g., DALL-E, ComfyUI) enriches visual content, and a model builder enables creating and importing custom models via the interface. The Pipelines plugin framework supports Python plugins, extending functionality like function calling and real-time translation. The tool’s offline privacy and flexibility deliver a modern AI interaction solution.\n\n**Key Features:**\n- Local execution of Ollama and OpenAI-compatible APIs with multi-model conversations\n- RAG support with local document and web search integration (e.g., SearXNG, Google PSE)\n- Granular permissions and role-based access control (RBAC)\n- Simultaneous interaction with multiple models, leveraging their strengths\n- Image generation integration with DALL-E, ComfyUI, and more\n- Full Markdown and LaTeX support\n- Hands-free voice and video call functionality\n- Pipelines plugin framework for custom Python functionality\n\n**Learn More:**\n- [Open WebUI Official Website](https://openwebui.com)\n- [Open WebUI Documentation](https://docs.openwebui.com)\n- [Open WebUI GitHub Repository](https://github.com/open-webui/open-webui)\n",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/thumbnail.png",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/screenshot-3.png"
+    ],
+    "category": [
+        "Chat"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "ghcr.io/open-webui/open-webui:ollama",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [],
+        "volumes": [],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

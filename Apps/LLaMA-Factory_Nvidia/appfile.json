@@ -1,0 +1,80 @@
+{
+    "version": "2.0",
+    "title": "LLaMA-Factory_Nvidia",
+    "name": "llama_factory_nvidia",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LLaMA-Factory_Nvidia/icon.png",
+    "tagline": "Unified LLM Fine-Tuning with 100+ Models",
+    "overview": "LLaMA Factory is a comprehensive framework for fine-tuning Large Language Models (LLMs) with support for over 100 models. It provides a user-friendly web interface and powerful training methods including LoRA, QLoRA, and full-parameter training.\n\n**Key Features:**\n- Support for 100+ LLMs including LLaMA, Mistral, Qwen, and more\n- Multiple fine-tuning methods (LoRA, QLoRA, Full, Freeze)\n- Intuitive Web UI for easy model management\n- Built-in API server for model inference\n- Multi-GPU training support\n- Quantization and model export capabilities\n\n**Hardware Requirements:**\n- GPU: NVIDIA GPU with CUDA support required\n\n**Learn More:**\n- [GitHub Repository](https://github.com/hiyouga/LLaMA-Factory)\n- [Documentation](https://llamafactory.readthedocs.io/)\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LLaMA-Factory_Nvidia/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LLaMA-Factory_Nvidia/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LLaMA-Factory_Nvidia/screenshot-3.png"
+    ],
+    "category": [
+        "AI"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "hiyouga/llamafactory:0.9.4",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "7860",
+                "host": "18877",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "LLaMA Factory Web UI Port"
+            }
+        ],
+        "volumes": [],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}
