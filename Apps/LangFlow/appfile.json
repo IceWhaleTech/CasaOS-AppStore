@@ -1,0 +1,89 @@
+{
+    "version": "2.0",
+    "title": "LangFlow",
+    "name": "langflow",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/icon.png",
+    "tagline": "Open-source UI for building and debugging multi-agent and RAG applications",
+    "overview": "Langflow is a powerful, open-source UI designed specifically for building and debugging multi-agent and Retrieval-Augmented Generation (RAG) applications. It provides a visual, drag-and-drop interface that simplifies the process of creating complex AI workflows.\n\nThe system consists of two main components:\n- **Langflow**: The main application providing a visual interface for building AI workflows\n- **PostgreSQL**: A robust database system for storing application data and configurations\n\n**Key Features:**\n- Visual, drag-and-drop interface for building AI workflows\n- Support for multi-agent systems and RAG applications\n- Integrated debugging tools for testing and optimization\n- Persistent storage for workflows and configurations\n- Easy deployment with Docker containers\n\n**Learn More:**\n- [Langflow Official Website](https://www.langflow.org)\n- [Langflow GitHub Repository](https://github.com/langflow-ai/langflow)\n- [Documentation](https://docs.langflow.org)\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/screenshot-3.png"
+    ],
+    "category": [
+        "AI"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "langflowai/langflow:1.5.0",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "7860",
+                "host": "17860",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "Langflow Web Interface Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/app/langflow",
+                "host": "/DATA/AppData/$AppID/backend",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Langflow Configuration and Data Storage Directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

@@ -1,0 +1,89 @@
+{
+    "version": "2.0",
+    "title": "BeaverHabitTracker",
+    "name": "beaverhabittracker",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BeaverHabitTracker/icon.png",
+    "tagline": "A self-hosted, goal-free habit tracking tool.",
+    "overview": "Beaver Habit Tracker is a self-hosted habit tracking tool designed for users who want to effortlessly monitor daily behaviors without the stress of goal-setting. Its intuitive Web interface offers a pressure-free tracking experience, ideal for those focused on behavior observation and personal growth.\n\nThe tool's core features include goal-free habit tracking and a minimalist interface. It allows users to log multiple habits easily, without focusing on streaks or targets, and provides simple visualizations to understand behavior patterns. Users can add daily notes to record specific activities or reflections, with a smooth, low-effort interface.\n\nIt uses a self-hosted approach, ensuring data privacy and full control, with a lightweight, efficient design requiring minimal server resources. Users can manually reorder habits for an optimized experience. The tool's stress-free observation and intuitive operation help users gradually improve habits, delivering a modern habit management solution.\n\n**Key Features:**\n- Goal-free habit tracking focused on awareness, not achievement\n- Clean, minimalist interface for effortless daily logging\n- Lightweight and efficient, requiring minimal server resources\n- Simple visualizations to understand behavior patterns\n- Daily notes for recording activities or reflections\n\n**Learn More:**\n- [Beaver Habit Tracker Official Website](https://beaverhabits.com/)\n- [Beaver Habit Tracker GitHub](https://github.com/daya0576/beaverhabits)\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BeaverHabitTracker/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BeaverHabitTracker/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BeaverHabitTracker/screenshot-3.png"
+    ],
+    "category": [
+        "Utilities"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "daya0576/beaverhabits:0.7.3",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "8080",
+                "host": "15580",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/app/.user",
+                "host": "/DATA/AppData/$AppID/",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "BeaverHabitTracker User Data Directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

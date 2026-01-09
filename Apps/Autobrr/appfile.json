@@ -1,0 +1,87 @@
+{
+    "version": "2.0",
+    "title": "Autobrr",
+    "name": "autobrr",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Autobrr/icon.png",
+    "tagline": "Modern, easy to use download automation for torrents and usenet.",
+    "overview": "Autobrr is the modern download automation tool for torrents and usenet. With inspiration and ideas from tools like trackarr, autodl-irssi and flexget we built one tool that can do it all, and then some.",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Autobrr/thumbnail.png",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Autobrr/screenshot-1.png"
+    ],
+    "category": [
+        "Media"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "ghcr.io/autobrr/autobrr:v1.69.0",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "7474",
+                "host": "7474",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/config",
+                "host": "/DATA/AppData/$AppID/config",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Autobrr config directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

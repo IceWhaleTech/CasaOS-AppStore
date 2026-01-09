@@ -1,0 +1,98 @@
+{
+    "version": "2.0",
+    "title": "Kavita",
+    "name": "kavita",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Kavita/icon.png",
+    "tagline": "Kavita is a free and open source web based Comic and Book Server.",
+    "overview": "Kavita is a self-hosted digital library app designed for managing and reading comics, light novels, and e-books (supporting CBZ, CBR, EPUB, PDF, and more), offering a secure and convenient solution for personal reading collections. Its responsive Web interface allows users to access content effortlessly via any browser, with fullscreen reading and full localization support, ideal for comic and e-book enthusiasts building personalized digital libraries.\n\nThe app's core features include robust library management and an enhanced reading experience. Users can organize content with collections, reading lists, and custom tags, editing metadata to keep libraries neatly arranged. The built-in manga reader supports dual-page mode, Webtoon scrolling, and image splitting, while the e-book reader offers customizable fonts, spacing, and themes, with by-line progress syncing across devices. The PDF reader provides light/dark modes and diverse settings. It supports multi-user management, allowing custom permissions for sharing libraries or restricting content access, perfect for family or team use. Bulk imports and full-text search streamline large collection management.\n\nIt can be flexibly deployed on personal servers or NAS devices, with an active community providing extensive documentation to enhance functionality. Folder monitoring automatically detects file changes without manual scans, and sending content to Kindle or other devices improves cross-device access. Whether creating a personal reading hub or sharing media with others, the app's intuitive interface and high customizability deliver a modern management platform, meeting needs from casual reading to professional collections.\n\n**Key Features:**\n- Serve up Manga/Webtoons/Comics (cbr, cbz, zip/rar/rar5, 7zip, raw images) and Books (epub, pdf)\n- First class responsive readers that work great on any device (phone, tablet, desktop)\n- Customizable theming support: [Theme Repo](https://github.com/Kareadita/Themes) and [Documentation](https://wiki.kavitareader.com/guides/themes/)\n- External metadata integration and scrobbling for read status, ratings, and reviews (available via Kavita+)\n- Rich Metadata support with filtering and searching\n- Ways to group reading material: Collections, Reading Lists (CBL Import), Want to Read\n- Ability to manage users with rich Role-based management for age restrictions, abilities within the app, etc\n- Rich web readers supporting webtoon, continuous reading mode (continue without leaving the reader), virtual pages (epub), etc\n- Ability to customize your dashboard and side nav with smart filters, custom order and visibility toggles\n- Ability to download metadata (available via Kavita+)\n\n**Learn More:**\n- [Kavita Official Website](https://www.kavitareader.com)\n- [Kavita GitHub Repository](https://github.com/Kareadita/Kavita)\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Kavita/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Kavita/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Kavita/screenshot-3.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Kavita/screenshot-4.png"
+    ],
+    "category": [
+        "Media"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "jvmilazz0/kavita:0.8.8",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "5000",
+                "host": "5150",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/kavita/config",
+                "host": "/DATA/AppData/$AppID/config",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Config directory."
+            },
+            {
+                "container": "/manga",
+                "host": "/DATA/Media/Manga",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Manga directory."
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

@@ -1,0 +1,91 @@
+{
+    "version": "2.0",
+    "title": "Sure",
+    "name": "sure",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sure/icon.png",
+    "tagline": "Personal finance management application",
+    "overview": "Sure is a personal finance management application designed to help you track your expenses, income, and investments in one place. With an intuitive interface and powerful features, Sure makes it easy to understand your financial situation and make informed decisions about your money.\n\n**Key Features:**\n- **Expense Tracking**: Easily log and categorize your expenses\n- **Income Management**: Track multiple income sources\n- **Investment Monitoring**: Keep an eye on your investments and their performance\n- **Budget Planning**: Create and maintain budgets to control your spending\n- **Financial Reports**: Generate detailed reports to understand your financial habits\n- **AI-Powered Insights**: Get personalized financial advice using AI technology\n\n**Use Cases:**\n- Personal budget management\n- Expense tracking and categorization\n- Investment portfolio monitoring\n- Financial goal setting and tracking\n- Cash flow analysis\n\n**Learn More:**\n- [Sure GitHub Repository](https://github.com/we-promise/sure)\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sure/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sure/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sure/screenshot-3.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sure/screenshot-4.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sure/screenshot-5.png"
+    ],
+    "category": [
+        "Finance"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "ghcr.io/we-promise/sure:0.6.5-hotfix.1",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "3000",
+                "host": "23000",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "Sure Web Application Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/rails/storage",
+                "host": "/DATA/AppData/$AppID/app/storage",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Sure Application Storage"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

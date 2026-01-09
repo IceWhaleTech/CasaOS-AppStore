@@ -3,8 +3,8 @@
     "title": "Jellyfin",
     "name": "jellyfin",
     "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/icon.png",
-    "tagline": "Puts you in control of your media.",
-    "overview": "Jellyfin enables you to collect, manage, and stream your media. Run the Jellyfin server on your system and gain access to the leading free-software entertainment system, bells and whistles included.",
+    "tagline": "The personal Media System",
+    "overview": "Jellyfin stands out among media server applications for its fully open-source, free, and privacy-focused design. Unlike Emby and Plex, Jellyfin delivers robust media management, real-time transcoding, and granular multi-user permissions without subscription costs, operating independently of cloud services to ensure full user control over data. Its community-driven development and efficient resource usage enable smooth performance on low-end devices, making it the go-to choice for privacy-conscious and budget-savvy users.\n\nPicture your movies, TV shows, and music at your fingertips, accessible on any device. Jellyfin transforms your media collection into a personalized entertainment hub, surpassing traditional photo albums with a seamless browsing and playback experience.\nJellyfin offers high-quality streaming, automatic metadata fetching, and personalized recommendations, all at no cost. It supports multiple users, each with their own media library, catering to the diverse needs of families or teams.\nDeploying Jellyfin on private cloud devices like Zima provides near-unlimited storage, smooth streaming, and secure multi-device access. For NAS enthusiasts or anyone looking to elevate their home media setup, Jellyfin is the perfect solution.\n",
     "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.png",
     "screenshots": [
         "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-1.jpg",
@@ -19,25 +19,24 @@
     "developer": {
         "name": "Jellyfin",
         "website": "https://jellyfin.org/",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "adaptor": {
         "name": "CasaOS Team",
         "website": "https://www.casaos.io",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "support": "https://discord.gg/knqAbbBbeX",
     "website": "https://www.casaos.io",
     "container": {
-        "image": "linuxserver/jellyfin:latest",
+        "image": "linuxserver/jellyfin:10.10.7",
         "shell": "bash",
         "privileged": false,
         "network_model": "bridge",
         "web_ui": {
             "http": "8096",
-            "https": "8920",
             "path": "/"
         },
         "health_check": "",
@@ -64,7 +63,7 @@
         "ports": [
             {
                 "container": "8096",
-                "host": "8096",
+                "host": "8097",
                 "type": "tcp",
                 "allocation": "preferred",
                 "configurable": "advanced",
@@ -72,7 +71,7 @@
             },
             {
                 "container": "8920",
-                "host": "8920",
+                "host": "8921",
                 "type": "tcp",
                 "allocation": "preferred",
                 "configurable": "advanced",
@@ -82,16 +81,16 @@
                 "container": "7359",
                 "host": "7359",
                 "type": "tcp",
-                "allocation": "optional",
-                "configurable": "no",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Jellyfin auto-discovery Port"
             },
             {
                 "container": "1900",
-                "host": "1900",
+                "host": "1901",
                 "type": "tcp",
-                "allocation": "optional",
-                "configurable": "no",
+                "allocation": "preferred",
+                "configurable": "advanced",
                 "description": "Jellyfin DLNA Port"
             }
         ],
@@ -109,15 +108,15 @@
                 "host": "/DATA/Media",
                 "mode": "rw",
                 "allocation": "automatic",
-                "configurable": "advanced",
+                "configurable": "no",
                 "description": "Jellyfin Media directory."
             },
             {
                 "container": "/opt/vc/lib",
                 "host": "/opt/vc/lib",
                 "mode": "rw",
-                "allocation": "optional",
-                "configurable": "advanced",
+                "allocation": "automatic",
+                "configurable": "no",
                 "description": "OpenMax libs"
             }
         ],
@@ -172,7 +171,9 @@
         "restart_policy": "unless-stopped",
         "sysctls": [],
         "cap_add": [],
-        "labels": []
+        "labels": [],
+        "host_name": "",
+        "cmd": []
     },
     "abilities": {
         "notification": false,
@@ -181,8 +182,10 @@
         "search": false,
         "upnp": false
     },
-    "tips": {},
-    "changelog":{
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
         "latest_updates": "",
         "url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/changelog.txt"
     },

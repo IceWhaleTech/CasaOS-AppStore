@@ -1,0 +1,96 @@
+{
+    "version": "2.0",
+    "title": "ActualBudget",
+    "name": "actualbudget",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ActualBudget/icon.png",
+    "tagline": "Privacy-first finance app with envelope budgeting and multi-device sync.",
+    "overview": "Actual Budget is a fast, privacy-focused finance management app using local-first envelope budgeting, ensuring full control over data. Its intuitive interface supports offline use, with multi-device sync and optional end-to-end encryption, delivering a secure, efficient financial management experience, ideal for users seeking clear financial oversight.\n\nThe app's core features include envelope budgeting based on real income, rapid transaction handling, and intuitive financial reporting. It helps users track spending and monitor monthly savings clearly, with a streamlined transaction editor for quick categorization, split transactions, and transfers. Built-in net worth and cash flow reports provide financial insights, and a custom report engine allows tailored reports for specific needs. Undo and redo functionality ensures users can easily correct mistakes, maintaining operational flexibility.\n\nIt integrates bank accounts via goCardless (EU/UK) or SimpleFIN (US/Canada), supports multi-device syncing for data privacy, and enables importing transaction data from YNAB4, nYNAB, and QIF, OFX, QFX, CAMT.053, CSV files, simplifying migration of existing financial records. Community documentation enhances usability, and the app's simple operation and high flexibility deliver a modern finance management solution.\n\n**Key Features:**\n- Privacy-focused personal finance management\n- Envelope budgeting methodology\n- Multi-device synchronization\n- End-to-end encryption support\n- Local data ownership\n- Fast and responsive interface\n- Open source and self-hosted\n- Bank account synchronization\n- Detailed financial reporting\n- Budget tracking and analysis\n\n**Learn More:**\n- [Actual Budget Official Website](https://actualbudget.org)\n- [Actual Budget GitHub Repository](https://github.com/actualbudget/actual)\n- [Actual Budget Docker Image](https://hub.docker.com/r/actualbudget/actual-server)\n",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ActualBudget/thumbnail.png",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ActualBudget/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ActualBudget/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ActualBudget/screenshot-3.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ActualBudget/screenshot-4.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ActualBudget/screenshot-5.png"
+    ],
+    "category": [
+        "Finance"
+    ],
+    "developer": {
+        "name": "ActualBudget",
+        "website": "https://actualbudget.org",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "https://github.com/actualbudget/actual/issues",
+    "website": "https://actualbudget.org",
+    "container": {
+        "image": "actualbudget/actual-server:25.7.1",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "5006",
+            "path": "/"
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "5006",
+                "host": "15006",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "Actual Budget Web Interface Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/data",
+                "host": "/DATA/AppData/$AppID",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Actual Budget Data Directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 128,
+            "min_storage": 128
+        },
+        "restart_policy": "unless-stopped",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": [
+            {
+                "content": "After opening the web page for the first time, you will see an error popup. Click the `Advanced options` option to successfully enter the Actual Budget web page.",
+                "env": "en_US"
+            }
+        ]
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

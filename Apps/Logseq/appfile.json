@@ -1,0 +1,98 @@
+{
+    "version": "2.0",
+    "title": "Logseq",
+    "name": "logseq",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Logseq/icon.png",
+    "tagline": "A privacy-first, open-source platform for knowledge management and collaboration.",
+    "overview": "A privacy-first, open-source platform for knowledge management and collaboration.",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Logseq/thumbnail.png",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Logseq/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Logseq/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Logseq/screenshot-3.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Logseq/screenshot-4.png"
+    ],
+    "category": [
+        "Notes"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "correctroad/logseq:v0.10.10",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "3325",
+                "host": "",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": ""
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/config",
+                "host": "/DATA/AppData/logseq/config",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": ""
+            },
+            {
+                "container": "/notes",
+                "host": "/DATA/Documents/Notes",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": ""
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

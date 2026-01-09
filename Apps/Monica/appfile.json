@@ -1,0 +1,89 @@
+{
+    "version": "2.0",
+    "title": "Monica",
+    "name": "monica",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Monica/icon.png",
+    "tagline": "A Personal Relationship Management tool to help you document your social life.",
+    "overview": "Monica is a self-hosted personal relationship management tool that helps users document and organize interactions with family and friends via an intuitive Web interface, creating a personalized contact database. It is ideal for users balancing work and life, ensuring key personal connections are never missed.\n\nThe tool's core features include comprehensive contact management and smart reminders. It supports creating detailed contact profiles, logging personal details, relationships (e.g., family, friends), and how contacts were met. Users can set automatic reminders for birthdays, anniversaries, and other key dates, while tracking conversations, activities, and gift ideas. A diary feature records daily moods and significant moments, maintaining a clear life record.\n\nIt offers task and debt management to track to-dos or financial interactions. Users can upload photos and documents, favorite contacts, and organize relationships with labels for streamlined data management. Full control over local data ensures privacy. The tool’s intuitive operation and high flexibility deliver a modern relationship management solution.\n\n**Key Features:**\n- Comprehensive contact management with detailed profiles\n- Automatic reminders for birthdays, anniversaries, and key dates\n- Track conversations, activities, and gift ideas\n- Diary feature to record daily moods and moments\n- Task and debt management for to-dos and finances\n- Upload photos and documents, favorite contacts\n- Organize contacts with labels\n- Local data storage for privacy assurance\n\n**Learn More:**\n- [Monica Official Website](https://www.monicahq.com)\n- [Monica GitHub Repository](https://github.com/monicahq/monica)\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Monica/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Monica/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Monica/screenshot-3.png"
+    ],
+    "category": [
+        "Utilities"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "monica:4.1.2",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "80",
+                "host": "18930",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/var/www/html/storage",
+                "host": "/DATA/AppData/$AppID/storage",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Monica Application Storage Directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

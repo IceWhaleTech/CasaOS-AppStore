@@ -1,0 +1,85 @@
+{
+    "version": "2.0",
+    "title": "Ollama_Nvidia",
+    "name": "ollama_nvidia",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ollama/icon.png",
+    "tagline": "Get up and running with large language models locally",
+    "overview": "Ollama is a tool for running large language models locally, designed to help users quickly deploy and manage AI models via a simple command-line interface and server. Its intuitive Web interface and efficient design make it ideal for developers, researchers, and AI enthusiasts working on local hardware.\n\nThe tool's core features include local model execution and multi-model support. It enables running models like Llama 3, Mistral, and Gemma, with simple commands for downloading and switching models. All data processing occurs locally, ensuring privacy. Low resource usage optimizes model loading, allowing smooth operation on limited hardware.\n\nIt offers a RESTful API for application integration and supports tool calling (e.g., Llama 3.1) for complex tasks. Model management via Modelfile bundles weights and configurations for ease of use. The tool's efficiency and user control deliver a modern local AI solution.\n\n**Key Features:**\n- **Local Execution**: Run LLMs directly on your hardware without internet dependency\n- **Multiple Model Support**: Access to dozens of pre-trained models including Llama 3, Mistral, Gemma, Code Llama, and more\n- **Easy Model Management**: Simple commands to pull, run, and manage different models\n- **API Integration**: RESTful API for building applications and integrations\n- **Memory Efficient**: Optimized model loading and memory management\n- **Privacy-Focused**: All processing happens locally, ensuring data privacy\n\n**Supported Models:**\n- DeepSeek-R1 (1.5B, 7B, 8B, 14B, 32B, 70B, 671B parameters)\n- Gemma3n (2B, 4B parameters)\n- Gemma3 (1B, 4B, 12B, 27B parameters)\n- Qwen3 (0.6B, 1.7B, 4B, 8B, 14B, 30B, 32B, 235B parameters)\n- Qwen2.5vl (3B, 7B, 32B, 72B parameters)\n- Llama3.1 (8B, 70B, 405B parameters)\n- Llama3.2 (1B, 3B parameters)\n- Mistral (7B parameters)\n- And many more...\n\n**Use Cases:**\n- Local AI development and experimentation\n- Educational purposes and research\n- Building AI-powered applications\n- Code generation and assistance\n- Text generation and completion\n- Chatbots and conversational AI\n- Data analysis and insights\n\n**Learn More:**\n- [Ollama Official Website](https://ollama.com/)\n- [Ollama GitHub Repository](https://github.com/ollama/ollama)\n- [Model Library](https://ollama.com/library)\n",
+    "thumbnail": "",
+    "screenshots": [],
+    "category": [
+        "Chat"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "ollama/ollama:0.9.5",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "11434",
+                "host": "11434",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "Ollama API Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/root/.ollama",
+                "host": "/DATA/AppData/$AppID/",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Ollama Models and Data Directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

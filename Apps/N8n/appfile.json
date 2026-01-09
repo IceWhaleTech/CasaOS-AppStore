@@ -1,95 +1,96 @@
 {
-	"version": "1.0",
-	"title": "n8n",
-	"name": "n8n",
-	"icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/icon.png",
-	"tagline": "Workflow automation tool",
-	"overview": "Free and source-available fair-code licensed workflow automation tool. Easily automate tasks across different services.",
-	"thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/thumbnail.png",
-	"screenshots": [
-		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/screenshot-1.png",
-		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/screenshot-2.png",
-		"https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/screenshot-3.png"
-	],
-	"category": [
-		"Utilities"
-	],
-	"developer": {
-		"name": "n8n",
-		"website": "https://n8n.io/",
-		"donate_text": "",
-		"donate_link": ""
-	},
-	"adaptor": {
-		"name": "YoussofKhawaja",
-		"website": "",
-		"donate_text": "",
-		"donate_link": ""
-	},
-	"support": "https://community.n8n.io",
-	"website": "https://n8n.io",
-	"container": {
-		"image": "n8nio/n8n:latest",
-		"shell": "bash",
-		"privileged": false,
-		"network_model": "bridge",
-		"web_ui": {
-			"http": "5678",
-			"path": "/"
-		},
-		"health_check": "",
-		"envs":
-        [
-        {
-            "key": "TZ",
-            "value": "$TZ",
-            "configurable": "no",
-            "description": "TimeZone"
-        }
-        ],
-		"ports":
-        [
-			{
-				"container": "5678",
-				"host": "5678",
-				"type": "tcp",
-                "allocation": "preferred",
+    "version": "1.0",
+    "title": "n8n",
+    "name": "n8n",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/icon.png",
+    "tagline": "Workflow automation tool",
+    "overview": "n8n is a powerful open-source workflow automation and conversational AI platform that blends the flexibility of coding with the simplicity of no-code development, empowering users to create efficient and secure automation workflows. It seamlessly connects any app with an API, leveraging native AI capabilities (like LangChain-based AI agent workflows) to process custom data, ideal for personal task management, team collaboration, or enterprise-grade automation. Its vibrant community offers over 400 integrations and 900+ ready-to-use templates, enabling users to deploy automations quickly.\n\nThe platform supports highly customizable workflow design, allowing users to write JavaScript/Python, add npm packages, or use an intuitive visual interface to manage data, catering to both simple tasks and complex processes. Enterprise-grade features like advanced permissions and air-gapped deployments ensure security, while multilingual support makes it accessible globally. n8n delivers a versatile and user-friendly automation solution.\n\nDiscover n8n’s Automation Scenarios\nn8n’s community resources provide extensive support and inspiration, helping users explore its scenario-based value and easily build automation workflows. Below are two key resources showcasing n8n’s capabilities across various use cases:\n\n1. [n8n Official Community Forum](https://community.n8n.io/): \nThe forum is a hub for user collaboration and learning, offering resources from beginner guides to advanced workflow designs. Shared use cases include automating social media posts or real-time data syncing, such as using n8n to pull data from Google Sheets and send Slack notifications, boosting team collaboration and data efficiency.\n\n2. [n8n Official Template Library](https://n8n.io/workflows/): \nThe template library offers over 900 ready-to-use workflows for scenarios like marketing automation, data analytics, and customer support. For example, a template can link Shopify to Mailchimp, automatically adding new customers to mailing lists and sending welcome emails, making automation accessible to non-technical users. AI-driven workflows, like handling customer queries with LangChain, highlight n8n’s strength in intelligent interactions.\n",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/thumbnail.png",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/screenshot-3.png"
+    ],
+    "category": [
+        "Utilities"
+    ],
+    "developer": {
+        "name": "n8n",
+        "website": "https://n8n.io/",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "YoussofKhawaja",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "https://community.n8n.io",
+    "website": "https://n8n.io",
+    "container": {
+        "image": "n8nio/n8n:1.123.0",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "5678",
+            "path": "/"
+        },
+        "health_check": "",
+        "envs": [
+            {
+                "key": "TZ",
+                "value": "$TZ",
                 "configurable": "no",
-				"description": "web port"
-			}
-		],
-		"volumes":
-        [
-           {
+                "description": "TimeZone"
+            }
+        ],
+        "ports": [
+            {
+                "container": "5678",
+                "host": "5678",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "web port"
+            }
+        ],
+        "volumes": [
+            {
                 "container": "/home/node/.n8n",
-                "host": "/DATA/AppData/$AppID/.n8n",
+                "host": "/DATA/AppData/$AppID",
                 "mode": "rw",
                 "allocation": "automatic",
-                "configurable": "advanced",
+                "configurable": "no",
                 "description": "n8n directory."
             }
         ],
-		"devices": [],
-		"constraints": {
-			"min_memory": 320,
-			"min_storage": 512
-		},
-		"restart_policy": "unless-stopped",
-		"sysctls": [],
-		"cap_add": [],
-		"labels": [],
-		"cmd": []
-	},
-	"abilities": {
-		"notification": false,
-		"widgets": false,
-		"authentication": true,
-		"search": false,
-		"upnp": false
-	},
-	"changelog": {
-		"latest_updates": "",
-		"url": "https://docs.n8n.io/reference/release-notes/"
-	},
-	"latest_update_date": "1660128804"
+        "devices": [],
+        "constraints": {
+            "min_memory": 320,
+            "min_storage": 512
+        },
+        "restart_policy": "unless-stopped",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": true,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": "https://docs.n8n.io/reference/release-notes/"
+    },
+    "latest_update_date": "1660128804"
 }
