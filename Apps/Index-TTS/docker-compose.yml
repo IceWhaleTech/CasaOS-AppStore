@@ -12,7 +12,7 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 8G
+          memory: 12G
     x-casaos:
       ports:
         - container: "7860"
@@ -80,8 +80,10 @@ x-casaos:
       - Präzise Dauerkontrolle zur expliziten Token-Anzahl-Spezifikation für perfekte Audio-Video-Synchronisation
       - Natürlichsprachliche Emotionskontrolle zur Steuerung der Sprachgenerierung durch Textbeschreibungen
 
-       **Zusätzliche Hinweise:**
-      - Diese Anwendung läuft standardmäßig auf der CPU. Für NVIDIA GPU-Nutzung wählen Sie "Custom Install" und aktivieren Sie die GPU-Option (unterstützt in ZimaOS 1.5.0 und höher)
+      **Zusätzliche Hinweise:**
+      - Bitte stellen Sie sicher, dass verfügbarer Speicher > 12 GB ist, andernfalls kann die Anwendung möglicherweise nicht ordnungsgemäß ausgeführt werden
+      - Diese Anwendung läuft standardmäßig auf der CPU. Dieser Modus hat eine geringe Recheneffizienz und verursacht extrem hohen Ressourcenverbrauch und potenzielle Systeminstabilität. Für optimale Leistung und Stabilität wird dringend empfohlen, diese Anwendung mit NVIDIA GPU auszuführen
+      - Wenn Sie NVIDIA GPU verwenden möchten, wählen Sie bitte "Custom Install" und aktivieren Sie die GPU-Option (unterstützt in ZimaOS 1.5.0 und höher)
       - Bei NVIDIA GPU-Nutzung wird ≥ 8 GB VRAM benötigt (empfohlen für optimale Leistung)
       - Bei NVIDIA GPU-Nutzung wird NVIDIA CUDA Toolkit Version ≥ 12.8 benötigt
 
@@ -101,8 +103,10 @@ x-casaos:
       - Ακριβής έλεγχος διάρκειας με ρητή καθορισμό αριθμού tokens για τέλειο συγχρονισμό ήχου-βίντεο
       - Έλεγχος συναισθημάτων με φυσική γλώσσα για καθοδήγηση της παραγωγής φωνής μέσω περιγραφών κειμένου
 
-       **Πρόσθετες Πληροφορίες:**
-      - Αυτή η εφαρμογή εκτελείται από προεπιλογή στην CPU. Για χρήση NVIDIA GPU, επιλέξτε "Custom Install" και ενεργοποιήστε την επιλογή GPU (υποστηρίζεται σε ZimaOS 1.5.0 και νεότερα)
+      **Πρόσθετες Πληροφορίες:**
+      - Βεβαιωθείτε ότι η διαθέσιμη μνήμη είναι > 12 GB, διαφορετικά η εφαρμογή ενδέχεται να μην λειτουργήσει σωστά
+      - Αυτή η εφαρμογή εκτελείται από προεπιλογή στην CPU. Αυτή η λειτουργία έχει χαμηλή υπολογιστική αποδοτικότητα και θα προκαλέσει εξαιρετικά υψηλή κατανάλωση πόρων και πιθανή αστάθεια συστήματος. Για βέλτιστη απόδοση και σταθερότητα, συνιστάται ιδιαίτερα η χρήση NVIDIA GPU για την εκτέλεση αυτής της εφαρμογής
+      - Εάν χρειάζεστε να χρησιμοποιήσετε NVIDIA GPU, επιλέξτε "Custom Install" και ενεργοποιήστε την επιλογή GPU (υποστηρίζεται σε ZimaOS 1.5.0 και νεότερα)
       - Για χρήση NVIDIA GPU, απαιτείται ≥ 8 GB VRAM (συνιστάται για βέλτιστη απόδοση)
       - Για χρήση NVIDIA GPU, απαιτείται NVIDIA CUDA Toolkit έκδοση ≥ 12.8
 
@@ -122,8 +126,10 @@ x-casaos:
       - Precise duration control with explicit token count specification for perfect audio-video synchronisation
       - Natural language-based emotion control to guide speech generation through text descriptions
 
-       **Additional Notes:**
-      - This application runs on CPU by default. For NVIDIA GPU usage, select "Custom Install" and enable the GPU option (supported in ZimaOS 1.5.0 and above)
+      **Additional Notes:**
+      - Please ensure available memory > 12 GB, otherwise the application may not run properly
+      - This application runs on CPU by default. This mode has low computational efficiency and will cause extremely high resource consumption and potential system instability. For optimal performance and stability, it is strongly recommended to use NVIDIA GPU to run this application
+      - If you need to use NVIDIA GPU, please select "Custom Install" and enable the GPU option (supported in ZimaOS 1.5.0 and above)
       - For NVIDIA GPU usage, ≥ 8 GB VRAM is required (recommended for optimal performance)
       - For NVIDIA GPU usage, NVIDIA CUDA Toolkit version ≥ 12.8 is required
 
@@ -143,8 +149,10 @@ x-casaos:
       - Precise duration control with explicit token count specification for perfect audio-video synchronization
       - Natural language-based emotion control to guide speech generation through text descriptions
 
-       **Additional Notes:**
-      - This application runs on CPU by default. For NVIDIA GPU usage, select "Custom Install" and enable the GPU option (supported in ZimaOS 1.5.0 and above)
+      **Additional Notes:**
+      - Please ensure available memory > 12 GB, otherwise the application may not run properly
+      - This application runs on CPU by default. This mode has low computational efficiency and will cause extremely high resource consumption and potential system instability. For optimal performance and stability, it is strongly recommended to use NVIDIA GPU to run this application
+      - If you need to use NVIDIA GPU, please select "Custom Install" and enable the GPU option (supported in ZimaOS 1.5.0 and above)
       - For NVIDIA GPU usage, ≥ 8 GB VRAM is required (recommended for optimal performance)
       - For NVIDIA GPU usage, NVIDIA CUDA Toolkit version ≥ 12.8 is required
 
@@ -164,8 +172,10 @@ x-casaos:
       - Contrôle précis de la durée avec spécification explicite du nombre de tokens pour une synchronisation audio-vidéo parfaite
       - Contrôle émotionnel basé sur le langage naturel pour guider la génération vocale par descriptions textuelles
 
-       **Notes Supplémentaires:**
-      - Cette application s'exécute par défaut sur le CPU. Pour utiliser le GPU NVIDIA, sélectionnez "Custom Install" et activez l'option GPU (pris en charge dans ZimaOS 1.5.0 et supérieur)
+      **Notes Supplémentaires:**
+      - Veuillez vous assurer que la mémoire disponible > 12 Go, sinon l'application pourrait ne pas fonctionner correctement
+      - Cette application s'exécute par défaut sur le CPU. Ce mode a une faible efficacité de calcul et entraînera une consommation de ressources extrêmement élevée et une instabilité potentielle du système. Pour des performances et une stabilité optimales, il est fortement recommandé d'utiliser le GPU NVIDIA pour exécuter cette application
+      - Si vous devez utiliser le GPU NVIDIA, veuillez sélectionner "Custom Install" et activer l'option GPU (pris en charge dans ZimaOS 1.5.0 et supérieur)
       - Pour l'utilisation du GPU NVIDIA, ≥ 8 GB de VRAM sont requis (recommandé pour des performances optimales)
       - Pour l'utilisation du GPU NVIDIA, NVIDIA CUDA Toolkit version ≥ 12.8 est requis
 
@@ -185,8 +195,10 @@ x-casaos:
       - Precizna kontrola trajanja s eksplicitnom specifikacijom broja tokena za savršenu audio-video sinkronizaciju
       - Kontrola emocija temeljena na prirodnom jeziku za usmjeravanje generiranja govora kroz tekstualne opise
 
-       **Dodatne Napomene:**
-      - Ova aplikacija radi na CPU-u prema zadanim postavkama. Za korištenje NVIDIA GPU-a, odaberite "Custom Install" i omogućite GPU opciju (podržano u ZimaOS 1.5.0 i novijim verzijama)
+      **Dodatne Napomene:**
+      - Molimo osigurajte da dostupna memorija bude > 12 GB, inače aplikacija možda neće raditi pravilno
+      - Ova aplikacija radi na CPU-u prema zadanim postavkama. Ovaj način rada ima nisku računalnu učinkovitost i uzrokovat će iznimno visoku potrošnju resursa i potencijalnu nestabilnost sustava. Za optimalne performanse i stabilnost, jako se preporučuje korištenje NVIDIA GPU-a za pokretanje ove aplikacije
+      - Ako trebate koristiti NVIDIA GPU, odaberite "Custom Install" i omogućite GPU opciju (podržano u ZimaOS 1.5.0 i novijim verzijama)
       - Za korištenje NVIDIA GPU-a, potrebno je ≥ 8 GB VRAM-a (preporučeno za optimalnu performansu)
       - Za korištenje NVIDIA GPU-a, potreban je NVIDIA CUDA Toolkit verzija ≥ 12.8
 
@@ -206,8 +218,10 @@ x-casaos:
       - Controllo preciso della durata con specifica esplicita del conteggio dei token per perfetta sincronizzazione audio-video
       - Controllo emotivo basato sul linguaggio naturale per guidare la generazione vocale attraverso descrizioni testuali
 
-       **Note Aggiuntive:**
-      - Questa applicazione viene eseguita su CPU per impostazione predefinita. Per l'uso della GPU NVIDIA, selezionare "Custom Install" e abilitare l'opzione GPU (supportato in ZimaOS 1.5.0 e versioni successive)
+      **Note Aggiuntive:**
+      - Si prega di assicurarsi che la memoria disponibile sia > 12 GB, altrimenti l'applicazione potrebbe non funzionare correttamente
+      - Questa applicazione viene eseguita su CPU per impostazione predefinita. Questa modalità ha una bassa efficienza computazionale e causerà un consumo di risorse estremamente elevato e una potenziale instabilità del sistema. Per prestazioni e stabilità ottimali, si raccomanda vivamente di utilizzare la GPU NVIDIA per eseguire questa applicazione
+      - Se è necessario utilizzare la GPU NVIDIA, selezionare "Custom Install" e abilitare l'opzione GPU (supportato in ZimaOS 1.5.0 e versioni successive)
       - Per l'uso della GPU NVIDIA, sono richiesti ≥ 8 GB di VRAM (consigliato per prestazioni ottimali)
       - Per l'uso della GPU NVIDIA, è richiesto NVIDIA CUDA Toolkit versione ≥ 12.8
 
@@ -227,8 +241,10 @@ x-casaos:
       - 完璧な音声・映像同期のための明示的トークン数指定による精密な時間制御
       - テキスト記述による音声生成をガイドする自然言語ベースの感情制御
 
-       **補足説明：**
-      - このアプリケーションはデフォルトでCPUで実行されます。NVIDIA GPUを使用する場合は、「Custom Install」を選択してGPUオプションを有効にしてください（ZimaOS 1.5.0以上でサポート）
+      **補足説明：**
+      - 利用可能なメモリが 12 GB を超えることを確認してください。そうでない場合、アプリケーションが正常に動作しない可能性があります
+      - このアプリケーションはデフォルトでCPUで実行されます。このモードは計算効率が低く、極めて高いリソース消費とシステムの不安定性を引き起こします。最適なパフォーマンスと安定性を確保するため、NVIDIA GPUを使用してこのアプリケーションを実行することを強く推奨します
+      - NVIDIA GPUを使用する必要がある場合は、「Custom Install」を選択してGPUオプションを有効にしてください（ZimaOS 1.5.0以上でサポート）
       - NVIDIA GPUを使用する場合、≥ 8 GBのVRAMが必要です（最適なパフォーマンスのため推奨）
       - NVIDIA GPUを使用する場合、NVIDIA CUDA Toolkitバージョン ≥ 12.8が必要です
 
@@ -248,8 +264,10 @@ x-casaos:
       - 완벽한 오디오-비디오 동기화를 위한 명시적 토큰 수 지정을 통한 정밀한 지속 시간 제어
       - 텍스트 설명을 통해 음성 생성을 안내하는 자연어 기반 감정 제어
 
-       **추가 참고사항:**
-      - 이 애플리케이션은 기본적으로 CPU에서 실행됩니다. NVIDIA GPU를 사용하려면 "Custom Install"을 선택하고 GPU 옵션을 활성화하세요 (ZimaOS 1.5.0 이상에서 지원)
+      **추가 참고사항:**
+      - 사용 가능한 메모리가 12GB를 초과하는지 확인하십시오. 그렇지 않으면 애플리케이션이 제대로 실행되지 않을 수 있습니다
+      - 이 애플리케이션은 기본적으로 CPU에서 실행됩니다. 이 모드는 계산 효율성이 낮으며 극히 높은 리소스 소비와 잠재적인 시스템 불안정성을 야기합니다. 최적의 성능과 안정성을 위해 NVIDIA GPU를 사용하여 이 애플리케이션을 실행하는 것을 강력히 권장합니다
+      - NVIDIA GPU를 사용해야 하는 경우 "Custom Install"을 선택하고 GPU 옵션을 활성화하세요 (ZimaOS 1.5.0 이상에서 지원)
       - NVIDIA GPU 사용 시 ≥ 8GB VRAM이 필요합니다 (최적의 성능을 위해 권장)
       - NVIDIA GPU 사용 시 NVIDIA CUDA Toolkit 버전 ≥ 12.8이 필요합니다
 
@@ -269,8 +287,10 @@ x-casaos:
       - Presis varighetskontroll med eksplisitt token-antallspesifikasjon for perfekt lyd-video-synkronisering
       - Naturlig språkbasert emosjonskontroll for å veilede talegenerering gjennom tekstbeskrivelser
 
-       **Tilleggsmerknader:**
-      - Denne applikasjonen kjører på CPU som standard. For bruk av NVIDIA GPU, velg "Custom Install" og aktiver GPU-alternativet (støttet i ZimaOS 1.5.0 og nyere)
+      **Tilleggsmerknader:**
+      - Vennligst sørg for at tilgjengelig minne > 12 GB, ellers kan applikasjonen ikke kjøre ordentlig
+      - Denne applikasjonen kjører på CPU som standard. Denne modusen har lav beregningseffektivitet og vil forårsake ekstremt høyt ressursforbruk og potensiell systemustabilitet. For optimal ytelse og stabilitet anbefales det sterkt å bruke NVIDIA GPU til å kjøre denne applikasjonen
+      - Hvis du trenger å bruke NVIDIA GPU, velg "Custom Install" og aktiver GPU-alternativet (støttet i ZimaOS 1.5.0 og nyere)
       - For bruk av NVIDIA GPU kreves ≥ 8 GB VRAM (anbefalt for optimal ytelse)
       - For bruk av NVIDIA GPU kreves NVIDIA CUDA Toolkit versjon ≥ 12.8
 
@@ -290,8 +310,10 @@ x-casaos:
       - Controle preciso de duração com especificação explícita de contagem de tokens para sincronização perfeita de áudio-vídeo
       - Controle emocional baseado em linguagem natural para guiar a geração de fala através de descrições textuais
 
-       **Notas Adicionais:**
-      - Esta aplicação executa em CPU por padrão. Para uso de GPU NVIDIA, selecione "Custom Install" e ative a opção GPU (suportado no ZimaOS 1.5.0 e superior)
+      **Notas Adicionais:**
+      - Por favor, certifique-se de que a memória disponível > 12 GB, caso contrário a aplicação poderá não funcionar corretamente
+      - Esta aplicação executa em CPU por padrão. Este modo tem baixa eficiência computacional e causará consumo de recursos extremamente alto e potencial instabilidade do sistema. Para desempenho e estabilidade ideais, é fortemente recomendado usar GPU NVIDIA para executar esta aplicação
+      - Se você precisar usar GPU NVIDIA, selecione "Custom Install" e ative a opção GPU (suportado no ZimaOS 1.5.0 e superior)
       - Para uso de GPU NVIDIA, é necessário ≥ 8 GB de VRAM (recomendado para desempenho ideal)
       - Para uso de GPU NVIDIA, é necessário NVIDIA CUDA Toolkit versão ≥ 12.8
 
@@ -311,8 +333,10 @@ x-casaos:
       - Точный контроль длительности с явным указанием количества токенов для идеальной синхронизации аудио-видео
       - Эмоциональный контроль на основе естественного языка для управления генерацией речи через текстовые описания
 
-       **Дополнительные Примечания:**
-      - Это приложение по умолчанию работает на CPU. Для использования GPU NVIDIA выберите "Custom Install" и включите опцию GPU (поддерживается в ZimaOS 1.5.0 и выше)
+      **Дополнительные Примечания:**
+      - Пожалуйста, убедитесь, что доступная память > 12 ГБ, в противном случае приложение может работать некорректно
+      - Это приложение по умолчанию работает на CPU. Этот режим имеет низкую вычислительную эффективность и вызовет чрезвычайно высокое потребление ресурсов и потенциальную нестабильность системы. Для оптимальной производительности и стабильности настоятельно рекомендуется использовать NVIDIA GPU для запуска этого приложения
+      - Если вам нужно использовать GPU NVIDIA, выберите "Custom Install" и включите опцию GPU (поддерживается в ZimaOS 1.5.0 и выше)
       - Для использования GPU NVIDIA требуется ≥ 8 ГБ видеопамяти (рекомендуется для оптимальной производительности)
       - Для использования GPU NVIDIA требуется NVIDIA CUDA Toolkit версии ≥ 12.8
 
@@ -332,8 +356,10 @@ x-casaos:
       - Точный контроль длительности с явным указанием количества токенов для идеальной синхронизации аудио-видео
       - Эмоциональный контроль на основе естественного языка для управления генерацией речи через текстовые описания
 
-       **Ytterligare Anmärkningar:**
-      - Denna applikation körs på CPU som standard. För NVIDIA GPU-användning, välj "Custom Install" och aktivera GPU-alternativet (stöds i ZimaOS 1.5.0 och senare)
+      **Ytterligare Anmärkningar:**
+      - Vänligen se till att tillgängligt minne > 12 GB, annars kan applikationen inte köras korrekt
+      - Denna applikation körs på CPU som standard. Detta läge har låg beräkningseffektivitet och kommer att orsaka extremt hög resursförbrukning och potentiell systeminstabilitet. För optimal prestanda och stabilitet rekommenderas det starkt att använda NVIDIA GPU för att köra denna applikation
+      - Om du behöver använda NVIDIA GPU, välj "Custom Install" och aktivera GPU-alternativet (stöds i ZimaOS 1.5.0 och senare)
       - För NVIDIA GPU-användning krävs ≥ 8 GB VRAM (rekommenderas för optimal prestanda)
       - För NVIDIA GPU-användning krävs NVIDIA CUDA Toolkit version ≥ 12.8
 
@@ -353,8 +379,10 @@ x-casaos:
       - Mükemmel ses-video senkronizasyonu için açık token sayısı belirtimi ile hassas süre kontrolü
       - Metin açıklamaları aracılığıyla konuşma üretimini yönlendirmek için doğal dil tabanlı duygu kontrolü
 
-       **Ek Notlar:**
-      - Bu uygulama varsayılan olarak CPU üzerinde çalışır. NVIDIA GPU kullanımı için "Custom Install" seçeneğini seçin ve GPU seçeneğini etkinleştirin (ZimaOS 1.5.0 ve üzeri sürümlerde desteklenir)
+      **Ek Notlar:**
+      - Lütfen kullanılabilir belleğin > 12 GB olduğundan emin olun, aksi takdirde uygulama düzgün çalışmayabilir
+      - Bu uygulama varsayılan olarak CPU üzerinde çalışır. Bu mod düşük hesaplama verimliliğine sahiptir ve son derece yüksek kaynak tüketimine ve potansiyel sistem kararsızlığına neden olacaktır. Optimum performans ve kararlılık için bu uygulamayı çalıştırmak için NVIDIA GPU kullanılması şiddetle tavsiye edilir
+      - NVIDIA GPU kullanmanız gerekiyorsa, "Custom Install" seçeneğini seçin ve GPU seçeneğini etkinleştirin (ZimaOS 1.5.0 ve üzeri sürümlerde desteklenir)
       - NVIDIA GPU kullanımı için ≥ 8 GB VRAM gereklidir (optimal performans için önerilir)
       - NVIDIA GPU kullanımı için NVIDIA CUDA Toolkit sürüm ≥ 12.8 gereklidir
 
@@ -374,8 +402,10 @@ x-casaos:
       - 精确时长控制，可显式指定token数量实现完美音视频同步
       - 基于自然语言的情感控制，通过文本描述引导语音生成
 
-       **补充说明:**
-      - 该应用默认调用 CPU 运行，如果需要调用 NVIDIA GPU，请选择 “Custom Install” 安装，并勾选 GPU 选项（ZimaOS 1.5.0 及以上版本支持）
+      **补充说明:**
+      - 请确保可用内存 > 12G，否则可能会导致应用无法正常运行
+      - 该应用默认调用 CPU 运行，此模式计算效率低下，会造成极高的资源占用和潜在的系统不稳定。为确保最佳性能和稳定性，强烈推荐使用 NVIDIA GPU 来运行该应用以获得最佳性能
+      - 如果需要调用 NVIDIA GPU，请选择 “Custom Install” 安装，并勾选 GPU 选项（ZimaOS 1.5.0 及以上版本支持）
       - 若调用 NVIDIA GPU，则需要具有 ≥ 8 GB 显存（推荐，用于获得最佳性能）
       - 若调用 NVIDIA GPU，则需要 NVIDIA CUDA Toolkit 版本 ≥ 12.8
 
@@ -399,32 +429,77 @@ x-casaos:
   tips:
     before_install:
       de_DE: |
-        Diese Anwendung läuft standardmäßig auf der CPU. Für NVIDIA GPU-Nutzung klicken Sie in Ihrem Dashboard auf die Einstellungen dieser Anwendung und aktivieren Sie die GPU-Option (unterstützt in ZimaOS 1.5.0 und höher)
+        1. Bitte stellen Sie sicher, dass verfügbarer Speicher > 12 GB ist, andernfalls kann die Anwendung möglicherweise nicht ordnungsgemäß ausgeführt werden
+        2. Die Anwendung benötigt etwa 5 Minuten zum Starten, bitte haben Sie Geduld
+        3. Diese Anwendung läuft standardmäßig auf der CPU. Dieser Modus hat eine geringe Recheneffizienz und verursacht extrem hohen Ressourcenverbrauch und potenzielle Systeminstabilität. Für optimale Leistung und Stabilität wird dringend empfohlen, diese Anwendung mit NVIDIA GPU auszuführen
+        4. Wenn Sie NVIDIA GPU verwenden möchten, wählen Sie bitte "Custom Install" und aktivieren Sie die GPU-Option (unterstützt in ZimaOS 1.5.0 und höher)
       el_GR: |
-        Αυτή η εφαρμογή εκτελείται από προεπιλογή στην CPU. Για χρήση NVIDIA GPU, κάντε κλικ στις ρυθμίσεις της εφαρμογής στο Dashboard σας και ενεργοποιήστε την επιλογή GPU (υποστηρίζεται σε ZimaOS 1.5.0 και νεότερα)
+        1. Βεβαιωθείτε ότι η διαθέσιμη μνήμη είναι > 12 GB, διαφορετικά η εφαρμογή ενδέχεται να μην λειτουργήσει σωστά
+        2. Η εφαρμογή χρειάζεται περίπου 5 λεπτά για να ξεκινήσει, παρακαλούμε να είστε υπομονετικοί
+        3. Αυτή η εφαρμογή εκτελείται από προεπιλογή στην CPU. Αυτή η λειτουργία έχει χαμηλή υπολογιστική αποδοτικότητα και θα προκαλέσει εξαιρετικά υψηλή κατανάλωση πόρων και πιθανή αστάθεια συστήματος. Για βέλτιστη απόδοση και σταθερότητα, συνιστάται ιδιαίτερα η χρήση NVIDIA GPU για την εκτέλεση αυτής της εφαρμογής
+        4. Εάν χρειάζεστε να χρησιμοποιήσετε NVIDIA GPU, επιλέξτε "Custom Install" και ενεργοποιήστε την επιλογή GPU (υποστηρίζεται σε ZimaOS 1.5.0 και νεότερα)
       en_GB: |
-        This application runs on CPU by default. For NVIDIA GPU usage, click the settings option for this application in your Dashboard and enable the GPU option (supported in ZimaOS 1.5.0 and above)
+        1. Please ensure available memory > 12 GB, otherwise the application may not run properly
+        2. The application takes approximately 5 minutes to start, please be patient
+        3. This application runs on CPU by default. This mode has low computational efficiency and will cause extremely high resource consumption and potential system instability. For optimal performance and stability, it is strongly recommended to use NVIDIA GPU to run this application
+        4. If you need to use NVIDIA GPU, please select "Custom Install" and enable the GPU option (supported in ZimaOS 1.5.0 and above)
       en_US: |
-        This application runs on CPU by default. For NVIDIA GPU usage, click the settings option for this application in your Dashboard and enable the GPU option (supported in ZimaOS 1.5.0 and above)
+        1. Please ensure available memory > 12 GB, otherwise the application may not run properly
+        2. The application takes approximately 5 minutes to start, please be patient
+        3. This application runs on CPU by default. This mode has low computational efficiency and will cause extremely high resource consumption and potential system instability. For optimal performance and stability, it is strongly recommended to use NVIDIA GPU to run this application
+        4. If you need to use NVIDIA GPU, please select "Custom Install" and enable the GPU option (supported in ZimaOS 1.5.0 and above)
       fr_FR: |
-        Cette application s'exécute par défaut sur le CPU. Pour utiliser le GPU NVIDIA, cliquez sur l'option des paramètres de cette application dans votre Dashboard et activez l'option GPU (pris en charge dans ZimaOS 1.5.0 et supérieur)
+        1. Veuillez vous assurer que la mémoire disponible > 12 Go, sinon l'application pourrait ne pas fonctionner correctement
+        2. L'application prend environ 5 minutes pour démarrer, veuillez patienter
+        3. Cette application s'exécute par défaut sur le CPU. Ce mode a une faible efficacité de calcul et entraînera une consommation de ressources extrêmement élevée et une instabilité potentielle du système. Pour des performances et une stabilité optimales, il est fortement recommandé d'utiliser le GPU NVIDIA pour exécuter cette application
+        4. Si vous devez utiliser le GPU NVIDIA, veuillez sélectionner "Custom Install" et activer l'option GPU (pris en charge dans ZimaOS 1.5.0 et supérieur)
       hr_HR: |
-        Ova aplikacija radi na CPU-u prema zadanim postavkama. Za korištenje NVIDIA GPU-a, kliknite opciju postavki za ovu aplikaciju u vašem Dashboard-u i omogućite GPU opciju (podržano u ZimaOS 1.5.0 i novijim verzijama)
+        1. Molimo osigurajte da dostupna memorija bude > 12 GB, inače aplikacija možda neće raditi pravilno
+        2. Aplikaciji je potrebno oko 5 minuta za pokretanje, molimo budite strpljivi
+        3. Ova aplikacija radi na CPU-u prema zadanim postavkama. Ovaj način rada ima nisku računalnu učinkovitost i uzrokovat će iznimno visoku potrošnju resursa i potencijalnu nestabilnost sustava. Za optimalne performanse i stabilnost, jako se preporučuje korištenje NVIDIA GPU-a za pokretanje ove aplikacije
+        4. Ako trebate koristiti NVIDIA GPU, odaberite "Custom Install" i omogućite GPU opciju (podržano u ZimaOS 1.5.0 i novijim verzijama)
       it_IT: |
-        Questa applicazione viene eseguita su CPU per impostazione predefinita. Per l'uso della GPU NVIDIA, fare clic sull'opzione delle impostazioni per questa applicazione nel Dashboard e abilitare l'opzione GPU (supportato in ZimaOS 1.5.0 e versioni successive)
+        1. Si prega di assicurarsi che la memoria disponibile sia > 12 GB, altrimenti l'applicazione potrebbe non funzionare correttamente
+        2. L'applicazione richiede circa 5 minuti per avviarsi, si prega di attendere pazientemente
+        3. Questa applicazione viene eseguita su CPU per impostazione predefinita. Questa modalità ha una bassa efficienza computazionale e causerà un consumo di risorse estremamente elevato e una potenziale instabilità del sistema. Per prestazioni e stabilità ottimali, si raccomanda vivamente di utilizzare la GPU NVIDIA per eseguire questa applicazione
+        4. Se è necessario utilizzare la GPU NVIDIA, selezionare "Custom Install" e abilitare l'opzione GPU (supportato in ZimaOS 1.5.0 e versioni successive)
       ja_JP: |
-        このアプリケーションはデフォルトでCPUで実行されます。NVIDIA GPUを使用する場合は、ダッシュボードでこのアプリケーションの設定オプションをクリックし、GPUオプションを有効にしてください（ZimaOS 1.5.0以上でサポート）
+        1. 利用可能なメモリが 12 GB を超えることを確認してください。そうでない場合、アプリケーションが正常に動作しない可能性があります
+        2. アプリケーションの起動には約5分かかります。お待ちください
+        3. このアプリケーションはデフォルトでCPUで実行されます。このモードは計算効率が低く、極めて高いリソース消費とシステムの不安定性を引き起こします。最適なパフォーマンスと安定性を確保するため、NVIDIA GPUを使用してこのアプリケーションを実行することを強く推奨します
+        4. NVIDIA GPUを使用する必要がある場合は、「Custom Install」を選択してGPUオプションを有効にしてください（ZimaOS 1.5.0以上でサポート）
       ko_KR: |
-        이 애플리케이션은 기본적으로 CPU에서 실행됩니다. NVIDIA GPU를 사용하려면 대시보드에서 이 애플리케이션의 설정 옵션을 클릭하고 GPU 옵션을 활성화하세요 (ZimaOS 1.5.0 이상에서 지원)
+        1. 사용 가능한 메모리가 12GB를 초과하는지 확인하십시오. 그렇지 않으면 애플리케이션이 제대로 실행되지 않을 수 있습니다
+        2. 애플리케이션 시작에 약 5분이 소요되니 기다려 주십시오
+        3. 이 애플리케이션은 기본적으로 CPU에서 실행됩니다. 이 모드는 계산 효율성이 낮으며 극히 높은 리소스 소비와 잠재적인 시스템 불안정성을 야기합니다. 최적의 성능과 안정성을 위해 NVIDIA GPU를 사용하여 이 애플리케이션을 실행하는 것을 강력히 권장합니다
+        4. NVIDIA GPU를 사용해야 하는 경우 "Custom Install"을 선택하고 GPU 옵션을 활성화하세요 (ZimaOS 1.5.0 이상에서 지원)
       nb_NO: |
-        Denne applikasjonen kjører på CPU som standard. For bruk av NVIDIA GPU, klikk på innstillingsalternativet for denne applikasjonen i Dashboard-et ditt og aktiver GPU-alternativet (støttet i ZimaOS 1.5.0 og nyere)
+        1. Vennligst sørg for at tilgjengelig minne > 12 GB, ellers kan applikasjonen ikke kjøre ordentlig
+        2. Applikasjonen tar omtrent 5 minutter å starte, vennligst vær tålmodig
+        3. Denne applikasjonen kjører på CPU som standard. Denne modusen har lav beregningseffektivitet og vil forårsake ekstremt høyt ressursforbruk og potensiell systemustabilitet. For optimal ytelse og stabilitet anbefales det sterkt å bruke NVIDIA GPU til å kjøre denne applikasjonen
+        4. Hvis du trenger å bruke NVIDIA GPU, velg "Custom Install" og aktiver GPU-alternativet (støttet i ZimaOS 1.5.0 og nyere)
       pt_PT: |
-        Esta aplicação executa em CPU por padrão. Para uso de GPU NVIDIA, clique na opção de configurações desta aplicação no seu Dashboard e ative a opção GPU (suportado no ZimaOS 1.5.0 e superior)
+        1. Por favor, certifique-se de que a memória disponível > 12 GB, caso contrário a aplicação poderá não funcionar corretamente
+        2. A aplicação leva aproximadamente 5 minutos para iniciar, por favor seja paciente
+        3. Esta aplicação executa em CPU por padrão. Este modo tem baixa eficiência computacional e causará consumo de recursos extremamente alto e potencial instabilidade do sistema. Para desempenho e estabilidade ideais, é fortemente recomendado usar GPU NVIDIA para executar esta aplicação
+        4. Se você precisar usar GPU NVIDIA, selecione "Custom Install" e ative a opção GPU (suportado no ZimaOS 1.5.0 e superior)
       ru_RU: |
-        Это приложение работает на CPU по умолчанию. Для использования GPU NVIDIA нажмите на опцию настроек этого приложения в вашей панели управления и включите опцию GPU (поддерживается в ZimaOS 1.5.0 и выше)
+        1. Пожалуйста, убедитесь, что доступная память > 12 ГБ, в противном случае приложение может работать некорректно
+        2. Запуск приложения занимает около 5 минут, пожалуйста, проявите терпение
+        3. Это приложение по умолчанию работает на CPU. Этот режим имеет низкую вычислительную эффективность и вызовет чрезвычайно высокое потребление ресурсов и потенциальную нестабильность системы. Для оптимальной производительности и стабильности настоятельно рекомендуется использовать NVIDIA GPU для запуска этого приложения
+        4. Если вам нужно использовать GPU NVIDIA, выберите "Custom Install" и включите опцию GPU (поддерживается в ZimaOS 1.5.0 и выше)
       sv_SE: |
-        Denna applikation körs på CPU som standard. För NVIDIA GPU-användning, klicka på inställningsalternativet för denna applikation i din Dashboard och aktivera GPU-alternativet (stöds i ZimaOS 1.5.0 och senare)
+        1. Vänligen se till att tillgängligt minne > 12 GB, annars kan applikationen inte köras korrekt
+        2. Applikationen tar ungefär 5 minuter att starta, vänligen ha tålamod
+        3. Denna applikation körs på CPU som standard. Detta läge har låg beräkningseffektivitet och kommer att orsaka extremt hög resursförbrukning och potentiell systeminstabilitet. För optimal prestanda och stabilitet rekommenderas det starkt att använda NVIDIA GPU för att köra denna applikation
+        4. Om du behöver använda NVIDIA GPU, välj "Custom Install" och aktivera GPU-alternativet (stöds i ZimaOS 1.5.0 och senare)
       tr_TR: |
-        Bu uygulama varsayılan olarak CPU üzerinde çalışır. NVIDIA GPU kullanımı için Dashboard'unuzda bu uygulamanın ayarlar seçeneğine tıklayın ve GPU seçeneğini etkinleştirin (ZimaOS 1.5.0 ve üzeri sürümlerde desteklenir)
+        1. Lütfen kullanılabilir belleğin > 12 GB olduğundan emin olun, aksi takdirde uygulama düzgün çalışmayabilir
+        2. Uygulamanın başlaması yaklaşık 5 dakika sürer, lütfen sabırlı olun
+        3. Bu uygulama varsayılan olarak CPU üzerinde çalışır. Bu mod düşük hesaplama verimliliğine sahiptir ve son derece yüksek kaynak tüketimine ve potansiyel sistem kararsızlığına neden olacaktır. Optimum performans ve kararlılık için bu uygulamayı çalıştırmak için NVIDIA GPU kullanılması şiddetle tavsiye edilir
+        4. NVIDIA GPU kullanmanız gerekiyorsa, "Custom Install" seçeneğini seçin ve GPU seçeneğini etkinleştirin (ZimaOS 1.5.0 ve üzeri sürümlerde desteklenir)
       zh_CN: |
-        该应用默认调用 CPU 运行，如果需要调用 NVIDIA GPU，请在 Dashboard 中点击该应用的设置选项，勾选 GPU（ZimaOS 1.5.0 及以上版本支持）
+        1. 请确保可用内存 > 12G，否则可能会导致应用无法正常运行
+        2. 该应用启动需要 5 分钟左右，请耐心等待
+        3. 该应用默认调用 CPU 运行，此模式计算效率低下，会造成极高的资源占用和潜在的系统不稳定。为确保最佳性能和稳定性，强烈推荐使用 NVIDIA GPU 来运行该应用以获得最佳性能
+        4. 如果需要调用 NVIDIA GPU，请选择 “Custom Install” 安装，并勾选 GPU 选项（ZimaOS 1.5.0 及以上版本支持）
