@@ -19,19 +19,19 @@
     "developer": {
         "name": "Radarr",
         "website": "https://radarr.video/",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "adaptor": {
         "name": "CasaOS Team",
         "website": "https://www.casaos.io",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "support": "https://discord.gg/knqAbbBbeX",
     "website": "https://www.casaos.io",
     "container": {
-        "image": "linuxserver/radarr:latest",
+        "image": "linuxserver/radarr:5.26.2",
         "shell": "bash",
         "privileged": false,
         "network_model": "bridge",
@@ -84,7 +84,7 @@
                 "host": "/DATA/Media/Movies",
                 "mode": "rw",
                 "allocation": "automatic",
-                "configurable": "advanced",
+                "configurable": "no",
                 "description": "Radarr movies directory."
             },
             {
@@ -92,7 +92,7 @@
                 "host": "/DATA/Downloads",
                 "mode": "rw",
                 "allocation": "automatic",
-                "configurable": "advanced",
+                "configurable": "no",
                 "description": "Radarr downloads directory."
             }
         ],
@@ -104,7 +104,9 @@
         "restart_policy": "unless-stopped",
         "sysctls": [],
         "cap_add": [],
-        "labels": []
+        "labels": [],
+        "host_name": "",
+        "cmd": []
     },
     "abilities": {
         "notification": false,
@@ -113,8 +115,10 @@
         "search": false,
         "upnp": false
     },
-    "tips": {},
-    "changelog":{
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
         "latest_updates": "",
         "url": ""
     },

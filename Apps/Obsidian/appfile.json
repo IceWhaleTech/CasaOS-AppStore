@@ -1,0 +1,97 @@
+{
+    "version": "2.0",
+    "title": "Obsidian",
+    "name": "obsidian",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Obsidian/icon.png",
+    "tagline": "Obsidian is a knowledge management app for creating, linking, and visually organizing Markdown notes.",
+    "overview": "Obsidian is a self-hosted knowledge management app designed for creating, linking, and organizing notes, operating on local Markdown files, leveraging WebDAV and kasmVNC remote desktop technology to deliver a near-native experience in browsers. Its intuitive interface supports storing and editing notes on devices, ensuring full data ownership, ideal for crafting a lasting second brain.\n\nThe app's core features include robust note management and connectivity, suitable for various scenarios. Bi-directional linking connects related notes, forming a web of knowledge, while the Graph View visualizes note relationships, helping users uncover hidden connections. It supports Markdown editing with live preview for easy formatting and structuring. Hundreds of community plugins and themes offer extended functionality, such as calendars, kanban boards, PDF annotation, and advanced search, enabling tailored workflows. The Canvas feature provides infinite visual organization space, aiding students in organizing research, writers in developing stories, or professionals in managing projects. Notes are stored as standard Markdown files, openable with any text editor, ensuring future-proof portability.\n\nIt enhances usability through community-provided documentation, and whether for personal knowledge bases or team collaboration, the app's high flexibility and intuitive operation offer a modern knowledge management solution.\n\n**Key Features:**\n- Local storage, ensuring full data ownership\n- Bi-directional note linking for a knowledge web\n- Graph View for visualizing note connections\n- Extensible plugin system for personalized needs\n- Markdown support with live preview\n- Infinite Canvas for visual organization\n- Theme customization for enhanced visuals\n\n**Learn More:**\n- [Obsidian Official Website](https://obsidian.md)\n- [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Obsidian/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Obsidian/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Obsidian/screenshot-3.png"
+    ],
+    "category": [
+        "Notes"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "lscr.io/linuxserver/obsidian:1.8.10",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "3000",
+                "host": "15323",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "Obsidian Desktop GUI HTTP Port"
+            },
+            {
+                "container": "3001",
+                "host": "15324",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "Obsidian Desktop GUI HTTPS Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/config",
+                "host": "/DATA/AppData/$AppID/config",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Obsidian Configuration Directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

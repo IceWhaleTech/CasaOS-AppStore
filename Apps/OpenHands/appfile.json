@@ -1,0 +1,105 @@
+{
+    "version": "2.0",
+    "title": "OpenHands",
+    "name": "openhands",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHands/icon.png",
+    "tagline": "Open-source AI-powered coding assistant",
+    "overview": "OpenHands is an open-source AI-powered coding assistant that provides developers with intelligent code completion, generation, and debugging capabilities. It runs in a sandboxed environment to ensure security and isolation while allowing access to various development tools and resources.\n\n**Key Features:**\n- AI-powered code completion and generation\n- Interactive debugging and error resolution\n- Support for multiple programming languages\n- Secure sandboxed execution environment\n- Customizable runtime configurations\n- Integration with Docker for containerized workflows\n\n**Learn More:**\n- [OpenHands Official Website](https://www.all-hands.dev)\n- [OpenHands GitHub Repository](https://github.com/All-Hands-AI/OpenHands)\n- [Documentation](https://docs.all-hands.dev)\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHands/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHands/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHands/screenshot-3.png"
+    ],
+    "category": [
+        "AI"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "docker.all-hands.dev/all-hands-ai/openhands:0.49",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "3000",
+                "host": "13333",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "OpenHands Web Interface Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/var/run/docker.sock",
+                "host": "/var/run/docker.sock",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Docker Socket Mount for Container Management"
+            },
+            {
+                "container": "/.openhands",
+                "host": "/DATA/AppData/$AppID/openhands",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "OpenHands Configuration and Data Directory"
+            },
+            {
+                "container": "/opt/workspace_base",
+                "host": "/DATA/AppData/$AppID/workspace",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Workspace Directory for Project Files"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

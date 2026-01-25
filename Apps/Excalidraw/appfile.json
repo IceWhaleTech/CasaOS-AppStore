@@ -1,0 +1,81 @@
+{
+    "version": "2.0",
+    "title": "Excalidraw",
+    "name": "excalidraw",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Excalidraw/icon.png",
+    "tagline": "Virtual whiteboard for sketching hand-drawn like diagrams",
+    "overview": "Excalidraw is a virtual hand-drawn style whiteboard platform supporting infinite canvas and end-to-end encrypted collaboration. An intuitive interface offers a hand-drawn experience, ideal for brainstorming, design sketches, or educational scenarios, meeting diverse creative needs.\n\nCore features include an infinite canvas whiteboard and end-to-end encrypted collaboration. Hand-drawn style with shape library support allows creating rich graphics, enhanced by image insertion capabilities. Dark mode improves user experience, catering to diverse users.\n\nIt provides export options including PNG, SVG, and clipboard for easy content sharing. Drawing capabilities cover rectangle, circle, diamond, arrow, line, free-draw, and eraser, with arrow-binding and labeled arrow support. Undo, redo, zoom, and panning functionalities optimize operations. With creativity and security at the core, the platform delivers a modern whiteboard design solution.\n\n**Key Features:**\n- Infinite canvas whiteboard supporting hand-drawn style\n- Shape library support for creating rich graphics\n- Image insertion capability\n- Dark mode\n- Export to PNG, SVG, and clipboard\n- Open format - export drawings as an `.excalidraw` json file\n- Wide range of tools - rectangle, circle, diamond, arrow, line, free-draw, eraser...\n- Arrow-binding & labeled arrows\n- Undo and redo\n- Zoom and panning support\n\n**Learn More:**\n- [Excalidraw Official Website](https://excalidraw.com/)\n- [Excalidraw GitHub](https://github.com/excalidraw/excalidraw)\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Excalidraw/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Excalidraw/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Excalidraw/screenshot-4.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Excalidraw/screenshot-5.png"
+    ],
+    "category": [
+        "Utilities"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "excalidraw/excalidraw:latest",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "80",
+                "host": "17638",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI HTTP Port"
+            }
+        ],
+        "volumes": [],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

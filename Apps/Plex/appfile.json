@@ -3,8 +3,8 @@
     "title": "Plex",
     "name": "plex",
     "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Plex/icon.png",
-    "tagline": "The home for all your entertainment.",
-    "overview": "Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone Plex Media Server. has always been a top priority. Straightforward design and bulk actions mean getting things done faster.",
+    "tagline": "Stream Movies & TV Shows",
+    "overview": "Transform your home into a cinematic oasis with your very own media server. Unlike streaming platforms that compress and limit the quality of your content, a Plex server in your home allows you to maintain the pristine, high-bitrate glory of Blu-ray and beyond. Imagine pairing this high-fidelity, uninterrupted media access with cutting-edge home theater tech like VR headsets, 75-inch UHD TVs, or 100-inch laser projectors. The result? A breathtaking visual and auditory experience that streams seamlessly across TVs and mobile devices alike, right from the comfort of your couch. \n\nDeploy Plex on a Zima devices and unlock the ultimate in home entertainment convenience. Enjoy ALMOST limitless storage capacity for your entire media library, lightning-fast local network speeds, and the ability to stream content effortlessly to any device in your home. Experience a world where your favorite shows and movies are always just a click away, stored securely and privately on your own terms.\n",
     "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Plex/thumbnail.png",
     "screenshots": [
         "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Plex/screenshot-1.png",
@@ -17,19 +17,19 @@
     "developer": {
         "name": "Plex",
         "website": "https://www.plex.tv/",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "adaptor": {
         "name": "CasaOS Team",
         "website": "https://www.casaos.io",
-        "donate_text": "", 
+        "donate_text": "",
         "donate_link": ""
     },
     "support": "https://discord.gg/knqAbbBbeX",
     "website": "https://www.casaos.io",
     "container": {
-        "image": "linuxserver/plex:latest",
+        "image": "lscr.io/linuxserver/plex:1.41.3",
         "shell": "bash",
         "privileged": false,
         "network_model": "host",
@@ -73,7 +73,7 @@
                 "host": "/DATA/Media",
                 "mode": "rw",
                 "allocation": "automatic",
-                "configurable": "advanced",
+                "configurable": "no",
                 "description": "Plex Media directory."
             }
         ],
@@ -100,7 +100,9 @@
         "restart_policy": "unless-stopped",
         "sysctls": [],
         "cap_add": [],
-        "labels": []
+        "labels": [],
+        "host_name": "",
+        "cmd": []
     },
     "abilities": {
         "notification": false,
@@ -109,8 +111,10 @@
         "search": false,
         "upnp": false
     },
-    "tips": {},
-    "changelog":{
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
         "latest_updates": "",
         "url": ""
     },

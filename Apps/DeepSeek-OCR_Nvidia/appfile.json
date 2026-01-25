@@ -1,0 +1,81 @@
+{
+    "version": "2.0",
+    "title": "DeepSeek-OCR_Nvidia",
+    "name": "deepseek_ocr_nvidia",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DeepSeek-OCR_Nvidia/icon.png",
+    "tagline": "Powerful OCR powered by DeepSeek AI",
+    "overview": "DeepSeek OCR is a powerful open-source OCR (Optical Character Recognition) tool based on the advanced DeepSeek-AI model. It enables accurate text extraction from images and document scans via a user-friendly web interface and API. Supports various image formats and offers configurations for image size, cropping, and upload limits. Additionally, DeepSeek OCR features four core recognition modes: Plain OCR for raw text extraction, Describe for intelligent image content descriptions, Find for keyword localization with visual bounding box returns, and Freeform for flexible image understanding tasks based on custom prompts.\n\n**Key Features:**\n- High-accuracy text recognition with DeepSeek-OCR, supporting images and multi-page PDF documents\n- Preserves document layout including tables, formulas, and structural formatting\n- Web frontend (React) and REST API (FastAPI) for easy usage and system integration\n- Export results to Markdown, HTML, DOCX, or JSON formats\n- Automatic extraction and embedding of images from PDF files\n- GPU acceleration and Docker deployment for fast and scalable processing\n\n**Prerequisites:**\n- ZimaOS version 1.5.2 or higher, or NVIDIA Open Driver version 580 or higher\n- NVIDIA GPU with >= 8 GB VRAM for optimal performance\n\n**Learn More:**\n- [DeepSeek OCR App (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)\n",
+    "thumbnail": "",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DeepSeek-OCR_Nvidia/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DeepSeek-OCR_Nvidia/screenshot-2.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DeepSeek-OCR_Nvidia/screenshot-3.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DeepSeek-OCR_Nvidia/screenshot-4.png"
+    ],
+    "category": [
+        "AI"
+    ],
+    "developer": {
+        "name": "",
+        "website": "",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "CasaOS Team",
+        "website": "https://www.casaos.io",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "",
+    "website": "",
+    "container": {
+        "image": "icewhaletech/deepseek-ocr-frontend:v2.2.0",
+        "shell": "bash",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "",
+            "path": ""
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "80",
+                "host": "23000",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "Frontend Web Port"
+            }
+        ],
+        "volumes": [],
+        "devices": [],
+        "constraints": {
+            "min_memory": 0,
+            "min_storage": 0
+        },
+        "restart_policy": "",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": [],
+        "host_name": "",
+        "cmd": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": []
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}

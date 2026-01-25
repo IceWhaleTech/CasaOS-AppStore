@@ -29,7 +29,7 @@
     "support": "https://discord.gg/knqAbbBbeX",
     "website": "https://github.com/dani-garcia/vaultwarden",
     "container": {
-        "image": "vaultwarden/server:1.24.0",
+        "image": "vaultwarden/server:1.32.7",
         "shell": "bash",
         "privileged": false,
         "network_model": "bridge",
@@ -37,11 +37,12 @@
             "http": "80",
             "path": "/"
         },
+        "health_check": "",
         "envs": [],
         "ports": [
             {
                 "container": "80",
-                "host": "80",
+                "host": "10380",
                 "type": "tcp",
                 "allocation": "preferred",
                 "configurable": "advanced",
@@ -66,7 +67,9 @@
         "restart_policy": "unless-stopped",
         "sysctls": [],
         "cap_add": [],
-        "labels": []
+        "labels": [],
+        "host_name": "",
+        "cmd": []
     },
     "abilities": {
         "notification": false,
@@ -75,7 +78,9 @@
         "search": false,
         "upnp": false
     },
-    "tips": {},
+    "tips": {
+        "before_install": []
+    },
     "changelog": {
         "latest_updates": "",
         "url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Vaultwarden/changelog.txt"
