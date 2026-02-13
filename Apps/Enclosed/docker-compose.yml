@@ -1,0 +1,63 @@
+name: enclosed
+services:
+  enclosed:
+    image: corentinth/enclosed:1.9.2
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    deploy:
+      resources:
+        reservations:
+          memory: "128M"
+    network_mode: bridge
+    ports:
+      - target: 8787
+        published: "8787"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/app/.data
+        target: /app/.data
+    x-casaos:
+      ports:
+        - container: "8787"
+          description:
+            en_us: WebUI Port
+      volumes:
+        - container: /app/.data
+          description: 
+            en_us: Enclosed data directory.
+      container_name: enclosed
+  x-casaos:
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  main: enclosed
+  author: Corentin Thomasset
+  category: Notes
+  description:
+    en_us: Minimalistic web application designed for sending end-to-end encrypted notes and files. 
+  developer: Corentin Thomasset
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Enclosed/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Enclosed/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Enclosed/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Enclosed/screenshot-3.png
+  tagline:
+    en_us: Send private and secure notes
+    zh_cn: 发送私密、安全的笔记
+    ar_sa: إرسال ملاحظات خاصة وآمنة
+    de_de: Private und sichere Notizen versenden.
+    es_es: Enviar notas privadas y seguras.
+    fr_fr: Envoyez des notes privées et sécurisées.
+    it_it: Invia note private e sicure
+    ru_ru: Отправляйте приватные и защищенные заметки
+    pt_br: Envie notas de forma privada e segura
+  tips: {}
+  title:
+    en_us: Enclosed
+  index: /
+  port_map: "8787"
