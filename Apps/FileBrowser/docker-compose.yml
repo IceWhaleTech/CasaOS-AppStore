@@ -19,7 +19,7 @@ services:
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/db
-        target: /db
+        target: /database
       - type: bind
         source: /DATA
         target: /srv
