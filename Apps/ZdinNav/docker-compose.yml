@@ -1,0 +1,81 @@
+name: zdinnav
+services:
+  zdinnav:
+    environment:
+      TZ: $TZ
+    image: tkme/zdinnav:1.1.2
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    network_mode: bridge
+    ports:
+      - target: 9200
+        published: "9200"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/configuration
+        target: /app/configuration
+      - type: bind
+        source: /DATA/AppData/$AppID/database
+        target: /app/database
+      - type: bind
+        source: /DATA/AppData/$AppID/Logs
+        target: /app/Logs
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: TimeZone
+            zh_CN: 时区
+      ports:
+        - container: "9200"
+          description:
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP 端口
+      volumes:
+        - container: /app/configuration
+          description:
+            en_US: ZdinNav config directory.
+            zh_CN: ZdinNav 配置目录
+        - container: /app/database
+          description:
+            en_US: ZdinNav SQLite data.
+            zh_CN: 智淀导航SQLite数据
+        - container: /app/Logs
+          description:
+            en_US: ZdinNav runtime logs directory.
+            zh_CN: 智淀导航运行日志目录
+    container_name: zdinnav
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  main: zdinnav
+  author: tkme
+  category: Utilities
+  description:
+    en_US: ZdinNav is a web bookmark storage tool. Deploy all your bookmarks privately to your own server, soft router, NAS, or device for data security and multi-device syncing of the same data.
+    zh_CN: 智淀导航一款网页书签存放的工具，将自己的全部书签，私有化部署到自己的：服务器、软路由、Nas、设备，实现数据保密，多端同步共享同一份数据。
+  developer: ZdinNav
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ZdinNav/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ZdinNav/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ZdinNav/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ZdinNav/screenshot-3.png
+  tagline:
+    en_US: Web bookmark manager, build your own personal navigation website.
+    zh_CN: 网页书签管理工具，搭建专属于你的导航网站。
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ZdinNav/thumbnail.png
+  tips:
+    before_install:
+      en_US: Default super administrator account:zdinnav, password:pwd123. For more information, visit https://github.com/MyTkme/ZdinNav-Link.
+      zh_CN: 默认超级管理员登录账号：zdinnav 密码：pwd123，更多信息访问https://github.com/MyTkme/ZdinNav-Link。
+  title:
+    en_US: ZdinNav
+    zh_CN: 智淀导航
+  index: /
+  port_map: "9200"
