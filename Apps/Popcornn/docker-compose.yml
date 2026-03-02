@@ -31,11 +31,36 @@ services:
       retries: 5
       start_period: 1m0s
     image: bobdivx/popcorn-frontend:latest
+    networks:
+      - popcornn-network
     ports:
       - target: 80
         published: "4325"
         protocol: tcp
     restart: unless-stopped
+    x-casaos:
+      envs:
+        - container: PUBLIC_BACKEND_URL
+          description:
+            en_us: "Backend URL as seen by the browser (e.g. http://your-nas:3000). Leave empty if same host."
+            fr_fr: "URL du backend telle que vue par le navigateur. Laisser vide si même hôte."
+        - container: TZ
+          description:
+            en_us: TimeZone
+            fr_fr: Fuseau horaire
+        - container: PUID
+          description:
+            en_us: Run as user ID
+            fr_fr: Exécuter avec cet ID utilisateur
+        - container: PGID
+          description:
+            en_us: Run as group ID
+            fr_fr: Exécuter avec cet ID groupe
+      ports:
+        - container: "80"
+          description:
+            en_us: Web UI Port
+            fr_fr: Port interface web
   server:
     container_name: popcornn-server
     deploy:
@@ -65,6 +90,8 @@ services:
       retries: 5
       start_period: 1m0s
     image: bobdivx/popcorn-backend:latest
+    networks:
+      - popcornn-network
     ports:
       - target: 3000
         published: "3000"
@@ -77,10 +104,27 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/downloads
         target: /app/downloads
+    x-casaos:
+      envs:
+        - container: RUN_AS_ROOT
+          description:
+            en_us: "1 = run server as root (recommended on ZimaOS/CasaOS). 0 = run as PUID:PGID."
+            fr_fr: "1 = lancer le serveur en root (recommandé). 0 = lancer avec PUID:PGID."
+      volumes:
+        - container: /app/.data
+          description:
+            en_us: Database and config directory
+            fr_fr: Répertoire base de données et config
+        - container: /app/downloads
+          description:
+            en_us: Downloads and transcode cache directory
+            fr_fr: Répertoire téléchargements et cache transcodage
   flaresolverr:
     image: flaresolverr/flaresolverr:latest
     container_name: popcornn-flaresolverr
     restart: unless-stopped
+    networks:
+      - popcornn-network
     ports:
       - target: 9191
         published: "9191"
@@ -91,6 +135,10 @@ services:
           memory: 1073741824
         reservations:
           memory: 268435456
+
+networks:
+  popcornn-network:
+    driver: bridge
 
 x-casaos:
   architectures:
@@ -116,24 +164,3 @@ x-casaos:
     en_us: Popcornn
     fr_fr: Popcornn
   tips: {}
-  envs:
-    - container: PUBLIC_BACKEND_URL
-      description:
-        en_us: "Backend URL as seen by the browser (e.g. http://your-nas:3000). Leave empty if same host."
-        fr_fr: "URL du backend telle que vue par le navigateur. Laisser vide si même hôte."
-    - container: TZ
-      description:
-        en_us: TimeZone
-        fr_fr: Fuseau horaire
-    - container: PUID
-      description:
-        en_us: Run as user ID
-        fr_fr: Exécuter avec cet ID utilisateur
-    - container: PGID
-      description:
-        en_us: Run as group ID
-        fr_fr: Exécuter avec cet ID groupe
-    - container: RUN_AS_ROOT
-      description:
-        en_us: "1 = run server as root (recommended on ZimaOS/CasaOS). 0 = run as PUID:PGID."
-        fr_fr: "1 = lancer le serveur en root (recommandé). 0 = lancer avec PUID:PGID."
