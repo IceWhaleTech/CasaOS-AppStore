@@ -1,0 +1,67 @@
+{
+    "version": "2.0",
+    "title": "Popcornn",
+    "name": "popcornn",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/icon.png",
+    "tagline": "Self-hosted BitTorrent manager with streaming and HLS transcoding",
+    "overview": "Popcornn is a self-hosted BitTorrent manager with a modern web interface. Search and download torrents, manage your library, stream with built-in HLS transcoding. Backend (Rust) + frontend in one stack. Optional FlareSolverr for Cloudflare-protected indexers.",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/icon.png",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/screenshot-1.png"
+    ],
+    "category": ["Media"],
+    "developer": {
+        "name": "Popcornn Team",
+        "website": "https://popcornn.app",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "Popcornn Team",
+        "website": "https://popcornn.app",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "https://github.com/bobdivx/popcorn-server",
+    "website": "https://popcornn.app",
+    "container": {
+        "image": "bobdivx/popcorn-frontend:latest",
+        "shell": "sh",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "80",
+            "path": "/"
+        },
+        "health_check": "curl -f http://localhost:4321/ || exit 1",
+        "envs": [
+            {"key": "TZ", "value": "$TZ", "configurable": "no", "description": "TimeZone"},
+            {"key": "PUID", "value": "$PUID", "configurable": "no", "description": "Run as user ID"},
+            {"key": "PGID", "value": "$PGID", "configurable": "no", "description": "Run as group ID"},
+            {"key": "PUBLIC_BACKEND_URL", "value": "", "configurable": "yes", "description": "Backend URL as seen by the browser (leave empty if same host)"}
+        ],
+        "ports": [
+            {"container": "80", "host": "4325", "type": "tcp", "allocation": "preferred", "configurable": "advanced", "description": "Web UI Port"}
+        ],
+        "volumes": [
+            {"container": "/app/.data", "host": "/DATA/AppData/$AppID/data", "mode": "rw", "allocation": "automatic", "configurable": "no", "description": "Database and config directory"},
+            {"container": "/app/downloads", "host": "/DATA/AppData/$AppID/downloads", "mode": "rw", "allocation": "automatic", "configurable": "advanced", "description": "Downloads and transcode cache directory"}
+        ],
+        "devices": [],
+        "constraints": {"min_memory": 512, "min_storage": 1024},
+        "restart_policy": "unless-stopped",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {},
+    "changelog": {"latest_updates": "", "url": ""},
+    "latest_update_date": "1738368000"
+}
