@@ -104,45 +104,24 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-    - arm
+  main: client
   author: Popcornn Team
   category: Media
   description:
-    en_us: >
+    en_US: |
       Popcornn is a self-hosted BitTorrent manager with a modern web interface.
       Search and download torrents, manage your library, stream with built-in HLS transcoding.
       Backend (Rust) + frontend in one stack. Optional FlareSolverr for Cloudflare-protected indexers.
-    fr_fr: >
-      Popcornn est un gestionnaire BitTorrent auto-hébergé avec interface web moderne.
-      Recherche et téléchargement de torrents, gestion de la médiathèque, streaming avec transcodage HLS intégré.
-      Backend (Rust) + frontend dans un même stack. FlareSolverr optionnel pour les indexeurs protégés par Cloudflare.
   developer: Popcornn Team
-  hostname: ""
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/icon.png
-  index: /
-  is_uncontrolled: false
-  main: client
-  port_map: "4325"
-  scheme: http
-  store_app_id: popcornn
   tagline:
-    en_us: Self-hosted BitTorrent manager with streaming and HLS transcoding
-    fr_fr: Gestionnaire BitTorrent auto-hébergé avec streaming et transcodage HLS
+    en_US: Self-hosted BitTorrent manager with streaming and HLS transcoding
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/icon.png
+  tips: {}
   title:
-    custom: Popcornn
     en_us: Popcornn
-    fr_fr: Popcornn
-  tips:
-    before_install:
-      en_us: |
-        **Access from another device:** Set **PUBLIC_BACKEND_URL** to the backend URL as seen by the browser (e.g. http://your-nas-ip:3000). Leave empty if you only open the app on the same host.
-
-        **Default API login:** admin / popcorn_password_secure — change in the app or via env vars API_USERNAME and API_PASSWORD.
-      fr_fr: |
-        **Accès depuis un autre appareil :** Définissez **PUBLIC_BACKEND_URL** sur l'URL du backend telle que vue par le navigateur (ex. http://ip-du-nas:3000). Laisser vide si même hôte.
-
-        **Identifiants API par défaut :** admin / popcorn_password_secure — à modifier dans l'app ou via API_USERNAME et API_PASSWORD.
+  index: /
+  port_map: "4325"
   envs:
     - container: PUBLIC_BACKEND_URL
       description:
