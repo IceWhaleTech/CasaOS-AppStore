@@ -1,13 +1,13 @@
-# CasaOS App Store - Popcornn
+# CasaOS App Store - Popcornn (2 N)
 # Volumes use /DATA/AppData/$AppID/ (CasaOS injects $AppID at install).
 name: popcornn
+version: "3"
+
 services:
   client:
     container_name: popcornn-client
     depends_on:
-      server:
-        condition: service_started
-        required: true
+      - server
     deploy:
       resources:
         limits:
@@ -31,8 +31,6 @@ services:
       retries: 5
       start_period: 1m0s
     image: bobdivx/popcorn-frontend:latest
-    networks:
-      - popcornn-network
     ports:
       - target: 80
         published: "4325"
@@ -67,8 +65,6 @@ services:
       retries: 5
       start_period: 1m0s
     image: bobdivx/popcorn-backend:latest
-    networks:
-      - popcornn-network
     ports:
       - target: 3000
         published: "3000"
@@ -85,8 +81,6 @@ services:
     image: flaresolverr/flaresolverr:latest
     container_name: popcornn-flaresolverr
     restart: unless-stopped
-    networks:
-      - popcornn-network
     ports:
       - target: 9191
         published: "9191"
@@ -97,36 +91,36 @@ services:
           memory: 1073741824
         reservations:
           memory: 268435456
-networks:
-  popcornn-network:
-    name: popcornn-network
+
 x-casaos:
   architectures:
     - amd64
     - arm64
-  main: client
+    - arm
   author: Popcornn Team
   category: Media
   description:
-    en_US: |
-      Popcornn is a self-hosted BitTorrent manager with a modern web interface.
-      Search and download torrents, manage your library, stream with built-in HLS transcoding.
-      Backend (Rust) + frontend in one stack. Optional FlareSolverr for Cloudflare-protected indexers.
+    en_us: "Popcornn is a self-hosted BitTorrent manager with a modern web interface. Search and download torrents, manage your library, stream with built-in HLS transcoding. Backend (Rust) + frontend in one stack. Optional FlareSolverr for Cloudflare-protected indexers."
+    fr_fr: "Popcornn est un gestionnaire BitTorrent auto-hébergé avec interface web moderne. Recherche et téléchargement de torrents, gestion de la médiathèque, streaming avec transcodage HLS intégré. Backend (Rust) + frontend dans un même stack. FlareSolverr optionnel pour les indexeurs protégés par Cloudflare."
   developer: Popcornn Team
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/icon.png
+  index: /
+  main: client
+  port_map: "4325"
+  scheme: http
   tagline:
-    en_US: Self-hosted BitTorrent manager with streaming and HLS transcoding
+    en_us: Self-hosted BitTorrent manager with streaming and HLS transcoding
+    fr_fr: Gestionnaire BitTorrent auto-hébergé avec streaming et transcodage HLS
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/icon.png
-  tips: {}
   title:
     en_us: Popcornn
-  index: /
-  port_map: "4325"
+    fr_fr: Popcornn
+  tips: {}
   envs:
     - container: PUBLIC_BACKEND_URL
       description:
         en_us: "Backend URL as seen by the browser (e.g. http://your-nas:3000). Leave empty if same host."
-        fr_fr: "URL du backend telle que vue par le navigateur (ex. http://votre-nas:3000). Laisser vide si même hôte."
+        fr_fr: "URL du backend telle que vue par le navigateur. Laisser vide si même hôte."
     - container: TZ
       description:
         en_us: TimeZone
@@ -142,4 +136,4 @@ x-casaos:
     - container: RUN_AS_ROOT
       description:
         en_us: "1 = run server as root (recommended on ZimaOS/CasaOS). 0 = run as PUID:PGID."
-        fr_fr: "1 = lancer le serveur en root (recommandé sur ZimaOS/CasaOS). 0 = lancer avec PUID:PGID."
+        fr_fr: "1 = lancer le serveur en root (recommandé). 0 = lancer avec PUID:PGID."
