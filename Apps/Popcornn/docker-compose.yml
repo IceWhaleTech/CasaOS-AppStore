@@ -1,0 +1,166 @@
+# CasaOS App Store - Popcornn
+# Volumes use /DATA/AppData/$AppID/ (CasaOS injects $AppID at install).
+name: popcornn
+services:
+  client:
+    container_name: popcornn-client
+    depends_on:
+      server:
+        condition: service_started
+        required: true
+    deploy:
+      resources:
+        limits:
+          memory: 1073741824
+        reservations:
+          memory: "268435456"
+    environment:
+      BACKEND_URL: http://server:3000
+      HOST: 0.0.0.0
+      NODE_ENV: production
+      PGID: $PGID
+      PORT: 80
+      PUBLIC_BACKEND_URL: ${PUBLIC_BACKEND_URL:-}
+      PUBLIC_CLIENT_URL: ${PUBLIC_CLIENT_URL:-http://localhost:4325}
+      PUID: $PUID
+      TZ: $TZ
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:4321/ || exit 1"]
+      timeout: 10s
+      interval: 30s
+      retries: 5
+      start_period: 1m0s
+    image: bobdivx/popcorn-frontend:latest
+    networks:
+      - popcornn-network
+    ports:
+      - target: 80
+        published: "4325"
+        protocol: tcp
+    restart: unless-stopped
+  server:
+    container_name: popcornn-server
+    deploy:
+      resources:
+        limits:
+          memory: 2147483648
+        reservations:
+          memory: "536870912"
+    environment:
+      API_PASSWORD: popcorn_password_secure
+      API_USERNAME: admin
+      DOWNLOAD_DIR: /app/downloads
+      LOG_LEVEL: info
+      PGID: $PGID
+      PUID: $PUID
+      RUST_LOG: info
+      RUN_AS_ROOT: ${RUN_AS_ROOT:-1}
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 3000
+      TZ: $TZ
+      TX_ALT: ${TX_ALT:-0}
+      FLARESOLVERR_URL: ${FLARESOLVERR_URL:-}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/client/health || exit 1"]
+      timeout: 10s
+      interval: 30s
+      retries: 5
+      start_period: 1m0s
+    image: bobdivx/popcorn-backend:latest
+    networks:
+      - popcornn-network
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/.data
+      - type: bind
+        source: /DATA/AppData/$AppID/downloads
+        target: /app/downloads
+  flaresolverr:
+    image: flaresolverr/flaresolverr:latest
+    container_name: popcornn-flaresolverr
+    restart: unless-stopped
+    networks:
+      - popcornn-network
+    ports:
+      - target: 9191
+        published: "9191"
+        protocol: tcp
+    deploy:
+      resources:
+        limits:
+          memory: 1073741824
+        reservations:
+          memory: 268435456
+networks:
+  popcornn-network:
+    name: popcornn-network
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  author: Popcornn Team
+  category: Media
+  description:
+    en_us: >
+      Popcornn is a self-hosted BitTorrent manager with a modern web interface.
+      Search and download torrents, manage your library, stream with built-in HLS transcoding.
+      Backend (Rust) + frontend in one stack. Optional FlareSolverr for Cloudflare-protected indexers.
+    fr_fr: >
+      Popcornn est un gestionnaire BitTorrent auto-hébergé avec interface web moderne.
+      Recherche et téléchargement de torrents, gestion de la médiathèque, streaming avec transcodage HLS intégré.
+      Backend (Rust) + frontend dans un même stack. FlareSolverr optionnel pour les indexeurs protégés par Cloudflare.
+  developer: Popcornn Team
+  hostname: ""
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/icon.png
+  index: /
+  is_uncontrolled: false
+  main: client
+  port_map: "4325"
+  scheme: http
+  store_app_id: popcornn
+  tagline:
+    en_us: Self-hosted BitTorrent manager with streaming and HLS transcoding
+    fr_fr: Gestionnaire BitTorrent auto-hébergé avec streaming et transcodage HLS
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/icon.png
+  title:
+    custom: Popcornn
+    en_us: Popcornn
+    fr_fr: Popcornn
+  tips:
+    before_install:
+      en_us: |
+        **Access from another device:** Set **PUBLIC_BACKEND_URL** to the backend URL as seen by the browser (e.g. http://your-nas-ip:3000). Leave empty if you only open the app on the same host.
+
+        **Default API login:** admin / popcorn_password_secure — change in the app or via env vars API_USERNAME and API_PASSWORD.
+      fr_fr: |
+        **Accès depuis un autre appareil :** Définissez **PUBLIC_BACKEND_URL** sur l'URL du backend telle que vue par le navigateur (ex. http://ip-du-nas:3000). Laisser vide si même hôte.
+
+        **Identifiants API par défaut :** admin / popcorn_password_secure — à modifier dans l'app ou via API_USERNAME et API_PASSWORD.
+  envs:
+    - container: PUBLIC_BACKEND_URL
+      description:
+        en_us: "Backend URL as seen by the browser (e.g. http://your-nas:3000). Leave empty if same host."
+        fr_fr: "URL du backend telle que vue par le navigateur (ex. http://votre-nas:3000). Laisser vide si même hôte."
+    - container: TZ
+      description:
+        en_us: TimeZone
+        fr_fr: Fuseau horaire
+    - container: PUID
+      description:
+        en_us: Run as user ID
+        fr_fr: Exécuter avec cet ID utilisateur
+    - container: PGID
+      description:
+        en_us: Run as group ID
+        fr_fr: Exécuter avec cet ID groupe
+    - container: RUN_AS_ROOT
+      description:
+        en_us: "1 = run server as root (recommended on ZimaOS/CasaOS). 0 = run as PUID:PGID."
+        fr_fr: "1 = lancer le serveur en root (recommandé sur ZimaOS/CasaOS). 0 = lancer avec PUID:PGID."
