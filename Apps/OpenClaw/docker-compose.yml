@@ -1,0 +1,535 @@
+services:
+  openclaw:
+    image: icewhaletech/openclaw:2026.3.8
+    environment:
+      HOME: /home/node
+      TERM: xterm-256color
+      OPENCLAW_GATEWAY_TOKEN: casaos
+    network_mode: bridge
+    deploy:
+      resources:
+        reservations:
+          memory: 1G
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /home/node/.openclaw
+    ports:
+      - target: 18789
+        published: "24190"
+        protocol: tcp
+      - target: 18790
+        published: "18790"
+        protocol: tcp
+    init: true
+    restart: unless-stopped
+    privileged: true
+    command:
+      - /bin/bash
+      - -c
+      - /app/start.sh && node dist/index.js gateway --bind lan --allow-unconfigured --port '18789'
+    container_name: openclaw
+    x-casaos:
+      envs:
+        - container: HOME
+          description:
+            de_DE: Gibt das Home-Verzeichnis für den Container-Benutzer an.
+            el_GR: Καθορίζει τον αρχικό κατάλογο για τον χρήστη του κοντέινερ.
+            en_GB: Specifies the home directory for the container user.
+            en_US: Specifies the home directory for the container user.
+            fr_FR: Spécifie le répertoire personnel de l'utilisateur du conteneur.
+            hr_HR: Određuje početni direktorij za korisnika spremnika.
+            it_IT: Specifica la directory home per l'utente del container.
+            ja_JP: コンテナユーザーのホームディレクトリを指定します。
+            ko_KR: 컨테이너 사용자의 홈 디렉터리를 지정합니다.
+            nb_NO: Angir hjemmekatalogen for containerbrukeren.
+            pt_PT: Especifica o diretório principal para o utilizador do contentor.
+            ru_RU: Указывает домашний каталог для пользователя контейнера.
+            sv_SE: Anger hemkatalogen för containeranvändaren.
+            tr_TR: Kapsayıcı kullanıcısı için ana dizini belirtir.
+            zh_CN: 指定容器用户的主目录。
+        - container: TERM
+          description:
+            de_DE: Definiert den Terminaltyp, oft für eine korrekte Befehlszeileninteraktion festgelegt.
+            el_GR: Καθορίζει τον τύπο τερματικού, συχνά ρυθμισμένο για σωστή αλληλεπίδραση γραμμής εντολών.
+            en_GB: Defines the terminal type, often set for proper command-line interaction.
+            en_US: Defines the terminal type, often set for proper command-line interaction.
+            fr_FR: Définit le type de terminal, souvent configuré pour une interaction correcte en ligne de commande.
+            hr_HR: Definira vrstu terminala, često postavljenu za pravilnu interakciju s naredbenim retkom.
+            it_IT: Definisce il tipo di terminale, spesso impostato per una corretta interazione da riga di comando.
+            ja_JP: ターミナルタイプを定義します。これは、適切なコマンドライン操作のために設定されることがよくあります。
+            ko_KR: 터미널 유형을 정의하며, 올바른 명령줄 상호 작용을 위해 설정되는 경우가 많습니다.
+            nb_NO: Definerer terminaltypen, ofte satt for riktig kommandolinjeinteraksjon.
+            pt_PT: Define o tipo de terminal, frequentemente configurado para uma interação adequada na linha de comandos.
+            ru_RU: Определяет тип терминала, часто устанавливаемый для корректного взаимодействия с командной строкой.
+            sv_SE: Definierar terminaltypen, ofta inställd för korrekt interaktion med kommandoraden.
+            tr_TR: Terminal türünü tanımlar, genellikle doğru komut satırı etkileşimi için ayarlanır.
+            zh_CN: 定义终端类型，通常设置为实现正确的命令行交互。
+        - container: OPENCLAW_GATEWAY_TOKEN
+          description:
+            de_DE: Authentifizierungs-Token für das OpenClaw-Gateway zur Verbindung mit externen Diensten.
+            el_GR: Διακριτικό ελέγχου ταυτότητας για την πύλη OpenClaw για σύνδεση με εξωτερικές υπηρεσίες.
+            en_GB: Authentication token for the OpenClaw gateway to connect to external services.
+            en_US: Authentication token for the OpenClaw gateway to connect to external services.
+            fr_FR: Jeton d'authentification pour la passerelle OpenClaw afin de se connecter aux services externes.
+            hr_HR: Autentifikacijski token za OpenClaw pristupnik za povezivanje s vanjskim uslugama.
+            it_IT: Token di autenticazione per il gateway OpenClaw per connettersi a servizi esterni.
+            ja_JP: 外部サービスに接続するためのOpenClawゲートウェイの認証トークン。
+            ko_KR: OpenClaw 게이트웨이가 외부 서비스에 연결하기 위한 인증 토큰입니다.
+            nb_NO: Autentiseringstoken for OpenClaw-gatewayen for å koble til eksterne tjenester.
+            pt_PT: Token de autenticação para o gateway OpenClaw se conectar a serviços externos.
+            ru_RU: Токен аутентификации для шлюза OpenClaw для подключения к внешним службам.
+            sv_SE: Autentiseringstoken för OpenClaw-gatewayen för att ansluta till externa tjänster.
+            tr_TR: OpenClaw ağ geçidinin harici hizmetlere bağlanması için kimlik doğrulama belirteci.
+            zh_CN: OpenClaw 网关连接到外部服务的身份验证令牌。
+      ports:
+        - container: "18789"
+          description:
+            de_DE: Haupt-Webinterface-Port für den Zugriff auf OpenClaw.
+            el_GR: Κύρια θύρα διεπαφής ιστού για πρόσβαση στο OpenClaw.
+            en_GB: Main web interface port for accessing OpenClaw.
+            en_US: Main web interface port for accessing OpenClaw.
+            fr_FR: Port principal de l'interface web pour accéder à OpenClaw.
+            hr_HR: Glavni port web sučelja za pristup OpenClawu.
+            it_IT: Porta principale dell'interfaccia web per accedere a OpenClaw.
+            ja_JP: OpenClawにアクセスするためのメインWebインターフェースポート。
+            ko_KR: OpenClaw에 액세스하기 위한 주 웹 인터페이스 포트입니다.
+            nb_NO: Hovedport for webgrensesnitt for tilgang til OpenClaw.
+            pt_PT: Porta principal da interface web para aceder ao OpenClaw.
+            ru_RU: Основной порт веб-интерфейса для доступа к OpenClaw.
+            sv_SE: Huvudport för webbgränssnittet för åtkomst till OpenClaw.
+            tr_TR: OpenClaw'a erişim için ana web arayüzü bağlantı noktası.
+            zh_CN: 访问 OpenClaw 的主 Web 界面端口。
+        - container: "18790"
+          description:
+            de_DE: Interner API-Port für die Kerndienste von OpenClaw.
+            el_GR: Εσωτερική θύρα API για τις βασικές υπηρεσίες του OpenClaw.
+            en_GB: Internal API port for OpenClaw's core services.
+            en_US: Internal API port for OpenClaw's core services.
+            fr_FR: Port API interne pour les services principaux de OpenClaw.
+            hr_HR: Interni API port za OpenClawove temeljne usluge.
+            it_IT: Porta API interna per i servizi principali di OpenClaw.
+            ja_JP: OpenClawのコアサービス用の内部APIポート。
+            ko_KR: OpenClaw의 핵심 서비스를 위한 내부 API 포트입니다.
+            nb_NO: Intern API-port for OpenClaws kjernetjenester.
+            pt_PT: Porta API interna para os serviços principais do OpenClaw.
+            ru_RU: Внутренний порт API для основных служб OpenClaw.
+            sv_SE: Intern API-port för OpenClaws kärntjänster.
+            tr_TR: OpenClaw'un çekirdek uygulama dosyaları ve çalışma zamanı verilerini içerir.
+            zh_CN: OpenClaw 核心服务的内部 API 端口。
+      volumes:
+        - container: /home/node/.openclaw
+          description:
+            de_DE: Speichert die Konfigurationsdateien und persistenten Daten von OpenClaw.
+            el_GR: Αποθηκεύει τα αρχεία διαμόρφωσης και τα μόνιμα δεδομένα του OpenClaw.
+            en_GB: Stores OpenClaw's configuration files and persistent data.
+            en_US: Stores OpenClaw's configuration files and persistent data.
+            fr_FR: Stocke les fichiers de configuration et les données persistantes de OpenClaw.
+            hr_HR: Pohranjuje OpenClawove konfiguracijske datoteke i trajne podatke.
+            it_IT: Archivia i file di configurazione e i dati persistenti di OpenClaw.
+            ja_JP: OpenClawの設定ファイルと永続データを保存します。
+            ko_KR: OpenClaw의 구성 파일과 영구 데이터를 저장합니다.
+            nb_NO: Lagrer OpenClaws konfigurasjonsfiler og vedvarende data.
+            pt_PT: Armazena os ficheiros de configuração e os dados persistentes do OpenClaw.
+            ru_RU: Хранит конфигурационные файлы и постоянные данные OpenClaw.
+            sv_SE: Lagrar OpenClaws konfigurationsfiler och beständiga data.
+            tr_TR: OpenClaw'un yapılandırma dosyalarını ve kalıcı verilerini depolar.
+            zh_CN: 存储 OpenClaw 的配置文件和持久数据。
+name: openclaw
+x-casaos:
+  title:
+    de_DE: OpenClaw
+    el_GR: OpenClaw
+    en_GB: OpenClaw
+    en_US: OpenClaw
+    fr_FR: OpenClaw
+    hr_HR: OpenClaw
+    it_IT: OpenClaw
+    ja_JP: OpenClaw
+    ko_KR: OpenClaw
+    nb_NO: OpenClaw
+    pt_PT: OpenClaw
+    ru_RU: OpenClaw
+    sv_SE: OpenClaw
+    tr_TR: OpenClaw
+    zh_CN: OpenClaw
+  tagline:
+    de_DE: OpenClaw ist ein persönlicher KI-Assistent, den Sie auf Ihren eigenen Geräten ausführen.
+    el_GR: Το OpenClaw είναι ένας προσωπικός βοηθός τεχνητής νοημοσύνης που εκτελείτε στις δικές σας συσκευές.
+    en_GB: OpenClaw is a personal AI assistant you run on your own devices
+    en_US: OpenClaw is a personal AI assistant you run on your own devices
+    fr_FR: OpenClaw est un assistant IA personnel que vous exécutez sur vos propres appareils.
+    hr_HR: OpenClaw je osobni AI asistent kojeg pokrećete na vlastitim uređajima.
+    it_IT: OpenClaw è un assistente AI personale che puoi eseguire sui tuoi dispositivi.
+    ja_JP: OpenClawは、ご自身のデバイスで実行するパーソナルAIアシスタントです。
+    ko_KR: OpenClaw은 사용자의 기기에서 실행되는 개인 AI 비서입니다.
+    nb_NO: OpenClaw er en personlig AI-assistent du kjører på dine egne enheter.
+    pt_PT: OpenClaw é um assistente de IA pessoal que executa nos seus próprios dispositivos.
+    ru_RU: OpenClaw — это персональный ИИ-помощник, который вы запускаете на своих собственных устройствах.
+    sv_SE: OpenClaw är en personlig AI-assistent som du kör på dina egna enheter.
+    tr_TR: OpenClaw, kendi cihazlarınızda çalıştırdığınız kişisel bir yapay zeka asistanıdır.
+    zh_CN: OpenClaw 是一个您在自己的设备上运行的个人 AI 助手。
+  description:
+    de_DE: |-
+      OpenClaw ist ein quelloffener persönlicher KI-Assistent, der entwickelt wurde, um die Fähigkeiten großer Sprachmodelle (LLMs) zu intelligenten Agenten zu erweitern, die aktiv Aufgaben ausführen, über mehrere Plattformen hinweg interagieren und kontinuierlich arbeiten. Er unterstützt den 24/7-Betrieb auf dem eigenen Gerät oder Server des Benutzers und bietet intelligente Automatisierungsdienste über gängige Kommunikationstools. OpenClaw verbindet KI über eine lokal laufende "Gateway + Agent"-Architektur mit bestehenden Chat-Kanälen (wie WhatsApp, Telegram, Discord usw.) und ermöglicht es ihr, nicht nur Fragen zu beantworten, sondern auch proaktiv Aktionen auszuführen, Zeitpläne zu verwalten, E-Mails zu verarbeiten, Workflows zu automatisieren und vieles mehr.
+
+      **Hauptmerkmale**:
+
+      - Mehrkanal-Kommunikationsintegration: Interagieren Sie direkt mit der KI über gängige Kommunikationsplattformen wie WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams usw., ohne zusätzliche Anwendungen zu benötigen.
+
+      - Kontinuierlicher Online-Betrieb & Langzeitgedächtnis: OpenClaw kann 24/7 laufen und verfügt über persistente Speicher- und Kontextbeibehaltungsfunktionen, die es ihm ermöglichen, Präferenzen und historische Gespräche zu speichern und personalisierte Dienste bereitzustellen.
+
+      - Ausführung realer Aktionen: Über Textantworten hinaus kann es Systemaufgaben ausführen (z. B. Posteingang leeren, E-Mails senden, Formulare ausfüllen, Termine planen, Web durchsuchen, Browser steuern usw.).
+
+      - Fähigkeitserweiterung & Automatisierte Workflows: Unterstützt Community-Plugins, erweiterte Fähigkeiten und benutzerdefinierte Automatisierungsskripte, die es der KI ermöglichen, komplexe Aufgaben in verschiedenen Szenarien auszuführen.
+
+      **Erfahren Sie mehr:**
+
+      - [Offizielle Website](https://openclaw.ai)
+
+      - [Offizielle Dokumentation](https://docs.openclaw.ai/)
+
+      - [OpenClaw GitHub-Repository](https://github.com/openclaw/openclaw)
+
+      - [Konfigurationsanleitung](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+    el_GR: |-
+      Το OpenClaw είναι ένας προσωπικός βοηθός τεχνητής νοημοσύνης ανοιχτού κώδικα, σχεδιασμένος να επεκτείνει τις δυνατότητες των μεγάλων γλωσσικών μοντέλων (LLMs) σε ευφυείς πράκτορες που εκτελούν ενεργά εργασίες, αλληλεπιδρούν σε πολλαπλές πλατφόρμες και λειτουργούν συνεχώς. Υποστηρίζει 24/7 λειτουργία στην ίδια τη συσκευή ή τον διακομιστή του χρήστη και παρέχει έξυπνες υπηρεσίες αυτοματισμού μέσω κοινών εργαλείων επικοινωνίας. Το OpenClaw συνδέει την τεχνητή νοημοσύνη με υπάρχοντα κανάλια συνομιλίας (όπως WhatsApp, Telegram, Discord, κ.λπ.) μέσω μιας τοπικά εκτελούμενης αρχιτεκτονικής "πύλης + πράκτορα", επιτρέποντάς της όχι μόνο να απαντά σε ερωτήσεις αλλά και να εκτελεί προληπτικά ενέργειες, να διαχειρίζεται χρονοδιαγράμματα, να επεξεργάζεται μηνύματα ηλεκτρονικού ταχυδρομείου, να αυτοματοποιεί ροές εργασίας και πολλά άλλα.
+
+      **Βασικά χαρακτηριστικά**:
+
+      - Ενσωμάτωση επικοινωνίας πολλαπλών καναλιών: Αλληλεπιδράστε απευθείας με την τεχνητή νοημοσύνη μέσω κοινών πλατφορμών επικοινωνίας όπως WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams κ.λπ., χωρίς την ανάγκη για πρόσθετες εφαρμογές.
+
+      - Συνεχής λειτουργία & Μακροπρόθεσμη μνήμη: Το OpenClaw μπορεί να λειτουργεί 24/7, διαθέτοντας δυνατότητες επίμονης μνήμης και διατήρησης πλαισίου, επιτρέποντάς του να θυμάται προτιμήσεις, ιστορικές συνομιλίες και να παρέχει εξατομικευμένες υπηρεσίες.
+
+      - Εκτέλεση πραγματικών ενεργειών: Πέρα από τις απαντήσεις κειμένου, μπορεί να εκτελέσει εργασίες συστήματος (π.χ. εκκαθάριση εισερχομένων, αποστολή email, συμπλήρωση φορμών, προγραμματισμός ραντεβού, περιήγηση στο διαδίκτυο, έλεγχος προγράμματος περιήγησης κ.λπ.).
+
+      - Επέκταση δεξιοτήτων & Αυτοματοποιημένες ροές εργασίας: Υποστηρίζει πρόσθετα κοινότητας, εκτεταμένες δεξιότητες και προσαρμοσμένα σενάρια αυτοματισμού, επιτρέποντας στην τεχνητή νοημοσύνη να εκτελεί σύνθετες εργασίες σε διάφορα σενάρια.
+
+      **Μάθετε περισσότερα:**
+
+      - [Επίσημη Ιστοσελίδα](https://openclaw.ai)
+
+      - [Επίσημη Τεκμηρίωση](https://docs.openclaw.ai/)
+
+      - [Αποθετήριο OpenClaw στο GitHub](https://github.com/openclaw/openclaw)
+
+      - [Οδηγός Διαμόρφωσης](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+    en_GB: |-
+      OpenClaw is an open-source personal AI assistant designed to extend the capabilities of large language models (LLMs) into intelligent agents that actively execute tasks, interact across multiple platforms, and operate continuously. It supports 24/7 operation on the user's own device or server and provides intelligent automation services through common communication tools. OpenClaw connects AI to existing chat channels (such as WhatsApp, Telegram, Discord, etc.) via a locally running "gateway + agent" architecture, enabling it not only to answer questions but also to proactively perform actions, manage schedules, process emails, automate workflows, and more.
+
+      **Key Features**:
+
+      - Multi-channel Communication Integration: Interact directly with AI through common communication platforms like WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams, etc., without the need for additional applications.
+
+      - Continuous Online & Long-term Memory: OpenClaw can run 24/7, possessing persistent memory and context retention capabilities, allowing it to remember preferences, historical conversations, and provide personalized services.
+
+      - Real Action Execution: Beyond text replies, it can perform system tasks (e.g., clear inbox, send emails, fill forms, schedule appointments, browse web, control browser, etc.).
+
+      - Skill Expansion & Automated Workflows: Supports community plugins, extended skills, and custom automation scripts, enabling the AI to execute complex tasks in various scenarios.
+
+      **Learn More:**
+
+      - [Official Website](https://openclaw.ai)
+
+      - [Official Documentation](https://docs.openclaw.ai/)
+
+      - [OpenClaw GitHub Repository](https://github.com/openclaw/openclaw)
+
+      - [Configure Guide](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+    en_US: |-
+      OpenClaw is an open-source personal AI assistant designed to extend the capabilities of large language models (LLMs) into intelligent agents that actively execute tasks, interact across multiple platforms, and operate continuously. It supports 24/7 operation on the user's own device or server and provides intelligent automation services through common communication tools. OpenClaw connects AI to existing chat channels (such as WhatsApp, Telegram, Discord, etc.) via a locally running "gateway + agent" architecture, enabling it not only to answer questions but also to proactively perform actions, manage schedules, process emails, automate workflows, and more.
+
+      **Key Features**:
+
+      - Multi-channel Communication Integration: Interact directly with AI through common communication platforms like WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams, etc., without the need for additional applications.
+
+      - Continuous Online & Long-term Memory: OpenClaw can run 24/7, possessing persistent memory and context retention capabilities, allowing it to remember preferences, historical conversations, and provide personalized services.
+
+      - Real Action Execution: Beyond text replies, it can perform system tasks (e.g., clear inbox, send emails, fill forms, schedule appointments, browse web, control browser, etc.).
+
+      - Skill Expansion & Automated Workflows: Supports community plugins, extended skills, and custom automation scripts, enabling the AI to execute complex tasks in various scenarios.
+
+      **Learn More:**
+
+      - [Official Website](https://openclaw.ai)
+
+      - [Official Documentation](https://docs.openclaw.ai/)
+
+      - [OpenClaw GitHub Repository](https://github.com/openclaw/openclaw)
+
+      - [Configure Guide](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+    fr_FR: |-
+      OpenClaw est un assistant personnel d'IA open-source conçu pour étendre les capacités des grands modèles linguistiques (LLM) en agents intelligents qui exécutent activement des tâches, interagissent sur plusieurs plateformes et fonctionnent en continu. Il prend en charge un fonctionnement 24h/24 et 7j/7 sur l'appareil ou le serveur de l'utilisateur et fournit des services d'automatisation intelligents via des outils de communication courants. OpenClaw connecte l'IA aux canaux de discussion existants (tels que WhatsApp, Telegram, Discord, etc.) via une architecture "passerelle + agent" exécutée localement, lui permettant non seulement de répondre aux questions, mais aussi d'effectuer des actions de manière proactive, de gérer des plannings, de traiter des e-mails, d'automatiser des flux de travail, et bien plus encore.
+
+      **Fonctionnalités clés**:
+
+      - Intégration de la communication multicanal : Interagissez directement avec l'IA via des plateformes de communication courantes comme WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams, etc., sans avoir besoin d'applications supplémentaires.
+
+      - Mémoire continue en ligne et à long terme : OpenClaw peut fonctionner 24h/24 et 7j/7, possédant des capacités de mémoire persistante et de rétention de contexte, lui permettant de se souvenir des préférences, des conversations historiques et de fournir des services personnalisés.
+
+      - Exécution d'actions réelles : Au-delà des réponses textuelles, il peut effectuer des tâches système (par exemple, vider la boîte de réception, envoyer des e-mails, remplir des formulaires, planifier des rendez-vous, naviguer sur le web, contrôler le navigateur, etc.).
+
+      - Extension des compétences et flux de travail automatisés : Prend en charge les plugins communautaires, les compétences étendues et les scripts d'automatisation personnalisés, permettant à l'IA d'exécuter des tâches complexes dans divers scénarios.
+
+      **En savoir plus:**
+
+      - [Site Web officiel](https://openclaw.ai)
+
+      - [Documentation officielle](https://docs.openclaw.ai/)
+
+      - [Dépôt GitHub d'OpenClaw](https://github.com/openclaw/openclaw)
+
+      - [Guide de configuration](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+    hr_HR: |-
+      OpenClaw je osobni AI asistent otvorenog koda dizajniran za proširenje mogućnosti velikih jezičnih modela (LLM) u inteligentne agente koji aktivno izvršavaju zadatke, komuniciraju na više platformi i rade kontinuirano. Podržava 24/7 rad na korisnikovom vlastitom uređaju ili poslužitelju i pruža inteligentne usluge automatizacije putem uobičajenih komunikacijskih alata. OpenClaw povezuje AI s postojećim chat kanalima (kao što su WhatsApp, Telegram, Discord itd.) putem lokalno pokrenute arhitekture "gateway + agent", omogućujući mu ne samo odgovaranje na pitanja, već i proaktivno obavljanje radnji, upravljanje rasporedima, obradu e-pošte, automatizaciju radnih procesa i još mnogo toga.
+
+      **Ključne značajke**:
+
+      - Integracija višekanalne komunikacije: Izravno komunicirajte s AI putem uobičajenih komunikacijskih platformi kao što su WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams itd., bez potrebe za dodatnim aplikacijama.
+
+      - Kontinuirani online rad i dugoročna memorija: OpenClaw može raditi 24/7, posjedujući mogućnosti trajne memorije i zadržavanja konteksta, što mu omogućuje pamćenje preferencija, povijesnih razgovora i pružanje personaliziranih usluga.
+
+      - Izvršavanje stvarnih radnji: Osim tekstualnih odgovora, može obavljati sistemske zadatke (npr. čišćenje pristigle pošte, slanje e-pošte, ispunjavanje obrazaca, zakazivanje sastanaka, pregledavanje weba, kontrola preglednika itd.).
+
+      - Proširenje vještina i automatizirani radni procesi: Podržava dodatke zajednice, proširene vještine i prilagođene skripte za automatizaciju, omogućujući AI-u izvršavanje složenih zadataka u različitim scenarijima.
+
+      **Saznajte više:**
+
+      - [Službena web stranica](https://openclaw.ai)
+
+      - [Službena dokumentacija](https://docs.openclaw.ai/)
+
+      - [OpenClaw GitHub repozitorij](https://github.com/openclaw/openclaw)
+
+      - [Vodič za konfiguraciju](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+    it_IT: |-
+      OpenClaw è un assistente AI personale open-source progettato per estendere le capacità dei modelli linguistici di grandi dimensioni (LLM) in agenti intelligenti che eseguono attivamente compiti, interagiscono su più piattaforme e operano continuamente. Supporta il funzionamento 24 ore su 24, 7 giorni su 7 sul dispositivo o server dell'utente e fornisce servizi di automazione intelligenti tramite strumenti di comunicazione comuni. OpenClaw connette l'AI ai canali di chat esistenti (come WhatsApp, Telegram, Discord, ecc.) tramite un'architettura "gateway + agent" in esecuzione localmente, consentendole non solo di rispondere a domande ma anche di eseguire proattivamente azioni, gestire orari, elaborare e-mail, automatizzare flussi di lavoro e altro ancora.
+
+      **Caratteristiche principali**:
+
+      - Integrazione della comunicazione multicanale: Interagisci direttamente con l'AI tramite piattaforme di comunicazione comuni come WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams, ecc., senza la necessità di applicazioni aggiuntive.
+
+      - Memoria continua online e a lungo termine: OpenClaw può funzionare 24 ore su 24, 7 giorni su 7, possedendo capacità di memoria persistente e di ritenzione del contesto, consentendogli di ricordare preferenze, conversazioni storiche e fornire servizi personalizzati.
+
+      - Esecuzione di azioni reali: Oltre alle risposte testuali, può eseguire attività di sistema (ad esempio, svuotare la posta in arrivo, inviare e-mail, compilare moduli, programmare appuntamenti, navigare sul web, controllare il browser, ecc.).
+
+      - Espansione delle competenze e flussi di lavoro automatizzati: Supporta plugin della community, competenze estese e script di automazione personalizzati, consentendo all'AI di eseguire compiti complessi in vari scenari.
+
+      **Scopri di più:**
+
+      - [Sito Web Ufficiale](https://openclaw.ai)
+
+      - [Documentazione Ufficiale](https://docs.openclaw.ai/)
+
+      - [Repository GitHub di OpenClaw](https://github.com/openclaw/openclaw)
+
+      - [Guida alla configurazione](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+    ja_JP: |-
+      OpenClawは、大規模言語モデル（LLM）の機能を、タスクを積極的に実行し、複数のプラットフォームで対話し、継続的に動作するインテリジェントエージェントへと拡張するために設計された、オープンソースのパーソナルAIアシスタントです。ユーザー自身のデバイスまたはサーバーで24時間365日稼働をサポートし、一般的なコミュニケーションツールを介してインテリジェントな自動化サービスを提供します。OpenClawは、ローカルで実行される「ゲートウェイ＋エージェント」アーキテクチャを介して、AIを既存のチャットチャネル（WhatsApp、Telegram、Discordなど）に接続し、質問に答えるだけでなく、プロアクティブにアクションを実行し、スケジュールを管理し、メールを処理し、ワークフローを自動化するなど、さまざまなことを可能にします。
+
+      **主な機能**:
+
+      - マルチチャネル通信統合：WhatsApp、Telegram、Slack、Discord、Signal、iMessage、Microsoft Teamsなどの一般的な通信プラットフォームを介してAIと直接対話できます。追加のアプリケーションは不要です。
+
+      - 継続的なオンライン稼働と長期記憶：OpenClawは24時間365日稼働でき、永続的なメモリとコンテキスト保持機能を備えているため、好みや過去の会話を記憶し、パーソナライズされたサービスを提供できます。
+
+      - 実際のアクション実行：テキスト応答だけでなく、システムタスク（例：受信トレイのクリア、メール送信、フォーム入力、アポイントメントのスケジュール、ウェブ閲覧、ブラウザ制御など）を実行できます。
+
+      - スキル拡張と自動化ワークフロー：コミュニティプラグイン、拡張スキル、カスタム自動化スクリプトをサポートし、AIがさまざまなシナリオで複雑なタスクを実行できるようにします。
+
+      **詳細はこちら:**
+
+      - [公式サイト](https://openclaw.ai)
+
+      - [公式ドキュメント](https://docs.openclaw.ai/)
+
+      - [OpenClaw GitHubリポジトリ](https://github.com/openclaw/openclaw)
+
+      - [設定ガイド](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+    ko_KR: |-
+      OpenClaw는 대규모 언어 모델(LLM)의 기능을 적극적으로 작업을 실행하고, 여러 플랫폼에서 상호 작용하며, 지속적으로 작동하는 지능형 에이전트로 확장하도록 설계된 오픈 소스 개인 AI 비서입니다. 사용자 자신의 장치 또는 서버에서 24시간 연중무휴 작동을 지원하며, 일반적인 통신 도구를 통해 지능형 자동화 서비스를 제공합니다. OpenClaw는 로컬에서 실행되는 "게이트웨이 + 에이전트" 아키텍처를 통해 AI를 기존 채팅 채널(예: WhatsApp, Telegram, Discord 등)에 연결하여 질문에 답할 뿐만 아니라, 능동적으로 작업을 수행하고, 일정을 관리하고, 이메일을 처리하고, 워크플로우를 자동화하는 등 다양한 기능을 제공합니다.
+
+      **주요 기능**:
+
+      - 다중 채널 통신 통합: WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams 등과 같은 일반적인 통신 플랫폼을 통해 AI와 직접 상호 작용할 수 있으며, 추가 애플리케이션이 필요 없습니다.
+
+      - 지속적인 온라인 및 장기 기억: OpenClaw는 24시간 연중무휴로 실행될 수 있으며, 영구적인 메모리 및 컨텍스트 유지 기능을 갖추고 있어 선호도, 과거 대화를 기억하고 개인화된 서비스를 제공할 수 있습니다.
+
+      - 실제 작업 실행: 텍스트 응답을 넘어 시스템 작업(예: 받은 편지함 비우기, 이메일 보내기, 양식 작성, 약속 예약, 웹 검색, 브라우저 제어 등)을 수행할 수 있습니다.
+
+      - 스킬 확장 및 자동화된 워크플로우: 커뮤니티 플러그인, 확장 스킬 및 사용자 지정 자동화 스크립트를 지원하여 AI가 다양한 시나리오에서 복잡한 작업을 실행할 수 있도록 합니다.
+
+      **더 알아보기:**
+
+      - [공식 웹사이트](https://openclaw.ai)
+
+      - [공식 문서](https://docs.openclaw.ai/)
+
+      - [OpenClaw GitHub 저장소](https://github.com/openclaw/openclaw)
+
+      - [구성 가이드](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+    nb_NO: |-
+      OpenClaw er en åpen kildekode personlig AI-assistent designet for å utvide mulighetene til store språkmodeller (LLM-er) til intelligente agenter som aktivt utfører oppgaver, interagerer på tvers av flere plattformer og opererer kontinuerlig. Den støtter 24/7 drift på brukerens egen enhet eller server og tilbyr intelligente automatiseringstjenester gjennom vanlige kommunikasjonsverktøy. OpenClaw kobler AI til eksisterende chatkanaler (som WhatsApp, Telegram, Discord, osv.) via en lokalt kjørende "gateway + agent"-arkitektur, noe som gjør den i stand til ikke bare å svare på spørsmål, men også proaktivt å utføre handlinger, administrere tidsplaner, behandle e-poster, automatisere arbeidsflyter og mer.
+
+      **Nøkkelfunksjoner**:
+
+      - Multikanal kommunikasjonsintegrasjon: Samhandle direkte med AI via vanlige kommunikasjonsplattformer som WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams, osv., uten behov for ekstra applikasjoner.
+
+      - Kontinuerlig online og langtidsminne: OpenClaw kan kjøre 24/7, og har vedvarende minne- og kontekstbevaringsevner, slik at den kan huske preferanser, historiske samtaler og tilby personlige tjenester.
+
+      - Utførelse av virkelige handlinger: Utover tekstsvar kan den utføre systemoppgaver (f.eks. tømme innboks, sende e-poster, fylle ut skjemaer, planlegge avtaler, bla på nettet, kontrollere nettleser, osv.).
+
+      - Ferdighetsutvidelse og automatiserte arbeidsflyter: Støtter fellesskapsplugins, utvidede ferdigheter og tilpassede automatiseringsskript, noe som gjør at AI kan utføre komplekse oppgaver i ulike scenarier.
+
+      **Lær mer:**
+
+      - [Offisiell nettside](https://openclaw.ai)
+
+      - [Offisiell dokumentasjon](https://docs.openclaw.ai/)
+
+      - [OpenClaw GitHub-arkiv](https://github.com/openclaw/openclaw)
+
+      - [Konfigurasjonsguide](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+    pt_PT: |-
+      OpenClaw é um assistente de IA pessoal de código aberto, concebido para estender as capacidades dos grandes modelos de linguagem (LLMs) a agentes inteligentes que executam ativamente tarefas, interagem em múltiplas plataformas e operam continuamente. Suporta operação 24/7 no próprio dispositivo ou servidor do utilizador e fornece serviços de automação inteligentes através de ferramentas de comunicação comuns. O OpenClaw conecta a IA a canais de chat existentes (como WhatsApp, Telegram, Discord, etc.) através de uma arquitetura "gateway + agente" em execução localmente, permitindo-lhe não só responder a perguntas, mas também realizar ações proativamente, gerir horários, processar e-mails, automatizar fluxos de trabalho e muito mais.
+
+      **Principais funcionalidades**:
+
+      - Integração de comunicação multicanal: Interaja diretamente com a IA através de plataformas de comunicação comuns como WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams, etc., sem a necessidade de aplicações adicionais.
+
+      - Memória contínua online e de longo prazo: O OpenClaw pode funcionar 24/7, possuindo capacidades de memória persistente e retenção de contexto, permitindo-lhe recordar preferências, conversas históricas e fornecer serviços personalizados.
+
+      - Execução de ações reais: Além das respostas de texto, pode realizar tarefas de sistema (por exemplo, limpar a caixa de entrada, enviar e-mails, preencher formulários, agendar compromissos, navegar na web, controlar o navegador, etc.).
+
+      - Expansão de habilidades e fluxos de trabalho automatizados: Suporta plugins da comunidade, habilidades estendidas e scripts de automação personalizados, permitindo que a IA execute tarefas complexas em vários cenários.
+
+      **Saiba mais:**
+
+      - [Site Oficial](https://openclaw.ai)
+
+      - [Documentação Oficial](https://docs.openclaw.ai/)
+
+      - [Repositório GitHub do OpenClaw](https://github.com/openclaw/openclaw)
+
+      - [Guia de Configuração](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+    ru_RU: |-
+      OpenClaw — это персональный AI-помощник с открытым исходным кодом, разработанный для расширения возможностей больших языковых моделей (LLM) до интеллектуальных агентов, которые активно выполняют задачи, взаимодействуют на нескольких платформах и работают непрерывно. Он поддерживает круглосуточную работу на собственном устройстве или сервере пользователя и предоставляет интеллектуальные услуги автоматизации через распространенные средства связи. OpenClaw подключает ИИ к существующим чат-каналам (таким как WhatsApp, Telegram, Discord и т. д.) через локально работающую архитектуру "шлюз + агент", позволяя ему не только отвечать на вопросы, но и проактивно выполнять действия, управлять расписаниями, обрабатывать электронные письма, автоматизировать рабочие процессы и многое другое.
+
+      **Ключевые особенности**:
+
+      - Интеграция многоканальной связи: Взаимодействуйте напрямую с ИИ через распространенные коммуникационные платформы, такие как WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams и т. д., без необходимости использования дополнительных приложений.
+
+      - Непрерывная работа онлайн и долгосрочная память: OpenClaw может работать 24/7, обладая возможностями постоянной памяти и сохранения контекста, что позволяет ему запоминать предпочтения, исторические разговоры и предоставлять персонализированные услуги.
+
+      - Выполнение реальных действий: Помимо текстовых ответов, он может выполнять системные задачи (например, очищать входящие, отправлять электронные письма, заполнять формы, планировать встречи, просматривать веб-страницы, управлять браузером и т. д.).
+
+      - Расширение навыков и автоматизированные рабочие процессы: Поддерживает плагины сообщества, расширенные навыки и пользовательские скрипты автоматизации, позволяя ИИ выполнять сложные задачи в различных сценариях.
+
+      **Узнать больше:**
+
+      - [Официальный сайт](https://openclaw.ai)
+
+      - [Официальная документация](https://docs.openclaw.ai/)
+
+      - [Репозиторий OpenClaw на GitHub](https://github.com/openclaw/openclaw)
+
+      - [Руководство по настройке](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+    sv_SE: |-
+      OpenClaw är en personlig AI-assistent med öppen källkod, utformad för att utöka kapaciteten hos stora språkmodeller (LLM) till intelligenta agenter som aktivt utför uppgifter, interagerar över flera plattformar och fungerar kontinuerligt. Den stöder 24/7-drift på användarens egen enhet eller server och tillhandahåller intelligenta automationstjänster via vanliga kommunikationsverktyg. OpenClaw ansluter AI till befintliga chattkanaler (som WhatsApp, Telegram, Discord, etc.) via en lokalt körande "gateway + agent"-arkitektur, vilket gör att den inte bara kan svara på frågor utan också proaktivt utföra åtgärder, hantera scheman, bearbeta e-post, automatisera arbetsflöden och mycket mer.
+
+      **Nyckelfunktioner**:
+
+      - Multikanals kommunikationsintegration: Interagera direkt med AI via vanliga kommunikationsplattformar som WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams, etc., utan behov av ytterligare applikationer.
+
+      - Kontinuerlig online & långtidsminne: OpenClaw kan köras 24/7 och har ihållande minnes- och kontextbevarandeförmåga, vilket gör att den kan komma ihåg preferenser, historiska konversationer och tillhandahålla personliga tjänster.
+
+      - Verklig åtgärdsutförande: Utöver textsvar kan den utföra systemuppgifter (t.ex. rensa inkorgen, skicka e-post, fylla i formulär, schemalägga möten, surfa på webben, styra webbläsare, etc.).
+
+      - Färdighetsutvidgning & automatiserade arbetsflöden: Stöder community-plugins, utökade färdigheter och anpassade automationsskript, vilket gör att AI kan utföra komplexa uppgifter i olika scenarier.
+
+      **Läs mer:**
+
+      - [Officiell webbplats](https://openclaw.ai)
+
+      - [Officiell dokumentation](https://docs.openclaw.ai/)
+
+      - [OpenClaw GitHub-arkiv](https://github.com/openclaw/openclaw)
+
+      - [Konfigurationsguide](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+    tr_TR: |-
+      OpenClaw, büyük dil modellerinin (LLM'ler) yeteneklerini aktif olarak görevleri yürüten, birden fazla platformda etkileşim kuran ve sürekli çalışan akıllı aracılara dönüştürmek üzere tasarlanmış açık kaynaklı bir kişisel yapay zeka asistanıdır. Kullanıcının kendi cihazında veya sunucusunda 7/24 çalışmayı destekler ve yaygın iletişim araçları aracılığıyla akıllı otomasyon hizmetleri sunar. OpenClaw, yerel olarak çalışan bir "ağ geçidi + aracı" mimarisi aracılığıyla yapay zekayı mevcut sohbet kanallarına (WhatsApp, Telegram, Discord vb. gibi) bağlayarak, sadece soruları yanıtlamakla kalmayıp aynı zamanda proaktif olarak eylemler gerçekleştirmesini, programları yönetmesini, e-postaları işlemesini, iş akışlarını otomatikleştirmesini ve daha fazlasını sağlar.
+
+      **Temel Özellikler**:
+
+      - Çok Kanallı İletişim Entegrasyonu: WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams vb. gibi yaygın iletişim platformları aracılığıyla yapay zeka ile doğrudan etkileşim kurun, ek uygulamalara gerek kalmadan.
+
+      - Sürekli Çevrimiçi ve Uzun Süreli Bellek: OpenClaw 7/24 çalışabilir, kalıcı belleğe ve bağlam koruma yeteneklerine sahiptir, bu sayede tercihleri, geçmiş konuşmaları hatırlayabilir ve kişiselleştirilmiş hizmetler sunabilir.
+
+      - Gerçek Eylem Yürütme: Metin yanıtlarının ötesinde, sistem görevlerini (örn. gelen kutusunu temizleme, e-posta gönderme, form doldurma, randevu planlama, web'de gezinme, tarayıcı kontrol etme vb.) gerçekleştirebilir.
+
+      - Beceri Genişletme ve Otomatik İş Akışları: Topluluk eklentilerini, genişletilmiş becerileri ve özel otomasyon komut dosyalarını destekleyerek yapay zekanın çeşitli senaryolarda karmaşık görevleri yürütmesini sağlar.
+
+      **Daha Fazla Bilgi Edinin:**
+
+      - [Resmi Web Sitesi](https://openclaw.ai)
+
+      - [Resmi Belgeler](https://docs.openclaw.ai/)
+
+      - [OpenClaw GitHub Deposu](https://github.com/openclaw/openclaw)
+
+      - [Yapılandırma Kılavuzu](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+    zh_CN: |-
+      OpenClaw 是一款开源的个人 AI 助手，旨在将大型语言模型 (LLM) 的能力扩展为智能代理，使其能够主动执行任务、跨多个平台进行交互并持续运行。它支持在用户自己的设备或服务器上进行 24/7 全天候操作，并通过常见的通信工具提供智能自动化服务。OpenClaw 通过本地运行的“网关 + 代理”架构将 AI 连接到现有的聊天渠道（如 WhatsApp、Telegram、Discord 等），使其不仅能够回答问题，还能主动执行操作、管理日程、处理电子邮件、自动化工作流程等。
+
+      **主要功能**:
+
+      - 多渠道通信集成：通过 WhatsApp、Telegram、Slack、Discord、Signal、iMessage、Microsoft Teams 等常见通信平台直接与 AI 交互，无需额外应用程序。
+
+      - 持续在线与长期记忆：OpenClaw 可以 24/7 运行，具备持久记忆和上下文保留能力，使其能够记住偏好、历史对话并提供个性化服务。
+
+      - 真实行动执行：除了文本回复，它还可以执行系统任务（例如，清理收件箱、发送电子邮件、填写表格、安排约会、浏览网页、控制浏览器等）。
+
+      - 技能扩展与自动化工作流：支持社区插件、扩展技能和自定义自动化脚本，使 AI 能够在各种场景中执行复杂任务。
+
+      **了解更多：**
+
+      - [官方网站](https://openclaw.ai)
+
+      - [官方文档](https://docs.openclaw.ai/)
+
+      - [OpenClaw GitHub 仓库](https://github.com/openclaw/openclaw)
+
+      - [配置指南](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
+  category: AI
+  author: openclaw
+  developer: openclaw
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenClaw/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenClaw/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenClaw/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenClaw/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenClaw/screenshot-3.png
+  main: openclaw
+  port_map: "24190"
+  architectures:
+    - amd64
+    - arm64
+  index: ?token=casaos
+  scheme: https
+  tips:
+    before_install:
+      de_DE: Bitte konfigurieren Sie vor der Verwendung das Modell und die zugehörigen Einstellungen gemäß der [Konfigurationsanleitung](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw).
+      el_GR: Πριν τη χρήση, παρακαλούμε ακολουθήστε τον [Οδηγό Διαμόρφωσης](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) για να διαμορφώσετε το μοντέλο και τις σχετικές ρυθμίσεις.
+      en_GB: Before use, please follow the [Configuration Guide](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) to configure the model and related settings.
+      en_US: Before use, please follow the [Configuration Guide](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) to configure the model and related settings.
+      fr_FR: Avant utilisation, veuillez suivre le [Guide de configuration](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) pour configurer le modèle et les paramètres associés.
+      hr_HR: Prije uporabe, molimo slijedite [Vodič za konfiguraciju](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) za konfiguriranje modela i povezanih postavki.
+      it_IT: Prima dell'uso, si prega di seguire la [Guida alla configurazione](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) per configurare il modello e le impostazioni correlate.
+      ja_JP: ご使用前に、[設定ガイド](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) に従ってモデルおよび関連設定を構成してください。
+      ko_KR: 사용 전, [구성 가이드](https://www.zimaspace.com/docs/zimaspace/How-to-Deploy-OpenClaw)에 따라 모델 및 관련 설정을 구성하십시오.
+      nb_NO: Før bruk, vennligst følg [Konfigurasjonsguiden](https://www.zimaspace.com/docs/zimaspace/How-to-Deploy-OpenClaw) for å konfigurere modellen og relaterte innstillinger.
+      pt_PT: Antes de usar, siga o [Guia de Configuração](https://www.zimaspace.com/docs/zimaspace/How-to-Deploy-OpenClaw) para configurar o modelo e as definições relacionadas.
+      ru_RU: Перед использованием, пожалуйста, следуйте [Руководству по настройке](https://www.zimaspace.com/docs/zimaspace/How-to-Deploy-OpenClaw) для настройки модели и связанных параметров.
+      sv_SE: Före användning, vänligen följ [Konfigurationsguiden](https://www.zimaspace.com/docs/zimaspace/How-to-Deploy-OpenClaw) för att konfigurera modellen och relaterade inställningar.
+      tr_TR: Kullanmadan önce, lütfen [Yapılandırma Kılavuzu](https://www.zimaspace.com/docs/zimaspace/How-to-Deploy-OpenClaw)nu takip ederek modeli ve ilgili ayarları yapılandırın.
+      zh_CN: 使用前请先按照 [配置指南](https://www.zimaspace.com/docs/zimaspace/How-to-Deploy-OpenClaw) 配置model 及相关配置
