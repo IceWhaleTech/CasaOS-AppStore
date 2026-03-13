@@ -1,0 +1,67 @@
+name: home-assistant-matter-hub
+services:
+  home-assistant-matter-hub:
+    image: panwang/home-assistant-matter-hub:latest
+    container_name: home-assistant-matter-hub
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - /DATA/AppData/$AppID/data:/data
+    environment:
+      - HAMH_HOME_ASSISTANT_URL=${HAMH_HOME_ASSISTANT_URL}
+      - HAMH_HOME_ASSISTANT_ACCESS_TOKEN=${HAMH_HOME_ASSISTANT_ACCESS_TOKEN}
+      - HAMH_STORAGE_LOCATION=/data
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    x-casaos:
+      envs:
+        - container: HAMH_HOME_ASSISTANT_URL
+          default: "http://localhost:8123"
+          description:
+            en_US: "Home Assistant URL (Must start with http:// or https://)"
+            zh_CN: "Home Assistant 访问地址 (必须以 http:// 或 https:// 开头)"
+        - container: HAMH_HOME_ASSISTANT_ACCESS_TOKEN
+          description:
+            en_US: "Long-lived Access Token (Required! Generate in HA Profile)"
+            zh_CN: "HA 长期访问令牌 (必填！在 HA 个人资料页底部生成)"
+      ports:
+        - container: "8482"
+          host: "8482"
+          description:
+            en_US: Web UI Port
+            zh_CN: 网页管理界面端口
+        - container: "5540"
+          description:
+            en_US: Matter Communication Port
+            zh_CN: Matter 通信端口
+      volumes:
+        - container: /data
+          description:
+            en_US: Data directory
+            zh_CN: 数据持久化目录
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: home-assistant-matter-hub
+  scheme: http
+  port_map: "8482"
+  index: /
+  author: symi-daguo
+  category: Home Automation
+  developer: t0bst4r
+  description:
+    en_US: "Simulate Matter bridges to publish your entities from Home Assistant to any Matter-compatible controller like Alexa, Apple Home, or Google Home. Completely local communication, no port forwarding required."
+    zh_CN: "模拟 Matter 桥接器，将 Home Assistant 中的实体发布到任何兼容 Matter 的控制器（如 Alexa、Apple Home 或 Google Home）。完全本地化通信，无需配置端口转发。"
+  tagline:
+    en_US: "Bridge Home Assistant entities to Matter (HomeKit/Alexa/Google)"
+    zh_CN: "将 Home Assistant 实体桥接到 Matter (HomeKit/Alexa/Google)"
+  title:
+    en_US: "HA Matter Hub"
+    zh_CN: "HA Matter 枢纽"
+  icon: https://raw.githubusercontent.com/symi-daguo/home-assistant-matter-hub/main/Apps/home-assistant-matter-hub/icon.png
+  screenshot_link:
+    - https://raw.githubusercontent.com/symi-daguo/home-assistant-matter-hub/main/Apps/home-assistant-matter-hub/screenshot-1.png
