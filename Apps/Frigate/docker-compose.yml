@@ -1,0 +1,83 @@
+name: frigate
+services:
+  frigate:
+    container_name: frigate
+    privileged: true
+    restart: unless-stopped
+    image: ghcr.io/blakeblackshear/frigate:stable
+    shm_size: "64mb" # default, adjust as needed or use --shm-size in run command equivalence
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /DATA/AppData/$AppID/config:/config
+      - /DATA/AppData/$AppID/storage:/media/frigate
+      - type: tmpfs # Optional: 1GB of memory, reduces SSD/SD Card wear
+        target: /tmp/cache
+        tmpfs:
+          size: 1000000000
+    ports:
+      - target: 8971
+        published: "8971"
+        protocol: tcp
+      - target: 8554
+        published: "8554"
+        protocol: tcp
+      - target: 8555
+        published: "8555"
+        protocol: tcp
+      - target: 8555
+        published: "8555"
+        protocol: udp
+      - target: 5000
+        published: ${WEBUI_PORT:-5000}
+        protocol: tcp
+    environment:
+      FRIGATE_RTSP_PASSWORD: "password"
+    x-casaos:
+      envs:
+        - container: FRIGATE_RTSP_PASSWORD
+          description:
+            en_US: Password for the RTSP stream.
+      ports:
+        - container: "8971"
+          description:
+            en_US: Authenticated Application Port
+        - container: "8554"
+          description:
+            en_US: RTSP Port
+        - container: "8555"
+          description:
+            en_US: WebRTC Port
+        - container: "5000"
+          description:
+            en_US: WebUI Port
+      volumes:
+        - container: /config
+          description:
+            en_US: Frigate config directory.
+        - container: /media/frigate
+          description:
+            en_US: Frigate media storage.
+        - container: /tmp/cache
+          description:
+            en_US: Frigate cache.
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: frigate
+  author: Blake Blackshear
+  category: Home Automation
+  description:
+    en_US: Frigate is an open source NVR built around real-time AI object detection. All processing is performed locally on your own hardware, and your camera feeds never leave your home.
+  developer: Blake Blackshear
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Frigate/icon.png
+  tagline:
+    en_US: NVR with real-time local object detection.
+  title:
+    en_US: Frigate NVR
+  index: /
+  port_map: "${WEBUI_PORT:-5000}"
