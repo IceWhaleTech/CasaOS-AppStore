@@ -1,0 +1,28 @@
+name: mqtt-antena
+services:
+  mqtt-antena:
+    image: fbossolan/mqtt-antena:1.5.8
+    container_name: mqtt-antena
+    ports:
+      - "8585:8585"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - SECRET_KEY=your_secret_key_here
+    restart: unless-stopped
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: mqtt-antena
+  author: fbossolan
+  category: IOT
+  description:
+    en_US: MQTT-Antena is a tool to manage MQTT messages.
+  developer: fbossolan
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MQTT-Antena/icon.png
+  tagline:
+    en_US: A simple way to manage MQTT.
+  title:
+    en_US: MQTT Antena
+  port_map: "8585"
