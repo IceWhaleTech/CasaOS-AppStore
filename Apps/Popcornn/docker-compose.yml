@@ -7,9 +7,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 1073741824
+          memory: "1G"
         reservations:
-          memory: "268435456"
+          memory: "256M"
     environment:
       BACKEND_URL: http://server:3000
       HOST: 0.0.0.0
@@ -55,9 +55,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 2147483648
+          memory: "2G"
         reservations:
-          memory: "536870912"
+          memory: "512M"
     environment:
       API_PASSWORD: popcorn_password_secure
       API_USERNAME: admin
@@ -102,9 +102,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 1073741824
+          memory: "1G"
         reservations:
-          memory: 268435456
+          memory: "256M"
 
 networks:
   popcornn-network:
