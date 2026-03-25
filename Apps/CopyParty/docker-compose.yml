@@ -12,6 +12,9 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/w
         target: /w
+      - type: bind
+        source: /DATA/AppData/$AppID/confg
+        target: /cfg
     deploy:
       resources:
         reservations:
