@@ -1,7 +1,7 @@
 name: copyparty
 services:
   copyparty:
-    image: icewhaletech/copyparty:1.20.10
+    image: icewhaletech/copyparty:1.20.13
     container_name: copyparty
     ports:
       - target: 3923
@@ -12,6 +12,9 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/w
         target: /w
+      - type: bind
+        source: /DATA/AppData/$AppID/confg
+        target: /cfg
     deploy:
       resources:
         reservations:
