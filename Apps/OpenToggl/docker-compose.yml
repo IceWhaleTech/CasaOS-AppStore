@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
     ports:
       - target: 8080
-        published: "18080"
+        published: "7789"
         protocol: tcp
     environment:
       PORT: "8080"
@@ -136,7 +136,7 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenToggl/screenshot-3.png
   thumbnail: ""
   scheme: http
-  port_map: "18080"
+  port_map: "7789"
   index: /
   title:
     en_US: OpenToggl
