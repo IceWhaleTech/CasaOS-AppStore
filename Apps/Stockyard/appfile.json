@@ -1,0 +1,97 @@
+{
+    "version": "2.0",
+    "title": "Stockyard",
+    "name": "stockyard",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stockyard/icon.png",
+    "tagline": "150 self-hosted developer tools, one binary",
+    "overview": "Stockyard is 150 self-hosted developer tools. Bug tracker, CRM, feature flags, uptime monitoring, invoicing, webhook testing, secret management, web analytics, link shortening, status pages, and more. Each tool runs as a single Go binary with embedded SQLite. Zero external dependencies. Also includes an LLM proxy with 76 middleware modules and 16 providers.",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stockyard/thumbnail.png",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stockyard/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stockyard/screenshot-2.png"
+    ],
+    "category": [
+        "Developer"
+    ],
+    "developer": {
+        "name": "Stockyard",
+        "website": "https://stockyard.dev",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "stockyard-dev",
+        "website": "https://stockyard.dev",
+        "donate_text": "",
+        "donate_link": ""
+    },
+    "support": "https://github.com/stockyard-dev/Stockyard/discussions",
+    "website": "https://stockyard.dev",
+    "container": {
+        "image": "ghcr.io/stockyard-dev/stockyard:latest",
+        "shell": "sh",
+        "privileged": false,
+        "network_model": "bridge",
+        "web_ui": {
+            "http": "4200",
+            "path": "/ui"
+        },
+        "health_check": "",
+        "envs": [
+            {
+                "key": "PORT",
+                "value": "4200",
+                "configurable": "advanced",
+                "description": "HTTP port"
+            },
+            {
+                "key": "DATA_DIR",
+                "value": "/data",
+                "configurable": "no",
+                "description": "Data directory"
+            }
+        ],
+        "ports": [
+            {
+                "container": "4200",
+                "host": "4200",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "advanced",
+                "description": "WebUI Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/data",
+                "host": "/DATA/AppData/$AppID/data",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "advanced",
+                "description": "Stockyard data directory"
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 64,
+            "min_storage": 128
+        },
+        "restart_policy": "unless-stopped",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {},
+    "changelog": {
+        "latest_updates": "v1.1.0: Docker image, multi-tool installer, 150 tool releases",
+        "url": "https://stockyard.dev/changelog/"
+    },
+    "latest_update_date": "1743552000"
+}
