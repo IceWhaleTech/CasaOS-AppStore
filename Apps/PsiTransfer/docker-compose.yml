@@ -13,6 +13,10 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/data
         target: /data
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
     restart: unless-stopped
     x-casaos:
       envs:
