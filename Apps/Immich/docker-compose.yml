@@ -8,7 +8,7 @@ services:
           memory: 1024M
     container_name: immich-server
     hostname: immich-server
-    image: ghcr.io/immich-app/immich-server:v2.6.3
+    image: ghcr.io/immich-app/immich-server:v2.7.2
     volumes:
       - /DATA/Gallery/immich:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
@@ -30,7 +30,7 @@ services:
   immich-machine-learning:
     container_name: immich-machine-learning
     hostname: immich-machine-learning
-    image: ghcr.io/immich-app/immich-machine-learning:v2.6.3
+    image: ghcr.io/immich-app/immich-machine-learning:v2.7.2
     environment:
       DB_DATABASE_NAME: immich
       DB_PASSWORD: postgres
