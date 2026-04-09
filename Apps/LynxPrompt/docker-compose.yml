@@ -1,0 +1,158 @@
+name: lynxprompt
+
+services:
+  lynxprompt:
+    image: drumsergio/lynxprompt:2.0.75
+    container_name: lynxprompt
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    restart: unless-stopped
+    ports:
+      - target: 3000
+        published: "3100"
+        protocol: tcp
+    environment:
+      DB_APP_HOST: lynxprompt-db
+      DB_APP_USER: lynxprompt
+      DB_APP_PASSWORD: changeme
+      DB_APP_NAME: lynxprompt
+      DB_USERS_HOST: lynxprompt-db
+      DB_USERS_USER: lynxprompt
+      DB_USERS_PASSWORD: changeme
+      DB_USERS_NAME: lynxprompt
+      DB_BLOG_HOST: lynxprompt-db
+      DB_BLOG_USER: lynxprompt
+      DB_BLOG_PASSWORD: changeme
+      DB_BLOG_NAME: lynxprompt
+      DB_SUPPORT_HOST: lynxprompt-db
+      DB_SUPPORT_USER: lynxprompt
+      DB_SUPPORT_PASSWORD: changeme
+      DB_SUPPORT_NAME: lynxprompt
+      NEXTAUTH_SECRET: changeme-generate-with-openssl-rand-base64-32
+      NEXTAUTH_URL: http://localhost:3100
+      APP_URL: http://localhost:3100
+      NODE_ENV: production
+    networks:
+      - lynxprompt-network
+    depends_on:
+      lynxprompt-db:
+        condition: service_healthy
+    x-casaos:
+      envs:
+        - container: DB_APP_PASSWORD
+          description:
+            en_US: Database password (must match PostgreSQL password below)
+        - container: NEXTAUTH_SECRET
+          description:
+            en_US: "Authentication secret (generate with: openssl rand -base64 32)"
+        - container: NEXTAUTH_URL
+          description:
+            en_US: "Full URL of your LynxPrompt instance (e.g. http://your-casaos-ip:3100)"
+        - container: APP_URL
+          description:
+            en_US: "Application URL (same as NEXTAUTH_URL)"
+      ports:
+        - container: "3000"
+          description:
+            en_US: Web UI Port
+      volumes: []
+
+  lynxprompt-db:
+    image: postgres:17-alpine
+    container_name: lynxprompt-db
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/pgdata
+        target: /var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: lynxprompt
+      POSTGRES_USER: lynxprompt
+      POSTGRES_PASSWORD: changeme
+    networks:
+      - lynxprompt-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lynxprompt -d lynxprompt"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    x-casaos:
+      envs:
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: PostgreSQL Password (must match DB_APP_PASSWORD above)
+        - container: POSTGRES_USER
+          description:
+            en_US: PostgreSQL User
+        - container: POSTGRES_DB
+          description:
+            en_US: PostgreSQL Database Name
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_US: PostgreSQL data directory
+
+networks:
+  lynxprompt-network:
+    name: lynxprompt-network
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: lynxprompt
+  store_app_id: lynxprompt
+  category: Developer
+  author: GeiserX
+  developer: GeiserX
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LynxPrompt/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LynxPrompt/screenshot-1.png
+  thumbnail: ""
+  description:
+    en_US: |
+      LynxPrompt is a self-hosted platform for managing AI IDE rules and commands. It provides a universal configuration hub for tools like Cursor, Claude Code, GitHub Copilot, Windsurf, Aider, and 20+ other AI coding assistants.
+
+      Create, share, and discover configuration blueprints through a web interface or CLI. Features include template variables for dynamic configurations, a blueprint marketplace, and instant project bootstrapping.
+
+      Self-host your own instance to keep your AI configurations private and under your control.
+    zh_CN: |
+      LynxPrompt 是一个自托管平台，用于管理 AI IDE 规则和命令。它为 Cursor、Claude Code、GitHub Copilot、Windsurf、Aider 等 20 多种 AI 编码助手提供通用配置中心。
+
+      通过 Web 界面或 CLI 创建、分享和发现配置蓝图。功能包括模板变量、蓝图市场和即时项目引导。
+    de_DE: |
+      LynxPrompt ist eine selbst gehostete Plattform zur Verwaltung von AI-IDE-Regeln und -Befehlen. Es bietet einen universellen Konfigurationshub fuer Cursor, Claude Code, GitHub Copilot und 20+ weitere AI-Codierungsassistenten.
+    fr_FR: |
+      LynxPrompt est une plateforme auto-hebergee pour gerer les regles et commandes des IDE IA. Elle fournit un hub de configuration universel pour Cursor, Claude Code, GitHub Copilot et plus de 20 assistants de codage IA.
+    es_ES: |
+      LynxPrompt es una plataforma autoalojada para gestionar reglas y comandos de IDEs con IA. Proporciona un centro de configuracion universal para Cursor, Claude Code, GitHub Copilot y mas de 20 asistentes de codificacion con IA.
+    pt_PT: |
+      LynxPrompt e uma plataforma auto-hospedada para gerenciar regras e comandos de IDEs com IA, oferecendo um hub de configuracao universal para mais de 20 assistentes de codificacao.
+    it_IT: |
+      LynxPrompt e una piattaforma self-hosted per gestire regole e comandi degli IDE AI, fornendo un hub di configurazione universale per oltre 20 assistenti di codifica AI.
+    ja_JP: |
+      LynxPromptは、AI IDEのルールとコマンドを管理するためのセルフホスト型プラットフォームです。Cursor、Claude Code、GitHub Copilotなど20以上のAIコーディングアシスタントに対応しています。
+    ko_KR: |
+      LynxPrompt는 AI IDE 규칙과 명령을 관리하기 위한 셀프 호스팅 플랫폼입니다. Cursor, Claude Code, GitHub Copilot 등 20개 이상의 AI 코딩 어시스턴트를 지원합니다.
+  tagline:
+    en_US: Self-hosted AI IDE configuration hub
+    zh_CN: 自托管 AI IDE 配置中心
+  title:
+    en_US: LynxPrompt
+  tips:
+    before_install:
+      en_US: |
+        After installation, you must change the default passwords:
+        1. Set `NEXTAUTH_SECRET` to a secure random value (generate with `openssl rand -base64 32`)
+        2. Change `DB_APP_PASSWORD` and `POSTGRES_PASSWORD` to the same secure value
+
+        Update `NEXTAUTH_URL` and `APP_URL` to match your CasaOS IP (e.g. `http://192.168.1.100:3100`).
+  index: /
+  port_map: "3100"
+  scheme: http
