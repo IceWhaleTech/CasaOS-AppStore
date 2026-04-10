@@ -1,0 +1,134 @@
+name: immich-lite
+services:
+  immich-server:
+    cpu_shares: 1024
+    command: []
+    container_name: immich-lite_server
+    depends_on:
+      database:
+        condition: service_started
+        required: true
+      redis:
+        condition: service_started
+        required: true
+    environment:
+      - TZ=UTC
+      - DB_DATABASE_NAME=immich
+      - DB_PASSWORD=postgres
+      - DB_USERNAME=postgres
+    hostname: immich_server
+    healthcheck: {}
+    image: ghcr.io/immich-app/immich-server:v2.7.3
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich-Lite/icon.png
+    ports:
+      - target: 2283
+        published: "2283"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/ImmichLite/data
+        target: /data
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+    devices: []
+    cap_add: []
+    networks:
+      - immich-lite
+    privileged: false
+
+  database:
+    cpu_shares: 90
+    command: []
+    container_name: immich_postgres
+    environment:
+      - POSTGRES_DB=immich
+      - POSTGRES_INITDB_ARGS=--data-checksums
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    hostname: immich_postgres
+    healthcheck: {}
+    image: ghcr.io/immich-app/postgres:17-vectorchord0.5.3-pgvector0.8.1@sha256:ac3391b202f1bd1a588152cc38a41ae86f9b6dcd3c03d3d67621ced086cc35d3
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich-Lite/icon.png
+    restart: unless-stopped
+    shm_size: "134217728"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/ImmichLite/postgres
+        target: /var/lib/postgresql/data
+    ports: []
+    devices: []
+    cap_add: []
+    networks:
+      - immich-lite
+    privileged: false
+
+  redis:
+    cpu_shares: 90
+    command: []
+    container_name: immich_redis
+    hostname: immich_redis
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - redis-cli ping || exit 1
+    image: docker.io/valkey/valkey:9@sha256:3b55fbaa0cd93cf0d9d961f405e4dfcc70efe325e2d84da207a0a8e6d8fde4f9
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich-Lite/icon.png
+    restart: unless-stopped
+    ports: []
+    volumes: []
+    devices: []
+    cap_add: []
+    environment: []
+    networks:
+      - immich-lite
+    privileged: false
+
+networks:
+  immich-lite:
+    driver: bridge
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  author: suryacagur
+  developer: alextran1502
+  category: Gallery
+  description:
+    en_us: |
+      Designed specifically for Single Board Computers (SBCs) like the Raspberry Pi, various Pi variants, and even modified STBs, Immich Micro removes the heavy burden of Machine Learning processing, ensuring your photo gallery remains highly responsive even on low-power devices with limited RAM and CPU.
+    id_id: |
+      Dirancang khusus untuk Single Board Computers (SBC) seperti Raspberry Pi, berbagai varian Pi, dan bahkan STB yang dimodifikasi, Immich Micro menghilangkan beban berat pemrosesan Machine Learning, memastikan galeri foto Anda tetap sangat responsif bahkan pada perangkat dengan daya rendah yang memiliki RAM dan CPU terbatas.
+    zh_cn: |
+      专为树莓派、各种Pi变体甚至修改过的STB等单板计算机（SBC）设计，Immich Micro消除了机器学习处理的沉重负担，即使在RAM和CPU有限的低功耗设备上，也能确保您的照片库保持高度响应。
+  tagline:
+    en_us: Self-hosted photo management solution for small servers.
+    id_id: Daya simpan besar untuk papan kecil.
+    zh_cn: 适用于小型服务器的自托管照片管理解决方案。
+  hostname: ""
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich-Lite/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich-Lite/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich-Lite/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich-Lite/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich-Lite/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich-Lite/screenshot-5.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich-Lite/thumbnail.png
+  tips:
+    before_install:
+      en_us: Please make sure to change the default POSTGRES_PASSWORD and DB_PASSWORD for the database in a production environment.
+      id_id: Harap pastikan untuk mengubah POSTGRES_PASSWORD dan DB_PASSWORD default untuk database di lingkungan produksi.
+      zh_cn: 请确保在生产环境中更改数据库的默认 POSTGRES_PASSWORD 和 DB_PASSWORD。
+  index: /
+  is_uncontrolled: true
+  port_map: "2283"
+  scheme: http
+  store_app_id: immich-lite
+  title:
+    custom: Immich Lite
+    en_us: Immich Lite
