@@ -1,0 +1,92 @@
+name: velix-api
+
+services:
+  velix-api:
+    image: ghcr.io/paulolinder/velix-api:0.1.0
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://postgres:casaos@velix-db:5432/velix?sslmode=disable
+      REDIS_URL: redis://velix-redis:6379
+      JWT_SECRET: change-me-to-a-random-64-char-secret-key-here-now
+      HTTP_PORT: "8080"
+      APP_ENV: production
+      LOG_LEVEL: info
+      MEDIA_STORAGE_PATH: /data/media
+      ENGINE_STORE_PATH: /data/instances
+      ENGINE_AUTO_RECONNECT: "true"
+      ENGINE_MAX_INSTANCES: "200"
+      REGISTRATION_ENABLED: "true"
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/velix-api/data
+        target: /data
+    depends_on:
+      - velix-db
+      - velix-redis
+    x-casaos:
+      envs:
+        - container: JWT_SECRET
+          description:
+            en_us: Secret key for JWT token signing (min 32 characters)
+        - container: ENGINE_MAX_INSTANCES
+          description:
+            en_us: Maximum number of WhatsApp instances allowed
+        - container: REGISTRATION_ENABLED
+          description:
+            en_us: Allow new user registration (true/false)
+      ports:
+        - container: "8080"
+          description:
+            en_us: Admin panel and API port
+      volumes:
+        - container: /data
+          description:
+            en_us: Media files and WhatsApp instance data
+
+  velix-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: velix
+      POSTGRES_PASSWORD: casaos
+    volumes:
+      - type: bind
+        source: /DATA/AppData/velix-api/postgres
+        target: /var/lib/postgresql/data
+
+  velix-redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/velix-api/redis
+        target: /data
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: velix-api
+  author: Paulo Linder
+  category: Communication
+  description:
+    en_us: >-
+      Velix is a self-hosted WhatsApp API built in Go. Connect multiple WhatsApp
+      numbers, send and receive messages via REST, get real-time webhooks, and
+      integrate with n8n and Chatwoot. Features a web admin panel with QR code
+      pairing and per-instance API keys.
+  developer: Paulo Linder
+  icon: https://raw.githubusercontent.com/paulolinder/velix-api/master/internal/ui/web/admin/dist/velix-logo.svg
+  tagline:
+    en_us: Self-hosted WhatsApp API with multi-instance support
+  thumbnail: ""
+  title:
+    en_us: Velix API
+  port_map: "8080"
+  scheme: http
+  store_app_id: velix-api
+  is_uncontrolled: false
