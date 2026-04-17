@@ -14,7 +14,7 @@ services:
         published: "3000"
         protocol: tcp
     environment:
-      DATABASE_URL: postgresql://pumperly:pumperly@pumperly-db:5432/pumperly
+      DATABASE_URL: postgresql://pumperly:changeme@pumperly-db:5432/pumperly
       PUMPERLY_DEFAULT_COUNTRY: ES
       TZ: $TZ
     networks:
@@ -53,7 +53,7 @@ services:
         target: /var/lib/postgresql/data
     environment:
       POSTGRES_USER: pumperly
-      POSTGRES_PASSWORD: pumperly
+      POSTGRES_PASSWORD: changeme
       POSTGRES_DB: pumperly
     networks:
       - pumperly-network
@@ -129,6 +129,8 @@ x-casaos:
   tips:
     before_install:
       en_US: |
+        Before starting, change the default password (`changeme`) in both `DATABASE_URL` and `POSTGRES_PASSWORD` to the same secure value.
+
         Pumperly scrapes fuel prices from government APIs on startup. Station data populates automatically.
 
         For route planning and address autocomplete, you can optionally deploy Valhalla and Photon as separate containers and set the `VALHALLA_URL` and `PHOTON_URL` environment variables. Without them, Pumperly still shows fuel stations on a map with prices.
