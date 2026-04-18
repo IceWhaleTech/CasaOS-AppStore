@@ -14,7 +14,7 @@ services:
         protocol: tcp
     environment:
       PORT: "8080"
-      DATABASE_URL: postgres://opentoggl:opentoggl@opentoggl-db:5432/opentoggl?sslmode=disable
+      DATABASE_URL: postgres://opentoggl:aa77365f3e538f923cee66d7b5cfea1d@opentoggl-db:5432/opentoggl?sslmode=disable
       REDIS_URL: redis://opentoggl-redis:6379/0
     networks:
       - opentoggl-network
@@ -43,7 +43,7 @@ services:
     environment:
       POSTGRES_DB: opentoggl
       POSTGRES_USER: opentoggl
-      POSTGRES_PASSWORD: opentoggl
+      POSTGRES_PASSWORD: aa77365f3e538f923cee66d7b5cfea1d
     restart: unless-stopped
     volumes:
       - type: bind
@@ -100,39 +100,27 @@ x-casaos:
 
       Toggl is a great product, but it's expensive and your data doesn't really belong to you. On top of that, the 30 requests/hour API limit is painful — an AI agent can burn through an hour's quota in a single minute.
 
-      OpenToggl aims to stay aligned with Toggl, so you can move your data in and out between the two without any loss. Keep every workflow and habit you already have. Nothing changes — it just gets better, cheaper, and more private.
+      OpenToggl aims to stay aligned with Toggl, so you can move your data in and out between the two with zero loss. Keep every workflow and habit you already have. Nothing changes — it just gets better, cheaper, and more private.
 
-      **Key Features:**
-      - Free and open source time tracking
-      - Private-first, self-hostable on your own CasaOS / ZimaOS / NAS
-      - AI-friendly: no API rate limits — works seamlessly with AI agents
-      - Full API compatibility with Toggl Track v9 and Reports v3 (drop-in migration in/out, zero data loss)
-      - Installable PWA on iOS and Android with offline support
-      - Works directly with [toggl-cli](https://github.com/CorrectRoadH/toggl-cli) for AI-assisted time tracking (Lyubishchev method supported)
+      OpenToggl integrates with AI agents via [`toggl-cli`](https://github.com/CorrectRoadH/toggl-cli), letting AI help you log, manage, and review your time. You can apply the Lyubishchev time management method to find your time black holes.
 
-      **Learn More:**
+      See the full documentation [here](https://opentoggl.com/docs/ai-integration).
+
       [Give us a Star](https://github.com/CorrectRoadH/opentoggl)
-
-      [OpenToggl Official Website](https://opentoggl.com?utm_source=casaos-appstore&utm_medium=app-store&utm_campaign=opentoggl)
+      [OpenToggl Official Website](https://opentoggl.com?utm_source=casaos-appstore)
     zh_CN: |
-      OpenToggl 是一个免费、隐私优先、AI 友好的 Toggl 替代方案。
+      OpenToggl 是一个免费、隐私优先、AI友好 的 Toggl 替代方案。
 
       Toggl 是一个很棒的产品，但是太贵而且数据并没有真正的属于你。而且 30 次/小时的 API 调用限制又令人头疼，AI Agent 能在一分钟内就把一个小时的用量给消耗掉。
 
       OpenToggl 的目标是与 Toggl 保持一致，你可以 0 损失的迁入与迁出用户数据在两者之间。保持一切工作流与使用习惯。什么都没有变，只是更好用、更便宜、更隐私了。
 
-      **主要功能：**
-      - 免费开源的时间追踪
-      - 隐私优先，可自托管在你的 CasaOS / ZimaOS / NAS 上
-      - AI 友好，无 API 速率限制，完美适配 AI Agent 场景
-      - 完全兼容 Toggl Track v9 和 Reports v3 API（0 损失迁入迁出）
-      - 可安装的 PWA，支持 iOS、Android 并离线可用
-      - 直接与 [toggl-cli](https://github.com/CorrectRoadH/toggl-cli) 集成，支持 AI 辅助记录（适合柳比歇夫时间管理法）
+      OpenToggl 可以通过 [`toggl-cli`](https://github.com/CorrectRoadH/toggl-cli) 与 AI Agent 集成，让 AI Agent 帮助你记录、管理、复盘你的时间。可以应用柳比歇夫时间管理法来找出你的时间黑洞。
 
-      **了解更多：**
+      详细文档见[这里](https://opentoggl.com/zh/docs/ai-integration)
+
       [给我一个 Star 吧](https://github.com/CorrectRoadH/opentoggl)
-
-      [OpenToggl 官方网站](https://opentoggl.com?utm_source=casaos-appstore&utm_medium=app-store&utm_campaign=opentoggl)
+      [OpenToggl 官方网站](https://opentoggl.com?utm_source=casaos-appstore)
 
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenToggl/icon.png
   screenshot_link:
