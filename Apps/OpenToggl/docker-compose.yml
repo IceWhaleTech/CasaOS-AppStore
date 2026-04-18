@@ -14,7 +14,7 @@ services:
         protocol: tcp
     environment:
       PORT: "8080"
-      DATABASE_URL: postgres://opentoggl:aa77365f3e538f923cee66d7b5cfea1d@opentoggl-db:5432/opentoggl?sslmode=disable
+      DATABASE_URL: postgres://opentoggl:${POSTGRES_PASSWORD}@opentoggl-db:5432/opentoggl?sslmode=disable
       REDIS_URL: redis://opentoggl-redis:6379/0
     networks:
       - opentoggl-network
@@ -43,7 +43,7 @@ services:
     environment:
       POSTGRES_DB: opentoggl
       POSTGRES_USER: opentoggl
-      POSTGRES_PASSWORD: aa77365f3e538f923cee66d7b5cfea1d
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     restart: unless-stopped
     volumes:
       - type: bind
