@@ -5,7 +5,7 @@ services:
     image: ghcr.io/paulolinder/velix-api:0.1.0
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgres://postgres:casaos@velix-db:5432/velix?sslmode=disable
+      DATABASE_URL: postgres://postgres@velix-db:5432/velix?sslmode=disable
       REDIS_URL: redis://velix-redis:6379
       JWT_SECRET: change-me-to-a-random-64-char-secret-key-here-now
       HTTP_PORT: "8080"
@@ -52,7 +52,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_DB: velix
-      POSTGRES_PASSWORD: casaos
+      POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - type: bind
         source: /DATA/AppData/velix-api/postgres
