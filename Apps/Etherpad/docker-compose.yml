@@ -1,0 +1,99 @@
+name: etherpad
+services:
+  etherpad:
+    image: etherpad/etherpad:2.6.1
+    deploy:
+      resources:
+        reservations:
+          memory: "256M"
+    network_mode: bridge
+    ports:
+      - target: 9001
+        published: "9001"
+        protocol: tcp
+    restart: unless-stopped
+    environment:
+      TITLE: Etherpad
+      DEFAULT_PAD_TEXT: "Welcome to Etherpad on CasaOS!\n\nThis pad text is synchronized as you type, so that everyone viewing this page sees the same text. This allows you to collaborate seamlessly on documents!\n\nGet involved with Etherpad at https://etherpad.org\n"
+      ADMIN_PASSWORD: admin
+      AUTHENTICATION_METHOD: apikey
+      DB_TYPE: dirty
+      DB_FILENAME: /opt/etherpad-lite/var/dirty.db
+      TRUST_PROXY: "true"
+      SHOW_SETTINGS_IN_ADMIN_PAGE: "true"
+      REQUIRE_AUTHENTICATION: "false"
+      REQUIRE_AUTHORIZATION: "false"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/var
+        target: /opt/etherpad-lite/var
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O-", "http://localhost:9001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    x-casaos:
+      envs:
+        - container: TITLE
+          description:
+            en_us: Name of your Etherpad instance (shown in the browser tab).
+        - container: ADMIN_PASSWORD
+          description:
+            en_us: Password for the "admin" user used to reach /admin. CHANGE THIS.
+        - container: DEFAULT_PAD_TEXT
+          description:
+            en_us: Text shown inside every freshly created pad.
+        - container: AUTHENTICATION_METHOD
+          description:
+            en_us: 'Authentication mode. "apikey" (default here) enables admin login; "sso" enables OAuth2.'
+        - container: REQUIRE_AUTHENTICATION
+          description:
+            en_us: If "true", every pad requires a login. Default "false" means public pads.
+        - container: DB_TYPE
+          description:
+            en_us: Database backend. "dirty" is a zero-config embedded file store suitable for single-user CasaOS installs. Use "postgres"/"mysql" for production.
+        - container: DB_FILENAME
+          description:
+            en_us: Path inside the container for the dirty-db file. Kept on the persistent volume.
+        - container: TRUST_PROXY
+          description:
+            en_us: Set to "true" when running behind CasaOS's reverse proxy.
+      ports:
+        - container: "9001"
+          description:
+            en_us: WebUI HTTP Port
+      volumes:
+        - container: /opt/etherpad-lite/var
+          description:
+            en_us: Etherpad data directory (pads, sessions, dirty.db, plugins).
+    container_name: etherpad
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: etherpad
+  author: CasaOS Community
+  category: Productivity
+  description:
+    en_us: |
+      Etherpad is a real-time collaborative document editor. Multiple people can edit the same pad simultaneously, with every change synchronized instantly and colour-coded per author. Self-hosted, open source, and fully under your control — perfect for meeting notes, brainstorming, shared writing, and lightweight knowledge capture. Ships with a built-in admin panel, a plugin ecosystem of 250+ add-ons, native DOCX/PDF/Markdown import & export, and multi-architecture container support (amd64 + arm64).
+  developer: Etherpad Foundation
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Etherpad/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Etherpad/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Etherpad/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Etherpad/screenshot-3.png
+  tagline:
+    en_us: Real-time collaborative document editor
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Etherpad/thumbnail.png
+  tips:
+    before_install:
+      en_us: |
+        Default admin password is "admin" — change ADMIN_PASSWORD before exposing Etherpad to the network. Pads are stored on-disk in /DATA/AppData/etherpad/var using the embedded "dirty" database; this is ideal for personal and small-team use. For heavy multi-user production workloads, switch DB_TYPE to "postgres" or "mysql" and point DB_HOST/DB_NAME/DB_USER/DB_PASS at an external database.
+  title:
+    en_us: Etherpad
+  index: /
+  port_map: "9001"
+  scheme: http
+  store_app_id: etherpad
