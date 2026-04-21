@@ -1,0 +1,95 @@
+version: '3.8'
+
+name: kani-tts
+
+services:
+  kani-tts:
+    image: ghcr.io/ffrericks/kani-tts-docker:1.0.0
+    container_name: kani-tts
+    ports:
+      - "8000:8000"
+    volumes:
+      - hf_cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+    environment:
+      - TZ=$TZ
+    x-casaos:
+      ports:
+        - container: "8000"
+          description:
+            en_US: Kani TTS Web UI and API Port
+            de_DE: Kani TTS Web-Oberfläche und API-Port
+            fr_FR: Port de l'interface web et de l'API Kani TTS
+      volumes:
+        - container: /root/.cache/huggingface
+          description:
+            en_US: Hugging Face model cache (prevents re-downloading on restart)
+            de_DE: Hugging Face Modell-Cache
+            fr_FR: Cache des modèles Hugging Face
+
+volumes:
+  hf_cache:
+    driver: local
+
+x-casaos:
+  architectures:
+    - amd64
+  main: kani-tts
+  title:
+    en_US: Kani TTS
+  category: AI
+  developer: nineninesix-ai
+  author: ffrericks
+  tagline:
+    en_US: Human-like AI Text-to-Speech for your home server
+    de_DE: Menschliche KI-Sprachsynthese für deinen Heimserver
+    fr_FR: Synthèse vocale IA naturelle pour votre serveur domestique
+    zh_CN: 适合家庭服务器的人性化AI文字转语音
+    ja_JP: ホームサーバー向けの人間らしいAI音声合成
+    ko_KR: 홈 서버를 위한 인간적인 AI 텍스트 음성 변환
+  description:
+    en_US: |
+      Kani TTS is a fast, modular, and natural-sounding Text-to-Speech engine powered by the kani-tts-370m model from nineninesix-ai.
+
+      Generate high-quality speech from text directly in your browser using the built-in Web Studio UI. Supports 15 voices across 6 languages: English, German, Spanish, Chinese, Korean, and Arabic.
+
+      Features:
+      - 15 pre-trained voices across 6 languages
+      - NVIDIA GPU acceleration (4GB+ VRAM recommended)
+      - Persistent model cache — no re-downloads on restart
+      - Built-in Web Studio UI for easy speech generation
+      - FastAPI backend with /tts and /stream-tts endpoints
+      - Time Report showing generation performance per request
+
+      Note: The first start takes a few minutes to download the AI model (~1GB). This only happens once thanks to the persistent volume.
+    de_DE: |
+      Kani TTS ist eine schnelle, modulare Text-zu-Sprache-Engine basierend auf dem kani-tts-370m Modell von nineninesix-ai.
+
+      Generiere hochwertige Sprache direkt im Browser. Unterstützt 15 Stimmen in 6 Sprachen: Englisch, Deutsch, Spanisch, Chinesisch, Koreanisch und Arabisch.
+
+      Hinweis: Beim ersten Start wird das KI-Modell (~1GB) heruntergeladen. Dank des persistenten Volumes geschieht dies nur einmal.
+    fr_FR: |
+      Kani TTS est un moteur de synthèse vocale rapide et modulaire basé sur le modèle kani-tts-370m de nineninesix-ai.
+
+      Générez de la parole de haute qualité directement dans votre navigateur. Supporte 15 voix dans 6 langues : anglais, allemand, espagnol, chinois, coréen et arabe.
+    zh_CN: |
+      Kani TTS 是一款基于 nineninesix-ai 的 kani-tts-370m 模型的快速、模块化、自然音效的文字转语音引擎。
+
+      支持6种语言的15种声音：英语、德语、西班牙语、中文、韩语和阿拉伯语。
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KaniTTS/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KaniTTS/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KaniTTS/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KaniTTS/screenshot-3.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KaniTTS/screenshot-4.jpg
+  thumbnail: ""
+  scheme: http
+  port_map: "8000"
+  index: /
