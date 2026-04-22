@@ -1,0 +1,336 @@
+name: termix
+
+services:
+  termix:
+    cpu_shares: 90
+    container_name: termix
+    depends_on:
+      guacd:
+        condition: service_started
+        required: true
+    deploy:
+      resources:
+        reservations:
+          memory: "512MB"
+    hostname: termix
+    image: ghcr.io/lukegus/termix:release-2.0.0
+    environment:
+      PORT: "8080"
+      SALT: "casaos"
+      GUACD_HOSTNAME: "guacd"
+      GUACD_PORT: "4822"
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/icon.png
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    restart: always
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+        bind:
+          create_host_path: true
+    x-casaos:
+      envs:
+        - container: PORT
+          description:
+            en_us: "Port for Termix Web UI"
+        - container: SALT
+          description:
+            en_us: "Encryption salt for Termix (max 32 chars, change this!)"
+        - container: GUACD_HOSTNAME
+          description:
+            en_us: "Guacd service hostname (default: guacd)"
+        - container: GUACD_PORT
+          description:
+            en_us: "Guacd service port (default: 4822)"
+      ports:
+        - container: "8080"
+          description:
+            en_us: "Termix Web UI"
+      volumes:
+        - container: /app/data
+          description:
+            en_us: "Termix persistent data"
+    networks:
+      - termix
+    privileged: false
+
+  guacd:
+    cpu_shares: 90
+    container_name: guacd
+    deploy:
+      resources:
+        reservations:
+          memory: "512MB"
+    hostname: guacd
+    image: guacamole/guacd:1.6.0
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/icon.png
+    restart: always
+    networks:
+      - termix
+    privileged: false
+
+networks:
+  termix:
+    name: termix
+    driver: bridge
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  author: suryacagur
+  category: Network
+  description:
+    en_us: >-
+      <div align="center">
+
+      <img src="https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/icon.png" width="250" alt="Termix Icon">
+
+      # **Termix**
+      ![GitHub Repo stars](https://img.shields.io/github/stars/Termix-SSH/Termix?style=flat&label=Stars)
+      ![GitHub forks](https://img.shields.io/github/forks/Termix-SSH/Termix?style=flat&label=Forks)
+      ![GitHub Release](https://img.shields.io/github/v/release/Termix-SSH/Termix?style=flat&label=Release)
+
+      _Termix_
+
+      </div>
+
+      # Overview
+
+      Termix is an open-source, forever-free, self-hosted all-in-one server management platform. It provides a multi-platform solution for managing your servers and infrastructure through a single, intuitive interface. Termix offers SSH terminal access, remote desktop control (RDP, VNC, Telnet), SSH tunneling capabilities, remote SSH file management, and many other tools. Termix is the perfect free and self-hosted alternative to Termius available for all platforms.
+
+      # Features
+
+      - **SSH Terminal Access** - Full-featured terminal with split-screen support (up to 4 panels) with a browser-like tab system. Includes support for customizing the terminal including common terminal themes, fonts, and other components.
+      - **Remote Desktop Access** - RDP, VNC, and Telnet support over the browser with complete customization and split screening
+      - **SSH Tunnel Management** - Create and manage SSH tunnels with automatic reconnection and health monitoring and support for -l or -r connections
+      - **Remote File Manager** - Manage files directly on remote servers with support for viewing and editing code, images, audio, and video. Upload, download, rename, delete, and move files seamlessly with sudo support.
+      - **Docker Management** - Start, stop, pause, remove containers. View container stats. Control container using docker exec terminal. It was not made to replace Portainer or Dockge but rather to simply manage your containers compared to creating them.
+      - **SSH Host Manager** - Save, organize, and manage your SSH connections with tags and folders, and easily save reusable login info while being able to automate the deployment of SSH keys
+      - **Server Stats** - View CPU, memory, and disk usage along with network, uptime, system information, firewall, port monitor, on most Linux based servers
+      - **Dashboard** - View server information at a glance on your dashboard
+      - **RBAC** - Create roles and share hosts across users/roles
+      - **User Authentication** - Secure user management with admin controls and OIDC (with access control) and 2FA (TOTP) support. View active user sessions across all platforms and revoke permissions. Link your OIDC/Local accounts together.
+      - **Database Encryption** - Backend stored as encrypted SQLite database files. View [docs](https://docs.termix.site/security) for more.
+      - **Data Export/Import** - Export and import SSH hosts, credentials, and file manager data
+      - **Automatic SSL Setup** - Built-in SSL certificate generation and management with HTTPS redirects
+      - **Modern UI** - Clean desktop/mobile-friendly interface built with React, Tailwind CSS, and Shadcn. Choose between dark or light mode based UI. Use URL routes to open any connection in full-screen.
+      - **Languages** - Built-in support ~30 languages (managed by [Crowdin](https://docs.termix.site/translations))
+      - **Platform Support** - Available as a web app, desktop application (Windows, Linux, and macOS, can be run standalone without Termix backend), PWA, and dedicated mobile/tablet app for iOS and Android.
+      - **SSH Tools** - Create reusable command snippets that execute with a single click. Run one command simultaneously across multiple open terminals.
+      - **Command History** - Auto-complete and view previously ran SSH commands
+      - **Quick Connect** - Connect to a server without having to save the connection data
+      - **Command Palette** - Double tap left shift to quickly access SSH connections with your keyboard
+      - **SSH Feature Rich** - Supports jump hosts, Warpgate, TOTP based connections, SOCKS5, host key verification, password autofill, [OPKSSH](https://github.com/openpubkey/opkssh), etc.
+      - **Network Graph** - Customize your Dashboard to visualize your homelab based off your SSH connections with status support
+      - **Persistent Tabs** - SSH sessions and tabs stay open across devices/refreshes if enabled in user profile
+    zh_cn: >-
+      <div align="center">
+
+      <img src="https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/icon.png" width="250" alt="Termix Icon">
+
+      # **Termix**
+      ![GitHub 仓库星数](https://img.shields.io/github/stars/Termix-SSH/Termix?style=flat&label=Stars)
+      ![GitHub 分叉数](https://img.shields.io/github/forks/Termix-SSH/Termix?style=flat&label=Forks)
+      ![GitHub 发布](https://img.shields.io/github/v/release/Termix-SSH/Termix?style=flat&label=Release)
+
+      _Termix_
+
+      </div>
+
+      # 概述
+
+      Termix 是一个开源的、永远免费的、自托管的一体化服务器管理平台。它提供了一个多平台解决方案，用于通过单一直观的界面管理您的服务器和基础设施。Termix 提供 SSH 终端访问、远程桌面控制（RDP、VNC、Telnet）、SSH 隧道功能、远程 SSH 文件管理和许多其他工具。Termix 是适用于所有平台的 Termius 的完美免费自托管替代品。
+
+      # 功能
+
+      - **SSH 终端访问** - 功能齐全的终端，支持分屏（最多 4 个面板）和浏览器式标签系统。包括对终端自定义的支持，包括常见的终端主题、字体和其他组件。
+      - **远程桌面访问** - 浏览器上的 RDP、VNC 和 Telnet 支持，具有完整的自定义和分屏功能
+      - **SSH 隧道管理** - 创建和管理 SSH 隧道，支持自动重新连接和健康监测，以及 -l 或 -r 连接支持
+      - **远程文件管理器** - 直接在远程服务器上管理文件，支持查看和编辑代码、图像、音频和视频。无缝上传、下载、重命名、删除和移动文件，支持 sudo。
+      - **Docker 管理** - 启动、停止、暂停、删除容器。查看容器统计信息。使用 docker exec 终端控制容器。这不是为了替代 Portainer 或 Dockge，而是为了相比创建容器时简化容器管理。
+      - **SSH 主机管理器** - 使用标签和文件夹保存、组织和管理您的 SSH 连接，轻松保存可重用的登录信息，同时能够自动部署 SSH 密钥
+      - **服务器统计** - 在大多数基于 Linux 的服务器上查看 CPU、内存和磁盘使用情况以及网络、正常运行时间、系统信息、防火墙、端口监控
+      - **仪表板** - 在仪表板上一览无余地查看服务器信息
+      - **基于角色的访问控制** - 创建角色并跨用户/角色共享主机
+      - **用户身份验证** - 具有管理控制、OIDC（带访问控制）和 2FA（TOTP）支持的安全用户管理。查看所有平台上的活跃用户会话并撤销权限。链接您的 OIDC/本地账户。
+      - **数据库加密** - 后端存储为加密的 SQLite 数据库文件。查看[文档](https://docs.termix.site/security)了解更多。
+      - **数据导出/导入** - 导出和导入 SSH 主机、凭证和文件管理器数据
+      - **自动 SSL 设置** - 内置 SSL 证书生成和管理以及 HTTPS 重定向
+      - **现代界面** - 使用 React、Tailwind CSS 和 Shadcn 构建的干净的桌面/移动友好界面。根据偏好选择深色或浅色模式。使用 URL 路由在全屏中打开任何连接。
+      - **多语言支持** - 内置支持约 30 种语言（由 [Crowdin](https://docs.termix.site/translations) 管理）
+      - **平台支持** - 可用作网络应用、桌面应用（Windows、Linux 和 macOS，可独立运行而无需 Termix 后端）、PWA 和 iOS 及 Android 专用移动/平板应用。
+      - **SSH 工具** - 创建可重用的命令片段，一键即可执行。同时在多个打开的终端中运行一条命令。
+      - **命令历史** - 自动完成和查看以前运行的 SSH 命令
+      - **快速连接** - 无需保存连接数据即可连接到服务器
+      - **命令面板** - 双击左 Shift 键可快速使用键盘访问 SSH 连接
+      - **功能丰富的 SSH** - 支持跳转主机、Warpgate、基于 TOTP 的连接、SOCKS5、主机密钥验证、密码自动填充、[OPKSSH](https://github.com/openpubkey/opkssh) 等。
+      - **网络图** - 根据您的 SSH 连接自定义仪表板以可视化您的家庭实验室，支持状态显示
+      - **持久标签** - 如果在用户配置文件中启用，SSH 会话和标签在设备/刷新间保持打开状态
+    hi_in: >-
+      <div align="center">
+
+      <img src="https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/icon.png" width="250" alt="Termix Icon">
+
+      # **Termix**
+      ![GitHub Repo तारे](https://img.shields.io/github/stars/Termix-SSH/Termix?style=flat&label=Stars)
+      ![GitHub कांटे](https://img.shields.io/github/forks/Termix-SSH/Termix?style=flat&label=Forks)
+      ![GitHub रिलीज़](https://img.shields.io/github/v/release/Termix-SSH/Termix?style=flat&label=Release)
+
+      _Termix_
+
+      </div>
+
+      # अवलोकन
+
+      Termix एक ओपन-सोर्स, सदा-मुक्त, स्व-होस्ट किया गया सर्व-एक-में सर्वर प्रबंधन मंच है। यह एक एकल, सहज इंटरफेस के माध्यम से अपने सर्वर और बुनियादी ढांचे के प्रबंधन के लिए एक बहु-प्लेटफॉर्म समाधान प्रदान करता है। Termix SSH टर्मिनल एक्सेस, रिमोट डेस्कटॉप नियंत्रण (RDP, VNC, Telnet), SSH सुरंगिंग क्षमताएं, रिमोट SSH फ़ाइल प्रबंधन और कई अन्य उपकरण प्रदान करता है। Termix सभी प्लेटफार्मों के लिए Termius का एक आदर्श मुक्त और स्व-होस्ट किया गया विकल्प है।
+
+      # विशेषताएं
+
+      - **SSH टर्मिनल एक्सेस** - विभाजन-स्क्रीन समर्थन (4 पैनल तक) और ब्राउज़र-जैसी टैब प्रणाली के साथ पूर्ण-विशेषताओं वाला टर्मिनल। टर्मिनल को अनुकूलित करने के लिए समर्थन शामिल है जिसमें सामान्य टर्मिनल थीम, फ़ॉन्ट और अन्य घटक शामिल हैं।
+      - **रिमोट डेस्कटॉप एक्सेस** - ब्राउज़र पर RDP, VNC और Telnet समर्थन पूर्ण अनुकूलन और विभाजन स्क्रीनिंग के साथ
+      - **SSH सुरंग प्रबंधन** - स्वचालित पुनः कनेक्ट और स्वास्थ्य निगरानी के साथ SSH सुरंगें बनाएं और प्रबंधित करें और -l या -r कनेक्शन के लिए समर्थन
+      - **रिमोट फ़ाइल प्रबंधक** - कोड, चित्र, ऑडियो और वीडियो देखने और संपादित करने के लिए समर्थन के साथ रिमोट सर्वर पर सीधे फ़ाइलें प्रबंधित करें। Sudo समर्थन के साथ फ़ाइलों को निर्बाध रूप से अपलोड, डाउनलोड, नाम बदलें, हटाएं और स्थानांतरित करें।
+      - **Docker प्रबंधन** - कंटेनर शुरू, बंद, रोकें, हटाएं। कंटेनर आंकड़े देखें। docker exec टर्मिनल का उपयोग करके कंटेनर को नियंत्रित करें। यह Portainer या Dockge को प्रतिस्थापित करने के लिए नहीं बनाया गया था, बल्कि उन्हें बनाने की तुलना में अपने कंटेनरों को आसानी से प्रबंधित करने के लिए बनाया गया था।
+      - **SSH होस्ट प्रबंधक** - टैग और फ़ोल्डर के साथ अपने SSH कनेक्शन को सहेजें, व्यवस्थित करें और प्रबंधित करें, और आसानी से पुनः प्रयोज्य लॉगिन जानकारी सहेजें जबकि SSH कुंजी के स्वचालित स्थापन में सक्षम हों
+      - **सर्वर आंकड़े** - अधिकांश Linux-आधारित सर्वर पर CPU, मेमोरी और डिस्क उपयोग के साथ नेटवर्क, अपटाइम, सिस्टम जानकारी, फायरवॉल, पोर्ट मॉनिटर देखें
+      - **डैशबोर्ड** - अपने डैशबोर्ड पर एक नज़र में सर्वर की जानकारी देखें
+      - **RBAC** - भूमिकाएं बनाएं और उपयोगकर्ताओं/भूमिकाओं में होस्ट साझा करें
+      - **उपयोगकर्ता प्रमाणीकरण** - व्यवस्थापक नियंत्रण और OIDC (एक्सेस नियंत्रण के साथ) और 2FA (TOTP) समर्थन के साथ सुरक्षित उपयोगकर्ता प्रबंधन। सभी प्लेटफार्म में सक्रिय उपयोगकर्ता सत्र देखें और अनुमतियां रद्द करें। अपने OIDC/स्थानीय खातों को एक साथ लिंक करें।
+      - **डेटाबेस एन्क्रिप्शन** - बैकएंड को एन्क्रिप्ट किए गए SQLite डेटाबेस फ़ाइलों के रूप में संग्रहीत। अधिक जानकारी के लिए [दस्तावेज़](https://docs.termix.site/security) देखें।
+      - **डेटा निर्यात/आयात** - SSH होस्ट, क्रेडेंशियल और फ़ाइल प्रबंधक डेटा निर्यात और आयात करें
+      - **स्वचालित SSL सेटअप** - HTTPS रीडायरेक्ट के साथ अंतर्निहित SSL प्रमाणपत्र पीढ़ी और प्रबंधन
+      - **आधुनिक UI** - React, Tailwind CSS और Shadcn के साथ बनाया गया स्वच्छ डेस्कटॉप/मोबाइल-अनुकूल इंटरफेस। UI पर आधारित गहरे या हल्के मोड के बीच चुनें। किसी भी कनेक्शन को पूर्ण-स्क्रीन में खोलने के लिए URL मार्ग का उपयोग करें।
+      - **भाषाएं** - लगभग 30 भाषाओं के लिए अंतर्निहित समर्थन ([Crowdin](https://docs.termix.site/translations) द्वारा प्रबंधित)
+      - **प्लेटफॉर्म समर्थन** - वेब ऐप, डेस्कटॉप एप्लिकेशन (Windows, Linux और macOS, Termix बैकएंड के बिना स्वतंत्र रूप से चलाया जा सकता है), PWA और iOS और Android के लिए समर्पित मोबाइल/टैबलेट ऐप के रूप में उपलब्ध।
+      - **SSH उपकरण** - पुनः प्रयोज्य कमांड स्निपेट बनाएं जो एक क्लिक से निष्पादित होते हैं। एक साथ कई खुले टर्मिनल में एक कमांड चलाएं।
+      - **कमांड इतिहास** - ऑटो-पूर्ण करें और पहले चलाई गई SSH कमांड देखें
+      - **त्वरित कनेक्ट** - कनेक्शन डेटा को सहेजे बिना सर्वर से कनेक्ट करें
+      - **कमांड पैलेट** - SSH कनेक्शन को अपने कीबोर्ड के साथ जल्दी से एक्सेस करने के लिए बाएं शिफ्ट को दोगुना टैप करें
+      - **SSH फीचर समृद्ध** - जंप होस्ट, Warpgate, TOTP आधारित कनेक्शन, SOCKS5, होस्ट कुंजी सत्यापन, पासवर्ड ऑटोफिल, [OPKSSH](https://github.com/openpubkey/opkssh), आदि का समर्थन करता है।
+      - **नेटवर्क ग्राफ** - अपने SSH कनेक्शन के आधार पर अपने होमलैब को दृश्यमान करने के लिए अपने डैशबोर्ड को अनुकूलित करें, स्थिति समर्थन के साथ
+      - **स्थिर टैब** - यदि उपयोगकर्ता प्रोफ़ाइल में सक्षम किया गया तो SSH सत्र और टैब डिवाइस/रीफ्रेश में खुले रहते हैं
+    es_es: >-
+      <div align="center">
+
+      <img src="https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/icon.png" width="250" alt="Termix Icon">
+
+      # **Termix**
+      ![Estrellas del repositorio GitHub](https://img.shields.io/github/stars/Termix-SSH/Termix?style=flat&label=Stars)
+      ![Bifurcaciones de GitHub](https://img.shields.io/github/forks/Termix-SSH/Termix?style=flat&label=Forks)
+      ![Lanzamiento de GitHub](https://img.shields.io/github/v/release/Termix-SSH/Termix?style=flat&label=Release)
+
+      _Termix_
+
+      </div>
+
+      # Descripción General
+
+      Termix es una plataforma de gestión de servidores todo en uno de código abierto, gratuita para siempre y auto-alojada. Proporciona una solución multiplataforma para administrar sus servidores e infraestructura a través de una interfaz única e intuitiva. Termix ofrece acceso a terminal SSH, control de escritorio remoto (RDP, VNC, Telnet), capacidades de túnel SSH, gestión remota de archivos SSH y muchas otras herramientas. Termix es la alternativa gratuita y auto-alojada perfecta a Termius disponible para todas las plataformas.
+
+      # Características
+
+      - **Acceso a Terminal SSH** - Terminal con todas las características con soporte de pantalla dividida (hasta 4 paneles) con un sistema de pestañas similar al navegador. Incluye soporte para personalizar la terminal, incluidos temas de terminal comunes, fuentes y otros componentes.
+      - **Acceso a Escritorio Remoto** - Soporte para RDP, VNC y Telnet en el navegador con personalización completa y pantalla dividida
+      - **Gestión de Túneles SSH** - Cree y gestione túneles SSH con reconexión automática y monitoreo de salud y soporte para conexiones -l o -r
+      - **Administrador de Archivos Remoto** - Administre archivos directamente en servidores remotos con soporte para ver y editar código, imágenes, audio y video. Cargue, descargue, cambie el nombre, elimine y mueva archivos sin problemas con soporte de sudo.
+      - **Gestión de Docker** - Inicie, detenga, pause, elimine contenedores. Ver estadísticas de contenedores. Controle el contenedor utilizando el terminal docker exec. No fue hecho para reemplazar Portainer o Dockge sino para administrar simplemente sus contenedores en comparación con crearlos.
+      - **Gestor de Hosts SSH** - Guarde, organice y administre sus conexiones SSH con etiquetas y carpetas, y guarde fácilmente información de inicio de sesión reutilizable mientras puede automatizar la implementación de claves SSH
+      - **Estadísticas del Servidor** - Ver uso de CPU, memoria y disco junto con red, tiempo de actividad, información del sistema, firewall, monitor de puertos, en la mayoría de servidores basados ​​en Linux
+      - **Panel de Control** - Ver información del servidor de un vistazo en su panel de control
+      - **RBAC** - Crear roles y compartir hosts entre usuarios/roles
+      - **Autenticación de Usuario** - Gestión segura de usuarios con controles administrativos y soporte OIDC (con control de acceso) y 2FA (TOTP). Ver sesiones de usuario activas en todas las plataformas y revocar permisos. Vincule sus cuentas OIDC/Locales juntas.
+      - **Cifrado de Base de Datos** - Backend almacenado como archivos de base de datos SQLite cifrados. Ver [documentación](https://docs.termix.site/security) para más.
+      - **Exportación/Importación de Datos** - Exportar e importar hosts SSH, credenciales y datos del administrador de archivos
+      - **Configuración SSL Automática** - Generación y gestión de certificados SSL integrados con redirecciones HTTPS
+      - **Interfaz Moderna** - Interfaz limpia y amigable para escritorio/móvil construida con React, Tailwind CSS y Shadcn. Elija entre modo claro u oscuro basado en IU. Use rutas de URL para abrir cualquier conexión en pantalla completa.
+      - **Idiomas** - Soporte integrado para ~30 idiomas (administrado por [Crowdin](https://docs.termix.site/translations))
+      - **Compatibilidad de Plataformas** - Disponible como aplicación web, aplicación de escritorio (Windows, Linux y macOS, se puede ejecutar de forma independiente sin backend de Termix), PWA y aplicación móvil/tableta dedicada para iOS y Android.
+      - **Herramientas SSH** - Cree fragmentos de comandos reutilizables que se ejecuten con un solo clic. Ejecute un comando simultáneamente en varias terminales abiertas.
+      - **Historial de Comandos** - Autocompletar y ver comandos SSH ejecutados anteriormente
+      - **Conexión Rápida** - Conéctese a un servidor sin necesidad de guardar los datos de conexión
+      - **Paleta de Comandos** - Toque dos veces la tecla Mayús izquierda para acceder rápidamente a las conexiones SSH con su teclado
+      - **SSH Completo de Características** - Soporta hosts de salto, Warpgate, conexiones basadas en TOTP, SOCKS5, verificación de claves de host, relleno automático de contraseñas, [OPKSSH](https://github.com/openpubkey/opkssh), etc.
+      - **Gráfico de Red** - Personalice su Panel para visualizar su laboratorio casero basado en sus conexiones SSH con soporte de estado
+      - **Pestañas Persistentes** - Las sesiones y pestañas SSH permanecen abiertas en dispositivos/actualizaciones si está habilitado en el perfil del usuario
+    id_id: >-
+      <div align="center">
+
+      <img src="https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/icon.png" width="250" alt="Termix Icon">
+
+      # **Termix**
+      ![Bintang Repo GitHub](https://img.shields.io/github/stars/Termix-SSH/Termix?style=flat&label=Stars)
+      ![Fork GitHub](https://img.shields.io/github/forks/Termix-SSH/Termix?style=flat&label=Forks)
+      ![Rilis GitHub](https://img.shields.io/github/v/release/Termix-SSH/Termix?style=flat&label=Release)
+
+      _Termix_
+
+      </div>
+
+      # Ringkasan
+
+      Termix adalah platform manajemen server all-in-one yang bersumber terbuka, gratis selamanya, dan di-host sendiri. Ini menyediakan solusi multi-platform untuk mengelola server dan infrastruktur Anda melalui antarmuka tunggal yang intuitif. Termix menawarkan akses terminal SSH, kontrol desktop jarak jauh (RDP, VNC, Telnet), kemampuan tunneling SSH, manajemen file SSH jarak jauh, dan banyak alat lainnya. Termix adalah alternatif gratis dan self-hosted yang sempurna untuk Termius yang tersedia untuk semua platform.
+
+      # Fitur
+
+      - **Akses Terminal SSH** - Terminal dengan fitur lengkap dengan dukungan layar terpisah (hingga 4 panel) dengan sistem tab seperti browser. Mencakup dukungan untuk menyesuaikan terminal termasuk tema terminal umum, font, dan komponen lainnya.
+      - **Akses Desktop Jarak Jauh** - Dukungan RDP, VNC, dan Telnet melalui browser dengan kustomisasi lengkap dan layar terpisah
+      - **Manajemen Tunnel SSH** - Buat dan kelola tunnel SSH dengan reconnection otomatis dan monitoring kesehatan serta dukungan untuk koneksi -l atau -r
+      - **Manajer File Jarak Jauh** - Kelola file langsung di server jarak jauh dengan dukungan untuk melihat dan mengedit kode, gambar, audio, dan video. Unggah, unduh, ubah nama, hapus, dan pindahkan file dengan mulus dengan dukungan sudo.
+      - **Manajemen Docker** - Mulai, hentikan, jeda, hapus kontainer. Lihat statistik kontainer. Kontrol kontainer menggunakan terminal docker exec. Ini tidak dibuat untuk menggantikan Portainer atau Dockge tetapi hanya untuk mengelola kontainer Anda dibandingkan dengan membuatnya.
+      - **Manajer Host SSH** - Simpan, atur, dan kelola koneksi SSH Anda dengan tag dan folder, dan mudah simpan informasi login yang dapat digunakan kembali sambil dapat mengotomatisasi penyebaran kunci SSH
+      - **Statistik Server** - Lihat penggunaan CPU, memori, dan disk bersama dengan jaringan, waktu aktif, informasi sistem, firewall, monitor port, di sebagian besar server berbasis Linux
+      - **Dasbor** - Lihat informasi server sekilas di dasbor Anda
+      - **RBAC** - Buat peran dan bagikan host di seluruh pengguna/peran
+      - **Autentikasi Pengguna** - Manajemen pengguna yang aman dengan kontrol admin dan dukungan OIDC (dengan kontrol akses) dan 2FA (TOTP). Lihat sesi pengguna aktif di semua platform dan cabut izin. Tautkan akun OIDC/Lokal Anda bersama-sama.
+      - **Enkripsi Database** - Backend disimpan sebagai file database SQLite terenkripsi. Lihat [dokumen](https://docs.termix.site/security) untuk selengkapnya.
+      - **Ekspor/Impor Data** - Ekspor dan impor host SSH, kredensial, dan data manajer file
+      - **Penyiapan SSL Otomatis** - Pembuatan dan manajemen sertifikat SSL bawaan dengan pengalihan HTTPS
+      - **UI Modern** - Antarmuka ramah desktop/seluler yang bersih dibangun dengan React, Tailwind CSS, dan Shadcn. Pilih antara mode gelap atau terang berbasis UI. Gunakan rute URL untuk membuka koneksi apa pun layar penuh.
+      - **Bahasa** - Dukungan bawaan ~30 bahasa (dikelola oleh [Crowdin](https://docs.termix.site/translations))
+      - **Dukungan Platform** - Tersedia sebagai aplikasi web, aplikasi desktop (Windows, Linux, dan macOS, dapat dijalankan secara mandiri tanpa backend Termix), PWA, dan aplikasi seluler/tablet khusus untuk iOS dan Android.
+      - **Alat SSH** - Buat cuplikan perintah yang dapat digunakan kembali yang dijalankan dengan satu klik. Jalankan satu perintah secara bersamaan di beberapa terminal terbuka.
+      - **Riwayat Perintah** - Pelengkapan otomatis dan lihat perintah SSH yang dijalankan sebelumnya
+      - **Koneksi Cepat** - Terhubung ke server tanpa harus menyimpan data koneksi
+      - **Palet Perintah** - Ketuk dua kali tombol Shift kiri untuk akses cepat koneksi SSH dengan keyboard Anda
+      - **SSH Kaya Fitur** - Mendukung jump host, Warpgate, koneksi berbasis TOTP, SOCKS5, verifikasi kunci host, pengisian otomatis sandi, [OPKSSH](https://github.com/openpubkey/opkssh), dll.
+      - **Grafik Jaringan** - Sesuaikan Dasbor Anda untuk memvisualisasikan homelab Anda berdasarkan koneksi SSH Anda dengan dukungan status
+      - **Tab Persisten** - Sesi dan tab SSH tetap terbuka di seluruh perangkat/segarkan jika diaktifkan di profil pengguna
+
+  developer: lukegus
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/icon.png
+  index: /
+  is_uncontrolled: false
+  main: termix
+  port_map: "8080"
+  scheme: http
+  store_app_id: termix
+  tagline:
+    en_us: Self-hosted SSH & Remote Desktop Manager
+    zh_cn: 自托管 SSH 和远程桌面管理器
+    hi_in: स्व-होस्टेड SSH और रिमोट डेस्कटॉप मैनेजर
+    es_es: Administrador de SSH y Escritorio Remoto Autoalojado
+    id_id: Pengelola SSH dan Desktop Jarak Jauh yang Dihosting Sendiri
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/thumbnail.png
+  tips:
+    en_us: Don't forget to change the SALT in the environment.
+    zh_ch: 别忘了更改环境中的 SALT。
+    hi_in: environment में SALT बदलना न भूलें।
+    es_es: No olvides cambiar el SALT en el entorno.
+    id_id: Jangan lupa untuk mengganti SALT di environment.
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/screenshot-5.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/screenshot-6.png
+  title:
+    custom: Termix
+    en_us: Termix
