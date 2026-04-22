@@ -1,5 +1,5 @@
 version: "3"
-name: technitium-dns
+#name: technitium-dns
 services:
   technitium-dns:
     image: technitium/dns-server@sha256:322b236403ca25028032f28736e2270a860527b030b162c9f82451c6494c4698
@@ -21,6 +21,7 @@ services:
 x-casaos:
   architectures:
     - amd64
+    - arm64
   main: technitium-dns
   author: Michael McNairy
   category: Network
