@@ -2,7 +2,7 @@ version: "3"
 name: technitium-dns
 services:
   technitium-dns:
-    image: technitium/dns-server:14.3.0
+    image: technitium/dns-server@sha256:322b236403ca25028032f28736e2270a860527b030b162c9f82451c6494c4698
     container_name: technitium-dns
     hostname: technitium-dns
     restart: unless-stopped
