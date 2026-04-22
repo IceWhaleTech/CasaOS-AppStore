@@ -1,0 +1,62 @@
+version: "3"
+name: caddy
+services:
+  caddy-server:
+    cpu_shares: 10
+    command: []
+    container_name: caddy
+    deploy:
+      resources:
+        limits:
+          memory: 98732085248
+        reservations:
+          devices: []
+    image: caddy:2
+    labels:
+      icon: https://cdn.brandfetch.io/id6urH6yOB/w/400/h/400/theme/dark/icon.jpeg?c=1bxid64Mup7aczewSAYMX&t=1769785145609
+    ports:
+      - target: 80
+        published: "8088"
+        protocol: tcp
+      - target: 443
+        published: "2443"
+        protocol: tcp
+      - target: 443
+        published: "2443"
+        protocol: udp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/Caddy/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/Caddy/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/Caddy/site
+        target: /srv
+    devices: []
+    cap_add: []
+    environment: []
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: caddy-server
+  author: Michael McNairy
+  category: WEB
+  hostname: "caddy"
+  icon: https://cdn.brandfetch.io/id6urH6yOB/w/400/h/400/theme/dark/icon.jpeg?c=1bxid64Mup7aczewSAYMX&t=1769785145609
+  index: /
+  is_uncontrolled: false
+  port_map: "8088"
+  scheme: http
+  store_app_id: caddy
+  title:
+    custom: Caddy
+  tagline: Self-host an easyto configure web server.
+  description: Caddy Server is a fast, modern, open-source web server written in Go.
+  #developer:
+  #screenshot_link:
