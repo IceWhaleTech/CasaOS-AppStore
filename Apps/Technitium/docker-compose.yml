@@ -1,0 +1,37 @@
+version: "3"
+services:
+  technitium-dns:
+    image: technitium/dns-server:14.3.0
+    container_name: technitium-dns
+    hostname: technitium-dns
+    restart: unless-stopped
+    ports:
+      - "5380:5380/tcp"      # Web Management Console
+      - "53:53/udp"          # DNS Service (UDP)
+      - "53:53/tcp"          # DNS Service (TCP)
+      - "853:853/tcp"        # DNS-over-TLS (Optional)
+    environment:
+      - DNS_SERVER_DOMAIN=technitium-dns
+      # - DNS_SERVER_ADMIN_PASSWORD=password  # Optional: Set initial password
+    volumes:
+      - /DATA/AppData/technitium/config:/etc/dns
+    
+    # ZimaOS/CasaOS Specific Metadata
+    x-casaos:
+      architectures:
+        - amd64
+        - arm64
+      main: technitium-dns
+      author: Michael McNairy
+      category: Network
+      icon: https://githubusercontent.com
+      title:
+        en_us: Technitium DNS Server
+      tagline:
+        en_us: Self-host a privacy-focused DNS server.
+      description:
+        en_us: "Technitium DNS Server is an open-source authoritative as well as recursive DNS server that can be used for self-hosting for privacy and security."
+      developer: Technitium Software
+      screenshot_link:
+        - https://technitium.com
+
