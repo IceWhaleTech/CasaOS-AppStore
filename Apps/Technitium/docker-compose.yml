@@ -17,21 +17,21 @@ services:
     volumes:
       - /DATA/AppData/technitium/config:/etc/dns
     
-  # ZimaOS/CasaOS Specific Metadata
-  x-casaos:
-    architectures:
-      - amd64
-    main: technitium-dns
-    author: Michael McNairy
-    category: Network
-    icon: https://githubusercontent.com
-    title:
-      en_us: Technitium DNS Server
-    tagline:
-      en_us: Self-host a privacy-focused DNS server.
-    description:
-      en_us: "Technitium DNS Server is an open-source authoritative as well as recursive DNS server that can be used for self-hosting for privacy and security."
-    developer: Technitium Software
-    screenshot_link:
-      - https://technitium.com
+# ZimaOS/CasaOS Specific Metadata
+x-casaos:
+  architectures:
+    - amd64
+  main: technitium-dns
+  author: Michael McNairy
+  category: Network
+  icon: https://githubusercontent.com
+  title:
+    en_us: Technitium DNS Server
+  tagline:
+    en_us: Self-host a privacy-focused DNS server.
+  description:
+    en_us: "Technitium DNS Server is an open-source authoritative as well as recursive DNS server that can be used for self-hosting for privacy and security."
+  developer: Technitium Software
+  screenshot_link:
+    - https://technitium.com
 
