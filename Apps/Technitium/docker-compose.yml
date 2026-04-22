@@ -16,6 +16,8 @@ services:
       # - DNS_SERVER_ADMIN_PASSWORD=password  # Optional: Set initial password
     volumes:
       - /DATA/AppData/technitium/config:/etc/dns
+    sysctls:
+      - net.ipv4.ip_local_port_range=1024 65535
     
 # ZimaOS/CasaOS Specific Metadata
 x-casaos:
