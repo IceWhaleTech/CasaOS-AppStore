@@ -1,0 +1,36 @@
+version: "3"
+services:
+  forgejo:
+    image: codeberg.org/forgejo/forgejo:15
+    container_name: forgejo
+    hostname: forgejo
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    restart: unless-stopped
+    networks:
+      - forgejo
+    volumes:
+      - /DATA/AppData/forgejo:/data
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - '3000:3000'
+      - '222:22'
+# ZimaOS/CasaOS Specific Metadata
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: forgejo
+  author: Michael McNairy
+  category: WEB
+  icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/forgejo.png
+  title:
+    en_us: Forgejo Git Server
+  tagline:
+    en_us: Self-host a free software focused Git server.
+  description:
+    en_us: "Forgejo is a self-hosted lightweight software forge."
+networks:
+  forgejo:
+    external: false
