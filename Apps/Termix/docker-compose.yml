@@ -1,8 +1,6 @@
 name: termix
-
 services:
   termix:
-    cpu_shares: 90
     container_name: termix
     depends_on:
       guacd:
@@ -13,7 +11,7 @@ services:
         reservations:
           memory: "512MB"
     hostname: termix
-    image: ghcr.io/lukegus/termix:release-2.0.0
+    image: ghcr.io/lukegus/termix:release-2.1.0
     environment:
       PORT: "8080"
       SALT: "casaos"
@@ -59,7 +57,6 @@ services:
     privileged: false
 
   guacd:
-    cpu_shares: 90
     container_name: guacd
     deploy:
       resources:
@@ -87,7 +84,7 @@ x-casaos:
   author: suryacagur
   category: Network
   description:
-    en_us: >-
+    en_us: |
       <div align="center">
 
       <img src="https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/icon.png" width="250" alt="Termix Icon">
@@ -130,7 +127,7 @@ x-casaos:
       - **SSH Feature Rich** - Supports jump hosts, Warpgate, TOTP based connections, SOCKS5, host key verification, password autofill, [OPKSSH](https://github.com/openpubkey/opkssh), etc.
       - **Network Graph** - Customize your Dashboard to visualize your homelab based off your SSH connections with status support
       - **Persistent Tabs** - SSH sessions and tabs stay open across devices/refreshes if enabled in user profile
-    zh_cn: >-
+    zh_cn: |
       <div align="center">
 
       <img src="https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/icon.png" width="250" alt="Termix Icon">
@@ -173,7 +170,7 @@ x-casaos:
       - **功能丰富的 SSH** - 支持跳转主机、Warpgate、基于 TOTP 的连接、SOCKS5、主机密钥验证、密码自动填充、[OPKSSH](https://github.com/openpubkey/opkssh) 等。
       - **网络图** - 根据您的 SSH 连接自定义仪表板以可视化您的家庭实验室，支持状态显示
       - **持久标签** - 如果在用户配置文件中启用，SSH 会话和标签在设备/刷新间保持打开状态
-    hi_in: >-
+    hi_in: |
       <div align="center">
 
       <img src="https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/icon.png" width="250" alt="Termix Icon">
@@ -216,7 +213,7 @@ x-casaos:
       - **SSH फीचर समृद्ध** - जंप होस्ट, Warpgate, TOTP आधारित कनेक्शन, SOCKS5, होस्ट कुंजी सत्यापन, पासवर्ड ऑटोफिल, [OPKSSH](https://github.com/openpubkey/opkssh), आदि का समर्थन करता है।
       - **नेटवर्क ग्राफ** - अपने SSH कनेक्शन के आधार पर अपने होमलैब को दृश्यमान करने के लिए अपने डैशबोर्ड को अनुकूलित करें, स्थिति समर्थन के साथ
       - **स्थिर टैब** - यदि उपयोगकर्ता प्रोफ़ाइल में सक्षम किया गया तो SSH सत्र और टैब डिवाइस/रीफ्रेश में खुले रहते हैं
-    es_es: >-
+    es_es: |
       <div align="center">
 
       <img src="https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/icon.png" width="250" alt="Termix Icon">
@@ -259,7 +256,7 @@ x-casaos:
       - **SSH Completo de Características** - Soporta hosts de salto, Warpgate, conexiones basadas en TOTP, SOCKS5, verificación de claves de host, relleno automático de contraseñas, [OPKSSH](https://github.com/openpubkey/opkssh), etc.
       - **Gráfico de Red** - Personalice su Panel para visualizar su laboratorio casero basado en sus conexiones SSH con soporte de estado
       - **Pestañas Persistentes** - Las sesiones y pestañas SSH permanecen abiertas en dispositivos/actualizaciones si está habilitado en el perfil del usuario
-    id_id: >-
+    id_id: |
       <div align="center">
 
       <img src="https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/icon.png" width="250" alt="Termix Icon">
@@ -302,7 +299,6 @@ x-casaos:
       - **SSH Kaya Fitur** - Mendukung jump host, Warpgate, koneksi berbasis TOTP, SOCKS5, verifikasi kunci host, pengisian otomatis sandi, [OPKSSH](https://github.com/openpubkey/opkssh), dll.
       - **Grafik Jaringan** - Sesuaikan Dasbor Anda untuk memvisualisasikan homelab Anda berdasarkan koneksi SSH Anda dengan dukungan status
       - **Tab Persisten** - Sesi dan tab SSH tetap terbuka di seluruh perangkat/segarkan jika diaktifkan di profil pengguna
-
   developer: lukegus
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Termix/icon.png
   index: /
