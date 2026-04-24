@@ -13,6 +13,8 @@ services:
       TWINGATE_LABEL_HOSTNAME: ""
 
     restart: unless-stopped
+    sysctls:
+      net.ipv4.ping_group_range: "0 2147483647"
     network_mode: default
     privileged: false
     cpu_shares: 90
