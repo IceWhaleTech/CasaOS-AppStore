@@ -1,10 +1,10 @@
 {
-    "version": "1.0",
+    "version": "2.0",
     "title": "Twingate",
     "name": "twingate-connector",
     "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Twingate/icon.png",
-    "tagline": "Twingate Connector for CasaOS",
-    "overview": "It's a connector for Twingate",
+    "tagline": "Twingate Connector for ZimaOS",
+    "overview": "The Twingate Connector is a lightweight application that allows you to securely connect your ZimaOS device to your Twingate network. It provides seamless access to your private resources without the need for a traditional VPN, ensuring a secure and efficient connection. With the Twingate Connector, you can easily manage and access your network resources from anywhere, while maintaining the security and performance of your ZimaOS device.",
     "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Twingate/thumbnail.png",
     "screenshots": [
     ],
@@ -35,19 +35,30 @@
         "envs": [
             {
                 "name": "TWINGATE_NETWORK",
-                "value": "rasp"
+                "description": "The name of your Twingate network. This can be found in the Twingate Admin Console under Network Settings.",
+                "value": ""
             },
             {
                 "name": "TWINGATE_ACCESS_TOKEN",
+                "description": "The Twingate Access Token. You can generate one from the Twingate Admin Console.",
                 "value": ""
             },
             {
                 "name": "TWINGATE_REFRESH_TOKEN",
+                "description": "The Twingate Refresh Token. You can generate one from the Twingate Admin Console.",
                 "value": ""
             },
             {
                 "name": "TWINGATE_LABEL_HOSTNAME",
-                "value": "`hostname`"
+                "description": "The hostname label for the Twingate connector.",
+                "configurable": "advanced",
+                "value": ""
+            },
+            {
+                "name": "TWINGATE_LABEL_DEPLOYED_BY",
+                "description": "The deployed by label for the Twingate connector.",
+                "configurable": "no",
+                "value": "zimaos"
             }
         ],
         "ports": [],
@@ -75,11 +86,32 @@
         "upnp": false
     },
     "tips": {
-        "before_install": []
+        "before_install": [
+            {
+                "content": "Twingate Account Information",
+                "value": "To use the Twingate Connector, you will need to have a Twingate account and a Twingate network set up. You can sign up for a free Twingate account at [https://www.twingate.com](https://www.twingate.com). Once you have an account, you can create a Twingate network and generate the necessary Access Token and Refresh Token from the Twingate Admin Console."
+            },
+            {
+                "content": "Post Installation Configuration",
+                "value": "After installing the Twingate Connector, you will need to configure the environment variables with your Twingate account information. This includes the TWINGATE_NETWORK, TWINGATE_ACCESS_TOKEN, and TWINGATE_REFRESH_TOKEN. You can do this from the CasaOS application settings. Click the ellipsis (...) in the top right corner of the Twingate Connector app and select 'Settings'. Make sure to save the changes after updating the environment variables. For easy access to the admin console, add your admin URL to the \"Web UI\" field."
+            },
+            {
+                "content": "Supported OS Disclaimer",
+                "value": "This app store entry is only supported on ZimaOS. CasaOS requires a custom installation. For more information visit [The official Twingate CasaOS documentation page](https://www.twingate.com/docs)."
+            },
+            {
+                "content": "Official Documentation",
+                "value": "For a setup guide using this app, please refer to the official Twingate documentation for ZimaOS: [https://www.twingate.com/docs](https://www.twingate.com/docs)."
+            },
+            {
+                "content": "Community Support",
+                "value": "If you have any questions or need help with the Twingate Connector, you can reach out on the [Twingate subreddit](https://www.reddit.com/r/twingate/)."
+            }
+        ]
     },
     "changelog": {
         "latest_updates": "",
         "url": ""
     },
-    "latest_update_date": "1667464530"
+    "latest_update_date": "1777044342"
 }
