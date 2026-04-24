@@ -35,7 +35,7 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 500M  # Modify as needed since the original command didn't specify memory reservation
+          memory: 500M  # Modify as needed
 
 x-casaos:
   architectures:
@@ -46,7 +46,7 @@ x-casaos:
   author: Shubhankar Trivedi
   category: Network
   description: 
-    en_us: "Install the Twingate Connector on ZimaOS to securely connect your home network to the Twingate network. This allows you to access your home network resources from anywhere without exposing them to the internet."
+    en_us: "Install the Twingate Connector on ZimaOS to securely connect your home network to a Twingate Network. This allows you to access your home network resources from anywhere without exposing them to the internet."
   developer: Twingate
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Twingate/icon.png
   screenshot_link:
