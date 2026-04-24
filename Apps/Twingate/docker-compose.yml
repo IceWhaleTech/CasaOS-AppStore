@@ -9,11 +9,10 @@ services:
       TWINGATE_NETWORK: ""
       TWINGATE_ACCESS_TOKEN: ""
       TWINGATE_REFRESH_TOKEN: ""
-      TWINGATE_LABEL_HOSTNAME: ${HOSTNAME}
+      TWINGATE_LABEL_DEPLOYED_BY: "zimaos"
+      TWINGATE_LABEL_HOSTNAME: ""
 
     restart: unless-stopped
-    sysctls:
-      net.ipv4.ping_group_range: "0 2147483647"
     network_mode: default
     privileged: false
     cpu_shares: 90
@@ -21,25 +20,16 @@ services:
       envs:
         - container: TWINGATE_NETWORK
           description:
-            en_us: ""
+            en_us: "Name of the Twingate Network to connect to. Example: 'https://{network_name}.twingate.com'"
         - container: TWINGATE_ACCESS_TOKEN
           description:
-            en_us: ""
+            en_us: "The Twingate Access Token. You can generate one from the Twingate Admin Console."
         - container: TWINGATE_REFRESH_TOKEN
           description:
-            en_us: ""
+            en_us: "The Twingate Refresh Token. You can generate one from the Twingate Admin Console."
         - container: TWINGATE_LABEL_HOSTNAME
           description:
-            en_us: ""
-        - container: PATH
-          description:
-            en_us: ""
-        - container: SSL_CERT_FILE
-          description:
-            en_us: ""
-        - container: TWINGATE_API_ENDPOINT
-          description:
-            en_us: ""  
+            en_us: "The hostname label for the Twingate Connector."
     deploy:
       resources:
         reservations:
@@ -54,16 +44,29 @@ x-casaos:
   author: Shubhankar Trivedi
   category: Network
   description: 
-    en_us: It's a connector for Twingate".
+    en_us: "Install the Twingate Connector on ZimaOS to securely connect your home network to the Twingate network. This allows you to access your home network resources from anywhere without exposing them to the internet."
   developer: Twingate
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Twingate/icon.png
   screenshot_link:
   tagline:
-    en_us: Twingate Connector for CasaOS
+    en_us: Twingate Connector for ZimaOS
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Twingate/thumbnail.png
-  tips: {}
+  tips:
+    "before_install":
+      en_us: |
+        **Twingate Account Information**
+        To use the Twingate Connector, you will need to have a Twingate account and a Twingate Network set up. You can sign up for a free Twingate account at [https://www.twingate.com](https://www.twingate.com). Once you have an account, you can create a Twingate Network and generate the necessary Access Token and Refresh Token from the Twingate Admin Console.
+
+        **Post Installation Configuration**
+        After installing the Twingate Connector, you will need to configure the environment variables with your Twingate account information. This includes the TWINGATE_NETWORK, TWINGATE_ACCESS_TOKEN, and TWINGATE_REFRESH_TOKEN. You can do this from the ZimaOS application settings. Click the ellipsis (...) in the top right corner of the Twingate Connector app and select 'Settings'. Make sure to save the changes after updating the environment variables. For easy access to your Admin Console, add your URL to the "Web UI" field. EXAMPLE: Select `https` in drop down the add {network_name}.twingate.com/networks/overview to the "Web UI" field. 
+
+        **Supported OS Disclaimer**
+        This app store entry is only supported on ZimaOS. CasaOS requires a custom installation. For more information visit [The official Twingate CasaOS documentation page](https://www.twingate.com/docs).
+
+        **Official Documentation**
+        For a setup guide using this app, please refer to the official Twingate documentation for ZimaOS: [https://www.twingate.com/docs](https://www.twingate.com/docs).
+
+        **Community Support**
+        If you have any questions or need help with the Twingate Connector, you can reach out on the [Twingate subreddit](https://www.reddit.com/r/twingate/).
   title:
-    en_us: Twingate
-  hostname: ""
-  index: /
-  port_map: ""
+    en_us: Twingate Connector
