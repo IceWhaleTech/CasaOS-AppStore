@@ -1,0 +1,945 @@
+name: turbodiffusion_nvidia
+services:
+  turbodiffusion:
+    image: icewhaletech/turbodiffusion:20260312
+    container_name: turbodiffusion
+    deploy:
+      resources:
+        reservations:
+          memory: 40G
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities:
+                - gpu
+    environment:
+      MODEL_PATHS: /workspace/TurboDiffusion/checkpoints_host,/workspace/TurboDiffusion/checkpoints
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility,video
+      CUDA_HOME: /usr/local/cuda
+      PYTHONPATH: /workspace/TurboDiffusion/turbodiffusion
+    ports:
+      - target: 7860
+        published: "27860"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/models
+        target: /workspace/TurboDiffusion/checkpoints_host
+      - type: bind
+        source: /DATA/AppData/$AppID/outputs
+        target: /workspace/TurboDiffusion/outputs
+    working_dir: /workspace/TurboDiffusion
+    command:
+      - python
+      - turbodiffusion/app_gradio.py
+    x-casaos:
+      envs:
+        - container: NVIDIA_VISIBLE_DEVICES
+          description:
+            de_DE: Sichtbare NVIDIA-Geräte für GPU-Beschleunigung
+            el_GR: Ορατές συσκευές NVIDIA για επιτάχυνση GPU
+            en_GB: Visible NVIDIA devices for GPU acceleration
+            en_US: Visible NVIDIA devices for GPU acceleration
+            fr_FR: Appareils NVIDIA visibles pour l'accélération GPU
+            hr_HR: Vidljivi NVIDIA uređaji za GPU ubrzanje
+            it_IT: Dispositivi NVIDIA visibili per l'accelerazione GPU
+            ja_JP: GPUアクセラレーション用の可視NVIDIAデバイス
+            ko_KR: GPU 가속을 위한 가시적 NVIDIA 장치
+            nb_NO: Synlige NVIDIA-enheter for GPU-akselerasjon
+            pt_PT: Dispositivos NVIDIA visíveis para aceleração de GPU
+            ru_RU: Видимые устройства NVIDIA для ускорения GPU
+            sv_SE: Synliga NVIDIA-enheter för GPU-acceleration
+            tr_TR: GPU hızlandırması için görünür NVIDIA cihazları
+            zh_CN: 用于GPU加速的可见NVIDIA设备
+        - container: NVIDIA_DRIVER_CAPABILITIES
+          description:
+            de_DE: NVIDIA-Treiberfähigkeiten
+            el_GR: Δυνατότητες οδηγού NVIDIA
+            en_GB: NVIDIA driver capabilities
+            en_US: NVIDIA driver capabilities
+            fr_FR: Capacités du pilote NVIDIA
+            hr_HR: NVIDIA mogućnosti upravljačkog programa
+            it_IT: Capacità del driver NVIDIA
+            ja_JP: NVIDIAドライバー機能
+            ko_KR: NVIDIA 드라이버 기능
+            nb_NO: NVIDIA driverkapabiliteter
+            pt_PT: Capacidades do driver NVIDIA
+            ru_RU: Возможности драйвера NVIDIA
+            sv_SE: NVIDIA-drivrutinskapaciteter
+            tr_TR: NVIDIA sürücü yetenekleri
+            zh_CN: NVIDIA驱动程序功能
+        - container: CUDA_HOME
+          description:
+            de_DE: CUDA-Installationsverzeichnis
+            el_GR: Κατάλογος εγκατάστασης CUDA
+            en_GB: CUDA installation directory
+            en_US: CUDA installation directory
+            fr_FR: Répertoire d'installation CUDA
+            hr_HR: CUDA instalacijski direktorij
+            it_IT: Directory di installazione CUDA
+            ja_JP: CUDAインストールディレクトリ
+            ko_KR: CUDA 설치 디렉터리
+            nb_NO: CUDA installasjonskatalog
+            pt_PT: Diretório de instalação CUDA
+            ru_RU: Каталог установки CUDA
+            sv_SE: CUDA installationskatalog
+            tr_TR: CUDA kurulum dizini
+            zh_CN: CUDA安装目录
+        - container: PYTHONPATH
+          description:
+            de_DE: Python-Pfad für Turbodiffusion-Module
+            el_GR: Διαδρομή Python για τις ενότητες Turbodiffusion
+            en_GB: Python path for Turbodiffusion modules
+            en_US: Python path for Turbodiffusion modules
+            fr_FR: Chemin Python pour les modules Turbodiffusion
+            hr_HR: Python put za Turbodiffusion module
+            it_IT: Percorso Python per i moduli Turbodiffusion
+            ja_JP: Turbodiffusionモジュール用のPythonパス
+            ko_KR: Turbodiffusion 모듈용 Python 경로
+            nb_NO: Python-sti for Turbodiffusion-moduler
+            pt_PT: Caminho Python para módulos Turbodiffusion
+            ru_RU: Путь Python для модулей Turbodiffusion
+            sv_SE: Python-sökväg för Turbodiffusion-moduler
+            tr_TR: Turbodiffusion modülleri için Python yolu
+            zh_CN: Turbodiffusion模块的Python路径
+      ports:
+        - container: "7860"
+          description:
+            de_DE: Gradio WebUI-Port
+            el_GR: Θύρα Gradio WebUI
+            en_GB: Gradio WebUI port
+            en_US: Gradio WebUI port
+            fr_FR: Port Gradio WebUI
+            hr_HR: Gradio WebUI luka
+            it_IT: Porta Gradio WebUI
+            ja_JP: Gradio WebUIポート
+            ko_KR: Gradio WebUI 포트
+            nb_NO: Gradio WebUI-port
+            pt_PT: Porta Gradio WebUI
+            ru_RU: Порт Gradio WebUI
+            sv_SE: Gradio WebUI-port
+            tr_TR: Gradio WebUI portu
+            zh_CN: Gradio WebUI端口
+      volumes:
+        - container: /workspace/TurboDiffusion/outputs
+          description:
+            de_DE: Ausgabeverzeichnis für generierte Videos und Bilder
+            el_GR: Κατάλογος εξόδου για παραγόμενα βίντεο και εικόνες
+            en_GB: Output directory for generated videos and images
+            en_US: Output directory for generated videos and images
+            fr_FR: Répertoire de sortie pour les vidéos et images générées
+            hr_HR: Izlazni direktorij za generirane videozapise i slike
+            it_IT: Directory di output per video e immagini generate
+            ja_JP: 生成動画と画像用の出力ディレクトリ
+            ko_KR: 생성된 비디오와 이미지용 출력 디렉터리
+            nb_NO: Utdatakatalog for genererte videoer og bilder
+            pt_PT: Diretório de saída para vídeos e imagens gerados
+            ru_RU: Каталог вывода для сгенерированных видео и изображений
+            sv_SE: Utdatakatalog för genererade videor och bilder
+            tr_TR: Oluşturulan videolar ve görüntüler için çıktı dizini
+            zh_CN: 生成视频和图像的输出目录
+        - container: /workspace/TurboDiffusion/checkpoints_host
+          description:
+            de_DE: Verzeichnis für Modell-Checkpoints und Gewichte
+            el_GR: Κατάλογος για τα σημεία ελέγχου και τα βάρη του μοντέλου
+            en_GB: Directory for model checkpoints and weights
+            en_US: Directory for model checkpoints and weights
+            fr_FR: Répertoire pour les points de contrôle et poids du modèle
+            hr_HR: Direktorij za checkpointe i težine modela
+            it_IT: Directory per checkpoint e pesi del modello
+            ja_JP: モデルチェックポイントと重み用のディレクトリ
+            ko_KR: 모델 체크포인트 및 가중치용 디렉터리
+            nb_NO: Katalog for modell-checkpoints og vekter
+            pt_PT: Diretório para checkpoints e pesos do modelo
+            ru_RU: Каталог для контрольных точек и весов модели
+            sv_SE: Katalog för modell-checkpoints och vikter
+            tr_TR: Model checkpoint'leri ve ağırlıkları için dizin
+            zh_CN: 模型检查点和权重目录
+    restart: unless-stopped
+x-casaos:
+  title:
+    de_DE: TurboDiffusion(Nvidia GPU)
+    el_GR: TurboDiffusion(Nvidia GPU)
+    en_GB: TurboDiffusion(Nvidia GPU)
+    en_US: TurboDiffusion(Nvidia GPU)
+    fr_FR: TurboDiffusion(Nvidia GPU)
+    hr_HR: TurboDiffusion(Nvidia GPU)
+    it_IT: TurboDiffusion(Nvidia GPU)
+    ja_JP: TurboDiffusion(Nvidia GPU)
+    ko_KR: TurboDiffusion(Nvidia GPU)
+    nb_NO: TurboDiffusion(Nvidia GPU)
+    pt_PT: TurboDiffusion(Nvidia GPU)
+    ru_RU: TurboDiffusion(Nvidia GPU)
+    sv_SE: TurboDiffusion(Nvidia GPU)
+    tr_TR: TurboDiffusion(Nvidia GPU)
+    zh_CN: TurboDiffusion(Nvidia GPU)
+  tagline:
+    de_DE: Ein Beschleunigungsframework für die End-to-End-Diffusionsgenerierung bei gleichbleibender Videoqualität
+    el_GR: Πλαίσιο επιτάχυνσης για ενιαία (end-to-end) παραγωγή διάχυσης με διατήρηση της ποιότητας βίντεο
+    en_GB: An accelerated video generation framework that speeds up end-to-end diffusion while preserving video quality
+    en_US: An accelerated video generation framework that speeds up end-to-end diffusion while preserving video quality
+    fr_FR: Un framework d’accélération pour la génération par diffusion de bout en bout tout en préservant la qualité vidéo
+    hr_HR: Akceleracijski okvir za end-to-end difuzijsko generiranje uz očuvanje kvalitete videa
+    it_IT: Un framework di accelerazione per la generazione end-to-end tramite diffusione mantenendo la qualità video
+    ja_JP: 動画品質を維持しながらエンドツーエンドの拡散生成を高速化する動画生成フレームワーク
+    ko_KR: 비디오 품질을 유지하면서 엔드투엔드 확산 생성을 가속하는 비디오 생성 프레임워크
+    nb_NO: Et akselerasjonsrammeverk for ende-til-ende diffusjonsgenerering med bevart videokvalitet
+    pt_PT: Um framework de aceleração para geração por difusão de ponta a ponta mantendo a qualidade de vídeo
+    ru_RU: Ускоряющий фреймворк для сквозной диффузионной генерации с сохранением качества видео
+    sv_SE: Ett accelerationsramverk för end-to-end-diffusionsgenerering med bibehållen videokvalitet
+    tr_TR: Video kalitesini koruyarak uçtan uca difüzyon üretimini hızlandıran bir video üretim çerçevesi
+    zh_CN: 一种能够加速端到端扩散生成并保持视频质量的视频生成加速框架
+  description:
+    de_DE: |
+      TurboDiffusion ist ein beschleunigtes Framework zur Text-zu-Video-Generierung auf Basis des Latent Consistency Model (LCM). Es nutzt verschiedene TurboWan2-Modelle, um aus Textbeschreibungen schnell hochwertige Videos zu erzeugen. Das Framework unterstützt sowohl die Bild- als auch die Videogenerierung und bietet optimierte Checkpoints für unterschiedliche GPU-Konfigurationen.
+
+      **Hauptfunktionen:**
+      - Extrem schnelle Video- und Bildgenerierung
+      - Intuitive Gradio WebUI
+      - Optimiert für unterschiedliche GPU-Konfigurationen
+      - Quantisierte und nicht quantisierte Checkpoints
+      - Flexible Modellkonfiguration
+
+      **Hardware-Anforderungen:**
+      - Empfohlen: RTX 3090 oder höher
+      - GPU-VRAM: > 30 GB
+      - System-RAM: > 40 GB
+      - CUDA-kompatible NVIDIA-Treiber
+
+      **Mehr erfahren:**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+    el_GR: |
+      Το TurboDiffusion είναι ένα επιταχυνόμενο πλαίσιο παραγωγής κειμένου-σε-βίντεο βασισμένο στο Latent Consistency Model (LCM). Χρησιμοποιεί διάφορα μοντέλα TurboWan2 για τη γρήγορη δημιουργία βίντεο υψηλής ποιότητας από περιγραφές κειμένου. Το πλαίσιο υποστηρίζει παραγωγή εικόνων και βίντεο και παρέχει βελτιστοποιημένα checkpoints για διαφορετικές διαμορφώσεις GPU.
+
+      **Κύρια χαρακτηριστικά:**
+      - Εξαιρετικά γρήγορη παραγωγή βίντεο και εικόνων
+      - Διαισθητικό Gradio WebUI
+      - Βελτιστοποιημένο για διαφορετικές διαμορφώσεις GPU
+      - Ποσοτικοποιημένα και μη ποσοτικοποιημένα checkpoints
+      - Ευέλικτη διαμόρφωση μοντέλων
+
+      **Απαιτήσεις υλικού:**
+      - Συνιστάται: RTX 3090 ή νεότερη
+      - VRAM GPU: > 30 GB
+      - RAM συστήματος: > 40 GB
+      - Οδηγοί NVIDIA συμβατοί με CUDA
+
+      **Μάθετε περισσότερα:**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+    en_GB: |
+      TurboDiffusion is an accelerated text-to-video generation framework based on the Latent Consistency Model (LCM). It leverages various TurboWan2 models to rapidly generate high-quality videos from text descriptions. The framework supports both image and video generation and provides optimised checkpoints for different GPU configurations.
+
+      **Key Features:**
+      - Ultra-fast video and image generation
+      - Intuitive Gradio WebUI
+      - Optimised for different GPU configurations
+      - Quantised and unquantised checkpoints
+      - Flexible model configuration
+
+      **Hardware Requirements:**
+      - Recommended: RTX 3090 or above
+      - GPU VRAM: > 30 GB
+      - System RAM: > 40 GB
+      - CUDA-compatible NVIDIA drivers
+
+      **Learn More:**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+    en_US: |
+      TurboDiffusion is an accelerated text-to-video generation framework based on the Latent Consistency Model (LCM). It leverages various TurboWan2 models to rapidly generate high-quality videos from text descriptions. The framework supports both image and video generation and provides optimized checkpoints for different GPU configurations.
+
+      **Key Features:**
+      - Ultra-fast video and image generation
+      - Intuitive Gradio WebUI
+      - Optimized for different GPU configurations
+      - Quantized and unquantized checkpoints
+      - Flexible model configuration
+
+      **Hardware Requirements:**
+      - Recommended: RTX 3090 or above
+      - GPU VRAM: > 30 GB
+      - System RAM: > 40 GB
+      - CUDA-compatible NVIDIA drivers
+
+      **Learn More:**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+    fr_FR: |
+      TurboDiffusion est un framework accéléré de génération texte-à-vidéo basé sur le Latent Consistency Model (LCM). Il utilise divers modèles TurboWan2 pour générer rapidement des vidéos de haute qualité à partir de descriptions textuelles. Le framework prend en charge la génération d’images et de vidéos et fournit des checkpoints optimisés pour différentes configurations GPU.
+
+      **Fonctionnalités principales :**
+      - Génération ultra-rapide de vidéos et d’images
+      - Gradio WebUI intuitive
+      - Optimisé pour différentes configurations GPU
+      - Checkpoints quantifiés et non quantifiés
+      - Configuration flexible des modèles
+
+      **Configuration matérielle requise :**
+      - Recommandé : RTX 3090 ou supérieure
+      - VRAM GPU : > 30 Go
+      - RAM système : > 40 Go
+      - Pilotes NVIDIA compatibles CUDA
+
+      **En savoir plus :**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+    hr_HR: |
+      TurboDiffusion je ubrzani okvir za generiranje teksta-u-video temeljen na Latent Consistency Modelu (LCM). Koristi različite TurboWan2 modele za brzo generiranje visokokvalitetnih videozapisa iz tekstualnih opisa. Okvir podržava generiranje slika i videozapisa te pruža optimizirane checkpointove za različite GPU konfiguracije.
+
+      **Glavne značajke:**
+      - Ultra brzo generiranje videozapisa i slika
+      - Intuitivni Gradio WebUI
+      - Optimizirano za različite GPU konfiguracije
+      - Kvantizirani i nekvantizirani checkpointovi
+      - Fleksibilna konfiguracija modela
+
+      **Hardverski zahtjevi:**
+      - Preporučeno: RTX 3090 ili noviji
+      - VRAM GPU-a: > 30 GB
+      - Sistemски RAM: > 40 GB
+      - CUDA-kompatibilni NVIDIA upravljački programi
+
+      **Saznajte više:**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+    it_IT: |
+      TurboDiffusion è un framework accelerato per la generazione testo-video basato sul Latent Consistency Model (LCM). Utilizza vari modelli TurboWan2 per generare rapidamente video di alta qualità a partire da descrizioni testuali. Il framework supporta la generazione di immagini e video e fornisce checkpoint ottimizzati per diverse configurazioni GPU.
+
+      **Funzionalità principali:**
+      - Generazione ultra-rapida di video e immagini
+      - Gradio WebUI intuitiva
+      - Ottimizzato per diverse configurazioni GPU
+      - Checkpoint quantizzati e non quantizzati
+      - Configurazione modello flessibile
+
+      **Requisiti hardware:**
+      - Consigliato: RTX 3090 o superiore
+      - VRAM GPU: > 30 GB
+      - RAM di sistema: > 40 GB
+      - Driver NVIDIA compatibili con CUDA
+
+      **Scopri di più:**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+    ja_JP: |
+      TurboDiffusionは、Latent Consistency Model（LCM）に基づく加速テキスト動画生成フレームワークです。さまざまなTurboWan2モデルを使用し、テキスト記述から高品質な動画を高速に生成します。本フレームワークは画像および動画生成をサポートし、異なるGPU構成向けに最適化されたチェックポイントを提供します。
+
+      **主な機能：**
+      - 超高速な動画・画像生成
+      - 直感的なGradio WebUI
+      - さまざまなGPU構成に最適化
+      - 量子化／非量子化チェックポイント
+      - 柔軟なモデル設定
+
+      **ハードウェア要件：**
+      - 推奨：RTX 3090以上
+      - GPU VRAM：30GB超
+      - システムRAM：40GB超
+      - CUDA互換のNVIDIAドライバー
+
+      **詳細情報：**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+    ko_KR: |
+      TurboDiffusion은 Latent Consistency Model(LCM)을 기반으로 한 가속 텍스트-비디오 생성 프레임워크입니다. 다양한 TurboWan2 모델을 활용하여 텍스트 설명으로부터 고품질 비디오를 빠르게 생성합니다. 이 프레임워크는 이미지 및 비디오 생성을 지원하며, 다양한 GPU 구성에 최적화된 체크포인트를 제공합니다.
+
+      **주요 기능:**
+      - 초고속 비디오 및 이미지 생성
+      - 직관적인 Gradio WebUI
+      - 다양한 GPU 구성에 최적화
+      - 양자화 및 비양자화 체크포인트
+      - 유연한 모델 구성
+
+      **하드웨어 요구 사항:**
+      - 권장: RTX 3090 이상
+      - GPU VRAM: 30GB 초과
+      - 시스템 RAM: 40GB 초과
+      - CUDA 호환 NVIDIA 드라이버
+
+      **자세히 알아보기:**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+    nb_NO: |
+      TurboDiffusion er et akselerert rammeverk for tekst-til-video-generering basert på Latent Consistency Model (LCM). Det bruker ulike TurboWan2-modeller for raskt å generere videoer av høy kvalitet fra tekstbeskrivelser. Rammeverket støtter både bilde- og videogenerering og gir optimaliserte checkpoints for ulike GPU-konfigurasjoner.
+
+      **Hovedfunksjoner:**
+      - Ultra-rask video- og bildegenerering
+      - Intuitiv Gradio WebUI
+      - Optimalisert for ulike GPU-konfigurasjoner
+      - Kvantiserte og ikke-kvantiserte checkpoints
+      - Fleksibel modellkonfigurasjon
+
+      **Maskinvarekrav:**
+      - Anbefalt: RTX 3090 eller nyere
+      - GPU VRAM: > 30 GB
+      - System-RAM: > 40 GB
+      - CUDA-kompatible NVIDIA-drivere
+
+      **Les mer:**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+    pt_PT: |
+      TurboDiffusion é um framework acelerado para geração texto-para-vídeo baseado no Latent Consistency Model (LCM). Ele utiliza vários modelos TurboWan2 para gerar rapidamente vídeos de alta qualidade a partir de descrições de texto. O framework suporta geração de imagens e vídeos e fornece checkpoints otimizados para diferentes configurações de GPU.
+
+      **Principais funcionalidades:**
+      - Geração ultra-rápida de vídeos e imagens
+      - Gradio WebUI intuitivo
+      - Otimizado para diferentes configurações de GPU
+      - Checkpoints quantizados e não quantizados
+      - Configuração de modelo flexível
+
+      **Requisitos de hardware:**
+      - Recomendado: RTX 3090 ou superior
+      - VRAM da GPU: > 30 GB
+      - RAM do sistema: > 40 GB
+      - Drivers NVIDIA compatíveis com CUDA
+
+      **Saiba mais:**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+    ru_RU: |
+      TurboDiffusion — это ускоренный фреймворк генерации текста в видео на основе Latent Consistency Model (LCM). Он использует различные модели TurboWan2 для быстрого создания высококачественных видео по текстовым описаниям. Фреймворк поддерживает генерацию изображений и видео и предоставляет оптимизированные чекпоинты для различных конфигураций GPU.
+
+      **Основные возможности:**
+      - Сверхбыстрая генерация видео и изображений
+      - Интуитивный Gradio WebUI
+      - Оптимизация под разные конфигурации GPU
+      - Квантизованные и неквантизованные чекпоинты
+      - Гибкая конфигурация моделей
+
+      **Требования к оборудованию:**
+      - Рекомендуется: RTX 3090 и выше
+      - VRAM GPU: > 30 ГБ
+      - ОЗУ системы: > 40 ГБ
+      - Драйверы NVIDIA, совместимые с CUDA
+
+      **Подробнее:**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+    sv_SE: |
+      TurboDiffusion är ett accelererat ramverk för text-till-video-generering baserat på Latent Consistency Model (LCM). Det använder olika TurboWan2-modeller för att snabbt generera högkvalitativa videor från textbeskrivningar. Ramverket stödjer både bild- och videogenerering och tillhandahåller optimerade checkpoints för olika GPU-konfigurationer.
+
+      **Nyckelfunktioner:**
+      - Ultrasnabb video- och bildgenerering
+      - Intuitivt Gradio WebUI
+      - Optimerat för olika GPU-konfigurationer
+      - Kvantiserade och icke-kvantiserade checkpoints
+      - Flexibel modellkonfiguration
+
+      **Hårdvarukrav:**
+      - Rekommenderas: RTX 3090 eller högre
+      - GPU VRAM: > 30 GB
+      - System-RAM: > 40 GB
+      - CUDA-kompatibla NVIDIA-drivrutiner
+
+      **Läs mer:**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+    tr_TR: |
+      TurboDiffusion, Latent Consistency Model (LCM) tabanlı hızlandırılmış bir metinden videoya üretim çerçevesidir. Çeşitli TurboWan2 modellerini kullanarak metin açıklamalarından yüksek kaliteli videoları hızlı bir şekilde üretir. Çerçeve hem görüntü hem de video üretimini destekler ve farklı GPU yapılandırmaları için optimize edilmiş checkpoint'ler sunar.
+
+      **Temel özellikler:**
+      - Ultra hızlı video ve görüntü üretimi
+      - Sezgisel Gradio WebUI
+      - Farklı GPU yapılandırmaları için optimize edilmiş
+      - Quantized ve unquantized checkpoint'ler
+      - Esnek model yapılandırması
+
+      **Donanım gereksinimleri:**
+      - Önerilen: RTX 3090 veya üzeri
+      - GPU VRAM: > 30 GB
+      - Sistem RAM: > 40 GB
+      - CUDA uyumlu NVIDIA sürücüleri
+
+      **Daha fazla bilgi:**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+    zh_CN: |
+      TurboDiffusion是基于潜在一致性模型（LCM）的加速文本到视频生成框架。它使用各种TurboWan2模型，能够从文本描述快速生成高质量视频。该框架支持图像和视频生成，并为不同的GPU配置提供优化的检查点。
+
+      **主要功能：**
+      - 极速视频和图像生成
+      - 直观的Gradio WebUI
+      - 针对不同GPU配置优化
+      - 量化和非量化检查点
+      - 灵活的模型配置
+
+      **硬件要求：**
+      - 推荐 RTX 3090 及以上GPU
+      - 显存 > 30GB
+      - 内存 > 40GB
+      - CUDA兼容的NVIDIA驱动
+
+      **了解更多：**
+      - [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)
+  tips:
+    before_install:
+      de_DE: |
+        Built-in model: TurboWan2.1-T2V-1.3B-480P
+
+        1. Offiziell unterstützte Modellliste (TurboDiffusion offizielle HF-Organisation)
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+
+        2. hf-Download installieren (Hugging Face CLI) (Im Terminal ausführen)
+
+        - Methode A (Empfohlen): Offizielles Ein-Klick-Installationsskript
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+
+        - Methode B: pip install (geeignet für bestehende Python-Umgebungen)
+        `pip install -U huggingface_hub`
+
+        - Nach der Installation verifizieren:
+        `hf --help`
+
+        3. Bestimmte Modellgewichte in ein festes Verzeichnis herunterladen (Empfohlenes Befehlsvorlage)
+        Vorlage:
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        Beispiel: 14B 720P quant-Gewichte herunterladen (basierend auf dem tatsächlichen Dateinamen im Repo anpassen)
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+
+        4. Anwendung nach abgeschlossenem Download
+        - Bestätigen, dass die Gewichtedatei unter: `/DATA/AppData/turbodiffusion_nvidia/models` liegt
+        - Modellliste in der WebUI aktualisieren, auf Modell entdecken / Modellliste aktualisieren klicken
+      el_GR: |
+        Ενσωματωμένο μοντέλο: TurboWan2.1-T2V-1.3B-480P
+
+        1. Επίσημα υποστηριζόμενη λίστα μοντέλων (TurboDiffusion επίσημος οργανισμός HF)
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+
+        2. Εγκατάσταση hf download (Hugging Face CLI) (Εκτέλεση στο τερματικό)
+
+        - Μέθοδος Α (Συνιστάται): Επίσημο σενάριο εγκατάστασης με ένα κλικ
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+
+        - Μέθοδος B: pip install (κατάλληλο για υπάρχοντα περιβάλλοντα Python)
+        `pip install -U huggingface_hub`
+
+        - Επαλήθευση μετά την εγκατάσταση:
+        `hf --help`
+
+        3. Λήψη συγκεκριμένων βαρών μοντέλου σε σταθερό κατάλογο (Προτεινόμενο πρότυπο εντολής)
+        Πρότυπο:
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        Παράδειγμα: Λήψη 14B 720P quant βαρών (προσαρμόστε βάσει του πραγματικού αρχείου στο repo)
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+
+        4. Πώς να εφαρμόσετε μετά την ολοκλήρωση της λήψης
+        - Επιβεβαιώστε ότι το αρχείο βαρών βρίσκεται στο: `/DATA/AppData/turbodiffusion_nvidia/models`
+        - Ανανεώστε τη λίστα μοντέλων στο WebUI, κάντε κλικ στο discover model / refresh model list
+      en_GB: |
+        Built-in model: TurboWan2.1-T2V-1.3B-480P
+        
+        1. Officially supported model list (TurboDiffusion official HF org)
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+        
+        2. Install hf download (Hugging Face CLI) (Run in terminal)
+        
+        - Method A (Recommended): Official one-click installation script
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+        
+        - Method B: pip install (suitable for existing Python environments)
+        `pip install -U huggingface_hub`
+        
+        - Verify after installation:
+        `hf --help`
+        
+        3.  Download specific model weights to a fixed directory (Recommended command template)        
+        
+        Template:
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        Example: Download 14B 720P quant weights (adjust based on actual filename in repo)
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth  --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        
+        4. How to apply after download is complete
+        - Confirm weights file is at: `/DATA/AppData/turbodiffusion_nvidia/models`
+        - Refresh the model list in the WebUI, click discover model / refresh model list
+      en_US: |
+        Built-in model: TurboWan2.1-T2V-1.3B-480P
+        
+        1. Officially supported model list (TurboDiffusion official HF org)
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+        
+        2. Install hf download (Hugging Face CLI) (Run in terminal)
+        
+        - Method A (Recommended): Official one-click installation script
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+        
+        - Method B: pip install (suitable for existing Python environments)
+        `pip install -U huggingface_hub`
+        
+        - Verify after installation:
+        `hf --help`
+        
+        3.  Download specific model weights to a fixed directory (Recommended command template)
+        Template:
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        Example: Download 14B 720P quant weights (adjust based on actual filename in repo)
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth  --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        
+        4. How to apply after download is complete
+        - Confirm weights file is at: `/DATA/AppData/turbodiffusion_nvidia/models`
+        - Refresh the model list in the WebUI, click discover model / refresh model list
+      fr_FR: |
+        Modèle intégré : TurboWan2.1-T2V-1.3B-480P
+
+        1. Liste des modèles officiellement pris en charge (organisation HF officielle TurboDiffusion)
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+
+        2. Installer hf download (Hugging Face CLI) (Exécuter dans le terminal)
+
+        - Méthode A (Recommandée) : Script d'installation officiel en un clic
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+
+        - Méthode B : pip install (adapté aux environnements Python existants)
+        `pip install -U huggingface_hub`
+
+        - Vérifier après l'installation :
+        `hf --help`
+
+        3. Télécharger des poids de modèle spécifiques dans un répertoire fixe (Modèle de commande recommandé)
+        Modèle :
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        Exemple : Télécharger les poids quant 14B 720P (ajuster selon le nom de fichier réel dans le repo)
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+
+        4. Comment appliquer après le téléchargement
+        - Confirmer que le fichier de poids se trouve à : `/DATA/AppData/turbodiffusion_nvidia/models`
+        - Actualiser la liste des modèles dans la WebUI, cliquer sur discover model / refresh model list
+      hr_HR: |
+        Ugrađeni model: TurboWan2.1-T2V-1.3B-480P
+
+        1. Službeno podržani popis modela (TurboDiffusion službena HF organizacija)
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+
+        2. Instaliraj hf download (Hugging Face CLI) (Pokreni u terminalu)
+
+        - Metoda A (Preporučeno): Službena skripta za instalaciju jednim klikom
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+
+        - Metoda B: pip install (prikladno za postojeća Python okruženja)
+        `pip install -U huggingface_hub`
+
+        - Provjeri nakon instalacije:
+        `hf --help`
+
+        3. Preuzmi specifične težine modela u direktorij (Preporučeni predložak naredbe)
+        Predložak:
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        Primjer: Preuzmi 14B 720P quant težine (prilagodi prema stvarnom nazivu datoteke u repozitoriju)
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+
+        4. Kako primijeniti nakon završetka preuzimanja
+        - Potvrdi da je datoteka težina na: `/DATA/AppData/turbodiffusion_nvidia/models`
+        - Osvježi popis modela u WebUI-u, klikni discover model / refresh model list
+      it_IT: |
+        Modello integrato: TurboWan2.1-T2V-1.3B-480P
+
+        1. Elenco modelli ufficialmente supportati (organizzazione HF ufficiale TurboDiffusion)
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+
+        2. Installa hf download (Hugging Face CLI) (Esegui nel terminale)
+
+        - Metodo A (Consigliato): Script di installazione ufficiale con un clic
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+
+        - Metodo B: pip install (adatto per ambienti Python esistenti)
+        `pip install -U huggingface_hub`
+
+        - Verifica dopo l'installazione:
+        `hf --help`
+
+        3. Scarica pesi del modello specifici in una directory fissa (Modello di comando consigliato)
+        Modello:
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        Esempio: Scarica pesi quant 14B 720P (regola in base al nome file effettivo nel repo)
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+
+        4. Come applicare dopo il download completato
+        - Conferma che il file dei pesi si trova in: `/DATA/AppData/turbodiffusion_nvidia/models`
+        - Aggiorna l'elenco dei modelli nella WebUI, fai clic su discover model / refresh model list
+      ja_JP: |
+        組み込みモデル: TurboWan2.1-T2V-1.3B-480P
+
+        1. 正式にサポートされているモデル一覧（TurboDiffusion公式HF org）
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+
+        2. hf downloadのインストール（Hugging Face CLI）（ターミナルで実行）
+
+        - 方法A（推奨）：公式ワンクリックインストールスクリプト
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+
+        - 方法B：pip install（既存のPython環境に適しています）
+        `pip install -U huggingface_hub`
+
+        - インストール後の確認：
+        `hf --help`
+
+        3. 特定のモデルウェイトを固定ディレクトリにダウンロード（推奨コマンドテンプレート）
+        テンプレート：
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        例：14B 720P quantウェイトのダウンロード（repoの実際のファイル名に基づいて調整）
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+
+        4. ダウンロード完了後の適用方法
+        - ウェイトファイルが `/DATA/AppData/turbodiffusion_nvidia/models` にあることを確認
+        - WebUIでモデルリストを更新し、discover model / refresh model listをクリック
+      ko_KR: |
+        내장 모델: TurboWan2.1-T2V-1.3B-480P
+
+        1. 공식 지원 모델 목록 (TurboDiffusion 공식 HF 조직)
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+
+        2. hf download 설치 (Hugging Face CLI) (터미널에서 실행)
+
+        - 방법 A (권장): 공식 원클릭 설치 스크립트
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+
+        - 방법 B: pip install (기존 Python 환경에 적합)
+        `pip install -U huggingface_hub`
+
+        - 설치 후 확인:
+        `hf --help`
+
+        3. 특정 모델 가중치를 고정 디렉토리에 다운로드 (권장 명령 템플릿)
+        템플릿:
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        예시: 14B 720P quant 가중치 다운로드 (repo의 실제 파일名에 따라 조정)
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+
+        4. 다운로드 완료 후 적용 방법
+        - 가중치 파일이 `/DATA/AppData/turbodiffusion_nvidia/models`에 있는지 확인
+        - WebUI에서 모델 목록을 새로고침하고, discover model / refresh model list 클릭
+      nb_NO: |
+        Innebygd modell: TurboWan2.1-T2V-1.3B-480P
+
+        1. Offisielt støttet modelliste (TurboDiffusion offisiell HF-organisasjon)
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+
+        2. Installer hf download (Hugging Face CLI) (Kjør i terminal)
+
+        - Metode A (Anbefalt): Offisielt ett-klikks installasjonsskript
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+
+        - Metode B: pip install (egnet for eksisterende Python-miljøer)
+        `pip install -U huggingface_hub`
+
+        - Verifiser etter installasjon:
+        `hf --help`
+
+        3. Last ned spesifikke modelvekt til en fast mappe (Anbefalt kommandomal)
+        Mal:
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        Eksempel: Last ned 14B 720P quant vekter (juster basert på faktisk filnavn i repo)
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+
+        4. Hvordan bruke etter nedlasting er fullført
+        - Bekreft at vektfilen er på: `/DATA/AppData/turbodiffusion_nvidia/models`
+        - Oppdater modellisten i WebUI, klikk discover model / refresh model list
+      pt_PT: |
+        Modelo integrado: TurboWan2.1-T2V-1.3B-480P
+
+        1. Lista de modelos oficialmente suportados (organização oficial HF TurboDiffusion)
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+
+        2. Instalar hf download (Hugging Face CLI) (Executar no terminal)
+
+        - Método A (Recomendado): Script de instalação oficial com um clique
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+
+        - Método B: pip install (adequado para ambientes Python existentes)
+        `pip install -U huggingface_hub`
+
+        - Verificar após a instalação:
+        `hf --help`
+
+        3. Transferir pesos de modelo específicos para um diretório fixo (Modelo de comando recomendado)
+        Modelo:
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        Exemplo: Transferir pesos quant 14B 720P (ajustar com base no nome real do ficheiro no repo)
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+
+        4. Como aplicar após a transferência estar concluída
+        - Confirmar que o ficheiro de pesos está em: `/DATA/AppData/turbodiffusion_nvidia/models`
+        - Atualizar a lista de modelos na WebUI, clicar em discover model / refresh model list
+      ru_RU: |
+        Встроенная модель: TurboWan2.1-T2V-1.3B-480P
+
+        1. Официально поддерживаемый список моделей (официальная организация HF TurboDiffusion)
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+
+        2. Установка hf download (Hugging Face CLI) (Запустить в терминале)
+
+        - Метод A (Рекомендуется): Официальный скрипт установки одним нажатием
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+
+        - Метод B: pip install (подходит для существующих Python-окружений)
+        `pip install -U huggingface_hub`
+
+        - Проверить после установки:
+        `hf --help`
+
+        3. Загрузка конкретных весов модели в фиксированную директорию (Рекомендуемый шаблон команды)
+        Шаблон:
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        Пример: Загрузка весов quant 14B 720P (настройте в соответствии с фактическим именем файла в репозитории)
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+
+        4. Как применить после завершения загрузки
+        - Подтвердите, что файл весов находится в: `/DATA/AppData/turbodiffusion_nvidia/models`
+        - Обновите список моделей в WebUI, нажмите discover model / refresh model list
+      sv_SE: |
+        Inbyggd modell: TurboWan2.1-T2V-1.3B-480P
+
+        1. Officiellt stödda modelllistan (TurboDiffusion officiella HF-organisation)
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+
+        2. Installera hf download (Hugging Face CLI) (Kör i terminal)
+
+        - Metod A (Rekommenderad): Officiellt installationsskript med ett klick
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+
+        - Metod B: pip install (lämplig för befintliga Python-miljöer)
+        `pip install -U huggingface_hub`
+
+        - Verifiera efter installation:
+        `hf --help`
+
+        3. Ladda ner specifika modellvikter till en fast katalog (Rekommenderad kommandomal)
+        Mall:
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        Exempel: Ladda ner 14B 720P quant-vikter (justera baserat på faktiskt filnamn i repo)
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+
+        4. Hur man applicerar efter nedladdning är klar
+        - Bekräfta att viktfilen finns på: `/DATA/AppData/turbodiffusion_nvidia/models`
+        - Uppdatera modelllistan i WebUI, klicka på discover model / refresh model list
+      tr_TR: |
+        Dahili model: TurboWan2.1-T2V-1.3B-480P
+
+        1. Resmi olarak desteklenen model listesi (TurboDiffusion resmi HF org)
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+
+        2. hf download kurulumu (Hugging Face CLI) (Terminalde çalıştır)
+
+        - Yöntem A (Önerilen): Resmi tek tıklama kurulum betiği
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+
+        - Yöntem B: pip install (mevcut Python ortamları için uygun)
+        `pip install -U huggingface_hub`
+
+        - Kurulumdan sonra doğrula:
+        `hf --help`
+
+        3. Belirli model ağırlıklarını sabit bir dizine indir (Önerilen komut şablonu)
+        Şablon:
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        Örnek: 14B 720P quant ağırlıklarını indir (repodaki gerçek dosya adına göre ayarla)
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+
+        4. İndirme tamamlandıktan sonra nasıl uygulanır
+        - Ağırlık dosyasının şu konumda olduğunu doğrula: `/DATA/AppData/turbodiffusion_nvidia/models`
+        - WebUI'da model listesini yenile, discover model / refresh model list'e tıkla
+      zh_CN: |
+        内置模型：TurboWan2.1-T2V-1.3B-480P
+
+        1. 官方支持的模型列表（TurboDiffusion官方HF组织）
+        Text-to-Video (T2V)
+        - [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)
+        - [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)
+        Image-to-Video (I2V)
+        - [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)
+
+        2. 安装hf download（Hugging Face CLI）（在终端中运行）
+
+        - 方法A（推荐）：官方一键安装脚本
+        `curl -LsSf https://hf.co/cli/install.sh | bash`
+
+        - 方法B：pip install（适用于现有Python环境）
+        `pip install -U huggingface_hub`
+
+        - 安装后验证：
+        `hf --help`
+
+        3. 将特定模型权重下载到固定目录（推荐命令模板）
+        模板：
+        `hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+        示例：下载14B 720P quant权重（根据仓库中的实际文件名调整）
+        `hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth --local-dir /DATA/AppData/turbodiffusion_nvidia/models`
+
+        4. 下载完成后的应用方法
+        - 确认权重文件位于：/DATA/AppData/turbodiffusion_nvidia/models
+        - 在WebUI中刷新模型列表，点击discover model / refresh model list
+  category: AI
+  author: thu-ml
+  developer: thu-ml
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TurboDiffusion_Nvidia/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TurboDiffusion_Nvidia/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TurboDiffusion_Nvidia/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TurboDiffusion_Nvidia/screenshot-3.png
+  main: turbodiffusion
+  port_map: "27860"
+  architectures:
+    - amd64
+  index: /
+  scheme: http

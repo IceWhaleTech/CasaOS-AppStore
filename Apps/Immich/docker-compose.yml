@@ -8,7 +8,7 @@ services:
           memory: 1024M
     container_name: immich-server
     hostname: immich-server
-    image: ghcr.io/immich-app/immich-server:v2.5.3
+    image: ghcr.io/immich-app/immich-server:v2.7.2
     volumes:
       - /DATA/Gallery/immich:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
@@ -30,7 +30,7 @@ services:
   immich-machine-learning:
     container_name: immich-machine-learning
     hostname: immich-machine-learning
-    image: ghcr.io/immich-app/immich-machine-learning:v2.5.3
+    image: ghcr.io/immich-app/immich-machine-learning:v2.7.2
     environment:
       DB_DATABASE_NAME: immich
       DB_PASSWORD: postgres
@@ -46,11 +46,9 @@ services:
   redis:
     container_name: immich-redis
     hostname: immich-redis
-    image: docker.io/redis:6.2-alpine@sha256:148bb5411c184abd288d9aaed139c98123eeb8824c5d3fce03cf721db58066d8
+    image: docker.io/valkey/valkey:9@sha256:3eeb09785cd61ec8e3be35f8804c8892080f3ca21934d628abc24ee4ed1698f6
     healthcheck:
       test: redis-cli ping || exit 1
-    volumes:
-      - /DATA/AppData/immich/redis:/data
     restart: unless-stopped
     networks:
       - immich
@@ -58,7 +56,7 @@ services:
   database:
     container_name: immich-postgres
     hostname: immich-postgres
-    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
@@ -72,7 +70,7 @@ services:
 
 networks:
   immich:
-    name: immich
+    driver: bridge
 
 x-casaos:
   architectures:
