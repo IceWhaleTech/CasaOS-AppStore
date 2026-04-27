@@ -1,9 +1,11 @@
 name: popcornn
 services:
   client:
+    image: bobdivx/popcorn-frontend:latest
     container_name: popcornn-client
     depends_on:
       - server
+    restart: unless-stopped
     deploy:
       resources:
         limits:
@@ -21,37 +23,58 @@ services:
       PUID: $PUID
       TZ: $TZ
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:4321/ || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost/ || exit 1"]
       timeout: 10s
       interval: 30s
       retries: 5
       start_period: 1m0s
-    image: bobdivx/popcorn-frontend:latest
     networks:
       - popcornn-network
     ports:
       - "4325:80"
-    restart: unless-stopped
     x-casaos:
       envs:
         - container: PUBLIC_BACKEND_URL
           description:
-            en_us: "Backend URL as seen by the browser (e.g. http://your-nas:3000). Leave empty if same host."
+            en_US: Backend URL as seen by the browser. Leave empty to use the same ZimaOS host on port 3000.
+            en_GB: Backend URL as seen by the browser. Leave empty to use the same ZimaOS host on port 3000.
+            zh_CN: 浏览器访问后端使用的 URL。留空则使用同一台 ZimaOS 主机的 3000 端口。
+            ja_JP: ブラウザから見たバックエンド URL。同じ ZimaOS ホストの 3000 ポートを使う場合は空のままにします。
+        - container: PUBLIC_CLIENT_URL
+          description:
+            en_US: Public URL of the Popcornn web interface. Optional, used for generated links.
+            en_GB: Public URL of the Popcornn web interface. Optional, used for generated links.
+            zh_CN: Popcornn 网页界面的公开 URL。可选，用于生成链接。
+            ja_JP: Popcornn Web UI の公開 URL。リンク生成に使う任意項目です。
         - container: TZ
           description:
-            en_us: TimeZone
+            en_US: Time zone
+            en_GB: Time zone
+            zh_CN: 时区
+            ja_JP: タイムゾーン
         - container: PUID
           description:
-            en_us: Run as user ID
+            en_US: Run as user ID
+            en_GB: Run as user ID
+            zh_CN: 运行用户 ID
+            ja_JP: 実行ユーザー ID
         - container: PGID
           description:
-            en_us: Run as group ID
+            en_US: Run as group ID
+            en_GB: Run as group ID
+            zh_CN: 运行组 ID
+            ja_JP: 実行グループ ID
       ports:
         - container: "80"
           description:
-            en_us: Web UI Port
+            en_US: Web UI port
+            en_GB: Web UI port
+            zh_CN: Web UI 端口
+            ja_JP: Web UI ポート
   server:
+    image: bobdivx/popcorn-backend:latest
     container_name: popcornn-server
+    restart: unless-stopped
     deploy:
       resources:
         limits:
@@ -71,19 +94,17 @@ services:
       SERVER_PORT: 3000
       TZ: $TZ
       TX_ALT: ${TX_ALT:-0}
-      FLARESOLVERR_URL: ${FLARESOLVERR_URL:-}
+      FLARESOLVERR_URL: ${FLARESOLVERR_URL:-http://flaresolverr:8191}
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:3000/api/client/health || exit 1"]
       timeout: 10s
       interval: 30s
       retries: 5
       start_period: 1m0s
-    image: bobdivx/popcorn-backend:latest
     networks:
       - popcornn-network
     ports:
       - "3000:3000"
-    restart: unless-stopped
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/data
@@ -91,6 +112,58 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/downloads
         target: /app/downloads
+    x-casaos:
+      envs:
+        - container: API_USERNAME
+          description:
+            en_US: Local backend administrator username.
+            en_GB: Local backend administrator username.
+            zh_CN: 本地后端管理员用户名。
+            ja_JP: ローカルバックエンド管理者ユーザー名。
+        - container: API_PASSWORD
+          description:
+            en_US: Local backend administrator password. Change it after installation.
+            en_GB: Local backend administrator password. Change it after installation.
+            zh_CN: 本地后端管理员密码。安装后请修改。
+            ja_JP: ローカルバックエンド管理者パスワード。インストール後に変更してください。
+        - container: FLARESOLVERR_URL
+          description:
+            en_US: Optional FlareSolverr URL for Cloudflare-protected indexers. Leave empty to use the included service.
+            en_GB: Optional FlareSolverr URL for Cloudflare-protected indexers. Leave empty to use the included service.
+            zh_CN: 用于受 Cloudflare 保护索引器的可选 FlareSolverr URL。留空则使用内置服务。
+            ja_JP: Cloudflare 保護付きインデクサー向けの任意 FlareSolverr URL。空の場合は同梱サービスを使います。
+        - container: RUN_AS_ROOT
+          description:
+            en_US: Run the backend as root inside the container when required for file permissions.
+            en_GB: Run the backend as root inside the container when required for file permissions.
+            zh_CN: 文件权限需要时，在容器内以 root 运行后端。
+            ja_JP: ファイル権限で必要な場合、コンテナ内でバックエンドを root として実行します。
+        - container: TX_ALT
+          description:
+            en_US: Alternative torrent engine mode. Keep 0 unless instructed by support.
+            en_GB: Alternative torrent engine mode. Keep 0 unless instructed by support.
+            zh_CN: 备用 torrent 引擎模式。除非支持人员要求，否则保持 0。
+            ja_JP: 代替 torrent エンジンモード。サポートから指示がない限り 0 のままにします。
+      ports:
+        - container: "3000"
+          description:
+            en_US: Backend API port
+            en_GB: Backend API port
+            zh_CN: 后端 API 端口
+            ja_JP: バックエンド API ポート
+      volumes:
+        - container: /app/.data
+          description:
+            en_US: Popcornn database and configuration directory
+            en_GB: Popcornn database and configuration directory
+            zh_CN: Popcornn 数据库和配置目录
+            ja_JP: Popcornn データベースと設定ディレクトリ
+        - container: /app/downloads
+          description:
+            en_US: Downloads, media library and transcoding cache directory
+            en_GB: Downloads, media library and transcoding cache directory
+            zh_CN: 下载、媒体库和转码缓存目录
+            ja_JP: ダウンロード、メディアライブラリ、トランスコードキャッシュのディレクトリ
   flaresolverr:
     image: flaresolverr/flaresolverr:latest
     container_name: popcornn-flaresolverr
@@ -98,7 +171,7 @@ services:
     networks:
       - popcornn-network
     ports:
-      - "9191:9191"
+      - "8191:8191"
     deploy:
       resources:
         limits:
@@ -117,17 +190,126 @@ x-casaos:
   main: client
   author: Popcornn Team
   category: Media
-  description:
-    en_us: "Popcornn is a self-hosted BitTorrent manager with a modern web interface. Search and download torrents, manage your library, stream with built-in HLS transcoding. Backend (Rust) + frontend in one stack. Optional FlareSolverr for Cloudflare-protected indexers."
   developer: Popcornn Team
+  tagline:
+    en_US: Self-hosted BitTorrent manager with streaming and HLS transcoding.
+    en_GB: Self-hosted BitTorrent manager with streaming and HLS transcoding.
+    zh_CN: 支持在线播放和 HLS 转码的自托管 BitTorrent 管理器。
+    ja_JP: ストリーミングと HLS トランスコードに対応したセルフホスト BitTorrent マネージャー。
+  description:
+    en_US: |
+      Popcornn is a free, self-hosted BitTorrent manager for your own server. It combines a Rust backend and a modern web interface to search torrents, manage downloads, organise a media library and stream content with built-in HLS transcoding.
+
+      - Ready to install on ZimaOS with frontend, backend and optional FlareSolverr included
+      - Search and download torrents from configured indexers
+      - Stream media directly from the browser with HLS support
+      - Manage downloads, media paths, indexers, requests and synchronisation settings
+      - No paid subscription is required; Popcornn runs on your own device
+
+      **Learn More:**
+      - [Popcornn Website](https://popcornn.app)
+      - [Backend GitHub](https://github.com/bobdivx/popcorn-server)
+      - [Client GitHub](https://github.com/bobdivx/popcorn-client)
+    en_GB: |
+      Popcornn is a free, self-hosted BitTorrent manager for your own server. It combines a Rust backend and a modern web interface to search torrents, manage downloads, organise a media library and stream content with built-in HLS transcoding.
+
+      - Ready to install on ZimaOS with frontend, backend and optional FlareSolverr included
+      - Search and download torrents from configured indexers
+      - Stream media directly from the browser with HLS support
+      - Manage downloads, media paths, indexers, requests and synchronisation settings
+      - No paid subscription is required; Popcornn runs on your own device
+
+      **Learn More:**
+      - [Popcornn Website](https://popcornn.app)
+      - [Backend GitHub](https://github.com/bobdivx/popcorn-server)
+      - [Client GitHub](https://github.com/bobdivx/popcorn-client)
+    zh_CN: |
+      Popcornn 是一个免费的自托管 BitTorrent 管理器，运行在您自己的服务器上。它将 Rust 后端与现代 Web 界面结合，可搜索 torrent、管理下载、整理媒体库，并通过内置 HLS 转码进行在线播放。
+
+      - 可直接在 ZimaOS 上安装，包含前端、后端和可选 FlareSolverr
+      - 从已配置的索引器搜索和下载 torrent
+      - 通过浏览器直接播放媒体，支持 HLS
+      - 管理下载、媒体路径、索引器、请求和同步设置
+      - 不需要付费订阅；Popcornn 运行在您自己的设备上
+
+      **了解更多：**
+      - [Popcornn 官网](https://popcornn.app)
+      - [后端 GitHub](https://github.com/bobdivx/popcorn-server)
+      - [客户端 GitHub](https://github.com/bobdivx/popcorn-client)
+    ja_JP: |
+      Popcornn は、自分のサーバーで動作する無料のセルフホスト BitTorrent マネージャーです。Rust バックエンドとモダンな Web UI を組み合わせ、torrent 検索、ダウンロード管理、メディアライブラリ整理、内蔵 HLS トランスコードによるストリーミングを提供します。
+
+      - フロントエンド、バックエンド、任意の FlareSolverr を含み、ZimaOS にすぐインストール可能
+      - 設定済みインデクサーから torrent を検索してダウンロード
+      - HLS 対応でブラウザから直接メディアを再生
+      - ダウンロード、メディアパス、インデクサー、リクエスト、同期設定を管理
+      - 有料サブスクリプションは不要で、自分のデバイス上で動作します
+
+      **詳細：**
+      - [Popcornn ウェブサイト](https://popcornn.app)
+      - [バックエンド GitHub](https://github.com/bobdivx/popcorn-server)
+      - [クライアント GitHub](https://github.com/bobdivx/popcorn-client)
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/screenshot-1.png
-  tagline:
-    en_us: Self-hosted BitTorrent manager with streaming and HLS transcoding
-  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/icon.png
-  title:
-    en_us: Popcornn
-  index: /
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/screenshot-3.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/thumbnail.png
   scheme: http
   port_map: "4325"
+  index: /
+  title:
+    en_US: Popcornn
+    en_GB: Popcornn
+    zh_CN: Popcornn
+    ja_JP: Popcornn
+  tips:
+    before_install:
+      en_US: |
+        ### Getting Started
+
+        Popcornn is a free self-hosted application. It does not require a paid subscription and runs on your own ZimaOS device.
+
+        1. Install the app from ZimaOS.
+        2. Open the Web UI on port **4325**.
+        3. If the setup wizard asks for the backend URL, use `http://<your-zima-ip>:3000`.
+        4. The backend API is available on port **3000** and downloads are stored in `/DATA/AppData/$AppID/downloads`.
+        5. Change the default local backend password after installation if you expose the service outside your local network.
+
+        FlareSolverr is included for Cloudflare-protected indexers. You can leave **FLARESOLVERR_URL** empty unless you want to use an external FlareSolverr instance.
+      en_GB: |
+        ### Getting Started
+
+        Popcornn is a free self-hosted application. It does not require a paid subscription and runs on your own ZimaOS device.
+
+        1. Install the app from ZimaOS.
+        2. Open the Web UI on port **4325**.
+        3. If the setup wizard asks for the backend URL, use `http://<your-zima-ip>:3000`.
+        4. The backend API is available on port **3000** and downloads are stored in `/DATA/AppData/$AppID/downloads`.
+        5. Change the default local backend password after installation if you expose the service outside your local network.
+
+        FlareSolverr is included for Cloudflare-protected indexers. You can leave **FLARESOLVERR_URL** empty unless you want to use an external FlareSolverr instance.
+      zh_CN: |
+        ### 入门
+
+        Popcornn 是免费的自托管应用，不需要付费订阅，运行在您自己的 ZimaOS 设备上。
+
+        1. 从 ZimaOS 安装应用。
+        2. 打开 **4325** 端口上的 Web UI。
+        3. 如果设置向导要求填写后端 URL，请使用 `http://<your-zima-ip>:3000`。
+        4. 后端 API 使用 **3000** 端口，下载文件保存在 `/DATA/AppData/$AppID/downloads`。
+        5. 如果要在本地网络之外公开服务，请在安装后修改默认本地后端密码。
+
+        FlareSolverr 已包含在应用中，用于受 Cloudflare 保护的索引器。除非要使用外部 FlareSolverr 实例，否则 **FLARESOLVERR_URL** 可留空。
+      ja_JP: |
+        ### はじめに
+
+        Popcornn は無料のセルフホストアプリです。有料サブスクリプションは不要で、自分の ZimaOS デバイス上で動作します。
+
+        1. ZimaOS からアプリをインストールします。
+        2. **4325** ポートの Web UI を開きます。
+        3. セットアップウィザードでバックエンド URL を求められた場合は、`http://<your-zima-ip>:3000` を入力します。
+        4. バックエンド API は **3000** ポートで利用でき、ダウンロードは `/DATA/AppData/$AppID/downloads` に保存されます。
+        5. ローカルネットワーク外に公開する場合は、インストール後にデフォルトのローカルバックエンドパスワードを変更してください。
+
+        Cloudflare 保護付きインデクサー用に FlareSolverr が同梱されています。外部 FlareSolverr インスタンスを使わない場合、**FLARESOLVERR_URL** は空のままで構いません。
