@@ -112,3 +112,12 @@ x-casaos:
   port_map: "3003"
   version: "12.1.4"
   updateAt: "2025-12-03"
+  releaseNotes:
+    en_US: |-
+      - v13.0.1 preserves timezone user preference when converting dashboards from V1 to V2.
+      - Provisioning now includes dashboard validation errors in pull request comments.
+      - Unified storage skips migrations already marked migrated by dual-write state.
+  website: "https://grafana.com/"
+  repo: "https://github.com/grafana/grafana"
+  support: "https://github.com/grafana/grafana/issues"
+  docs: "https://grafana.com/docs/grafana/latest/"

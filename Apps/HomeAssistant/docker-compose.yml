@@ -204,7 +204,7 @@ x-casaos:
       该应用的核心功能包括可定制的仪表板、强大的自动化和语音助手。仪表板支持拖放式编辑，多种卡片类型可展示数据并控制设备，如灯光或传感器。它提供高级自动化引擎，例如日落后开灯或检测车库门未关时发出警报。语音助手 Assist 支持自然语言控制，兼容手机、平板、智能手表甚至传统电话，用户可自定义对话并实验 AI 交互，满足多样化需求。
 
       它通过扩展插件增强功能，支持运行 AdGuard 广告拦截、NodeRed 自动化引擎或将设备转为 Spotify Connect 目标。家居能源管理功能优化太阳能生产和用电规划，节省成本。Home Assistant Cast 将电视变为仪表板显示屏，NFC 标签可触发音乐播放或日常自动化任务。社区文档支持优化配置，数据本地处理确保隐私，适合家庭或小型团队管理智能家居。
-      
+
       **主要功能：**
       - 本地数据存储，优先考虑隐私
       - 拖放可定制仪表板用于设备控制和数据显示
@@ -482,6 +482,10 @@ x-casaos:
   port_map: "8123"
   version: "2025.11"
   updateAt: "2025-12-03"
+  releaseNotes:
+    en_US: |-
+      - 2026.4.4 includes fixes for Kodi media browsing, Victron BLE reauth, and Google Generative AI TTS MIME checks.
+      - Dependency updates and integration fixes include Hive, Alexa Devices, MQTT, Roborock, and Gardena Bluetooth.
   website: "https://www.home-assistant.io"
   repo: "https://github.com/home-assistant/core"
   support: "https://community.home-assistant.io"
