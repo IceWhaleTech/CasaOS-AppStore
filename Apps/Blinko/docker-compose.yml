@@ -1,0 +1,597 @@
+services:
+  blinko:
+    image: blinkospace/blinko:1.8.7
+    container_name: blinko
+    restart: unless-stopped
+    networks:
+      - blinko-net
+    depends_on:
+      blinko-postgres:
+        condition: service_healthy
+    ports:
+      - target: 1111
+        published: "1111"
+        protocol: tcp
+    environment:
+      NODE_ENV: production
+      NEXTAUTH_URL: http://localhost:1111
+      NEXT_PUBLIC_BASE_URL: http://localhost:1111
+      NEXTAUTH_SECRET: 22PhaGVvvBTEC5E5G+U+5O1xqdmuzZKzjLeDMvdvB7I=
+      DATABASE_URL: postgresql://postgres:JWD9bxUR7Um9PaGg7FQZ@blinko-postgres:5432/postgres
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/blinko_data
+        target: /app/.blinko
+    logging:
+      options:
+        max-size: 10m
+        max-file: '3'
+    deploy:
+      resources:
+        reservations:
+          memory: 512m
+    x-casaos:
+      envs:
+        - container: NODE_ENV
+          description:
+            de_DE: Node.js-Umgebungsmodus (Entwicklung, Produktion oder Test)
+            el_GR: Λειτουργία περιβάλλοντος Node.js (ανάπτυξη, παραγωγή ή δοκιμές)
+            en_GB: Node.js environment mode (development, production, or test)
+            en_US: Node.js environment mode (development, production, or test)
+            fr_FR: Mode de l'environnement Node.js (développement, production ou test)
+            hr_HR: Mod Node.js za okruženje (razvojno, proizvodno ili testiranje)
+            it_IT: Modalità ambiente Node.js (sviluppo, produzione o test)
+            ja_JP: Node.js の環境モード（開発、本番、またはテスト）
+            ko_KR: Node.js 환경 모드 (개발, 프로덕션 또는 테스트)
+            nb_NO: Modus for Node.js-miljøet (utvikling, produksjon eller testing)
+            pt_PT: Modo de ambiente do Node.js (desenvolvimento, produção ou teste)
+            ru_RU: Режим среды Node.js (разработка, производство или тестирование)
+            sv_SE: Node.js-miljöläge (utveckling, produktion eller test)
+            tr_TR: Node.js ortam modu (geliştirme, üretim veya test)
+            zh_CN: Node.js 环境模式（开发、生产或测试）
+        - container: NEXTAUTH_URL
+          description:
+            de_DE: Basis-URL für den NextAuth.js-Authentifizierungsanbieter
+            el_GR: Διεύθυνση βάσης δεδομένων για τον προμηθευτή αναγνώρισης NextAuth.js
+            en_GB: Base URL for NextAuth.js authentication provider
+            en_US: Base URL for NextAuth.js authentication provider
+            fr_FR: URL de base pour le fournisseur d'authentification NextAuth.js
+            hr_HR: Osnovna URL adresa za pružatelja autentičnosti NextAuth.js
+            it_IT: URL base per il provider di autenticazione NextAuth.js
+            ja_JP: NextAuth.js 認証プロバイダーのベースURL
+            ko_KR: NextAuth.js 인증 제공자를 위한 기본 URL
+            nb_NO: Base-URL for NextAuth.js-autentiseringsleverandør
+            pt_PT: URL base para o provedor de autenticação do NextAuth.js
+            ru_RU: Основной URL для провайдера аутентификации NextAuth.js
+            sv_SE: Bas-URL för NextAuth.js-autentiseringsleverantör
+            tr_TR: NextAuth.js kimlik doğrulama sağlayıcısı için temel URL
+            zh_CN: NextAuth.js 认证提供器的基础 URL
+        - container: NEXT_PUBLIC_BASE_URL
+          description:
+            de_DE: Öffentliche Basis-URL für eine clientseitige Next.js-Anwendung
+            el_GR: Δημόσιο baseUrl για εφαρμογή Next.js στο πλευρό του πελάτη
+            en_GB: Public base URL for client-side Next.js application
+            en_US: Public base URL for client-side Next.js application
+            fr_FR: URL de base public pour une application côté client Next.js
+            hr_HR: Javna osnovna URL adresa za klijentsku Next.js aplikaciju
+            it_IT: URL di base pubblico per un'applicazione Next.js lato client
+            ja_JP: クライアントサイドの Next.js アプリケーション用の公開ベースURL
+            ko_KR: 클라이언트 측 Next.js 애플리케이션을 위한 공인 기본 URL
+            nb_NO: Offentlig base-URL for klient-siden Next.js-applikasjon
+            pt_PT: URL base público para aplicação do lado do cliente do Next.js
+            ru_RU: Публичный базовый URL для клиентского приложения Next.js
+            sv_SE: Public basadress för klientbaserad Next.js-app
+            tr_TR: İstemci tarafı Next.js uygulaması için public temel URL
+            zh_CN: 客户端 Next.js 应用的公共基础 URL
+        - container: NEXTAUTH_SECRET
+          description:
+            de_DE: Geheimer Schlüssel zum Verschlüsseln von NextAuth.js-JWT-Token
+            el_GR: Μυστικό κλειδί που χρησιμοποιείται για το κρυπτογράφηση των JWT tokens του NextAuth.js
+            en_GB: Secret key used to encrypt NextAuth.js JWT tokens
+            en_US: Secret key used to encrypt NextAuth.js JWT tokens
+            fr_FR: Clé secrète utilisée pour chiffrer les jetons JWT de NextAuth.js
+            hr_HR: Tajna ključica korištena za šifriranje NextAuth.js JWT tokena
+            it_IT: Chiave segreta utilizzata per criptare i token JWT di NextAuth.js
+            ja_JP: NextAuth.js の JWT トークンを暗号化するために使用されるシークレットキー
+            ko_KR: NextAuth.js JWT 토큰을 암호화하는 데 사용되는 시크릿 키
+            nb_NO: Hemmelig nøkkel som brukes til å kryptere NextAuth.js JWT-tokener
+            pt_PT: Chave secreta usada para encriptar os tokens JWT do NextAuth.js
+            ru_RU: Секретный ключ, используемый для шифрования токенов JWT NextAuth.js
+            sv_SE: Sekret nyckel som används för att kryptera NextAuth.js JWT-token
+            tr_TR: NextAuth.js JWT tokenlarını şifrelemek için kullanılan gizli anahtar
+            zh_CN: 用于加密 NextAuth.js JWT 令牌的密钥
+        - container: DATABASE_URL
+          description:
+            de_DE: Verbindungshinweis zur PostgreSQL-Datenbank mit Anmeldeinformationen
+            el_GR: Συμβολοσειρά σύνδεσης με βάση PostgreSQL με πιστοποιητικά
+            en_GB: PostgreSQL database connection string with credentials
+            en_US: PostgreSQL database connection string with credentials
+            fr_FR: Chaîne de connexion à la base de données PostgreSQL avec les identifiants
+            hr_HR: Veznica za bazu podataka PostgreSQL s vjerodajnicama
+            it_IT: String di connessione al database PostgreSQL con credenziali
+            ja_JP: PostgreSQL データベース接続文字列と認証情報
+            ko_KR: PostgreSQL 데이터베이스 연결 문자열 및 인증 정보
+            nb_NO: PostgreSQL-databas tilkoblingsstreng med påloggingsopplysninger
+            pt_PT: String de ligação à base de dados PostgreSQL com credenciais
+            ru_RU: Строка подключения к базе данных PostgreSQL с учетными данными
+            sv_SE: Anslutningssträng för PostgreSQL-databas med autentiseringsuppgifter
+            tr_TR: PostgreSQL veritabanı bağlantı dizini ve kimlik bilgileri
+            zh_CN: PostgreSQL 数据库连接字符串（含凭据）
+      ports:
+        - container: "1111"
+          description:
+            de_DE: Haupt-Webinterface-Port für den Zugriff auf die Blinko-Anwendung
+            el_GR: Κύρια θύρα διεπαφής ιστού για την πρόσβαση στην εφαρμογή Blinko
+            en_GB: Main web interface port for Blinko application access
+            en_US: Main web interface port for Blinko application access
+            fr_FR: Port principal de l'interface Web pour l'accès à l'application Blinko
+            hr_HR: Glavni web sučeljski port za pristup aplikaciji Blinko
+            it_IT: Principale porta dell'interfaccia web per l'accesso all'applicazione Blinko
+            ja_JP: Blinko アプリケーションへのアクセス用のメイン Web インターフェースポート
+            ko_KR: Blinko 애플리케이션 액세스를 위한 주요 웹 인터페이스 포트
+            nb_NO: Hovednettvervsport for tilgang til Blinko-applikasjonen
+            pt_PT: Principal porta da interface web para acesso à aplicação Blinko
+            ru_RU: Основной веб-интерфейс для доступа к приложению Blinko
+            sv_SE: Huvudwebbgränssnittsport för tillgång till Blinko-appen
+            tr_TR: Blinko uygulaması erişimi için ana web arayüzü bağlantı noktası
+            zh_CN: Blinko 应用程序访问的主 Web 界面端口
+      volumes:
+        - container: /app/.blinko
+          description:
+            de_DE: Daten, Uploads und Konfigurationsdateien der Blinko-Anwendung
+            el_GR: Δεδομένα εφαρμογής Blinko, αναφορές και αρχεία ρυθμίσεων
+            en_GB: Blinko application data, uploads, and configuration files
+            en_US: Blinko application data, uploads, and configuration files
+            fr_FR: Données de l'application Blinko, fichiers d'upload et fichiers de configuration
+            hr_HR: Podaci aplikacije Blinko, datoteke za učitavanje i konfiguracijske datoteke
+            it_IT: Dati dell'applicazione Blinko, caricamenti e file di configurazione
+            ja_JP: Blinko アプリケーションデータ、アップロード、および設定ファイル
+            ko_KR: Blinko 애플리케이션 데이터, 업로드 및 설정 파일
+            nb_NO: Data for Blinko-appen, lasteoppgaver og konfigurasjonsfiler
+            pt_PT: Dados da aplicação Blinko, carregamentos e ficheiros de configuração
+            ru_RU: Данные приложения Blinko, загрузки и файлы конфигурации
+            sv_SE: Data för Blinko-appen, uppladdningar och konfigurationsfiler
+            tr_TR: Blinko uygulama verileri, yüklemeleri ve yapılandırma dosyaları
+            zh_CN: Blinko 应用程序数据、上传文件和配置文件
+  blinko-postgres:
+    image: postgres:14
+    container_name: blinko-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: JWD9bxUR7Um9PaGg7FQZ
+      TZ: $TZ
+    networks:
+      - blinko-net
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres_data
+        target: /var/lib/postgresql/data
+    deploy:
+      resources:
+        reservations:
+          memory: 256m
+    healthcheck:
+      test:
+        - CMD
+        - pg_isready
+        - -U
+        - postgres
+        - -d
+        - postgres
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    x-casaos:
+      envs:
+        - container: POSTGRES_DB
+          description:
+            de_DE: Name der zu erstellenden und zu verwendenden PostgreSQL-Datenbank
+            el_GR: Το όνομα της βάσης δεδομένων PostgreSQL που θα δημιουργηθεί και θα χρησιμοποιηθεί
+            en_GB: Name of the PostgreSQL database to create and use
+            en_US: Name of the PostgreSQL database to create and use
+            fr_FR: Nom de la base de données PostgreSQL à créer et utiliser
+            hr_HR: Ime baze podataka PostgreSQL-a koju treba stvoriti i koristiti
+            it_IT: Nome del database PostgreSQL da creare e utilizzare
+            ja_JP: 作成して使用する PostgreSQL データベースの名前
+            ko_KR: PostgreSQL 데이터베이스를 생성하고 사용할 이름
+            nb_NO: Navnet på PostgreSQL-databasen som skal opprettes og brukes
+            pt_PT: Nome da base de dados PostgreSQL a criar e utilizar
+            ru_RU: Имя базы данных PostgreSQL для создания и использования
+            sv_SE: Namnet på den PostgreSQL-databas som ska skapas och användas
+            tr_TR: PostgreSQL veritabanı oluşturulacak ve kullanılacak ad
+            zh_CN: 要创建并使用的 PostgreSQL 数据库名称
+        - container: POSTGRES_USER
+          description:
+            de_DE: PostgreSQL-Datenbankbenutzer für die Authentifizierung
+            el_GR: Χρήστης βάσης δεδομένων PostgreSQL για πιστοποίηση
+            en_GB: PostgreSQL database user for authentication
+            en_US: PostgreSQL database user for authentication
+            fr_FR: Utilisateur de base de données PostgreSQL pour l'authentification
+            hr_HR: Baza podataka PostgreSQL korisnik za autentifikaciju
+            it_IT: Utente del database PostgreSQL per l'autenticazione
+            ja_JP: PostgreSQL データベースユーザーの認証用
+            ko_KR: PostgreSQL 데이터베이스 사용자를 인증을 위한
+            nb_NO: Bruker for PostgreSQL-databasen til autentisering
+            pt_PT: Utilizador da base de dados PostgreSQL para autenticação
+            ru_RU: Пользователь базы данных PostgreSQL для аутентификации
+            sv_SE: Användare för databas PostgreSQL för autentisering
+            tr_TR: PostgreSQL veritabanı kullanıcısı kimlik doğrulama için
+            zh_CN: PostgreSQL 数据库用户用于身份验证
+        - container: POSTGRES_PASSWORD
+          description:
+            de_DE: PostgreSQL-Datenbankbenutzerpasswort für die Authentifizierung
+            el_GR: Λέξη κωδικού χρήστη βάσης δεδομένων PostgreSQL για πιστοποίηση
+            en_GB: PostgreSQL database user password for authentication
+            en_US: PostgreSQL database user password for authentication
+            fr_FR: Mot de passe utilisateur de la base de données PostgreSQL pour l'authentification
+            hr_HR: Lozinka korisnika baze podataka PostgreSQL za autentifikaciju
+            it_IT: Password dell'utente del database PostgreSQL per l'autenticazione
+            ja_JP: PostgreSQL データベースユーザーのパスワード（認証用）
+            ko_KR: PostgreSQL 데이터베이스 사용자 비밀번호 인증
+            nb_NO: Passord for PostgreSQL-databasbruker for autentisering
+            pt_PT: Palavra-passe do utilizador da base de dados PostgreSQL para autenticação
+            ru_RU: Пароль пользователя базы данных PostgreSQL для аутентификации
+            sv_SE: Lösenord för användare i PostgreSQL-databasen för autentisering
+            tr_TR: PostgreSQL veritabanı kullanıcı şifresi kimlik doğrulama için
+            zh_CN: PostgreSQL 数据库用户密码用于身份验证
+        - container: TZ
+          description:
+            de_DE: Zeitzone-Einstellung für den PostgreSQL-Server
+            el_GR: Ρύθμιση ζώνης ώρας για τον δίαυλο PostgreSQL
+            en_GB: Timezone setting for the PostgreSQL server
+            en_US: Timezone setting for the PostgreSQL server
+            fr_FR: Paramétrage de la zone horaire pour le serveur PostgreSQL
+            hr_HR: PostgreSQL server postavka vremenske zone
+            it_IT: Impostazione del fuso orario per il server PostgreSQL
+            ja_JP: PostgreSQL サーバーのタイムゾーン設定
+            ko_KR: PostgreSQL 서버의 시간대 설정
+            nb_NO: Tidsoneinnstilling for PostgreSQL-serveren
+            pt_PT: Definição da zona horária para o servidor PostgreSQL
+            ru_RU: Настройка часового пояса для сервера PostgreSQL
+            sv_SE: Inställning av tidszon för PostgreSQL-servern
+            tr_TR: PostgreSQL sunucu için zaman dilimi ayarı
+            zh_CN: PostgreSQL 服务器的时区设置
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            de_DE: PostgreSQL-Datenspeicher für persistente Datenbank-Speicherung
+            el_GR: Διεύθυνση καταλόγου δεδομένων PostgreSQL για μόνιμη αποθήκευση βάσης δεδομένων
+            en_GB: PostgreSQL data directory for persistent database storage
+            en_US: PostgreSQL data directory for persistent database storage
+            fr_FR: Répertoire de données PostgreSQL pour le stockage persistant de la base de données
+            hr_HR: PostgreSQL direktorij podataka za trajno pohranjivanje baze podataka
+            it_IT: Directory dei dati PostgreSQL per l'archiviazione persistente del database
+            ja_JP: PostgreSQL データディレクトリ（永続的なデータベースストレージ用）
+            ko_KR: PostgreSQL 데이터 디렉토리는 영구적인 데이터베이스 저장에 사용됩니다.
+            nb_NO: PostgreSQL-datakatalog for varig lagring av databaser
+            pt_PT: Diretório de dados do PostgreSQL para armazenamento persistente de base de dados
+            ru_RU: Каталог данных PostgreSQL для постоянного хранения базы данных
+            sv_SE: PostgreSQL-datakatalog för permanent lagring av databaser
+            tr_TR: PostgreSQL veri dizini kalıcı veritabanı depolama için
+            zh_CN: PostgreSQL 数据目录用于持久化数据库存储
+networks:
+  blinko-net:
+    driver: bridge
+name: blinko
+x-casaos:
+  title:
+    de_DE: blinko
+    el_GR: blinko
+    en_GB: blinko
+    en_US: blinko
+    fr_FR: blinko
+    hr_HR: blinko
+    it_IT: blinko
+    ja_JP: blinko
+    ko_KR: blinko
+    nb_NO: blinko
+    pt_PT: blinko
+    ru_RU: blinko
+    sv_SE: blinko
+    tr_TR: blinko
+    zh_CN: blinko
+  tagline:
+    de_DE: Blinko ist ein KI-gestütztes Projekt für Kartennotizen. Es wurde für Einzelpersonen entwickelt, die ihre flüchtigen Gedanken schnell erfassen und organisieren möchten. Blinko ermöglicht es Benutzern, Ideen nahtlos aufzuschreiben, sobald sie entstehen, und stellt sicher, dass kein Funke der Kreativität verloren geht.
+    el_GR: Το Blinko είναι ένα έργο σημειώσεων σε κάρτες με τεχνητή νοημοσύνη. Σχεδιάστηκε για άτομα που θέλουν να καταγράφουν και να οργανώνουν γρήγορα τις στιγμιαίες σκέψεις τους. Το Blinko επιτρέπει στους χρήστες να σημειώνουν ιδέες χωρίς καμία δυσκολία τη στιγμή που έρχονται στο μυαλό, διασφαλίζοντας ότι κανένα σπίθα δημιουργικότητας δεν χάνεται.
+    en_GB: Blinko is an AI-powered card note-taking project. Designed for individuals who want to quickly capture and organize their fleeting thoughts. Blinko allows users to seamlessly jot down ideas the moment they strike, ensuring that no spark of creativity is lost.
+    en_US: Blinko is an AI-powered card note-taking project. Designed for individuals who want to quickly capture and organize their fleeting thoughts. Blinko allows users to seamlessly jot down ideas the moment they strike, ensuring that no spark of creativity is lost.
+    fr_FR: Blinko est un projet de prise de notes par carte alimenté par l'IA. Conçu pour les personnes qui souhaitent capturer et organiser rapidement leurs pensées fugaces. Blinko permet aux utilisateurs de noter facilement leurs idées dès qu'elles surgissent, garantissant qu'aucune étincelle de créativité ne soit perdue.
+    hr_HR: Blinko je projekt za bilježenje kartica napajen umjetnom inteligencijom. Dizajniran je za pojedince koji žele brzo uhvatiti i organizirati svoje prolazne misli. Blinko omogućuje korisnicima da bez problema zapisuju ideje u trenutku kada nastanu, osiguravajući da se nijedna iskrica kreativnosti ne izgubi.
+    it_IT: Blinko è un progetto di appunti su carta potenziato dall'IA. Progettato per individui che desiderano catturare e organizzare rapidamente i loro pensieri fugaci. Blinko consente agli utenti di prendere appunti sulle idee nel momento in cui arrivano, assicurandosi che nessuna scintilla di creatività si perda.
+    ja_JP: Blinko は、AI 搭載のカード形式ノートアプリです。瞬念的な思考を素早くキャプチャし、整理したい個人向けに設計されています。アイデアが閃いた瞬間にシームレスにメモを取ることができ、創造性の火花を失くすことはありません。
+    ko_KR: Blinko 는 AI 기반 카드 노트 작성 프로젝트입니다. 순간적인 생각을 빠르게 기록하고 정리하고 싶은 개인들을 위해 설계되었습니다. Blinko 를 사용하면 아이디어가 떠오르는 순간에 즉시 적을 수 있어 창의성의 불꽃이 사라지지 않습니다.
+    nb_NO: Blinko er et AI-drevet prosjekt for kortnotattekning. Det er designet for enkeltpersoner som ønsker å raskt fange opp og organisere sine flyktige tanker. Blinko lar brukerne enkelt skrive ned ideer i det øyeblikk de dukker opp, slik at ingen kreativ gnist går tapt.
+    pt_PT: O Blinko é um projeto de notas em cartões alimentado por IA. Foi concebido para indivíduos que desejam capturar e organizar rapidamente os seus pensamentos fugazes. O Blinko permite aos utilizadores anotar ideias sem esforço no momento em que surgem, garantindo que nenhuma centelha de criatividade se perde.
+    ru_RU: Blinko — это проект для заметок на карточках с использованием искусственного интеллекта. Он разработан для людей, которые хотят быстро фиксировать и организовывать свои мимолётные мысли. Blinko позволяет пользователям легко записывать идеи в тот момент, когда они возникают, гарантируя, что ни одна искра креативности не будет потеряна.
+    sv_SE: Blinko är ett AI-drivet projekt för anteckningar på kort. Det är designat för individer som vill snabbt fånga och organisera sina tillfälliga tankar. Blinko möjliggör för användarna att smidigt skriva ner idéer i det ögonblick de dyker upp, vilket säkerställer att ingen kreativ gnista går förlorad.
+    tr_TR: Blinko, yapay zeka destekli bir kart not alma projesidir. Geçici düşüncelerini hızlıca yakalayarak ve düzenleyerek arzulayan bireyler için tasarlanmıştır. Blinko, kullanıcıların yaratıcılığının hiçbir kıvılcımını kaybetmemesi için fikirlerini anında not alabilmelerini sağlar.
+    zh_CN: Blinko 是一个由人工智能驱动的卡片笔记项目。专为希望快速捕捉和整理转瞬即逝想法的个人设计。Blinko 允许用户无缝地记录下灵光乍现的瞬间，确保每一个创意的火花都不会流失。
+  description:
+    de_DE: |
+      Blinko ist eine Open-Source-Plattform für persönliches Wissensmanagement und Informationsaufzeichnung, die sich darauf konzentriert, Benutzern ein leichtes, effizientes und skalierbares Erlebnis für Notizen und Wissensorganisation zu bieten. Durch modulares Design und moderne Technologie-Stack ermöglicht es Benutzern, schnell Ideen festzuhalten, Wissen zu strukturieren und ihr eigenes Informationssystem aufzubauen.
+
+      Das Projekt legt Wert auf Einfachheit und Anpassbarkeit, unterstützt flexible Kombinationen verschiedener Inhaltstypen (Text, Tags, Links usw.) und hilft Benutzern durch klares strukturiertes Design, effiziente Suche und Verknüpfung in großen Informationsmengen zu erreichen. Blinko bietet auch gute Erweiterbarkeit, sodass Entwickler Funktionen nach ihren Bedürfnissen anpassen und erweitern können.
+
+      In der praktischen Anwendung vereint Blinko Benutzerfreundlichkeit und Funktionalität und bietet ein reibungsloses Erlebnis für alltägliche Notizen, Wissenssammlung oder Projektmanagement – ein ideales Wissenswerkzeug für langfristiges persönliches Wachstum.
+
+      **Hauptfunktionen:**
+
+      - Leichtgewichtiges Notizsystem für schnelle Aufzeichnung und Bearbeitung
+      - Tags und strukturierte Organisation zur Verbesserung der Informationssuche
+      - Unterstützung für mehrere Inhaltstypen (Text, Links usw.)
+      - Erweiterbare Architektur für benutzerdefinierte Funktionen und Plugin-Entwicklung
+      - Sauberes Interface-Design, das sich auf Inhalte konzentriert
+
+      **Mehr erfahren:**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+    el_GR: |
+      Το Blinko είναι μια ανοιχτού κώδικα πλατφόρμα διαχείρισης προσωπικής γνώσης και καταγραφής πληροφοριών, επικεντρωμένη στην παροχή ελαφριάς, αποτελεσματικής και επεκτάσιμης εμπειρίας λήψης σημειώσεων και οργάνωσης γνώσης στους χρήστες. Μέσω αρθρωτού σχεδιασμού και σύγχρονης τεχνολογικής υποδομής, επιτρέπει στους χρήστες να καταγράφουν γρήγορα ιδέες, να οργανώνουν γνώση και να δημιουργούν το δικό τους σύστημα πληροφοριών.
+
+      Το έργο δίνει έμφαση στην απλότητα και την προσαρμογή, υποστηρίζει ευέλικτους συνδυασμούς διαφόρων τύπων περιεχομένου (κείμενο, ετικέτες, σύνδεσμοι κ.λπ.), ενώ μέσω σαφούς δομημένου σχεδιασμού βοηθά τους χρήστες να επιτυγχάνουν αποτελεσματική ανάκτηση και συσχετισμό σε τεράστιες ποσότητες πληροφοριών. Το Blinko παρέχει επίσης καλές δυνατότητες επέκτασης, διευκολύνοντας τους προγραμματιστές να προσαρμόζουν και να βελτιώνουν λειτουργίες σύμφωνα με τις ανάγκες τους.
+
+      Στην πρακτική χρήση, το Blinko συνδυάζει ευκολία χρήσης και λειτουργικότητα, προσφέροντας μια ομαλή εμπειρία είτε για καθημερινές σημειώσεις, συσσώρευση γνώσης είτε για διαχείριση εγγράφων έργων – ένα ιδανικό εργαλείο γνώσης για μακροπρόθεσμη προσωπική ανάπτυξη.
+
+      **Κύριες λειτουργίες:**
+
+      - Ελαφρύ σύστημα σημειώσεων για γρήγορη καταγραφή και επεξεργασία
+      - Ετικέτες και δομημένη οργάνωση για βελτίωση της αποτελεσματικότητας αναζήτησης
+      - Υποστήριξη πολλαπλών τύπων περιεχομένου (κείμενο, σύνδεσμοι κ.λπ.)
+      - Επεκτάσιμη αρχιτεκτονική για προσαρμοσμένες λειτουργίες και ανάπτυξη προσθηκών
+      - Καθαρός σχεδιασμός διεπαφής που εστιάζει στο περιεχόμενο
+
+      **Μάθετε περισσότερα:**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+    en_GB: |
+      Blinko is an open-source personal knowledge management and information recording platform, focused on providing users with a lightweight, efficient, and scalable note-taking and knowledge organisation experience. Through modular design and modern technology stack, it enables users to quickly capture ideas, organise knowledge, and build their own information system.
+
+      The project emphasises simplicity and customisability, supporting flexible combinations of various content types (text, tags, links, etc.), while its clear structured design helps users achieve efficient retrieval and association within vast amounts of information. Blinko also provides excellent extensibility, making it easy for developers to customise and enhance functionality according to their needs.
+
+      In practical use, Blinko balances usability and functionality, offering a smooth experience for daily note-taking, knowledge accumulation, or project document management – an ideal knowledge tool for long-term personal growth.
+
+      **Main features:**
+
+      - Lightweight note system for quick content recording and editing
+      - Tags and structured organisation to improve information retrieval efficiency
+      - Support for multiple content types (text, links, etc.)
+      - Extensible architecture for custom functionality and plugin development
+      - Clean interface design focused on content rather than complex operations
+
+      **Learn more:**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+    en_US: |
+      Blinko 是一个开源的个人知识管理与信息记录平台，专注于为用户提供轻量、高效且可扩展的笔记与知识组织体验。它通过模块化设计与现代化技术栈，使用户能够快速记录灵感、整理知识，并构建属于自己的信息体系。
+
+      该项目强调简洁与可定制性，支持多种内容形式（如文本、标签、链接等）的灵活组合，同时通过清晰的结构化设计，帮助用户在海量信息中实现高效检索与关联。Blinko 还提供良好的扩展能力，便于开发者根据自身需求进行二次开发与功能增强。
+
+      在实际使用中，Blinko 兼顾易用性与功能性，无论是日常笔记、知识沉淀，还是项目资料管理，都能够提供流畅的使用体验，是一个适合个人长期积累与成长的知识工具。
+
+      **主要功能：**
+
+      - 轻量化笔记系统，快速记录与编辑内容
+      - 标签与结构化组织，提升信息检索效率
+      - 支持多类型内容管理（文本、链接等）
+      - 可扩展架构，便于自定义功能与插件开发
+      - 简洁界面设计，专注内容而非复杂操作
+
+      **了解更多：**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+    fr_FR: |
+      Blinko est une plateforme open-source de gestion des connaissances personnelles et d'enregistrement d'informations, axée sur la fourniture aux utilisateurs d'une expérience légère, efficace et évolutive de prise de notes et d'organisation des connaissances. Grâce à une conception modulaire et une pile technologique moderne, elle permet aux utilisateurs d capturer rapidement des idées, d'organiser leurs connaissances et de construire leur propre système d'information.
+
+      Le projet met l'accent sur la simplicité et la personnalisation, prenant en charge des combinaisons flexibles de différents types de contenu (texte, tags, liens, etc.), tout en aidant les utilisateurs à obtenir une récupération et une association efficaces des informations grâce à une conception structurée claire. Blinko offre également d'excellentes possibilités d'extension, facilitant la personnalisation et l'amélioration des fonctionnalités par les développeurs selon leurs besoins.
+
+      Dans la pratique, Blinko équilibre ergonomie et fonctionnalité, offrant une expérience fluide que ce soit pour la prise de notes quotidienne, l'accumulation de connaissances ou la gestion de documents de projet – un outil de connaissances idéal pour la croissance personnelle à long terme.
+
+      **Fonctionnalités principales :**
+
+      - Système de notes léger pour un enregistrement et un edição rapides du contenu
+      - Tags et organisation structurée pour améliorer l'efficacité de la recherche d'informations
+      - Prise en charge de plusieurs types de contenu (texte, liens, etc.)
+      - Architecture évolutive pour le développement de fonctionnalités personnalisées et de plugins
+      - Conception d'interface épurée axée sur le contenu
+
+      **En savoir plus :**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+    hr_HR: |
+      Blinko je open-source platforma za osobno upravljanje znanjem i bilježenje informacija, usmjerena na pružanje laganog, učinkovitog i proširivog iskustva bilježenja i organiziranja znanja korisnicima. Kroz modularni dizajn i moderni tehnološki skup, omogućava korisnicima brzo bilježenje ideja, organiziranje znanja i izgradnju vlastitog informacijskog sustava.
+
+      Projekt naglašava jednostavnost i prilagodljivost, podržava fleksibilne kombinacije različitih vrsta sadržaja (tekst, oznake, veze itd.), dok jasno strukturirani dizajn pomaže korisnicima postići učinkovito pretraživanje i povezivanje u velikim količinama informacija. Blinko također pruža izvrsnu proširivost, olakšavajući programerima prilagodbu i poboljšanje funkcionalnosti prema njihovim potrebama.
+
+      U praktičnoj upotrebi, Blinko balansira jednostavnost korištenja i funkcionalnost, nudeći glatko iskustvo bilo za svakodnevno bilježenje, akumulaciju znanja ili upravljanje projektnom dokumentacijom – idealan alat za znanje za dugoročni osobni rast.
+
+      **Glavne značajke:**
+
+      - Lagan sustav bilježaka za brzo bilježenje i uređivanje sadržaja
+      - Oznake i strukturirana organizacija za poboljšanje učinkovitosti pretraživanja informacija
+      - Podrška za više vrsta sadržaja (tekst, veze itd.)
+      - Proširiva arhitektura za prilagođene funkcionalnosti i razvoj dodataka
+      - Čist dizajn sučelja usmjeren na sadržaj
+
+      **Saznajte više:**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+    it_IT: |
+      Blinko è una piattaforma open-source per la gestione della conoscenza personale e la registrazione di informazioni, focalizzata sul fornire agli utenti un'esperienza leggera, efficiente e scalabile di take di appunti e organizzazione della conoscenza. Attraverso un design modulare e uno stack tecnologico moderno, consente agli utenti di catturare rapidamente idee, organizzare la conoscenza e costruire il proprio sistema informativo.
+
+      Il progetto enfatizza la semplicità e la personalizzazione, supportando combinazioni flessibili di vari tipi di contenuto (testo, tag, link, ecc.), mentre il suo design strutturato chiaro aiuta gli utenti a ottenere un recupero e un'associazione efficienti in grandi quantità di informazioni. Blinko offre anche un'eccellente estensibilità, facilitando gli sviluppatori nella personalizzazione e nel miglioramento delle funzionalità secondo le loro esigenze.
+
+      Nell'uso pratico, Blinko bilancia usabilità e funzionalità, offrendo un'esperienza fluida sia per l'appuntamento quotidiano, l'accumulo di conoscenza che per la gestione della documentazione di progetto – uno strumento di conoscenza ideale per la crescita personale a lungo termine.
+
+      **Funzionalità principali:**
+
+      - Sistema di note leggero per una rapida registrazione e modifica dei contenuti
+      - Tag e organizzazione strutturata per migliorare l'efficienza di ricerca delle informazioni
+      - Supporto per più tipi di contenuto (testo, link, ecc.)
+      - Architettura estensibile per funzionalità personalizzate e sviluppo di plugin
+      - Design dell'interfaccia pulito, focalizzato sui contenuti
+
+      **Scopri di più:**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+    ja_JP: |
+      Blinkoは、軽量で効率的かつスケーラブルなノート取りと知識整理のエクスペリエンスをユーザーに提供することに焦点を当てた、オープンソースの個人知識管理与情報記録プラットフォームです。モジュール式デザインと最新のテクノロジースタックにより、ユーザーはアイデアを素早く記録し、知識を整理し、独自の情報システムを構築ことができます。
+
+      このプロジェクトはシンプルさとカスタマイズ性を重視し、各种コンテンツタイプ（テキスト、タグ、リンクなど）の柔軟な組み合わせをサポート的同时に、明確な構造化デザインで大量の情報を効率的に検索·関連付けすることを支援します。Blinkoはまた、優れた拡張性を 提供し、開発者がニーズに応じて機能をカスタマイズ·強化することを容易にします。
+
+      実際の使用では、Blinkoは使いやすさと機能性を両立させ、日常のノート、知識の蓄積、プロジェクト資料管理などに関わらずスムーズなエクスペリエンスを提供し、長期的な個人的な成長に理想的な知識ツールです。
+
+      **主な機能：**
+
+      - 軽量なノートシステムで、コンテンツの быструю записьと編集
+      - 情報検索効率を向上させるタグと構造化された整理
+      - 複数タイプのコンテンツ管理をサポート（テキスト、リンクなど）
+      - カスタマイズ機能とプラグイン開発のための拡張可能なアーキテクチャ
+      - コンテンツに焦点を当てたシンプルなインターフェース設計
+
+      **詳細を見る：**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+    ko_KR: |
+      Blinko는 사용자에게 가볍고 효율적이며 확장 가능한 메모 및 지식 조직 경험을 제공하는 데 중점을 둔 오픈소스 개인 지식 관리 및 정보 기록 플랫폼입니다. 모듈식 디자인과 최신 기술 스택을 통해 사용자가 아이디어를 빠르게 기록하고, 지식을 정리하며, 자신만의 정보 시스템을 구축할 수 있습니다.
+
+      이 프로젝트는 단순함과 맞춤 설정을 강조하며, 다양한 콘텐츠 유형(텍스트, 태그, 링크 등)의 유연한 조합을 지원하고, 명확한 구조화 디자인을 통해 사용자가 대량의 정보에서 효율적인 검색과 연관을 달성할 수 있도록 도와줍니다. Blinko는 또한 우수한 확장성을 제공하여 개발자가 자신의 필요에 따라 기능을 맞춤 설정하고 강화할 수 있도록 합니다.
+
+      실제 사용에서 Blinko는 사용 편의성과 기능성을 균형 있게 갖추고 있으며, 일상적인 메모, 지식 축적 또는 프로젝트 문서 관리에 관계없이 원활한 경험을 제공합니다 – 장기적인 개인적 성장에 이상적인 지식 도구입니다.
+
+      **주요 기능:**
+
+      - 콘텐츠를 빠르게 기록하고 편집할 수 있는 경량 메모 시스템
+      - 정보 검색 효율성을 높이는 태그 및 구조화된 조직
+      - 여러 유형의 콘텐츠 관리 지원(텍스트, 링크 등)
+      - 사용자 정의 기능 및 플러그인 개발을 위한 확장 가능한 아키텍처
+      - 콘텐츠에 집중하는 깔끔한 인터페이스 디자인
+
+      **자세히 알아보기:**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+    nb_NO: |
+      Blinko er en åpen kildekode-plattform for personlig kunnskapsstyring og informasjonsregistrering, fokusert på å gi brukerne en lett, effektiv og skalerbar opplevelse for notat og kunnskapsorganisering. Gjennom modulær design og moderne teknologistack lar det brukere raskt fange ideer, organisere kunnskap og bygge sitt eget informasjonssystem.
+
+      Prosjektet legger vekt på enkelhet og tilpasning, støtter fleksible kombinasjoner av ulike innholdstyper (tekst, tags, lenker, etc.), samtidig som dets klare strukturerte design hjelper brukere med å oppnå effektiv gjenfinning og assosiasjon i enorme mengder informasjon. Blinko gir også utmerket utvidelsesmuligheter, noe som gjør det enkelt for utviklere å tilpasse og forbedre funksjonalitet etter deres behov.
+
+      I praktisk bruk balanserer Blinko brukervennlighet og funksjonalitet, og tilbyr en jevn opplevelse enten det er for daglige notater, kunnskapsakkumulering eller prosjektdokumentasjon – et ideelt kunnskapsverktøy for langsiktig personlig vekst.
+
+      **Hovedfunksjoner:**
+
+      - Lettvekts notatsystem for rask innholdsinregistrering og redigering
+      - Tags og strukturert organisering for å forbedre informasjonssøkeeffektiviteten
+      - Støtte for flere innholdstyper (tekst, lenker, etc.)
+      - Utvidbar arkitektur for tilpasset funksjonalitet og plugin-utvikling
+      - Ren grensesnittdesign fokusert på innhold
+
+      **Lær mer:**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+    pt_PT: |
+      Blinko é uma plataforma open-source de gestão de conhecimento pessoal e gravação de informações, focada em proporcionar aos utilizadores uma experiência leve, eficiente e escalável de tomada de notas e organização de conhecimento. Através de design modular e stack tecnológico moderno, permite aos utilizadores capturar rapidamente ideias, organizar conhecimento e construir o seu próprio sistema de informação.
+
+      O projeto enfatiza simplicidade e personalização, suportando combinações flexíveis de vários tipos de conteúdo (texto, tags, links, etc.), enquanto o seu design estruturado claro ajuda os utilizadores a alcançar recuperação e associação eficientes em grandes quantidades de informação. Blinko também fornece excelente extensibilidade, facilitando o desenvolvimento personalizado e melhoria de funcionalidades pelos programadores de acordo com as suas necessidades.
+
+      Na utilização prática, Blinko equilibra usabilidade e funcionalidade, oferecendo uma experiência fluida tanto para notas diárias, acumulação de conhecimento como gestão de documentação de projetos – uma ferramenta de conhecimento ideal para crescimento pessoal a longo prazo.
+
+      **Funcionalidades principais:**
+
+      - Sistema de notas leve para gravação e edição rápida de conteúdo
+      - Tags e organização estruturada para melhorar a eficiência de pesquisa de informação
+      - Suporte para múltiplos tipos de conteúdo (texto, links, etc.)
+      - Arquitetura extensível para funcionalidade personalizada e desenvolvimento de plugins
+      - Design de interface limpo focado no conteúdo
+
+      **Saiba mais:**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+    ru_RU: |
+      Blinko — это платформа управления персональными знаниями и записи информации с открытым исходным кодом, ориентированная на предоставление пользователям легкого, эффективного и масштабируемого опыта ведения заметок и организации знаний. Благодаря модульному дизайну и современному технологическому стеку она позволяет пользователям быстро записывать идеи, систематизировать знания и создавать собственную информационную систему.
+
+      Проект делает акцент на простоте и настраиваемости, поддерживая гибкие комбинации различных типов контента (текст, теги, ссылки и т. д.), а также помогает пользователям эффективно находить и связывать информацию в огромных объемах данных благодаря четкому структурированному дизайну. Blinko также обеспечивает отличную расширяемость, облегчая разработчикам настройку и улучшение функциональности в соответствии с их потребностями.
+
+      На практике Blinko сочетает удобство использования и функциональность, обеспечивая плавный опыт как для повседневных заметок, накопления знаний, так и для управления проектной документацией — идеальный инструмент знаний для долгосрочного личного роста.
+
+      **Основные функции:**
+
+      - Легковесная система заметок для быстрой записи и редактирования контента
+      - Теги и структурированная организация для повышения эффективности поиска информации
+      - Поддержка нескольких типов контента (текст, ссылки и т. д.)
+      - Расширяемая архитектура для пользовательской функциональности и разработки плагинов
+      - Чистый дизайн интерфейса, ориентированный на контент
+
+      **Узнать больше:**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+    sv_SE: |
+      Blinko är en öppen källkodsplattform för personlig kunskapshantering och informationsregistrering, fokuserad på att ge användarna en lätt, effektiv och skalbar upplevelse för anteckningar och kunskapsorganisation. Genom modulär design och modern teknikstack låter den användare snabbt fånga idéer, organisera kunskap och bygga sitt eget informationssystem.
+
+      Projektet betonar enkelhet och anpassningsbarhet, stödjer flexibla kombinationer av olika innehållstyper (text, taggar, länkar, etc.), medan dess tydliga strukturerade design hjälper användare att uppnå effektiv hämtning och association i stora mängder information. Blinko ger också utmärkt utvidgbarhet, vilket gör det lätt för utvecklare att anpassa och förbättra funktionalitet enligt sina behov.
+
+      I praktisk användning balanserar Blinko användbarhet och funktionalitet, och erbjuder en smidig upplevelse antingen för dagliga anteckningar, kunskapsackumulering eller projektdokumentation – ett idealiskt kunskapsverktyg för långsiktig personlig tillväxt.
+
+      **Huvudfunktioner:**
+
+      - Lättviktigt anteckningssystem för snabb innehållsregistrering och redigering
+      - Taggar och strukturerad organisation för att förbättra informationssökeffektiviteten
+      - Stöd för flera innehållstyper (text, länkar, etc.)
+      - Utvidgbar arkitektur för anpassad funktionalitet och plugin-utveckling
+      - Ren gränssnittsdesign fokuserad på innehåll
+
+      **Läs mer:**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+    tr_TR: |
+      Blinko, kullanıcılara hafif, verimli ve ölçeklenebilir bir not alma ve bilgi organizasyonu deneyimi sunmaya odaklanan açık kaynak kodlu bir kişisel bilgi yönetimi ve bilgi kayıt platformudur. Modüler tasarım ve modern teknoloji yığını aracılığıyla, kullanıcıların fikirleri hızla kaydetmelerini, bilgiyi düzenlemelerini ve kendi bilgi sistemlerini oluşturmalarını sağlar.
+
+      Proje, çeşitli içerik türlerinin (metin, etiket, bağlantı vb.) esnek kombinasyonlarını desteklerken sadelik ve özelleştirilebilirliğe vurgu yapar; ayrıca net yapılandırılmış tasarımı, kullanıcıların büyük miktarlardaki bilgi içinde verimli alma ve ilişkilendirme elde etmelerine yardımcı olur. Blinko ayrıca mükemmel genişletilebilirlik sunarak, geliştiricilerin ihtiyaçlarına göre işlevselliği özelleştirmelerini ve geliştirmelerini kolaylaştırır.
+
+      Pratik kullanımda Blinko, kullanılabilirlik ve işlevselliği dengeleyerek, günlük notlar, bilgi birikimi veya proje dokümantasyonu yönetimi için sorunsuz bir deneyim sunar – uzun vadeli kişisel büyüme için ideal bir bilgi aracıdır.
+
+      **Ana özellikler:**
+
+      - İçeriği hızla kaydetmek ve düzenlemek için hafif not sistemi
+      - Bilgi arama verimliliğini artıran etiketler ve yapılandırılmış organizasyon
+      - Birden fazla içerik türü desteği (metin, bağlantılar vb.)
+      - Özel işlevsellik ve eklenti geliştirme için genişletilebilir mimari
+      - Karmaşık işlemler yerine içeriğe odaklanan temiz arayüz tasarımı
+
+      **Daha fazla bilgi edinin:**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+    zh_CN: |
+      Blinko 是一个开源的个人知识管理与信息记录平台，专注于为用户提供轻量、高效且可扩展的笔记与知识组织体验。它通过模块化设计与现代化技术栈，使用户能够快速记录灵感、整理知识，并构建属于自己的信息体系。
+
+      该项目强调简洁与可定制性，支持多种内容形式（如文本、标签、链接等）的灵活组合，同时通过清晰的结构化设计，帮助用户在海量信息中实现高效检索与关联。Blinko 还提供良好的扩展能力，便于开发者根据自身需求进行二次开发与功能增强。
+
+      在实际使用中，Blinko 兼顾易用性与功能性，无论是日常笔记、知识沉淀，还是项目资料管理，都能够提供流畅的使用体验，是一个适合个人长期积累与成长的知识工具。
+
+      **主要功能：**
+
+      - 轻量化笔记系统，快速记录与编辑内容
+      - 标签与结构化组织，提升信息检索效率
+      - 支持多类型内容管理（文本、链接等）
+      - 可扩展架构，便于自定义功能与插件开发
+      - 简洁界面设计，专注内容而非复杂操作
+
+      **了解更多：**
+
+      - [Blinko GitHub](https://github.com/blinkospace/blinko)
+  category: Notes
+  author: blinkospace
+  developer: blinkospace
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Blinko/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Blinko/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Blinko/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Blinko/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Blinko/screenshot-3.png
+  main: blinko
+  port_map: "1111"
+  architectures:
+    - amd64
+    - arm64
+  index: /
+  scheme: http
