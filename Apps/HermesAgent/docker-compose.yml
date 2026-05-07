@@ -1,0 +1,504 @@
+services:
+  hermes:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes
+    restart: unless-stopped
+    command: gateway run
+    networks:
+      - hermes-net
+    ports:
+      - target: 8642
+        published: "8642"
+        protocol: tcp
+    environment:
+      TZ: $TZ
+      API_SERVER_ENABLED: "true"
+      API_SERVER_HOST: 0.0.0.0
+      API_SERVER_KEY: change-me-local-dev
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /opt/data
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            de_DE: Zeitzone des Hermes-Agent-Gateway-Containers
+            el_GR: Ζώνη ώρας που χρησιμοποιεί το κοντέινερ πύλης Hermes Agent
+            en_GB: Time zone used by the Hermes Agent gateway container
+            en_US: Time zone used by the Hermes Agent gateway container
+            fr_FR: Fuseau horaire utilisé par le conteneur passerelle Hermes Agent
+            hr_HR: Vremenska zona koju koristi kontejner pristupnika Hermes Agent
+            it_IT: Fuso orario usato dal contenitore gateway di Hermes Agent
+            ja_JP: Hermes Agent ゲートウェイコンテナで使用するタイムゾーン
+            ko_KR: Hermes Agent 게이트웨이 컨테이너에서 사용하는 시간대
+            nb_NO: Tidssone brukt av Hermes Agent-gatewaycontaineren
+            pt_PT: Fuso horário usado pelo contentor gateway do Hermes Agent
+            ru_RU: Часовой пояс контейнера шлюза Hermes Agent
+            sv_SE: Tidszon som används av Hermes Agent-gatewaycontainern
+            tr_TR: Hermes Agent ağ geçidi konteynerinin kullandığı saat dilimi
+            zh_CN: Hermes Agent 网关容器使用的时区
+        - container: API_SERVER_ENABLED
+          description:
+            de_DE: Aktiviert den OpenAI-kompatiblen API-Server und den Health-Endpunkt von Hermes Agent
+            el_GR: Ενεργοποιεί τον συμβατό με OpenAI διακομιστή API και το σημείο ελέγχου υγείας του Hermes Agent
+            en_GB: Enables the Hermes Agent OpenAI-compatible API server and health endpoint
+            en_US: Enables the Hermes Agent OpenAI-compatible API server and health endpoint
+            fr_FR: Active le serveur API compatible OpenAI et le point de santé de Hermes Agent
+            hr_HR: Omogućuje OpenAI-kompatibilni API poslužitelj i health endpoint za Hermes Agent
+            it_IT: Abilita il server API compatibile con OpenAI e l'endpoint di stato di Hermes Agent
+            ja_JP: Hermes Agent の OpenAI 互換 API サーバーとヘルスエンドポイントを有効にします
+            ko_KR: Hermes Agent의 OpenAI 호환 API 서버와 상태 확인 엔드포인트를 활성화합니다
+            nb_NO: Aktiverer den OpenAI-kompatible API-serveren og helseendepunktet til Hermes Agent
+            pt_PT: Ativa o servidor API compatível com OpenAI e o endpoint de estado do Hermes Agent
+            ru_RU: Включает совместимый с OpenAI API-сервер и endpoint проверки состояния Hermes Agent
+            sv_SE: Aktiverar Hermes Agents OpenAI-kompatibla API-server och hälsoendpoint
+            tr_TR: Hermes Agent için OpenAI uyumlu API sunucusunu ve sağlık uç noktasını etkinleştirir
+            zh_CN: 启用 Hermes Agent 的 OpenAI 兼容 API 服务器和健康检查端点
+        - container: API_SERVER_HOST
+          description:
+            de_DE: Bind-Adresse des Hermes-Agent-API-Servers
+            el_GR: Διεύθυνση δέσμευσης για τον διακομιστή API του Hermes Agent
+            en_GB: Bind address for the Hermes Agent API server
+            en_US: Bind address for the Hermes Agent API server
+            fr_FR: Adresse d'écoute du serveur API Hermes Agent
+            hr_HR: Adresa slušanja za API poslužitelj Hermes Agent
+            it_IT: Indirizzo di ascolto del server API di Hermes Agent
+            ja_JP: Hermes Agent API サーバーのバインドアドレス
+            ko_KR: Hermes Agent API 서버의 바인드 주소
+            nb_NO: Bind-adresse for Hermes Agent API-serveren
+            pt_PT: Endereço de escuta do servidor API do Hermes Agent
+            ru_RU: Адрес привязки API-сервера Hermes Agent
+            sv_SE: Bindningsadress för Hermes Agent API-servern
+            tr_TR: Hermes Agent API sunucusunun dinleme adresi
+            zh_CN: Hermes Agent API 服务器监听地址
+        - container: API_SERVER_KEY
+          description:
+            de_DE: Bearer-Token zum Schutz des Hermes-Agent-API-Servers
+            el_GR: Bearer token για την προστασία του διακομιστή API του Hermes Agent
+            en_GB: Bearer token used to protect the Hermes Agent API server
+            en_US: Bearer token used to protect the Hermes Agent API server
+            fr_FR: Jeton Bearer utilisé pour protéger le serveur API Hermes Agent
+            hr_HR: Bearer token za zaštitu API poslužitelja Hermes Agent
+            it_IT: Token Bearer usato per proteggere il server API di Hermes Agent
+            ja_JP: Hermes Agent API サーバーを保護するための Bearer トークン
+            ko_KR: Hermes Agent API 서버를 보호하는 Bearer 토큰
+            nb_NO: Bearer-token brukt til å beskytte Hermes Agent API-serveren
+            pt_PT: Token Bearer usado para proteger o servidor API do Hermes Agent
+            ru_RU: Bearer-токен для защиты API-сервера Hermes Agent
+            sv_SE: Bearer-token som används för att skydda Hermes Agent API-servern
+            tr_TR: Hermes Agent API sunucusunu korumak için kullanılan Bearer belirteci
+            zh_CN: 用于保护 Hermes Agent API 服务器的 Bearer 令牌
+      ports:
+        - container: "8642"
+          description:
+            de_DE: Hermes-Agent-Gateway-API und Health-Endpunkt
+            el_GR: API πύλης και σημείο ελέγχου υγείας του Hermes Agent
+            en_GB: Hermes Agent gateway API and health endpoint
+            en_US: Hermes Agent gateway API and health endpoint
+            fr_FR: API de passerelle Hermes Agent et point de santé
+            hr_HR: API pristupnika Hermes Agent i health endpoint
+            it_IT: API gateway e endpoint di stato di Hermes Agent
+            ja_JP: Hermes Agent ゲートウェイ API とヘルスエンドポイント
+            ko_KR: Hermes Agent 게이트웨이 API 및 상태 확인 엔드포인트
+            nb_NO: Hermes Agent gateway-API og helseendepunkt
+            pt_PT: API gateway e endpoint de estado do Hermes Agent
+            ru_RU: API шлюза Hermes Agent и endpoint проверки состояния
+            sv_SE: Hermes Agent gateway-API och hälsoendpoint
+            tr_TR: Hermes Agent ağ geçidi API'si ve sağlık uç noktası
+            zh_CN: Hermes Agent 网关 API 和健康检查端点
+      volumes:
+        - container: /opt/data
+          description:
+            de_DE: Dauerhafte Hermes-Agent-Konfiguration, Sitzungen, Skills, Erinnerungen und Protokolle
+            el_GR: Μόνιμη διαμόρφωση, συνεδρίες, skills, μνήμες και αρχεία καταγραφής του Hermes Agent
+            en_GB: Persistent Hermes Agent configuration, sessions, skills, memories, and logs
+            en_US: Persistent Hermes Agent configuration, sessions, skills, memories, and logs
+            fr_FR: Configuration, sessions, skills, mémoires et journaux persistants de Hermes Agent
+            hr_HR: Trajna konfiguracija, sesije, vještine, memorije i zapisnici za Hermes Agent
+            it_IT: Configurazione, sessioni, skill, memorie e log persistenti di Hermes Agent
+            ja_JP: Hermes Agent の設定、セッション、スキル、メモリ、ログを永続化します
+            ko_KR: Hermes Agent 설정, 세션, 스킬, 메모리 및 로그를 영구 저장합니다
+            nb_NO: Vedvarende Hermes Agent-konfigurasjon, økter, ferdigheter, minner og logger
+            pt_PT: Configuração, sessões, skills, memórias e registos persistentes do Hermes Agent
+            ru_RU: Постоянные настройки, сессии, навыки, память и журналы Hermes Agent
+            sv_SE: Beständig Hermes Agent-konfiguration, sessioner, färdigheter, minnen och loggar
+            tr_TR: Kalıcı Hermes Agent yapılandırması, oturumları, becerileri, bellekleri ve günlükleri
+            zh_CN: 持久化保存 Hermes Agent 配置、会话、技能、记忆和日志
+  hermes-dashboard:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes-dashboard
+    restart: unless-stopped
+    command: dashboard --host 0.0.0.0 --insecure
+    depends_on:
+      - hermes
+    networks:
+      - hermes-net
+    ports:
+      - target: 9119
+        published: "9119"
+        protocol: tcp
+    environment:
+      TZ: $TZ
+      GATEWAY_HEALTH_URL: http://hermes:8642
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /opt/data
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            de_DE: Zeitzone des Hermes-Agent-Dashboard-Containers
+            el_GR: Ζώνη ώρας που χρησιμοποιεί το κοντέινερ πίνακα ελέγχου Hermes Agent
+            en_GB: Time zone used by the Hermes Agent dashboard container
+            en_US: Time zone used by the Hermes Agent dashboard container
+            fr_FR: Fuseau horaire utilisé par le conteneur du tableau de bord Hermes Agent
+            hr_HR: Vremenska zona koju koristi kontejner nadzorne ploče Hermes Agent
+            it_IT: Fuso orario usato dal contenitore dashboard di Hermes Agent
+            ja_JP: Hermes Agent ダッシュボードコンテナで使用するタイムゾーン
+            ko_KR: Hermes Agent 대시보드 컨테이너에서 사용하는 시간대
+            nb_NO: Tidssone brukt av Hermes Agent-dashboardcontaineren
+            pt_PT: Fuso horário usado pelo contentor do painel do Hermes Agent
+            ru_RU: Часовой пояс контейнера панели Hermes Agent
+            sv_SE: Tidszon som används av Hermes Agent-dashboardcontainern
+            tr_TR: Hermes Agent pano konteynerinin kullandığı saat dilimi
+            zh_CN: Hermes Agent 仪表盘容器使用的时区
+        - container: GATEWAY_HEALTH_URL
+          description:
+            de_DE: Gateway-Health-Endpunkt, den das Hermes-Agent-Dashboard überwacht
+            el_GR: Σημείο ελέγχου υγείας της πύλης που παρακολουθεί ο πίνακας ελέγχου Hermes Agent
+            en_GB: Hermes Agent gateway health endpoint used by the dashboard
+            en_US: Hermes Agent gateway health endpoint used by the dashboard
+            fr_FR: Point de santé de la passerelle Hermes Agent utilisé par le tableau de bord
+            hr_HR: Health endpoint pristupnika Hermes Agent koji koristi nadzorna ploča
+            it_IT: Endpoint di stato del gateway Hermes Agent usato dalla dashboard
+            ja_JP: ダッシュボードが使用する Hermes Agent ゲートウェイのヘルスエンドポイント
+            ko_KR: 대시보드가 사용하는 Hermes Agent 게이트웨이 상태 확인 엔드포인트
+            nb_NO: Hermes Agent gateway-helseendepunkt brukt av dashboardet
+            pt_PT: Endpoint de estado do gateway Hermes Agent usado pelo painel
+            ru_RU: Endpoint проверки состояния шлюза Hermes Agent, используемый панелью
+            sv_SE: Hermes Agent gateway-hälsoendpoint som används av dashboarden
+            tr_TR: Panonun kullandığı Hermes Agent ağ geçidi sağlık uç noktası
+            zh_CN: 仪表盘使用的 Hermes Agent 网关健康检查端点
+      ports:
+        - container: "9119"
+          description:
+            de_DE: Web-Dashboard-Port von Hermes Agent
+            el_GR: Θύρα πίνακα ελέγχου web του Hermes Agent
+            en_GB: Hermes Agent web dashboard port
+            en_US: Hermes Agent web dashboard port
+            fr_FR: Port du tableau de bord web Hermes Agent
+            hr_HR: Port web nadzorne ploče Hermes Agent
+            it_IT: Porta della dashboard web di Hermes Agent
+            ja_JP: Hermes Agent Web ダッシュボードのポート
+            ko_KR: Hermes Agent 웹 대시보드 포트
+            nb_NO: Port for Hermes Agent webdashboard
+            pt_PT: Porta do painel web do Hermes Agent
+            ru_RU: Порт веб-панели Hermes Agent
+            sv_SE: Port för Hermes Agent webbdashboard
+            tr_TR: Hermes Agent web pano bağlantı noktası
+            zh_CN: Hermes Agent Web 仪表盘端口
+      volumes:
+        - container: /opt/data
+          description:
+            de_DE: Dauerhafte Hermes-Agent-Konfiguration, Sitzungen, Skills, Erinnerungen und Protokolle
+            el_GR: Μόνιμη διαμόρφωση, συνεδρίες, skills, μνήμες και αρχεία καταγραφής του Hermes Agent
+            en_GB: Persistent Hermes Agent configuration, sessions, skills, memories, and logs
+            en_US: Persistent Hermes Agent configuration, sessions, skills, memories, and logs
+            fr_FR: Configuration, sessions, skills, mémoires et journaux persistants de Hermes Agent
+            hr_HR: Trajna konfiguracija, sesije, vještine, memorije i zapisnici za Hermes Agent
+            it_IT: Configurazione, sessioni, skill, memorie e log persistenti di Hermes Agent
+            ja_JP: Hermes Agent の設定、セッション、スキル、メモリ、ログを永続化します
+            ko_KR: Hermes Agent 설정, 세션, 스킬, 메모리 및 로그를 영구 저장합니다
+            nb_NO: Vedvarende Hermes Agent-konfigurasjon, økter, ferdigheter, minner og logger
+            pt_PT: Configuração, sessões, skills, memórias e registos persistentes do Hermes Agent
+            ru_RU: Постоянные настройки, сессии, навыки, память и журналы Hermes Agent
+            sv_SE: Beständig Hermes Agent-konfiguration, sessioner, färdigheter, minnen och loggar
+            tr_TR: Kalıcı Hermes Agent yapılandırması, oturumları, becerileri, bellekleri ve günlükleri
+            zh_CN: 持久化保存 Hermes Agent 配置、会话、技能、记忆和日志
+networks:
+  hermes-net:
+    driver: bridge
+name: hermes-agent
+x-casaos:
+  title:
+    de_DE: Hermes Agent
+    el_GR: Hermes Agent
+    en_GB: Hermes Agent
+    en_US: Hermes Agent
+    fr_FR: Hermes Agent
+    hr_HR: Hermes Agent
+    it_IT: Hermes Agent
+    ja_JP: Hermes Agent
+    ko_KR: Hermes Agent
+    nb_NO: Hermes Agent
+    pt_PT: Hermes Agent
+    ru_RU: Hermes Agent
+    sv_SE: Hermes Agent
+    tr_TR: Hermes Agent
+    zh_CN: Hermes Agent
+
+  tagline:
+    de_DE: Selbstgehosteter KI-Agent mit dauerhaftem Gedächtnis, Skills, Messaging-Gateway und Web-Dashboard.
+    el_GR: Αυτοφιλοξενούμενος AI agent με μόνιμη μνήμη, skills, πύλη μηνυμάτων και web dashboard.
+    en_GB: Self-hosted AI agent with persistent memory, skills, messaging gateway, and web dashboard.
+    en_US: Self-hosted AI agent with persistent memory, skills, messaging gateway, and web dashboard.
+    fr_FR: Agent IA auto-hébergé avec mémoire persistante, skills, passerelle de messagerie et tableau de bord web.
+    hr_HR: Samohostani AI agent s trajnom memorijom, vještinama, pristupnikom za poruke i web nadzornom pločom.
+    it_IT: Agente IA self-hosted con memoria persistente, skill, gateway di messaggistica e dashboard web.
+    ja_JP: 永続メモリ、スキル、メッセージングゲートウェイ、Web ダッシュボードを備えたセルフホスト AI エージェント。
+    ko_KR: 영구 메모리, 스킬, 메시징 게이트웨이, 웹 대시보드를 갖춘 셀프 호스팅 AI 에이전트입니다.
+    nb_NO: Selvhostet KI-agent med vedvarende minne, ferdigheter, meldingsgateway og webdashboard.
+    pt_PT: Agente de IA autoalojado com memória persistente, skills, gateway de mensagens e painel web.
+    ru_RU: Самостоятельно размещаемый AI-агент с постоянной памятью, навыками, шлюзом сообщений и веб-панелью.
+    sv_SE: Självhostad AI-agent med beständigt minne, färdigheter, meddelandegateway och webbdashboard.
+    tr_TR: Kalıcı bellek, beceriler, mesajlaşma ağ geçidi ve web panosu içeren self-hosted AI ajanı.
+    zh_CN: 自托管 AI Agent，支持持久记忆、技能、消息网关和 Web 仪表盘。
+
+  description:
+    de_DE: |
+      Hermes Agent ist ein autonomer Open-Source-KI-Agent von Nous Research. Er läuft auf Ihrem eigenen Server, behält dauerhaftes Gedächtnis über Sitzungen hinweg, erstellt wiederverwendbare Skills und verbindet sich über ein Gateway mit Messaging-Plattformen.
+
+      Diese Bereitstellung startet das Hermes-Gateway und das integrierte Web-Dashboard. Das Gateway stellt eine OpenAI-kompatible API und einen Health-Endpunkt bereit, während das Dashboard Status, Konfiguration, Sitzungen, Skills und Gateway-Verwaltung im Browser verfügbar macht. Benutzerdaten werden unter /opt/data gespeichert, damit Konfiguration, API-Schlüssel, Sitzungen, Erinnerungen, Skills und Protokolle bei Image-Updates erhalten bleiben.
+
+      **Hauptfunktionen:**
+      - Dauerhaftes Gedächtnis und Sitzungsverlauf
+      - Skill-System für wiederverwendbare Agent-Workflows
+      - Messaging-Gateway und OpenAI-kompatibler API-Endpunkt
+      - Browserbasiertes Dashboard für Konfiguration und Überwachung
+      - Docker-Bereitstellung mit persistentem Speicher
+
+      **Mehr erfahren:**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+    el_GR: |
+      Το Hermes Agent είναι ένας ανοιχτού κώδικα αυτόνομος AI agent από τη Nous Research. Έχει σχεδιαστεί για να τρέχει στον δικό σας διακομιστή, να διατηρεί μόνιμη μνήμη μεταξύ συνεδριών, να δημιουργεί επαναχρησιμοποιήσιμα skills και να συνδέεται με πλατφόρμες μηνυμάτων μέσω gateway.
+
+      Αυτή η εγκατάσταση εκκινεί το Hermes gateway και το ενσωματωμένο web dashboard. Το gateway παρέχει API συμβατό με OpenAI και endpoint υγείας, ενώ το dashboard προσφέρει κατάσταση, ρυθμίσεις, συνεδρίες, skills και διαχείριση gateway από τον browser. Τα δεδομένα χρήστη αποθηκεύονται στο /opt/data ώστε ρυθμίσεις, API keys, συνεδρίες, μνήμες, skills και logs να διατηρούνται μετά από αναβαθμίσεις image.
+
+      **Κύρια χαρακτηριστικά:**
+      - Μόνιμη μνήμη και ιστορικό συνεδριών
+      - Σύστημα skills για επαναχρησιμοποιήσιμες ροές εργασίας agent
+      - Messaging gateway και API endpoint συμβατό με OpenAI
+      - Web dashboard για ρύθμιση και παρακολούθηση
+      - Docker εγκατάσταση με μόνιμο χώρο αποθήκευσης
+
+      **Μάθετε περισσότερα:**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+    en_GB: |
+      Hermes Agent is an open-source autonomous AI agent from Nous Research. It is designed to run on your own server, keep persistent memory across sessions, create reusable skills, and connect to messaging platforms through a gateway.
+
+      This deployment starts the Hermes gateway and the built-in web dashboard. The gateway exposes an OpenAI-compatible API and health endpoint, while the dashboard provides browser-based status, configuration, sessions, skills, and gateway management. User data is stored under /opt/data so configuration, API keys, sessions, memories, skills, and logs survive image upgrades.
+
+      **Key Features:**
+      - Persistent memory and session history
+      - Skills system for reusable agent workflows
+      - Messaging gateway and OpenAI-compatible API endpoint
+      - Browser-based dashboard for configuration and monitoring
+      - Docker-based deployment with persistent storage
+
+      **Learn More:**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+    en_US: |
+      Hermes Agent is an open-source autonomous AI agent from Nous Research. It is designed to run on your own server, keep persistent memory across sessions, create reusable skills, and connect to messaging platforms through a gateway.
+
+      This deployment starts the Hermes gateway and the built-in web dashboard. The gateway exposes an OpenAI-compatible API and health endpoint, while the dashboard provides browser-based status, configuration, sessions, skills, and gateway management. User data is stored under /opt/data so configuration, API keys, sessions, memories, skills, and logs survive image upgrades.
+
+      **Key Features:**
+      - Persistent memory and session history
+      - Skills system for reusable agent workflows
+      - Messaging gateway and OpenAI-compatible API endpoint
+      - Browser-based dashboard for configuration and monitoring
+      - Docker-based deployment with persistent storage
+
+      **Learn More:**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+    fr_FR: |
+      Hermes Agent est un agent IA autonome open source de Nous Research. Il est conçu pour fonctionner sur votre propre serveur, conserver une mémoire persistante entre les sessions, créer des skills réutilisables et se connecter aux plateformes de messagerie via une passerelle.
+
+      Ce déploiement lance la passerelle Hermes et le tableau de bord web intégré. La passerelle expose une API compatible OpenAI et un point de santé, tandis que le tableau de bord fournit dans le navigateur l'état, la configuration, les sessions, les skills et la gestion de la passerelle. Les données utilisateur sont stockées dans /opt/data afin que la configuration, les clés API, les sessions, les mémoires, les skills et les journaux survivent aux mises à jour d'image.
+
+      **Fonctionnalités principales :**
+      - Mémoire persistante et historique des sessions
+      - Système de skills pour des workflows d'agent réutilisables
+      - Passerelle de messagerie et endpoint API compatible OpenAI
+      - Tableau de bord web pour la configuration et la surveillance
+      - Déploiement Docker avec stockage persistant
+
+      **En savoir plus :**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+    hr_HR: |
+      Hermes Agent je autonomni AI agent otvorenog koda tvrtke Nous Research. Namijenjen je pokretanju na vlastitom poslužitelju, čuvanju trajne memorije između sesija, izradi ponovno upotrebljivih vještina i povezivanju s platformama za poruke putem pristupnika.
+
+      Ova instalacija pokreće Hermes pristupnik i ugrađenu web nadzornu ploču. Pristupnik izlaže OpenAI-kompatibilni API i health endpoint, dok nadzorna ploča u pregledniku prikazuje status, konfiguraciju, sesije, vještine i upravljanje pristupnikom. Korisnički podaci spremaju se u /opt/data kako bi konfiguracija, API ključevi, sesije, memorije, vještine i zapisnici preživjeli nadogradnje slike.
+
+      **Glavne značajke:**
+      - Trajna memorija i povijest sesija
+      - Sustav vještina za ponovno upotrebljive tijekove rada agenta
+      - Pristupnik za poruke i OpenAI-kompatibilni API endpoint
+      - Web nadzorna ploča za konfiguraciju i nadzor
+      - Docker instalacija s trajnom pohranom
+
+      **Saznajte više:**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+    it_IT: |
+      Hermes Agent è un agente IA autonomo open source di Nous Research. È progettato per funzionare sul tuo server, mantenere memoria persistente tra le sessioni, creare skill riutilizzabili e collegarsi alle piattaforme di messaggistica tramite un gateway.
+
+      Questo deployment avvia il gateway Hermes e la dashboard web integrata. Il gateway espone un'API compatibile con OpenAI e un endpoint di stato, mentre la dashboard offre da browser stato, configurazione, sessioni, skill e gestione del gateway. I dati utente sono salvati in /opt/data, così configurazione, chiavi API, sessioni, memorie, skill e log restano disponibili dopo gli aggiornamenti dell'immagine.
+
+      **Funzionalità principali:**
+      - Memoria persistente e cronologia delle sessioni
+      - Sistema di skill per workflow agent riutilizzabili
+      - Gateway di messaggistica ed endpoint API compatibile con OpenAI
+      - Dashboard web per configurazione e monitoraggio
+      - Deployment Docker con archiviazione persistente
+
+      **Scopri di più:**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+    ja_JP: |
+      Hermes Agent は Nous Research によるオープンソースの自律型 AI エージェントです。自分のサーバーで動作し、セッションをまたいで永続メモリを保持し、再利用可能なスキルを作成し、ゲートウェイ経由でメッセージングプラットフォームに接続できます。
+
+      この構成では Hermes ゲートウェイと組み込み Web ダッシュボードを起動します。ゲートウェイは OpenAI 互換 API とヘルスエンドポイントを公開し、ダッシュボードはブラウザからステータス、設定、セッション、スキル、ゲートウェイ管理を提供します。ユーザーデータは /opt/data に保存されるため、設定、API キー、セッション、メモリ、スキル、ログはイメージ更新後も維持されます。
+
+      **主な機能:**
+      - 永続メモリとセッション履歴
+      - 再利用可能なエージェントワークフロー向けスキルシステム
+      - メッセージングゲートウェイと OpenAI 互換 API エンドポイント
+      - 設定と監視のためのブラウザベースのダッシュボード
+      - 永続ストレージ付き Docker デプロイ
+
+      **詳細:**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+    ko_KR: |
+      Hermes Agent는 Nous Research의 오픈 소스 자율 AI 에이전트입니다. 자체 서버에서 실행하고, 세션 간 영구 메모리를 유지하며, 재사용 가능한 스킬을 만들고, 게이트웨이를 통해 메시징 플랫폼과 연결하도록 설계되었습니다.
+
+      이 배포는 Hermes 게이트웨이와 내장 웹 대시보드를 시작합니다. 게이트웨이는 OpenAI 호환 API와 상태 확인 엔드포인트를 제공하고, 대시보드는 브라우저에서 상태, 설정, 세션, 스킬 및 게이트웨이 관리를 제공합니다. 사용자 데이터는 /opt/data에 저장되어 설정, API 키, 세션, 메모리, 스킬 및 로그가 이미지 업그레이드 후에도 유지됩니다.
+
+      **주요 기능:**
+      - 영구 메모리와 세션 기록
+      - 재사용 가능한 에이전트 워크플로를 위한 스킬 시스템
+      - 메시징 게이트웨이와 OpenAI 호환 API 엔드포인트
+      - 설정과 모니터링을 위한 웹 대시보드
+      - 영구 저장소를 사용하는 Docker 배포
+
+      **자세히 알아보기:**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+    nb_NO: |
+      Hermes Agent er en åpen kildekode-basert autonom KI-agent fra Nous Research. Den er laget for å kjøre på din egen server, beholde vedvarende minne mellom økter, lage gjenbrukbare ferdigheter og koble til meldingsplattformer via en gateway.
+
+      Denne distribusjonen starter Hermes-gatewayen og det innebygde webdashboardet. Gatewayen eksponerer et OpenAI-kompatibelt API og helseendepunkt, mens dashboardet gir nettleserbasert status, konfigurasjon, økter, ferdigheter og gateway-administrasjon. Brukerdata lagres under /opt/data, slik at konfigurasjon, API-nøkler, økter, minner, ferdigheter og logger overlever image-oppgraderinger.
+
+      **Hovedfunksjoner:**
+      - Vedvarende minne og økthistorikk
+      - Ferdighetssystem for gjenbrukbare agentarbeidsflyter
+      - Meldingsgateway og OpenAI-kompatibelt API-endepunkt
+      - Nettleserbasert dashboard for konfigurasjon og overvåking
+      - Docker-distribusjon med vedvarende lagring
+
+      **Lær mer:**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+    pt_PT: |
+      O Hermes Agent é um agente de IA autónomo open source da Nous Research. Foi concebido para correr no seu próprio servidor, manter memória persistente entre sessões, criar skills reutilizáveis e ligar-se a plataformas de mensagens através de um gateway.
+
+      Esta implementação inicia o gateway Hermes e o painel web integrado. O gateway expõe uma API compatível com OpenAI e um endpoint de estado, enquanto o painel fornece no navegador estado, configuração, sessões, skills e gestão do gateway. Os dados do utilizador ficam guardados em /opt/data para que configuração, chaves API, sessões, memórias, skills e registos sobrevivam a atualizações da imagem.
+
+      **Funcionalidades principais:**
+      - Memória persistente e histórico de sessões
+      - Sistema de skills para fluxos de trabalho de agente reutilizáveis
+      - Gateway de mensagens e endpoint API compatível com OpenAI
+      - Painel web para configuração e monitorização
+      - Implementação Docker com armazenamento persistente
+
+      **Saiba mais:**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+    ru_RU: |
+      Hermes Agent — автономный AI-агент с открытым исходным кодом от Nous Research. Он предназначен для запуска на собственном сервере, сохраняет постоянную память между сессиями, создает повторно используемые навыки и подключается к платформам обмена сообщениями через шлюз.
+
+      Эта установка запускает шлюз Hermes и встроенную веб-панель. Шлюз предоставляет совместимый с OpenAI API и endpoint проверки состояния, а панель в браузере показывает статус, настройки, сессии, навыки и управление шлюзом. Пользовательские данные сохраняются в /opt/data, поэтому настройки, API-ключи, сессии, память, навыки и журналы остаются после обновления образа.
+
+      **Основные возможности:**
+      - Постоянная память и история сессий
+      - Система навыков для повторно используемых workflows агента
+      - Шлюз сообщений и совместимый с OpenAI API endpoint
+      - Веб-панель для настройки и мониторинга
+      - Docker-развертывание с постоянным хранилищем
+
+      **Подробнее:**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+    sv_SE: |
+      Hermes Agent är en autonom AI-agent med öppen källkod från Nous Research. Den är byggd för att köras på din egen server, behålla beständigt minne mellan sessioner, skapa återanvändbara färdigheter och ansluta till meddelandeplattformar via en gateway.
+
+      Den här distributionen startar Hermes-gatewayen och den inbyggda webbdashboarden. Gatewayen exponerar ett OpenAI-kompatibelt API och en hälsoendpoint, medan dashboarden ger webbläsarbaserad status, konfiguration, sessioner, färdigheter och gatewayhantering. Användardata lagras under /opt/data så att konfiguration, API-nycklar, sessioner, minnen, färdigheter och loggar finns kvar efter image-uppgraderingar.
+
+      **Huvudfunktioner:**
+      - Beständigt minne och sessionshistorik
+      - Färdighetssystem för återanvändbara agentarbetsflöden
+      - Meddelandegateway och OpenAI-kompatibel API-endpoint
+      - Webbdashboard för konfiguration och övervakning
+      - Docker-distribution med beständig lagring
+
+      **Läs mer:**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+    tr_TR: |
+      Hermes Agent, Nous Research tarafından geliştirilen açık kaynaklı otonom bir AI ajanıdır. Kendi sunucunuzda çalışmak, oturumlar arasında kalıcı bellek tutmak, yeniden kullanılabilir beceriler oluşturmak ve bir ağ geçidi üzerinden mesajlaşma platformlarına bağlanmak için tasarlanmıştır.
+
+      Bu kurulum Hermes ağ geçidini ve yerleşik web panosunu başlatır. Ağ geçidi OpenAI uyumlu API ve sağlık uç noktası sunarken pano tarayıcı üzerinden durum, yapılandırma, oturumlar, beceriler ve ağ geçidi yönetimi sağlar. Kullanıcı verileri /opt/data altında saklanır; böylece yapılandırma, API anahtarları, oturumlar, bellekler, beceriler ve günlükler imaj güncellemelerinden sonra korunur.
+
+      **Ana özellikler:**
+      - Kalıcı bellek ve oturum geçmişi
+      - Yeniden kullanılabilir ajan iş akışları için beceri sistemi
+      - Mesajlaşma ağ geçidi ve OpenAI uyumlu API uç noktası
+      - Yapılandırma ve izleme için web panosu
+      - Kalıcı depolama kullanan Docker kurulumu
+
+      **Daha fazla bilgi:**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+    zh_CN: |
+      Hermes Agent 是 Nous Research 开源的自主 AI Agent。它可以运行在你自己的服务器上，在不同会话之间保留持久记忆，创建可复用技能，并通过网关连接多种消息平台。
+
+      此部署会启动 Hermes 网关和内置 Web 仪表盘。网关提供 OpenAI 兼容 API 与健康检查端点，仪表盘则在浏览器中提供状态查看、配置管理、会话、技能和网关管理。用户数据保存在 /opt/data 中，因此配置、API 密钥、会话、记忆、技能和日志都能在镜像升级后保留。
+
+      **主要功能：**
+      - 持久记忆和会话历史
+      - 用于可复用 Agent 工作流的技能系统
+      - 消息网关和 OpenAI 兼容 API 端点
+      - 用于配置和监控的浏览器 Web 仪表盘
+      - 带持久化存储的 Docker 部署
+
+      **了解更多：**
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+  category: AI
+  author: Nous Research
+  developer: Nous Research
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HermesAgent/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HermesAgent/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HermesAgent/screenshot-1.png
+  main: hermes-dashboard
+  port_map: "9119"
+  architectures:
+    - amd64
+    - arm64
+  index: /
+  scheme: http
+  version: "v0.12.0"
+  updateAt: "2026-04-30"
+  releaseNotes:
+    en_US: |-
+      Hermes Agent v0.12.0 (2026.4.30)
+      - Adds the autonomous Curator for skill library maintenance and reports.
+      - Upgrades the self-improvement loop for memories and skills.
+      - Adds new inference providers, messaging platforms, Spotify, Google Meet, and bundled ComfyUI / TouchDesigner-MCP integrations.
+      - Adds model dashboard improvements and reduces visible TUI cold-start time.
+  website: https://hermes-agent.nousresearch.com/
+  repo: https://github.com/NousResearch/hermes-agent
+  support: https://github.com/NousResearch/hermes-agent/issues
+  docs: https://hermes-agent.nousresearch.com/docs/
