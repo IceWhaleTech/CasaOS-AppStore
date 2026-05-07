@@ -81,7 +81,9 @@ x-casaos:
   updateAt: "2024-12-20"
   releaseNotes:
     en_US: |-
-      Vaultwarden 1.32.7 is an upstream release; see GitHub releases for the detailed changelog.
+      - 1.32.7 includes a security fix for installations with ORG_GROUPS_ENABLED enabled.
+      - SMTP image source values are masked in the support string.
+      - Refactoring, optimizations, connect-src entry support, and updated fern usage are included.
   website: "https://vaultwarden.net"
   repo: "https://github.com/dani-garcia/vaultwarden"
   support: "https://github.com/dani-garcia/vaultwarden/discussions"

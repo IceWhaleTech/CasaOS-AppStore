@@ -169,7 +169,9 @@ x-casaos:
   updateAt: "2025-02-18"
   releaseNotes:
     en_US: |-
-      qBittorrent 5.0.4 is an upstream maintenance release; see the official changelog for detailed fixes.
+      - release-5.0.4 fixes removing trackers via WebAPI and torrent content checkbox state handling.
+      - Peer-list zero/infinity values are hidden only when that setting is Always.
+      - Fixes include stopped torrents in the error tracker filter, WebUI context-menu memory leaks, WebAPI string trimming, Windows Qt style handling, and a macOS memory leak.
   website: "https://www.qbittorrent.org"
   repo: "https://github.com/qbittorrent/qBittorrent"
   support: "https://github.com/qbittorrent/qBittorrent/issues"

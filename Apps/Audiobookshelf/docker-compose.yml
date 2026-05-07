@@ -460,6 +460,8 @@ x-casaos:
   repo: "https://github.com/advplyr/audiobookshelf"
   releaseNotes:
     en_US: |-
-      - Latest upstream release checked from the Audiobookshelf project releases.
+      - v2.30.0 adds a Best option for book cover search across Audible, Google, and FantLab.
+      - Cover search is now async and streams results over websockets, with shorter metadata-provider timeouts.
+      - Fixes include OIDC callback protocol handling, MultiSelect responsiveness, podcast downloads without audio streams, and chapter editor overflow.
   support: "https://github.com/advplyr/audiobookshelf/issues"
   docs: "https://www.audiobookshelf.org/docs"

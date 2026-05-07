@@ -717,8 +717,9 @@ x-casaos:
   updateAt: "2025-10-24"
   releaseNotes:
     en_US: |-
-      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
-      - Security configuration changes add AllowChildProcess and restrict default http.urls handling for userinfo.
+      - v0.152.2 restores support for valid module/theme mounts that reference node_modules.
+      - Hugo now treats node_modules as a special mount source fallback relative to the project root.
+      - The release also updates minify and fixes a GitHub stale PR message typo.
   website: "https://gohugo.io/"
   repo: "https://github.com/gohugoio/hugo"
   support: "https://github.com/gohugoio/hugo/issues"

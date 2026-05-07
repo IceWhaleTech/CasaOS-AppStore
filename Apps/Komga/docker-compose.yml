@@ -529,8 +529,9 @@ x-casaos:
   updateAt: "2025-11-28"
   releaseNotes:
     en_US: |-
-      - 1.24.4 fixes API handling for null age restrictions.
-      - EPUB table-of-contents parsing and Kobo raw request proxying were fixed.
+      - 1.23.6 fixes Kobo proxy initialization, double URL encoding, and Content-Type proxying.
+      - EPUB cover generation now properly decodes cover href values.
+      - Docker builds were adjusted to use the old-releases apt repository.
   website: "https://komga.org"
   repo: "https://github.com/gotson/komga"
   support: "https://github.com/gotson/komga/issues"

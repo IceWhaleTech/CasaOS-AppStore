@@ -55,8 +55,9 @@ x-casaos:
   updateAt: "2024-03-26"
   releaseNotes:
     en_US: |-
-      - v1.0.25 adds a code of conduct and supply-chain security scorecard action.
-      - Support was added for Python 3.13 and newer Node.js versions.
+      - The main image uses the floating master tag, so release notes cannot be mapped to one fixed upstream version.
+      - Pin the image to a concrete upstream tag before recording version-specific GitHub changelog notes.
+      - The latest checked GitHub release adds a code of conduct and supply-chain security scorecard action.
       - Project dependencies and lock files were updated.
   website: "https://pymedusa.com/"
   repo: "https://github.com/pymedusa/Medusa"

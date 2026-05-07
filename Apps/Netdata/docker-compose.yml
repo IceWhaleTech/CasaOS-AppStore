@@ -82,7 +82,9 @@ x-casaos:
   updateAt: "2025-12-05"
   releaseNotes:
     en_US: |-
-      v2.8.1 is an upstream Netdata release; no concise formal changelog was identified.
+      - v2.8.1 fixes dynamic-configuration vnodes disappearing after agent restart.
+      - PSS memory sampling in apps.plugin was disabled by default to reduce CPU overhead.
+      - Alert source unit display, Windows datafile sync logging, dbengine-disabled compilation, and Podman container name resolution were improved.
   website: "https://www.netdata.cloud"
   repo: "https://github.com/netdata/netdata"
   support: "https://github.com/netdata/netdata/issues"

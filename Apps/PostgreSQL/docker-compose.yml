@@ -173,8 +173,8 @@ x-casaos:
   updateAt: "2025-03-18"
   releaseNotes:
     en_US: |-
-      - PostgreSQL 17.4 is the upstream database release used by this image.
-      - No concise formal changelog was identified for the Docker image metadata itself.
+      - PostgreSQL 17.4 fixes libpq quoting behavior after CVE-2025-1094 so length-limited strings are handled correctly.
+      - The release also fixes a pg_createsubscriber memory leak and a Meson build-system header detection issue.
   website: "https://www.postgresql.org"
   repo: "https://github.com/postgres/postgres"
   support: "https://www.postgresql.org/support/"

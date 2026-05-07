@@ -433,6 +433,8 @@ x-casaos:
   repo: "https://github.com/tailscale/tailscale"
   releaseNotes:
     en_US: |-
-      Tailscale v1.90.8 is an upstream release; see the official changelog for detailed changes.
+      - v1.90.8 adds auto:any exit-node selection commands that track the recommended exit node.
+      - Alpine Linux auto-update version detection was improved and unnecessary power/routing log messages were removed.
+      - The container image fixes Tailnet Lock signing checks when no statedir or TS_STATE_DIR is configured, addressing TS-2025-008.
   support: "https://tailscale.com/contact/support"
   docs: "https://tailscale.com/kb/"

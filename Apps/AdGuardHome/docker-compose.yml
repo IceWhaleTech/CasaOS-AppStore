@@ -121,7 +121,9 @@ x-casaos:
   updateAt: "2025-04-22"
   releaseNotes:
     en_US: |-
-      - Latest upstream release checked from the AdGuard Home release notes.
+      - v0.107.61 fixes a cache poisoning vulnerability.
+      - Duplicate simultaneous requests are now coalesced into a single upstream request.
+      - The new pending_requests configuration is enabled by default and is recommended for untrusted clients.
   website: "https://adguard.com/en/adguard-home/overview.html"
   repo: "https://github.com/AdguardTeam/AdGuardHome"
   support: "https://github.com/AdguardTeam/AdGuardHome/issues"

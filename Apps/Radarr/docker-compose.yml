@@ -112,7 +112,9 @@ x-casaos:
   updateAt: "2025-06-27"
   releaseNotes:
     en_US: |-
-      Radarr 5.26.2 is an upstream release for the v5 series; see GitHub releases for the detailed changelog.
+      - Radarr 5.26.2.10099 fixes disk-space checks for network drives and prevents movie metadata refresh failures.
+      - It also updates remove-root-folder wording, Discord notification escaping, translations, and API documentation.
+      - Docker users should update the container image rather than update inside the container.
   website: "https://radarr.video"
   repo: "https://github.com/Radarr/Radarr"
   support: "https://radarr.video/support"

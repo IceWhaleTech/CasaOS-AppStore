@@ -538,6 +538,7 @@ x-casaos:
   repo: "https://github.com/pi-hole/pi-hole"
   releaseNotes:
     en_US: |-
-      Pi-hole 2025.11.1 is the upstream release used by this image; no concise formal changelog was identified.
+      - Pi-hole Docker 2025.11.1 fixes the README build-status badge and restores RISCV image support.
+      - Startup handling improves FTL readiness detection and log tailing, and the compose example now sets DNS listening mode to ALL.
   support: "https://discourse.pi-hole.net"
   docs: "https://docs.pi-hole.net"

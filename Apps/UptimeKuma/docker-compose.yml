@@ -400,6 +400,7 @@ x-casaos:
   repo: "https://github.com/louislam/uptime-kuma"
   releaseNotes:
     en_US: |-
-      Uptime Kuma 1.23.16-alpine is the container variant used by this app; see GitHub releases for the detailed changelog.
+      - Uptime Kuma 1.23.16 updates dependencies for security.
+      - It fixes CVE-2024-56331, a local file inclusion issue in the Real-Browser monitor's URL handling.
   support: "https://github.com/louislam/uptime-kuma/issues"
   docs: "https://github.com/louislam/uptime-kuma/wiki"
