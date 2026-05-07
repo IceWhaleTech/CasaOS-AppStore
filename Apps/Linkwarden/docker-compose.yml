@@ -21,6 +21,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+    deploy:
+      resources:
+        reservations:
+          memory: 512m
+          cpus: '0.2'
     x-casaos:
       envs:
         - container: POSTGRES_USER
@@ -126,6 +131,11 @@ services:
         target: /meili_data
     networks:
       - linkwarden-net
+    deploy:
+      resources:
+        reservations:
+          memory: 256m
+          cpus: '0.2'
     x-casaos:
       envs:
         - container: MEILI_MASTER_KEY
@@ -211,6 +221,11 @@ services:
         target: /data/data
     networks:
       - linkwarden-net
+    deploy:
+      resources:
+        reservations:
+          memory: 512m
+          cpus: '0.2'
     x-casaos:
       envs:
         - container: TZ

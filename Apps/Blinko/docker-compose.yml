@@ -26,6 +26,11 @@ services:
       options:
         max-size: 10m
         max-file: "3"
+    deploy:
+      resources:
+        reservations:
+          memory: 512m
+          cpus: '0.2'
     x-casaos:
       envs:
         - container: NODE_ENV
@@ -164,6 +169,11 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID/postgres_data
         target: /var/lib/postgresql/data
+    deploy:
+      resources:
+        reservations:
+          memory: 512m
+          cpus: '0.2'
     healthcheck:
       test:
         - CMD
