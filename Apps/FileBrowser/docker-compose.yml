@@ -27,33 +27,26 @@ services:
         - container: PUID
           description:
             en_us: Run File Browser as the specified user ID.
-            de_de: Startet File Browser unter dieser User-ID.
         - container: PGID
           description:
             en_us: Run File Browser as the specified group ID.
-            de_de: Startet File Browser unter dieser Gruppen-ID.
         - container: TZ
           description:
             en_us: Container timezone.
-            de_de: Zeitzone des Containers.
       ports:
         - container: "80"
           description:
             en_us: WebUI HTTP port.
-            de_de: WebUI HTTP-Port.
       volumes:
         - container: /srv
           description:
             en_us: Files exposed for browsing and editing. Bound to /DATA so every file on the NAS is reachable.
-            de_de: Dateien, die zum Betrachten und Bearbeiten freigegeben werden. Auf /DATA gemountet, damit alle NAS-Dateien erreichbar sind.
         - container: /database
           description:
             en_us: SQLite database with users, settings and shares.
-            de_de: SQLite-Datenbank mit Benutzern, Einstellungen und Freigaben.
         - container: /config
           description:
             en_us: Optional settings.json overrides.
-            de_de: Optionale settings.json Überschreibungen.
 
 x-casaos:
   architectures:
@@ -67,13 +60,10 @@ x-casaos:
   description:
     en_us: |
       File Browser is a lightweight web file manager with a built-in editor for plain-text files, Markdown, JSON, YAML and source code. It fills the gap in the ZimaOS Files UI, where text files can only be viewed but not edited. With its single binary and tiny footprint it pairs well with NAS workloads: browse /DATA, edit configuration files in place, share folders or single files via short links, and use the integrated Markdown preview while writing notes.
-    de_de: |
-      File Browser ist ein schlanker Web-Dateimanager mit eingebautem Editor fuer Text, Markdown, JSON, YAML und Quellcode. Er schliesst die Luecke in der ZimaOS-Dateiansicht, wo Textdateien bisher nur angezeigt, aber nicht bearbeitet werden koennen. Dank seines kleinen Footprints passt er ideal zu NAS-Workloads: /DATA durchsuchen, Konfigurationsdateien direkt bearbeiten, Ordner oder einzelne Dateien per Kurz-Link teilen und Markdown-Notizen mit Live-Vorschau schreiben.
     zh_cn: |
       File Browser 是一款轻量级的网页文件管理器，内置文本、Markdown、JSON、YAML 与源代码的编辑器。它弥补了 ZimaOS 文件界面只能预览文本却无法编辑的不足。它体积小巧，非常适合 NAS 场景：浏览 /DATA，直接编辑配置文件，通过短链接分享目录或单个文件，并在书写 Markdown 笔记时使用实时预览。
   tagline:
     en_us: Web file manager with built-in editor for txt, Markdown, JSON, YAML and code.
-    de_de: Web-Dateimanager mit eingebautem Editor fuer Text, Markdown, JSON, YAML und Code.
     zh_cn: 内置文本/Markdown 编辑器的网页文件管理器。
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/icon.png
   screenshot_link:
@@ -86,22 +76,12 @@ x-casaos:
   tips:
     before_install:
       en_us: |
-        On first start File Browser (s6 image) generates a random initial password for the `admin` user. Find it once after the container has started:
+        On first start the File Browser s6 image generates a random initial password for the `admin` user. Read it once from the container log:
 
         ```
         docker logs filebrowser | grep "randomly generated"
         ```
 
-        Sign in with username `admin` and the printed password, then change it under Settings -> User Management. The web UI is exposed on the host port shown above.
+        Sign in with username `admin` and the printed password, then change it under Settings -> Profile Settings -> Change Password. The web UI is exposed on the host port shown above.
 
         File Browser mounts `/DATA` as `/srv`, so every file under `/DATA` is reachable for the signed-in user. Treat the admin account accordingly.
-      de_de: |
-        Beim ersten Start erzeugt File Browser (s6-Image) ein zufaelliges initiales Passwort fuer den Benutzer `admin`. Einmalig auslesen, nachdem der Container gestartet ist:
-
-        ```
-        docker logs filebrowser | grep "randomly generated"
-        ```
-
-        Mit `admin` und dem ausgegebenen Passwort einloggen und es danach unter Einstellungen -> Benutzerverwaltung aendern. Das WebUI ist auf dem oben angezeigten Host-Port erreichbar.
-
-        File Browser mountet `/DATA` als `/srv`, das heisst alle Dateien unterhalb `/DATA` sind fuer den eingeloggten Benutzer erreichbar. Den Admin-Zugang entsprechend behandeln.
