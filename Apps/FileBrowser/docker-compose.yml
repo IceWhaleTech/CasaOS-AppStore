@@ -86,20 +86,22 @@ x-casaos:
   tips:
     before_install:
       en_us: |
-        Default sign-in after first start:
+        On first start File Browser (s6 image) generates a random initial password for the `admin` user. Find it once after the container has started:
 
-        - Username: `admin`
-        - Password: `admin`
+        ```
+        docker logs filebrowser | grep "randomly generated"
+        ```
 
-        Please change the password immediately after the first login. The web UI is exposed on the host port shown above.
+        Sign in with username `admin` and the printed password, then change it under Settings -> User Management. The web UI is exposed on the host port shown above.
 
-        File Browser mounts `/DATA` as `/srv`, so every file under `/DATA` is reachable for the configured user. Treat the admin account accordingly.
+        File Browser mounts `/DATA` as `/srv`, so every file under `/DATA` is reachable for the signed-in user. Treat the admin account accordingly.
       de_de: |
-        Standard-Anmeldedaten beim ersten Start:
+        Beim ersten Start erzeugt File Browser (s6-Image) ein zufaelliges initiales Passwort fuer den Benutzer `admin`. Einmalig auslesen, nachdem der Container gestartet ist:
 
-        - Benutzername: `admin`
-        - Passwort: `admin`
+        ```
+        docker logs filebrowser | grep "randomly generated"
+        ```
 
-        Bitte das Passwort direkt nach dem ersten Login aendern. Das WebUI ist auf dem oben angezeigten Host-Port erreichbar.
+        Mit `admin` und dem ausgegebenen Passwort einloggen und es danach unter Einstellungen -> Benutzerverwaltung aendern. Das WebUI ist auf dem oben angezeigten Host-Port erreichbar.
 
-        File Browser mountet `/DATA` als `/srv`, das heisst alle Dateien unterhalb `/DATA` sind fuer den konfigurierten Benutzer erreichbar. Den Admin-Zugang entsprechend behandeln.
+        File Browser mountet `/DATA` als `/srv`, das heisst alle Dateien unterhalb `/DATA` sind fuer den eingeloggten Benutzer erreichbar. Den Admin-Zugang entsprechend behandeln.
