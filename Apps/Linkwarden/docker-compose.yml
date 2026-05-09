@@ -1,0 +1,766 @@
+services:
+  linkwarden:
+    image: ghcr.io/linkwarden/linkwarden:v2.14.1
+    container_name: linkwarden
+    restart: unless-stopped
+    depends_on:
+      linkwarden-postgres:
+        condition: service_healthy
+      linkwarden-meilisearch:
+        condition: service_started
+    ports:
+      - target: 3000
+        published: "3428"
+        protocol: tcp
+    environment:
+      TZ: $TZ
+      NEXTAUTH_URL: http://localhost:3000/api/v1/auth
+      NEXTAUTH_SECRET: abc123
+      DATABASE_URL: postgresql://postgres:abc123@linkwarden-postgres:5432/linkwarden
+      STORAGE_FOLDER: /data
+      MEILI_HOST: http://linkwarden-meilisearch:7700
+      MEILI_MASTER_KEY: kZWvi7wFylRjEnOTnNrNucG3d7c892HlIBtN3Vr8M-0
+      NEXT_PUBLIC_DISABLE_REGISTRATION: 'false'
+      NEXT_PUBLIC_CREDENTIALS_ENABLED: 'true'
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data/data
+    networks:
+      - linkwarden-net
+    deploy:
+      resources:
+        reservations:
+          memory: 512m
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            de_DE: Umgebungsvariable TZ
+            el_GR: Μεταβλητή περιβάλλοντος TZ
+            en_GB: Environment variable TZ
+            en_US: Environment variable TZ
+            fr_FR: Variable d’environnement TZ
+            hr_HR: Varijabla okruženja TZ
+            it_IT: Variabile d’ambiente TZ
+            ja_JP: 環境変数 TZ
+            ko_KR: 환경 변수 TZ
+            nb_NO: Miljøvariabel TZ
+            pt_PT: Variável de ambiente TZ
+            ru_RU: Переменная среды TZ
+            sv_SE: Miljövariabel TZ
+            tr_TR: Ortam değişkeni TZ
+            zh_CN: 环境变量 TZ
+
+        - container: NEXTAUTH_URL
+          description:
+            de_DE: Umgebungsvariable NEXTAUTH_URL
+            el_GR: Μεταβλητή περιβάλλοντος NEXTAUTH_URL
+            en_GB: Environment variable NEXTAUTH_URL
+            en_US: Environment variable NEXTAUTH_URL
+            fr_FR: Variable d’environnement NEXTAUTH_URL
+            hr_HR: Varijabla okruženja NEXTAUTH_URL
+            it_IT: Variabile d’ambiente NEXTAUTH_URL
+            ja_JP: 環境変数 NEXTAUTH_URL
+            ko_KR: 환경 변수 NEXTAUTH_URL
+            nb_NO: Miljøvariabel NEXTAUTH_URL
+            pt_PT: Variável de ambiente NEXTAUTH_URL
+            ru_RU: Переменная среды NEXTAUTH_URL
+            sv_SE: Miljövariabel NEXTAUTH_URL
+            tr_TR: Ortam değişkeni NEXTAUTH_URL
+            zh_CN: 环境变量 NEXTAUTH_URL
+
+        - container: NEXTAUTH_SECRET
+          description:
+            de_DE: Umgebungsvariable NEXTAUTH_SECRET
+            el_GR: Μεταβλητή περιβάλλοντος NEXTAUTH_SECRET
+            en_GB: Environment variable NEXTAUTH_SECRET
+            en_US: Environment variable NEXTAUTH_SECRET
+            fr_FR: Variable d’environnement NEXTAUTH_SECRET
+            hr_HR: Varijabla okruženja NEXTAUTH_SECRET
+            it_IT: Variabile d’ambiente NEXTAUTH_SECRET
+            ja_JP: 環境変数 NEXTAUTH_SECRET
+            ko_KR: 환경 변수 NEXTAUTH_SECRET
+            nb_NO: Miljøvariabel NEXTAUTH_SECRET
+            pt_PT: Variável de ambiente NEXTAUTH_SECRET
+            ru_RU: Переменная среды NEXTAUTH_SECRET
+            sv_SE: Miljövariabel NEXTAUTH_SECRET
+            tr_TR: Ortam değişkeni NEXTAUTH_SECRET
+            zh_CN: 环境变量 NEXTAUTH_SECRET
+
+        - container: DATABASE_URL
+          description:
+            de_DE: Umgebungsvariable DATABASE_URL
+            el_GR: Μεταβλητή περιβάλλοντος DATABASE_URL
+            en_GB: Environment variable DATABASE_URL
+            en_US: Environment variable DATABASE_URL
+            fr_FR: Variable d’environnement DATABASE_URL
+            hr_HR: Varijabla okruženja DATABASE_URL
+            it_IT: Variabile d’ambiente DATABASE_URL
+            ja_JP: 環境変数 DATABASE_URL
+            ko_KR: 환경 변수 DATABASE_URL
+            nb_NO: Miljøvariabel DATABASE_URL
+            pt_PT: Variável de ambiente DATABASE_URL
+            ru_RU: Переменная среды DATABASE_URL
+            sv_SE: Miljövariabel DATABASE_URL
+            tr_TR: Ortam değişkeni DATABASE_URL
+            zh_CN: 环境变量 DATABASE_URL
+
+        - container: STORAGE_FOLDER
+          description:
+            de_DE: Umgebungsvariable STORAGE_FOLDER
+            el_GR: Μεταβλητή περιβάλλοντος STORAGE_FOLDER
+            en_GB: Environment variable STORAGE_FOLDER
+            en_US: Environment variable STORAGE_FOLDER
+            fr_FR: Variable d’environnement STORAGE_FOLDER
+            hr_HR: Varijabla okruženja STORAGE_FOLDER
+            it_IT: Variabile d’ambiente STORAGE_FOLDER
+            ja_JP: 環境変数 STORAGE_FOLDER
+            ko_KR: 환경 변수 STORAGE_FOLDER
+            nb_NO: Miljøvariabel STORAGE_FOLDER
+            pt_PT: Variável de ambiente STORAGE_FOLDER
+            ru_RU: Переменная среды STORAGE_FOLDER
+            sv_SE: Miljövariabel STORAGE_FOLDER
+            tr_TR: Ortam değişkeni STORAGE_FOLDER
+            zh_CN: 环境变量 STORAGE_FOLDER
+
+        - container: MEILI_HOST
+          description:
+            de_DE: Umgebungsvariable MEILI_HOST
+            el_GR: Μεταβλητή περιβάλλοντος MEILI_HOST
+            en_GB: Environment variable MEILI_HOST
+            en_US: Environment variable MEILI_HOST
+            fr_FR: Variable d’environnement MEILI_HOST
+            hr_HR: Varijabla okruženja MEILI_HOST
+            it_IT: Variabile d’ambiente MEILI_HOST
+            ja_JP: 環境変数 MEILI_HOST
+            ko_KR: 환경 변수 MEILI_HOST
+            nb_NO: Miljøvariabel MEILI_HOST
+            pt_PT: Variável de ambiente MEILI_HOST
+            ru_RU: Переменная среды MEILI_HOST
+            sv_SE: Miljövariabel MEILI_HOST
+            tr_TR: Ortam değişkeni MEILI_HOST
+            zh_CN: 环境变量 MEILI_HOST
+
+        - container: MEILI_MASTER_KEY
+          description:
+            de_DE: Umgebungsvariable MEILI_MASTER_KEY
+            el_GR: Μεταβλητή περιβάλλοντος MEILI_MASTER_KEY
+            en_GB: Environment variable MEILI_MASTER_KEY
+            en_US: Environment variable MEILI_MASTER_KEY
+            fr_FR: Variable d’environnement MEILI_MASTER_KEY
+            hr_HR: Varijabla okruženja MEILI_MASTER_KEY
+            it_IT: Variabile d’ambiente MEILI_MASTER_KEY
+            ja_JP: 環境変数 MEILI_MASTER_KEY
+            ko_KR: 환경 변수 MEILI_MASTER_KEY
+            nb_NO: Miljøvariabel MEILI_MASTER_KEY
+            pt_PT: Variável de ambiente MEILI_MASTER_KEY
+            ru_RU: Переменная среды MEILI_MASTER_KEY
+            sv_SE: Miljövariabel MEILI_MASTER_KEY
+            tr_TR: Ortam değişkeni MEILI_MASTER_KEY
+            zh_CN: 环境变量 MEILI_MASTER_KEY
+
+        - container: NEXT_PUBLIC_DISABLE_REGISTRATION
+          description:
+            de_DE: Umgebungsvariable NEXT_PUBLIC_DISABLE_REGISTRATION
+            el_GR: Μεταβλητή περιβάλλοντος NEXT_PUBLIC_DISABLE_REGISTRATION
+            en_GB: Environment variable NEXT_PUBLIC_DISABLE_REGISTRATION
+            en_US: Environment variable NEXT_PUBLIC_DISABLE_REGISTRATION
+            fr_FR: Variable d’environnement NEXT_PUBLIC_DISABLE_REGISTRATION
+            hr_HR: Varijabla okruženja NEXT_PUBLIC_DISABLE_REGISTRATION
+            it_IT: Variabile d’ambiente NEXT_PUBLIC_DISABLE_REGISTRATION
+            ja_JP: 環境変数 NEXT_PUBLIC_DISABLE_REGISTRATION
+            ko_KR: 환경 변수 NEXT_PUBLIC_DISABLE_REGISTRATION
+            nb_NO: Miljøvariabel NEXT_PUBLIC_DISABLE_REGISTRATION
+            pt_PT: Variável de ambiente NEXT_PUBLIC_DISABLE_REGISTRATION
+            ru_RU: Переменная среды NEXT_PUBLIC_DISABLE_REGISTRATION
+            sv_SE: Miljövariabel NEXT_PUBLIC_DISABLE_REGISTRATION
+            tr_TR: Ortam değişkeni NEXT_PUBLIC_DISABLE_REGISTRATION
+            zh_CN: 环境变量 NEXT_PUBLIC_DISABLE_REGISTRATION
+
+        - container: NEXT_PUBLIC_CREDENTIALS_ENABLED
+          description:
+            de_DE: Umgebungsvariable NEXT_PUBLIC_CREDENTIALS_ENABLED
+            el_GR: Μεταβλητή περιβάλλοντος NEXT_PUBLIC_CREDENTIALS_ENABLED
+            en_GB: Environment variable NEXT_PUBLIC_CREDENTIALS_ENABLED
+            en_US: Environment variable NEXT_PUBLIC_CREDENTIALS_ENABLED
+            fr_FR: Variable d’environnement NEXT_PUBLIC_CREDENTIALS_ENABLED
+            hr_HR: Varijabla okruženja NEXT_PUBLIC_CREDENTIALS_ENABLED
+            it_IT: Variabile d’ambiente NEXT_PUBLIC_CREDENTIALS_ENABLED
+            ja_JP: 環境変数 NEXT_PUBLIC_CREDENTIALS_ENABLED
+            ko_KR: 환경 변수 NEXT_PUBLIC_CREDENTIALS_ENABLED
+            nb_NO: Miljøvariabel NEXT_PUBLIC_CREDENTIALS_ENABLED
+            pt_PT: Variável de ambiente NEXT_PUBLIC_CREDENTIALS_ENABLED
+            ru_RU: Переменная среды NEXT_PUBLIC_CREDENTIALS_ENABLED
+            sv_SE: Miljövariabel NEXT_PUBLIC_CREDENTIALS_ENABLED
+            tr_TR: Ortam değişkeni NEXT_PUBLIC_CREDENTIALS_ENABLED
+            zh_CN: 环境变量 NEXT_PUBLIC_CREDENTIALS_ENABLED
+
+      ports:
+        - container: "3000"
+          description:
+            de_DE: Port 3000
+            el_GR: Θύρα 3000
+            en_GB: Port 3000
+            en_US: Port 3000
+            fr_FR: Port 3000
+            hr_HR: Priključak 3000
+            it_IT: Porta 3000
+            ja_JP: ポート 3000
+            ko_KR: 포트 3000
+            nb_NO: Port 3000
+            pt_PT: Porta 3000
+            ru_RU: Порт 3000
+            sv_SE: Port 3000
+            tr_TR: Bağlantı noktası 3000
+            zh_CN: 端口 3000
+
+      volumes:
+        - container: /data/data
+          description:
+            de_DE: Datenvolumen /data/data
+            el_GR: Τόμος δεδομένων /data/data
+            en_GB: Data volume /data/data
+            en_US: Data volume /data/data
+            fr_FR: Volume de données /data/data
+            hr_HR: Podatkovni volumen /data/data
+            it_IT: Volume dati /data/data
+            ja_JP: データボリューム /data/data
+            ko_KR: 데이터 볼륨 /data/data
+            nb_NO: Datavolum /data/data
+            pt_PT: Volume de dados /data/data
+            ru_RU: Том данных /data/data
+            sv_SE: Datavolym /data/data
+            tr_TR: Veri birimi /data/data
+            zh_CN: 数据卷 /data/data
+  linkwarden-postgres:
+    image: postgres:16-alpine
+    container_name: linkwarden-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: abc123
+      POSTGRES_DB: linkwarden
+      TZ: $TZ
+    networks:
+      - linkwarden-net
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/pgdata
+        target: /var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U postgres -d linkwarden
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    deploy:
+      resources:
+        reservations:
+          memory: 256m
+    x-casaos:
+      envs:
+        - container: POSTGRES_USER
+          description:
+            de_DE: Umgebungsvariable POSTGRES_USER
+            el_GR: Μεταβλητή περιβάλλοντος POSTGRES_USER
+            en_GB: Environment variable POSTGRES_USER
+            en_US: Environment variable POSTGRES_USER
+            fr_FR: Variable d’environnement POSTGRES_USER
+            hr_HR: Varijabla okruženja POSTGRES_USER
+            it_IT: Variabile d’ambiente POSTGRES_USER
+            ja_JP: 環境変数 POSTGRES_USER
+            ko_KR: 환경 변수 POSTGRES_USER
+            nb_NO: Miljøvariabel POSTGRES_USER
+            pt_PT: Variável de ambiente POSTGRES_USER
+            ru_RU: Переменная среды POSTGRES_USER
+            sv_SE: Miljövariabel POSTGRES_USER
+            tr_TR: Ortam değişkeni POSTGRES_USER
+            zh_CN: 环境变量 POSTGRES_USER
+
+        - container: POSTGRES_PASSWORD
+          description:
+            de_DE: Umgebungsvariable POSTGRES_PASSWORD
+            el_GR: Μεταβλητή περιβάλλοντος POSTGRES_PASSWORD
+            en_GB: Environment variable POSTGRES_PASSWORD
+            en_US: Environment variable POSTGRES_PASSWORD
+            fr_FR: Variable d’environnement POSTGRES_PASSWORD
+            hr_HR: Varijabla okruženja POSTGRES_PASSWORD
+            it_IT: Variabile d’ambiente POSTGRES_PASSWORD
+            ja_JP: 環境変数 POSTGRES_PASSWORD
+            ko_KR: 환경 변수 POSTGRES_PASSWORD
+            nb_NO: Miljøvariabel POSTGRES_PASSWORD
+            pt_PT: Variável de ambiente POSTGRES_PASSWORD
+            ru_RU: Переменная среды POSTGRES_PASSWORD
+            sv_SE: Miljövariabel POSTGRES_PASSWORD
+            tr_TR: Ortam değişkeni POSTGRES_PASSWORD
+            zh_CN: 环境变量 POSTGRES_PASSWORD
+
+        - container: POSTGRES_DB
+          description:
+            de_DE: Umgebungsvariable POSTGRES_DB
+            el_GR: Μεταβλητή περιβάλλοντος POSTGRES_DB
+            en_GB: Environment variable POSTGRES_DB
+            en_US: Environment variable POSTGRES_DB
+            fr_FR: Variable d’environnement POSTGRES_DB
+            hr_HR: Varijabla okruženja POSTGRES_DB
+            it_IT: Variabile d’ambiente POSTGRES_DB
+            ja_JP: 環境変数 POSTGRES_DB
+            ko_KR: 환경 변수 POSTGRES_DB
+            nb_NO: Miljøvariabel POSTGRES_DB
+            pt_PT: Variável de ambiente POSTGRES_DB
+            ru_RU: Переменная среды POSTGRES_DB
+            sv_SE: Miljövariabel POSTGRES_DB
+            tr_TR: Ortam değişkeni POSTGRES_DB
+            zh_CN: 环境变量 POSTGRES_DB
+
+        - container: TZ
+          description:
+            de_DE: Umgebungsvariable TZ
+            el_GR: Μεταβλητή περιβάλλοντος TZ
+            en_GB: Environment variable TZ
+            en_US: Environment variable TZ
+            fr_FR: Variable d’environnement TZ
+            hr_HR: Varijabla okruženja TZ
+            it_IT: Variabile d’ambiente TZ
+            ja_JP: 環境変数 TZ
+            ko_KR: 환경 변수 TZ
+            nb_NO: Miljøvariabel TZ
+            pt_PT: Variável de ambiente TZ
+            ru_RU: Переменная среды TZ
+            sv_SE: Miljövariabel TZ
+            tr_TR: Ortam değişkeni TZ
+            zh_CN: 环境变量 TZ
+
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            de_DE: Datenvolumen /var/lib/postgresql/data
+            el_GR: Τόμος δεδομένων /var/lib/postgresql/data
+            en_GB: Data volume /var/lib/postgresql/data
+            en_US: Data volume /var/lib/postgresql/data
+            fr_FR: Volume de données /var/lib/postgresql/data
+            hr_HR: Podatkovni volumen /var/lib/postgresql/data
+            it_IT: Volume dati /var/lib/postgresql/data
+            ja_JP: データボリューム /var/lib/postgresql/data
+            ko_KR: 데이터 볼륨 /var/lib/postgresql/data
+            nb_NO: Datavolum /var/lib/postgresql/data
+            pt_PT: Volume de dados /var/lib/postgresql/data
+            ru_RU: Том данных /var/lib/postgresql/data
+            sv_SE: Datavolym /var/lib/postgresql/data
+            tr_TR: Veri birimi /var/lib/postgresql/data
+            zh_CN: 数据卷 /var/lib/postgresql/data
+  linkwarden-meilisearch:
+    image: getmeili/meilisearch:v1.12.8
+    container_name: linkwarden-meilisearch
+    restart: unless-stopped
+    environment:
+      MEILI_MASTER_KEY: kZWvi7wFylRjEnOTnNrNucG3d7c892HlIBtN3Vr8M-0
+      MEILI_ENV: production
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/meili_data
+        target: /meili_data
+    networks:
+      - linkwarden-net
+    deploy:
+      resources:
+        reservations:
+          memory: 256m
+    x-casaos:
+      envs:
+        - container: MEILI_MASTER_KEY
+          description:
+            de_DE: Umgebungsvariable MEILI_MASTER_KEY
+            el_GR: Μεταβλητή περιβάλλοντος MEILI_MASTER_KEY
+            en_GB: Environment variable MEILI_MASTER_KEY
+            en_US: Environment variable MEILI_MASTER_KEY
+            fr_FR: Variable d’environnement MEILI_MASTER_KEY
+            hr_HR: Varijabla okruženja MEILI_MASTER_KEY
+            it_IT: Variabile d’ambiente MEILI_MASTER_KEY
+            ja_JP: 環境変数 MEILI_MASTER_KEY
+            ko_KR: 환경 변수 MEILI_MASTER_KEY
+            nb_NO: Miljøvariabel MEILI_MASTER_KEY
+            pt_PT: Variável de ambiente MEILI_MASTER_KEY
+            ru_RU: Переменная среды MEILI_MASTER_KEY
+            sv_SE: Miljövariabel MEILI_MASTER_KEY
+            tr_TR: Ortam değişkeni MEILI_MASTER_KEY
+            zh_CN: 环境变量 MEILI_MASTER_KEY
+
+        - container: MEILI_ENV
+          description:
+            de_DE: Umgebungsvariable MEILI_ENV
+            el_GR: Μεταβλητή περιβάλλοντος MEILI_ENV
+            en_GB: Environment variable MEILI_ENV
+            en_US: Environment variable MEILI_ENV
+            fr_FR: Variable d’environnement MEILI_ENV
+            hr_HR: Varijabla okruženja MEILI_ENV
+            it_IT: Variabile d’ambiente MEILI_ENV
+            ja_JP: 環境変数 MEILI_ENV
+            ko_KR: 환경 변수 MEILI_ENV
+            nb_NO: Miljøvariabel MEILI_ENV
+            pt_PT: Variável de ambiente MEILI_ENV
+            ru_RU: Переменная среды MEILI_ENV
+            sv_SE: Miljövariabel MEILI_ENV
+            tr_TR: Ortam değişkeni MEILI_ENV
+            zh_CN: 环境变量 MEILI_ENV
+
+      volumes:
+        - container: /meili_data
+          description:
+            de_DE: Datenvolumen /meili_data
+            el_GR: Τόμος δεδομένων /meili_data
+            en_GB: Data volume /meili_data
+            en_US: Data volume /meili_data
+            fr_FR: Volume de données /meili_data
+            hr_HR: Podatkovni volumen /meili_data
+            it_IT: Volume dati /meili_data
+            ja_JP: データボリューム /meili_data
+            ko_KR: 데이터 볼륨 /meili_data
+            nb_NO: Datavolum /meili_data
+            pt_PT: Volume de dados /meili_data
+            ru_RU: Том данных /meili_data
+            sv_SE: Datavolym /meili_data
+            tr_TR: Veri birimi /meili_data
+            zh_CN: 数据卷 /meili_data
+networks:
+  linkwarden-net:
+    driver: bridge
+name: linkwarden
+x-casaos:
+  title:
+    de_DE: Linkwarden
+    el_GR: Linkwarden
+    en_GB: Linkwarden
+    en_US: Linkwarden
+    fr_FR: Linkwarden
+    hr_HR: Linkwarden
+    it_IT: Linkwarden
+    ja_JP: Linkwarden
+    ko_KR: Linkwarden
+    nb_NO: Linkwarden
+    pt_PT: Linkwarden
+    ru_RU: Linkwarden
+    sv_SE: Linkwarden
+    tr_TR: Linkwarden
+    zh_CN: Linkwarden
+
+  tagline:
+    de_DE: Selbstgehosteter kollaborativer Lesezeichen-Manager zum Sammeln, Lesen, Kommentieren und vollständigen Bewahren wichtiger Inhalte an einem Ort.
+    el_GR: Αυτοφιλοξενούμενος συνεργατικός διαχειριστής σελιδοδεικτών για συλλογή, ανάγνωση, σχολιασμό και πλήρη διατήρηση όσων έχουν σημασία, όλα σε ένα μέρος.
+    en_GB: Self-hosted collaborative bookmark manager to collect, read, annotate, and fully preserve what matters, all in one place.
+    en_US: Self-hosted collaborative bookmark manager to collect, read, annotate, and fully preserve what matters, all in one place.
+    fr_FR: Gestionnaire collaboratif de favoris auto-hébergé pour collecter, lire, annoter et préserver intégralement l’essentiel en un seul endroit.
+    hr_HR: Samostalno hostiran suradnički upravitelj knjižnim oznakama za prikupljanje, čitanje, bilježenje i potpuno očuvanje važnog sadržaja na jednom mjestu.
+    it_IT: Gestore collaborativo di segnalibri self-hosted per raccogliere, leggere, annotare e conservare completamente ciò che conta, tutto in un unico posto.
+    ja_JP: 収集・閲覧・注釈・完全保存を1か所で行える、セルフホスト型の共同ブックマーク管理ツール。
+    ko_KR: 중요한 콘텐츠를 한곳에서 수집하고, 읽고, 주석을 달고, 완전하게 보존할 수 있는 셀프호스팅 협업 북마크 관리자입니다.
+    nb_NO: Selvhostet samarbeidsbasert bokmerkebehandler for å samle, lese, annotere og fullstendig bevare det som betyr noe, alt på ett sted.
+    pt_PT: Gestor colaborativo de marcadores autoalojado para recolher, ler, anotar e preservar totalmente o que importa, tudo num só lugar.
+    ru_RU: Самостоятельно размещаемый совместный менеджер закладок для сбора, чтения, аннотирования и полного сохранения важного контента в одном месте.
+    sv_SE: Självhostad samarbetsbaserad bokmärkeshanterare för att samla, läsa, annotera och bevara det som är viktigt på ett och samma ställe.
+    tr_TR: Önemli içerikleri tek bir yerde toplamak, okumak, not eklemek ve tamamen korumak için kendi sunucunda barındırılan işbirlikçi yer imi yöneticisi.
+    zh_CN: 自托管协作式书签管理器，可在一个地方收集、阅读、批注并完整保存重要内容。
+
+  description:
+    de_DE: |
+      Linkwarden ist eine Open-Source-Plattform zur selbstgehosteten Verwaltung von Lesezeichen und Webarchiven. Sie hilft Nutzern dabei, wichtige Online-Inhalte zentral zu sammeln, zu organisieren und langfristig zu bewahren. Neben klassischen Lesezeichenfunktionen bietet sie einen vollständigen Sicherungsmechanismus für Webseiten, damit wertvolle Informationen sicher in einem einheitlichen Arbeitsbereich gespeichert und abgerufen werden können.
+
+      Das Projekt stellt die langfristige Erhaltung von Inhalten in den Mittelpunkt und unterstützt automatische Erfassung von Webseiten-Screenshots, PDFs und vollständigen HTML-Dateien, um Link-Verfall wirksam zu vermeiden. Zusätzlich bietet Linkwarden einen Lesemodus, Anmerkungen, lokale KI-Tagging-Funktionen, Volltextsuche und ein mehrstufiges Kategoriesystem, wodurch Informationen intelligenter und effizienter organisiert werden können. Dank seiner modularen Architektur unterstützt es Self-Hosting, Browser-Erweiterungen und Synchronisierung über mehrere Geräte hinweg.
+
+      In der Praxis eignet sich Linkwarden nicht nur für persönliches Wissensmanagement und das Sammeln von Informationen, sondern auch für Teamarbeit und gemeinsames Teilen von Inhalten. Mit Sammlungen und Berechtigungssystemen können Inhalte gemeinsam organisiert sowie öffentlich oder privat verwaltet werden. Es ist ein modernes Lesezeichen-Tool, das Datenkontrolle, Sicherheit und Zusammenarbeit miteinander verbindet.
+
+      **Hauptfunktionen:**
+
+      - Vollständige Webseiten-Archivierung (Screenshot, PDF, HTML) gegen Link-Verfall
+      - KI-gestützte automatische Tags und Volltextsuche für schnellere Recherche
+      - Lesemodus, Textmarkierungen und Anmerkungen
+      - Mehrstufige Kategorien und Tags zur flexiblen Organisation
+      - Teamzusammenarbeit und Berechtigungsverwaltung mit Freigabeoptionen
+
+      **Mehr erfahren:**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+
+    el_GR: |
+      Το Linkwarden είναι μια ανοιχτού κώδικα, self-hosted πλατφόρμα διαχείρισης σελιδοδεικτών και αρχειοθέτησης ιστοσελίδων, σχεδιασμένη ώστε να βοηθά τους χρήστες να συλλέγουν, να οργανώνουν και να διατηρούν σημαντικό διαδικτυακό περιεχόμενο σε βάθος χρόνου. Εκτός από τις κλασικές λειτουργίες σελιδοδεικτών, προσφέρει πλήρες αντίγραφο ιστοσελίδων ώστε οι πολύτιμες πληροφορίες να παραμένουν προσβάσιμες σε έναν ενιαίο χώρο.
+
+      Με βασική φιλοσοφία τη μακροχρόνια διατήρηση περιεχομένου, υποστηρίζει αυτόματη αποθήκευση στιγμιότυπων ιστοσελίδων, PDF και πλήρων αρχείων HTML, αντιμετωπίζοντας αποτελεσματικά το πρόβλημα του link rot. Παράλληλα προσφέρει λειτουργία ανάγνωσης, σημειώσεις, τοπικό AI tagging, πλήρη αναζήτηση κειμένου και πολυεπίπεδη οργάνωση κατηγοριών, ώστε η διαχείριση πληροφοριών να γίνεται πιο έξυπνα και αποτελεσματικά.
+
+      Στην πράξη, το Linkwarden είναι κατάλληλο τόσο για προσωπική διαχείριση γνώσης όσο και για ομαδική συνεργασία και κοινή χρήση περιεχομένου. Μέσω συλλογών και δικαιωμάτων πρόσβασης, οι χρήστες μπορούν να οργανώνουν συνεργατικά το υλικό τους και να το διαχειρίζονται δημόσια ή ιδιωτικά. Είναι ένα σύγχρονο εργαλείο σελιδοδεικτών που συνδυάζει έλεγχο δεδομένων, ασφάλεια και συνεργασία.
+
+      **Κύρια χαρακτηριστικά:**
+
+      - Πλήρης αρχειοθέτηση ιστοσελίδων (στιγμιότυπο, PDF, HTML) για αποφυγή απώλειας συνδέσμων
+      - Αυτόματες ετικέτες με AI και πλήρης αναζήτηση κειμένου
+      - Λειτουργία ανάγνωσης, υπογράμμιση κειμένου και σημειώσεις
+      - Πολυεπίπεδες κατηγορίες και ετικέτες
+      - Συνεργασία ομάδας και διαχείριση δικαιωμάτων
+
+      **Περισσότερα:**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+
+    en_GB: |
+      Linkwarden is an open-source self-hosted bookmark and web archive manager designed to help users collect, organise, and preserve important online content in one place. In addition to traditional bookmarking capabilities, it provides full webpage backup so valuable information remains safely accessible over time.
+
+      Built around long-term content preservation, Linkwarden can automatically capture webpage screenshots, PDFs, and full HTML files to help prevent link rot. It also includes reading mode, annotations, local AI-powered tagging, full-text search, and a multi-level classification system for smarter and more efficient information management. Its modular architecture supports self-hosting, browser extensions, and cross-device sync.
+
+      In practice, Linkwarden is suitable not only for personal knowledge management and content collection, but also for team collaboration and shared curation. With collections and permission controls, users can organise content together and manage it publicly or privately. It is a modern bookmarking tool that balances data ownership, security, and collaboration.
+
+      **Key Features:**
+
+      - Full webpage archiving (screenshots, PDFs, HTML) to prevent link rot
+      - AI-powered auto-tagging and full-text search
+      - Reading mode, text highlighting, and annotations
+      - Multi-level categories and tags for flexible organisation
+      - Team collaboration and permission management
+
+      **Learn more:**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+
+    en_US: |
+      Linkwarden is an open-source self-hosted bookmark and web archive manager designed to help users collect, organize, and preserve important online content in one place. In addition to traditional bookmarking capabilities, it provides full webpage backup so valuable information remains safely accessible over time.
+
+      Built around long-term content preservation, Linkwarden can automatically capture webpage screenshots, PDFs, and full HTML files to help prevent link rot. It also includes reading mode, annotations, local AI-powered tagging, full-text search, and a multi-level classification system for smarter and more efficient information management. Its modular architecture supports self-hosting, browser extensions, and cross-device sync.
+
+      In practice, Linkwarden is suitable not only for personal knowledge management and content collection, but also for team collaboration and shared curation. With collections and permission controls, users can organize content together and manage it publicly or privately. It is a modern bookmarking tool that balances data ownership, security, and collaboration.
+
+      **Key Features:**
+
+      - Full webpage archiving (screenshots, PDFs, HTML) to prevent link rot
+      - AI-powered auto-tagging and full-text search
+      - Reading mode, text highlighting, and annotations
+      - Multi-level categories and tags for flexible organization
+      - Team collaboration and permission management
+
+      **Learn more:**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+
+    fr_FR: |
+      Linkwarden est une plateforme open source auto-hébergée de gestion de favoris et d’archivage web, conçue pour aider les utilisateurs à collecter, organiser et conserver durablement les contenus importants du Web. Au-delà des fonctions classiques de favoris, elle permet de sauvegarder intégralement les pages afin de garder les informations précieuses accessibles dans le temps.
+
+      Axé sur la préservation à long terme du contenu, Linkwarden peut capturer automatiquement des captures d’écran de pages, des PDF et des fichiers HTML complets pour lutter contre la disparition des liens. Il propose également un mode lecture, des annotations, un étiquetage local assisté par IA, une recherche plein texte et un système de classification multi-niveaux pour une organisation plus intelligente et plus efficace.
+
+      Dans la pratique, Linkwarden convient aussi bien à la gestion personnelle des connaissances qu’à la collaboration d’équipe et au partage de contenus. Grâce aux collections et aux permissions, les utilisateurs peuvent organiser les contenus ensemble et les gérer en mode public ou privé. C’est un outil de favoris moderne qui combine contrôle des données, sécurité et collaboration.
+
+      **Fonctionnalités principales :**
+
+      - Archivage complet des pages web (captures, PDF, HTML) pour éviter la perte des liens
+      - Étiquetage automatique par IA et recherche plein texte
+      - Mode lecture, surlignage de texte et annotations
+      - Catégories et étiquettes multi-niveaux
+      - Collaboration d’équipe et gestion des permissions
+
+      **En savoir plus :**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+
+    hr_HR: |
+      Linkwarden je open-source self-hosted platforma za upravljanje oznakama i arhiviranje web sadržaja, osmišljena kako bi korisnicima pomogla prikupljati, organizirati i dugoročno sačuvati važan internetski sadržaj. Uz klasične mogućnosti spremanja oznaka, nudi i potpuno sigurnosno kopiranje web stranica kako bi vrijedne informacije ostale dostupne kroz vrijeme.
+
+      Usmjeren na dugotrajno očuvanje sadržaja, Linkwarden podržava automatsko spremanje snimki zaslona web stranica, PDF-ova i potpunih HTML datoteka, čime učinkovito sprječava propadanje poveznica. Također uključuje način čitanja, bilješke, lokalno AI označavanje, pretraživanje cijelog teksta i višerazinski sustav kategorizacije za pametnije i učinkovitije upravljanje informacijama.
+
+      U praksi je Linkwarden prikladan i za osobno upravljanje znanjem i za timsku suradnju te dijeljenje sadržaja. Uz kolekcije i dozvole, korisnici mogu zajednički organizirati sadržaj te ga upravljati javno ili privatno. To je moderan alat za oznake koji povezuje kontrolu nad podacima, sigurnost i suradnju.
+
+      **Glavne značajke:**
+
+      - Potpuno arhiviranje web stranica (snimke zaslona, PDF, HTML) za sprječavanje nestanka poveznica
+      - Automatsko AI označavanje i pretraživanje cijelog teksta
+      - Način čitanja, označavanje teksta i bilješke
+      - Višerazinske kategorije i oznake
+      - Timska suradnja i upravljanje dozvolama
+
+      **Saznajte više:**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+
+    it_IT: |
+      Linkwarden è una piattaforma open source self-hosted per la gestione dei segnalibri e l’archiviazione del web, pensata per aiutare gli utenti a raccogliere, organizzare e conservare nel tempo contenuti online importanti. Oltre alle classiche funzioni di bookmarking, offre il backup completo delle pagine web così che le informazioni preziose restino accessibili in modo sicuro.
+
+      Basato sul principio della conservazione a lungo termine dei contenuti, Linkwarden supporta la cattura automatica di screenshot di pagine web, PDF e file HTML completi, aiutando a prevenire il link rot. Include anche modalità lettura, annotazioni, tagging locale con AI, ricerca full-text e un sistema di classificazione multilivello per una gestione delle informazioni più intelligente ed efficiente.
+
+      Nella pratica, Linkwarden è adatto non solo alla gestione personale della conoscenza e alla raccolta di contenuti, ma anche alla collaborazione di team e alla condivisione. Tramite raccolte e permessi, gli utenti possono organizzare i contenuti insieme e gestirli in modo pubblico o privato. È uno strumento moderno per i segnalibri che unisce controllo dei dati, sicurezza e collaborazione.
+
+      **Funzionalità principali:**
+
+      - Archiviazione completa delle pagine web (screenshot, PDF, HTML) per evitare la perdita dei link
+      - Tag automatici con AI e ricerca full-text
+      - Modalità lettura, evidenziazione del testo e annotazioni
+      - Categorie e tag multilivello
+      - Collaborazione di team e gestione dei permessi
+
+      **Scopri di più:**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+
+    ja_JP: |
+      Linkwarden は、重要なオンラインコンテンツを一か所で収集・整理し、長期的に保存するための、オープンソースのセルフホスト型ブックマーク兼 Web アーカイブ管理プラットフォームです。一般的なブックマーク機能に加え、Web ページ全体のバックアップ機能により、価値ある情報へ継続的に安全にアクセスできます。
+
+      長期保存を中心に設計されており、Web ページのスクリーンショット、PDF、完全な HTML ファイルを自動取得して、リンク切れの問題を軽減します。さらに、リーディングモード、注釈、ローカル AI による自動タグ付け、全文検索、多階層の分類システムを備え、より賢く効率的な情報管理を実現します。モジュール型アーキテクチャにより、セルフホスティング、ブラウザ拡張、複数端末での同期にも対応します。
+
+      実際には、個人のナレッジ管理や情報収集だけでなく、チームでの共同整理や共有にも適しています。コレクションと権限設定により、コンテンツを共同で整理し、公開または非公開で管理できます。データ管理性・安全性・共同作業性を兼ね備えた、モダンなブックマークツールです。
+
+      **主な機能:**
+
+      - Web ページの完全アーカイブ（スクリーンショット、PDF、HTML）でリンク切れを防止
+      - AI 自動タグ付けと全文検索
+      - リーディングモード、テキストハイライト、注釈
+      - 多階層カテゴリとタグによる柔軟な整理
+      - チーム共同作業と権限管理
+
+      **詳細:**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+
+    ko_KR: |
+      Linkwarden는 중요한 온라인 콘텐츠를 한곳에서 수집, 정리, 장기 보존할 수 있도록 설계된 오픈소스 셀프호스팅 북마크 및 웹 아카이브 관리 플랫폼입니다. 일반적인 북마크 기능뿐 아니라 전체 웹페이지 백업 기능도 제공하여 가치 있는 정보를 오랫동안 안전하게 보관하고 접근할 수 있습니다.
+
+      장기 보존을 핵심으로 하며, 웹페이지 스크린샷, PDF, 전체 HTML 파일을 자동으로 저장해 링크 손실 문제를 효과적으로 줄여 줍니다. 또한 읽기 모드, 주석 기능, 로컬 AI 자동 태깅, 전문 검색, 다단계 분류 체계를 제공하여 정보를 더 지능적이고 효율적으로 관리할 수 있습니다. 모듈형 아키텍처를 통해 셀프호스팅, 브라우저 확장, 여러 기기 간 동기화도 지원합니다.
+
+      실제로 Linkwarden는 개인 지식 관리와 정보 수집은 물론 팀 협업과 콘텐츠 공유에도 적합합니다. 컬렉션과 권한 시스템을 통해 함께 정리하고 공개 또는 비공개로 관리할 수 있습니다. 데이터 통제, 보안, 협업을 모두 고려한 현대적인 북마크 도구입니다.
+
+      **주요 기능:**
+
+      - 링크 손실 방지를 위한 전체 웹페이지 아카이빙(스크린샷, PDF, HTML)
+      - AI 자동 태깅 및 전문 검색
+      - 읽기 모드, 텍스트 하이라이트, 주석
+      - 다단계 카테고리 및 태그 구성
+      - 팀 협업 및 권한 관리
+
+      **더 알아보기:**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+
+    nb_NO: |
+      Linkwarden er en åpen kildekode, selvhostet plattform for bokmerkehåndtering og webarkivering, utviklet for å hjelpe brukere med å samle, organisere og bevare viktig nettinnhold over tid. I tillegg til tradisjonelle bokmerkefunksjoner tilbyr den full sikkerhetskopiering av nettsider slik at verdifull informasjon forblir tilgjengelig.
+
+      Med fokus på langtidsbevaring av innhold støtter Linkwarden automatisk lagring av skjermbilder av nettsider, PDF-er og komplette HTML-filer, noe som effektivt motvirker lenkeråte. Den tilbyr også lesemodus, merknader, lokal AI-basert tagging, fulltekstsøk og et flernivå kategorisystem for smartere og mer effektiv informasjonsorganisering.
+
+      I praksis passer Linkwarden både til personlig kunnskapsforvaltning og til teamsamarbeid og deling av innhold. Med samlinger og tilgangskontroll kan brukere organisere innhold sammen og administrere det offentlig eller privat. Det er et moderne bokmerkeverktøy som kombinerer datakontroll, sikkerhet og samarbeid.
+
+      **Hovedfunksjoner:**
+
+      - Full arkivering av nettsider (skjermbilder, PDF, HTML) for å forhindre tap av lenker
+      - AI-basert automatisk tagging og fulltekstsøk
+      - Lesemodus, tekstutheving og merknader
+      - Flernivå kategorier og tagger
+      - Teamsamarbeid og tilgangsstyring
+
+      **Les mer:**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+
+    pt_PT: |
+      O Linkwarden é uma plataforma open source autoalojada de gestão de marcadores e arquivo web, concebida para ajudar os utilizadores a recolher, organizar e preservar conteúdos online importantes ao longo do tempo. Para além das funções tradicionais de marcadores, oferece cópia de segurança completa de páginas web para manter a informação valiosa acessível com segurança.
+
+      Assente na preservação de conteúdo a longo prazo, o Linkwarden suporta a captura automática de capturas de ecrã de páginas web, PDFs e ficheiros HTML completos, ajudando a evitar o desaparecimento de ligações. Inclui também modo de leitura, anotações, etiquetagem local com IA, pesquisa em texto integral e um sistema de classificação multinível para uma gestão de informação mais inteligente e eficiente.
+
+      Na prática, o Linkwarden adequa-se tanto à gestão pessoal de conhecimento como à colaboração em equipa e partilha de conteúdos. Com coleções e permissões, os utilizadores podem organizar conteúdos em conjunto e geri-los de forma pública ou privada. É uma ferramenta moderna de marcadores que equilibra controlo de dados, segurança e colaboração.
+
+      **Funcionalidades principais:**
+
+      - Arquivo completo de páginas web (capturas de ecrã, PDF, HTML) para evitar perda de ligações
+      - Etiquetagem automática com IA e pesquisa em texto integral
+      - Modo de leitura, realce de texto e anotações
+      - Categorias e etiquetas multinível
+      - Colaboração em equipa e gestão de permissões
+
+      **Saiba mais:**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+
+    ru_RU: |
+      Linkwarden — это платформа с открытым исходным кодом для самостоятельного хостинга закладок и веб-архивов, предназначенная для того, чтобы помогать пользователям собирать, упорядочивать и надолго сохранять важный онлайн-контент. Помимо обычных возможностей работы с закладками, она обеспечивает полное резервное копирование веб-страниц, чтобы ценные материалы оставались доступными со временем.
+
+      Основанный на идее долгосрочного сохранения контента, Linkwarden поддерживает автоматическое сохранение скриншотов страниц, PDF и полных HTML-файлов, что помогает бороться с исчезновением ссылок. Также доступны режим чтения, аннотации, локальная AI-автоматизация тегов, полнотекстовый поиск и многоуровневая система классификации для более умной и эффективной организации информации.
+
+      На практике Linkwarden подходит не только для личного управления знаниями и коллекционирования материалов, но и для командной совместной работы и обмена контентом. С помощью коллекций и управления правами пользователи могут совместно организовывать материалы и делать их публичными или приватными. Это современный инструмент закладок, сочетающий контроль над данными, безопасность и совместную работу.
+
+      **Основные возможности:**
+
+      - Полное архивирование веб-страниц (скриншоты, PDF, HTML) для предотвращения исчезновения ссылок
+      - AI-автотеги и полнотекстовый поиск
+      - Режим чтения, выделение текста и аннотации
+      - Многоуровневые категории и теги
+      - Командная работа и управление правами доступа
+
+      **Подробнее:**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+
+    sv_SE: |
+      Linkwarden är en öppen källkodsbaserad självhostad plattform för bokmärkeshantering och webbarkivering, utformad för att hjälpa användare att samla, organisera och bevara viktigt onlineinnehåll över tid. Förutom traditionella bokmärkesfunktioner erbjuder den fullständig säkerhetskopiering av webbsidor så att värdefull information förblir tillgänglig.
+
+      Med fokus på långsiktig innehållsbevaring kan Linkwarden automatiskt spara skärmbilder av webbsidor, PDF-filer och fullständiga HTML-filer för att motverka att länkar försvinner. Den erbjuder även läsläge, anteckningar, lokal AI-baserad taggning, fulltextsökning och ett flernivåsystem för kategorisering som gör informationshanteringen smartare och effektivare.
+
+      I praktiken lämpar sig Linkwarden både för personlig kunskapshantering och för teamsamarbete och delning av innehåll. Med samlingar och behörighetskontroller kan användare organisera innehåll tillsammans och hantera det offentligt eller privat. Det är ett modernt bokmärkesverktyg som kombinerar datakontroll, säkerhet och samarbete.
+
+      **Huvudfunktioner:**
+
+      - Fullständig webbarkivering (skärmbilder, PDF, HTML) för att förhindra länkförfall
+      - AI-baserad automatisk taggning och fulltextsökning
+      - Läsläge, textmarkering och anteckningar
+      - Flernivåkategorier och taggar
+      - Teamsamarbete och behörighetshantering
+
+      **Läs mer:**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+
+    tr_TR: |
+      Linkwarden, kullanıcıların önemli çevrimiçi içerikleri tek bir yerde toplamasına, düzenlemesine ve uzun vadeli olarak korumasına yardımcı olmak için tasarlanmış, açık kaynaklı ve kendi sunucunda barındırılabilen bir yer imi ve web arşivi yönetim platformudur. Geleneksel yer imi özelliklerine ek olarak, değerli bilgilerin zaman içinde erişilebilir kalması için tam web sayfası yedekleme özelliği sunar.
+
+      Uzun süreli içerik korumasını merkeze alan Linkwarden; web sayfası ekran görüntülerini, PDF dosyalarını ve tam HTML dosyalarını otomatik olarak kaydederek bağlantı çürümesi sorununu azaltır. Ayrıca okuma modu, not ekleme, yerel AI destekli otomatik etiketleme, tam metin arama ve çok seviyeli sınıflandırma sistemi ile bilgilerin daha akıllı ve verimli şekilde düzenlenmesini sağlar. Modüler yapısı sayesinde self-hosting, tarayıcı eklentileri ve çoklu cihaz senkronizasyonunu destekler.
+
+      Uygulamada Linkwarden yalnızca kişisel bilgi yönetimi ve içerik toplama için değil, ekip iş birliği ve içerik paylaşımı için de uygundur. Koleksiyonlar ve izin kontrolleri sayesinde kullanıcılar içerikleri birlikte düzenleyebilir ve bunları herkese açık ya da özel olarak yönetebilir. Veri kontrolü, güvenlik ve iş birliğini bir araya getiren modern bir yer imi aracıdır.
+
+      **Başlıca Özellikler:**
+
+      - Bağlantı çürümesini önlemek için tam web sayfası arşivleme (ekran görüntüsü, PDF, HTML)
+      - AI destekli otomatik etiketleme ve tam metin arama
+      - Okuma modu, metin vurgulama ve notlar
+      - Esnek düzenleme için çok seviyeli kategoriler ve etiketler
+      - Ekip iş birliği ve izin yönetimi
+
+      **Daha fazla bilgi:**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+
+    zh_CN: |
+      Linkwarden 是一个开源的自托管书签与网页归档管理平台，旨在帮助用户集中收集、整理并长期保存重要的网络内容。它不仅提供传统书签管理能力，还通过网页完整备份机制，让用户能够在一个统一空间中安全存储和访问有价值的信息资源。
+
+      该项目以“内容持久化”为核心理念，支持自动抓取网页截图、PDF 以及完整 HTML 文件，从根本上缓解链接失效（Link Rot）问题。同时，Linkwarden 提供阅读模式与批注功能，并结合本地 AI 自动标签、全文搜索与多层级分类体系，使信息组织更加智能与高效。此外，其模块化架构支持自托管部署、浏览器扩展与多端同步，兼顾灵活性与可扩展性。
+
+      在实际应用中，Linkwarden 不仅适用于个人知识管理与信息收藏，也适合团队协作与内容共享场景。用户可以通过集合与权限系统进行协同整理，并将整理后的内容公开或私有化管理，是一个兼顾数据掌控、安全性与协作能力的现代化书签工具。
+
+      **主要功能：**
+
+      - 网页完整归档（截图、PDF、HTML），防止链接失效
+      - AI 自动标签与全文搜索，提升信息检索效率
+      - 支持阅读模式、文本高亮与批注功能
+      - 多级分类与标签体系，灵活组织内容
+      - 团队协作与权限管理，支持共享与公开集合
+
+      **了解更多：**
+
+      - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
+  category: Notes
+  author: linkwarden
+  developer: linkwarden
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Linkwarden/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Linkwarden/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Linkwarden/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Linkwarden/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Linkwarden/screenshot-3.png
+  main: linkwarden
+  port_map: "3428"
+  architectures:
+    - amd64
+    - arm64
+  index: /
+  scheme: http
