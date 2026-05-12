@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: ghcr.io/henriquesebastiao/downtify:1.1.4
+    image: ghcr.io/henriquesebastiao/downtify:2.6.0
     deploy:
       resources:
         reservations:
@@ -19,6 +19,9 @@ services:
       - type: bind
         source: /DATA/Downloads/downtify
         target: /downloads
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
     x-casaos:
       envs:
         - container: PUID
@@ -34,6 +37,11 @@ services:
         - container: /downloads
           description:
             en_us: Directory where the files will be saved.
+            pt_br: Diretório onde os arquivos serão salvos.
+        - container: /data
+          description:
+            en_us: Directory where the app will save its data.
+            pt_br: Diretório onde o aplicativo salvará seus dados.
     container_name: downtify
 x-casaos:
   architectures:

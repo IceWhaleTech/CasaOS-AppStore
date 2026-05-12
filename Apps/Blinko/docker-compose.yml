@@ -1,12 +1,13 @@
+name: blinko
 services:
   blinko:
-    image: blinkospace/blinko:1.8.6
+    image: blinkospace/blinko:1.8.7
     container_name: blinko
     restart: unless-stopped
     networks:
       - blinko-net
     depends_on:
-      postgres:
+      blinko-postgres:
         condition: service_healthy
     ports:
       - target: 1111
@@ -17,7 +18,7 @@ services:
       NEXTAUTH_URL: http://localhost:1111
       NEXT_PUBLIC_BASE_URL: http://localhost:1111
       NEXTAUTH_SECRET: 22PhaGVvvBTEC5E5G+U+5O1xqdmuzZKzjLeDMvdvB7I=
-      DATABASE_URL: postgresql://postgres:JWD9bxUR7Um9PaGg7FQZ@postgres:5432/postgres
+      DATABASE_URL: postgresql://postgres:JWD9bxUR7Um9PaGg7FQZ@blinko-postgres:5432/postgres
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/blinko_data
@@ -25,12 +26,11 @@ services:
     logging:
       options:
         max-size: 10m
-        max-file: "3"
+        max-file: '3'
     deploy:
       resources:
         reservations:
           memory: 512m
-          cpus: '0.2'
     x-casaos:
       envs:
         - container: NODE_ENV
@@ -172,8 +172,7 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 512m
-          cpus: '0.2'
+          memory: 256m
     healthcheck:
       test:
         - CMD
@@ -276,24 +275,10 @@ services:
 networks:
   blinko-net:
     driver: bridge
-name: blinko
 x-casaos:
   title:
-    de_DE: blinko
-    el_GR: blinko
-    en_GB: blinko
-    en_US: blinko
-    fr_FR: blinko
-    hr_HR: blinko
-    it_IT: blinko
-    ja_JP: blinko
-    ko_KR: blinko
-    nb_NO: blinko
-    pt_PT: blinko
-    ru_RU: blinko
-    sv_SE: blinko
-    tr_TR: blinko
-    zh_CN: blinko
+    en_GB: Blinko
+    en_US: Blinko
   tagline:
     de_DE: Blinko ist ein KI-gestütztes Projekt für Kartennotizen. Es wurde für Einzelpersonen entwickelt, die ihre flüchtigen Gedanken schnell erfassen und organisieren möchten. Blinko ermöglicht es Benutzern, Ideen nahtlos aufzuschreiben, sobald sie entstehen, und stellt sicher, dass kein Funke der Kreativität verloren geht.
     el_GR: Το Blinko είναι ένα έργο σημειώσεων σε κάρτες με τεχνητή νοημοσύνη. Σχεδιάστηκε για άτομα που θέλουν να καταγράφουν και να οργανώνουν γρήγορα τις στιγμιαίες σκέψεις τους. Το Blinko επιτρέπει στους χρήστες να σημειώνουν ιδέες χωρίς καμία δυσκολία τη στιγμή που έρχονται στο μυαλό, διασφαλίζοντας ότι κανένα σπίθα δημιουργικότητας δεν χάνεται.
@@ -581,7 +566,7 @@ x-casaos:
       **了解更多：**
 
       - [Blinko GitHub](https://github.com/blinkospace/blinko)
-  category: NOTES
+  category: Notes
   author: blinkospace
   developer: blinkospace
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Blinko/icon.png
@@ -601,30 +586,9 @@ x-casaos:
   updateAt: "2026-05-02"
   releaseNotes:
     en_US: |-
-      ✨ New Features
-      - Add MiniMax as first-class LLM provider (3ada33c)
-
-      🐛 Bug Fixes
-      - Sanitize filenames before path validation to prevent upload 500 errors (#1138) (f7ed24c)
-      - Clear tag filters when resetting search (f995a2e)
-      - Update Turkish translations for various UI elements (9c9d8ad)
-
-      ♻️ Refactors
-      - Streamline search state clearing and URL updates (5795884)
-
-      ✅ Tests
-      - Add integration tests for file upload + fix consecutive dots issue (27ae1df)
-      - Add E2E tests for file upload endpoint (1a8cdcd)
-
-      🔧 Chores
-      - Remove CircleCI config (0799275)
-      - Update version to 1.8.7 (03d48f2)
-
-      🌍 Localization & Other
-      - Rewrite French translation based on English file (4bb3587)
-      - Translation fixes and improvements (087674a, c610a7f)
-      - Add and refine French translations (35d08ec, 3eae5bf, 46e61d9)
-      - Fix typo in English translation for password reset (01047eb)
+      - Blinko 1.8.7 adds MiniMax as a first-class LLM provider.
+      - It fixes upload filename sanitization, tag filter reset behavior, and Turkish translations.
+      - The release also streamlines search state and URL updates, adds file upload tests, removes CircleCI config, and refreshes localization content.
   website: https://blinko.space/
   repo: https://github.com/blinkospace/blinko
   support:

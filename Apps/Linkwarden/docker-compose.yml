@@ -1,216 +1,23 @@
 services:
-  linkwarden-postgres:
-    image: postgres:16-alpine
-    container_name: linkwarden-postgres
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: abc123
-      POSTGRES_DB: linkwarden
-      TZ: $TZ
-    networks:
-      - linkwarden-net
-    volumes:
-      - type: bind
-        source: /DATA/AppData/$AppID/pgdata
-        target: /var/lib/postgresql/data
-    healthcheck:
-      test:
-        - CMD-SHELL
-        - pg_isready -U postgres -d linkwarden
-      interval: 10s
-      timeout: 5s
-      retries: 10
-    deploy:
-      resources:
-        reservations:
-          memory: 512m
-          cpus: '0.2'
-    x-casaos:
-      envs:
-        - container: POSTGRES_USER
-          description:
-            de_DE: Umgebungsvariable POSTGRES_USER
-            el_GR: Μεταβλητή περιβάλλοντος POSTGRES_USER
-            en_GB: Environment variable POSTGRES_USER
-            en_US: Environment variable POSTGRES_USER
-            fr_FR: Variable d’environnement POSTGRES_USER
-            hr_HR: Varijabla okruženja POSTGRES_USER
-            it_IT: Variabile d’ambiente POSTGRES_USER
-            ja_JP: 環境変数 POSTGRES_USER
-            ko_KR: 환경 변수 POSTGRES_USER
-            nb_NO: Miljøvariabel POSTGRES_USER
-            pt_PT: Variável de ambiente POSTGRES_USER
-            ru_RU: Переменная среды POSTGRES_USER
-            sv_SE: Miljövariabel POSTGRES_USER
-            tr_TR: Ortam değişkeni POSTGRES_USER
-            zh_CN: 环境变量 POSTGRES_USER
-
-        - container: POSTGRES_PASSWORD
-          description:
-            de_DE: Umgebungsvariable POSTGRES_PASSWORD
-            el_GR: Μεταβλητή περιβάλλοντος POSTGRES_PASSWORD
-            en_GB: Environment variable POSTGRES_PASSWORD
-            en_US: Environment variable POSTGRES_PASSWORD
-            fr_FR: Variable d’environnement POSTGRES_PASSWORD
-            hr_HR: Varijabla okruženja POSTGRES_PASSWORD
-            it_IT: Variabile d’ambiente POSTGRES_PASSWORD
-            ja_JP: 環境変数 POSTGRES_PASSWORD
-            ko_KR: 환경 변수 POSTGRES_PASSWORD
-            nb_NO: Miljøvariabel POSTGRES_PASSWORD
-            pt_PT: Variável de ambiente POSTGRES_PASSWORD
-            ru_RU: Переменная среды POSTGRES_PASSWORD
-            sv_SE: Miljövariabel POSTGRES_PASSWORD
-            tr_TR: Ortam değişkeni POSTGRES_PASSWORD
-            zh_CN: 环境变量 POSTGRES_PASSWORD
-
-        - container: POSTGRES_DB
-          description:
-            de_DE: Umgebungsvariable POSTGRES_DB
-            el_GR: Μεταβλητή περιβάλλοντος POSTGRES_DB
-            en_GB: Environment variable POSTGRES_DB
-            en_US: Environment variable POSTGRES_DB
-            fr_FR: Variable d’environnement POSTGRES_DB
-            hr_HR: Varijabla okruženja POSTGRES_DB
-            it_IT: Variabile d’ambiente POSTGRES_DB
-            ja_JP: 環境変数 POSTGRES_DB
-            ko_KR: 환경 변수 POSTGRES_DB
-            nb_NO: Miljøvariabel POSTGRES_DB
-            pt_PT: Variável de ambiente POSTGRES_DB
-            ru_RU: Переменная среды POSTGRES_DB
-            sv_SE: Miljövariabel POSTGRES_DB
-            tr_TR: Ortam değişkeni POSTGRES_DB
-            zh_CN: 环境变量 POSTGRES_DB
-
-        - container: TZ
-          description:
-            de_DE: Umgebungsvariable TZ
-            el_GR: Μεταβλητή περιβάλλοντος TZ
-            en_GB: Environment variable TZ
-            en_US: Environment variable TZ
-            fr_FR: Variable d’environnement TZ
-            hr_HR: Varijabla okruženja TZ
-            it_IT: Variabile d’ambiente TZ
-            ja_JP: 環境変数 TZ
-            ko_KR: 환경 변수 TZ
-            nb_NO: Miljøvariabel TZ
-            pt_PT: Variável de ambiente TZ
-            ru_RU: Переменная среды TZ
-            sv_SE: Miljövariabel TZ
-            tr_TR: Ortam değişkeni TZ
-            zh_CN: 环境变量 TZ
-
-      volumes:
-        - container: /var/lib/postgresql/data
-          description:
-            de_DE: Datenvolumen /var/lib/postgresql/data
-            el_GR: Τόμος δεδομένων /var/lib/postgresql/data
-            en_GB: Data volume /var/lib/postgresql/data
-            en_US: Data volume /var/lib/postgresql/data
-            fr_FR: Volume de données /var/lib/postgresql/data
-            hr_HR: Podatkovni volumen /var/lib/postgresql/data
-            it_IT: Volume dati /var/lib/postgresql/data
-            ja_JP: データボリューム /var/lib/postgresql/data
-            ko_KR: 데이터 볼륨 /var/lib/postgresql/data
-            nb_NO: Datavolum /var/lib/postgresql/data
-            pt_PT: Volume de dados /var/lib/postgresql/data
-            ru_RU: Том данных /var/lib/postgresql/data
-            sv_SE: Datavolym /var/lib/postgresql/data
-            tr_TR: Veri birimi /var/lib/postgresql/data
-            zh_CN: 数据卷 /var/lib/postgresql/data
-  linkwarden-meilisearch:
-    image: getmeili/meilisearch:v1.12.8
-    container_name: linkwarden-meilisearch
-    restart: unless-stopped
-    environment:
-      MEILI_MASTER_KEY: kZWvi7wFylRjEnOTnNrNucG3d7c892HlIBtN3Vr8M-0
-      MEILI_ENV: production
-    volumes:
-      - type: bind
-        source: /DATA/AppData/$AppID/meili_data
-        target: /meili_data
-    networks:
-      - linkwarden-net
-    deploy:
-      resources:
-        reservations:
-          memory: 256m
-          cpus: '0.2'
-    x-casaos:
-      envs:
-        - container: MEILI_MASTER_KEY
-          description:
-            de_DE: Umgebungsvariable MEILI_MASTER_KEY
-            el_GR: Μεταβλητή περιβάλλοντος MEILI_MASTER_KEY
-            en_GB: Environment variable MEILI_MASTER_KEY
-            en_US: Environment variable MEILI_MASTER_KEY
-            fr_FR: Variable d’environnement MEILI_MASTER_KEY
-            hr_HR: Varijabla okruženja MEILI_MASTER_KEY
-            it_IT: Variabile d’ambiente MEILI_MASTER_KEY
-            ja_JP: 環境変数 MEILI_MASTER_KEY
-            ko_KR: 환경 변수 MEILI_MASTER_KEY
-            nb_NO: Miljøvariabel MEILI_MASTER_KEY
-            pt_PT: Variável de ambiente MEILI_MASTER_KEY
-            ru_RU: Переменная среды MEILI_MASTER_KEY
-            sv_SE: Miljövariabel MEILI_MASTER_KEY
-            tr_TR: Ortam değişkeni MEILI_MASTER_KEY
-            zh_CN: 环境变量 MEILI_MASTER_KEY
-
-        - container: MEILI_ENV
-          description:
-            de_DE: Umgebungsvariable MEILI_ENV
-            el_GR: Μεταβλητή περιβάλλοντος MEILI_ENV
-            en_GB: Environment variable MEILI_ENV
-            en_US: Environment variable MEILI_ENV
-            fr_FR: Variable d’environnement MEILI_ENV
-            hr_HR: Varijabla okruženja MEILI_ENV
-            it_IT: Variabile d’ambiente MEILI_ENV
-            ja_JP: 環境変数 MEILI_ENV
-            ko_KR: 환경 변수 MEILI_ENV
-            nb_NO: Miljøvariabel MEILI_ENV
-            pt_PT: Variável de ambiente MEILI_ENV
-            ru_RU: Переменная среды MEILI_ENV
-            sv_SE: Miljövariabel MEILI_ENV
-            tr_TR: Ortam değişkeni MEILI_ENV
-            zh_CN: 环境变量 MEILI_ENV
-
-      volumes:
-        - container: /meili_data
-          description:
-            de_DE: Datenvolumen /meili_data
-            el_GR: Τόμος δεδομένων /meili_data
-            en_GB: Data volume /meili_data
-            en_US: Data volume /meili_data
-            fr_FR: Volume de données /meili_data
-            hr_HR: Podatkovni volumen /meili_data
-            it_IT: Volume dati /meili_data
-            ja_JP: データボリューム /meili_data
-            ko_KR: 데이터 볼륨 /meili_data
-            nb_NO: Datavolum /meili_data
-            pt_PT: Volume de dados /meili_data
-            ru_RU: Том данных /meili_data
-            sv_SE: Datavolym /meili_data
-            tr_TR: Veri birimi /meili_data
-            zh_CN: 数据卷 /meili_data
   linkwarden:
-    image: ghcr.io/linkwarden/linkwarden:v2.14.0
+    image: ghcr.io/linkwarden/linkwarden:v2.14.1
     container_name: linkwarden
     restart: unless-stopped
     depends_on:
-      postgres:
+      linkwarden-postgres:
         condition: service_healthy
-      meilisearch:
+      linkwarden-meilisearch:
         condition: service_started
     ports:
       - target: 3000
-        published: "3000"
+        published: "3428"
         protocol: tcp
     environment:
       TZ: $TZ
       NEXTAUTH_URL: http://localhost:3000/api/v1/auth
       NEXTAUTH_SECRET: abc123
-      DATABASE_URL: postgresql://linkwarden-postgres:abc123@postgres:5432/linkwarden
-      STORAGE_FOLDER: /data/data
+      DATABASE_URL: postgresql://postgres:abc123@linkwarden-postgres:5432/linkwarden
+      STORAGE_FOLDER: /data
       MEILI_HOST: http://linkwarden-meilisearch:7700
       MEILI_MASTER_KEY: kZWvi7wFylRjEnOTnNrNucG3d7c892HlIBtN3Vr8M-0
       NEXT_PUBLIC_DISABLE_REGISTRATION: 'false'
@@ -225,7 +32,6 @@ services:
       resources:
         reservations:
           memory: 512m
-          cpus: '0.2'
     x-casaos:
       envs:
         - container: TZ
@@ -427,6 +233,197 @@ services:
             sv_SE: Datavolym /data/data
             tr_TR: Veri birimi /data/data
             zh_CN: 数据卷 /data/data
+  linkwarden-postgres:
+    image: postgres:16-alpine
+    container_name: linkwarden-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: abc123
+      POSTGRES_DB: linkwarden
+      TZ: $TZ
+    networks:
+      - linkwarden-net
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/pgdata
+        target: /var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U postgres -d linkwarden
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    deploy:
+      resources:
+        reservations:
+          memory: 256m
+    x-casaos:
+      envs:
+        - container: POSTGRES_USER
+          description:
+            de_DE: Umgebungsvariable POSTGRES_USER
+            el_GR: Μεταβλητή περιβάλλοντος POSTGRES_USER
+            en_GB: Environment variable POSTGRES_USER
+            en_US: Environment variable POSTGRES_USER
+            fr_FR: Variable d’environnement POSTGRES_USER
+            hr_HR: Varijabla okruženja POSTGRES_USER
+            it_IT: Variabile d’ambiente POSTGRES_USER
+            ja_JP: 環境変数 POSTGRES_USER
+            ko_KR: 환경 변수 POSTGRES_USER
+            nb_NO: Miljøvariabel POSTGRES_USER
+            pt_PT: Variável de ambiente POSTGRES_USER
+            ru_RU: Переменная среды POSTGRES_USER
+            sv_SE: Miljövariabel POSTGRES_USER
+            tr_TR: Ortam değişkeni POSTGRES_USER
+            zh_CN: 环境变量 POSTGRES_USER
+
+        - container: POSTGRES_PASSWORD
+          description:
+            de_DE: Umgebungsvariable POSTGRES_PASSWORD
+            el_GR: Μεταβλητή περιβάλλοντος POSTGRES_PASSWORD
+            en_GB: Environment variable POSTGRES_PASSWORD
+            en_US: Environment variable POSTGRES_PASSWORD
+            fr_FR: Variable d’environnement POSTGRES_PASSWORD
+            hr_HR: Varijabla okruženja POSTGRES_PASSWORD
+            it_IT: Variabile d’ambiente POSTGRES_PASSWORD
+            ja_JP: 環境変数 POSTGRES_PASSWORD
+            ko_KR: 환경 변수 POSTGRES_PASSWORD
+            nb_NO: Miljøvariabel POSTGRES_PASSWORD
+            pt_PT: Variável de ambiente POSTGRES_PASSWORD
+            ru_RU: Переменная среды POSTGRES_PASSWORD
+            sv_SE: Miljövariabel POSTGRES_PASSWORD
+            tr_TR: Ortam değişkeni POSTGRES_PASSWORD
+            zh_CN: 环境变量 POSTGRES_PASSWORD
+
+        - container: POSTGRES_DB
+          description:
+            de_DE: Umgebungsvariable POSTGRES_DB
+            el_GR: Μεταβλητή περιβάλλοντος POSTGRES_DB
+            en_GB: Environment variable POSTGRES_DB
+            en_US: Environment variable POSTGRES_DB
+            fr_FR: Variable d’environnement POSTGRES_DB
+            hr_HR: Varijabla okruženja POSTGRES_DB
+            it_IT: Variabile d’ambiente POSTGRES_DB
+            ja_JP: 環境変数 POSTGRES_DB
+            ko_KR: 환경 변수 POSTGRES_DB
+            nb_NO: Miljøvariabel POSTGRES_DB
+            pt_PT: Variável de ambiente POSTGRES_DB
+            ru_RU: Переменная среды POSTGRES_DB
+            sv_SE: Miljövariabel POSTGRES_DB
+            tr_TR: Ortam değişkeni POSTGRES_DB
+            zh_CN: 环境变量 POSTGRES_DB
+
+        - container: TZ
+          description:
+            de_DE: Umgebungsvariable TZ
+            el_GR: Μεταβλητή περιβάλλοντος TZ
+            en_GB: Environment variable TZ
+            en_US: Environment variable TZ
+            fr_FR: Variable d’environnement TZ
+            hr_HR: Varijabla okruženja TZ
+            it_IT: Variabile d’ambiente TZ
+            ja_JP: 環境変数 TZ
+            ko_KR: 환경 변수 TZ
+            nb_NO: Miljøvariabel TZ
+            pt_PT: Variável de ambiente TZ
+            ru_RU: Переменная среды TZ
+            sv_SE: Miljövariabel TZ
+            tr_TR: Ortam değişkeni TZ
+            zh_CN: 环境变量 TZ
+
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            de_DE: Datenvolumen /var/lib/postgresql/data
+            el_GR: Τόμος δεδομένων /var/lib/postgresql/data
+            en_GB: Data volume /var/lib/postgresql/data
+            en_US: Data volume /var/lib/postgresql/data
+            fr_FR: Volume de données /var/lib/postgresql/data
+            hr_HR: Podatkovni volumen /var/lib/postgresql/data
+            it_IT: Volume dati /var/lib/postgresql/data
+            ja_JP: データボリューム /var/lib/postgresql/data
+            ko_KR: 데이터 볼륨 /var/lib/postgresql/data
+            nb_NO: Datavolum /var/lib/postgresql/data
+            pt_PT: Volume de dados /var/lib/postgresql/data
+            ru_RU: Том данных /var/lib/postgresql/data
+            sv_SE: Datavolym /var/lib/postgresql/data
+            tr_TR: Veri birimi /var/lib/postgresql/data
+            zh_CN: 数据卷 /var/lib/postgresql/data
+  linkwarden-meilisearch:
+    image: getmeili/meilisearch:v1.12.8
+    container_name: linkwarden-meilisearch
+    restart: unless-stopped
+    environment:
+      MEILI_MASTER_KEY: kZWvi7wFylRjEnOTnNrNucG3d7c892HlIBtN3Vr8M-0
+      MEILI_ENV: production
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/meili_data
+        target: /meili_data
+    networks:
+      - linkwarden-net
+    deploy:
+      resources:
+        reservations:
+          memory: 256m
+    x-casaos:
+      envs:
+        - container: MEILI_MASTER_KEY
+          description:
+            de_DE: Umgebungsvariable MEILI_MASTER_KEY
+            el_GR: Μεταβλητή περιβάλλοντος MEILI_MASTER_KEY
+            en_GB: Environment variable MEILI_MASTER_KEY
+            en_US: Environment variable MEILI_MASTER_KEY
+            fr_FR: Variable d’environnement MEILI_MASTER_KEY
+            hr_HR: Varijabla okruženja MEILI_MASTER_KEY
+            it_IT: Variabile d’ambiente MEILI_MASTER_KEY
+            ja_JP: 環境変数 MEILI_MASTER_KEY
+            ko_KR: 환경 변수 MEILI_MASTER_KEY
+            nb_NO: Miljøvariabel MEILI_MASTER_KEY
+            pt_PT: Variável de ambiente MEILI_MASTER_KEY
+            ru_RU: Переменная среды MEILI_MASTER_KEY
+            sv_SE: Miljövariabel MEILI_MASTER_KEY
+            tr_TR: Ortam değişkeni MEILI_MASTER_KEY
+            zh_CN: 环境变量 MEILI_MASTER_KEY
+
+        - container: MEILI_ENV
+          description:
+            de_DE: Umgebungsvariable MEILI_ENV
+            el_GR: Μεταβλητή περιβάλλοντος MEILI_ENV
+            en_GB: Environment variable MEILI_ENV
+            en_US: Environment variable MEILI_ENV
+            fr_FR: Variable d’environnement MEILI_ENV
+            hr_HR: Varijabla okruženja MEILI_ENV
+            it_IT: Variabile d’ambiente MEILI_ENV
+            ja_JP: 環境変数 MEILI_ENV
+            ko_KR: 환경 변수 MEILI_ENV
+            nb_NO: Miljøvariabel MEILI_ENV
+            pt_PT: Variável de ambiente MEILI_ENV
+            ru_RU: Переменная среды MEILI_ENV
+            sv_SE: Miljövariabel MEILI_ENV
+            tr_TR: Ortam değişkeni MEILI_ENV
+            zh_CN: 环境变量 MEILI_ENV
+
+      volumes:
+        - container: /meili_data
+          description:
+            de_DE: Datenvolumen /meili_data
+            el_GR: Τόμος δεδομένων /meili_data
+            en_GB: Data volume /meili_data
+            en_US: Data volume /meili_data
+            fr_FR: Volume de données /meili_data
+            hr_HR: Podatkovni volumen /meili_data
+            it_IT: Volume dati /meili_data
+            ja_JP: データボリューム /meili_data
+            ko_KR: 데이터 볼륨 /meili_data
+            nb_NO: Datavolum /meili_data
+            pt_PT: Volume de dados /meili_data
+            ru_RU: Том данных /meili_data
+            sv_SE: Datavolym /meili_data
+            tr_TR: Veri birimi /meili_data
+            zh_CN: 数据卷 /meili_data
 networks:
   linkwarden-net:
     driver: bridge
@@ -751,7 +748,7 @@ x-casaos:
       **了解更多：**
 
       - [Linkwarden GitHub](https://github.com/linkwarden/linkwarden)
-  category: AI
+  category: Notes
   author: linkwarden
   developer: linkwarden
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Linkwarden/icon.png
@@ -761,7 +758,7 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Linkwarden/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Linkwarden/screenshot-3.png
   main: linkwarden
-  port_map: "3000"
+  port_map: "3428"
   architectures:
     - amd64
     - arm64
@@ -771,15 +768,9 @@ x-casaos:
   updateAt: "2026-05-02"
   releaseNotes:
     en_US: |-
-      ✨ What's Changed
-      - Added support for serving preserved HTML archives from a separate public hostname to isolate untrusted content from the main Linkwarden app (see "Setting Up a User Content Domain")
-      - Improved UX when selecting tags
-
-      🐛 Bug Fixes
-      - Various bug fixes and stability improvements
-
-      👥 New Contributors
-      - @xiebaiyuan made their first contribution (#1667)
+      - Linkwarden 2.14.1 adds support for serving preserved HTML archives from a separate public hostname to isolate untrusted content from the main app.
+      - It improves the tag selection experience.
+      - The release also includes stability fixes and bug fixes.
   website: https://linkwarden.app/
   repo: https://github.com/linkwarden/linkwarden
   support:
