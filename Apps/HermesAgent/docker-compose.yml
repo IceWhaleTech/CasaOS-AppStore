@@ -489,15 +489,12 @@ x-casaos:
     - arm64
   index: /
   scheme: http
-  version: "v0.12.0"
+  version: "latest"
   updateAt: "2026-04-30"
   releaseNotes:
     en_US: |-
-      Hermes Agent v0.12.0 (2026.4.30)
-      - Adds the autonomous Curator for skill library maintenance and reports.
-      - Upgrades the self-improvement loop for memories and skills.
-      - Adds new inference providers, messaging platforms, Spotify, Google Meet, and bundled ComfyUI / TouchDesigner-MCP integrations.
-      - Adds model dashboard improvements and reduces visible TUI cold-start time.
+      - The main image uses a floating latest tag, so release notes cannot be mapped to one fixed upstream version.
+      - Pin the image to a concrete upstream tag before recording version-specific GitHub changelog notes.
   website: https://hermes-agent.nousresearch.com/
   repo: https://github.com/NousResearch/hermes-agent
   support: https://github.com/NousResearch/hermes-agent/issues
