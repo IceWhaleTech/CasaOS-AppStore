@@ -4,7 +4,9 @@ services:
     image: psitrax/psitransfer:v2.4.1
     container_name: psitransfer
     ports:
-      - "13001:3000/tcp"
+      - target: "3000"
+        published: "13001"
+        protocol: tcp
     environment:
       PSITRANSFER_ADMIN_PASS: secret
     volumes:
