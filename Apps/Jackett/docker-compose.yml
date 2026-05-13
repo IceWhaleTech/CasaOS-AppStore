@@ -98,13 +98,13 @@ x-casaos:
     en_us: Jackett
   index: /
   port_map: "9117"
-  version: "0.24.87"
-  updateAt: "2025-10-07"
+  version: "0.24.1841"
+  updateAt: "2026-05-11"
   releaseNotes:
     en_US: |-
-      - v0.24.87 updates the rudub and carpt indexers.
-      - ShareIsland was adjusted for 9.1.7 info_hash removal.
-      - BigCore, OxTorrent VIP, and ExtraTorrent-ST selectors/categories were updated.
+      - v0.24.1841 updates torrenttip, torrentsome, btstate, ADC, u2p, magnetcat, torrent9, and czteam indexer handling.
+      - Several tracker domains and selector/category configurations were refreshed.
+      - Docker users should update the container image rather than running the in-app updater inside an existing container.
   website: ""
   repo: "https://github.com/Jackett/Jackett"
   support: "https://github.com/Jackett/Jackett/issues"

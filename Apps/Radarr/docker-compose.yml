@@ -108,12 +108,13 @@ x-casaos:
     en_us: Radarr
   index: /
   port_map: "7878"
-  version: "5.26.2"
-  updateAt: "2025-06-27"
+  version: "6.1.1"
+  updateAt: "2026-03-26"
   releaseNotes:
     en_US: |-
-      - Radarr 5.26.2.10099 fixes disk-space checks for network drives and prevents movie metadata refresh failures.
-      - It also updates remove-root-folder wording, Discord notification escaping, translations, and API documentation.
+      - Radarr 6.1.1.10360 fixes Inno Setup download handling and URL parsing on some systems.
+      - Updates MailKit, ImageSharp, translations, HTTP file mapper behavior, and SonarCloud versioning.
+      - Adds GiLG group parsing and fixes a collection API error around Movie CollectionThe.
       - Docker users should update the container image rather than update inside the container.
   website: "https://radarr.video"
   repo: "https://github.com/Radarr/Radarr"

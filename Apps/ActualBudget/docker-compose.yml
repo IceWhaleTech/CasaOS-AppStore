@@ -1,7 +1,7 @@
 name: actualbudget
 services:
   actualbudget:
-    image: actualbudget/actual-server:25.7.1
+    image: actualbudget/actual-server:26.5.2
     container_name: actualbudget
     deploy:
       resources:
@@ -468,13 +468,13 @@ x-casaos:
   index: /
   title:
     en_US: Actual Budget
-  version: "25.7.1"
-  updateAt: "2025-07-03"
+  version: "26.5.2"
+  updateAt: "2026-05-08"
   releaseNotes:
     en_US: |-
-      - v25.7.1 points to the official Actual Budget release notes.
-      - Desktop release artifacts were published for the same version.
-      - Microsoft Store updates may lag while the release is verified.
+      - Actual Budget 26.5.2 includes the 26.5.1 release notes and packaging update for the configured image tag.
+      - Failed login attempts are now counted against the authentication rate limit.
+      - Fixes desktop self-signed certificate handling and reverts UUID generation back to the uuid library.
   website: "https://actualbudget.org"
   repo: "https://github.com/actualbudget/actual"
   support: "https://github.com/actualbudget/actual/issues"

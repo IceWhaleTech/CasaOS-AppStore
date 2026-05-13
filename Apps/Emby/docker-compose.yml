@@ -11,7 +11,7 @@ services:
       PGID: "1000"
       PUID: "1000"
       TZ: $TZ
-    image: linuxserver/emby:4.9.1
+    image: linuxserver/emby:4.9.3
     deploy:
       resources:
         reservations:
@@ -402,13 +402,14 @@ x-casaos:
     en_US: Emby
   index: /
   port_map: "8096"
-  version: "4.9.1"
-  updateAt: "2025-11-28"
+  version: "4.9.3"
+  updateAt: "2026-01-08"
   website: "https://emby.media/"
   releaseNotes:
     en_US: |-
-      - Emby Server 4.8.11.0 fixes playlist writes, multi-version episode playback, m3u/RTSP handling, SMB folder access, and transcoding cleanup.
-      - The release also adds notification grouping, playback-speed controls in the video OSD, photo slideshow timing, and tabbed book libraries.
-  repo: "https://github.com/MediaBrowser/Emby"
+      - Emby Server 4.9.3 adds an auto remote quality option, a legacy folder scanning option, and a landing tab option for book libraries.
+      - Music transcoding was fixed, mixed content tabs were updated, and YouTube trailer volume control is supported.
+      - Fixes include maintenance mode blocking settings screens, embedded audio fields not rescanning, and lost genre or collection images after deleting movies.
+  repo: "https://github.com/linuxserver/docker-emby"
   support: "https://emby.media/community/"
   docs: "https://support.emby.media/support/"

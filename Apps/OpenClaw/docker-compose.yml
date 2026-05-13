@@ -533,13 +533,14 @@ x-casaos:
       sv_SE: Före användning, vänligen följ [Konfigurationsguiden](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) för att konfigurera modellen och relaterade inställningar.
       tr_TR: Kullanmadan önce, lütfen [Yapılandırma Kılavuzu](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)nu takip ederek modeli ve ilgili ayarları yapılandırın.
       zh_CN: 使用前请先按照 [配置指南](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) 配置model 及相关配置
-  version: "2026.4.9"
-  updateAt: "2026-04-09"
+  version: "2026.5.7"
+  updateAt: "2026-05-07"
   website: "https://openclaw.ai"
   repo: "https://github.com/openclaw/openclaw"
   docs: "https://docs.openclaw.ai/"
   releaseNotes:
     en_US: |-
-      - OpenClaw 2026.4.9 is the configured Docker image version.
-      - No matching GitHub Release object was found for this tag in the configured openclaw/openclaw repository.
+      - OpenClaw 2026.5.7 improves release and plugin publishing recovery around transient ClawHub CLI dependency installation failures.
+      - Adds an explicit openai/chat-latest direct API-key model override and exposes computed cron status in JSON output.
+      - Hardens native command ownership, memory admin checks, inline skill tool authorization, credential resolution, and plugin lifecycle shell handling.
   support: "https://github.com/openclaw/openclaw/issues"

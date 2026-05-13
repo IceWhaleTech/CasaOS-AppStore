@@ -101,13 +101,13 @@ x-casaos:
   title:
     en_us: Bazarr
   port_map: "6767"
-  version: "1.5.3"
-  updateAt: "2025-09-20"
+  version: "1.5.6"
+  updateAt: "2026-02-26"
   releaseNotes:
     en_US: |-
-      - v1.5.3 removes obsolete Argenteam-dump and tusubtitulo providers.
-      - Plex integration was improved with OAuth support, URL sanitization, better server sessions, webhook fixes, selective refresh, and clearer authentication errors.
-      - Fixes include Sonarr SignalR subtitle-search behavior, upgrade loops, shutdown/restart handling, backup restoration, subtitle translation, language mapping, and long text removal from subtitle files.
+      - v1.5.6 improves subdl and Gestdown provider error handling and release matching.
+      - Adds Spain vs LATAM Spanish detection for SubX and completes SubX API key integration.
+      - Fixes audio profile migration, Windows post-processing, assrt season-pack matching, and CJK title matching issues.
   website: "https://www.bazarr.media"
   repo: "https://github.com/morpheus65535/bazarr"
   support: "https://github.com/morpheus65535/bazarr/issues"
