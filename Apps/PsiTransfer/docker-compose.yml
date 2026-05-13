@@ -4,7 +4,7 @@ services:
     image: psitrax/psitransfer:v2.4.1
     container_name: psitransfer
     ports:
-      - target: 3000
+      - target: "3000"
         published: "13001"
         protocol: tcp
     environment:
