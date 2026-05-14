@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # OpenClaw Core Agent Engine
+  openclaw-core:
+    image: openclaw/core:latest
+    container_name: openclaw_core
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - OPENCLAW_SECRET_KEY=${OPENCLAW_SECRET_KEY}
+      - PRIMARY_BRAIN=${PRIMARY_BRAIN:-claude-4.7-opus}
+      - IMAGE_GENERATION_MODEL=${IMAGE_GENERATION_MODEL:-gpt-image-2}
+      - IMAGE_RESOLUTION=${IMAGE_RESOLUTION:-4K}
+      - NB_PRO_API_KEY=${NB_PRO_API_KEY}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - WHATSAPP_SESSION_PATH=/app/sessions
+    volumes:
+      - openclaw_data:/app/data
+      - openclaw_sessions:/app/sessions
+    ports:
+      - "3000:3000"
+    networks:
+      - openclaw-network
+    depends_on:
+      - openclaw-db
+
+  # MissionDeck Dashboard UI / Agent Control Plane
+  openclaw-ui:
+    image: openclaw/missiondeck:latest
+    container_name: openclaw_ui
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - CORE_API_URL=http://openclaw-core:3000
+    networks:
+      - openclaw-network
+    depends_on:
+      - openclaw-core
+
+  # State & Active Memory Storage
+  openclaw-db:
+    image: postgres:15-alpine
+    container_name: openclaw_db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=openclaw
+      - POSTGRES_USER=claw_admin
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - openclaw_db_data:/var/lib/postgresql/data
+    networks:
+      - openclaw-network
+
+volumes:
+  openclaw_data:
+  openclaw_sessions:
+  openclaw_db_data:
+
+networks:
+  openclaw-network:
+    driver: bridge
