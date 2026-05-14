@@ -125,7 +125,7 @@ class ValidateAppMetadataTests(unittest.TestCase):
         self.assertIn("required_field_missing", categories)
         self.assertIn("version_image_mismatch", categories)
         self.assertIn("updateAt_format", categories)
-        self.assertIn("releaseNotes_empty", categories)
+        self.assertNotIn("releaseNotes_empty", categories)
         self.assertIn("url_format", categories)
         self.assertIn("appfile_image_tag_mismatch", categories)
 

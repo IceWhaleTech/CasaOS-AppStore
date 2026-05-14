@@ -27,7 +27,7 @@ except ImportError as exc:  # pragma: no cover - exercised by operators.
 
 
 REQUIRED_ROOT_FIELDS = ("version", "updateAt", "releaseNotes", "website", "repo", "support", "docs")
-NON_EMPTY_ROOT_FIELDS = ("version", "updateAt", "releaseNotes")
+NON_EMPTY_ROOT_FIELDS = ("version", "updateAt")
 LINK_ROOT_FIELDS = ("website", "repo", "support", "docs")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
@@ -277,8 +277,7 @@ def validate_root_metadata(
         if metadata[field] is None:
             add_issue(issues, app, compose_file, "error", "required_field_null", f"x-casaos.{field}", "non-null", None, "Required root metadata field is null.")
         elif field in NON_EMPTY_ROOT_FIELDS and blank(metadata[field]):
-            category = "releaseNotes_empty" if field == "releaseNotes" else "required_field_empty"
-            add_issue(issues, app, compose_file, "error", category, f"x-casaos.{field}", "non-empty", metadata[field], "Required root metadata field is empty.")
+            add_issue(issues, app, compose_file, "error", "required_field_empty", f"x-casaos.{field}", "non-empty", metadata[field], "Required root metadata field is empty.")
 
     for field in LINK_ROOT_FIELDS:
         value = metadata.get(field)
