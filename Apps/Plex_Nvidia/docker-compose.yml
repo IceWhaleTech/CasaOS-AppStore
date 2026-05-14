@@ -10,7 +10,7 @@ services:
       VERSION: docker
       CPU_FALLBACK: "true"
       NVIDIA_VISIBLE_DEVICES: all
-    image: lscr.io/linuxserver/plex:1.43.1
+    image: lscr.io/linuxserver/plex:1.41.3
     deploy:
       resources:
         reservations:
@@ -122,13 +122,13 @@ x-casaos:
     en_us: Plex(Nvidia GPU)
   index: /web/index.html
   port_map: "32400"
-  version: "1.43.1"
-  updateAt: "2026-04-09"
+  version: "1.41.3"
+  updateAt: "2024-12-17"
   releaseNotes:
     en_US: |-
-      - Plex Media Server 1.43.1.10611 adds AV1 decoding support on Windows with Intel devices, Battlemage GPU support, and Web 4.159.0.
-      - HEVC preferences are enabled by default, and downloads, database migrations, live TV playback, hubs, metadata, and library matching receive fixes.
-      - The GPU-enabled entry uses the same LinuxServer image tag and upstream Plex release as the standard Plex entry.
+      - Plex Media Server 1.41.3 is the application version used by the upstream linuxserver image tag.
+      - The GPU-enabled entry uses the same upstream image tag and release metadata as the standard Plex entry.
+      - The upstream tag is kept as the metadata baseline for this CasaOS entry.
   website: "https://www.plex.tv"
   repo: "https://github.com/linuxserver/docker-plex"
   support: "https://support.plex.tv"
