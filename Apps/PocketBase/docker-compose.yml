@@ -17,17 +17,6 @@ services:
         source: /DATA/AppData/$AppID/pb_data
         target: /pb_data
     container_name: pocketbase
-    x-casaos:
-      ports:
-        - container: "8090"
-          description:
-            en_US: Container port 8090
-            zh_CN: 容器端口 8090
-      volumes:
-        - container: "/pb_data"
-          description:
-            en_US: Container path /pb_data
-            zh_CN: 容器路径 /pb_data
 x-casaos:
   architectures:
     - amd64

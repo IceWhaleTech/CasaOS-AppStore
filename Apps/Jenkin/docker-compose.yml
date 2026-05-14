@@ -21,21 +21,6 @@ services:
     container_name: Jenkins
     hostname: Jenkins
 
-    x-casaos:
-      ports:
-        - container: "8080"
-          description:
-            en_US: Container port 8080
-            zh_CN: 容器端口 8080
-      volumes:
-        - container: "/data"
-          description:
-            en_US: Container path /data
-            zh_CN: 容器路径 /data
-        - container: "/var/jenkins_home"
-          description:
-            en_US: Container path /var/jenkins_home
-            zh_CN: 容器路径 /var/jenkins_home
 x-casaos:
   architectures:
     - amd64

@@ -103,10 +103,6 @@ services:
             sv_SE: Python-sökväg för Turbodiffusion-moduler
             tr_TR: Turbodiffusion modülleri için Python yolu
             zh_CN: Turbodiffusion模块的Python路径
-        - container: "MODEL_PATHS"
-          description:
-            en_US: Environment variable MODEL_PATHS
-            zh_CN: 环境变量 MODEL_PATHS
       ports:
         - container: "7860"
           description:
@@ -949,8 +945,8 @@ x-casaos:
   scheme: http
   version: "20260312"
   updateAt: "2026-04-04"
-  repo: "https://github.com/thu-ml/TurboDiffusion"
   releaseNotes: ""
   website: ""
+  repo: "https://github.com/thu-ml/TurboDiffusion"
   support: "https://github.com/thu-ml/TurboDiffusion/issues"
   docs: "https://github.com/thu-ml/TurboDiffusion#readme"

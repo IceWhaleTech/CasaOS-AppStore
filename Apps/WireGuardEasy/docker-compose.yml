@@ -21,23 +21,6 @@ services:
         - container: '51821'
           description:
             en_us: WEB UI port
-      envs:
-        - container: "PASSWORD"
-          description:
-            en_US: Environment variable PASSWORD
-            zh_CN: 环境变量 PASSWORD
-        - container: "WG_DEFAULT_DNS"
-          description:
-            en_US: Environment variable WG_DEFAULT_DNS
-            zh_CN: 环境变量 WG_DEFAULT_DNS
-        - container: "WG_HOST"
-          description:
-            en_US: Environment variable WG_HOST
-            zh_CN: 环境变量 WG_HOST
-        - container: "WG_PORT"
-          description:
-            en_US: Environment variable WG_PORT
-            zh_CN: 环境变量 WG_PORT
     ports:
       - target: 51820
         published: "51820"

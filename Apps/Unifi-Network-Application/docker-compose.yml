@@ -49,48 +49,11 @@ services:
           description:
             en_us: "timezone"
             zh_cn: "时区"
-        - container: "MONGO_DBNAME"
-          description:
-            en_US: Environment variable MONGO_DBNAME
-            zh_CN: 环境变量 MONGO_DBNAME
-        - container: "MONGO_HOST"
-          description:
-            en_US: Environment variable MONGO_HOST
-            zh_CN: 环境变量 MONGO_HOST
-        - container: "MONGO_PASS"
-          description:
-            en_US: Environment variable MONGO_PASS
-            zh_CN: 环境变量 MONGO_PASS
-        - container: "MONGO_PORT"
-          description:
-            en_US: Environment variable MONGO_PORT
-            zh_CN: 环境变量 MONGO_PORT
-        - container: "MONGO_USER"
-          description:
-            en_US: Environment variable MONGO_USER
-            zh_CN: 环境变量 MONGO_USER
       ports:
         - container: "8443"
           description:
             en_us: WebUI HTTP Port
             zh_cn: WebUI HTTP 端口
-        - container: "10001"
-          description:
-            en_US: Container port 10001
-            zh_CN: 容器端口 10001
-        - container: "3478"
-          description:
-            en_US: Container port 3478
-            zh_CN: 容器端口 3478
-        - container: "8080"
-          description:
-            en_US: Container port 8080
-            zh_CN: 容器端口 8080
-      volumes:
-        - container: "/config"
-          description:
-            en_US: Container path /config
-            zh_CN: 容器路径 /config
   unifi-db:
     container_name: unifi-db
     image: docker.io/mongo:3.6
@@ -184,8 +147,8 @@ x-casaos:
     en_us: Unifi Network Application
   version: "latest"
   updateAt: "2024-01-29"
-  docs: "https://docs.linuxserver.io/images/docker-unifi-network-application/#ports-p"
   releaseNotes: ""
   website: "https://ui.com"
   repo: "https://github.com/linuxserver/docker-unifi-network-application"
   support: "https://github.com/linuxserver/docker-unifi-network-application/issues"
+  docs: "https://docs.linuxserver.io/images/docker-unifi-network-application/#ports-p"

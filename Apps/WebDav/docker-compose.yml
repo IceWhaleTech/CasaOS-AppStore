@@ -28,38 +28,6 @@ services:
         target: /media
     network_mode: bridge
     privileged: false
-    x-casaos:
-      ports:
-        - container: "80"
-          description:
-            en_US: Container port 80
-            zh_CN: 容器端口 80
-      volumes:
-        - container: "/media"
-          description:
-            en_US: Container path /media
-            zh_CN: 容器路径 /media
-      envs:
-        - container: "GID"
-          description:
-            en_US: Environment variable GID
-            zh_CN: 环境变量 GID
-        - container: "PASSWORD"
-          description:
-            en_US: Environment variable PASSWORD
-            zh_CN: 环境变量 PASSWORD
-        - container: "TZ"
-          description:
-            en_US: Environment variable TZ
-            zh_CN: 环境变量 TZ
-        - container: "UDI"
-          description:
-            en_US: Environment variable UDI
-            zh_CN: 环境变量 UDI
-        - container: "USERNAME"
-          description:
-            en_US: Environment variable USERNAME
-            zh_CN: 环境变量 USERNAME
 x-casaos:
   architectures:
     - amd64

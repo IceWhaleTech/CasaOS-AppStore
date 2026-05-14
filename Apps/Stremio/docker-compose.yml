@@ -40,10 +40,6 @@ services:
             pt_br: Porta da WebUI
             zh_cn: WebUI HTTPS端口
           protocol: tcp
-        - container: "8080"
-          description:
-            en_US: Container port 8080
-            zh_CN: 容器端口 8080
       envs:
         - container: NO_CORS
           description:

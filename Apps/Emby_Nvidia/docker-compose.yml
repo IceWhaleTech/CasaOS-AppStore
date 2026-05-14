@@ -52,14 +52,6 @@ services:
         - container: TZ
           description:
             en_us: ""
-        - container: "CPU_FALLBACK"
-          description:
-            en_US: Environment variable CPU_FALLBACK
-            zh_CN: 环境变量 CPU_FALLBACK
-        - container: "NVIDIA_VISIBLE_DEVICES"
-          description:
-            en_US: Environment variable NVIDIA_VISIBLE_DEVICES
-            zh_CN: 环境变量 NVIDIA_VISIBLE_DEVICES
       ports:
         - container: "8096"
           description:

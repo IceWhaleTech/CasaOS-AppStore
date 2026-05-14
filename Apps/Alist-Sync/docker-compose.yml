@@ -12,22 +12,6 @@ services:
         target: /app/data
     environment:
       - TZ=Asia/Shanghai
-    x-casaos:
-      ports:
-        - container: "52441"
-          description:
-            en_US: Container port 52441
-            zh_CN: 容器端口 52441
-      volumes:
-        - container: "/app/data"
-          description:
-            en_US: Container path /app/data
-            zh_CN: 容器路径 /app/data
-      envs:
-        - container: "TZ"
-          description:
-            en_US: Environment variable TZ
-            zh_CN: 环境变量 TZ
 x-casaos:
   envs:
     - container: TZ

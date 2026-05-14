@@ -32,14 +32,6 @@ services:
           description:
             en_us: Access authorization code, please be sure to modify, otherwise anyone can read and write your data
             zh_cn: 访问码，请修改，否则其他人可以直接访问并修改你的数据
-        - container: "PGID"
-          description:
-            en_US: Environment variable PGID
-            zh_CN: 环境变量 PGID
-        - container: "PUID"
-          description:
-            en_US: Environment variable PUID
-            zh_CN: 环境变量 PUID
       ports:
         - container: "6806"
           description:

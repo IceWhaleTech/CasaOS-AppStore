@@ -16,41 +16,6 @@ services:
       - /DATA/AppData/duckdns:/config #optional
     restart: unless-stopped
 
-    x-casaos:
-      volumes:
-        - container: "/config"
-          description:
-            en_US: Container path /config
-            zh_CN: 容器路径 /config
-      envs:
-        - container: "LOG_FILE"
-          description:
-            en_US: Environment variable LOG_FILE
-            zh_CN: 环境变量 LOG_FILE
-        - container: "PGID"
-          description:
-            en_US: Environment variable PGID
-            zh_CN: 环境变量 PGID
-        - container: "PUID"
-          description:
-            en_US: Environment variable PUID
-            zh_CN: 环境变量 PUID
-        - container: "SUBDOMAINS"
-          description:
-            en_US: Environment variable SUBDOMAINS
-            zh_CN: 环境变量 SUBDOMAINS
-        - container: "TOKEN"
-          description:
-            en_US: Environment variable TOKEN
-            zh_CN: 环境变量 TOKEN
-        - container: "TZ"
-          description:
-            en_US: Environment variable TZ
-            zh_CN: 环境变量 TZ
-        - container: "UPDATE_IP"
-          description:
-            en_US: Environment variable UPDATE_IP
-            zh_CN: 环境变量 UPDATE_IP
 x-casaos:
   architectures:
     - amd64

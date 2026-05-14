@@ -73,51 +73,6 @@ services:
             ru_RU: Хранилище приложения Maybe
             tr_TR: Maybe Uygulama Depolama
 
-      envs:
-        - container: "DB_HOST"
-          description:
-            en_US: Environment variable DB_HOST
-            zh_CN: 环境变量 DB_HOST
-        - container: "DB_PORT"
-          description:
-            en_US: Environment variable DB_PORT
-            zh_CN: 环境变量 DB_PORT
-        - container: "OPENAI_ACCESS_TOKEN"
-          description:
-            en_US: Environment variable OPENAI_ACCESS_TOKEN
-            zh_CN: 环境变量 OPENAI_ACCESS_TOKEN
-        - container: "POSTGRES_DB"
-          description:
-            en_US: Environment variable POSTGRES_DB
-            zh_CN: 环境变量 POSTGRES_DB
-        - container: "POSTGRES_PASSWORD"
-          description:
-            en_US: Environment variable POSTGRES_PASSWORD
-            zh_CN: 环境变量 POSTGRES_PASSWORD
-        - container: "POSTGRES_USER"
-          description:
-            en_US: Environment variable POSTGRES_USER
-            zh_CN: 环境变量 POSTGRES_USER
-        - container: "RAILS_ASSUME_SSL"
-          description:
-            en_US: Environment variable RAILS_ASSUME_SSL
-            zh_CN: 环境变量 RAILS_ASSUME_SSL
-        - container: "RAILS_FORCE_SSL"
-          description:
-            en_US: Environment variable RAILS_FORCE_SSL
-            zh_CN: 环境变量 RAILS_FORCE_SSL
-        - container: "REDIS_URL"
-          description:
-            en_US: Environment variable REDIS_URL
-            zh_CN: 环境变量 REDIS_URL
-        - container: "SECRET_KEY_BASE"
-          description:
-            en_US: Environment variable SECRET_KEY_BASE
-            zh_CN: 环境变量 SECRET_KEY_BASE
-        - container: "SELF_HOSTED"
-          description:
-            en_US: Environment variable SELF_HOSTED
-            zh_CN: 环境变量 SELF_HOSTED
   maybe-worker:
     container_name: maybe-worker
     image: ghcr.io/maybe-finance/maybe:latest
@@ -258,7 +213,7 @@ x-casaos:
   description:
     en_US: |
       Maybe is a personal finance management application designed to help you track your expenses, income, and investments in one place. With an intuitive interface and powerful features, Maybe makes it easy to understand your financial situation and make informed decisions about your money.
-
+      
       **Key Features:**
       - **Expense Tracking**: Easily log and categorize your expenses
       - **Income Management**: Track multiple income sources
@@ -266,19 +221,19 @@ x-casaos:
       - **Budget Planning**: Create and maintain budgets to control your spending
       - **Financial Reports**: Generate detailed reports to understand your financial habits
       - **AI-Powered Insights**: Get personalized financial advice using AI technology
-
+      
       **Use Cases:**
       - Personal budget management
       - Expense tracking and categorization
       - Investment portfolio monitoring
       - Financial goal setting and tracking
       - Cash flow analysis
-
+      
       **Learn More:**
       - [Maybe GitHub Repository](https://github.com/maybe-finance/maybe)
     en_GB: |
       Maybe is a personal finance management application designed to help you track your expenses, income, and investments in one place. With an intuitive interface and powerful features, Maybe makes it easy to understand your financial situation and make informed decisions about your money.
-
+      
       **Key Features:**
       - **Expense Tracking**: Easily log and categorise your expenses
       - **Income Management**: Track multiple income sources
@@ -286,19 +241,19 @@ x-casaos:
       - **Budget Planning**: Create and maintain budgets to control your spending
       - **Financial Reports**: Generate detailed reports to understand your financial habits
       - **AI-Powered Insights**: Get personalised financial advice using AI technology
-
+      
       **Use Cases:**
       - Personal budget management
       - Expense tracking and categorisation
       - Investment portfolio monitoring
       - Financial goal setting and tracking
       - Cash flow analysis
-
+      
       **Learn More:**
       - [Maybe GitHub Repository](https://github.com/maybe-finance/maybe)
     it_IT: |
       Maybe è un'applicazione di gestione finanziaria personale progettata per aiutarti a monitorare spese, redditi e investimenti in un unico posto. Con un'interfaccia intuitiva e funzionalità potenti, Maybe rende facile comprendere la tua situazione finanziaria e prendere decisioni informate sul tuo denaro.
-
+      
       **Caratteristiche Principali:**
       - **Tracciamento Spese**: Registra e categorizza facilmente le tue spese
       - **Gestione Reddito**: Monitora molteplici fonti di reddito
@@ -306,19 +261,19 @@ x-casaos:
       - **Pianificazione Budget**: Crea e mantieni budget per controllare le tue spese
       - **Report Finanziari**: Genera report dettagliati per comprendere le tue abitudini finanziarie
       - **Approfondimenti AI**: Ottieni consigli finanziari personalizzati utilizzando la tecnologia AI
-
+      
       **Casi d'Uso:**
       - Gestione del budget personale
       - Tracciamento e categorizzazione delle spese
       - Monitoraggio del portafoglio di investimenti
       - Impostazione e monitoraggio degli obiettivi finanziari
       - Analisi del flusso di cassa
-
+      
       **Scopri di Più:**
       - [Repository GitHub Maybe](https://github.com/maybe-finance/maybe)
     nb_NO: |
       Maybe er en applikasjon for personlig finansforvaltning designet for å hjelpe deg med å spore utgifter, inntekter og investeringer på ett sted. Med et intuitivt grensesnitt og kraftfulle funksjoner, gjør Maybe det enkelt å forstå din finansielle situasjon og ta informerte beslutninger om pengene dine.
-
+      
       **Hovedfunksjoner:**
       - **Utgiftssporing**: Loggfør og kategoriser enkelt utgiftene dine
       - **Inntektsstyring**: Spor flere inntektskilder
@@ -326,19 +281,19 @@ x-casaos:
       - **Budsjettplanlegging**: Opprett og vedlikehold budsjetter for å kontrollere utgiftene dine
       - **Finansielle Rapporter**: Generer detaljerte rapporter for å forstå dine finansielle vaner
       - **AI-drevne Innsikter**: Få personlig finansiell rådgivning ved bruk av AI-teknologi
-
+      
       **Bruksområder:**
       - Personlig budsjettstyring
       - Utgiftssporing og kategorisering
       - Overvåking av investeringsportefølje
       - Målsetting og sporing av finansielle mål
       - Kontantstrømanalyse
-
+      
       **Lær Mer:**
       - [Maybe GitHub Repository](https://github.com/maybe-finance/maybe)
     zh_CN: |
       Maybe是一款个人理财管理应用，旨在帮助您在一个地方跟踪您的支出、收入和投资。凭借直观的界面和强大的功能，Maybe让您轻松了解自己的财务状况，并对您的资金做出明智的决策。
-
+      
       **主要特性：**
       - **支出跟踪**：轻松记录和分类您的支出
       - **收入管理**：跟踪多个收入来源
@@ -346,19 +301,19 @@ x-casaos:
       - **预算规划**：创建和维护预算以控制您的支出
       - **财务报告**：生成详细报告以了解您的财务习惯
       - **AI驱动洞察**：使用AI技术获取个性化财务建议
-
+      
       **使用场景：**
       - 个人预算管理
       - 支出跟踪和分类
       - 投资组合监控
       - 财务目标设定和跟踪
       - 现金流分析
-
+      
       **了解更多：**
       - [Maybe GitHub仓库](https://github.com/maybe-finance/maybe)
     ja_JP: |
       Maybeは、支出、収入、投資を一か所で追跡するために設計された個人ファイナンス管理アプリケーションです。直感的なインターフェースと強力な機能により、Maybeは財政状況を理解し、資金について情報に基づいた意思決定を容易にします。
-
+      
       **主な機能：**
       - **支出追跡**：支出を簡単に記録および分類
       - **収入管理**：複数の収入源を追跡
@@ -366,19 +321,19 @@ x-casaos:
       - **予算計画**：支出を管理するための予算を作成および維持
       - **財務レポート**：財務習慣を理解するための詳細なレポートを生成
       - **AI駆動型洞察**：AI技術を使用してパーソナライズされた財務アドバイスを取得
-
+      
       **使用例：**
       - 個人予算管理
       - 支出の追跡と分類
       - 投資ポートフォリオの監視
       - 財務目標の設定と追跡
       - キャッシュフロー分析
-
+      
       **詳細情報：**
       - [Maybe GitHubリポジトリ](https://github.com/maybe-finance/maybe)
     ko_KR: |
       Maybe는 지출, 수입, 투자를 한곳에서 추적할 수 있도록 설계된 개인 재무 관리 애플리케이션입니다. 직관적인 인터페이스와 강력한 기능을 통해 Maybe는 재정 상황을 이해하고 자금에 대한 정보에 입각한 결정을 내리는 것을 쉽게 만듭니다.
-
+      
       **주요 기능:**
       - **지출 추적**: 지출을 쉽게 기록하고 분류
       - **수입 관리**: 여러 수입원 추적
@@ -386,19 +341,19 @@ x-casaos:
       - **예산 계획**: 지출을 통제하기 위해 예산 생성 및 유지
       - **재무 보고서**: 재무 습관을 이해하기 위한 상세한 보고서 생성
       - **AI 기반 통찰력**: AI 기술을 사용하여 개인화된 재무 조언 얻기
-
+      
       **사용 사례:**
       - 개인 예산 관리
       - 지출 추적 및 분류
       - 투자 포트폴리오 모니터링
       - 재무 목표 설정 및 추적
       - 현금 흐름 분석
-
+      
       **더 알아보기:**
       - [Maybe GitHub 저장소](https://github.com/maybe-finance/maybe)
     fr_FR: |
       Maybe est une application de gestion financière personnelle conçue pour vous aider à suivre vos dépenses, revenus et investissements en un seul endroit. Avec une interface intuitive et des fonctionnalités puissantes, Maybe facilite la compréhension de votre situation financière et la prise de décisions éclairées concernant votre argent.
-
+      
       **Fonctionnalités Clés :**
       - **Suivi des Dépenses** : Enregistrez et catégorisez facilement vos dépenses
       - **Gestion des Revenus** : Suivez plusieurs sources de revenus
@@ -406,19 +361,19 @@ x-casaos:
       - **Planification Budgétaire** : Créez et maintenez des budgets pour contrôler vos dépenses
       - **Rapports Financiers** : Générez des rapports détaillés pour comprendre vos habitudes financières
       - **Conseils par IA** : Obtenez des conseils financiers personnalisés grâce à la technologie IA
-
+      
       **Cas d'Usage :**
       - Gestion du budget personnel
       - Suivi et catégorisation des dépenses
       - Surveillance du portefeuille d'investissements
       - Définition et suivi des objectifs financiers
       - Analyse de la trésorerie
-
+      
       **En Savoir Plus :**
       - [Dépôt GitHub Maybe](https://github.com/maybe-finance/maybe)
     de_DE: |
       Maybe ist eine Anwendung zur persönlichen Finanzverwaltung, die entwickelt wurde, um Ihnen zu helfen, Ausgaben, Einkommen und Investitionen an einem Ort zu verfolgen. Mit einer intuitiven Benutzeroberfläche und leistungsstarken Funktionen macht Maybe es einfach, Ihre finanzielle Situation zu verstehen und fundierte Entscheidungen über Ihr Geld zu treffen.
-
+      
       **Hauptfunktionen:**
       - **Ausgabenverfolgung**: Erfassen und kategorisieren Sie Ihre Ausgaben einfach
       - **Einkommensverwaltung**: Verfolgen Sie mehrere Einkommensquellen
@@ -426,19 +381,19 @@ x-casaos:
       - **Budgetplanung**: Erstellen und pflegen Sie Budgets, um Ihre Ausgaben zu kontrollieren
       - **Finanzberichte**: Generieren Sie detaillierte Berichte, um Ihre Finanzgewohnheiten zu verstehen
       - **KI-gestützte Einblicke**: Erhalten Sie personalisierte Finanzberatung durch KI-Technologie
-
+      
       **Anwendungsfälle:**
       - Persönliche Budgetverwaltung
       - Ausgabenverfolgung und -kategorisierung
       - Überwachung des Anlageportfolios
       - Festlegung und Verfolgung von Finanzzielen
       - Cashflow-Analyse
-
+      
       **Mehr Erfahren:**
       - [Maybe GitHub Repository](https://github.com/maybe-finance/maybe)
     sv_SE: |
       Maybe är en applikation för personlig finanshantering designad för att hjälpa dig att spara utgifter, inkomster och investeringar på ett ställe. Med ett intuitivt gränssnitt och kraftfulla funktioner gör Maybe det enkelt att förstå din finansiella situation och fatta välgrundade beslut om dina pengar.
-
+      
       **Huvudfunktioner:**
       - **Ugiftsspårning**: Logga och kategorisera enkelt dina utgifter
       - **Inkomsthanterning**: Spåra flera inkomstkällor
@@ -446,19 +401,19 @@ x-casaos:
       - **Budgetplanering**: Skapa och underhåll budgetar för att kontrollera dina utgifter
       - **Finansiella Rapporter**: Generera detaljerade rapporter för att förstå dina finansiella vanor
       - **AI-drivna Insikter**: Få personlig finansiell rådgivning med AI-teknik
-
+      
       **Användningsområden:**
       - Personlig budgethantering
       - Utgiftsspårning och kategorisering
       - Övervakning av investeringsportfölj
       - Målsättning och spårning av finansiella mål
       - Kassaflödesanalys
-
+      
       **Läs Mer:**
       - [Maybe GitHub Repository](https://github.com/maybe-finance/maybe)
     el_GR: |
       Το Maybe είναι μια εφαρμογή διαχείρισης προσωπικών οικονομικών σχεδιασμένη για να σας βοηθήσει να παρακολουθείτε τα έξοδα, τα έσοδα και τις επενδύσεις σας σε ένα μέρος. Με ένα διαισθητικό περιβάλλον και ισχυρές λειτουργίες, το Maybe καθιστά εύκολη την κατανόηση της οικονομικής σας κατάστασης και τη λήψη ενημερωμένων αποφάσεων για τα χρήματά σας.
-
+      
       **Βασικά Χαρακτηριστικά:**
       - **Παρακολούθηση Εξόδων**: Καταγράψτε και κατηγοριοποιήστε εύκολα τα έξοδά σας
       - **Διαχείριση Εσόδων**: Παρακολουθήστε πολλαπλές πηγές εσόδων
@@ -466,19 +421,19 @@ x-casaos:
       - **Σχεδιασμός Προϋπολογισμού**: Δημιουργήστε και διατηρήστε προϋπολογισμούς για να ελέγχετε τα έξοδά σας
       - **Οικονομικές Αναφορές**: Δημιουργήστε λεπτομερείς αναφορές για να κατανοήσετε τις οικονομικές σας συνήθειες
       - **Ευφυείς Συμβουλές AI**: Λάβετε εξατομικευμένες οικονομικές συμβουλές χρησιμοποιώντας τεχνολογία AI
-
+      
       **Περιπτώσεις Χρήσης:**
       - Διαχείριση προσωπικού προϋπολογισμού
       - Παρακολούθηση και κατηγοριοποίηση εξόδων
       - Παρακολούθηση χαρτοφυλακίου επενδύσεων
       - Ορισμός και παρακολούθηση οικονομικών στόχων
       - Ανάλυση ταμειακών ροών
-
+      
       **Μάθετε Περισσότερα:**
       - [Αποθετήριο GitHub Maybe](https://github.com/maybe-finance/maybe)
     hr_HR: |
       Maybe je aplikacija za upravljanje osobnim financijama dizajnirana da vam pomogne pratiti troškove, prihode i investicije na jednom mjestu. S intuitivnim sučeljem i moćnim značajkama, Maybe olakšava razumijevanje vaše financijske situacije i donošenje informiranih odluka o novcu.
-
+      
       **Ključne Značajke:**
       - **Praćenje Troškova**: Lako evidentirajte i kategorizirajte svoje troškove
       - **Upravljanje Prihodima**: Pratite više izvora prihoda
@@ -486,19 +441,19 @@ x-casaos:
       - **Planiranje Proračuna**: Stvarajte i održavajte proračune za kontrolu troškova
       - **Financijska Izvješća**: Generirajte detaljna izvješća za razumijevanje financijskih navika
       - **AI-Upravljani Uvidi**: Dobijte personalizirane financijske savjete korištenjem AI tehnologije
-
+      
       **Slučajevi Korištenja:**
       - Upravljanje osobnim proračunom
       - Praćenje i kategorizacija troškova
       - Praćenje investicijskog portfelja
       - Postavljanje i praćenje financijskih ciljeva
       - Analiza novčanog tijeka
-
+      
       **Saznajte Više:**
       - [Maybe GitHub Repozitorij](https://github.com/maybe-finance/maybe)
     pt_PT: |
       Maybe é uma aplicação de gestão financeira pessoal concebida para o ajudar a acompanhar as suas despesas, rendimentos e investimentos num só lugar. Com uma interface intuitiva e funcionalidades poderosas, o Maybe torna fácil compreender a sua situação financeira e tomar decisões informadas sobre o seu dinheiro.
-
+      
       **Funcionalidades Principais:**
       - **Acompanhamento de Despesas**: Registe e categorize facilmente as suas despesas
       - **Gestão de Rendimentos**: Acompanhe múltiplas fontes de rendimento
@@ -506,19 +461,19 @@ x-casaos:
       - **Planeamento de Orçamento**: Crie e mantenha orçamentos para controlar as suas despesas
       - **Relatórios Financeiros**: Gere relatórios detalhados para compreender os seus hábitos financeiros
       - **Informações com IA**: Obtenha aconselhamento financeiro personalizado utilizando tecnologia IA
-
+      
       **Casos de Uso:**
       - Gestão de orçamento pessoal
       - Acompanhamento e categorização de despesas
       - Monitorização de carteira de investimentos
       - Definição e acompanhamento de objetivos financeiros
       - Análise de fluxo de caixa
-
+      
       **Saiba Mais:**
       - [Repositório GitHub Maybe](https://github.com/maybe-finance/maybe)
     ru_RU: |
       Maybe — это приложение для управления личными финансами, разработанное, чтобы помочь вам отслеживать расходы, доходы и инвестиции в одном месте. С интуитивно понятным интерфейсом и мощными функциями Maybe облегчает понимание вашего финансового положения и принятие обоснованных решений о ваших деньгах.
-
+      
       **Ключевые Особенности:**
       - **Отслеживание Расходов**: Легко записывайте и категоризируйте свои расходы
       - **Управление Доходами**: Отслеживайте несколько источников дохода
@@ -526,19 +481,19 @@ x-casaos:
       - **Планирование Бюджета**: Создавайте и поддерживайте бюджеты для контроля расходов
       - **Финансовые Отчеты**: Генерируйте подробные отчеты для понимания ваших финансовых привычек
       - **ИИ-рекомендации**: Получайте персонализированные финансовые советы с помощью ИИ-технологии
-
+      
       **Случаи Использования:**
       - Управление личным бюджетом
       - Отслеживание и категоризация расходов
       - Мониторинг инвестиционного портфеля
       - Постановка и отслеживание финансовых целей
       - Анализ движения денежных средств
-
+      
       **Узнать Больше:**
       - [GitHub Репозиторий Maybe](https://github.com/maybe-finance/maybe)
     tr_TR: |
       Maybe, harcamalarınızı, gelirlerinizi ve yatırımlarınızı tek bir yerde takip etmenize yardımcı olmak için tasarlanmış kişisel finans yönetimi uygulamasıdır. Sezgisel arayüzü ve güçlü özellikleriyle Maybe, finansal durumunuzu anlamanızı ve paranız hakkında bilinçli kararlar almanızı kolaylaştırır.
-
+      
       **Ana Özellikler:**
       - **Harcama Takibi**: Harcamalarınızı kolayca kaydedin ve kategorize edin
       - **Gelir Yönetimi**: Birden fazla gelir kaynağını takip edin
@@ -546,14 +501,14 @@ x-casaos:
       - **Bütçe Planlama**: Harcamalarınızı kontrol etmek için bütçeler oluşturun ve sürdürün
       - **Finansal Raporlar**: Finansal alışkanlıklarınızı anlamak için detaylı raporlar oluşturun
       - **AI Destekli İçgörüler**: AI teknolojisini kullanarak kişiselleştirilmiş finansal tavsiyeler alın
-
+      
       **Kullanım Alanları:**
       - Kişisel bütçe yönetimi
       - Harcama takibi ve kategorizasyonu
       - Yatırım portföyü izleme
       - Finansal hedef belirleme ve takip
       - Nakit akışı analizi
-
+      
       **Daha Fazla Bilgi:**
       - [Maybe GitHub Deposu](https://github.com/maybe-finance/maybe)
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Maybe/icon.png

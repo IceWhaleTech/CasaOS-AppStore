@@ -59,10 +59,6 @@ services:
             sv_SE: Huvudsaklig monteringspunkt för dina delade filer och kataloger (t.ex. din NAS-plats).
             tr_TR: Paylaşılan dosyalarınız ve dizinleriniz için ana bağlama noktası (örneğin, NAS depolama konumunuz).
             zh_CN: 您共享文件和目录的主挂载点（例如，您的NAS存储位置）。
-        - container: "/cfg"
-          description:
-            en_US: Container path /cfg
-            zh_CN: 容器路径 /cfg
 x-casaos:
   title:
     de_DE: CopyParty
@@ -396,6 +392,17 @@ x-casaos:
   main: copyparty
   port_map: "29708"
   scheme: http
+  version: "1.20.13"
+  updateAt: "2026-03-23"
+  releaseNotes:
+    en_US: |-
+      - v1.20.13 adds .hidden support for cosmetic directory-listing filtering.
+      - Thumbnail pregeneration and dotfile visibility in shares were added.
+      - Fixes include thumbnails on older OSes without JXL support, new-version alert permissions, mkdir blocking, nohtml/noscript behavior on the web root, and share dotfile handling.
+  website: "https://copyparty.eu/"
+  repo: "https://github.com/9001/copyparty"
+  support: "https://github.com/9001/copyparty/issues"
+  docs: "https://github.com/9001/copyparty/tree/hovudstraum/docs"
   tips:
     before_install:
       de_DE: |
@@ -563,14 +570,3 @@ x-casaos:
                 如需修改默认用户名和密码，可以通过映射 `/cfg/` 路径，并在该目录中添加 `copyparty.conf` 配置文件进行配置。
 
                 具体配置请参考：[example](https://github.com/9001/copyparty/blob/hovudstraum/docs/example.conf)
-  version: "1.20.13"
-  updateAt: "2026-03-23"
-  repo: "https://github.com/9001/copyparty"
-  releaseNotes:
-    en_US: |-
-      - v1.20.13 adds .hidden support for cosmetic directory-listing filtering.
-      - Thumbnail pregeneration and dotfile visibility in shares were added.
-      - Fixes include thumbnails on older OSes without JXL support, new-version alert permissions, mkdir blocking, nohtml/noscript behavior on the web root, and share dotfile handling.
-  website: "https://copyparty.eu/"
-  support: "https://github.com/9001/copyparty/issues"
-  docs: "https://github.com/9001/copyparty/tree/hovudstraum/docs"

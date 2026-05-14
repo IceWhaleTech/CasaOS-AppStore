@@ -21,23 +21,11 @@ services:
         target: /home/node/trilium-data
     network_mode: bridge
     privileged: false
-    x-casaos:
-      ports:
-        - container: "8080"
-          description:
-            en_US: Container port 8080
-            zh_CN: 容器端口 8080
-      volumes:
-        - container: "/home/node/trilium-data"
-          description:
-            en_US: Container path /home/node/trilium-data
-            zh_CN: 容器路径 /home/node/trilium-data
 x-casaos:
   architectures:
     - amd64
     - arm64
     - arm
-  main: trilium
   author: Jason McFeetors
   category: Notes
   tagline:

@@ -40,46 +40,11 @@ services:
           description:
             en_us: Manage ROMS
             zh_cn: ROM 管理
-        - container: "4001"
-          description:
-            en_US: Container port 4001
-            zh_CN: 容器端口 4001
-      volumes:
-        - container: "/config"
-          description:
-            en_US: Container path /config
-            zh_CN: 容器路径 /config
-        - container: "/data"
-          description:
-            en_US: Container path /data
-            zh_CN: 容器路径 /data
-        - container: "/data/nes/roms"
-          description:
-            en_US: Container path /data/nes/roms
-            zh_CN: 容器路径 /data/nes/roms
-      envs:
-        - container: "PGID"
-          description:
-            en_US: Environment variable PGID
-            zh_CN: 环境变量 PGID
-        - container: "PUID"
-          description:
-            en_US: Environment variable PUID
-            zh_CN: 环境变量 PUID
-        - container: "SUBFOLDER"
-          description:
-            en_US: Environment variable SUBFOLDER
-            zh_CN: 环境变量 SUBFOLDER
-        - container: "TZ"
-          description:
-            en_US: Environment variable TZ
-            zh_CN: 环境变量 TZ
     container_name: emulatorjs
 x-casaos:
   architectures:
     - amd64
     - arm64
-  main: emulatorjs
   description:
     en_us: EmulatorJS is a Docker-based emulator application that can simulate various operating systems and device environments within containers for development, testing, and learning purposes.
     zh_cn: EmulatorJS是一个基于Docker的模拟器应用程序，可以在容器中模拟多种操作系统和设备环境，用于开发、测试和学习目的。

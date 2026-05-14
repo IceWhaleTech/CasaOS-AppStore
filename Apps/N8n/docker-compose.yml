@@ -25,10 +25,6 @@ services:
           description:
             en_us: TimeZone
             zh_cn: 时区
-        - container: "N8N_SECURE_COOKIE"
-          description:
-            en_US: Environment variable N8N_SECURE_COOKIE
-            zh_CN: 环境变量 N8N_SECURE_COOKIE
       ports:
         - container: "5678"
           description:
@@ -275,12 +271,12 @@ x-casaos:
   port_map: "5678"
   version: "1.123.0"
   updateAt: "2025-12-01"
-  website: "https://n8n.io"
-  support: "https://community.n8n.io/"
   releaseNotes:
     en_US: |-
       - Fixed AI Agent memory handling for streaming and non-streaming execution.
       - Added database mode for binary data storage.
       - Added Gemini Node support for the Nano Banana Pro model.
+  website: "https://n8n.io"
   repo: "https://github.com/n8n-io/n8n"
+  support: "https://community.n8n.io/"
   docs: "https://docs.n8n.io"

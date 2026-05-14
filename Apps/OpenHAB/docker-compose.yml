@@ -68,18 +68,6 @@ services:
           description:
             en_us: Location for logs, cache, persistence databases, etc.
             zh_cn: 用于日志，缓存，持久性数据库等的位置。
-        - container: "/openhab/addons"
-          description:
-            en_US: Container path /openhab/addons
-            zh_CN: 容器路径 /openhab/addons
-        - container: "/openhab/conf"
-          description:
-            en_US: Container path /openhab/conf
-            zh_CN: 容器路径 /openhab/conf
-        - container: "/openhab/userdata"
-          description:
-            en_US: Container path /openhab/userdata
-            zh_CN: 容器路径 /openhab/userdata
     container_name: openhab
 x-casaos:
   architectures:

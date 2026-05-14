@@ -26,30 +26,6 @@ services:
         target: /tv
     network_mode: bridge
     privileged: false
-    x-casaos:
-      ports:
-        - container: "8081"
-          description:
-            en_US: Container port 8081
-            zh_CN: 容器端口 8081
-      volumes:
-        - container: "/config"
-          description:
-            en_US: Container path /config
-            zh_CN: 容器路径 /config
-        - container: "/downloads"
-          description:
-            en_US: Container path /downloads
-            zh_CN: 容器路径 /downloads
-        - container: "/tv"
-          description:
-            en_US: Container path /tv
-            zh_CN: 容器路径 /tv
-      envs:
-        - container: "TZ"
-          description:
-            en_US: Environment variable TZ
-            zh_CN: 环境变量 TZ
 x-casaos:
   architectures:
     - amd64

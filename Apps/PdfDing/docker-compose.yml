@@ -79,27 +79,6 @@ services:
             pt_PT: Diretório de ficheiros multimédia PdfDing
             ru_RU: Каталог медиафайлов PdfDing
             tr_TR: PdfDing medya dosyaları dizini
-      envs:
-        - container: "CSRF_COOKIE_SECURE"
-          description:
-            en_US: Environment variable CSRF_COOKIE_SECURE
-            zh_CN: 环境变量 CSRF_COOKIE_SECURE
-        - container: "DEBUG"
-          description:
-            en_US: Environment variable DEBUG
-            zh_CN: 环境变量 DEBUG
-        - container: "HOST_NAME"
-          description:
-            en_US: Environment variable HOST_NAME
-            zh_CN: 环境变量 HOST_NAME
-        - container: "SECRET_KEY"
-          description:
-            en_US: Environment variable SECRET_KEY
-            zh_CN: 环境变量 SECRET_KEY
-        - container: "SESSION_COOKIE_SECURE"
-          description:
-            en_US: Environment variable SESSION_COOKIE_SECURE
-            zh_CN: 环境变量 SESSION_COOKIE_SECURE
     container_name: pdfding
 x-casaos:
   architectures:

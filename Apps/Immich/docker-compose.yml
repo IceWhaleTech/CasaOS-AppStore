@@ -27,34 +27,6 @@ services:
     networks:
       - immich
 
-    x-casaos:
-      ports:
-        - container: "2283"
-          description:
-            en_US: Container port 2283
-            zh_CN: 容器端口 2283
-      volumes:
-        - container: "/etc/localtime"
-          description:
-            en_US: Container path /etc/localtime
-            zh_CN: 容器路径 /etc/localtime
-        - container: "/usr/src/app/upload"
-          description:
-            en_US: Container path /usr/src/app/upload
-            zh_CN: 容器路径 /usr/src/app/upload
-      envs:
-        - container: "DB_DATABASE_NAME"
-          description:
-            en_US: Environment variable DB_DATABASE_NAME
-            zh_CN: 环境变量 DB_DATABASE_NAME
-        - container: "DB_PASSWORD"
-          description:
-            en_US: Environment variable DB_PASSWORD
-            zh_CN: 环境变量 DB_PASSWORD
-        - container: "DB_USERNAME"
-          description:
-            en_US: Environment variable DB_USERNAME
-            zh_CN: 环境变量 DB_USERNAME
   immich-machine-learning:
     container_name: immich-machine-learning
     hostname: immich-machine-learning
