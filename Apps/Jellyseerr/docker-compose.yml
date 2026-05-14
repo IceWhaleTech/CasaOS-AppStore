@@ -26,6 +26,26 @@ services:
           create_host_path: true
     network_mode: bridge
     privileged: false
+    x-casaos:
+      ports:
+        - container: "5055"
+          description:
+            en_US: Container port 5055
+            zh_CN: 容器端口 5055
+      volumes:
+        - container: "/app/config"
+          description:
+            en_US: Container path /app/config
+            zh_CN: 容器路径 /app/config
+      envs:
+        - container: "LOG_LEVEL"
+          description:
+            en_US: Environment variable LOG_LEVEL
+            zh_CN: 环境变量 LOG_LEVEL
+        - container: "TZ"
+          description:
+            en_US: Environment variable TZ
+            zh_CN: 环境变量 TZ
 x-casaos:
   scheme: http
   title:

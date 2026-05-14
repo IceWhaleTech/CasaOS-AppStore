@@ -25,6 +25,21 @@ services:
         reservations:
           memory: 32M
 
+    x-casaos:
+      volumes:
+        - container: "/firefly/conf"
+          description:
+            en_US: Container path /firefly/conf
+            zh_CN: 容器路径 /firefly/conf
+        - container: "/lib/modules"
+          description:
+            en_US: Container path /lib/modules
+            zh_CN: 容器路径 /lib/modules
+      envs:
+        - container: "FIREFLY_PASSWORD"
+          description:
+            en_US: Environment variable FIREFLY_PASSWORD
+            zh_CN: 环境变量 FIREFLY_PASSWORD
 x-casaos:
   architectures:
     - amd64

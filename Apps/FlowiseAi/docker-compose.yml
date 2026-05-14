@@ -23,6 +23,50 @@ services:
       - /DATA/AppData/$AppID:/root/.flowise
     entrypoint: /bin/sh -c "sleep 3; flowise start"
 
+    x-casaos:
+      ports:
+        - container: "3025"
+          description:
+            en_US: Container port 3025
+            zh_CN: 容器端口 3025
+      volumes:
+        - container: "/root/.flowise"
+          description:
+            en_US: Container path /root/.flowise
+            zh_CN: 容器路径 /root/.flowise
+      envs:
+        - container: "APIKEY_PATH"
+          description:
+            en_US: Environment variable APIKEY_PATH
+            zh_CN: 环境变量 APIKEY_PATH
+        - container: "BLOB_STORAGE_PATH"
+          description:
+            en_US: Environment variable BLOB_STORAGE_PATH
+            zh_CN: 环境变量 BLOB_STORAGE_PATH
+        - container: "DATABASE_PATH"
+          description:
+            en_US: Environment variable DATABASE_PATH
+            zh_CN: 环境变量 DATABASE_PATH
+        - container: "FLOWISE_PASSWORD"
+          description:
+            en_US: Environment variable FLOWISE_PASSWORD
+            zh_CN: 环境变量 FLOWISE_PASSWORD
+        - container: "FLOWISE_USERNAME"
+          description:
+            en_US: Environment variable FLOWISE_USERNAME
+            zh_CN: 环境变量 FLOWISE_USERNAME
+        - container: "LOG_PATH"
+          description:
+            en_US: Environment variable LOG_PATH
+            zh_CN: 环境变量 LOG_PATH
+        - container: "PORT"
+          description:
+            en_US: Environment variable PORT
+            zh_CN: 环境变量 PORT
+        - container: "SECRETKEY_PATH"
+          description:
+            en_US: Environment variable SECRETKEY_PATH
+            zh_CN: 环境变量 SECRETKEY_PATH
 x-casaos:
   architectures:
     - amd64

@@ -26,6 +26,11 @@ services:
         - container: /var/file_drop_files
           description:
             en_us: "Directory where your files are stored"
+      ports:
+        - container: "8000"
+          description:
+            en_US: Container port 8000
+            zh_CN: 容器端口 8000
     ports:
       - target: 8000
         published: "8000"

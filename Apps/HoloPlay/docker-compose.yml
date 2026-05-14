@@ -9,6 +9,12 @@ services:
     privileged: true
     restart: unless-stopped
     container_name: holoplay
+    x-casaos:
+      ports:
+        - container: "3000"
+          description:
+            en_US: Container port 3000
+            zh_CN: 容器端口 3000
 x-casaos:
   architectures:
     - amd64

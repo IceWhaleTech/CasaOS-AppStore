@@ -103,6 +103,10 @@ services:
             sv_SE: Python-sökväg för Turbodiffusion-moduler
             tr_TR: Turbodiffusion modülleri için Python yolu
             zh_CN: Turbodiffusion模块的Python路径
+        - container: "MODEL_PATHS"
+          description:
+            en_US: Environment variable MODEL_PATHS
+            zh_CN: 环境变量 MODEL_PATHS
       ports:
         - container: "7860"
           description:

@@ -138,6 +138,10 @@ services:
             pt_PT: Diretório de configuração.
             ru_RU: Каталог конфигурации.
             tr_TR: Yapılandırma dizini.
+        - container: "/redis-data"
+          description:
+            en_US: Container path /redis-data
+            zh_CN: 容器路径 /redis-data
       envs:
         - container: DB_HOST
           description:

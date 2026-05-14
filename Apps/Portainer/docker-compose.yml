@@ -61,6 +61,10 @@ services:
             pt_PT: Porta Interface Web Portainer(https)
             ru_RU: Порт Веб-Интерфейса Portainer(https)
             tr_TR: Portainer Web UI Portu(https)
+        - container: "8000"
+          description:
+            en_US: Container port 8000
+            zh_CN: 容器端口 8000
       volumes:
         - container: /data
           description:
@@ -79,6 +83,10 @@ services:
             pt_PT: Diretório de dados Portainer
             ru_RU: Каталог данных Portainer
             tr_TR: Portainer veri dizini
+        - container: "/var/run/docker.sock"
+          description:
+            en_US: Container path /var/run/docker.sock
+            zh_CN: 容器路径 /var/run/docker.sock
     container_name: portainer
 x-casaos:
   architectures:

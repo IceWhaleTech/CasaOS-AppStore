@@ -118,6 +118,16 @@ services:
     networks:
       - dify
 
+    x-casaos:
+      envs:
+        - container: "APP_API_URL"
+          description:
+            en_US: Environment variable APP_API_URL
+            zh_CN: 环境变量 APP_API_URL
+        - container: "CONSOLE_API_URL"
+          description:
+            en_US: Environment variable CONSOLE_API_URL
+            zh_CN: 环境变量 CONSOLE_API_URL
   db:
     image: postgres:15-alpine
     container_name: dify-db

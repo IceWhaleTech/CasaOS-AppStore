@@ -42,6 +42,11 @@ services:
           description:
             en_us: Directory where the app will save its data.
             pt_br: Diretório onde o aplicativo salvará seus dados.
+      ports:
+        - container: "8000"
+          description:
+            en_US: Container port 8000
+            zh_CN: 容器端口 8000
     container_name: downtify
 x-casaos:
   architectures:

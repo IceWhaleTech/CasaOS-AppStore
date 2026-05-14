@@ -47,6 +47,75 @@ services:
         - container: /updater/data
           description:
             en_us: ddns-updater config directory.
+      envs:
+        - container: "BACKUP_DIRECTORY"
+          description:
+            en_US: Environment variable BACKUP_DIRECTORY
+            zh_CN: 环境变量 BACKUP_DIRECTORY
+        - container: "BACKUP_PERIOD"
+          description:
+            en_US: Environment variable BACKUP_PERIOD
+            zh_CN: 环境变量 BACKUP_PERIOD
+        - container: "CONFIG"
+          description:
+            en_US: Environment variable CONFIG
+            zh_CN: 环境变量 CONFIG
+        - container: "HTTP_TIMEOUT"
+          description:
+            en_US: Environment variable HTTP_TIMEOUT
+            zh_CN: 环境变量 HTTP_TIMEOUT
+        - container: "LISTENING_ADDRESS"
+          description:
+            en_US: Environment variable LISTENING_ADDRESS
+            zh_CN: 环境变量 LISTENING_ADDRESS
+        - container: "LOG_CALLER"
+          description:
+            en_US: Environment variable LOG_CALLER
+            zh_CN: 环境变量 LOG_CALLER
+        - container: "LOG_LEVEL"
+          description:
+            en_US: Environment variable LOG_LEVEL
+            zh_CN: 环境变量 LOG_LEVEL
+        - container: "PERIOD"
+          description:
+            en_US: Environment variable PERIOD
+            zh_CN: 环境变量 PERIOD
+        - container: "PUBLICIPV4_HTTP_PROVIDERS"
+          description:
+            en_US: Environment variable PUBLICIPV4_HTTP_PROVIDERS
+            zh_CN: 环境变量 PUBLICIPV4_HTTP_PROVIDERS
+        - container: "PUBLICIPV6_HTTP_PROVIDERS"
+          description:
+            en_US: Environment variable PUBLICIPV6_HTTP_PROVIDERS
+            zh_CN: 环境变量 PUBLICIPV6_HTTP_PROVIDERS
+        - container: "PUBLICIP_DNS_PROVIDERS"
+          description:
+            en_US: Environment variable PUBLICIP_DNS_PROVIDERS
+            zh_CN: 环境变量 PUBLICIP_DNS_PROVIDERS
+        - container: "PUBLICIP_DNS_TIMEOUT"
+          description:
+            en_US: Environment variable PUBLICIP_DNS_TIMEOUT
+            zh_CN: 环境变量 PUBLICIP_DNS_TIMEOUT
+        - container: "PUBLICIP_FETCHERS"
+          description:
+            en_US: Environment variable PUBLICIP_FETCHERS
+            zh_CN: 环境变量 PUBLICIP_FETCHERS
+        - container: "PUBLICIP_HTTP_PROVIDERS"
+          description:
+            en_US: Environment variable PUBLICIP_HTTP_PROVIDERS
+            zh_CN: 环境变量 PUBLICIP_HTTP_PROVIDERS
+        - container: "ROOT_URL"
+          description:
+            en_US: Environment variable ROOT_URL
+            zh_CN: 环境变量 ROOT_URL
+        - container: "SHOUTRRR_ADDRESSES"
+          description:
+            en_US: Environment variable SHOUTRRR_ADDRESSES
+            zh_CN: 环境变量 SHOUTRRR_ADDRESSES
+        - container: "UPDATE_COOLDOWN_PERIOD"
+          description:
+            en_US: Environment variable UPDATE_COOLDOWN_PERIOD
+            zh_CN: 环境变量 UPDATE_COOLDOWN_PERIOD
 x-casaos:
   architectures:
     - amd64

@@ -75,6 +75,51 @@ services:
             ru_RU: Хранилище приложения Sure
             tr_TR: Sure Uygulama Depolama
 
+      envs:
+        - container: "DB_HOST"
+          description:
+            en_US: Environment variable DB_HOST
+            zh_CN: 环境变量 DB_HOST
+        - container: "DB_PORT"
+          description:
+            en_US: Environment variable DB_PORT
+            zh_CN: 环境变量 DB_PORT
+        - container: "OPENAI_ACCESS_TOKEN"
+          description:
+            en_US: Environment variable OPENAI_ACCESS_TOKEN
+            zh_CN: 环境变量 OPENAI_ACCESS_TOKEN
+        - container: "POSTGRES_DB"
+          description:
+            en_US: Environment variable POSTGRES_DB
+            zh_CN: 环境变量 POSTGRES_DB
+        - container: "POSTGRES_PASSWORD"
+          description:
+            en_US: Environment variable POSTGRES_PASSWORD
+            zh_CN: 环境变量 POSTGRES_PASSWORD
+        - container: "POSTGRES_USER"
+          description:
+            en_US: Environment variable POSTGRES_USER
+            zh_CN: 环境变量 POSTGRES_USER
+        - container: "RAILS_ASSUME_SSL"
+          description:
+            en_US: Environment variable RAILS_ASSUME_SSL
+            zh_CN: 环境变量 RAILS_ASSUME_SSL
+        - container: "RAILS_FORCE_SSL"
+          description:
+            en_US: Environment variable RAILS_FORCE_SSL
+            zh_CN: 环境变量 RAILS_FORCE_SSL
+        - container: "REDIS_URL"
+          description:
+            en_US: Environment variable REDIS_URL
+            zh_CN: 环境变量 REDIS_URL
+        - container: "SECRET_KEY_BASE"
+          description:
+            en_US: Environment variable SECRET_KEY_BASE
+            zh_CN: 环境变量 SECRET_KEY_BASE
+        - container: "SELF_HOSTED"
+          description:
+            en_US: Environment variable SELF_HOSTED
+            zh_CN: 环境变量 SELF_HOSTED
   sure-worker:
     container_name: sure-worker
     image: ghcr.io/we-promise/sure:0.6.5-hotfix.1

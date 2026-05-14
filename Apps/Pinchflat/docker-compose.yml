@@ -77,6 +77,19 @@ services:
             pt_PT: Diretório de downloads Pinchflat.
             ru_RU: Каталог загрузок Pinchflat.
             tr_TR: Pinchflat indirme dizini.
+      envs:
+        - container: "PGID"
+          description:
+            en_US: Environment variable PGID
+            zh_CN: 环境变量 PGID
+        - container: "PUID"
+          description:
+            en_US: Environment variable PUID
+            zh_CN: 环境变量 PUID
+        - container: "TZ"
+          description:
+            en_US: Environment variable TZ
+            zh_CN: 环境变量 TZ
     container_name: pinchflat
 x-casaos:
   architectures:

@@ -26,6 +26,30 @@ services:
         target: /root/.ollama
     privileged: false
     container_name: open-webui-ollama
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_US: Container port 8080
+            zh_CN: 容器端口 8080
+      volumes:
+        - container: "/app/backend/data"
+          description:
+            en_US: Container path /app/backend/data
+            zh_CN: 容器路径 /app/backend/data
+        - container: "/root/.ollama"
+          description:
+            en_US: Container path /root/.ollama
+            zh_CN: 容器路径 /root/.ollama
+      envs:
+        - container: "CPU_FALLBACK"
+          description:
+            en_US: Environment variable CPU_FALLBACK
+            zh_CN: 环境变量 CPU_FALLBACK
+        - container: "NVIDIA_VISIBLE_DEVICES"
+          description:
+            en_US: Environment variable NVIDIA_VISIBLE_DEVICES
+            zh_CN: 环境变量 NVIDIA_VISIBLE_DEVICES
 x-casaos:
   architectures:
     - amd64

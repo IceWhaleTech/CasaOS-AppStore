@@ -21,6 +21,34 @@ services:
         target: /config
     privileged: false
     container_name: snapdrop
+    x-casaos:
+      ports:
+        - container: "443"
+          description:
+            en_US: Container port 443
+            zh_CN: 容器端口 443
+        - container: "80"
+          description:
+            en_US: Container port 80
+            zh_CN: 容器端口 80
+      volumes:
+        - container: "/config"
+          description:
+            en_US: Container path /config
+            zh_CN: 容器路径 /config
+      envs:
+        - container: "PGID"
+          description:
+            en_US: Environment variable PGID
+            zh_CN: 环境变量 PGID
+        - container: "PUID"
+          description:
+            en_US: Environment variable PUID
+            zh_CN: 环境变量 PUID
+        - container: "TZ"
+          description:
+            en_US: Environment variable TZ
+            zh_CN: 环境变量 TZ
 x-casaos:
   architectures:
     - amd64

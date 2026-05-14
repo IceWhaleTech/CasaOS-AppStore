@@ -38,6 +38,16 @@ services:
         - container: REMOTE_SQL
           description:
             en_us: Set this to ingest sql files from an http/https endpoint (comma seperated array).
+      ports:
+        - container: "3306"
+          description:
+            en_US: Container port 3306
+            zh_CN: 容器端口 3306
+      volumes:
+        - container: "/config"
+          description:
+            en_US: Container path /config
+            zh_CN: 容器路径 /config
     ports:
       - target: 3306
         published: "3306"

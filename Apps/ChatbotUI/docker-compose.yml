@@ -17,6 +17,19 @@ services:
         - container: "3000"
           description:
             en_us: WebUI HTTP Port
+      envs:
+        - container: "PGID"
+          description:
+            en_US: Environment variable PGID
+            zh_CN: 环境变量 PGID
+        - container: "PUID"
+          description:
+            en_US: Environment variable PUID
+            zh_CN: 环境变量 PUID
+        - container: "TZ"
+          description:
+            en_US: Environment variable TZ
+            zh_CN: 环境变量 TZ
     container_name: chatbot-ui
 x-casaos:
   architectures:

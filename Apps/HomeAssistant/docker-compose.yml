@@ -96,6 +96,14 @@ services:
             pt_PT: Diretório de configuração HomeAssistant.
             ru_RU: Каталог конфигурации HomeAssistant.
             tr_TR: HomeAssistant yapılandırma dizini.
+        - container: "/etc/localtime"
+          description:
+            en_US: Container path /etc/localtime
+            zh_CN: 容器路径 /etc/localtime
+        - container: "/run/dbus"
+          description:
+            en_US: Container path /run/dbus
+            zh_CN: 容器路径 /run/dbus
     container_name: homeassistant
 x-casaos:
   architectures:

@@ -23,6 +23,29 @@ services:
         source: /DATA/AppData/$AppID/config
         target: /config
     container_name: handbrake
+    x-casaos:
+      ports:
+        - container: "5800"
+          description:
+            en_US: Container port 5800
+            zh_CN: 容器端口 5800
+      volumes:
+        - container: "/config"
+          description:
+            en_US: Container path /config
+            zh_CN: 容器路径 /config
+        - container: "/output"
+          description:
+            en_US: Container path /output
+            zh_CN: 容器路径 /output
+        - container: "/storage"
+          description:
+            en_US: Container path /storage
+            zh_CN: 容器路径 /storage
+        - container: "/watch"
+          description:
+            en_US: Container path /watch
+            zh_CN: 容器路径 /watch
 x-casaos:
   architectures:
     - amd64

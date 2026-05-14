@@ -132,6 +132,10 @@ services:
             en_us: Minecraft listening Port (UDP)
           protocol: udp
 
+        - container: "25565-25570"
+          description:
+            en_US: Container port 25565-25570
+            zh_CN: 容器端口 25565-25570
       volumes:
         - container: /var/games/minecraft
           description:

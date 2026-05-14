@@ -330,6 +330,206 @@ services:
             pt_PT: Chave Secreta de Atualização JWT
             ru_RU: Секретный ключ обновления JWT
             tr_TR: JWT Yenileme Gizli Anahtarı
+        - container: "ALLOW_EMAIL_LOGIN"
+          description:
+            en_US: Environment variable ALLOW_EMAIL_LOGIN
+            zh_CN: 环境变量 ALLOW_EMAIL_LOGIN
+        - container: "ALLOW_PASSWORD_RESET"
+          description:
+            en_US: Environment variable ALLOW_PASSWORD_RESET
+            zh_CN: 环境变量 ALLOW_PASSWORD_RESET
+        - container: "ALLOW_REGISTRATION"
+          description:
+            en_US: Environment variable ALLOW_REGISTRATION
+            zh_CN: 环境变量 ALLOW_REGISTRATION
+        - container: "ALLOW_SOCIAL_LOGIN"
+          description:
+            en_US: Environment variable ALLOW_SOCIAL_LOGIN
+            zh_CN: 环境变量 ALLOW_SOCIAL_LOGIN
+        - container: "ALLOW_SOCIAL_REGISTRATION"
+          description:
+            en_US: Environment variable ALLOW_SOCIAL_REGISTRATION
+            zh_CN: 环境变量 ALLOW_SOCIAL_REGISTRATION
+        - container: "ALLOW_UNVERIFIED_EMAIL_LOGIN"
+          description:
+            en_US: Environment variable ALLOW_UNVERIFIED_EMAIL_LOGIN
+            zh_CN: 环境变量 ALLOW_UNVERIFIED_EMAIL_LOGIN
+        - container: "ANTHROPIC_API_KEY"
+          description:
+            en_US: Environment variable ANTHROPIC_API_KEY
+            zh_CN: 环境变量 ANTHROPIC_API_KEY
+        - container: "ASSISTANTS_API_KEY"
+          description:
+            en_US: Environment variable ASSISTANTS_API_KEY
+            zh_CN: 环境变量 ASSISTANTS_API_KEY
+        - container: "BAN_DURATION"
+          description:
+            en_US: Environment variable BAN_DURATION
+            zh_CN: 环境变量 BAN_DURATION
+        - container: "BAN_INTERVAL"
+          description:
+            en_US: Environment variable BAN_INTERVAL
+            zh_CN: 环境变量 BAN_INTERVAL
+        - container: "BAN_VIOLATIONS"
+          description:
+            en_US: Environment variable BAN_VIOLATIONS
+            zh_CN: 环境变量 BAN_VIOLATIONS
+        - container: "CONCURRENT_MESSAGE_MAX"
+          description:
+            en_US: Environment variable CONCURRENT_MESSAGE_MAX
+            zh_CN: 环境变量 CONCURRENT_MESSAGE_MAX
+        - container: "CONCURRENT_VIOLATION_SCORE"
+          description:
+            en_US: Environment variable CONCURRENT_VIOLATION_SCORE
+            zh_CN: 环境变量 CONCURRENT_VIOLATION_SCORE
+        - container: "CONSOLE_JSON"
+          description:
+            en_US: Environment variable CONSOLE_JSON
+            zh_CN: 环境变量 CONSOLE_JSON
+        - container: "CREDS_IV"
+          description:
+            en_US: Environment variable CREDS_IV
+            zh_CN: 环境变量 CREDS_IV
+        - container: "CREDS_KEY"
+          description:
+            en_US: Environment variable CREDS_KEY
+            zh_CN: 环境变量 CREDS_KEY
+        - container: "DEBUG_CONSOLE"
+          description:
+            en_US: Environment variable DEBUG_CONSOLE
+            zh_CN: 环境变量 DEBUG_CONSOLE
+        - container: "DEBUG_LOGGING"
+          description:
+            en_US: Environment variable DEBUG_LOGGING
+            zh_CN: 环境变量 DEBUG_LOGGING
+        - container: "DEBUG_OPENAI"
+          description:
+            en_US: Environment variable DEBUG_OPENAI
+            zh_CN: 环境变量 DEBUG_OPENAI
+        - container: "DEBUG_PLUGINS"
+          description:
+            en_US: Environment variable DEBUG_PLUGINS
+            zh_CN: 环境变量 DEBUG_PLUGINS
+        - container: "DOMAIN_CLIENT"
+          description:
+            en_US: Environment variable DOMAIN_CLIENT
+            zh_CN: 环境变量 DOMAIN_CLIENT
+        - container: "DOMAIN_SERVER"
+          description:
+            en_US: Environment variable DOMAIN_SERVER
+            zh_CN: 环境变量 DOMAIN_SERVER
+        - container: "FILE_UPLOAD_VIOLATION_SCORE"
+          description:
+            en_US: Environment variable FILE_UPLOAD_VIOLATION_SCORE
+            zh_CN: 环境变量 FILE_UPLOAD_VIOLATION_SCORE
+        - container: "FORK_VIOLATION_SCORE"
+          description:
+            en_US: Environment variable FORK_VIOLATION_SCORE
+            zh_CN: 环境变量 FORK_VIOLATION_SCORE
+        - container: "GOOGLE_KEY"
+          description:
+            en_US: Environment variable GOOGLE_KEY
+            zh_CN: 环境变量 GOOGLE_KEY
+        - container: "ILLEGAL_MODEL_REQ_SCORE"
+          description:
+            en_US: Environment variable ILLEGAL_MODEL_REQ_SCORE
+            zh_CN: 环境变量 ILLEGAL_MODEL_REQ_SCORE
+        - container: "IMPORT_VIOLATION_SCORE"
+          description:
+            en_US: Environment variable IMPORT_VIOLATION_SCORE
+            zh_CN: 环境变量 IMPORT_VIOLATION_SCORE
+        - container: "LIMIT_CONCURRENT_MESSAGES"
+          description:
+            en_US: Environment variable LIMIT_CONCURRENT_MESSAGES
+            zh_CN: 环境变量 LIMIT_CONCURRENT_MESSAGES
+        - container: "LIMIT_MESSAGE_IP"
+          description:
+            en_US: Environment variable LIMIT_MESSAGE_IP
+            zh_CN: 环境变量 LIMIT_MESSAGE_IP
+        - container: "LIMIT_MESSAGE_USER"
+          description:
+            en_US: Environment variable LIMIT_MESSAGE_USER
+            zh_CN: 环境变量 LIMIT_MESSAGE_USER
+        - container: "LOGIN_MAX"
+          description:
+            en_US: Environment variable LOGIN_MAX
+            zh_CN: 环境变量 LOGIN_MAX
+        - container: "LOGIN_VIOLATION_SCORE"
+          description:
+            en_US: Environment variable LOGIN_VIOLATION_SCORE
+            zh_CN: 环境变量 LOGIN_VIOLATION_SCORE
+        - container: "LOGIN_WINDOW"
+          description:
+            en_US: Environment variable LOGIN_WINDOW
+            zh_CN: 环境变量 LOGIN_WINDOW
+        - container: "MESSAGE_IP_MAX"
+          description:
+            en_US: Environment variable MESSAGE_IP_MAX
+            zh_CN: 环境变量 MESSAGE_IP_MAX
+        - container: "MESSAGE_IP_WINDOW"
+          description:
+            en_US: Environment variable MESSAGE_IP_WINDOW
+            zh_CN: 环境变量 MESSAGE_IP_WINDOW
+        - container: "MESSAGE_USER_MAX"
+          description:
+            en_US: Environment variable MESSAGE_USER_MAX
+            zh_CN: 环境变量 MESSAGE_USER_MAX
+        - container: "MESSAGE_USER_WINDOW"
+          description:
+            en_US: Environment variable MESSAGE_USER_WINDOW
+            zh_CN: 环境变量 MESSAGE_USER_WINDOW
+        - container: "MESSAGE_VIOLATION_SCORE"
+          description:
+            en_US: Environment variable MESSAGE_VIOLATION_SCORE
+            zh_CN: 环境变量 MESSAGE_VIOLATION_SCORE
+        - container: "NON_BROWSER_VIOLATION_SCORE"
+          description:
+            en_US: Environment variable NON_BROWSER_VIOLATION_SCORE
+            zh_CN: 环境变量 NON_BROWSER_VIOLATION_SCORE
+        - container: "NO_INDEX"
+          description:
+            en_US: Environment variable NO_INDEX
+            zh_CN: 环境变量 NO_INDEX
+        - container: "OPENAI_API_KEY"
+          description:
+            en_US: Environment variable OPENAI_API_KEY
+            zh_CN: 环境变量 OPENAI_API_KEY
+        - container: "PORT"
+          description:
+            en_US: Environment variable PORT
+            zh_CN: 环境变量 PORT
+        - container: "REFRESH_TOKEN_EXPIRY"
+          description:
+            en_US: Environment variable REFRESH_TOKEN_EXPIRY
+            zh_CN: 环境变量 REFRESH_TOKEN_EXPIRY
+        - container: "REGISTER_MAX"
+          description:
+            en_US: Environment variable REGISTER_MAX
+            zh_CN: 环境变量 REGISTER_MAX
+        - container: "REGISTER_WINDOW"
+          description:
+            en_US: Environment variable REGISTER_WINDOW
+            zh_CN: 环境变量 REGISTER_WINDOW
+        - container: "REGISTRATION_VIOLATION_SCORE"
+          description:
+            en_US: Environment variable REGISTRATION_VIOLATION_SCORE
+            zh_CN: 环境变量 REGISTRATION_VIOLATION_SCORE
+        - container: "SESSION_EXPIRY"
+          description:
+            en_US: Environment variable SESSION_EXPIRY
+            zh_CN: 环境变量 SESSION_EXPIRY
+        - container: "STT_VIOLATION_SCORE"
+          description:
+            en_US: Environment variable STT_VIOLATION_SCORE
+            zh_CN: 环境变量 STT_VIOLATION_SCORE
+        - container: "TRUST_PROXY"
+          description:
+            en_US: Environment variable TRUST_PROXY
+            zh_CN: 环境变量 TRUST_PROXY
+        - container: "TTS_VIOLATION_SCORE"
+          description:
+            en_US: Environment variable TTS_VIOLATION_SCORE
+            zh_CN: 环境变量 TTS_VIOLATION_SCORE
   librechat-mongodb:
     container_name: librechat-mongodb
     image: mongo:6.0

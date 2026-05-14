@@ -26,6 +26,41 @@ services:
     restart: unless-stopped
     network_mode: bridge
     privileged: false
+    x-casaos:
+      ports:
+        - container: "8191"
+          description:
+            en_US: Container port 8191
+            zh_CN: 容器端口 8191
+      envs:
+        - container: "CAPTCHA_SOLVER"
+          description:
+            en_US: Environment variable CAPTCHA_SOLVER
+            zh_CN: 环境变量 CAPTCHA_SOLVER
+        - container: "LOG_HTML"
+          description:
+            en_US: Environment variable LOG_HTML
+            zh_CN: 环境变量 LOG_HTML
+        - container: "LOG_LEVEL"
+          description:
+            en_US: Environment variable LOG_LEVEL
+            zh_CN: 环境变量 LOG_LEVEL
+        - container: "PGID"
+          description:
+            en_US: Environment variable PGID
+            zh_CN: 环境变量 PGID
+        - container: "PUID"
+          description:
+            en_US: Environment variable PUID
+            zh_CN: 环境变量 PUID
+        - container: "TZ"
+          description:
+            en_US: Environment variable TZ
+            zh_CN: 环境变量 TZ
+        - container: "UMASK"
+          description:
+            en_US: Environment variable UMASK
+            zh_CN: 环境变量 UMASK
 x-casaos:
   architectures:                  # a list of architectures that the app supports
       - amd64

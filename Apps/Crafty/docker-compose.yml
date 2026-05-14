@@ -100,6 +100,44 @@ services:
             en_us: Minecraft listening Port (UDP)
             zh_cn: Minecraft监听端口 (UDP)
           protocol: udp
+        - container: "25500-25600"
+          description:
+            en_US: Container port 25500-25600
+            zh_CN: 容器端口 25500-25600
+        - container: "8123"
+          description:
+            en_US: Container port 8123
+            zh_CN: 容器端口 8123
+        - container: "8443"
+          description:
+            en_US: Container port 8443
+            zh_CN: 容器端口 8443
+      volumes:
+        - container: "/crafty/app/config"
+          description:
+            en_US: Container path /crafty/app/config
+            zh_CN: 容器路径 /crafty/app/config
+        - container: "/crafty/backups"
+          description:
+            en_US: Container path /crafty/backups
+            zh_CN: 容器路径 /crafty/backups
+        - container: "/crafty/import"
+          description:
+            en_US: Container path /crafty/import
+            zh_CN: 容器路径 /crafty/import
+        - container: "/crafty/logs"
+          description:
+            en_US: Container path /crafty/logs
+            zh_CN: 容器路径 /crafty/logs
+        - container: "/crafty/servers"
+          description:
+            en_US: Container path /crafty/servers
+            zh_CN: 容器路径 /crafty/servers
+      envs:
+        - container: "TZ"
+          description:
+            en_US: Environment variable TZ
+            zh_CN: 环境变量 TZ
 x-casaos:
   architectures:
     - amd64

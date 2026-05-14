@@ -38,6 +38,11 @@ services:
         - container: /var/lib/postgresql/data
           description:
             en_us: "Directory where Postgres database data is stored"
+      ports:
+        - container: "5432"
+          description:
+            en_US: Container port 5432
+            zh_CN: 容器端口 5432
     ports:
       - target: 5432
         published: "5432"

@@ -52,6 +52,49 @@ services:
         target: /var/run/docker.sock
     network_mode: bridge
     privileged: false
+    x-casaos:
+      ports:
+        - container: "19999"
+          description:
+            en_US: Container port 19999
+            zh_CN: 容器端口 19999
+      volumes:
+        - container: "/etc/netdata"
+          description:
+            en_US: Container path /etc/netdata
+            zh_CN: 容器路径 /etc/netdata
+        - container: "/host/etc/group"
+          description:
+            en_US: Container path /host/etc/group
+            zh_CN: 容器路径 /host/etc/group
+        - container: "/host/etc/os-release"
+          description:
+            en_US: Container path /host/etc/os-release
+            zh_CN: 容器路径 /host/etc/os-release
+        - container: "/host/etc/passwd"
+          description:
+            en_US: Container path /host/etc/passwd
+            zh_CN: 容器路径 /host/etc/passwd
+        - container: "/host/proc"
+          description:
+            en_US: Container path /host/proc
+            zh_CN: 容器路径 /host/proc
+        - container: "/host/sys"
+          description:
+            en_US: Container path /host/sys
+            zh_CN: 容器路径 /host/sys
+        - container: "/var/cache/netdata"
+          description:
+            en_US: Container path /var/cache/netdata
+            zh_CN: 容器路径 /var/cache/netdata
+        - container: "/var/lib/netdata"
+          description:
+            en_US: Container path /var/lib/netdata
+            zh_CN: 容器路径 /var/lib/netdata
+        - container: "/var/run/docker.sock"
+          description:
+            en_US: Container path /var/run/docker.sock
+            zh_CN: 容器路径 /var/run/docker.sock
 x-casaos:
   architectures:
     - amd64

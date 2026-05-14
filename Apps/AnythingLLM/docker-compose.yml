@@ -17,6 +17,17 @@ services:
     restart: always
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    x-casaos:
+      ports:
+        - container: "3001"
+          description:
+            en_US: Container port 3001
+            zh_CN: 容器端口 3001
+      volumes:
+        - container: "/app/server/storage"
+          description:
+            en_US: Container path /app/server/storage
+            zh_CN: 容器路径 /app/server/storage
 x-casaos:
   architectures:
     - amd64

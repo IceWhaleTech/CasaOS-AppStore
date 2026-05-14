@@ -27,6 +27,42 @@ services:
         target: /downloads
     privileged: false
     container_name: resilio-sync
+    x-casaos:
+      ports:
+        - container: "55555"
+          description:
+            en_US: Container port 55555
+            zh_CN: 容器端口 55555
+        - container: "8888"
+          description:
+            en_US: Container port 8888
+            zh_CN: 容器端口 8888
+      volumes:
+        - container: "/config"
+          description:
+            en_US: Container path /config
+            zh_CN: 容器路径 /config
+        - container: "/downloads"
+          description:
+            en_US: Container path /downloads
+            zh_CN: 容器路径 /downloads
+        - container: "/sync"
+          description:
+            en_US: Container path /sync
+            zh_CN: 容器路径 /sync
+      envs:
+        - container: "PGID"
+          description:
+            en_US: Environment variable PGID
+            zh_CN: 环境变量 PGID
+        - container: "PUID"
+          description:
+            en_US: Environment variable PUID
+            zh_CN: 环境变量 PUID
+        - container: "TZ"
+          description:
+            en_US: Environment variable TZ
+            zh_CN: 环境变量 TZ
 x-casaos:
   architectures:
     - amd64
