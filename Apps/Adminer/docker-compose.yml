@@ -47,6 +47,26 @@ x-casaos:
       - v5.4.1 fixes unlinking NULL primary keys from SQL command.
       - CSV export no longer quotes zero values, and imports warn when upload_max_filesize is exceeded.
       - Saved SQL command queries can be prolonged to the URL, and MySQL routine definition display was fixed.
+    zh_CN: |-
+      - v5.4.1 修复了从 SQL command 取消关联 NULL primary key 的问题。
+      - CSV 导出不再给零值加引号，导入时会在超过 upload_max_filesize 时提示警告。
+      - 已保存的 SQL command 查询可以延长到 URL，MySQL routine definition 显示也已修复。
+    de_DE: |-
+      - v5.4.1 behebt das Aufheben der Verknuepfung von NULL-Primary-Keys aus SQL command.
+      - CSV-Exporte setzen Nullwerte nicht mehr in Anfuehrungszeichen, und Importe warnen, wenn upload_max_filesize ueberschritten wird.
+      - Gespeicherte SQL command-Abfragen koennen in die URL verlaengert werden, und die Anzeige von MySQL routine definition wurde korrigiert.
+    fr_FR: |-
+      - v5.4.1 corrige le detachement de primary keys NULL depuis SQL command.
+      - L'export CSV ne met plus les valeurs zero entre guillemets, et les imports avertissent lorsque upload_max_filesize est depasse.
+      - Les requetes SQL command enregistrees peuvent etre prolongees dans l'URL, et l'affichage des MySQL routine definitions a ete corrige.
+    ja_JP: |-
+      - v5.4.1 は SQL command から NULL primary key を解除する問題を修正します。
+      - CSV エクスポートではゼロ値を引用符で囲まなくなり、インポート時に upload_max_filesize 超過の警告が表示されます。
+      - 保存済み SQL command クエリを URL に延長できるようになり、MySQL routine definition の表示も修正されました。
+    ko_KR: |-
+      - v5.4.1은 SQL command에서 NULL primary key 연결을 해제하는 문제를 수정합니다.
+      - CSV 내보내기는 더 이상 0 값을 따옴표로 감싸지 않으며, 가져오기에서는 upload_max_filesize 초과 시 경고합니다.
+      - 저장된 SQL command 쿼리를 URL로 확장할 수 있고 MySQL routine definition 표시가 수정되었습니다.
   website: "https://www.adminer.org"
   repo: "https://github.com/vrana/adminer"
   support: "https://github.com/vrana/adminer/issues"
