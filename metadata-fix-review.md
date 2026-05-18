@@ -63,6 +63,12 @@ changes can be reviewed later.
 | Node-RED | `releaseNotes` | Added `zh_CN`, `de_DE`, `fr_FR`, `ja_JP`, and `ko_KR` translations for the existing `en_US` summary. | GitHub release `4.1.2` from the CSV. | Preserved the bugfix-only summary. |
 | RagFlow | `releaseNotes` | Added `zh_CN`, `de_DE`, `fr_FR`, `ja_JP`, and `ko_KR` translations for the existing `en_US` summary. | GitHub release `v0.21.1` from the CSV. | Preserved MinerU/Infinity/video parsing summary. |
 | Transmission | `releaseNotes` | Added `zh_CN`, `de_DE`, `fr_FR`, `ja_JP`, and `ko_KR` translations for the existing `en_US` summary. | GitHub release `4.0.4` from the CSV. | Preserved bugfix-only release summary. |
+| Embystat | `releaseNotes` | Added `zh_CN`, `de_DE`, `fr_FR`, `ja_JP`, and `ko_KR` translations for the existing `en_US` note. | Existing note records that configured EmbyStat `0.2.0` does not map to a matching stable GitHub Release object. | No new release facts added; source-limitation wording preserved. |
+| Lidarr | `releaseNotes` | Added `zh_CN`, `de_DE`, `fr_FR`, `ja_JP`, and `ko_KR` translations for the existing `en_US` summary. | Existing note summarizes Lidarr `3.1.0`. | Preserved IPv6, qBittorrent login-check, and Docker update guidance. |
+| Mongo | `releaseNotes` | Added `zh_CN`, `de_DE`, `fr_FR`, `ja_JP`, and `ko_KR` translations for the existing `en_US` note. | Existing note records MongoDB `8.2.2` as the database image version. | No version/tag changes; Docker tag remains image metadata. |
+| PhotoPrism | `releaseNotes` | Added `zh_CN`, `de_DE`, `fr_FR`, `ja_JP`, and `ko_KR` translations for the existing `en_US` summary. | Existing note summarizes PhotoPrism build `250228`. | Preserved Retina 5K thumbnail, viewer, WebDAV, and M4V details. |
+| PostgreSQL | `releaseNotes` | Added `zh_CN`, `de_DE`, `fr_FR`, `ja_JP`, and `ko_KR` translations for the existing `en_US` summary. | Existing note summarizes PostgreSQL `17.4`. | Preserved CVE-2025-1094/libpq, pg_createsubscriber, and Meson details. |
+| Unifi-controller | `releaseNotes` | Added `zh_CN`, `de_DE`, `fr_FR`, `ja_JP`, and `ko_KR` translations for the existing `en_US` note. | Existing note records UniFi Controller `8.0.7` as the application version. | No additional release details added because the existing note points to UniFi release notes. |
 
 ## Deferred For Rule Confirmation
 
