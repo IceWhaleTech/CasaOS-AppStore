@@ -534,7 +534,31 @@ x-casaos:
   port_map: "8800"
   version: "2025.11.1"
   updateAt: "2025-12-23"
-  releaseNotes: ""
+  releaseNotes:
+    en_US: |-
+      - Docker image 2025.11.1 adds RISCV support back and improves FTL startup detection and log tailing.
+      - The bundled Pi-hole updates include FTL v6.4.1, Web v6.4, and Core v6.3 fixes.
+      - FTL changes include SQLite 3.51.0, DNS upstream API/spec fixes, reduced database locking, TOTP validation rate limiting, and search/API improvements.
+    zh_CN: |-
+      - Docker 镜像 2025.11.1 恢复了 RISCV 支持，并改进了 FTL 启动检测和日志跟踪。
+      - 随附的 Pi-hole 更新包含 FTL v6.4.1、Web v6.4 和 Core v6.3 修复。
+      - FTL 变更包括 SQLite 3.51.0、DNS upstream API/spec 修复、减少数据库锁、TOTP 验证限流以及搜索/API 改进。
+    de_DE: |-
+      - Das Docker-Image 2025.11.1 bringt RISCV-Unterstuetzung zurueck und verbessert FTL-Start-Erkennung sowie Log-Tailing.
+      - Die enthaltenen Pi-hole-Updates umfassen Korrekturen fuer FTL v6.4.1, Web v6.4 und Core v6.3.
+      - FTL-Aenderungen umfassen SQLite 3.51.0, DNS-Upstream-API/Spec-Korrekturen, weniger Datenbank-Locking, Rate-Limiting fuer TOTP-Validierung und Such/API-Verbesserungen.
+    fr_FR: |-
+      - L'image Docker 2025.11.1 retablit le support RISCV et ameliore la detection du demarrage FTL ainsi que le suivi des logs.
+      - Les mises a jour Pi-hole incluses comprennent les correctifs FTL v6.4.1, Web v6.4 et Core v6.3.
+      - Les changements FTL incluent SQLite 3.51.0, des correctifs API/spec DNS upstream, une reduction du verrouillage de la base de donnees, une limitation du taux de validation TOTP et des ameliorations recherche/API.
+    ja_JP: |-
+      - Docker image 2025.11.1 は RISCV サポートを復帰させ、FTL の起動検出とログ追跡を改善します。
+      - 同梱される Pi-hole 更新には、FTL v6.4.1、Web v6.4、Core v6.3 の修正が含まれます。
+      - FTL の変更には、SQLite 3.51.0、DNS upstream API/spec 修正、データベースロック削減、TOTP 検証のレート制限、検索/API 改善が含まれます。
+    ko_KR: |-
+      - Docker 이미지 2025.11.1은 RISCV 지원을 다시 추가하고 FTL 시작 감지와 로그 추적을 개선합니다.
+      - 포함된 Pi-hole 업데이트에는 FTL v6.4.1, Web v6.4, Core v6.3 수정 사항이 포함됩니다.
+      - FTL 변경 사항에는 SQLite 3.51.0, DNS upstream API/spec 수정, 데이터베이스 잠금 감소, TOTP 검증 속도 제한, 검색/API 개선이 포함됩니다.
   website: "https://pi-hole.net/"
   repo: "https://github.com/pi-hole/pi-hole"
   support: "https://discourse.pi-hole.net"
