@@ -83,3 +83,28 @@ changes can be reviewed later.
 | Floating tags | Keep image/version tag unchanged; release notes should later be checked against the latest actual app version. |
 | Digest versions | Keep digest value unchanged. |
 | Docker tags with no matching GitHub Release | Look for official project changelog before editing. |
+
+## Remaining Deferred Items
+
+These entries are still not patched because the current value is not a clear
+application release version, or an official changelog for the exact configured
+version was not found in this pass.
+
+| App | Current version/tag | Reason kept deferred |
+| --- | --- | --- |
+| Cloudflared | `2025.2.1` | `wisdomsky/cloudflared-web` does not publish GitHub Releases; no official changelog for this exact image tag was found. |
+| Databag | `0.1.18` | Configured Docker tag does not line up with the current upstream GitHub Releases, which are in the `v1.1.x` line. |
+| DeepSeek-OCR_Nvidia | `v2.2.0` | Configured IceWhale image tags do not map to an official upstream `rdumasia303/deepseek_ocr_app` release note. |
+| HoloPlay | `1.12.3` | Current GitHub Releases observed for upstream stop before this configured image tag, so exact release notes are not confirmed. |
+| Jenkin | `lts-jdk17` | This is a moving Jenkins LTS image line, not a fixed application version. |
+| Lazylibrarian | `version-169e669f` | This is a LinuxServer commit-style image tag; exact application release notes need source mapping before patching. |
+| Motioneye | `master-amd64` | This is a branch/architecture-style tag rather than a fixed release. |
+| OpenSpeedTest | `v2.0.6` | The upstream repository did not expose a GitHub Release object or official changelog for this exact tag in this pass. |
+| OpenWebUI | `ollama` | This is an image flavor tag, not a fixed Open WebUI application release. |
+| PyLoad | `0.5.0` | The configured `pyload-ng` image line does not expose clear official release notes for an exact stable `0.5.0` release. |
+| RDTClient | `2` | This is a major-version Docker tag; the exact RDTClient application version must be resolved before releaseNotes can be accurate. |
+| Readarr | `0.3.10-develop` | This is a develop image line; exact release-note source must be mapped to the actual application build first. |
+| Resilio-sync | `2.7.3` | Official source for exact `2.7.3` release details was not confirmed in this pass. |
+| Snapdrop | `version-eac78009` | This is a LinuxServer commit-style image tag; exact upstream app changes need commit/source mapping before patching. |
+| TurboDiffusion_Nvidia | `20260312` | Configured image date tag does not map to an official upstream release note. |
+| WebDav | `amd64` | This is an architecture tag, not an application release version. |
