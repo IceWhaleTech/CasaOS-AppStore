@@ -371,7 +371,25 @@ x-casaos:
   scheme: http
   version: "latest"
   updateAt: "2026-01-05"
-  releaseNotes: ""
+  releaseNotes:
+    en_US: |-
+      - Latest upstream release v1.13.0 adds support for using Redis cache instead of memory cache.
+      - The backend can now define the path to the config file.
+    zh_CN: |-
+      - 上游最新版本 v1.13.0 增加了使用 Redis cache 代替 memory cache 的支持。
+      - 后端现在可以定义 config file 路径。
+    de_DE: |-
+      - Das aktuelle upstream Release v1.13.0 ergaenzt Unterstuetzung fuer Redis Cache statt Memory Cache.
+      - Das Backend kann nun den Pfad zur config file definieren.
+    fr_FR: |-
+      - La derniere release upstream v1.13.0 ajoute la prise en charge du cache Redis a la place du cache memoire.
+      - Le backend peut maintenant definir le chemin du config file.
+    ja_JP: |-
+      - upstream の最新リリース v1.13.0 は、memory cache の代わりに Redis cache を使うサポートを追加します。
+      - backend で config file のパスを定義できるようになりました。
+    ko_KR: |-
+      - upstream 최신 릴리스 v1.13.0은 memory cache 대신 Redis cache를 사용하는 기능을 추가합니다.
+      - backend에서 config file 경로를 정의할 수 있게 되었습니다.
   website: "https://stonith404.github.io/pingvin-share/"
   repo: "https://github.com/stonith404/pingvin-share"
   support: "https://github.com/stonith404/pingvin-share/issues"

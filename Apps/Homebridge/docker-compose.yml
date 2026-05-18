@@ -38,7 +38,31 @@ x-casaos:
     port_map: "8581"
     version: "latest"
     updateAt: "2026-03-29"
-    releaseNotes: ""
+    releaseNotes:
+      en_US: |-
+        - Latest upstream release v1.9.0 adds updateDisplayName().
+        - It fixes handleUpdatePlatformAccessories() and allows Characteristic.SerialNumber to be set through config.json.
+        - The release includes minor dependency updates and uses hap-nodejs v0.12.3.
+      zh_CN: |-
+        - 上游最新版本 v1.9.0 增加了 updateDisplayName()。
+        - 此版本修复了 handleUpdatePlatformAccessories()，并允许通过 config.json 设置 Characteristic.SerialNumber。
+        - 此版本包含少量依赖更新，并使用 hap-nodejs v0.12.3。
+      de_DE: |-
+        - Das aktuelle upstream Release v1.9.0 fuegt updateDisplayName() hinzu.
+        - Es korrigiert handleUpdatePlatformAccessories() und erlaubt das Setzen von Characteristic.SerialNumber ueber config.json.
+        - Das Release enthaelt kleinere Dependency-Updates und verwendet hap-nodejs v0.12.3.
+      fr_FR: |-
+        - La derniere release upstream v1.9.0 ajoute updateDisplayName().
+        - Elle corrige handleUpdatePlatformAccessories() et permet de definir Characteristic.SerialNumber via config.json.
+        - Cette release inclut de petites mises a jour de dependances et utilise hap-nodejs v0.12.3.
+      ja_JP: |-
+        - upstream の最新リリース v1.9.0 は updateDisplayName() を追加します。
+        - handleUpdatePlatformAccessories() を修正し、config.json から Characteristic.SerialNumber を設定できるようにします。
+        - このリリースには軽微な依存関係更新が含まれ、hap-nodejs v0.12.3 を使用します。
+      ko_KR: |-
+        - upstream 최신 릴리스 v1.9.0은 updateDisplayName()을 추가합니다.
+        - handleUpdatePlatformAccessories()를 수정하고 config.json을 통해 Characteristic.SerialNumber를 설정할 수 있게 합니다.
+        - 이 릴리스는 소규모 의존성 업데이트를 포함하며 hap-nodejs v0.12.3을 사용합니다.
     website: "https://homebridge.io/"
     repo: "https://github.com/homebridge/homebridge"
     support: "https://github.com/homebridge/homebridge/issues"
