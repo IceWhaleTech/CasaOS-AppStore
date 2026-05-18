@@ -124,18 +124,22 @@ x-casaos:
       - v0.107.61 fixes a cache poisoning vulnerability.
       - Duplicate simultaneous requests are now coalesced into a single upstream request.
       - The new pending_requests configuration is enabled by default and is recommended for untrusted clients.
+    en_GB: |-
+      - v0.107.61 fixes a cache poisoning vulnerability.
+      - Duplicate simultaneous requests are now coalesced into a single upstream request.
+      - The new pending_requests configuration is enabled by default and is recommended for untrusted clients.
+    it_IT: |-
+      - v0.107.61 risolve una vulnerabilità di avvelenamento della cache.
+      - Le richieste simultanee duplicate vengono ora riunite in un'unica richiesta upstream.
+      - La nuova configurazione Pending_requests è abilitata da default ed è consigliata per client non attendibili.
+    nb_NO: |-
+      - v0.107.61 fikser et cache-forgiftningssårbarhet.
+      - Dupliserte samtidige forespørsler er nå slått sammen til en enkelt oppstrømsforespørsel.
+      - Den nye pending_requests-konfigurasjonen er aktivert av default og anbefales for ikke-klarerte klienter.
     zh_CN: |-
       - v0.107.61 修复了一个 cache poisoning 漏洞。
       - 同时发生的重复请求现在会合并为一次 upstream 请求。
       - 新的 pending_requests 配置默认启用，建议在不可信客户端场景下使用。
-    de_DE: |-
-      - v0.107.61 behebt eine Cache-Poisoning-Schwachstelle.
-      - Doppelte gleichzeitige Anfragen werden nun zu einer einzigen Upstream-Anfrage zusammengefasst.
-      - Die neue pending_requests-Konfiguration ist standardmaessig aktiviert und wird fuer nicht vertrauenswuerdige Clients empfohlen.
-    fr_FR: |-
-      - v0.107.61 corrige une vulnerabilite de cache poisoning.
-      - Les requetes simultanees dupliquees sont maintenant regroupees en une seule requete upstream.
-      - La nouvelle configuration pending_requests est activee par defaut et recommandee pour les clients non fiables.
     ja_JP: |-
       - v0.107.61 は cache poisoning 脆弱性を修正します。
       - 同時に発生した重複リクエストは、単一の upstream リクエストにまとめられるようになりました。
@@ -144,6 +148,38 @@ x-casaos:
       - v0.107.61은 cache poisoning 취약점을 수정합니다.
       - 동시에 발생한 중복 요청은 이제 하나의 upstream 요청으로 병합됩니다.
       - 새로운 pending_requests 구성은 기본적으로 활성화되며 신뢰할 수 없는 클라이언트에 권장됩니다.
+    fr_FR: |-
+      - v0.107.61 corrige une vulnerabilite de cache poisoning.
+      - Les requetes simultanees dupliquees sont maintenant regroupees en une seule requete upstream.
+      - La nouvelle configuration pending_requests est activee par defaut et recommandee pour les clients non fiables.
+    de_DE: |-
+      - v0.107.61 behebt eine Cache-Poisoning-Schwachstelle.
+      - Doppelte gleichzeitige Anfragen werden nun zu einer einzigen Upstream-Anfrage zusammengefasst.
+      - Die neue pending_requests-Konfiguration ist standardmaessig aktiviert und wird fuer nicht vertrauenswuerdige Clients empfohlen.
+    sv_SE: |-
+      - v0.107.61 fixar en sårbarhet för cacheförgiftning.
+      - Duplicerade samtidiga förfrågningar sammansmälts nu till en enda uppströmsförfrågan.
+      - Den nya pending_requests-konfigurationen är aktiverad av default och rekommenderas för opålitliga klienter.
+    el_GR: |-
+      - Το v0.107.61 διορθώνει μια ευπάθεια δηλητηρίασης κρυφής μνήμης.
+      - Διπλότυπα ταυτόχρονα αιτήματα συγχωνεύονται πλέον σε ένα μόνο ανάντη αίτημα.
+      - Η νέα διαμόρφωση pending_requests ενεργοποιείται από default και συνιστάται για μη αξιόπιστους πελάτες.
+    hr_HR: |-
+      - v0.107.61 popravlja ranjivost trovanja predmemorije.
+      - Dvostruki istodobni zahtjevi sada su spojeni u jedan uzvodni zahtjev.
+      - Novu konfiguraciju pending_requests omogućio je default i preporučuje se nepouzdanim klijentima.
+    pt_PT: |-
+      - v0.107.61 corrige uma vulnerabilidade de envenenamento da cache.
+      - As solicitações simultâneas duplicadas são agora agrupadas numa única solicitação upstream.
+      - A nova configuração pendente_requests é ativada por default e é recomendada para clientes não fidedignos.
+    ru_RU: |-
+      - v0.107.61 устраняет уязвимость, связанную с отравлением кэша.
+      - Дублирующиеся одновременные запросы теперь объединяются в один восходящий запрос.
+      - Новая конфигурация pending_requests включена default и рекомендуется для ненадежных клиентов.
+    tr_TR: |-
+      - v0.107.61 önbellek zehirlenmesi güvenlik açığını giderir.
+      - Yinelenen eşzamanlı istekler artık tek bir yukarı akış isteğinde birleştirildi.
+      - Yeni pending_requests yapılandırması default tarafından etkinleştirilir ve güvenilmeyen istemciler için önerilir.
   website: "https://adguard.com/en/adguard-home/overview.html"
   repo: "https://github.com/AdguardTeam/AdGuardHome"
   support: "https://github.com/AdguardTeam/AdGuardHome/issues"

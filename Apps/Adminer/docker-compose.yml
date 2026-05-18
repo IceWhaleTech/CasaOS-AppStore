@@ -47,18 +47,22 @@ x-casaos:
       - v5.4.1 fixes unlinking NULL primary keys from SQL command.
       - CSV export no longer quotes zero values, and imports warn when upload_max_filesize is exceeded.
       - Saved SQL command queries can be prolonged to the URL, and MySQL routine definition display was fixed.
+    en_GB: |-
+      - v5.4.1 fixes unlinking NULL primary keys from SQL command.
+      - CSV export no longer quotes zero values, and imports warn when upload_max_filesize is exceeded.
+      - Saved SQL command queries can be prolonged to the URL, and MySQL routine definition display was fixed.
+    it_IT: |-
+      - v5.4.1 corregge lo scollegamento delle chiavi primarie NULL dal comando SQL.
+      - L'esportazione CSV non cita più valori zero e le importazioni avvisano quando viene superato upload_max_filesize.
+      - Le query di comando salvate SQL possono essere estese a URL e la visualizzazione della definizione di routine MySQL è stata corretta.
+    nb_NO: |-
+      - v5.4.1 fikser frakobling av NULL primærnøkler fra SQL kommando.
+      - CSV eksport angir ikke lenger nullverdier, og import advarer når upload_max_filesize overskrides.
+      - Lagrede SQL kommandospørringer kan forlenges til URL, og MySQL rutinedefinisjonsvisning ble fikset.
     zh_CN: |-
       - v5.4.1 修复了从 SQL command 取消关联 NULL primary key 的问题。
       - CSV 导出不再给零值加引号，导入时会在超过 upload_max_filesize 时提示警告。
       - 已保存的 SQL command 查询可以延长到 URL，MySQL routine definition 显示也已修复。
-    de_DE: |-
-      - v5.4.1 behebt das Aufheben der Verknuepfung von NULL-Primary-Keys aus SQL command.
-      - CSV-Exporte setzen Nullwerte nicht mehr in Anfuehrungszeichen, und Importe warnen, wenn upload_max_filesize ueberschritten wird.
-      - Gespeicherte SQL command-Abfragen koennen in die URL verlaengert werden, und die Anzeige von MySQL routine definition wurde korrigiert.
-    fr_FR: |-
-      - v5.4.1 corrige le detachement de primary keys NULL depuis SQL command.
-      - L'export CSV ne met plus les valeurs zero entre guillemets, et les imports avertissent lorsque upload_max_filesize est depasse.
-      - Les requetes SQL command enregistrees peuvent etre prolongees dans l'URL, et l'affichage des MySQL routine definitions a ete corrige.
     ja_JP: |-
       - v5.4.1 は SQL command から NULL primary key を解除する問題を修正します。
       - CSV エクスポートではゼロ値を引用符で囲まなくなり、インポート時に upload_max_filesize 超過の警告が表示されます。
@@ -67,6 +71,38 @@ x-casaos:
       - v5.4.1은 SQL command에서 NULL primary key 연결을 해제하는 문제를 수정합니다.
       - CSV 내보내기는 더 이상 0 값을 따옴표로 감싸지 않으며, 가져오기에서는 upload_max_filesize 초과 시 경고합니다.
       - 저장된 SQL command 쿼리를 URL로 확장할 수 있고 MySQL routine definition 표시가 수정되었습니다.
+    fr_FR: |-
+      - v5.4.1 corrige le detachement de primary keys NULL depuis SQL command.
+      - L'export CSV ne met plus les valeurs zero entre guillemets, et les imports avertissent lorsque upload_max_filesize est depasse.
+      - Les requetes SQL command enregistrees peuvent etre prolongees dans l'URL, et l'affichage des MySQL routine definitions a ete corrige.
+    de_DE: |-
+      - v5.4.1 behebt das Aufheben der Verknuepfung von NULL-Primary-Keys aus SQL command.
+      - CSV-Exporte setzen Nullwerte nicht mehr in Anfuehrungszeichen, und Importe warnen, wenn upload_max_filesize ueberschritten wird.
+      - Gespeicherte SQL command-Abfragen koennen in die URL verlaengert werden, und die Anzeige von MySQL routine definition wurde korrigiert.
+    sv_SE: |-
+      - v5.4.1 fixar att ta bort NULL primärnycklar från kommandot SQL.
+      - CSV export anger inte längre nollvärden, och importer varnar när upload_max_filesize överskrids.
+      - Sparade SQL kommandoförfrågningar kan förlängas till URL och MySQL rutindefinitionsvisning har fixats.
+    el_GR: |-
+      - Το v5.4.1 διορθώνει την αποσύνδεση των πρωτευόντων κλειδιών NULL από την εντολή SQL.
+      - Η εξαγωγή CSV δεν αναφέρει πλέον μηδενικές τιμές και οι εισαγωγές προειδοποιούν όταν γίνεται υπέρβαση του upload_max_filesize.
+      - Τα αποθηκευμένα ερωτήματα εντολών SQL μπορούν να παραταθούν στο URL και η εμφάνιση ορισμού ρουτίνας MySQL διορθώθηκε.
+    hr_HR: |-
+      - v5.4.1 popravlja uklanjanje veze primarnih ključeva NULL s naredbom SQL.
+      - CSV izvoz više ne navodi nulte vrijednosti, a uvoz upozorava kada se prekorači upload_max_filesize.
+      - Spremljeni upiti naredbi SQL mogu se produžiti na URL, a prikaz definicije rutine MySQL je popravljen.
+    pt_PT: |-
+      - v5.4.1 corrige a desvinculação das chaves primárias NULL do comando SQL.
+      - CSV export já não cita valores zero e as importações avisam quando upload_max_filesize é excedido.
+      - As consultas de comando SQL guardadas podem ser prolongadas para o URL, e a apresentação da definição de rotina MySQL foi corrigida.
+    ru_RU: |-
+      - v5.4.1 исправляет отсоединение первичных ключей NULL от команды SQL.
+      - Экспорт CSV больше не указывает нулевые значения, а импорт предупреждает при превышении upload_max_filesize.
+      - Сохраненные командные запросы SQL можно расширить до URL, а отображение определения подпрограммы MySQL было исправлено.
+    tr_TR: |-
+      - v5.4.1, NULL birincil anahtarlarının SQL komutuyla bağlantısının kaldırılmasını düzeltir.
+      - CSV dışa aktarma artık sıfır değerleri alıntılamıyor ve içe aktarmalar, upload_max_filesize aşıldığında uyarı veriyor.
+      - Kaydedilen SQL komut sorguları URL'ye kadar uzatılabilir ve MySQL rutin tanım ekranı düzeltildi.
   website: "https://www.adminer.org"
   repo: "https://github.com/vrana/adminer"
   support: "https://github.com/vrana/adminer/issues"

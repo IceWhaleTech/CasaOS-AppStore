@@ -434,18 +434,22 @@ x-casaos:
       - v1.90.8 adds auto:any exit-node selection commands that track the recommended exit node.
       - Alpine Linux auto-update version detection was improved and unnecessary power/routing log messages were removed.
       - The container image fixes Tailnet Lock signing checks when no statedir or TS_STATE_DIR is configured, addressing TS-2025-008.
+    en_GB: |-
+      - v1.90.8 adds auto:any exit-node selection commands that track the recommended exit node.
+      - Alpine Linux auto-update version detection was improved and unnecessary power/routing log messages were removed.
+      - The container image fixes Tailnet Lock signing checks when no statedir or TS_STATE_DIR is configured, addressing TS-2025-008.
+    it_IT: |-
+      - v1.90.8 aggiunge auto:qualsiasi comando di selezione exit-node che traccia il nodo di uscita consigliato.
+      - Il rilevamento della versione auto-update di Alpine Linux è stato migliorato e i messaggi di registro di alimentazione/routing non necessari sono stati rimossi.
+      - L'immagine del contenitore corregge i controlli di firma del blocco Tailnet quando non è configurato nessuno stato o TS_STATE_DIR, indirizzando TS-2025-008.
+    nb_NO: |-
+      - v1.90.8 legger til auto:enhver exit-node valgkommando som sporer den anbefalte utgangsnoden.
+      - Alpine Linux auto-update versjonsdeteksjon ble forbedret og unødvendige strøm-/rutingsloggmeldinger ble fjernet.
+      - Beholderbildet fikser Tailnet Lock-signeringssjekker når ingen statedir eller TS_STATE_DIR er konfigurert, adressert TS-2025-008.
     zh_CN: |-
       - v1.90.8 增加了 auto:any 出口节点选择命令，用于跟踪推荐的出口节点。
       - 改进了 Alpine Linux 自动更新版本检测，并移除了不必要的电源/路由日志消息。
       - 容器镜像修复了未配置 statedir 或 TS_STATE_DIR 时的 Tailnet Lock 签名检查问题，对应 TS-2025-008。
-    de_DE: |-
-      - v1.90.8 ergänzt auto:any-Befehle zur Auswahl von Exit-Nodes, die dem empfohlenen Exit-Node folgen.
-      - Die Versionserkennung für automatische Updates unter Alpine Linux wurde verbessert, und unnötige Power-/Routing-Logmeldungen wurden entfernt.
-      - Das Container-Image korrigiert Tailnet-Lock-Signaturprüfungen ohne konfiguriertes statedir oder TS_STATE_DIR und behandelt TS-2025-008.
-    fr_FR: |-
-      - v1.90.8 ajoute des commandes de sélection de nœud de sortie auto:any qui suivent le nœud de sortie recommandé.
-      - La détection de version pour les mises à jour automatiques sur Alpine Linux a été améliorée, et des messages de log inutiles liés à l'alimentation et au routage ont été supprimés.
-      - L'image conteneur corrige les vérifications de signature Tailnet Lock lorsqu'aucun statedir ou TS_STATE_DIR n'est configuré, couvrant TS-2025-008.
     ja_JP: |-
       - v1.90.8 は、推奨 exit node を追跡する auto:any exit-node 選択コマンドを追加します。
       - Alpine Linux の自動更新バージョン検出が改善され、不要な電源/ルーティングログメッセージが削除されました。
@@ -454,6 +458,38 @@ x-casaos:
       - v1.90.8은 권장 exit node를 추적하는 auto:any exit-node 선택 명령을 추가합니다.
       - Alpine Linux 자동 업데이트 버전 감지가 개선되었고 불필요한 전원/라우팅 로그 메시지가 제거되었습니다.
       - 컨테이너 이미지는 statedir 또는 TS_STATE_DIR이 구성되지 않은 경우 Tailnet Lock 서명 검사를 수정하며 TS-2025-008을 처리합니다.
+    fr_FR: |-
+      - v1.90.8 ajoute des commandes de sélection de nœud de sortie auto:any qui suivent le nœud de sortie recommandé.
+      - La détection de version pour les mises à jour automatiques sur Alpine Linux a été améliorée, et des messages de log inutiles liés à l'alimentation et au routage ont été supprimés.
+      - L'image conteneur corrige les vérifications de signature Tailnet Lock lorsqu'aucun statedir ou TS_STATE_DIR n'est configuré, couvrant TS-2025-008.
+    de_DE: |-
+      - v1.90.8 ergänzt auto:any-Befehle zur Auswahl von Exit-Nodes, die dem empfohlenen Exit-Node folgen.
+      - Die Versionserkennung für automatische Updates unter Alpine Linux wurde verbessert, und unnötige Power-/Routing-Logmeldungen wurden entfernt.
+      - Das Container-Image korrigiert Tailnet-Lock-Signaturprüfungen ohne konfiguriertes statedir oder TS_STATE_DIR und behandelt TS-2025-008.
+    sv_SE: |-
+      - v1.90.8 lägger till auto:någon exit-node valkommandon som spårar den rekommenderade utgångsnoden.
+      - Alpine Linux auto-update versionsidentifiering förbättrades och onödiga ström-/routingloggmeddelanden togs bort.
+      - Behållarbilden fixar signeringskontroller för Tailnet Lock när ingen statedir eller TS_STATE_DIR är konfigurerad, adresserande TS-2025-008.
+    el_GR: |-
+      - Το v1.90.8 προσθέτει auto:οποιεσδήποτε εντολές επιλογής exit-node που παρακολουθούν τον προτεινόμενο κόμβο εξόδου.
+      - Ο εντοπισμός της έκδοσης Alpine Linux auto-update βελτιώθηκε και τα περιττά μηνύματα καταγραφής ενέργειας/δρομολόγησης καταργήθηκαν.
+      - Η εικόνα του κοντέινερ διορθώνει τους ελέγχους υπογραφής Tailnet Lock όταν δεν έχει διαμορφωθεί statementir ή TS_STATE_DIR, με διεύθυνση TS-2025-008.
+    hr_HR: |-
+      - v1.90.8 dodaje auto:bilo koje exit-node naredbe za odabir koje prate preporučeni izlazni čvor.
+      - Poboljšano je otkrivanje verzije Alpine Linux auto-update i uklonjene su nepotrebne poruke dnevnika napajanja/usmjeravanja.
+      - Slika spremnika popravlja provjere potpisivanja Tailnet Lock kada nije konfiguriran statedir ili TS_STATE_DIR, adresiranje TS-2025-008.
+    pt_PT: |-
+      - v1.90.8 adiciona comandos de seleção auto:any exit-node que rastreiam o nó de saída recomendado.
+      - A deteção da versão Alpine Linux auto-update foi melhorada e as mensagens desnecessárias de registo de energia/routing foram removidas.
+      - A imagem do contentor corrige as verificações de assinatura do Tailnet Lock quando não está configurado nenhum statedir ou TS_STATE_DIR, endereçando TS-2025-008.
+    ru_RU: |-
+      - v1.90.8 добавляет команды выбора auto:any exit-node, которые отслеживают рекомендуемый выходной узел.
+      - Улучшено определение версии Alpine Linux auto-update и удалены ненужные сообщения журнала питания/маршрутизации.
+      - Образ контейнера исправляет проверки подписи Tailnet Lock, когда не настроен Stateir или TS_STATE_DIR, с адресацией TS-2025-008.
+    tr_TR: |-
+      - v1.90.8 otomatik: önerilen çıkış düğümünü izleyen herhangi bir exit-node seçim komutunu ekler.
+      - Alpine Linux auto-update sürüm tespiti iyileştirildi ve gereksiz güç/yönlendirme günlüğü mesajları kaldırıldı.
+      - Konteyner görüntüsü, hiçbir durum dizini veya TS_STATE_DIR yapılandırılmadığında, TS-2025-008 adresine giderek Tailnet Lock imzalama kontrollerini düzeltir.
   website: "https://tailscale.com"
   repo: "https://github.com/tailscale/tailscale"
   support: "https://tailscale.com/contact/support"
