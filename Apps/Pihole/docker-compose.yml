@@ -532,3 +532,70 @@ x-casaos:
     en_US: Pi-hole
   index: /admin
   port_map: "8800"
+  version: "2025.11.1"
+  updateAt: "2025-12-23"
+  releaseNotes:
+    en_US: |-
+      - Docker image 2025.11.1 adds RISCV support back and improves FTL startup detection and log tailing.
+      - The bundled Pi-hole updates include FTL v6.4.1, Web v6.4, and Core v6.3 fixes.
+      - FTL changes include SQLite 3.51.0, DNS upstream API/spec fixes, reduced database locking, TOTP validation rate limiting, and search/API improvements.
+    en_GB: |-
+      - Docker image 2025.11.1 adds RISCV support back and improves FTL startup detection and log tailing.
+      - The bundled Pi-hole updates include FTL v6.4.1, Web v6.4, and Core v6.3 fixes.
+      - FTL changes include SQLite 3.51.0, DNS upstream API/spec fixes, reduced database locking, TOTP validation rate limiting, and search/API improvements.
+    it_IT: |-
+      - L'immagine Docker 2025.11.1 aggiunge il supporto RISCV e migliora il rilevamento dell'avvio di FTL e il tailing dei log.
+      - Gli aggiornamenti Pi-hole in bundle includono correzioni per FTL v6.4.1, Web v6.4 e Core v6.3.
+      - Le modifiche a FTL includono SQLite 3.51.0, DNS correzioni API/spec upstream, blocco ridotto del database, limitazione della velocità di convalida TOTP e miglioramenti alla ricerca/API.
+    nb_NO: |-
+      - Docker image 2025.11.1 legger til RISCV støtte tilbake og forbedrer FTL oppstartsdeteksjon og logging.
+      - De medfølgende Pi-hole-oppdateringene inkluderer FTL v6.4.1, Web v6.4 og Core v6.3 rettelser.
+      - FTL endringer inkluderer SQLite 3.51.0, DNS oppstrøms API/spesifikasjoner, redusert databaselåsing, TOTP valideringshastighetsbegrensning og søk/API forbedringer.
+    zh_CN: |-
+      - Docker 镜像 2025.11.1 恢复了 RISCV 支持，并改进了 FTL 启动检测和日志跟踪。
+      - 随附的 Pi-hole 更新包含 FTL v6.4.1、Web v6.4 和 Core v6.3 修复。
+      - FTL 变更包括 SQLite 3.51.0、DNS upstream API/spec 修复、减少数据库锁、TOTP 验证限流以及搜索/API 改进。
+    ja_JP: |-
+      - Docker image 2025.11.1 は RISCV サポートを復帰させ、FTL の起動検出とログ追跡を改善します。
+      - 同梱される Pi-hole 更新には、FTL v6.4.1、Web v6.4、Core v6.3 の修正が含まれます。
+      - FTL の変更には、SQLite 3.51.0、DNS upstream API/spec 修正、データベースロック削減、TOTP 検証のレート制限、検索/API 改善が含まれます。
+    ko_KR: |-
+      - Docker 이미지 2025.11.1은 RISCV 지원을 다시 추가하고 FTL 시작 감지와 로그 추적을 개선합니다.
+      - 포함된 Pi-hole 업데이트에는 FTL v6.4.1, Web v6.4, Core v6.3 수정 사항이 포함됩니다.
+      - FTL 변경 사항에는 SQLite 3.51.0, DNS upstream API/spec 수정, 데이터베이스 잠금 감소, TOTP 검증 속도 제한, 검색/API 개선이 포함됩니다.
+    fr_FR: |-
+      - L'image Docker 2025.11.1 retablit le support RISCV et ameliore la detection du demarrage FTL ainsi que le suivi des logs.
+      - Les mises a jour Pi-hole incluses comprennent les correctifs FTL v6.4.1, Web v6.4 et Core v6.3.
+      - Les changements FTL incluent SQLite 3.51.0, des correctifs API/spec DNS upstream, une reduction du verrouillage de la base de donnees, une limitation du taux de validation TOTP et des ameliorations recherche/API.
+    de_DE: |-
+      - Das Docker-Image 2025.11.1 bringt RISCV-Unterstuetzung zurueck und verbessert FTL-Start-Erkennung sowie Log-Tailing.
+      - Die enthaltenen Pi-hole-Updates umfassen Korrekturen fuer FTL v6.4.1, Web v6.4 und Core v6.3.
+      - FTL-Aenderungen umfassen SQLite 3.51.0, DNS-Upstream-API/Spec-Korrekturen, weniger Datenbank-Locking, Rate-Limiting fuer TOTP-Validierung und Such/API-Verbesserungen.
+    sv_SE: |-
+      - Docker image 2025.11.1 lägger till RISCV stöd tillbaka och förbättrar FTL startdetektering och log tailing.
+      - De medföljande Pi-hole-uppdateringarna inkluderar FTL v6.4.1, Web v6.4 och Core v6.3 korrigeringar.
+      - FTL ändringar inkluderar SQLite 3.51.0, DNS uppströms API/spec fixar, reducerad databaslåsning, TOTP valideringshastighetsbegränsning och sökning/API förbättringar.
+    el_GR: |-
+      - Η εικόνα Docker 2025.11.1 προσθέτει υποστήριξη RISCV και βελτιώνει την ανίχνευση εκκίνησης FTL και την τελική καταγραφή.
+      - Οι ομαδοποιημένες ενημερώσεις Pi-hole περιλαμβάνουν διορθώσεις FTL v6.4.1, Web v6.4 και Core v6.3.
+      - Οι αλλαγές FTL περιλαμβάνουν SQLite 3.51.0, DNS upstream API/επιδιορθώσεις προδιαγραφών, μειωμένο κλείδωμα βάσης δεδομένων, περιορισμό ποσοστού επικύρωσης TOTP και βελτιώσεις αναζήτησης/API.
+    hr_HR: |-
+      - Docker slika 2025.11.1 vraća podršku za RISCV i poboljšava otkrivanje pokretanja FTL i praćenje dnevnika.
+      - Ažuriranja paketa Pi-hole uključuju popravke FTL v6.4.1, Web v6.4 i Core v6.3.
+      - FTL promjene uključuju SQLite 3.51.0, DNS upstream API/spec popravke, smanjeno zaključavanje baze podataka, TOTP ograničenje stope provjere valjanosti i poboljšanja pretraživanja/API.
+    pt_PT: |-
+      - Docker imagem 2025.11.1 adiciona suporte para RISCV e melhora a deteção de arranque de FTL e o seguimento de registos.
+      - As atualizações Pi-hole incluídas incluem as correções FTL v6.4.1, Web v6.4 e Core v6.3.
+      - As alterações de FTL incluem correções de SQLite 3.51.0, DNS upstream API/spec, bloqueio reduzido da base de dados, limitação da taxa de validação de TOTP e melhorias de pesquisa/API.
+    ru_RU: |-
+      - Образ Docker 2025.11.1 возвращает поддержку RISCV и улучшает обнаружение запуска FTL и ведение журналов.
+      - В комплект обновлений Pi-hole входят исправления FTL v6.4.1, Web v6.4 и Core v6.3.
+      - Изменения FTL включают SQLite 3.51.0, DNS исправления API/spec, уменьшенную блокировку базы данных, ограничение скорости проверки TOTP и улучшения поиска/API.
+    tr_TR: |-
+      - Docker görüntüsü 2025.11.1, RISCV desteğini geri ekler ve FTL başlangıç ​​algılamasını ve günlük takibini geliştirir.
+      - Paketlenmiş Pi-hole güncellemeleri FTL v6.4.1, Web v6.4 ve Çekirdek v6.3 düzeltmelerini içerir.
+      - FTL değişiklikleri, SQLite 3.51.0, DNS yukarı akış API/spec düzeltmelerini, azaltılmış veritabanı kilitlemeyi, TOTP doğrulama hızı sınırlamasını ve arama/API iyileştirmelerini içerir.
+  website: "https://pi-hole.net/"
+  repo: "https://github.com/pi-hole/pi-hole"
+  support: "https://discourse.pi-hole.net"
+  docs: "https://docs.pi-hole.net"
