@@ -19,7 +19,7 @@ services:
         target: /opt/etherpad-lite/var
     environment:
       TITLE: Etherpad
-      DEFAULT_PAD_TEXT: "Welcome to Etherpad!\n\nThis pad updates in real time as people type, making it easy to write notes, brainstorm, and collaborate together.\n\nLearn more at https://etherpad.org\n"
+      DEFAULT_PAD_TEXT: "Welcome to Etherpad on CasaOS!\n\nThis pad text is synchronized as you type, so that everyone viewing this page sees the same text. This allows you to collaborate seamlessly on documents!\n\nGet involved with Etherpad at https://etherpad.org\n"
       ADMIN_PASSWORD: admin
       AUTHENTICATION_METHOD: apikey
       DB_TYPE: dirty
@@ -74,174 +74,37 @@ services:
       envs:
         - container: TITLE
           description:
-            en_US: Sets the name shown in the browser tab
-            en_GB: Sets the name shown in the browser tab
-            it_IT: Imposta il nome mostrato nella scheda del browser
-            nb_NO: Angir navnet som vises i nettleserfanen
-            zh_CN: 设置浏览器标签页中显示的名称
-            ja_JP: ブラウザータブに表示される名前を設定します
-            ko_KR: 브라우저 탭에 표시되는 이름을 설정합니다
-            fr_FR: Définit le nom affiché dans l'onglet du navigateur
-            de_DE: Legt den im Browser-Tab angezeigten Namen fest
-            sv_SE: Anger namnet som visas i webbläsarfliken
-            el_GR: Ορίζει το όνομα που εμφανίζεται στην καρτέλα του προγράμματος περιήγησης
-            hr_HR: Postavlja naziv prikazan u kartici preglednika
-            pt_PT: Define o nome apresentado no separador do navegador
-            ru_RU: Задает имя, отображаемое во вкладке браузера
-            tr_TR: Tarayıcı sekmesinde gösterilen adı ayarlar
-        - container: DEFAULT_PAD_TEXT
-          description:
-            en_US: Sets the text shown in every newly created pad
-            en_GB: Sets the text shown in every newly created pad
-            it_IT: Imposta il testo mostrato in ogni nuovo pad creato
-            nb_NO: Angir teksten som vises i hver nyopprettede pad
-            zh_CN: 设置每个新建 pad 中显示的默认文本
-            ja_JP: 新しく作成された各パッドに表示されるテキストを設定します
-            ko_KR: 새로 생성되는 각 패드에 표시될 텍스트를 설정합니다
-            fr_FR: Définit le texte affiché dans chaque nouveau pad créé
-            de_DE: Legt den Text fest, der in jedem neu erstellten Pad angezeigt wird
-            sv_SE: Anger texten som visas i varje ny skapad pad
-            el_GR: Ορίζει το κείμενο που εμφανίζεται σε κάθε νέο pad
-            hr_HR: Postavlja tekst prikazan u svakom novostvorenom padu
-            pt_PT: Define o texto apresentado em cada novo pad criado
-            ru_RU: Задает текст, отображаемый в каждом новом pad
-            tr_TR: Yeni oluşturulan her pad içinde gösterilen metni ayarlar
+            en_us: Name of your Etherpad instance (shown in the browser tab).
         - container: ADMIN_PASSWORD
           description:
-            en_US: Sets the admin password used to access /admin
-            en_GB: Sets the admin password used to access /admin
-            it_IT: Imposta la password amministratore usata per accedere a /admin
-            nb_NO: Angir administratorpassordet som brukes for å åpne /admin
-            zh_CN: 设置用于访问 /admin 的管理员密码
-            ja_JP: /admin へのアクセスに使う管理者パスワードを設定します
-            ko_KR: /admin 접근에 사용할 관리자 비밀번호를 설정합니다
-            fr_FR: Définit le mot de passe administrateur utilisé pour accéder à /admin
-            de_DE: Legt das Administratorpasswort für den Zugriff auf /admin fest
-            sv_SE: Anger administratörslösenordet som används för att nå /admin
-            el_GR: Ορίζει τον κωδικό διαχειριστή που χρησιμοποιείται για πρόσβαση στο /admin
-            hr_HR: Postavlja administratorsku lozinku za pristup /admin
-            pt_PT: Define a palavra-passe de administrador usada para aceder a /admin
-            ru_RU: Задает пароль администратора для доступа к /admin
-            tr_TR: /admin erişimi için kullanılan yönetici parolasını ayarlar
+            en_us: Password for the "admin" user used to reach /admin. CHANGE THIS.
+        - container: DEFAULT_PAD_TEXT
+          description:
+            en_us: Text shown inside every freshly created pad.
         - container: AUTHENTICATION_METHOD
           description:
-            en_US: Sets the authentication mode; apikey enables admin login and sso enables OAuth2
-            en_GB: Sets the authentication mode; apikey enables admin login and sso enables OAuth2
-            it_IT: Imposta la modalità di autenticazione; apikey abilita l'accesso admin e sso abilita OAuth2
-            nb_NO: Angir autentiseringsmodus; apikey aktiverer admininnlogging og sso aktiverer OAuth2
-            zh_CN: 设置认证方式；apikey 启用管理员登录，sso 启用 OAuth2
-            ja_JP: 認証モードを設定します。apikey は管理者ログインを有効にし、sso は OAuth2 を有効にします
-            ko_KR: 인증 방식을 설정합니다. apikey는 관리자 로그인을 활성화하고 sso는 OAuth2를 활성화합니다
-            fr_FR: Définit le mode d'authentification ; apikey active la connexion admin et sso active OAuth2
-            de_DE: Legt den Authentifizierungsmodus fest; apikey aktiviert den Admin-Login und sso aktiviert OAuth2
-            sv_SE: Anger autentiseringsläget; apikey aktiverar admininloggning och sso aktiverar OAuth2
-            el_GR: Ορίζει τη λειτουργία αυθεντικοποίησης. Το apikey ενεργοποιεί τη σύνδεση διαχειριστή και το sso ενεργοποιεί το OAuth2
-            hr_HR: Postavlja način autentifikacije; apikey omogućuje administratorsku prijavu, a sso omogućuje OAuth2
-            pt_PT: Define o modo de autenticação; apikey ativa o início de sessão de administrador e sso ativa OAuth2
-            ru_RU: Задает режим аутентификации; apikey включает вход администратора, а sso включает OAuth2
-            tr_TR: Kimlik doğrulama modunu ayarlar; apikey yönetici girişini, sso ise OAuth2'yi etkinleştirir
-        - container: DB_TYPE
-          description:
-            en_US: Sets the database backend; dirty suits small installs, postgres or mysql suits larger deployments
-            en_GB: Sets the database backend; dirty suits small installs, postgres or mysql suits larger deployments
-            it_IT: Imposta il backend del database; dirty va bene per piccole installazioni, postgres o mysql per distribuzioni più grandi
-            nb_NO: Angir databasebakgrunnen; dirty passer for små installasjoner, postgres eller mysql for større utrullinger
-            zh_CN: 设置数据库后端；dirty 适合小型部署，postgres 或 mysql 更适合较大的部署
-            ja_JP: データベースバックエンドを設定します。dirty は小規模構成向けで、postgres または mysql は大規模構成向けです
-            ko_KR: 데이터베이스 백엔드를 설정합니다. dirty는 소규모 설치에, postgres 또는 mysql은 더 큰 배포에 적합합니다
-            fr_FR: Définit le moteur de base de données ; dirty convient aux petites installations, postgres ou mysql aux déploiements plus importants
-            de_DE: Legt das Datenbank-Backend fest; dirty eignet sich für kleine Installationen, postgres oder mysql für größere Bereitstellungen
-            sv_SE: Anger databasbakänden; dirty passar små installationer, postgres eller mysql passar större distributioner
-            el_GR: Ορίζει το backend της βάσης δεδομένων. Το dirty ταιριάζει σε μικρές εγκαταστάσεις, ενώ το postgres ή το mysql σε μεγαλύτερες αναπτύξεις
-            hr_HR: Postavlja pozadinski sustav baze podataka; dirty odgovara manjim instalacijama, a postgres ili mysql većim implementacijama
-            pt_PT: Define o backend da base de dados; dirty adequa-se a instalações pequenas, postgres ou mysql a implementações maiores
-            ru_RU: Задает тип базы данных; dirty подходит для небольших установок, postgres или mysql для более крупных развертываний
-            tr_TR: Veritabanı altyapısını ayarlar; dirty küçük kurulumlar için, postgres veya mysql ise daha büyük kurulumlar için uygundur
-        - container: DB_FILENAME
-          description:
-            en_US: Sets the path to the dirty database file inside the container
-            en_GB: Sets the path to the dirty database file inside the container
-            it_IT: Imposta il percorso del file database dirty all'interno del container
-            nb_NO: Angir banen til dirty-databasefilen inne i containeren
-            zh_CN: 设置容器内 dirty 数据库文件的路径
-            ja_JP: コンテナー内の dirty データベースファイルのパスを設定します
-            ko_KR: 컨테이너 내부의 dirty 데이터베이스 파일 경로를 설정합니다
-            fr_FR: Définit le chemin du fichier de base dirty dans le conteneur
-            de_DE: Legt den Pfad zur dirty-Datenbankdatei im Container fest
-            sv_SE: Anger sökvägen till dirty-databasfilen i containern
-            el_GR: Ορίζει τη διαδρομή προς το αρχείο της βάσης dirty μέσα στο κοντέινερ
-            hr_HR: Postavlja putanju do datoteke dirty baze unutar spremnika
-            pt_PT: Define o caminho para o ficheiro da base de dados dirty dentro do contentor
-            ru_RU: Задает путь к файлу базы dirty внутри контейнера
-            tr_TR: Konteyner içindeki dirty veritabanı dosyasının yolunu ayarlar
-        - container: TRUST_PROXY
-          description:
-            en_US: Enables trusted reverse proxy handling
-            en_GB: Enables trusted reverse proxy handling
-            it_IT: Abilita la gestione di un reverse proxy affidabile
-            nb_NO: Aktiverer håndtering av en klarert reversproxy
-            zh_CN: 启用受信任反向代理处理
-            ja_JP: 信頼できるリバースプロキシ処理を有効にします
-            ko_KR: 신뢰할 수 있는 리버스 프록시 처리를 활성화합니다
-            fr_FR: Active la gestion d'un proxy inverse de confiance
-            de_DE: Aktiviert die Verarbeitung eines vertrauenswürdigen Reverse-Proxys
-            sv_SE: Aktiverar hantering av betrodd omvänd proxy
-            el_GR: Ενεργοποιεί τη διαχείριση αξιόπιστου reverse proxy
-            hr_HR: Omogućuje obradu pouzdanog obrnutog proxyja
-            pt_PT: Ativa o tratamento de um proxy inverso fidedigno
-            ru_RU: Включает обработку доверенного обратного прокси
-            tr_TR: Güvenilir ters proxy işlemeyi etkinleştirir
-        - container: SHOW_SETTINGS_IN_ADMIN_PAGE
-          description:
-            en_US: Shows configuration settings on the admin page
-            en_GB: Shows configuration settings on the admin page
-            it_IT: Mostra le impostazioni di configurazione nella pagina admin
-            nb_NO: Viser konfigurasjonsinnstillinger på adminsiden
-            zh_CN: 在管理页面显示配置设置
-            ja_JP: 管理ページに設定内容を表示します
-            ko_KR: 관리자 페이지에 구성 설정을 표시합니다
-            fr_FR: Affiche les paramètres de configuration sur la page admin
-            de_DE: Zeigt Konfigurationseinstellungen auf der Admin-Seite an
-            sv_SE: Visar konfigurationsinställningar på adminsidan
-            el_GR: Εμφανίζει τις ρυθμίσεις διαμόρφωσης στη σελίδα διαχειριστή
-            hr_HR: Prikazuje konfiguracijske postavke na administratorskoj stranici
-            pt_PT: Mostra as definições de configuração na página de administração
-            ru_RU: Показывает параметры конфигурации на странице администратора
-            tr_TR: Yapılandırma ayarlarını yönetici sayfasında gösterir
+            en_us: 'Authentication mode. "apikey" (default here) enables admin login; "sso" enables OAuth2.'
         - container: REQUIRE_AUTHENTICATION
           description:
-            en_US: Controls whether every pad requires a login
-            en_GB: Controls whether every pad requires a login
-            it_IT: Controlla se ogni pad richiede l'accesso
-            nb_NO: Styrer om hver pad krever innlogging
-            zh_CN: 控制每个 pad 是否都需要登录
-            ja_JP: すべてのパッドでログインを必須にするかを設定します
-            ko_KR: 모든 패드에 로그인이 필요한지 여부를 제어합니다
-            fr_FR: Contrôle si chaque pad nécessite une connexion
-            de_DE: Steuert, ob für jedes Pad eine Anmeldung erforderlich ist
-            sv_SE: Styr om varje pad kräver inloggning
-            el_GR: Ελέγχει αν κάθε pad απαιτεί σύνδεση
-            hr_HR: Određuje zahtijeva li svaki pad prijavu
-            pt_PT: Controla se cada pad exige início de sessão
-            ru_RU: Управляет тем, требуется ли вход для каждого pad
-            tr_TR: Her pad için giriş gerekip gerekmediğini kontrol eder
-        - container: REQUIRE_AUTHORIZATION
+            en_us: If "true", every pad requires a login. Default "false" means public pads.
+        - container: DB_TYPE
           description:
-            en_US: Requires explicit permission before users can access pads
-            en_GB: Requires explicit permission before users can access pads
-            it_IT: Richiede un'autorizzazione esplicita prima che gli utenti possano accedere ai pad
-            nb_NO: Krever eksplisitt tillatelse før brukere kan få tilgang til pads
-            zh_CN: 要求用户在访问 pad 之前获得明确授权
-            ja_JP: ユーザーがパッドへアクセスする前に明示的な許可を必要にします
-            ko_KR: 사용자가 패드에 접근하기 전에 명시적 권한을 요구합니다
-            fr_FR: Exige une autorisation explicite avant que les utilisateurs puissent accéder aux pads
-            de_DE: Erfordert eine ausdrückliche Berechtigung, bevor Benutzer auf Pads zugreifen können
-            sv_SE: Kräver uttryckligt tillstånd innan användare kan komma åt pads
-            el_GR: Απαιτεί ρητή άδεια πριν αποκτήσουν οι χρήστες πρόσβαση στα pads
-            hr_HR: Zahtijeva izričito dopuštenje prije nego korisnici mogu pristupiti padovima
-            pt_PT: Exige permissão explícita antes de os utilizadores poderem aceder aos pads
-            ru_RU: Требует явного разрешения перед доступом пользователей к pad
-            tr_TR: Kullanıcılar pad'lere erişmeden önce açık izin gerektirir
+            en_us: Database backend. "dirty" is a zero-config embedded file store suitable for single-user CasaOS installs. Use "postgres"/"mysql" for production.
+        - container: DB_FILENAME
+          description:
+            en_us: Path inside the container for the dirty-db file. Kept on the persistent volume.
+        - container: TRUST_PROXY
+          description:
+            en_us: Set to "true" when running behind CasaOS's reverse proxy.
+      ports:
+        - container: "9001"
+          description:
+            en_us: WebUI HTTP Port
+      volumes:
+        - container: /opt/etherpad-lite/var
+          description:
+            en_us: Etherpad data directory (pads, sessions, dirty.db, plugins).
+
 x-casaos:
   architectures:
     - amd64
