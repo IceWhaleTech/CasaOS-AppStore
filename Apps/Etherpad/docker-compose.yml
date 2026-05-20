@@ -1,17 +1,22 @@
 name: etherpad
 services:
   etherpad:
-    image: etherpad/etherpad:3.0.0
+    image: etherpad/etherpad:3.1.0
+    container_name: etherpad
     deploy:
       resources:
         reservations:
-          memory: "256M"
+          memory: 256M
     network_mode: bridge
+    restart: unless-stopped
     ports:
       - target: 9001
         published: "9001"
         protocol: tcp
-    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/var
+        target: /opt/etherpad-lite/var
     environment:
       TITLE: Etherpad
       DEFAULT_PAD_TEXT: "Welcome to Etherpad on CasaOS!\n\nThis pad text is synchronized as you type, so that everyone viewing this page sees the same text. This allows you to collaborate seamlessly on documents!\n\nGet involved with Etherpad at https://etherpad.org\n"
@@ -23,10 +28,6 @@ services:
       SHOW_SETTINGS_IN_ADMIN_PAGE: "true"
       REQUIRE_AUTHENTICATION: "false"
       REQUIRE_AUTHORIZATION: "false"
-    volumes:
-      - type: bind
-        source: /DATA/AppData/$AppID/var
-        target: /opt/etherpad-lite/var
     healthcheck:
       test: ["CMD", "wget", "-q", "-O-", "http://localhost:9001/health"]
       interval: 30s
@@ -34,6 +35,42 @@ services:
       retries: 3
       start_period: 30s
     x-casaos:
+      ports:
+        - container: "9001"
+          description:
+            en_US: WebUI HTTP Port
+            en_GB: WebUI HTTP Port
+            it_IT: Porta HTTP WebUI
+            nb_NO: WebUI HTTP-port
+            zh_CN: WebUI HTTP端口
+            ja_JP: WebUI HTTPポート
+            ko_KR: WebUI HTTP 포트
+            fr_FR: Port HTTP WebUI
+            de_DE: WebUI-HTTP-Port
+            sv_SE: WebUI HTTP-port
+            el_GR: Θύρα HTTP WebUI
+            hr_HR: WebUI HTTP priključak
+            pt_PT: Porta HTTP da WebUI
+            ru_RU: HTTP-порт WebUI
+            tr_TR: WebUI HTTP Bağlantı Noktası
+      volumes:
+        - container: /opt/etherpad-lite/var
+          description:
+            en_US: Etherpad Data Directory
+            en_GB: Etherpad Data Directory
+            it_IT: Directory Dati di Etherpad
+            nb_NO: Etherpad datakatalog
+            zh_CN: Etherpad 数据目录
+            ja_JP: Etherpad データディレクトリ
+            ko_KR: Etherpad 데이터 디렉터리
+            fr_FR: Répertoire de données Etherpad
+            de_DE: Etherpad-Datenverzeichnis
+            sv_SE: Etherpad datakatalog
+            el_GR: Κατάλογος δεδομένων Etherpad
+            hr_HR: Etherpad direktorij podataka
+            pt_PT: Diretório de dados do Etherpad
+            ru_RU: Каталог данных Etherpad
+            tr_TR: Etherpad veri dizini
       envs:
         - container: TITLE
           description:
@@ -67,33 +104,364 @@ services:
         - container: /opt/etherpad-lite/var
           description:
             en_us: Etherpad data directory (pads, sessions, dirty.db, plugins).
-    container_name: etherpad
+
 x-casaos:
   architectures:
     - amd64
     - arm64
   main: etherpad
-  author: CasaOS Community
-  category: Productivity
-  description:
-    en_us: |
-      Etherpad is a real-time collaborative document editor. Multiple people can edit the same pad simultaneously, with every change synchronized instantly and colour-coded per author. Self-hosted, open source, and fully under your control — perfect for meeting notes, brainstorming, shared writing, and lightweight knowledge capture. Ships with a built-in admin panel, a plugin ecosystem of 250+ add-ons, native DOCX/PDF/Markdown import & export, and multi-architecture container support (amd64 + arm64).
+  category: Notes
   developer: Etherpad Foundation
+  author: CasaOS Community
+  tagline:
+    en_US: Real-time collaborative document editor
+    en_GB: Real-time collaborative document editor
+    it_IT: Editor di documenti collaborativo in tempo reale
+    nb_NO: Samarbeidsredigerer for dokumenter i sanntid
+    zh_CN: 实时协作文档编辑器
+    ja_JP: リアルタイム共同文書エディタ
+    ko_KR: 실시간 협업 문서 편집기
+    fr_FR: Éditeur de documents collaboratif en temps réel
+    de_DE: Kollaborativer Dokumenteneditor in Echtzeit
+    sv_SE: Samarbetseditor för dokument i realtid
+    el_GR: Επεξεργαστής συνεργατικών εγγράφων σε πραγματικό χρόνο
+    hr_HR: Uređivač suradničkih dokumenata u stvarnom vremenu
+    pt_PT: Editor colaborativo de documentos em tempo real
+    ru_RU: Редактор совместных документов в реальном времени
+    tr_TR: Gerçek zamanlı ortak belge düzenleyici
+  description:
+    en_US: |
+      Etherpad is a real-time collaborative document editor where multiple people can edit the same pad simultaneously, with every change synchronized instantly and colour-coded per author.
+      Self-hosted, open source, and fully under your control, it is perfect for meeting notes, brainstorming, shared writing, and lightweight knowledge capture.
+      It ships with a built-in admin panel, a plugin ecosystem of 250+ add-ons, native DOCX/PDF/Markdown import & export, and multi-architecture container support (amd64 + arm64).
+
+      **Main Features:**
+      - Real-time collaborative editing with instant sync
+      - Per-author colour coding for clear writing attribution
+      - Built-in admin panel and a plugin ecosystem with 250+ add-ons
+      - Native DOCX, PDF, and Markdown import & export
+      - Open source, self-hosted deployment with amd64 and arm64 support
+
+      **Learn More:**
+      - [Etherpad Official Website](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Etherpad Documentation](https://docs.etherpad.org/)
+    en_GB: |
+      Etherpad is a real-time collaborative document editor where multiple people can edit the same pad simultaneously, with every change synchronised instantly and colour-coded per author.
+      Self-hosted, open source, and fully under your control, it is perfect for meeting notes, brainstorming, shared writing, and lightweight knowledge capture.
+      It ships with a built-in admin panel, a plugin ecosystem of 250+ add-ons, native DOCX/PDF/Markdown import & export, and multi-architecture container support (amd64 + arm64).
+
+      **Main Features:**
+      - Real-time collaborative editing with instant synchronisation
+      - Per-author colour coding for clear writing attribution
+      - Built-in admin panel and a plugin ecosystem with 250+ add-ons
+      - Native DOCX, PDF, and Markdown import & export
+      - Open source, self-hosted deployment with amd64 and arm64 support
+
+      **Learn More:**
+      - [Etherpad Official Website](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Etherpad Documentation](https://docs.etherpad.org/)
+    it_IT: |
+      Etherpad è un editor di documenti collaborativo in tempo reale in cui più persone possono modificare lo stesso pad contemporaneamente, con ogni modifica sincronizzata all'istante e colorata in base all'autore.
+      Self-hosted, open source e completamente sotto il tuo controllo, è perfetto per verbali di riunioni, brainstorming, scrittura condivisa e raccolta leggera della conoscenza.
+      Include un pannello di amministrazione integrato, un ecosistema di oltre 250 componenti aggiuntivi, importazione ed esportazione native DOCX/PDF/Markdown e supporto multiarchitettura per container (amd64 + arm64).
+
+      **Funzionalità Principali:**
+      - Modifica collaborativa in tempo reale con sincronizzazione immediata
+      - Colori per autore per vedere chiaramente chi ha scritto cosa
+      - Pannello di amministrazione integrato ed ecosistema con oltre 250 componenti aggiuntivi
+      - Importazione ed esportazione native di DOCX, PDF e Markdown
+      - Distribuzione open source self-hosted con supporto amd64 e arm64
+
+      **Ulteriori Informazioni:**
+      - [Sito Ufficiale Etherpad](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Documentazione Etherpad](https://docs.etherpad.org/)
+    nb_NO: |
+      Etherpad er en samarbeidsredigerer for dokumenter i sanntid der flere personer kan redigere samme pad samtidig, og hver endring synkroniseres umiddelbart og fargekodes etter forfatter.
+      Selvhostet, åpen kildekode og fullt under din kontroll, passer det godt til møtenotater, idémyldring, delt skriving og lett kunnskapsfangst.
+      Det leveres med et innebygd administrasjonspanel, et plugin-økosystem med 250+ tillegg, innebygd import og eksport for DOCX/PDF/Markdown og multiarkitektur-støtte for containere (amd64 + arm64).
+
+      **Hovedfunksjoner:**
+      - Samarbeidsredigering i sanntid med øyeblikkelig synkronisering
+      - Fargekoding per forfatter for tydelig skriveattribusjon
+      - Innebygd administrasjonspanel og plugin-økosystem med 250+ tillegg
+      - Innebygd import og eksport av DOCX, PDF og Markdown
+      - Åpen kildekode og selvhostet drift med støtte for amd64 og arm64
+
+      **Lær Mer:**
+      - [Etherpad Offisielle Nettside](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Etherpad Dokumentasjon](https://docs.etherpad.org/)
+    zh_CN: |
+      Etherpad 是一款实时协作文档编辑器，多人可以同时编辑同一个 pad，所有修改都会立即同步，并按作者颜色区分。
+      它支持自托管、开源且完全由你掌控，非常适合会议记录、头脑风暴、协作写作和轻量知识沉淀。
+      它内置管理面板，拥有 250+ 插件生态，原生支持 DOCX/PDF/Markdown 导入导出，并提供 amd64 与 arm64 多架构容器支持。
+
+      **主要功能：**
+      - 实时协同编辑，修改即时同步
+      - 按作者颜色区分内容，便于追踪贡献
+      - 内置管理面板，配合 250+ 插件扩展生态
+      - 原生支持 DOCX、PDF 和 Markdown 的导入与导出
+      - 开源自托管部署，支持 amd64 和 arm64
+
+      **了解更多：**
+      - [Etherpad 官网](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Etherpad 文档](https://docs.etherpad.org/)
+    ja_JP: |
+      Etherpadはリアルタイム共同文書エディタであり、複数の人が同じパッドを同時に編集でき、すべての変更は即座に同期され、著者ごとに色分けされます。
+      セルフホスト可能でオープンソース、そして完全に自分で管理できるため、会議メモ、ブレインストーミング、共同執筆、軽量なナレッジ共有に適しています。
+      内蔵の管理パネル、250以上のアドオンを持つプラグインエコシステム、DOCX/PDF/Markdownのネイティブなインポートとエクスポート、amd64とarm64向けのマルチアーキテクチャ対応コンテナを備えています。
+
+      **主な機能：**
+      - 即時同期に対応したリアルタイム共同編集
+      - 誰が書いたかを分かりやすくする著者ごとの色分け
+      - 内蔵管理パネルと250以上のアドオンを備えたプラグインエコシステム
+      - DOCX、PDF、Markdownのネイティブなインポートとエクスポート
+      - amd64とarm64をサポートするオープンソースのセルフホスト運用
+
+      **詳細情報：**
+      - [Etherpad 公式サイト](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Etherpad ドキュメント](https://docs.etherpad.org/)
+    ko_KR: |
+      Etherpad는 실시간 협업 문서 편집기로, 여러 사람이 같은 패드를 동시에 편집할 수 있으며 모든 변경 사항은 즉시 동기화되고 작성자별로 색상이 구분됩니다.
+      자체 호스팅이 가능하고 오픈 소스이며 완전히 직접 제어할 수 있어 회의록, 브레인스토밍, 공동 작성, 가벼운 지식 정리에 적합합니다.
+      내장 관리자 패널, 250개 이상의 애드온을 갖춘 플러그인 생태계, DOCX/PDF/Markdown의 기본 가져오기 및 내보내기, amd64와 arm64를 지원하는 멀티 아키텍처 컨테이너를 제공합니다.
+
+      **주요 기능:**
+      - 즉시 동기화되는 실시간 협업 편집
+      - 누가 무엇을 썼는지 보여 주는 작성자별 색상 구분
+      - 250개 이상의 애드온을 갖춘 내장 관리자 패널과 플러그인 생태계
+      - DOCX, PDF, Markdown의 기본 가져오기 및 내보내기
+      - amd64와 arm64를 지원하는 오픈 소스 자체 호스팅 배포
+
+      **더 알아보기:**
+      - [Etherpad 공식 웹사이트](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Etherpad 문서](https://docs.etherpad.org/)
+    fr_FR: |
+      Etherpad est un éditeur de documents collaboratif en temps réel où plusieurs personnes peuvent modifier le même pad simultanément, avec chaque changement synchronisé instantanément et codé par couleur selon l'auteur.
+      Auto-hébergé, open source et entièrement sous votre contrôle, il est idéal pour les comptes rendus de réunion, le brainstorming, l'écriture partagée et la capture légère de connaissances.
+      Il comprend un panneau d'administration intégré, un écosystème de plus de 250 extensions, l'import et l'export natifs DOCX/PDF/Markdown, ainsi qu'une prise en charge multiarchitecture des conteneurs (amd64 + arm64).
+
+      **Fonctionnalités Principales :**
+      - Édition collaborative en temps réel avec synchronisation immédiate
+      - Codage par couleur par auteur pour identifier clairement les contributions
+      - Panneau d'administration intégré et écosystème de plus de 250 extensions
+      - Import et export natifs de DOCX, PDF et Markdown
+      - Déploiement auto-hébergé open source avec prise en charge amd64 et arm64
+
+      **En Savoir Plus :**
+      - [Site Officiel Etherpad](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Documentation Etherpad](https://docs.etherpad.org/)
+    de_DE: |
+      Etherpad ist ein kollaborativer Dokumenteneditor in Echtzeit, in dem mehrere Personen gleichzeitig dasselbe Pad bearbeiten können, wobei jede Änderung sofort synchronisiert und pro Autor farblich gekennzeichnet wird.
+      Selbst gehostet, Open Source und vollständig unter Ihrer Kontrolle eignet es sich ideal für Besprechungsnotizen, Brainstorming, gemeinsames Schreiben und leichte Wissensdokumentation.
+      Es bietet ein integriertes Administrationspanel, ein Plugin-Ökosystem mit mehr als 250 Erweiterungen, nativen DOCX/PDF/Markdown-Import und -Export sowie Multiarchitektur-Containerunterstützung für amd64 und arm64.
+
+      **Hauptfunktionen:**
+      - Zusammenarbeit in Echtzeit mit sofortiger Synchronisierung
+      - Farbliche Kennzeichnung pro Autor für klare Zuordnung von Beiträgen
+      - Integriertes Administrationspanel und Plugin-Ökosystem mit über 250 Erweiterungen
+      - Nativer Import und Export für DOCX, PDF und Markdown
+      - Open-Source-Self-Hosting mit Unterstützung für amd64 und arm64
+
+      **Mehr Erfahren:**
+      - [Etherpad Offizielle Website](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Etherpad Dokumentation](https://docs.etherpad.org/)
+    sv_SE: |
+      Etherpad är en samarbetseditor för dokument i realtid där flera personer kan redigera samma pad samtidigt, och varje ändring synkroniseras direkt och färgkodas per författare.
+      Självhostad, öppen källkod och helt under din kontroll passar den bra för mötesanteckningar, brainstorming, gemensamt skrivande och lätt kunskapsinsamling.
+      Den levereras med en inbyggd administrationspanel, ett plugin-ekosystem med över 250 tillägg, inbyggd import och export för DOCX/PDF/Markdown samt containerstöd för flera arkitekturer (amd64 + arm64).
+
+      **Huvudfunktioner:**
+      - Samarbetsredigering i realtid med omedelbar synkronisering
+      - Färgkodning per författare för tydlig attribution
+      - Inbyggd administrationspanel och plugin-ekosystem med över 250 tillägg
+      - Inbyggd import och export av DOCX, PDF och Markdown
+      - Öppen källkod och självhostad drift med stöd för amd64 och arm64
+
+      **Lär Dig Mer:**
+      - [Etherpad Officiella Webbplats](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Etherpad Dokumentation](https://docs.etherpad.org/)
+    el_GR: |
+      Το Etherpad είναι ένας επεξεργαστής συνεργατικών εγγράφων σε πραγματικό χρόνο όπου πολλά άτομα μπορούν να επεξεργάζονται το ίδιο pad ταυτόχρονα, με κάθε αλλαγή να συγχρονίζεται άμεσα και να χρωματίζεται ανά συγγραφέα.
+      Αυτο-φιλοξενούμενο, ανοιχτού κώδικα και πλήρως υπό τον έλεγχό σας, είναι ιδανικό για σημειώσεις συναντήσεων, brainstorming, κοινή συγγραφή και ελαφριά καταγραφή γνώσης.
+      Περιλαμβάνει ενσωματωμένο πίνακα διαχείρισης, οικοσύστημα με 250+ πρόσθετα, εγγενή εισαγωγή και εξαγωγή DOCX/PDF/Markdown και υποστήριξη κοντέινερ πολλαπλών αρχιτεκτονικών (amd64 + arm64).
+
+      **Κύριες Λειτουργίες:**
+      - Συνεργατική επεξεργασία σε πραγματικό χρόνο με άμεσο συγχρονισμό
+      - Χρωματική κωδικοποίηση ανά συγγραφέα για σαφή απόδοση συνεισφορών
+      - Ενσωματωμένος πίνακας διαχείρισης και οικοσύστημα με 250+ πρόσθετα
+      - Εγγενής εισαγωγή και εξαγωγή DOCX, PDF και Markdown
+      - Αυτο-φιλοξενούμενη εγκατάσταση ανοιχτού κώδικα με υποστήριξη amd64 και arm64
+
+      **Μάθετε Περισσότερα:**
+      - [Επίσημος Ιστότοπος Etherpad](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Τεκμηρίωση Etherpad](https://docs.etherpad.org/)
+    hr_HR: |
+      Etherpad je uređivač suradničkih dokumenata u stvarnom vremenu u kojem više osoba može istovremeno uređivati isti pad, a svaka promjena sinkronizira se odmah i označava bojom prema autoru.
+      Samohostiran, otvorenog koda i potpuno pod vašom kontrolom, idealan je za zapisnike sastanaka, brainstorming, zajedničko pisanje i lagano bilježenje znanja.
+      Dolazi s ugrađenom administratorskom pločom, ekosustavom s više od 250 dodataka, izvornim DOCX/PDF/Markdown uvozom i izvozom te podrškom za višearhitekturne spremnike (amd64 + arm64).
+
+      **Glavne Funkcije:**
+      - Suradničko uređivanje u stvarnom vremenu s trenutačnom sinkronizacijom
+      - Označavanje bojom po autoru za jasno praćenje doprinosa
+      - Ugrađena administratorska ploča i ekosustav s više od 250 dodataka
+      - Izvorni uvoz i izvoz za DOCX, PDF i Markdown
+      - Samohostirano open source postavljanje uz podršku za amd64 i arm64
+
+      **Saznajte Više:**
+      - [Službena Web Stranica Etherpad](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Etherpad Dokumentacija](https://docs.etherpad.org/)
+    pt_PT: |
+      Etherpad é um editor colaborativo de documentos em tempo real onde várias pessoas podem editar o mesmo pad em simultâneo, com cada alteração sincronizada de imediato e identificada por cores por autor.
+      Auto-hospedado, open source e totalmente sob o seu controlo, é ideal para notas de reunião, brainstorming, escrita partilhada e recolha leve de conhecimento.
+      Inclui um painel de administração integrado, um ecossistema com mais de 250 extensões, importação e exportação nativas de DOCX/PDF/Markdown e suporte de contentor multiarquitetura (amd64 + arm64).
+
+      **Principais Funcionalidades:**
+      - Edição colaborativa em tempo real com sincronização imediata
+      - Identificação por cores por autor para atribuição clara do texto
+      - Painel de administração integrado e ecossistema com mais de 250 extensões
+      - Importação e exportação nativas de DOCX, PDF e Markdown
+      - Implementação auto-hospedada open source com suporte para amd64 e arm64
+
+      **Saiba Mais:**
+      - [Site Oficial Etherpad](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Documentação Etherpad](https://docs.etherpad.org/)
+    ru_RU: |
+      Etherpad - это редактор совместных документов в реальном времени, в котором несколько человек могут одновременно редактировать один и тот же pad, при этом каждое изменение мгновенно синхронизируется и выделяется цветом по автору.
+      Самостоятельно размещаемый, с открытым исходным кодом и полностью подконтрольный вам, он отлично подходит для заметок встреч, мозговых штурмов, совместного письма и легкого накопления знаний.
+      В комплект входят встроенная панель администратора, экосистема из 250+ дополнений, нативный импорт и экспорт DOCX/PDF/Markdown, а также поддержка контейнеров для нескольких архитектур (amd64 + arm64).
+
+      **Основные Функции:**
+      - Совместное редактирование в реальном времени с мгновенной синхронизацией
+      - Цветовое выделение по авторам для понятной атрибуции текста
+      - Встроенная панель администратора и экосистема из 250+ дополнений
+      - Нативный импорт и экспорт DOCX, PDF и Markdown
+      - Open source self-hosted развертывание с поддержкой amd64 и arm64
+
+      **Узнать Больше:**
+      - [Официальный Сайт Etherpad](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Документация Etherpad](https://docs.etherpad.org/)
+    tr_TR: |
+      Etherpad, birden fazla kişinin aynı pad üzerinde aynı anda çalışabildiği, her değişikliğin anında senkronize edilip yazara göre renkle gösterildiği gerçek zamanlı ortak belge düzenleyicisidir.
+      Kendi kendine barındırılabilir, açık kaynaklıdır ve tamamen sizin kontrolünüzdedir; toplantı notları, beyin fırtınası, ortak yazım ve hafif bilgi toplama için idealdir.
+      Yerleşik bir yönetim paneli, 250'den fazla eklenti içeren bir ekosistem, yerel DOCX/PDF/Markdown içe aktarma ve dışa aktarma ile çoklu mimari kapsayıcı desteği (amd64 + arm64) sunar.
+
+      **Başlıca İşlevler:**
+      - Anında senkronizasyon ile gerçek zamanlı ortak düzenleme
+      - Katkıları açıkça görmek için yazar bazlı renk kodlama
+      - Yerleşik yönetim paneli ve 250'den fazla eklenti içeren ekosistem
+      - DOCX, PDF ve Markdown için yerel içe aktarma ve dışa aktarma
+      - amd64 ve arm64 desteğine sahip açık kaynaklı self-hosted kurulum
+
+      **Daha Fazla Bilgi:**
+      - [Etherpad Resmi Web Sitesi](https://etherpad.org/)
+      - [Etherpad GitHub](https://github.com/ether/etherpad)
+      - [Etherpad Dokümantasyonu](https://docs.etherpad.org/)
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Etherpad/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Etherpad/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Etherpad/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Etherpad/screenshot-3.png
-  tagline:
-    en_us: Real-time collaborative document editor
-  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Etherpad/thumbnail.png
   tips:
     before_install:
-      en_us: |
-        Default admin password is "admin" — change ADMIN_PASSWORD before exposing Etherpad to the network. Pads are stored on-disk in /DATA/AppData/etherpad/var using the embedded "dirty" database; this is ideal for personal and small-team use. For heavy multi-user production workloads, switch DB_TYPE to "postgres" or "mysql" and point DB_HOST/DB_NAME/DB_USER/DB_PASS at an external database.
-  title:
-    en_us: Etherpad
-  index: /
-  port_map: "9001"
+      en_US: |
+        Default admin password is "admin". Change ADMIN_PASSWORD before exposing Etherpad to the network. Pads are stored on-disk in /DATA/AppData/etherpad/var using the embedded dirty database; this is ideal for personal and small-team use. For heavy multi-user production workloads, switch DB_TYPE to postgres or mysql and point DB_HOST, DB_NAME, DB_USER, and DB_PASS at an external database.
+      en_GB: |
+        Default admin password is "admin". Change ADMIN_PASSWORD before exposing Etherpad to the network. Pads are stored on-disk in /DATA/AppData/etherpad/var using the embedded dirty database; this is ideal for personal and small-team use. For heavy multi-user production workloads, switch DB_TYPE to postgres or mysql and point DB_HOST, DB_NAME, DB_USER, and DB_PASS at an external database.
+      it_IT: |
+        La password amministratore predefinita è "admin". Modifica ADMIN_PASSWORD prima di esporre Etherpad alla rete. I pad vengono salvati su disco in /DATA/AppData/etherpad/var usando il database dirty integrato; questa configurazione è ideale per uso personale o per piccoli team. Per carichi di produzione con molti utenti, imposta DB_TYPE su postgres o mysql e fai puntare DB_HOST, DB_NAME, DB_USER e DB_PASS a un database esterno.
+      nb_NO: |
+        Standard administratorpassord er "admin". Endre ADMIN_PASSWORD før du eksponerer Etherpad mot nettverket. Pads lagres på disk i /DATA/AppData/etherpad/var ved hjelp av den innebygde dirty-databasen; dette er ideelt for personlig bruk og små team. For tunge produksjonsmiljøer med mange brukere bør du bytte DB_TYPE til postgres eller mysql og peke DB_HOST, DB_NAME, DB_USER og DB_PASS til en ekstern database.
+      zh_CN: |
+        默认管理员密码是 "admin"。在将 Etherpad 暴露到网络之前，请先修改 ADMIN_PASSWORD。Pad 数据会使用内置的 dirty 数据库存储在 /DATA/AppData/etherpad/var 中，这种方式适合个人或小团队使用。对于高并发的生产场景，请将 DB_TYPE 改为 postgres 或 mysql，并将 DB_HOST、DB_NAME、DB_USER 和 DB_PASS 指向外部数据库。
+      ja_JP: |
+        デフォルトの管理者パスワードは "admin" です。Etherpad をネットワークに公開する前に ADMIN_PASSWORD を変更してください。pad は組み込みの dirty データベースを使って /DATA/AppData/etherpad/var に保存され、この構成は個人利用や小規模チームに適しています。多数のユーザーが利用する本番環境では、DB_TYPE を postgres または mysql に変更し、DB_HOST、DB_NAME、DB_USER、DB_PASS を外部データベースに向けてください。
+      ko_KR: |
+        기본 관리자 비밀번호는 "admin"입니다. Etherpad를 네트워크에 노출하기 전에 ADMIN_PASSWORD를 변경하세요. 패드는 내장 dirty 데이터베이스를 사용해 /DATA/AppData/etherpad/var 에 디스크로 저장되며, 이 방식은 개인용이나 소규모 팀에 적합합니다. 많은 사용자가 사용하는 운영 환경이라면 DB_TYPE을 postgres 또는 mysql로 바꾸고 DB_HOST, DB_NAME, DB_USER, DB_PASS를 외부 데이터베이스로 지정하세요.
+      fr_FR: |
+        Le mot de passe administrateur par défaut est "admin". Modifiez ADMIN_PASSWORD avant d'exposer Etherpad au réseau. Les pads sont stockés sur disque dans /DATA/AppData/etherpad/var à l'aide de la base dirty intégrée ; cette configuration convient à un usage personnel ou à de petites équipes. Pour des charges de production multi-utilisateurs importantes, remplacez DB_TYPE par postgres ou mysql et pointez DB_HOST, DB_NAME, DB_USER et DB_PASS vers une base de données externe.
+      de_DE: |
+        Das Standard-Administratorpasswort lautet "admin". Ändern Sie ADMIN_PASSWORD, bevor Sie Etherpad im Netzwerk verfügbar machen. Pads werden mit der eingebetteten dirty-Datenbank auf dem Datenträger unter /DATA/AppData/etherpad/var gespeichert; das ist ideal für den persönlichen Einsatz und kleine Teams. Für stark ausgelastete Produktionsumgebungen mit vielen Benutzern sollten Sie DB_TYPE auf postgres oder mysql umstellen und DB_HOST, DB_NAME, DB_USER und DB_PASS auf eine externe Datenbank verweisen lassen.
+      sv_SE: |
+        Standardlösenordet för administratören är "admin". Ändra ADMIN_PASSWORD innan du exponerar Etherpad mot nätverket. Pads lagras på disk i /DATA/AppData/etherpad/var med den inbyggda dirty-databasen; detta passar bra för personligt bruk och små team. För tyngre produktionsmiljöer med många användare bör du byta DB_TYPE till postgres eller mysql och peka DB_HOST, DB_NAME, DB_USER och DB_PASS mot en extern databas.
+      el_GR: |
+        Ο προεπιλεγμένος κωδικός διαχειριστή είναι "admin". Αλλάξτε το ADMIN_PASSWORD πριν εκθέσετε το Etherpad στο δίκτυο. Τα pads αποθηκεύονται στον δίσκο στο /DATA/AppData/etherpad/var χρησιμοποιώντας την ενσωματωμένη βάση dirty· αυτή η ρύθμιση είναι ιδανική για προσωπική χρήση και μικρές ομάδες. Για βαριά παραγωγικά φορτία πολλών χρηστών, αλλάξτε το DB_TYPE σε postgres ή mysql και κατευθύνετε τα DB_HOST, DB_NAME, DB_USER και DB_PASS σε εξωτερική βάση δεδομένων.
+      hr_HR: |
+        Zadana administratorska lozinka je "admin". Promijenite ADMIN_PASSWORD prije nego što Etherpad izložite mreži. Padovi se pohranjuju na disk u /DATA/AppData/etherpad/var koristeći ugrađenu dirty bazu podataka; to je idealno za osobnu upotrebu i male timove. Za zahtjevnija produkcijska okruženja s više korisnika promijenite DB_TYPE u postgres ili mysql te usmjerite DB_HOST, DB_NAME, DB_USER i DB_PASS na vanjsku bazu podataka.
+      pt_PT: |
+        A palavra-passe de administrador predefinida é "admin". Altere ADMIN_PASSWORD antes de expor o Etherpad à rede. Os pads são guardados em disco em /DATA/AppData/etherpad/var usando a base de dados dirty incorporada; esta configuração é ideal para uso pessoal e pequenas equipas. Para cargas de produção multiutilizador mais pesadas, altere DB_TYPE para postgres ou mysql e aponte DB_HOST, DB_NAME, DB_USER e DB_PASS para uma base de dados externa.
+      ru_RU: |
+        Пароль администратора по умолчанию - "admin". Измените ADMIN_PASSWORD перед тем, как открывать Etherpad для сети. Данные pad сохраняются на диске в /DATA/AppData/etherpad/var с использованием встроенной базы dirty; такой вариант подходит для личного использования и небольших команд. Для нагруженных производственных установок с большим числом пользователей переключите DB_TYPE на postgres или mysql и направьте DB_HOST, DB_NAME, DB_USER и DB_PASS на внешнюю базу данных.
+      tr_TR: |
+        Varsayılan yönetici parolası "admin" değeridir. Etherpad'i ağa açmadan önce ADMIN_PASSWORD değerini değiştirin. Pad'ler, gömülü dirty veritabanı kullanılarak /DATA/AppData/etherpad/var üzerinde diske kaydedilir; bu yapı kişisel kullanım ve küçük ekipler için idealdir. Yoğun çok kullanıcılı üretim iş yüklerinde DB_TYPE değerini postgres veya mysql olarak değiştirin ve DB_HOST, DB_NAME, DB_USER ile DB_PASS değerlerini harici bir veritabanına yönlendirin.
   scheme: http
+  port_map: "9001"
+  index: /
+  title:
+    en_US: Etherpad
+  version: "3.1.0"
+  updateAt: "2026-05-17"
+  releaseNotes:
+    en_US: |-
+      - Etherpad v3.1.0 adds Tier 4 autonomous self-updates with maintenance windows, preflight checks, and email notifications for failures and rollbacks.
+      - It also introduces real SMTP delivery for updater mail and includes API, export, and HTTP security hardening plus localisation updates.
+    en_GB: |-
+      - Etherpad v3.1.0 adds Tier 4 autonomous self-updates with maintenance windows, preflight checks, and email notifications for failures and rollbacks.
+      - It also introduces real SMTP delivery for updater mail and includes API, export, and HTTP security hardening plus localisation updates.
+    it_IT: |-
+      - Etherpad v3.1.0 aggiunge auto-aggiornamenti autonomi di livello 4 con finestre di manutenzione, controlli preliminari e notifiche email per errori e rollback.
+      - Introduce anche l'invio SMTP reale per le email dell'updater e include miglioramenti di sicurezza per API, esportazione e HTTP oltre ad aggiornamenti di localizzazione.
+    nb_NO: |-
+      - Etherpad v3.1.0 legger til Tier 4 autonome selvoppdateringer med vedlikeholdsvinduer, preflight-kontroller og e-postvarsler ved feil og tilbakerullinger.
+      - Den introduserer også ekte SMTP-levering for oppdateringsmailer og inkluderer sikkerhetsforbedringer for API, eksport og HTTP samt lokaliseringsoppdateringer.
+    zh_CN: |-
+      - Etherpad v3.1.0 新增第 4 级自治自更新，支持维护时间窗口、预检检查，以及在失败和回滚时发送邮件通知。
+      - 同时加入了更新器邮件的真实 SMTP 发送能力，并包含 API、导出与 HTTP 安全加固以及本地化更新。
+    ja_JP: |-
+      - Etherpad v3.1.0 では、メンテナンスウィンドウ、事前チェック、失敗やロールバック時のメール通知に対応した Tier 4 の自律セルフアップデートが追加されました。
+      - さらに、アップデーター用メールの実際の SMTP 配信、API・エクスポート・HTTP のセキュリティ強化、ローカライズ更新も含まれています。
+    ko_KR: |-
+      - Etherpad v3.1.0은 유지보수 시간대, 사전 점검, 실패 및 롤백 시 이메일 알림을 포함한 Tier 4 자율 자체 업데이트를 추가했습니다.
+      - 또한 업데이트 메일의 실제 SMTP 전송을 도입했고 API, 내보내기, HTTP 보안 강화와 현지화 업데이트도 포함합니다.
+    fr_FR: |-
+      - Etherpad v3.1.0 ajoute des auto-mises à jour autonomes de niveau 4 avec fenêtres de maintenance, vérifications préalables et notifications par e-mail en cas d'échec ou de rollback.
+      - Il introduit aussi l'envoi SMTP réel pour les e-mails de l'outil de mise à jour et inclut un renforcement de la sécurité des API, des exports et de HTTP ainsi que des mises à jour de localisation.
+    de_DE: |-
+      - Etherpad v3.1.0 ergänzt autonome Selbstaktualisierungen der Stufe 4 mit Wartungsfenstern, Vorabprüfungen und E-Mail-Benachrichtigungen bei Fehlern und Rollbacks.
+      - Außerdem führt es echten SMTP-Versand für Updater-E-Mails ein und enthält Sicherheitsverbesserungen für API, Export und HTTP sowie Lokalisierungsupdates.
+    sv_SE: |-
+      - Etherpad v3.1.0 lägger till autonoma självuppdateringar på nivå 4 med underhållsfönster, förhandskontroller och e-postaviseringar vid fel och återställningar.
+      - Det inför också riktig SMTP-leverans för uppdateringsmejl och innehåller säkerhetshärdning för API, export och HTTP samt lokaliseringsuppdateringar.
+    el_GR: |-
+      - Το Etherpad v3.1.0 προσθέτει αυτόνομες αυτοενημερώσεις επιπέδου 4 με παράθυρα συντήρησης, προληπτικούς ελέγχους και ειδοποιήσεις email για αποτυχίες και επαναφορές.
+      - Εισάγει επίσης πραγματική αποστολή SMTP για τα email του updater και περιλαμβάνει ενίσχυση ασφάλειας για API, export και HTTP, μαζί με ενημερώσεις τοπικοποίησης.
+    hr_HR: |-
+      - Etherpad v3.1.0 dodaje autonomna samoažuriranja razine 4 s vremenskim prozorima održavanja, prethodnim provjerama i obavijestima e-poštom za pogreške i vraćanja.
+      - Također uvodi stvarnu SMTP isporuku za poruke ažuriranja te uključuje sigurnosna poboljšanja za API, izvoz i HTTP, kao i ažuriranja lokalizacije.
+    pt_PT: |-
+      - O Etherpad v3.1.0 adiciona autoatualizações autónomas de nível 4 com janelas de manutenção, verificações prévias e notificações por email para falhas e reversões.
+      - Introduz também envio SMTP real para os emails do atualizador e inclui reforços de segurança em API, exportação e HTTP, além de atualizações de localização.
+    ru_RU: |-
+      - Etherpad v3.1.0 добавляет автономные самообновления уровня 4 с окнами обслуживания, предварительными проверками и уведомлениями по email о сбоях и откатах.
+      - Также он вводит полноценную SMTP-доставку писем обновлятора и включает усиление безопасности API, экспорта и HTTP, а также обновления локализации.
+    tr_TR: |-
+      - Etherpad v3.1.0; bakım pencereleri, ön kontroller ve hata ya da geri alma durumları için e-posta bildirimleri içeren Tier 4 otonom öz güncellemeleri ekler.
+      - Ayrıca güncelleyici postaları için gerçek SMTP gönderimini sunar ve API, dışa aktarma ve HTTP tarafında güvenlik iyileştirmeleriyle birlikte yerelleştirme güncellemeleri içerir.
   store_app_id: etherpad
+  website: "https://etherpad.org/"
+  repo: "https://github.com/ether/etherpad"
+  support: "https://github.com/ether/etherpad/issues"
+  docs: "https://docs.etherpad.org/"
