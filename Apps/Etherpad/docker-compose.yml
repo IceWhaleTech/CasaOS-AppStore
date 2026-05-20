@@ -35,42 +35,6 @@ services:
       retries: 3
       start_period: 30s
     x-casaos:
-      ports:
-        - container: "9001"
-          description:
-            en_US: WebUI HTTP Port
-            en_GB: WebUI HTTP Port
-            it_IT: Porta HTTP WebUI
-            nb_NO: WebUI HTTP-port
-            zh_CN: WebUI HTTP端口
-            ja_JP: WebUI HTTPポート
-            ko_KR: WebUI HTTP 포트
-            fr_FR: Port HTTP WebUI
-            de_DE: WebUI-HTTP-Port
-            sv_SE: WebUI HTTP-port
-            el_GR: Θύρα HTTP WebUI
-            hr_HR: WebUI HTTP priključak
-            pt_PT: Porta HTTP da WebUI
-            ru_RU: HTTP-порт WebUI
-            tr_TR: WebUI HTTP Bağlantı Noktası
-      volumes:
-        - container: /opt/etherpad-lite/var
-          description:
-            en_US: Etherpad Data Directory
-            en_GB: Etherpad Data Directory
-            it_IT: Directory Dati di Etherpad
-            nb_NO: Etherpad datakatalog
-            zh_CN: Etherpad 数据目录
-            ja_JP: Etherpad データディレクトリ
-            ko_KR: Etherpad 데이터 디렉터리
-            fr_FR: Répertoire de données Etherpad
-            de_DE: Etherpad-Datenverzeichnis
-            sv_SE: Etherpad datakatalog
-            el_GR: Κατάλογος δεδομένων Etherpad
-            hr_HR: Etherpad direktorij podataka
-            pt_PT: Diretório de dados do Etherpad
-            ru_RU: Каталог данных Etherpad
-            tr_TR: Etherpad veri dizini
       envs:
         - container: TITLE
           description:
