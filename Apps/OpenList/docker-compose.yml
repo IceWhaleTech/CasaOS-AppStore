@@ -1,0 +1,454 @@
+name: openlist
+services:
+  openlist:
+    image: openlistteam/openlist:v4.2.1
+    container_name: openlist
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    network_mode: bridge
+    restart: unless-stopped
+    user: "999:1000"
+    ports:
+      - target: 5244
+        published: "5244"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /opt/openlist/data
+    environment:
+      UMASK: "022"
+      OPENLIST_ADMIN_PASSWORD: "casaos"
+    x-casaos:
+      ports:
+        - container: "5244"
+          description:
+            en_US: WebUI HTTP Port
+            en_GB: WebUI HTTP Port
+            it_IT: Porta HTTP WebUI
+            nb_NO: WebUI HTTP-port
+            zh_CN: WebUI HTTP端口
+            ja_JP: WebUI HTTPポート
+            ko_KR: WebUI HTTP 포트
+            fr_FR: Port HTTP WebUI
+            de_DE: WebUI-HTTP-Port
+            sv_SE: WebUI HTTP-port
+            el_GR: Θύρα HTTP WebUI
+            hr_HR: WebUI HTTP priključak
+            pt_PT: Porta HTTP da WebUI
+            ru_RU: HTTP-порт WebUI
+            tr_TR: WebUI HTTP Bağlantı Noktası
+      volumes:
+        - container: /opt/openlist/data
+          description:
+            en_US: OpenList Data Directory
+            en_GB: OpenList Data Directory
+            it_IT: Directory Dati di OpenList
+            nb_NO: OpenList datakatalog
+            zh_CN: OpenList 数据目录
+            ja_JP: OpenList データディレクトリ
+            ko_KR: OpenList 데이터 디렉터리
+            fr_FR: Répertoire de données OpenList
+            de_DE: OpenList-Datenverzeichnis
+            sv_SE: OpenList datakatalog
+            el_GR: Κατάλογος δεδομένων OpenList
+            hr_HR: OpenList direktorij podataka
+            pt_PT: Diretório de dados do OpenList
+            ru_RU: Каталог данных OpenList
+            tr_TR: OpenList veri dizini
+      envs:
+        - container: UMASK
+          description:
+            en_US: Sets the default file creation mask for OpenList
+            en_GB: Sets the default file creation mask for OpenList
+            it_IT: Imposta la maschera predefinita di creazione file per OpenList
+            nb_NO: Angir standard filopprettingsmaske for OpenList
+            zh_CN: 设置 OpenList 的默认文件创建掩码
+            ja_JP: OpenList の既定ファイル作成マスクを設定します
+            ko_KR: OpenList의 기본 파일 생성 마스크를 설정합니다
+            fr_FR: Définit le masque de création de fichiers par défaut pour OpenList
+            de_DE: Legt die Standard-Dateierstellungsmaske für OpenList fest
+            sv_SE: Anger standardmasken för filskapande i OpenList
+            el_GR: Ορίζει την προεπιλεγμένη μάσκα δημιουργίας αρχείων για το OpenList
+            hr_HR: Postavlja zadanu masku stvaranja datoteka za OpenList
+            pt_PT: Define a máscara predefinida de criação de ficheiros para o OpenList
+            ru_RU: Задает маску создания файлов по умолчанию для OpenList
+            tr_TR: OpenList için varsayılan dosya oluşturma maskesini ayarlar
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: openlist
+  category: Cloud
+  developer: OpenListTeam
+  author: OpenList Team
+  tagline:
+    en_US: Mount your cloud drive on your home NAS
+    en_GB: Mount your cloud drive on your home NAS
+    it_IT: Monta il tuo disco cloud sul tuo NAS domestico
+    nb_NO: Monter skylagringsstasjonen din på hjemme-NAS-en
+    zh_CN: 将你的云盘挂载到家用 NAS 上
+    ja_JP: クラウドドライブをホーム NAS にマウント
+    ko_KR: 클라우드 드라이브를 홈 NAS에 마운트
+    fr_FR: Montez votre disque cloud sur votre NAS domestique
+    de_DE: Mounten Sie Ihr Cloud-Laufwerk auf Ihrem Heim-NAS
+    sv_SE: Montera din molndisk på ditt hemmabaserade NAS
+    el_GR: Προσαρτήστε τη μονάδα cloud σας στο οικιακό σας NAS
+    hr_HR: Povežite svoj cloud disk na kućni NAS
+    pt_PT: Monte o seu disco na nuvem no seu NAS doméstico
+    ru_RU: Подключите ваш облачный диск к домашнему NAS
+    tr_TR: Bulut sürücünüzü ev NAS'ınıza bağlayın
+  description:
+    en_US: |
+      OpenList is a community-driven, self-hosted file listing and cloud drive mounting service that supports multiple storage backends in one place.
+      It brings local storage plus services like OneDrive, Google Drive, S3, WebDAV, SMB, and many other providers into one browser-based file hub.
+      With previews, uploads, sharing, WebDAV, offline download, and package download built in, it works well for home NAS setups, personal cloud libraries, and lightweight team file portals.
+
+      **Main Features:**
+      - Connect local disks, cloud drives, object storage, and WebDAV or SMB endpoints in one place
+      - Preview documents, images, audio, video, code, Markdown, and Office files directly in the browser
+      - Upload, move, rename, copy, delete, and batch download files and folders from a single interface
+      - Enable WebDAV, protected routes, sharing, dark mode, and multi-language support
+      - Support offline downloads, cross-storage file copying, and multi-thread acceleration
+
+      **Learn More:**
+      - [OpenList Official Website](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+    en_GB: |
+      OpenList is a community-driven, self-hosted file listing and cloud drive mounting service that supports multiple storage backends in one place.
+      It brings local storage plus services like OneDrive, Google Drive, S3, WebDAV, SMB, and many other providers into one browser-based file hub.
+      With previews, uploads, sharing, WebDAV, offline download, and package download built in, it works well for home NAS setups, personal cloud libraries, and lightweight team file portals.
+
+      **Main Features:**
+      - Connect local disks, cloud drives, object storage, and WebDAV or SMB endpoints in one place
+      - Preview documents, images, audio, video, code, Markdown, and Office files directly in the browser
+      - Upload, move, rename, copy, delete, and batch download files and folders from a single interface
+      - Enable WebDAV, protected routes, sharing, dark mode, and multi-language support
+      - Support offline downloads, cross-storage file copying, and multi-thread acceleration
+
+      **Learn More:**
+      - [OpenList Official Website](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+    it_IT: |
+      OpenList è un servizio self-hosted e community-driven per l'elenco dei file e il montaggio dei cloud drive, con supporto a più back-end di archiviazione in un unico posto.
+      Riunisce archiviazione locale e servizi come OneDrive, Google Drive, S3, WebDAV, SMB e molti altri provider in un unico hub file accessibile dal browser.
+      Con anteprime, upload, condivisione, WebDAV, download offline e download di pacchetti integrati, si adatta bene a NAS domestici, librerie cloud personali e portali file leggeri per team.
+
+      **Funzionalità Principali:**
+      - Collega dischi locali, cloud drive, object storage ed endpoint WebDAV o SMB in un solo posto
+      - Anteprima nel browser di documenti, immagini, audio, video, codice, Markdown e file Office
+      - Carica, sposta, rinomina, copia, elimina e scarica in batch file e cartelle da un'unica interfaccia
+      - Abilita WebDAV, percorsi protetti, condivisione, modalità scura e supporto multilingua
+      - Supporta download offline, copia di file tra archivi diversi e accelerazione multi-thread
+
+      **Ulteriori Informazioni:**
+      - [Sito Ufficiale OpenList](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+    nb_NO: |
+      OpenList er en selvhostet og fellesskapsdrevet tjeneste for fillisting og montering av skylagring, med støtte for flere lagringsbakender på ett sted.
+      Den samler lokal lagring og tjenester som OneDrive, Google Drive, S3, WebDAV, SMB og mange andre leverandører i ett nettleserbasert filnav.
+      Med innebygd forhåndsvisning, opplasting, deling, WebDAV, offline nedlasting og pakkenedlasting passer den godt til hjemme-NAS, personlige skylagre og lette filportaler for team.
+
+      **Hovedfunksjoner:**
+      - Koble lokale disker, skylagring, objektlagring og WebDAV- eller SMB-endepunkter på ett sted
+      - Forhåndsvis dokumenter, bilder, lyd, video, kode, Markdown og Office-filer direkte i nettleseren
+      - Last opp, flytt, gi nytt navn, kopier, slett og last ned filer og mapper i batch fra ett grensesnitt
+      - Aktiver WebDAV, beskyttede ruter, deling, mørk modus og støtte for flere språk
+      - Støtter offline nedlastinger, filkopiering mellom lagre og flertrådet akselerasjon
+
+      **Lær Mer:**
+      - [OpenList Offisielle Nettside](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+    zh_CN: |
+      OpenList 是一个社区驱动的自托管文件列表与云盘挂载服务，可在一个入口中统一接入多种存储后端。
+      它把本地存储、OneDrive、Google Drive、S3、WebDAV、SMB 等多种存储统一到一个基于浏览器的文件入口中。
+      内置预览、上传、分享、WebDAV、离线下载和打包下载后，它很适合家庭 NAS、个人云资料库和轻量团队文件门户。
+
+      **主要功能：**
+      - 连接本地磁盘、云盘、对象存储以及 WebDAV 或 SMB 等多种存储后端
+      - 直接在浏览器中预览文档、图片、音视频、代码、Markdown 和 Office 文件
+      - 通过统一界面上传、移动、重命名、复制、删除和批量下载文件与文件夹
+      - 提供 WebDAV、受保护路径、分享、深色模式和多语言支持
+      - 支持离线下载、跨存储复制文件和多线程加速
+
+      **了解更多：**
+      - [OpenList 官网](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+    ja_JP: |
+      OpenListは、複数のストレージバックエンドをひとつの場所で扱える、コミュニティ主導のセルフホスト型ファイル一覧・クラウドドライブマウントサービスです。
+      ローカルストレージに加え、OneDrive、Google Drive、S3、WebDAV、SMB など多くのプロバイダーを、ブラウザー上のひとつのファイルハブにまとめます。
+      プレビュー、アップロード、共有、WebDAV、オフラインダウンロード、パッケージダウンロードを標準搭載しており、家庭用 NAS、個人クラウドライブラリ、軽量なチーム向けファイルポータルに向いています。
+
+      **主な機能：**
+      - ローカルディスク、クラウドドライブ、オブジェクトストレージ、WebDAV や SMB のエンドポイントを一か所に接続
+      - ドキュメント、画像、音声、動画、コード、Markdown、Office ファイルをブラウザー内で直接プレビュー
+      - 単一の画面から、ファイルやフォルダーのアップロード、移動、名前変更、コピー、削除、バッチダウンロードが可能
+      - WebDAV、保護されたルート、共有、ダークモード、多言語サポートを利用可能
+      - オフラインダウンロード、ストレージ間ファイルコピー、マルチスレッド高速化に対応
+
+      **詳細情報：**
+      - [OpenList 公式サイト](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+    ko_KR: |
+      OpenList는 여러 스토리지 백엔드를 한곳에서 다룰 수 있는 커뮤니티 주도의 자체 호스팅 파일 목록 및 클라우드 드라이브 마운트 서비스입니다.
+      로컬 저장소와 OneDrive, Google Drive, S3, WebDAV, SMB 등 다양한 제공자를 하나의 브라우저 기반 파일 허브로 통합합니다.
+      미리보기, 업로드, 공유, WebDAV, 오프라인 다운로드, 패키지 다운로드를 기본 제공해 가정용 NAS, 개인 클라우드 라이브러리, 가벼운 팀 파일 포털에 잘 맞습니다.
+
+      **주요 기능:**
+      - 로컬 디스크, 클라우드 드라이브, 오브젝트 스토리지, WebDAV 또는 SMB 엔드포인트를 한곳에 연결
+      - 문서, 이미지, 오디오, 비디오, 코드, Markdown, Office 파일을 브라우저에서 직접 미리보기
+      - 하나의 인터페이스에서 파일과 폴더 업로드, 이동, 이름 변경, 복사, 삭제, 일괄 다운로드 수행
+      - WebDAV, 보호된 경로, 공유, 다크 모드, 다국어 지원 제공
+      - 오프라인 다운로드, 저장소 간 파일 복사, 멀티스레드 가속 지원
+
+      **더 알아보기:**
+      - [OpenList 공식 웹사이트](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+    fr_FR: |
+      OpenList est un service auto-hébergé et communautaire de listing de fichiers et de montage de lecteurs cloud, avec prise en charge de plusieurs backends de stockage au même endroit.
+      Il regroupe le stockage local et des services comme OneDrive, Google Drive, S3, WebDAV, SMB et bien d'autres fournisseurs dans un hub de fichiers accessible depuis le navigateur.
+      Avec les aperçus, l'envoi, le partage, WebDAV, le téléchargement hors ligne et le téléchargement groupé intégrés, il convient bien aux NAS domestiques, aux bibliothèques cloud personnelles et aux portails de fichiers légers pour équipes.
+
+      **Fonctionnalités Principales :**
+      - Connecte disques locaux, lecteurs cloud, stockage objet et points de terminaison WebDAV ou SMB au même endroit
+      - Prévisualise directement dans le navigateur documents, images, audio, vidéo, code, Markdown et fichiers Office
+      - Permet d'envoyer, déplacer, renommer, copier, supprimer et télécharger par lots fichiers et dossiers depuis une seule interface
+      - Active WebDAV, routes protégées, partage, mode sombre et prise en charge multilingue
+      - Prend en charge le téléchargement hors ligne, la copie entre stockages et l'accélération multithread
+
+      **En Savoir Plus :**
+      - [Site Officiel OpenList](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+    de_DE: |
+      OpenList ist ein community-getriebener, selbst gehosteter Dienst für Dateilisten und das Einbinden von Cloud-Laufwerken, der mehrere Speicher-Backends an einem Ort unterstützt.
+      Er bündelt lokalen Speicher sowie Dienste wie OneDrive, Google Drive, S3, WebDAV, SMB und viele weitere Anbieter in einem browserbasierten Datei-Hub.
+      Mit integrierter Vorschau, Uploads, Freigaben, WebDAV, Offline-Downloads und Paket-Downloads eignet er sich gut für Heim-NAS-Systeme, persönliche Cloud-Bibliotheken und leichte Dateiportale für Teams.
+
+      **Hauptfunktionen:**
+      - Verbindet lokale Laufwerke, Cloud-Speicher, Objektspeicher sowie WebDAV- oder SMB-Endpunkte an einem Ort
+      - Zeigt Dokumente, Bilder, Audio, Video, Code, Markdown und Office-Dateien direkt im Browser an
+      - Ermöglicht Hochladen, Verschieben, Umbenennen, Kopieren, Löschen und Stapel-Downloads von Dateien und Ordnern über eine einzige Oberfläche
+      - Bietet WebDAV, geschützte Routen, Freigaben, Dunkelmodus und mehrsprachige Unterstützung
+      - Unterstützt Offline-Downloads, Dateiübertragungen zwischen Speichern und Multi-Thread-Beschleunigung
+
+      **Mehr Erfahren:**
+      - [OpenList Offizielle Website](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+    sv_SE: |
+      OpenList är en communitydriven och självhostad tjänst för fillistning och montering av molndiskar, med stöd för flera lagringsbakändar på ett ställe.
+      Den samlar lokal lagring och tjänster som OneDrive, Google Drive, S3, WebDAV, SMB och många andra leverantörer i ett webbläsarbaserat filnav.
+      Med inbyggd förhandsvisning, uppladdning, delning, WebDAV, offline-nedladdning och paketnedladdning passar den bra för hem-NAS, personliga molnbibliotek och lätta filportaler för team.
+
+      **Huvudfunktioner:**
+      - Anslut lokala diskar, molndiskar, objektlagring och WebDAV- eller SMB-endpoints på ett ställe
+      - Förhandsgranska dokument, bilder, ljud, video, kod, Markdown och Office-filer direkt i webbläsaren
+      - Ladda upp, flytta, byt namn på, kopiera, radera och batchladda ner filer och mappar från ett enda gränssnitt
+      - Aktivera WebDAV, skyddade vägar, delning, mörkt läge och stöd för flera språk
+      - Stöd för offline-nedladdningar, kopiering mellan lagringar och flertrådad acceleration
+
+      **Lär Dig Mer:**
+      - [OpenList Officiella Webbplats](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+    el_GR: |
+      Το OpenList είναι μια community-driven και self-hosted υπηρεσία για καταλόγους αρχείων και προσάρτηση cloud drives, με υποστήριξη για πολλαπλά storage backends σε ένα μέρος.
+      Συγκεντρώνει τοπική αποθήκευση και υπηρεσίες όπως OneDrive, Google Drive, S3, WebDAV, SMB και πολλούς άλλους παρόχους σε ένα κεντρικό περιβάλλον αρχείων μέσα από τον browser.
+      Με ενσωματωμένες προεπισκοπήσεις, μεταφορτώσεις, κοινή χρήση, WebDAV, λήψεις εκτός σύνδεσης και λήψεις πακέτων, ταιριάζει καλά σε οικιακά NAS, προσωπικές cloud βιβλιοθήκες και ελαφριές πύλες αρχείων για ομάδες.
+
+      **Κύριες Λειτουργίες:**
+      - Συνδέει τοπικούς δίσκους, cloud drives, object storage και endpoints WebDAV ή SMB σε ένα μέρος
+      - Προεπισκόπηση εγγράφων, εικόνων, ήχου, βίντεο, κώδικα, Markdown και αρχείων Office απευθείας στον browser
+      - Μεταφόρτωση, μετακίνηση, μετονομασία, αντιγραφή, διαγραφή και μαζική λήψη αρχείων και φακέλων από ένα ενιαίο περιβάλλον
+      - Ενεργοποιεί WebDAV, προστατευμένες διαδρομές, κοινή χρήση, σκοτεινή λειτουργία και υποστήριξη πολλών γλωσσών
+      - Υποστηρίζει λήψεις εκτός σύνδεσης, αντιγραφή αρχείων μεταξύ αποθηκευτικών χώρων και επιτάχυνση πολλαπλών νημάτων
+
+      **Μάθετε Περισσότερα:**
+      - [Επίσημος Ιστότοπος OpenList](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+    hr_HR: |
+      OpenList je community-driven i samohostirani servis za popis datoteka i povezivanje cloud diskova, s podrškom za više spremišnih pozadina na jednom mjestu.
+      Objedinjuje lokalnu pohranu i servise poput OneDrivea, Google Drivea, S3, WebDAV-a, SMB-a i mnogih drugih pružatelja u jedno pregledničko središte za datoteke.
+      Uz ugrađene preglede, prijenos datoteka, dijeljenje, WebDAV, izvanmrežna preuzimanja i paketna preuzimanja, dobro odgovara kućnim NAS sustavima, osobnim cloud bibliotekama i laganim timskim portalima za datoteke.
+
+      **Glavne Funkcije:**
+      - Povezuje lokalne diskove, cloud diskove, object storage i WebDAV ili SMB odredišta na jednom mjestu
+      - Izravno u pregledniku pregledava dokumente, slike, audio, video, kod, Markdown i Office datoteke
+      - Omogućuje prijenos, premještanje, preimenovanje, kopiranje, brisanje i skupno preuzimanje datoteka i mapa iz jednog sučelja
+      - Omogućuje WebDAV, zaštićene rute, dijeljenje, tamni način rada i podršku za više jezika
+      - Podržava izvanmrežna preuzimanja, kopiranje datoteka između spremišta i višedretveno ubrzanje
+
+      **Saznajte Više:**
+      - [Službena Web Stranica OpenList](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+    pt_PT: |
+      O OpenList é um serviço auto-hospedado e orientado pela comunidade para listagem de ficheiros e montagem de discos na nuvem, com suporte para vários backends de armazenamento num só local.
+      Reúne armazenamento local e serviços como OneDrive, Google Drive, S3, WebDAV, SMB e muitos outros fornecedores num único centro de ficheiros baseado no navegador.
+      Com pré-visualizações, carregamentos, partilha, WebDAV, downloads offline e downloads em pacote integrados, adapta-se bem a NAS domésticos, bibliotecas cloud pessoais e portais de ficheiros leves para equipas.
+
+      **Principais Funcionalidades:**
+      - Liga discos locais, discos na nuvem, armazenamento de objetos e endpoints WebDAV ou SMB num só local
+      - Pré-visualiza documentos, imagens, áudio, vídeo, código, Markdown e ficheiros Office diretamente no navegador
+      - Permite carregar, mover, renomear, copiar, apagar e descarregar em lote ficheiros e pastas a partir de uma única interface
+      - Ativa WebDAV, rotas protegidas, partilha, modo escuro e suporte multilingue
+      - Suporta downloads offline, cópia de ficheiros entre armazenamentos e aceleração multithread
+
+      **Saiba Mais:**
+      - [Site Oficial OpenList](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+    ru_RU: |
+      OpenList — это community-driven и self-hosted сервис для файловых списков и подключения облачных дисков с поддержкой нескольких хранилищ в одном месте.
+      Он объединяет локальное хранилище и сервисы вроде OneDrive, Google Drive, S3, WebDAV, SMB и многих других провайдеров в единый файловый центр, работающий в браузере.
+      Благодаря встроенным предпросмотрам, загрузке, общему доступу, WebDAV, офлайн-загрузкам и пакетным скачиваниям он хорошо подходит для домашних NAS, личных облачных библиотек и лёгких командных файловых порталов.
+
+      **Основные Функции:**
+      - Подключает локальные диски, облачные накопители, объектное хранилище и конечные точки WebDAV или SMB в одном месте
+      - Позволяет просматривать документы, изображения, аудио, видео, код, Markdown и Office-файлы прямо в браузере
+      - Даёт возможность загружать, перемещать, переименовывать, копировать, удалять и пакетно скачивать файлы и папки из единого интерфейса
+      - Предоставляет WebDAV, защищённые маршруты, общий доступ, тёмный режим и поддержку нескольких языков
+      - Поддерживает офлайн-загрузки, копирование файлов между хранилищами и многопоточную акселерацию
+
+      **Узнать Больше:**
+      - [Официальный Сайт OpenList](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+    tr_TR: |
+      OpenList, birden fazla depolama arka ucunu tek yerde destekleyen, topluluk odaklı ve kendi kendine barındırılabilen bir dosya listeleme ve bulut sürücüsü bağlama hizmetidir.
+      Yerel depolamayı ve OneDrive, Google Drive, S3, WebDAV, SMB ile daha birçok sağlayıcıyı tarayıcı tabanlı tek bir dosya merkezinde bir araya getirir.
+      Yerleşik önizleme, yükleme, paylaşım, WebDAV, çevrimdışı indirme ve paket indirme özellikleri sayesinde ev NAS kurulumları, kişisel bulut arşivleri ve hafif ekip dosya portalları için iyi bir uyum sağlar.
+
+      **Başlıca İşlevler:**
+      - Yerel diskleri, bulut sürücülerini, nesne depolamayı ve WebDAV veya SMB uç noktalarını tek yerde birleştirir
+      - Belgeleri, görselleri, sesleri, videoları, kodu, Markdown'u ve Office dosyalarını doğrudan tarayıcıda önizler
+      - Tek bir arayüzden dosya ve klasör yükleme, taşıma, yeniden adlandırma, kopyalama, silme ve toplu indirme işlemlerini sunar
+      - WebDAV, korumalı yollar, paylaşım, karanlık mod ve çok dilli desteği etkinleştirir
+      - Çevrimdışı indirmeleri, depolar arası dosya kopyalamayı ve çok iş parçacıklı hızlandırmayı destekler
+
+      **Daha Fazla Bilgi:**
+      - [OpenList Resmi Web Sitesi](https://oplist.org/)
+      - [OpenList GitHub](https://github.com/OpenListTeam/OpenList)
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenList/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenList/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenList/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenList/screenshot-3.png
+  tips:
+    before_install:
+      en_US: |
+        Default username: `admin`
+        Default password: `casaos`
+        If you want to change the password, please modify it in the OpenList WebUI.
+      en_GB: |
+        Default username: `admin`
+        Default password: `casaos`
+        If you want to change the password, please modify it in the OpenList WebUI.
+      it_IT: |
+        Nome utente predefinito: `admin`
+        Password predefinita: `casaos`
+        Se vuoi modificare la password, fallo nella WebUI di OpenList.
+      nb_NO: |
+        Standard brukernavn: `admin`
+        Standard passord: `casaos`
+        Hvis du vil endre passordet, gjør det i OpenList WebUI.
+      zh_CN: |
+        默认用户名：`admin`
+        默认密码：`casaos`
+        如果想要修改密码，请在 OpenList 的 WebUI 中修改。
+      ja_JP: |
+        デフォルトのユーザー名: `admin`
+        デフォルトのパスワード: `casaos`
+        パスワードを変更したい場合は、OpenList の WebUI で変更してください。
+      ko_KR: |
+        기본 사용자 이름: `admin`
+        기본 비밀번호: `casaos`
+        비밀번호를 변경하려면 OpenList WebUI에서 수정하세요.
+      fr_FR: |
+        Nom d'utilisateur par défaut : `admin`
+        Mot de passe par défaut : `casaos`
+        Si vous souhaitez modifier le mot de passe, veuillez le faire dans la WebUI d'OpenList.
+      de_DE: |
+        Standardbenutzername: `admin`
+        Standardpasswort: `casaos`
+        Wenn Sie das Passwort ändern möchten, tun Sie dies bitte in der OpenList-WebUI.
+      sv_SE: |
+        Standardanvändarnamn: `admin`
+        Standardlösenord: `casaos`
+        Om du vill ändra lösenordet gör du det i OpenLists WebUI.
+      el_GR: |
+        Προεπιλεγμένο όνομα χρήστη: `admin`
+        Προεπιλεγμένος κωδικός πρόσβασης: `casaos`
+        Αν θέλετε να αλλάξετε τον κωδικό, κάντε το μέσα από το WebUI του OpenList.
+      hr_HR: |
+        Zadano korisničko ime: `admin`
+        Zadana lozinka: `casaos`
+        Ako želite promijeniti lozinku, učinite to u OpenList WebUI sučelju.
+      pt_PT: |
+        Nome de utilizador predefinido: `admin`
+        Palavra-passe predefinida: `casaos`
+        Se quiser alterar a palavra-passe, faça-o na WebUI do OpenList.
+      ru_RU: |
+        Имя пользователя по умолчанию: `admin`
+        Пароль по умолчанию: `casaos`
+        Если вы хотите изменить пароль, сделайте это в WebUI OpenList.
+      tr_TR: |
+        Varsayılan kullanıcı adı: `admin`
+        Varsayılan parola: `casaos`
+        Parolayı değiştirmek istiyorsanız bunu OpenList WebUI üzerinden yapın.
+  scheme: http
+  port_map: "5244"
+  index: /
+  title:
+    en_US: OpenList
+  version: "4.2.1"
+  updateAt: "2026-04-09"
+  releaseNotes:
+    en_US: |-
+      - v4.2.1 locks musl outputs to fully static linking in the build script and CI workflows.
+      - It also fixes path cache invalidation after meta path updates.
+    en_GB: |-
+      - v4.2.1 locks musl outputs to fully static linking in the build script and CI workflows.
+      - It also fixes path cache invalidation after meta path updates.
+    it_IT: |-
+      - La v4.2.1 blocca gli output musl sul collegamento completamente statico negli script di build e nei workflow CI.
+      - Inoltre corregge l'invalidazione della cache dei percorsi dopo gli aggiornamenti del meta path.
+    nb_NO: |-
+      - v4.2.1 låser musl-utganger til fullstendig statisk linking i byggeskriptet og CI-arbeidsflytene.
+      - Den fikser også ugyldiggjøring av sti-cache etter oppdateringer av metasti.
+    zh_CN: |-
+      - v4.2.1 将 musl 输出固定为在构建脚本和 CI 工作流中使用完全静态链接。
+      - 同时修复了元路径更新后路径缓存失效的问题。
+    ja_JP: |-
+      - v4.2.1 では、ビルドスクリプトと CI ワークフローにおける musl 出力が完全静的リンクに固定されました。
+      - あわせて、メタパス更新後のパスキャッシュ無効化の不具合も修正されています。
+    ko_KR: |-
+      - v4.2.1은 빌드 스크립트와 CI 워크플로에서 musl 출력이 완전 정적 링크를 사용하도록 고정했습니다.
+      - 또한 메타 경로 업데이트 후 경로 캐시 무효화 문제를 수정했습니다.
+    fr_FR: |-
+      - La v4.2.1 verrouille les sorties musl sur un chaînage entièrement statique dans le script de build et les workflows CI.
+      - Elle corrige aussi l'invalidation du cache de chemins après les mises à jour de meta path.
+    de_DE: |-
+      - v4.2.1 stellt die musl-Ausgaben in Build-Skript und CI-Workflows auf vollständig statisches Linking fest.
+      - Außerdem wird die Invalidierung des Pfad-Caches nach Meta-Pfad-Aktualisierungen korrigiert.
+    sv_SE: |-
+      - v4.2.1 låser musl-utdata till fullständigt statisk länkning i byggskriptet och CI-arbetsflödena.
+      - Den åtgärdar också ogiltigförklaring av sökvägscache efter uppdateringar av metasökvägar.
+    el_GR: |-
+      - Το v4.2.1 κλειδώνει τα musl outputs σε πλήρως στατική σύνδεση στο build script και στα CI workflows.
+      - Επίσης διορθώνει την ακύρωση της cache διαδρομών μετά από ενημερώσεις meta path.
+    hr_HR: |-
+      - v4.2.1 zaključava musl izlaze na potpuno statičko povezivanje u build skripti i CI tijekovima rada.
+      - Također ispravlja poništavanje predmemorije putanja nakon ažuriranja meta putanje.
+    pt_PT: |-
+      - A v4.2.1 fixa as saídas musl em ligação totalmente estática no script de compilação e nos fluxos de trabalho CI.
+      - Corrige também a invalidação da cache de caminhos após atualizações de meta path.
+    ru_RU: |-
+      - В v4.2.1 выводы musl закреплены за полностью статической линковкой в скрипте сборки и CI-процессах.
+      - Также исправлена инвалидация кэша путей после обновлений meta path.
+    tr_TR: |-
+      - v4.2.1, musl çıktılarının derleme betiğinde ve CI iş akışlarında tamamen statik bağlama kullanmasını sabitler.
+      - Ayrıca meta path güncellemelerinden sonra yol önbelleğinin geçersiz kılınması sorununu düzeltir.
+  store_app_id: openlist
+  website: "https://oplist.org/"
+  repo: "https://github.com/OpenListTeam/OpenList"
+  support: "https://github.com/OpenListTeam/OpenList/issues"
+  docs: "https://doc.oplist.org/"
