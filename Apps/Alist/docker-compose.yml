@@ -1,7 +1,7 @@
 name: alist
 services:
   alist:
-    image: xhofe/alist:v3.40.0
+    image: xhofe/alist:v3.60.0
     deploy:
       resources:
         reservations:
@@ -173,54 +173,54 @@ x-casaos:
       tr_TR: Kurulumdan sonra, başlangıç şifresini konteyner günlüğünde kontrol edin (Ayarlar - Sağ Üst - Terminal ve Günlükler - Günlükler).
   title:
     en_us: Alist
-  version: "v3.40.0"
-  updateAt: "2024-11-22"
+  version: "v3.60.0"
+  updateAt: "2026-04-20"
   releaseNotes:
     en_US: |-
-      - v3.40.0 adds cryptographic random string generation for security and OAuth state generation/verification for SSO.
-      - Fixes include Baidu Netdisk timestamps, local file owner preservation, closing closed channels, PikPak captcha_sign errors, and OIDC compatibility mode.
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
     en_GB: |-
-      - v3.40.0 adds cryptographic random string generation for security and OAuth state generation/verification for SSO.
-      - Fixes include Baidu Netdisk timestamps, local file owner preservation, closing closed channels, PikPak captcha_sign errors, and OIDC compatibility mode.
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
     it_IT: |-
-      - v3.40.0 aggiunge la generazione di stringhe casuali crittografiche per la sicurezza e la generazione/verifica dello stato OAuth per SSO.
-      - Le correzioni includono timestamp di Baidu Netdisk, conservazione del proprietario del file locale, chiusura di canali chiusi, errori PikPak captcha_sign e modalità di compatibilità OIDC.
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
     nb_NO: |-
-      - v3.40.0 legger til kryptografisk tilfeldig strenggenerering for sikkerhet og OAuth tilstandsgenerering/verifisering for SSO.
-      - Rettelser inkluderer Baidu Netdisk-tidsstempler, bevaring av lokal fileier, lukking av lukkede kanaler, PikPak captcha_sign-feil og OIDC-kompatibilitetsmodus.
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
     zh_CN: |-
-      - v3.40.0 增加了用于安全场景的 cryptographic random string 生成，以及用于 SSO 的 OAuth state 生成/验证。
-      - 修复内容包括百度网盘时间戳、本地文件 owner 保留、关闭已关闭 channel、PikPak captcha_sign 错误以及 OIDC compatibility mode。
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
     ja_JP: |-
-      - v3.40.0 はセキュリティ向けの cryptographic random string 生成と、SSO 向けの OAuth state 生成/検証を追加します。
-      - Baidu Netdisk のタイムスタンプ、ローカルファイル owner の保持、閉じられた channel の終了、PikPak captcha_sign エラー、OIDC compatibility mode が修正されました。
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
     ko_KR: |-
-      - v3.40.0은 보안을 위한 cryptographic random string 생성과 SSO용 OAuth state 생성/검증을 추가합니다.
-      - Baidu Netdisk 타임스탬프, 로컬 파일 owner 보존, 닫힌 channel 종료, PikPak captcha_sign 오류, OIDC compatibility mode가 수정되었습니다.
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
     fr_FR: |-
-      - v3.40.0 ajoute la generation de chaines aleatoires cryptographiques pour la securite et la generation/verification OAuth state pour le SSO.
-      - Les correctifs couvrent les horodatages Baidu Netdisk, la conservation du owner des fichiers locaux, la fermeture de channels deja fermes, les erreurs PikPak captcha_sign et OIDC compatibility mode.
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
     de_DE: |-
-      - v3.40.0 ergaenzt kryptografische Zufallsstring-Erzeugung fuer Sicherheit und OAuth-State-Erzeugung/Pruefung fuer SSO.
-      - Korrekturen betreffen Baidu-Netdisk-Zeitstempel, Erhalt lokaler Dateibesitzer, Schliessen geschlossener Channels, PikPak captcha_sign-Fehler und OIDC compatibility mode.
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
     sv_SE: |-
-      - v3.40.0 lägger till kryptografisk slumpmässig stränggenerering för säkerhet och OAuth tillståndsgenerering/verifiering för SSO.
-      - Korrigeringar inkluderar Baidu Netdisk-tidsstämplar, bevarande av lokal filägare, stängning av stängda kanaler, PikPak captcha_sign-fel och OIDC-kompatibilitetsläge.
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
     el_GR: |-
-      - Το v3.40.0 προσθέτει κρυπτογραφική δημιουργία τυχαίας συμβολοσειράς για ασφάλεια και OAuth δημιουργία/επαλήθευση κατάστασης για SSO.
-      - Οι διορθώσεις περιλαμβάνουν χρονικές σημάνσεις Baidu Netdisk, διατήρηση τοπικού κατόχου αρχείων, κλείσιμο κλειστών καναλιών, σφάλματα PikPak captcha_sign και λειτουργία συμβατότητας OIDC.
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
     hr_HR: |-
-      - v3.40.0 dodaje kriptografsko nasumično generiranje niza za sigurnost i OAuth generiranje/provjeru stanja za SSO.
-      - Popravci uključuju vremenske oznake Baidu Netdiska, očuvanje vlasnika lokalne datoteke, zatvaranje zatvorenih kanala, pogreške PikPak captcha_sign i način rada kompatibilnosti OIDC.
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
     pt_PT: |-
-      - v3.40.0 adiciona geração de string aleatória criptográfica para segurança e geração/verificação de estado OAuth para SSO.
-      - As correções incluem carimbos de data/hora do Baidu Netdisk, preservação do proprietário do ficheiro local, fecho de canais fechados, erros PikPak captcha_sign e modo de compatibilidade OIDC.
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
     ru_RU: |-
-      - v3.40.0 добавляет генерацию криптографических случайных строк для безопасности и генерацию/проверку состояния OAuth для SSO.
-      - Исправления включают временные метки Baidu Netdisk, сохранение локального владельца файла, закрытие закрытых каналов, ошибки PikPak captcha_sign и режим совместимости OIDC.
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
     tr_TR: |-
-      - v3.40.0, güvenlik için kriptografik rastgele dize oluşturma ve SSO için OAuth durum oluşturma/doğrulama ekler.
-      - Düzeltmeler arasında Baidu Netdisk zaman damgaları, yerel dosya sahibinin korunması, kapalı kanalların kapatılması, PikPak captcha_sign hataları ve OIDC uyumluluk modu yer alıyor.
+      - v3.60.0 adds FRP runtime log and stop APIs plus runtime bootstrap settings.
+      - It also adds full GuangYaPan driver integration.
   website: "https://alistgo.com/"
   repo: "https://github.com/AlistGo/alist"
   support: "https://github.com/AlistGo/alist/issues"
