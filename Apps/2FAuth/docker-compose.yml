@@ -16,6 +16,8 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID
         target: /2fauth
+    environment:
+      APP_KEY: SomeRandomStringOf32CharsExactly
     x-casaos:
       ports:
         - container: "8000"
