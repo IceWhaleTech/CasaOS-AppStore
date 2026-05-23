@@ -18,7 +18,7 @@ services:
       - dify
 
   api:
-    image: langgenius/dify-api:0.12.1
+    image: langgenius/dify-api:0.15.8
     container_name: dify-api
     restart: unless-stopped
     environment:
@@ -72,7 +72,7 @@ services:
       - dify
 
   worker:
-    image: langgenius/dify-api:0.12.1
+    image: langgenius/dify-api:0.15.8
     container_name: dify-worker
     restart: unless-stopped
     environment:
@@ -105,7 +105,7 @@ services:
       - dify
 
   web:
-    image: langgenius/dify-web:0.12.1
+    image: langgenius/dify-web:0.15.8
     container_name: dify-web
     restart: unless-stopped
     environment:
@@ -178,7 +178,7 @@ services:
       - dify
 
   sandbox:
-    image: langgenius/dify-sandbox:0.2.10
+    image: langgenius/dify-sandbox:0.2.11
     container_name: dify-sandbox
     restart: unless-stopped
     environment:
@@ -263,69 +263,69 @@ x-casaos:
     en_us: Dify
   index: /
   port_map: "3701"
-  version: "0.12.1"
-  updateAt: "2024-11-26"
+  version: "0.15.8"
+  updateAt: "2025-05-30"
   releaseNotes:
     en_US: |-
-      - 0.12.1 fixes custom icon display in the webapp and file handling in Start forms.
-      - LLM memory processing, conversation deletion, app creation, and template import errors were corrected.
-      - The release includes upgrade guidance for Docker Compose deployments.
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
     en_GB: |-
-      - 0.12.1 fixes custom icon display in the webapp and file handling in Start forms.
-      - LLM memory processing, conversation deletion, app creation, and template import errors were corrected.
-      - The release includes upgrade guidance for Docker Compose deployments.
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
     it_IT: |-
-      - 0.12.1 risolve la visualizzazione personalizzata delle icone nella webapp e la gestione dei file nei moduli Start.
-      - Sono stati corretti gli errori di elaborazione della memoria LLM, eliminazione delle conversazioni, creazione di app e importazione di modelli.
-      - La versione include indicazioni sull'aggiornamento per le distribuzioni Docker Compose.
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
     nb_NO: |-
-      - 0.12.1 fikser tilpasset ikonvisning i webappen og filhåndtering i Start-skjemaer.
-      - LLM minnebehandling, samtalesletting, appoppretting og malimportfeil ble rettet.
-      - Utgivelsen inkluderer oppgraderingsveiledning for Docker Compose-distribusjoner.
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
     zh_CN: |-
-      - 0.12.1 修复了 webapp 中 custom icon 显示和 Start forms 中的文件处理。
-      - 修正了 LLM memory processing、conversation deletion、app creation 和 template import 错误。
-      - 此版本包含 Docker Compose 部署的升级指导。
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
     ja_JP: |-
-      - 0.12.1 は webapp の custom icon 表示と Start forms のファイル処理を修正します。
-      - LLM memory processing、conversation deletion、app creation、template import エラーが修正されました。
-      - このリリースには Docker Compose デプロイ向けのアップグレード手順が含まれます。
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
     ko_KR: |-
-      - 0.12.1은 webapp의 custom icon 표시와 Start forms의 파일 처리를 수정합니다.
-      - LLM memory processing, conversation deletion, app creation, template import 오류가 수정되었습니다.
-      - 이 릴리스에는 Docker Compose 배포를 위한 업그레이드 안내가 포함됩니다.
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
     fr_FR: |-
-      - 0.12.1 corrige l'affichage des custom icons dans la webapp et la gestion des fichiers dans Start forms.
-      - LLM memory processing, conversation deletion, app creation et les erreurs template import ont ete corriges.
-      - Cette version inclut des consignes de mise a niveau pour les deploiements Docker Compose.
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
     de_DE: |-
-      - 0.12.1 behebt die Anzeige von custom icons in der Webapp und die Dateiverarbeitung in Start forms.
-      - LLM memory processing, conversation deletion, app creation und template import-Fehler wurden korrigiert.
-      - Das Release enthaelt Upgrade-Hinweise fuer Docker-Compose-Deployments.
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
     sv_SE: |-
-      - 0.12.1 fixar anpassad ikonvisning i webbappen och filhantering i Start-formulär.
-      - LLM minnesbearbetning, konversationsradering, appskapande och mallimportfel korrigerades.
-      - Utgåvan innehåller uppgraderingsvägledning för Docker Compose-distributioner.
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
     el_GR: |-
-      - Το 0.12.1 διορθώνει την εμφάνιση προσαρμοσμένων εικονιδίων στην εφαρμογή web και το χειρισμό αρχείων στις φόρμες έναρξης.
-      - Διορθώθηκαν σφάλματα επεξεργασίας μνήμης LLM, διαγραφής συνομιλίας, δημιουργίας εφαρμογής και εισαγωγής προτύπου.
-      - Η έκδοση περιλαμβάνει οδηγίες αναβάθμισης για αναπτύξεις Docker Compose.
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
     hr_HR: |-
-      - 0.12.1 popravlja prilagođeni prikaz ikona u web aplikaciji i rukovanje datotekama u početnim obrascima.
-      - Ispravljene su pogreške obrade memorije LLM, brisanja razgovora, stvaranja aplikacije i uvoza predložaka.
-      - Izdanje uključuje smjernice za nadogradnju za Docker Compose implementacije.
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
     pt_PT: |-
-      - 0.12.1 corrige a apresentação de ícones personalizados na webapp e o manuseamento de ficheiros nos formulários iniciais.
-      - Foram corrigidos erros de processamento de memória LLM, eliminação de conversas, criação de aplicações e importação de modelos.
-      - A versão inclui orientações de atualização para as implementações do Docker Compose.
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
     ru_RU: |-
-      - 0.12.1 исправляет отображение пользовательских значков в веб-приложении и обработку файлов в стартовых формах.
-      - Исправлены ошибки обработки памяти LLM, удаления диалогов, создания приложений и импорта шаблонов.
-      - В выпуск включено руководство по обновлению для развертываний Docker Compose.
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
     tr_TR: |-
-      - 0.12.1 web uygulamasındaki özel simge görünümünü ve Başlangıç ​​formlarındaki dosya işlemeyi düzeltir.
-      - LLM bellek işleme, konuşma silme, uygulama oluşturma ve şablon içe aktarma hataları düzeltildi.
-      - Sürüm, Docker Compose dağıtımları için yükseltme kılavuzunu içerir.
+      - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
+      - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
+      - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
   website: "https://dify.ai"
   repo: "https://github.com/langgenius/dify"
   support: "https://github.com/langgenius/dify/discussions"
