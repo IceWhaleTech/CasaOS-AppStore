@@ -169,3 +169,55 @@ x-casaos:
   title:
     en_us: PostgreSQL
   category: Developer
+  version: "17.4"
+  updateAt: "2025-04-29"
+  releaseNotes:
+    en_US: |-
+      - PostgreSQL 17.4 fixes libpq quoting behavior after CVE-2025-1094 so length-limited strings are handled correctly.
+      - The release also fixes a pg_createsubscriber memory leak and a Meson build-system header detection issue.
+    en_GB: |-
+      - PostgreSQL 17.4 fixes libpq quoting behavior after CVE-2025-1094 so length-limited strings are handled correctly.
+      - The release also fixes a pg_createsubscriber memory leak and a Meson build-system header detection issue.
+    it_IT: |-
+      - PostgreSQL 17.4 risolve il comportamento delle virgolette di libpq dopo CVE-2025-1094 in modo che le stringhe length-limited vengano gestite correttamente.
+      - La versione risolve anche una perdita di memoria di pg_createsubscriber e un problema di rilevamento dell'intestazione Meson build-system.
+    nb_NO: |-
+      - PostgreSQL 17.4 fikser libpq sitatoppførsel etter CVE-2025-1094 slik at length-limited strenger håndteres riktig.
+      - Utgivelsen fikser også en pg_createsubscriber-minnelekkasje og et Meson build-system-headerdeteksjonsproblem.
+    zh_CN: |-
+      - PostgreSQL 17.4 修复了 CVE-2025-1094 之后 libpq 的引用处理行为，使长度受限的字符串能被正确处理。
+      - 此版本还修复了 pg_createsubscriber 内存泄漏以及 Meson 构建系统的头文件检测问题。
+    ja_JP: |-
+      - PostgreSQL 17.4 は CVE-2025-1094 後の libpq のクォート処理を修正し、長さ制限付き文字列が正しく扱われるようにします。
+      - このリリースでは、pg_createsubscriber のメモリリークと Meson ビルドシステムのヘッダー検出問題も修正されています。
+    ko_KR: |-
+      - PostgreSQL 17.4는 CVE-2025-1094 이후 libpq의 quoting 동작을 수정하여 길이가 제한된 문자열이 올바르게 처리되도록 합니다.
+      - 이 릴리스는 pg_createsubscriber 메모리 누수와 Meson 빌드 시스템의 헤더 감지 문제도 수정합니다.
+    fr_FR: |-
+      - PostgreSQL 17.4 corrige le comportement de citation de libpq apres CVE-2025-1094 afin que les chaines limitees en longueur soient traitees correctement.
+      - Cette version corrige aussi une fuite memoire dans pg_createsubscriber et un probleme de detection d'en-tetes dans le systeme de build Meson.
+    de_DE: |-
+      - PostgreSQL 17.4 behebt das libpq-Quoting-Verhalten nach CVE-2025-1094, sodass laengenbegrenzte Zeichenketten korrekt verarbeitet werden.
+      - Diese Version behebt ausserdem ein Speicherleck in pg_createsubscriber und ein Problem bei der Header-Erkennung im Meson-Buildsystem.
+    sv_SE: |-
+      - PostgreSQL 17.4 fixar libpq-citatbeteende efter CVE-2025-1094 så att length-limited-strängar hanteras korrekt.
+      - Utgåvan åtgärdar också en minnesläcka pg_createsubscriber och ett Meson build-system header-detekteringsproblem.
+    el_GR: |-
+      - Το PostgreSQL 17.4 διορθώνει τη συμπεριφορά εισαγωγικών libpq μετά από CVE-2025-1094, ώστε οι συμβολοσειρές length-limited να χειρίζονται σωστά.
+      - Η έκδοση διορθώνει επίσης μια διαρροή μνήμης pg_createsubscriber και ένα πρόβλημα ανίχνευσης κεφαλίδας Meson build-system.
+    hr_HR: |-
+      - PostgreSQL 17.4 popravlja ponašanje libpq citiranja nakon CVE-2025-1094 tako da se s nizovima length-limited rukuje ispravno.
+      - Izdanje također popravlja curenje memorije pg_createsubscriber i problem otkrivanja zaglavlja Meson build-system.
+    pt_PT: |-
+      - PostgreSQL 17.4 corrige o comportamento de citação da libpq após CVE-2025-1094 para que as strings length-limited sejam tratadas corretamente.
+      - A versão também corrige uma fuga de memória pg_createsubscriber e um problema de deteção de cabeçalho Meson build-system.
+    ru_RU: |-
+      - PostgreSQL 17.4 исправляет поведение цитирования libpq после CVE-2025-1094, поэтому строки length-limited обрабатываются правильно.
+      - В выпуске также исправлена ​​утечка памяти pg_createsubscriber и проблема обнаружения заголовка Meson build-system.
+    tr_TR: |-
+      - PostgreSQL 17.4, CVE-2025-1094 sonrasındaki libpq alıntı yapma davranışını düzelterek length-limited dizelerinin doğru şekilde işlenmesini sağlar.
+      - Sürüm ayrıca pg_createsubscriber bellek sızıntısını ve Meson build-system başlık algılama sorununu da düzeltir.
+  website: "https://www.postgresql.org"
+  repo: "https://github.com/postgres/postgres"
+  support: "https://www.postgresql.org/support/"
+  docs: "https://www.postgresql.org/docs/17/"

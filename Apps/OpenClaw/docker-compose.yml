@@ -1,6 +1,6 @@
 services:
   openclaw:
-    image: icewhaletech/openclaw:2026.4.9
+    image: icewhaletech/openclaw:2026.5.7
     environment:
       HOME: /home/node
       TERM: xterm-256color
@@ -533,3 +533,70 @@ x-casaos:
       sv_SE: Före användning, vänligen följ [Konfigurationsguiden](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) för att konfigurera modellen och relaterade inställningar.
       tr_TR: Kullanmadan önce, lütfen [Yapılandırma Kılavuzu](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)nu takip ederek modeli ve ilgili ayarları yapılandırın.
       zh_CN: 使用前请先按照 [配置指南](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) 配置model 及相关配置
+  version: "2026.5.7"
+  updateAt: "2026-05-13"
+  releaseNotes:
+    en_US: |-
+      - OpenClaw 2026.5.7 improves release and plugin publishing recovery around transient ClawHub CLI dependency installation failures.
+      - Adds an explicit openai/chat-latest direct API-key model override and exposes computed cron status in JSON output.
+      - Hardens native command ownership, memory admin checks, inline skill tool authorization, credential resolution, and plugin lifecycle shell handling.
+    en_GB: |-
+      - OpenClaw 2026.5.7 improves release and plugin publishing recovery around transient ClawHub CLI dependency installation failures.
+      - Adds an explicit openai/chat-latest direct API-key model override and exposes computed cron status in JSON output.
+      - Hardens native command ownership, memory admin checks, inline skill tool authorization, credential resolution, and plugin lifecycle shell handling.
+    it_IT: |-
+      - OpenClaw 2026.5.7 migliora il ripristino della pubblicazione del rilascio e del plug-in in caso di errori di installazione delle dipendenze transitorie ClawHub CLI.
+      - Aggiunge un override esplicito del modello openai/chat-latest diretto API-key ed espone lo stato cron calcolato nell'output JSON.
+      - Rafforza la proprietà dei comandi nativi, i controlli di amministrazione della memoria, l'autorizzazione degli strumenti di abilità in linea, la risoluzione delle credenziali e la gestione della shell del ciclo di vita dei plug-in.
+    nb_NO: |-
+      - OpenClaw 2026.5.7 forbedrer utgivelses- og pluginpubliseringsgjenoppretting rundt forbigående ClawHub CLI avhengighetsinstallasjonsfeil.
+      - Legger til en eksplisitt openai/chat-latest direkte API-key modelloverstyring og avslører beregnet cron-status i JSON-utdata.
+      - Hardner innfødt kommandoeierskap, minneadministratorsjekker, innebygd ferdighetsverktøyautorisasjon, legitimasjonsoppløsning og plugin-livssyklus-skallhåndtering.
+    zh_CN: |-
+      - OpenClaw 2026.5.7 改进了 transient ClawHub CLI dependency installation failures 场景下的 release 和 plugin publishing recovery。
+      - 新增显式 openai/chat-latest direct API-key model override，并在 JSON output 中暴露 computed cron status。
+      - 加固了 native command ownership、memory admin checks、inline skill tool authorization、credential resolution 和 plugin lifecycle shell handling。
+    ja_JP: |-
+      - OpenClaw 2026.5.7 は transient ClawHub CLI dependency installation failures まわりの release と plugin publishing recovery を改善します。
+      - 明示的な openai/chat-latest direct API-key model override を追加し、JSON output に computed cron status を公開します。
+      - native command ownership、memory admin checks、inline skill tool authorization、credential resolution、plugin lifecycle shell handling が強化されました。
+    ko_KR: |-
+      - OpenClaw 2026.5.7은 transient ClawHub CLI dependency installation failures 상황에서 release 및 plugin publishing recovery를 개선합니다.
+      - 명시적인 openai/chat-latest direct API-key model override를 추가하고 JSON output에 computed cron status를 노출합니다.
+      - native command ownership, memory admin checks, inline skill tool authorization, credential resolution, plugin lifecycle shell handling을 강화했습니다.
+    fr_FR: |-
+      - OpenClaw 2026.5.7 ameliore release et plugin publishing recovery en cas de transient ClawHub CLI dependency installation failures.
+      - Un openai/chat-latest direct API-key model override explicite a ete ajoute et computed cron status est expose dans JSON output.
+      - Native command ownership, memory admin checks, inline skill tool authorization, credential resolution et plugin lifecycle shell handling ont ete renforces.
+    de_DE: |-
+      - OpenClaw 2026.5.7 verbessert release und plugin publishing recovery bei transient ClawHub CLI dependency installation failures.
+      - Ein expliziter openai/chat-latest direct API-key model override wurde hinzugefuegt, und computed cron status wird in JSON output ausgegeben.
+      - Gehaertet wurden native command ownership, memory admin checks, inline skill tool authorization, credential resolution und plugin lifecycle shell handling.
+    sv_SE: |-
+      - OpenClaw 2026.5.7 förbättrar release- och plugin-publiceringsåterställning kring tillfälliga ClawHub CLI-beroendeinstallationsfel.
+      - Lägger till en explicit openai/chat-latest direkt API-key modell åsidosättande och exponerar beräknad cron status i JSON utdata.
+      - Förstärker inbyggt kommandoägande, minnesadministratörskontroller, auktorisering av inline-färdighetsverktyg, autentiseringsupplösning och plugin-livscykelhantering.
+    el_GR: |-
+      - Το OpenClaw 2026.5.7 βελτιώνει την ανάκτηση έκδοσης και δημοσίευσης προσθηκών σχετικά με παροδικές αποτυχίες εγκατάστασης εξάρτησης ClawHub CLI.
+      - Προσθέτει μια ρητή openai/chat-latest άμεση παράκαμψη μοντέλου API-key και εκθέτει την υπολογισμένη κατάσταση cron στην έξοδο JSON.
+      - Σκληραίνει την ιδιοκτησία εγγενών εντολών, τους ελέγχους διαχειριστή μνήμης, την εξουσιοδότηση εργαλείου ενσωματωμένης ικανότητας, την ανάλυση διαπιστευτηρίων και τον χειρισμό του κελύφους του κύκλου ζωής των προσθηκών.
+    hr_HR: |-
+      - OpenClaw 2026.5.7 poboljšava izdanje i oporavak objavljivanja dodataka oko prolaznih ClawHub CLI instalacijskih grešaka ovisnosti.
+      - Dodaje eksplicitno nadjačavanje openai/chat-latest izravnog API-key modela i izlaže izračunati cron status u JSON izlazu.
+      - Ojačava izvorno vlasništvo naredbi, provjere administratora memorije, autorizaciju ugrađenog alata za vještine, razlučivanje vjerodajnica i rukovanje ljuskom životnog ciklusa dodatka.
+    pt_PT: |-
+      - OpenClaw 2026.5.7 melhora a recuperação de lançamento e publicação de plug-ins em torno de falhas transitórias de instalação de dependências ClawHub CLI.
+      - Adiciona uma substituição explícita do modelo openai/chat-latest direto API-key e expõe o estado do cron computado na saída JSON.
+      - Reforça a propriedade de comandos nativos, verificações de administração de memória, autorização de ferramentas de competências em linha, resolução de credenciais e manipulação de shell do ciclo de vida do plug-in.
+    ru_RU: |-
+      - OpenClaw 2026.5.7 улучшает восстановление выпуска и публикации плагинов при временных сбоях установки зависимостей ClawHub CLI.
+      - Добавляет явное прямое переопределение модели API-key openai/chat-latest и отображает вычисленный статус cron в выходных данных JSON.
+      - Усиливает владение собственными командами, проверки администратора памяти, авторизацию встроенных инструментов навыков, разрешение учетных данных и обработку оболочки жизненного цикла плагина.
+    tr_TR: |-
+      - OpenClaw 2026.5.7, geçici ClawHub CLI bağımlılık yükleme hataları etrafında sürüm ve eklenti yayınlama kurtarmasını iyileştirir.
+      - Açık bir openai/chat-latest doğrudan API-key modeli geçersiz kılma ekler ve JSON çıktısında hesaplanan cron durumunu gösterir.
+      - Yerel komut sahipliğini, bellek yöneticisi kontrollerini, satır içi beceri aracı yetkilendirmesini, kimlik bilgisi çözümlemesini ve eklenti yaşam döngüsü kabuk işlemeyi güçlendirir.
+  website: "https://openclaw.ai"
+  repo: "https://github.com/openclaw/openclaw"
+  support: "https://github.com/openclaw/openclaw/issues"
+  docs: "https://docs.openclaw.ai/"
