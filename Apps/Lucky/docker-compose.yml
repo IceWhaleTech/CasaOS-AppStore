@@ -5,7 +5,7 @@ services:
       resources:
         reservations:
           memory: 64M
-    image: gdy666/lucky:2.20.2
+    image: gdy666/lucky:2.27.2
     restart: unless-stopped
     volumes:
       - type: bind
@@ -45,69 +45,69 @@ x-casaos:
   port_map: "16601"
   scheme: http
   store_app_id: lucky
-  version: "2.20.2"
-  updateAt: "2025-11-11"
+  version: "2.27.2"
+  updateAt: "2026-02-15"
   releaseNotes:
     en_US: |-
-      - v2.20.2 adds certificate sync support for Alibaba Cloud ESA and a Tencent Cloud option that is not yet open.
-      - Volcengine now sets the minimum TTL automatically based on the domain package.
-      - Generic OIDC third-party login support was added, ACME certificate application speed was optimized, and Filebrowser was updated to v2.45.0.
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
     en_GB: |-
-      - v2.20.2 adds certificate sync support for Alibaba Cloud ESA and a Tencent Cloud option that is not yet open.
-      - Volcengine now sets the minimum TTL automatically based on the domain package.
-      - Generic OIDC third-party login support was added, ACME certificate application speed was optimized, and Filebrowser was updated to v2.45.0.
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
     it_IT: |-
-      - v2.20.2 aggiunge il supporto per la sincronizzazione dei certificati per Alibaba Cloud ESA e un'opzione Tencent Cloud che non è ancora aperta.
-      - Volcengine ora imposta automaticamente il minimo TTL in base al pacchetto di dominio.
-      - È stato aggiunto il supporto per l'accesso generico OIDC third-party, la velocità di applicazione del certificato ACME è stata ottimizzata e il browser di file è stato aggiornato a v2.45.0.
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
     nb_NO: |-
-      - v2.20.2 legger til støtte for sertifikatsynkronisering for Alibaba Cloud ESA og et Tencent Cloud-alternativ som ennå ikke er åpent.
-      - Volcengine setter nå minimum TTL automatisk basert på domenepakken.
-      - Generisk OIDC third-party påloggingsstøtte ble lagt til, ACME sertifikatprogramhastighet ble optimalisert, og Filebrowser ble oppdatert til v2.45.0.
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
     zh_CN: |-
-      - v2.20.2 增加了阿里云 ESA 证书同步支持，以及一个尚未开放的腾讯云选项。
-      - 火山引擎现在会根据域名套餐自动设置最低 TTL。
-      - 新增通用 OIDC 第三方登录支持，优化了 ACME 证书申请速度，并将 Filebrowser 更新到 v2.45.0。
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
     ja_JP: |-
-      - v2.20.2 は Alibaba Cloud ESA の証明書同期サポートと、まだ公開されていない Tencent Cloud オプションを追加します。
-      - Volcengine はドメインパッケージに基づいて最小 TTL を自動設定するようになりました。
-      - 汎用 OIDC サードパーティログイン対応が追加され、ACME 証明書申請速度が最適化され、Filebrowser が v2.45.0 に更新されました。
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
     ko_KR: |-
-      - v2.20.2는 Alibaba Cloud ESA 인증서 동기화 지원과 아직 공개되지 않은 Tencent Cloud 옵션을 추가합니다.
-      - Volcengine은 이제 도메인 패키지에 따라 최소 TTL을 자동으로 설정합니다.
-      - 일반 OIDC 타사 로그인 지원이 추가되었고, ACME 인증서 신청 속도가 최적화되었으며, Filebrowser가 v2.45.0으로 업데이트되었습니다.
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
     fr_FR: |-
-      - v2.20.2 ajoute la synchronisation de certificats pour Alibaba Cloud ESA et une option Tencent Cloud pas encore ouverte.
-      - Volcengine définit désormais automatiquement le TTL minimal selon le forfait du domaine.
-      - La connexion tierce OIDC générique a été ajoutée, la demande de certificat ACME a été optimisée et Filebrowser a été mis à jour vers v2.45.0.
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
     de_DE: |-
-      - v2.20.2 ergänzt Zertifikatssynchronisierung für Alibaba Cloud ESA und eine noch nicht geöffnete Tencent-Cloud-Option.
-      - Volcengine setzt die minimale TTL nun automatisch anhand des Domain-Pakets.
-      - Allgemeine OIDC-Drittanbieteranmeldung wurde hinzugefügt, die ACME-Zertifikatsbeantragung beschleunigt und Filebrowser auf v2.45.0 aktualisiert.
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
     sv_SE: |-
-      - v2.20.2 lägger till stöd för certifikatsynkronisering för Alibaba Cloud ESA och ett Tencent Cloud-alternativ som ännu inte är öppet.
-      - Volcengine ställer nu in minimivärdet TTL automatiskt baserat på domänpaketet.
-      - Generiskt OIDC third-party inloggningsstöd lades till, ACME certifikatapplikationshastigheten optimerades och Filebrowser uppdaterades till v2.45.0.
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
     el_GR: |-
-      - Το v2.20.2 προσθέτει υποστήριξη συγχρονισμού πιστοποιητικών για το Alibaba Cloud ESA και μια επιλογή Tencent Cloud που δεν είναι ακόμη ανοιχτή.
-      - Το Volcengine ορίζει πλέον αυτόματα το ελάχιστο TTL βάσει του πακέτου τομέα.
-      - Προστέθηκε γενική υποστήριξη σύνδεσης OIDC third-party, βελτιστοποιήθηκε η ταχύτητα εφαρμογής πιστοποιητικού ACME και το πρόγραμμα περιήγησης αρχείων ενημερώθηκε σε v2.45.0.
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
     hr_HR: |-
-      - v2.20.2 dodaje podršku za sinkronizaciju certifikata za Alibaba Cloud ESA i opciju Tencent Cloud koja još nije otvorena.
-      - Volcengine sada automatski postavlja minimalni TTL na temelju paketa domene.
-      - Dodana je generička podrška za prijavu OIDC third-party, optimizirana je brzina primjene certifikata ACME, a Filebrowser je ažuriran na v2.45.0.
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
     pt_PT: |-
-      - v2.20.2 adiciona suporte de sincronização de certificados para o Alibaba Cloud ESA e uma opção Tencent Cloud que ainda não está aberta.
-      - O Volcengine define agora o TTL mínimo automaticamente com base no pacote de domínio.
-      - Foi adicionado suporte de login genérico OIDC third-party, a velocidade da aplicação de certificado ACME foi otimizada e o Filebrowser foi atualizado para v2.45.0.
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
     ru_RU: |-
-      - v2.20.2 добавляет поддержку синхронизации сертификатов для Alibaba Cloud ESA и опции Tencent Cloud, которая еще не открыта.
-      - Volcengine теперь автоматически устанавливает минимальное значение TTL в зависимости от пакета домена.
-      - Добавлена ​​общая поддержка входа в систему OIDC third-party, оптимизирована скорость применения сертификата ACME, а браузер файлов обновлен до v2.45.0.
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
     tr_TR: |-
-      - v2.20.2, Alibaba Cloud ESA için sertifika senkronizasyon desteği ve henüz açık olmayan bir Tencent Cloud seçeneği ekler.
-      - Volcengine artık minimum TTL değerini alan adı paketine göre otomatik olarak ayarlıyor.
-      - Genel OIDC third-party oturum açma desteği eklendi, ACME sertifika uygulama hızı optimize edildi ve Dosya Tarayıcı v2.45.0 olarak güncellendi.
+      - v2.27.2 refactors and optimizes the file service and WebDav frontend display.
+      - CorazaWAF built-in rules were updated to v4.22.0, with rule tips and custom inbound/outbound threshold settings.
+      - The gdy666/lucky:2.27.2 Docker image tag was published on 2026-02-02.
   website: "https://lucky666.cn/"
   repo: "https://github.com/gdy666/lucky"
   support: "https://github.com/gdy666/lucky/issues"
