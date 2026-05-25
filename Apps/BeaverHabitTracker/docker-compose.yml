@@ -1,7 +1,7 @@
 name: beaverhabittracker
 services:
   beaverhabittracker:
-    image: daya0576/beaverhabits:0.7.3
+    image: daya0576/beaverhabits:0.9.1
     container_name: beaverhabittracker
     deploy:
       resources:
@@ -421,39 +421,69 @@ x-casaos:
   index: /
   title:
     en_US: BeaverHabitTracker
-  version: "0.7.3"
-  updateAt: "2025-10-12"
+  version: "0.9.1"
+  updateAt: "2026-05-20"
   releaseNotes:
     en_US: |-
-      - v0.7.3 upgrades the application stack to Python 3.14 and NiceGUI 3.0.
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
     en_GB: |-
-      - v0.7.3 upgrades the application stack to Python 3.14 and NiceGUI 3.0.
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
     it_IT: |-
-      - v0.7.3 aggiorna lo stack dell'applicazione a Python 3.14 e NiceGUI 3.0.
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
     nb_NO: |-
-      - v0.7.3 oppgraderer applikasjonsstakken til Python 3.14 og NiceGUI 3.0.
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
     zh_CN: |-
-      - v0.7.3 将应用栈升级到 Python 3.14 和 NiceGUI 3.0。
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
     ja_JP: |-
-      - v0.7.3 はアプリケーションスタックを Python 3.14 と NiceGUI 3.0 にアップグレードします。
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
     ko_KR: |-
-      - v0.7.3은 애플리케이션 스택을 Python 3.14와 NiceGUI 3.0으로 업그레이드합니다.
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
     fr_FR: |-
-      - v0.7.3 met à niveau la pile applicative vers Python 3.14 et NiceGUI 3.0.
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
     de_DE: |-
-      - v0.7.3 aktualisiert den Anwendungs-Stack auf Python 3.14 und NiceGUI 3.0.
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
     sv_SE: |-
-      - v0.7.3 uppgraderar applikationsstacken till Python 3.14 och NiceGUI 3.0.
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
     el_GR: |-
-      - Το v0.7.3 αναβαθμίζει τη στοίβα εφαρμογών σε Python 3.14 και NiceGUI 3.0.
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
     hr_HR: |-
-      - v0.7.3 nadograđuje snop aplikacija na Python 3.14 i NiceGUI 3.0.
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
     pt_PT: |-
-      - v0.7.3 atualiza a pilha de aplicações para Python 3.14 e NiceGUI 3.0.
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
     ru_RU: |-
-      - v0.7.3 обновляет стек приложений до Python 3.14 и NiceGUI 3.0.
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
     tr_TR: |-
-      - v0.7.3 uygulama yığınını Python 3.14 ve NiceGUI 3.0'ye yükseltir.
+      - v0.9.1 adds a completion-status page for default and custom status configuration.
+      - It adds the TIME_ZONE environment variable to override the browser-detected timezone.
+      - It strips HTML from custom CSS to prevent stored XSS and auto-refreshes the habit list when the local date changes.
   website: "https://beaverhabits.com/"
   repo: "https://github.com/daya0576/beaverhabits"
   support: "https://github.com/daya0576/beaverhabits/issues"

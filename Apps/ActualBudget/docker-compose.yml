@@ -1,7 +1,7 @@
 name: actualbudget
 services:
   actualbudget:
-    image: actualbudget/actual-server:25.7.1
+    image: actualbudget/actual-server:26.5.2
     container_name: actualbudget
     deploy:
       resources:
@@ -468,94 +468,54 @@ x-casaos:
   index: /
   title:
     en_US: Actual Budget
-  version: "25.7.1"
-  updateAt: "2025-07-03"
+  version: "26.5.2"
+  updateAt: "2026-05-08"
   releaseNotes:
     en_US: |-
-      - This release contains the following improvements:
-      - Fix the amount input in the rules and schedules page not allowing decimals
-      - Docker tag: v25.7.1
-      Bugfix:
-      - #5270 Fix adding decimals to desktop amount inputs — thanks youngcw
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
     en_GB: |-
-      - This release contains the following improvements:
-      - Fix the amount input in the rules and schedules page not allowing decimals
-      - Docker tag: v25.7.1
-      Bugfix:
-      - #5270 Fix adding decimals to desktop amount inputs — thanks youngcw
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
     it_IT: |-
-      - Questa versione contiene i seguenti miglioramenti:
-      - Correzione dell'importo immesso nella pagina delle regole e degli orari che non consente i decimali
-      - Docker etichetta: v25.7.1
-      Correzione bug:
-      - #5270 Corretta l'aggiunta di decimali agli input degli importi sul desktop — grazie youngcw
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
     nb_NO: |-
-      - Denne utgivelsen inneholder følgende forbedringer:
-      - Korriger beløpet som legges inn på siden med regler og tidsplaner uten å tillate desimaler
-      - Docker tag: v25.7.1
-      Feilretting:
-      - #5270 Fiks å legge til desimaler til skrivebordsbeløp - takk youngcw
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
     zh_CN: |-
-      - 此版本包含以下改进。
-      - 修复 rules 和 schedules 页面中的金额输入框不允许输入小数的问题。
-      - Docker tag: v25.7.1
-      - Bugfix: #5270 修复桌面端金额输入添加小数的问题，感谢 youngcw。
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
     ja_JP: |-
-      - このリリースには次の改善が含まれます。
-      - rules と schedules ページの金額入力で小数を入力できない問題を修正しました。
-      - Docker tag: v25.7.1
-      - Bugfix: #5270 デスクトップの金額入力で小数を追加できるよう修正しました。youngcw に感謝します。
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
     ko_KR: |-
-      - 이 릴리스에는 다음 개선 사항이 포함됩니다.
-      - rules 및 schedules 페이지의 금액 입력에서 소수를 허용하지 않던 문제가 수정되었습니다.
-      - Docker tag: v25.7.1
-      - Bugfix: #5270 데스크톱 금액 입력에 소수를 추가하는 문제를 수정했습니다. youngcw에게 감사드립니다.
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
     fr_FR: |-
-      - Cette version contient les ameliorations suivantes.
-      - Correction du champ de montant dans les pages rules et schedules qui n'acceptait pas les decimales.
-      - Docker tag: v25.7.1
-      - Bugfix: #5270 corrige l'ajout de decimales dans les champs de montant desktop, merci a youngcw.
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
     de_DE: |-
-      - Diese Version enthaelt die folgenden Verbesserungen.
-      - Der Betragseingabefehler auf der Rules- und Schedules-Seite, der Dezimalwerte verhinderte, wurde behoben.
-      - Docker tag: v25.7.1
-      - Bugfix: #5270 behebt das Hinzufuegen von Dezimalwerten in Desktop-Betragseingaben, Dank an youngcw.
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
     sv_SE: |-
-      - Den här versionen innehåller följande förbättringar:
-      - Fixa beloppet som anges på sidan för regler och scheman och inte tillåta decimaler
-      - Docker tagg: v25.7.1
-      Buggfix:
-      - #5270 Fixa att lägga till decimaler till skrivbordsbeloppsinmatningar - tack youngcw
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
     el_GR: |-
-      - Αυτή η έκδοση περιέχει τις ακόλουθες βελτιώσεις:
-      - Διορθώστε το ποσό εισαγωγής στη σελίδα κανόνων και χρονοδιαγραμμάτων, χωρίς να επιτρέπονται τα δεκαδικά
-      - Docker ετικέτα: v25.7.1
-      Διόρθωση σφαλμάτων:
-      - #5270 Διορθώστε την προσθήκη δεκαδικών ψηφίων στις εισαγωγές ποσού στην επιφάνεια εργασίας — ευχαριστώ youngcw
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
     hr_HR: |-
-      - Ovo izdanje sadrži sljedeća poboljšanja:
-      - Ispravite unos iznosa na stranici s pravilima i rasporedima tako da ne dopuštaju decimale
-      - Docker oznaka: v25.7.1
-      Ispravak pogreške:
-      - #5270 Ispraviti dodavanje decimala u unos iznosa na radnoj površini — hvala youngcw
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
     pt_PT: |-
-      - Esta versão contém as seguintes melhorias:
-      - Corrigir o valor introduzido na página de regras e programações não permitindo decimais
-      - Etiqueta Docker: v25.7.1
-      Correção de bug:
-      - #5270 Corrigida a adição de decimais às entradas de valores do ambiente de trabalho – obrigado youngcw
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
     ru_RU: |-
-      - Этот выпуск содержит следующие улучшения:
-      - Исправлен ввод суммы на странице правил и расписаний, не допускающий десятичных дробей.
-      - Тег Docker: v25.7.1
-      Исправление:
-      - #5270 Исправлено добавление десятичных знаков к вводу суммы на рабочем столе — спасибо youngcw.
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
     tr_TR: |-
-      - Bu sürüm aşağıdaki iyileştirmeleri içermektedir:
-      - Kurallar ve planlar sayfasında ondalık sayılara izin vermeyen miktar girişini düzeltin
-      - Docker etiketi: v25.7.1
-      Hata düzeltmesi:
-      - #5270 Masaüstü miktar girişlerine ondalık sayıların eklenmesi düzeltildi — teşekkürler youngcw
+      - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
+      - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.
   website: "https://actualbudget.org"
   repo: "https://github.com/actualbudget/actual"
   support: "https://github.com/actualbudget/actual/issues"
