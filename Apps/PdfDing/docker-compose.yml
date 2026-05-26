@@ -1,7 +1,7 @@
 name: pdfding
 services:
   pdfding:
-    image: mrmn/pdfding:v1.3.1
+    image: mrmn/pdfding:v1.7.2
     deploy:
       resources:
         reservations:
@@ -268,69 +268,54 @@ x-casaos:
 
   title:
     en_US: PdfDing
-  version: "v1.3.1"
-  updateAt: "2025-04-04"
+  version: "v1.7.2"
+  updateAt: "2026-04-12"
   releaseNotes:
     en_US: |-
-      - v1.3.1 adds support for setting admin rights via OIDC claims.
-      - UI improvements were made, including better truncation for long titles.
-      - Long PDF filenames are supported by increasing the PDF file field length, and star size remains fixed in PDF overview when names are truncated.
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
     en_GB: |-
-      - v1.3.1 adds support for setting admin rights via OIDC claims.
-      - UI improvements were made, including better truncation for long titles.
-      - Long PDF filenames are supported by increasing the PDF file field length, and star size remains fixed in PDF overview when names are truncated.
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
     it_IT: |-
-      - v1.3.1 aggiunge il supporto per l'impostazione dei diritti di amministratore tramite attestazioni OIDC.
-      - Sono stati apportati miglioramenti a UI, incluso un migliore troncamento per i titoli lunghi.
-      - I nomi di file lunghi PDF sono supportati da increasing la lunghezza del campo file PDF e la dimensione della stella rimane fissa nella panoramica PDF quando i nomi vengono troncati.
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
     nb_NO: |-
-      - v1.3.1 legger til støtte for å angi administratorrettigheter via OIDC-krav.
-      - UI forbedringer ble gjort, inkludert bedre trunkering for lange titler.
-      - Lange PDF-filnavn støttes av increasing filfeltlengden PDF, og stjernestørrelsen forblir fast i PDF-oversikten når navn avkortes.
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
     zh_CN: |-
-      - v1.3.1 增加了通过 OIDC claims 设置 admin rights 的支持。
-      - UI 改进包括更好地截断长标题。
-      - 通过增加 PDF file field length 支持长 PDF 文件名，并在名称被截断时保持 PDF overview 中的 star size 固定。
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
     ja_JP: |-
-      - v1.3.1 は OIDC claims による admin rights 設定のサポートを追加します。
-      - UI 改善には長いタイトルの切り詰め改善が含まれます。
-      - PDF file field length を増やして長い PDF ファイル名をサポートし、名前が切り詰められた場合も PDF overview の star size は固定されます。
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
     ko_KR: |-
-      - v1.3.1은 OIDC claims를 통해 admin rights를 설정하는 기능을 추가합니다.
-      - UI 개선에는 긴 제목의 더 나은 잘림 처리가 포함됩니다.
-      - PDF file field length를 늘려 긴 PDF 파일명을 지원하고 이름이 잘릴 때 PDF overview의 star size를 고정합니다.
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
     fr_FR: |-
-      - v1.3.1 ajoute la prise en charge de la definition des admin rights via OIDC claims.
-      - Les ameliorations UI incluent une meilleure troncature des titres longs.
-      - Les longs noms de PDF sont pris en charge en augmentant PDF file field length, et star size reste fixe dans PDF overview lorsque les noms sont tronques.
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
     de_DE: |-
-      - v1.3.1 fuegt Support hinzu, admin rights ueber OIDC claims zu setzen.
-      - UI-Verbesserungen umfassen besseres Abschneiden langer Titel.
-      - Lange PDF-Dateinamen werden durch Erhoehen der PDF file field length unterstuetzt, und star size bleibt in der PDF overview fix, wenn Namen gekuerzt werden.
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
     sv_SE: |-
-      - v1.3.1 lägger till stöd för att ställa in administratörsrättigheter via OIDC-anspråk.
-      - UI förbättringar gjordes, inklusive bättre trunkering för långa titlar.
-      - Långa PDF-filnamn stöds av increasing filfältslängden PDF, och stjärnstorleken förblir fixerad i PDF-översikten när namn trunkeras.
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
     el_GR: |-
-      - Το v1.3.1 προσθέτει υποστήριξη για τον ορισμό δικαιωμάτων διαχειριστή μέσω αξιώσεων OIDC.
-      - Έγιναν βελτιώσεις UI, συμπεριλαμβανομένης της καλύτερης περικοπής για μεγάλους τίτλους.
-      - Τα μεγάλα ονόματα αρχείων PDF υποστηρίζονται από increasing το μήκος του πεδίου PDF και το μέγεθος του αστεριού παραμένει σταθερό στην επισκόπηση PDF όταν τα ονόματα περικόπτονται.
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
     hr_HR: |-
-      - v1.3.1 dodaje podršku za postavljanje administratorskih prava putem OIDC zahtjeva.
-      - Napravljena su poboljšanja UI, uključujući bolje skraćivanje dugih naslova.
-      - Duge PDF nazive datoteka podržava increasing duljina polja datoteke PDF, a veličina zvjezdice ostaje fiksna u pregledu PDF kada su imena skraćena.
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
     pt_PT: |-
-      - v1.3.1 adiciona suporte para a configuração de direitos de administrador através de declarações OIDC.
-      - Foram feitas melhorias no UI, incluindo um melhor truncamento para títulos longos.
-      - Os nomes de ficheiro PDF longos são suportados por increasing o comprimento do campo de ficheiro PDF e o tamanho da estrela permanece fixo na vista geral de PDF quando os nomes são truncados.
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
     ru_RU: |-
-      - v1.3.1 добавляет поддержку установки прав администратора через утверждения OIDC.
-      - Внесены улучшения в UI, включая лучшее усечение длинных заголовков.
-      - Длинные имена файлов PDF поддерживаются increasing, длина поля файла PDF, а размер звезды остается фиксированным в обзоре PDF, когда имена усекаются.
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
     tr_TR: |-
-      - v1.3.1, OIDC talepleri aracılığıyla yönetici haklarının ayarlanmasına yönelik destek ekler.
-      - UI uzun başlıklar için daha iyi kısaltma da dahil olmak üzere iyileştirmeler yapıldı.
-      - Uzun PDF dosya adları, increasing ve PDF dosya alanı uzunluğu tarafından desteklenir ve adlar kesildiğinde yıldız boyutu PDF genel bakışında sabit kalır.
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
   website: "https://www.pdfding.com"
   repo: "https://github.com/mrmn2/PdfDing"
   support: "https://github.com/mrmn2/PdfDing/issues"

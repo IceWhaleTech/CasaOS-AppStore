@@ -5,7 +5,7 @@ services:
       PGID: "1000"
       PUID: "1000"
       TZ: Europe/London
-    image: linuxserver/sabnzbd:4.1.0
+    image: linuxserver/sabnzbd:5.0.3
     deploy:
       resources:
         reservations:
@@ -103,69 +103,69 @@ x-casaos:
   title:
     en_us: Sabnzbd
   port_map: "8282"
-  version: "4.1.0"
-  updateAt: "2023-12-28"
+  version: "5.0.3"
+  updateAt: "2026-05-21"
   releaseNotes:
     en_US: |-
-      - 4.1.0 adds dark mode for Config, Login, and Wizard pages, plus multi-select in History.
-      - Proxy validation, log purging, server IP selection, IPv6 server settings, and archive unpacking behavior were updated.
-      - Fixes include duplicate detection, filename sorting, paused queue priority handling, API-key log sanitization, disk writes, folder sanitization, article decoding, and QuickCheck renaming.
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
     en_GB: |-
-      - 4.1.0 adds dark mode for Config, Login, and Wizard pages, plus multi-select in History.
-      - Proxy validation, log purging, server IP selection, IPv6 server settings, and archive unpacking behavior were updated.
-      - Fixes include duplicate detection, filename sorting, paused queue priority handling, API-key log sanitization, disk writes, folder sanitization, article decoding, and QuickCheck renaming.
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
     it_IT: |-
-      - 4.1.0 aggiunge la modalità oscura per le pagine di configurazione, accesso e procedura guidata, oltre a multi-select nella cronologia.
-      - Sono stati aggiornati la convalida proxy, l'eliminazione dei registri, la selezione del server IP, le impostazioni del server IPv6 e il comportamento di decompressione dell'archivio.
-      - Le correzioni includono rilevamento duplicati, ordinamento dei nomi file, gestione della priorità delle code in pausa, sanificazione dei registri API-key, scritture su disco, sanificazione delle cartelle, decodifica degli articoli e ridenominazione QuickCheck.
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
     nb_NO: |-
-      - 4.1.0 legger til mørk modus for konfigurasjons-, påloggings- og veivisersider, pluss multi-select i historikk.
-      - Proxy-validering, loggrensing, server IP valg, IPv6 serverinnstillinger og arkivutpakkingsadferd ble oppdatert.
-      - Rettelser inkluderer duplikatdeteksjon, sortering av filnavn, håndtering av køprioritet på pause, API-key loggrensing, diskskriving, mapperensing, artikkeldekoding og QuickCheck omdøping.
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
     zh_CN: |-
-      - 4.1.0 为 Config、Login 和 Wizard 页面增加 dark mode，并在 History 中增加 multi-select。
-      - 更新了 proxy validation、log purging、server IP selection、IPv6 server settings 和 archive unpacking behavior。
-      - 修复包括 duplicate detection、filename sorting、paused queue priority handling、API-key log sanitization、disk writes、folder sanitization、article decoding 和 QuickCheck renaming。
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
     ja_JP: |-
-      - 4.1.0 は Config、Login、Wizard ページに dark mode を追加し、History に multi-select を追加します。
-      - proxy validation、log purging、server IP selection、IPv6 server settings、archive unpacking behavior が更新されました。
-      - duplicate detection、filename sorting、paused queue priority handling、API-key log sanitization、disk writes、folder sanitization、article decoding、QuickCheck renaming が修正されました。
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
     ko_KR: |-
-      - 4.1.0은 Config, Login, Wizard 페이지에 dark mode를 추가하고 History에 multi-select를 추가합니다.
-      - proxy validation, log purging, server IP selection, IPv6 server settings, archive unpacking behavior가 업데이트되었습니다.
-      - duplicate detection, filename sorting, paused queue priority handling, API-key log sanitization, disk writes, folder sanitization, article decoding, QuickCheck renaming이 수정되었습니다.
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
     fr_FR: |-
-      - 4.1.0 ajoute dark mode pour les pages Config, Login et Wizard, ainsi que multi-select dans History.
-      - Proxy validation, log purging, server IP selection, IPv6 server settings et archive unpacking behavior ont ete mis a jour.
-      - Les correctifs incluent duplicate detection, filename sorting, paused queue priority handling, API-key log sanitization, disk writes, folder sanitization, article decoding et QuickCheck renaming.
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
     de_DE: |-
-      - 4.1.0 fuegt dark mode fuer Config-, Login- und Wizard-Seiten sowie multi-select in History hinzu.
-      - Proxy validation, log purging, server IP selection, IPv6 server settings und archive unpacking behavior wurden aktualisiert.
-      - Korrekturen betreffen duplicate detection, filename sorting, paused queue priority handling, API-key log sanitization, disk writes, folder sanitization, article decoding und QuickCheck renaming.
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
     sv_SE: |-
-      - 4.1.0 lägger till mörkt läge för konfigurations-, inloggnings- och guidesidor, plus multi-select i historik.
-      - Proxyvalidering, loggrensning, val av server IP, IPv6-serverinställningar och arkivuppackningsbeteende uppdaterades.
-      - Fixningar inkluderar dubblettdetektering, filnamnssortering, pausad köprioritetshantering, API-key loggsanering, diskskrivning, mappsanering, artikelavkodning och QuickCheck byte av namn.
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
     el_GR: |-
-      - Το 4.1.0 προσθέτει τη σκοτεινή λειτουργία για τις σελίδες Config, Login και Wizard, καθώς και multi-select στο Ιστορικό.
-      - Η επικύρωση διακομιστή μεσολάβησης, η εκκαθάριση αρχείων καταγραφής, η επιλογή διακομιστή IP, οι ρυθμίσεις διακομιστή IPv6 και η συμπεριφορά αποσυσκευασίας αρχείου ενημερώθηκαν.
-      - Οι επιδιορθώσεις περιλαμβάνουν εντοπισμό διπλότυπων, ταξινόμηση ονομάτων αρχείου, διαχείριση προτεραιότητας ουράς σε παύση, εξυγίανση αρχείου καταγραφής API-key, εγγραφή δίσκου, εξυγίανση φακέλων, αποκωδικοποίηση άρθρου και μετονομασία QuickCheck.
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
     hr_HR: |-
-      - 4.1.0 dodaje mračni način rada za stranice konfiguracije, prijave i čarobnjaka, plus multi-select u povijesti.
-      - Proxy provjera valjanosti, čišćenje zapisnika, odabir poslužitelja IP, postavke poslužitelja IPv6 i ponašanje pri raspakiranju arhive su ažurirani.
-      - Popravci uključuju otkrivanje duplikata, razvrstavanje naziva datoteke, pauzirano rukovanje prioritetom čekanja, čišćenje API-key dnevnika, pisanje na disk, čišćenje mape, dekodiranje članaka i preimenovanje QuickCheck.
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
     pt_PT: |-
-      - 4.1.0 adiciona o modo escuro para as páginas de configuração, login e assistente, bem como multi-select no histórico.
-      - A validação de proxy, a limpeza de registos, a seleção do servidor IP, as definições do servidor IPv6 e o comportamento de descompactação de ficheiros foram atualizados.
-      - As correções incluem deteção duplicada, classificação de nomes de ficheiros, tratamento de prioridade de fila pausada, limpeza de registos API-key, gravações de disco, limpeza de pastas, descodificação de artigos e renomeação QuickCheck.
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
     ru_RU: |-
-      - 4.1.0 добавляет темный режим для страниц конфигурации, входа и мастера, а также multi-select в истории.
-      - Обновлены проверка прокси, очистка журналов, выбор сервера IP, настройки сервера IPv6 и поведение распаковки архива.
-      - Исправления включают обнаружение дубликатов, сортировку имен файлов, обработку приоритета приостановленной очереди, очистку журнала API-key, запись на диск, очистку папок, декодирование статей и переименование QuickCheck.
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
     tr_TR: |-
-      - 4.1.0, Yapılandırma, Oturum Açma ve Sihirbaz sayfaları için karanlık modun yanı sıra Geçmiş'e multi-select ekler.
-      - Proxy doğrulama, günlük temizleme, sunucu IP seçimi, IPv6 sunucu ayarları ve arşiv açma davranışı güncellendi.
-      - Düzeltmeler arasında yinelenen kopya algılama, dosya adı sıralama, duraklatılmış kuyruk önceliği yönetimi, API-key günlük temizleme, disk yazma, klasör temizleme, makale kod çözme ve QuickCheck yeniden adlandırma yer alıyor.
+      - SABnzbd 5.0.3 includes the fifth major release updates with NNTP pipelining, direct write, a reworked cache, safer processing, and platform updates.
+      - Fixes in 5.0.1 through 5.0.3 cover new-install NZB fetching, queue loading after upgrade, duplicate nzo_id handling, RSS priority, duplicate filename stalls, IPv6 binding, and post-processing queue saves.
+      - The linuxserver/sabnzbd:5.0.3 Docker image tag was published on 2026-05-21.
   website: "https://sabnzbd.org"
   repo: "https://github.com/sabnzbd/sabnzbd"
   support: "https://forums.sabnzbd.org"
