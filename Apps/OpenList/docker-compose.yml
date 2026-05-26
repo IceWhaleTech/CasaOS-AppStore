@@ -1,7 +1,7 @@
 name: openlist
 services:
   openlist:
-    image: openlistteam/openlist:v4.2.1
+    image: openlistteam/openlist:v4.2.2
     container_name: openlist
     deploy:
       resources:
@@ -399,54 +399,69 @@ x-casaos:
   index: /
   title:
     en_US: OpenList
-  version: "4.2.1"
-  updateAt: "2026-04-09"
+  version: "4.2.2"
+  updateAt: "2026-05-25"
   releaseNotes:
     en_US: |-
-      - v4.2.1 locks musl outputs to fully static linking in the build script and CI workflows.
-      - It also fixes path cache invalidation after meta path updates.
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
     en_GB: |-
-      - v4.2.1 locks musl outputs to fully static linking in the build script and CI workflows.
-      - It also fixes path cache invalidation after meta path updates.
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
     it_IT: |-
-      - La v4.2.1 blocca gli output musl sul collegamento completamente statico negli script di build e nei workflow CI.
-      - Inoltre corregge l'invalidazione della cache dei percorsi dopo gli aggiornamenti del meta path.
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
     nb_NO: |-
-      - v4.2.1 låser musl-utganger til fullstendig statisk linking i byggeskriptet og CI-arbeidsflytene.
-      - Den fikser også ugyldiggjøring av sti-cache etter oppdateringer av metasti.
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
     zh_CN: |-
-      - v4.2.1 将 musl 输出固定为在构建脚本和 CI 工作流中使用完全静态链接。
-      - 同时修复了元路径更新后路径缓存失效的问题。
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
     ja_JP: |-
-      - v4.2.1 では、ビルドスクリプトと CI ワークフローにおける musl 出力が完全静的リンクに固定されました。
-      - あわせて、メタパス更新後のパスキャッシュ無効化の不具合も修正されています。
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
     ko_KR: |-
-      - v4.2.1은 빌드 스크립트와 CI 워크플로에서 musl 출력이 완전 정적 링크를 사용하도록 고정했습니다.
-      - 또한 메타 경로 업데이트 후 경로 캐시 무효화 문제를 수정했습니다.
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
     fr_FR: |-
-      - La v4.2.1 verrouille les sorties musl sur un chaînage entièrement statique dans le script de build et les workflows CI.
-      - Elle corrige aussi l'invalidation du cache de chemins après les mises à jour de meta path.
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
     de_DE: |-
-      - v4.2.1 stellt die musl-Ausgaben in Build-Skript und CI-Workflows auf vollständig statisches Linking fest.
-      - Außerdem wird die Invalidierung des Pfad-Caches nach Meta-Pfad-Aktualisierungen korrigiert.
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
     sv_SE: |-
-      - v4.2.1 låser musl-utdata till fullständigt statisk länkning i byggskriptet och CI-arbetsflödena.
-      - Den åtgärdar också ogiltigförklaring av sökvägscache efter uppdateringar av metasökvägar.
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
     el_GR: |-
-      - Το v4.2.1 κλειδώνει τα musl outputs σε πλήρως στατική σύνδεση στο build script και στα CI workflows.
-      - Επίσης διορθώνει την ακύρωση της cache διαδρομών μετά από ενημερώσεις meta path.
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
     hr_HR: |-
-      - v4.2.1 zaključava musl izlaze na potpuno statičko povezivanje u build skripti i CI tijekovima rada.
-      - Također ispravlja poništavanje predmemorije putanja nakon ažuriranja meta putanje.
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
     pt_PT: |-
-      - A v4.2.1 fixa as saídas musl em ligação totalmente estática no script de compilação e nos fluxos de trabalho CI.
-      - Corrige também a invalidação da cache de caminhos após atualizações de meta path.
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
     ru_RU: |-
-      - В v4.2.1 выводы musl закреплены за полностью статической линковкой в скрипте сборки и CI-процессах.
-      - Также исправлена инвалидация кэша путей после обновлений meta path.
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
     tr_TR: |-
-      - v4.2.1, musl çıktılarının derleme betiğinde ve CI iş akışlarında tamamen statik bağlama kullanmasını sabitler.
-      - Ayrıca meta path güncellemelerinden sonra yol önbelleğinin geçersiz kılınması sorununu düzeltir.
+      - v4.2.2 includes breaking cache changes by extracting the hybrid_cache package.
+      - Includes upstream fixes and maintenance from the 4.2.2 release.
+      - Review the upstream release notes before upgrading existing custom cache integrations.
   store_app_id: openlist
   website: "https://oplist.org/"
   repo: "https://github.com/OpenListTeam/OpenList"

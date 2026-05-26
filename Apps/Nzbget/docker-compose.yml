@@ -7,7 +7,7 @@ services:
       PGID: "1000"
       PUID: "1000"
       TZ: Europe/London
-    image: linuxserver/nzbget:25.4.20251205
+    image: linuxserver/nzbget:26.1.20260522
     deploy:
       resources:
         reservations:
@@ -116,69 +116,69 @@ x-casaos:
   title:
     en_us: Nzbget
   port_map: "6789"
-  version: "25.4.20251205"
-  updateAt: "2025-12-05"
+  version: "26.1.20260522"
+  updateAt: "2026-05-22"
   releaseNotes:
     en_US: |-
-      - NZBGet 25.4 adds TLS 1.3 cipher suite support through the ServerX.Cipher option.
-      - The web UI search bar is enabled on small screens.
-      - Fixes include Scan script API handling, RSS feed category application from filter rules, JSON value parsing, and the testserver API method.
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
     en_GB: |-
-      - NZBGet 25.4 adds TLS 1.3 cipher suite support through the ServerX.Cipher option.
-      - The web UI search bar is enabled on small screens.
-      - Fixes include Scan script API handling, RSS feed category application from filter rules, JSON value parsing, and the testserver API method.
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
     it_IT: |-
-      - NZBGet 25.4 aggiunge il supporto della suite di crittografia TLS 1.3 tramite l'opzione ServerX.Cipher.
-      - La barra di ricerca web UI è abilitata su schermi piccoli.
-      - Le correzioni includono la gestione dello script di scansione API, l'applicazione della categoria di feed RSS dalle regole filter, l'analisi dei valori JSON e il metodo testserver API.
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
     nb_NO: |-
-      - NZBGet 25.4 legger til TLS 1.3 chifferpakkestøtte gjennom alternativet ServerX.Cipher.
-      - Nettsøkefeltet UI er aktivert på små skjermer.
-      - Rettelser inkluderer skanneskript API-håndtering, RSS-feedkategoriapplikasjon fra filter-regler, JSON-verdiparsing og testserver API-metoden.
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
     zh_CN: |-
-      - NZBGet 25.4 通过 ServerX.Cipher 选项增加了 TLS 1.3 密码套件支持。
-      - Web UI 搜索栏现在会在小屏幕上启用。
-      - 修复内容包括 Scan 脚本 API、从过滤规则读取并应用 RSS feed 分类、JSON 值解析，以及 testserver API 方法。
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
     ja_JP: |-
-      - NZBGet 25.4 は ServerX.Cipher オプションを通じて TLS 1.3 暗号スイートのサポートを追加します。
-      - Web UI の検索バーが小さい画面で有効になります。
-      - 修正には、Scan スクリプト API、フィルタールールからの RSS フィードカテゴリの読み取りと適用、JSON 値解析、testserver API メソッドが含まれます。
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
     ko_KR: |-
-      - NZBGet 25.4는 ServerX.Cipher 옵션을 통해 TLS 1.3 암호화 제품군 지원을 추가합니다.
-      - 작은 화면에서 Web UI 검색 표시줄이 활성화됩니다.
-      - 수정 사항에는 Scan 스크립트 API, 필터 규칙에서 RSS 피드 카테고리 읽기 및 적용, JSON 값 파싱, testserver API 메서드가 포함됩니다.
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
     fr_FR: |-
-      - NZBGet 25.4 ajoute la prise en charge des suites de chiffrement TLS 1.3 via l'option ServerX.Cipher.
-      - La barre de recherche de l'interface Web est activée sur les petits écrans.
-      - Les correctifs couvrent l'API du script Scan, la lecture et l'application des catégories de flux RSS depuis les règles de filtrage, l'analyse des valeurs JSON et la méthode d'API testserver.
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
     de_DE: |-
-      - NZBGet 25.4 ergänzt TLS-1.3-Cipher-Suite-Unterstützung über die Option ServerX.Cipher.
-      - Die Suchleiste der Weboberfläche ist auf kleinen Bildschirmen aktiviert.
-      - Korrekturen betreffen die Scan-Skript-API, das Lesen und Anwenden von RSS-Feed-Kategorien aus Filterregeln, JSON-Wertparsing und die testserver-API-Methode.
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
     sv_SE: |-
-      - NZBGet 25.4 lägger till TLS 1.3 krypteringssvitstöd genom alternativet ServerX.Cipher.
-      - Sökfältet UI på webben är aktiverat på små skärmar.
-      - Korrigeringar inkluderar hantering av skanningsskript API, RSS flödeskategoriapplikation från filter-regler, JSON värdeanalys och testserverns API-metoden.
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
     el_GR: |-
-      - Ο NZBGet 25.4 προσθέτει την υποστήριξη της σουίτας κρυπτογράφησης TLS 1.3 μέσω της επιλογής ServerX.Cipher.
-      - Η γραμμή αναζήτησης web UI είναι ενεργοποιημένη σε μικρές οθόνες.
-      - Οι διορθώσεις περιλαμβάνουν χειρισμό δέσμης ενεργειών σάρωσης API, εφαρμογή κατηγορίας ροής RSS από κανόνες filter, ανάλυση τιμών JSON και μέθοδο διακομιστή δοκιμής API.
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
     hr_HR: |-
-      - NZBGet 25.4 dodaje podršku za TLS 1.3 paket šifri kroz opciju ServerX.Cipher.
-      - Web UI traka za pretraživanje je omogućena na malim ekranima.
-      - Popravci uključuju rukovanje skriptom skeniranja API, aplikaciju kategorije feeda RSS iz pravila filter, raščlanjivanje vrijednosti JSON i metodu test poslužitelja API.
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
     pt_PT: |-
-      - NZBGet 25.4 adiciona suporte ao conjunto de encriptação TLS 1.3 através da opção ServerX.Cipher.
-      - A barra de pesquisa web UI está ativada em ecrãs pequenos.
-      - As correções incluem a manipulação do script de scan API, a aplicação da categoria de feed RSS das regras filter, a análise do valor JSON e o método testserver API.
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
     ru_RU: |-
-      - NZBGet 25.4 добавляет поддержку набора шифров TLS 1.3 посредством опции ServerX.Cipher.
-      - Веб-панель поиска UI включена на маленьких экранах.
-      - Исправления включают обработку сценария сканирования API, приложение категории канала RSS из правил filter, анализ значения JSON и метод тестового сервера API.
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
     tr_TR: |-
-      - NZBGet 25.4, ServerX.Cipher seçeneği aracılığıyla TLS 1.3 şifre paketi desteğini ekler.
-      - Küçük ekranlarda web UI arama çubuğu etkinleştirilir.
-      - Düzeltmeler, Tarama komut dosyası API işlemeyi, filter kurallarından RSS besleme kategorisi uygulamasını, JSON değer ayrıştırmayı ve test sunucusu API yöntemini içerir.
+      - NZBGet 26.1 improves archived NZB handling support.
+      - Adds NzbDirArchiveScan for scanning zip, rar, 7z, and other archives in NzbDir.
+      - Uses the LinuxServer 26.1.20260522 image build for this release line.
   website: "https://nzbget.com"
   repo: "https://github.com/nzbgetcom/nzbget"
   support: "https://github.com/nzbgetcom/nzbget/discussions"
