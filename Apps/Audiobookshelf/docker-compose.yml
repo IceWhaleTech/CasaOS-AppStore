@@ -1,7 +1,7 @@
 name: audiobookshelf
 services:
   audiobookshelf:
-    image: ghcr.io/advplyr/audiobookshelf:2.30.0
+    image: ghcr.io/advplyr/audiobookshelf:2.35.0
     container_name: audiobookshelf
     deploy:
       resources:
@@ -454,3 +454,70 @@ x-casaos:
   index: /
   title:
     en_US: Audiobookshelf
+  version: "2.35.0"
+  updateAt: "2026-05-17"
+  releaseNotes:
+    en_US: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+    en_GB: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+    it_IT: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+    nb_NO: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+    zh_CN: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+    ja_JP: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+    ko_KR: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+    fr_FR: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+    de_DE: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+    sv_SE: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+    el_GR: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+    hr_HR: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+    pt_PT: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+    ru_RU: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+    tr_TR: |-
+      - v2.35.0 adds an access-token refresh grace period to reduce repeated logins.
+      - It fixes Android listening sessions showing as Abs iOS and fixes m4b RSS feed Content-Type handling.
+      - Book and podcast descriptions from audio files are sanitized, socket-event validation was tightened, and translations were updated.
+  website: "https://audiobookshelf.org"
+  repo: "https://github.com/advplyr/audiobookshelf"
+  support: "https://github.com/advplyr/audiobookshelf/issues"
+  docs: "https://www.audiobookshelf.org/docs"

@@ -1,7 +1,7 @@
 name: 2fauth
 services:
   2fauth:
-    image: 2fauth/2fauth:5.4.3
+    image: 2fauth/2fauth:6.1.3
     deploy:
       resources:
         reservations:
@@ -16,6 +16,8 @@ services:
       - type: bind
         source: /DATA/AppData/$AppID
         target: /2fauth
+    environment:
+      APP_KEY: SomeRandomStringOf32CharsExactly
     x-casaos:
       ports:
         - container: "8000"
@@ -75,3 +77,55 @@ x-casaos:
     en_us: 2FAuth
   index: /
   port_map: "8000"
+  version: "6.1.3"
+  updateAt: "2026-04-03"
+  releaseNotes:
+    en_US: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+    en_GB: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+    it_IT: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+    nb_NO: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+    zh_CN: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+    ja_JP: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+    ko_KR: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+    fr_FR: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+    de_DE: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+    sv_SE: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+    el_GR: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+    hr_HR: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+    pt_PT: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+    ru_RU: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+    tr_TR: |-
+      - v6.1.3 fixes the Try my luck feature being grayed out.
+      - It also fixes minor UI glitches.
+  website: "https://2fauth.app"
+  repo: "https://github.com/Bubka/2FAuth"
+  support: "https://github.com/Bubka/2FAuth/issues"
+  docs: "https://docs.2fauth.app"

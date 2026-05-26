@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/sonarr:4.0.15
+    image: linuxserver/sonarr:4.0.17
     deploy:
       resources:
         reservations:
@@ -108,3 +108,55 @@ x-casaos:
     en_us: Sonarr
   index: /
   port_map: "8989"
+  version: "4.0.17"
+  updateAt: "2026-05-09"
+  releaseNotes:
+    en_US: |-
+      - Sonarr 4.0.17.2967 backports qBittorrent fixes to the v4 release line.
+      - The release is based on changes after v4.0.17.2953.
+    en_GB: |-
+      - Sonarr 4.0.17.2967 backports qBittorrent fixes to the v4 release line.
+      - The release is based on changes after v4.0.17.2953.
+    it_IT: |-
+      - Sonarr 4.0.17.2967 esegue il backport delle correzioni qBittorrent alla linea di rilascio v4.
+      - La versione si basa sulle modifiche successive a v4.0.17.2953.
+    nb_NO: |-
+      - Sonarr 4.0.17.2967 tilbakeporterer qBittorrent-fikser til v4 utgivelseslinjen.
+      - Utgivelsen er basert på endringer etter v4.0.17.2953.
+    zh_CN: |-
+      - Sonarr 4.0.17.2967 将 qBittorrent 修复回移到 v4 发布线。
+      - 该版本基于 v4.0.17.2953 之后的变更。
+    ja_JP: |-
+      - Sonarr 4.0.17.2967 は qBittorrent の修正を v4 リリースラインへバックポートします。
+      - このリリースは v4.0.17.2953 以降の変更に基づいています。
+    ko_KR: |-
+      - Sonarr 4.0.17.2967은 qBittorrent 수정 사항을 v4 릴리스 라인으로 백포트합니다.
+      - 이 릴리스는 v4.0.17.2953 이후 변경 사항을 기반으로 합니다.
+    fr_FR: |-
+      - Sonarr 4.0.17.2967 rétroporte des correctifs qBittorrent dans la ligne de release v4.
+      - Cette version est basée sur les changements après v4.0.17.2953.
+    de_DE: |-
+      - Sonarr 4.0.17.2967 portiert qBittorrent-Korrekturen zurück in die v4-Release-Linie.
+      - Die Veröffentlichung basiert auf Änderungen nach v4.0.17.2953.
+    sv_SE: |-
+      - Sonarr 4.0.17.2967 backportar qBittorrent-fixar till v4 release line.
+      - Utgivningen är baserad på ändringar efter v4.0.17.2953.
+    el_GR: |-
+      - Το Sonarr 4.0.17.2967 υποστηρίζει τις διορθώσεις qBittorrent στη γραμμή έκδοσης v4.
+      - Η κυκλοφορία βασίζεται σε αλλαγές μετά από v4.0.17.2953.
+    hr_HR: |-
+      - Sonarr 4.0.17.2967 vraća qBittorrent popravke na liniju izdanja v4.
+      - Izdanje se temelji na promjenama nakon v4.0.17.2953.
+    pt_PT: |-
+      - Sonarr 4.0.17.2967 faz backport das correções qBittorrent para a linha de lançamento v4.
+      - O lançamento é baseado em alterações posteriores a v4.0.17.2953.
+    ru_RU: |-
+      - Sonarr 4.0.17.2967 переносит исправления qBittorrent в линейку выпуска v4.
+      - Релиз основан на изменениях после v4.0.17.2953.
+    tr_TR: |-
+      - Sonarr 4.0.17.2967, qBittorrent düzeltmelerini v4 sürüm satırına destekler.
+      - Sürüm, v4.0.17.2953 sonrasındaki değişikliklere dayanmaktadır.
+  website: "https://sonarr.tv"
+  repo: "https://github.com/Sonarr/Sonarr"
+  support: "https://sonarr.tv/#support"
+  docs: "https://wiki.servarr.com/sonarr"

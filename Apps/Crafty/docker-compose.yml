@@ -5,7 +5,7 @@ version: "3"
 services:
   crafty:
     container_name: crafty-container
-    image: registry.gitlab.com/crafty-controller/crafty-4:4.4.11
+    image: registry.gitlab.com/crafty-controller/crafty-4:4.10.4
     restart: always
     environment:
       - TZ=Etc/UTC
@@ -199,3 +199,55 @@ x-casaos:
   index: /panel
   scheme: https
   port_map: "8111"
+  version: "4.10.4"
+  updateAt: "2026-04-20"
+  releaseNotes:
+    en_US: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+    en_GB: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+    it_IT: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+    nb_NO: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+    zh_CN: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+    ja_JP: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+    ko_KR: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+    fr_FR: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+    de_DE: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+    sv_SE: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+    el_GR: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+    hr_HR: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+    pt_PT: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+    ru_RU: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+    tr_TR: |-
+      - v4.10.4 fixes servers with registered webhooks failing to start.
+      - This update follows the Crafty v4.10.4 GitLab release.
+  website: "https://craftycontrol.com"
+  repo: "https://gitlab.com/crafty-controller/crafty-4"
+  support: ""
+  docs: "https://docs.craftycontrol.com"

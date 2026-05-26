@@ -1,7 +1,7 @@
 name: adguard-home
 services:
   adguard-home:
-    image: adguard/adguardhome:v0.107.61
+    image: adguard/adguardhome:v0.107.76
     deploy:
       resources:
         reservations:
@@ -117,3 +117,55 @@ x-casaos:
     en_us: AdGuard Home
   index: /
   port_map: "3001"
+  version: "v0.107.76"
+  updateAt: "2026-05-21"
+  releaseNotes:
+    en_US: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+    en_GB: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+    it_IT: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+    nb_NO: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+    zh_CN: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+    ja_JP: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+    ko_KR: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+    fr_FR: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+    de_DE: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+    sv_SE: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+    el_GR: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+    hr_HR: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+    pt_PT: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+    ru_RU: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+    tr_TR: |-
+      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
+      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+  website: "https://adguard.com/en/adguard-home/overview.html"
+  repo: "https://github.com/AdguardTeam/AdGuardHome"
+  support: "https://github.com/AdguardTeam/AdGuardHome/issues"
+  docs: "https://github.com/AdguardTeam/AdGuardHome/wiki"

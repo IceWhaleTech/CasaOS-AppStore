@@ -1,7 +1,7 @@
 name: archivebox
 services:
   archivebox:
-    image: archivebox/archivebox:0.7.3
+    image: archivebox/archivebox:0.7.4
     container_name: archivebox
     deploy:
       resources:
@@ -245,7 +245,7 @@ services:
             tr_TR: Arama Backend Parolası
 
   archivebox_scheduler:
-    image: archivebox/archivebox:0.7.3
+    image: archivebox/archivebox:0.7.4
     container_name: archivebox_scheduler
     deploy:
       resources:
@@ -961,3 +961,70 @@ x-casaos:
     pt_PT: ArchiveBox
     ru_RU: ArchiveBox
     tr_TR: ArchiveBox
+  version: "0.7.4"
+  updateAt: "2026-05-18"
+  releaseNotes:
+    en_US: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+    en_GB: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+    it_IT: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+    nb_NO: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+    zh_CN: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+    ja_JP: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+    ko_KR: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+    fr_FR: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+    de_DE: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+    sv_SE: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+    el_GR: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+    hr_HR: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+    pt_PT: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+    ru_RU: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+    tr_TR: |-
+      - v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.
+      - Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.
+      - Back up archives before upgrading and run archivebox version after the update.
+  website: "https://archivebox.io"
+  repo: "https://github.com/ArchiveBox/ArchiveBox"
+  support: "https://github.com/ArchiveBox/ArchiveBox/issues"
+  docs: "https://github.com/ArchiveBox/ArchiveBox/wiki"
