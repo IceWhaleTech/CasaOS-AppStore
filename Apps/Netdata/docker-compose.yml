@@ -11,7 +11,7 @@ services:
       resources:
         limits:
           memory: 1794M
-    image: netdata/netdata:v2.8.1
+    image: netdata/netdata:v2.10.3
     labels:
       icon: https://icon.casaos.io/main/all/netdata.png
     pid: host
@@ -77,69 +77,69 @@ x-casaos:
   store_app_id: netdata
   title:
     en_us: Netdata
-  version: "v2.8.1"
-  updateAt: "2025-11-21"
+  version: "v2.10.3"
+  updateAt: "2026-04-27"
   releaseNotes:
     en_US: |-
-      - v2.8.1 fixes dynamic-configuration vnodes disappearing after agent restart.
-      - PSS memory sampling in apps.plugin was disabled by default to reduce CPU overhead.
-      - Alert source unit display, Windows datafile sync logging, dbengine-disabled compilation, and Podman container name resolution were improved.
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
     en_GB: |-
-      - v2.8.1 fixes dynamic-configuration vnodes disappearing after agent restart.
-      - PSS memory sampling in apps.plugin was disabled by default to reduce CPU overhead.
-      - Alert source unit display, Windows datafile sync logging, dbengine-disabled compilation, and Podman container name resolution were improved.
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
     it_IT: |-
-      - v2.8.1 risolve i problemi relativi ai vnode dynamic-configuration che scompaiono dopo il riavvio dell'agente.
-      - Il campionamento della memoria PSS in apps.plugin è stato disabilitato da default per ridurre il sovraccarico di CPU.
-      - Sono stati migliorati la visualizzazione dell'unità di origine degli avvisi, la registrazione della sincronizzazione dei file di dati di Windows, la compilazione dbengine-disabled e la risoluzione dei nomi dei contenitori Podman.
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
     nb_NO: |-
-      - v2.8.1 fikser dynamic-configuration vnoder som forsvinner etter omstart av agent.
-      - PSS minnesampling i apps.plugin ble deaktivert av default for å redusere CPU overhead.
-      - Visning av varselkildeenhet, logging av Windows-datafilsynkronisering, dbengine-disabled-kompilering og Podman-beholdernavnoppløsning ble forbedret.
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
     zh_CN: |-
-      - v2.8.1 修复了 agent restart 后 dynamic-configuration vnodes 消失的问题。
-      - apps.plugin 中的 PSS memory sampling 默认禁用，以降低 CPU 开销。
-      - 改进了 alert source unit display、Windows datafile sync logging、dbengine-disabled compilation 和 Podman container name resolution。
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
     ja_JP: |-
-      - v2.8.1 は agent restart 後に dynamic-configuration vnodes が消える問題を修正します。
-      - CPU 負荷を下げるため、apps.plugin の PSS memory sampling はデフォルトで無効化されました。
-      - alert source unit display、Windows datafile sync logging、dbengine-disabled compilation、Podman container name resolution が改善されました。
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
     ko_KR: |-
-      - v2.8.1은 agent restart 후 dynamic-configuration vnodes가 사라지는 문제를 수정합니다.
-      - CPU 오버헤드를 줄이기 위해 apps.plugin의 PSS memory sampling이 기본적으로 비활성화되었습니다.
-      - alert source unit display, Windows datafile sync logging, dbengine-disabled compilation, Podman container name resolution이 개선되었습니다.
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
     fr_FR: |-
-      - v2.8.1 corrige la disparition des dynamic-configuration vnodes apres agent restart.
-      - PSS memory sampling dans apps.plugin est desactive par defaut pour reduire la charge CPU.
-      - Alert source unit display, Windows datafile sync logging, dbengine-disabled compilation et Podman container name resolution ont ete ameliores.
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
     de_DE: |-
-      - v2.8.1 behebt, dass dynamic-configuration vnodes nach agent restart verschwinden.
-      - PSS memory sampling in apps.plugin wurde standardmaessig deaktiviert, um CPU-Overhead zu senken.
-      - Alert source unit display, Windows datafile sync logging, dbengine-disabled compilation und Podman container name resolution wurden verbessert.
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
     sv_SE: |-
-      - v2.8.1 fixar dynamic-configuration vnoder som försvinner efter omstart av agenten.
-      - PSS minnessampling i apps.plugin inaktiverades av default för att minska CPU overhead.
-      - Visning av larmkälla, synkronisering av Windows-datafilsloggning, dbengine-disabled-kompilering och Podman-behållarens namnupplösning förbättrades.
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
     el_GR: |-
-      - Ο v2.8.1 διορθώνει τους dynamic-configuration vnodes που εξαφανίζονται μετά την επανεκκίνηση του agent.
-      - Η δειγματοληψία μνήμης PSS στο apps.plugin απενεργοποιήθηκε από default για να μειωθεί το κόστος CPU.
-      - Η εμφάνιση της μονάδας πηγής ειδοποίησης, η καταγραφή συγχρονισμού αρχείων δεδομένων των Windows, η συλλογή dbengine-disabled και η ανάλυση ονόματος κοντέινερ Podman βελτιώθηκαν.
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
     hr_HR: |-
-      - v2.8.1 popravlja dynamic-configuration vnodes koji nestaju nakon ponovnog pokretanja agenta.
-      - PSS uzorkovanje memorije u apps.plugin je onemogućeno od strane default kako bi se smanjilo opterećenje CPU.
-      - Poboljšani su prikaz izvorne jedinice upozorenja, bilježenje sinkronizacije Windows podatkovne datoteke, kompilacija dbengine-disabled i razlučivost imena spremnika Podman.
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
     pt_PT: |-
-      - v2.8.1 corrige os vnodes dynamic-configuration que desaparecem após a reinicialização do agente.
-      - A amostragem de memória PSS em apps.plugin foi desativada por default para reduzir a sobrecarga de CPU.
-      - A apresentação da unidade de origem do alerta, o registo de sincronização do ficheiro de dados do Windows, a compilação dbengine-disabled e a resolução do nome do contentor Podman foram melhorados.
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
     ru_RU: |-
-      - v2.8.1 исправляет исчезновение vnodes dynamic-configuration после перезапуска агента.
-      - Выборка памяти PSS в apps.plugin была отключена default, чтобы уменьшить накладные расходы CPU.
-      - Улучшено отображение источника оповещений, ведение журнала синхронизации файлов данных Windows, компиляция dbengine-disabled и разрешение имен контейнеров Podman.
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
     tr_TR: |-
-      - v2.8.1, aracı yeniden başlatıldıktan sonra dynamic-configuration vnode'larının kaybolmasını düzeltir.
-      - apps.plugin içindeki PSS bellek örneklemesi, CPU yükünü azaltmak için default tarafından devre dışı bırakıldı.
-      - Uyarı kaynak birimi ekranı, Windows veri dosyası eşitleme günlüğü, dbengine-disabled derlemesi ve Podman kapsayıcı adı çözümlemesi iyileştirildi.
+      - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
+      - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.
+      - Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.
   website: "https://www.netdata.cloud"
   repo: "https://github.com/netdata/netdata"
   support: "https://github.com/netdata/netdata/issues"

@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: heartexlabs/label-studio:1.9.2
+    image: heartexlabs/label-studio:1.23.0
     deploy:
       resources:
         reservations:
@@ -53,69 +53,69 @@ x-casaos:
   title:
     en_us: Label Studio   
   port_map: "3080"
-  version: "1.9.2"
-  updateAt: "2023-11-07"
+  version: "1.23.0"
+  updateAt: "2026-03-13"
   releaseNotes:
     en_US: |-
-      - 1.9.2 adds a legacy Taxonomy parameter and support for AWS Signature Version 4 query parameters.
-      - VERIFY_SSL_CERTS now defaults to true for deployment-wide HTTPS certificate verification.
-      - Security fixes address XSS issues and an SSRF DNS rebinding issue.
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
     en_GB: |-
-      - 1.9.2 adds a legacy Taxonomy parameter and support for AWS Signature Version 4 query parameters.
-      - VERIFY_SSL_CERTS now defaults to true for deployment-wide HTTPS certificate verification.
-      - Security fixes address XSS issues and an SSRF DNS rebinding issue.
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
     it_IT: |-
-      - 1.9.2 aggiunge un parametro di tassonomia legacy e il supporto per i parametri di query AWS Signature Version 4.
-      - VERIFY_SSL_CERTS ora è impostato su true per la verifica del certificato deployment-wide HTTPS.
-      - Le correzioni di sicurezza risolvono i problemi di XSS e un problema di riassociazione di SSRF DNS.
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
     nb_NO: |-
-      - 1.9.2 legger til en eldre Taxonomy-parameter og støtte for AWS Signature Versjon 4-spørringsparametere.
-      - VERIFY_SSL_CERTS er nå satt til sann for deployment-wide HTTPS sertifikatverifisering.
-      - Sikkerhetsrettinger løser XSS-problemer og et SSRF DNS-rebindingsproblem.
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
     zh_CN: |-
-      - 1.9.2 增加了 legacy Taxonomy parameter，并支持 AWS Signature Version 4 query parameters。
-      - VERIFY_SSL_CERTS 现在默认为 true，用于部署级 HTTPS certificate verification。
-      - 安全修复解决了 XSS 问题和 SSRF DNS rebinding 问题。
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
     ja_JP: |-
-      - 1.9.2 は legacy Taxonomy parameter と AWS Signature Version 4 query parameters のサポートを追加します。
-      - VERIFY_SSL_CERTS はデプロイ全体の HTTPS certificate verification 向けにデフォルトで true になりました。
-      - セキュリティ修正では XSS 問題と SSRF DNS rebinding 問題に対応しています。
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
     ko_KR: |-
-      - 1.9.2는 legacy Taxonomy parameter와 AWS Signature Version 4 query parameters 지원을 추가합니다.
-      - VERIFY_SSL_CERTS는 이제 배포 전체 HTTPS certificate verification을 위해 기본값이 true입니다.
-      - 보안 수정은 XSS 문제와 SSRF DNS rebinding 문제를 해결합니다.
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
     fr_FR: |-
-      - 1.9.2 ajoute un legacy Taxonomy parameter et la prise en charge des AWS Signature Version 4 query parameters.
-      - VERIFY_SSL_CERTS vaut maintenant true par defaut pour la HTTPS certificate verification a l'echelle du deploiement.
-      - Les correctifs de securite traitent des problemes XSS et un probleme SSRF DNS rebinding.
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
     de_DE: |-
-      - 1.9.2 fuegt einen legacy Taxonomy parameter und Support fuer AWS Signature Version 4 query parameters hinzu.
-      - VERIFY_SSL_CERTS ist nun standardmaessig true fuer deploymentsweite HTTPS certificate verification.
-      - Sicherheitskorrekturen beheben XSS-Probleme und ein SSRF DNS rebinding-Problem.
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
     sv_SE: |-
-      - 1.9.2 lägger till en äldre taxonomiparameter och stöd för frågeparametrar för AWS Signature Version 4.
-      - VERIFY_SSL_CERTS är nu som standard sant för deployment-wide HTTPS certifikatverifiering.
-      - Säkerhetskorrigeringar åtgärdar XSS-problem och ett SSRF DNS återbindningsproblem.
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
     el_GR: |-
-      - Το 1.9.2 προσθέτει μια παράμετρο Taxonomy παλαιού τύπου και υποστήριξη για παραμέτρους ερωτήματος AWS Signature Version 4.
-      - Το VERIFY_SSL_CERTS είναι τώρα από προεπιλογή αληθές για την επαλήθευση πιστοποιητικού deployment-wide HTTPS.
-      - Οι διορθώσεις ασφαλείας αντιμετωπίζουν XSS ζητήματα και ένα SSRF DNS πρόβλημα επαναδέσμευσης.
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
     hr_HR: |-
-      - 1.9.2 dodaje naslijeđeni parametar taksonomije i podršku za parametre upita AWS Signature Version 4.
-      - VERIFY_SSL_CERTS sada je zadana vrijednost istinita za deployment-wide HTTPS provjeru certifikata.
-      - Sigurnosni popravci rješavaju probleme XSS i problem ponovnog povezivanja SSRF DNS.
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
     pt_PT: |-
-      - 1.9.2 adiciona um parâmetro de taxonomia herdado e suporte para parâmetros de consulta AWS Signature versão 4.
-      - VERIFY_SSL_CERTS tem agora como padrão verdadeiro para a verificação do certificado deployment-wide HTTPS.
-      - As correções de segurança abordam problemas de XSS e um problema de religação de SSRF DNS.
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
     ru_RU: |-
-      - 1.9.2 добавляет устаревший параметр таксономии и поддерживает параметры запроса AWS Signature версии 4.
-      - VERIFY_SSL_CERTS теперь по умолчанию имеет значение true для проверки сертификата deployment-wide HTTPS.
-      - Исправления безопасности касаются проблем XSS и проблемы повторной привязки SSRF DNS.
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
     tr_TR: |-
-      - 1.9.2 eski bir Taksonomi parametresi ekler ve AWS İmza Sürümü 4 sorgu parametrelerini destekler.
-      - VERIFY_SSL_CERTS artık deployment-wide HTTPS sertifika doğrulaması için varsayılan olarak true değerini alıyor.
-      - Güvenlik, adres XSS sorunlarını ve SSRF DNS yeniden bağlama sorununu düzeltir.
+      - v1.23.0 adds Vector and VectorLabels tags for point-based image annotations such as polylines, polygons, and skeletons.
+      - Data Manager and template-builder updates add interactive task-source viewing, filter copy/paste, JSON filter copy, row context menus, Ctrl+F search, panel resizing, and shift range selection.
+      - The heartexlabs/label-studio:1.23.0 Docker image tag was published on 2026-03-13.
   website: "https://labelstud.io/"
   repo: "https://github.com/HumanSignal/label-studio"
   support: "https://github.com/HumanSignal/label-studio/issues"
