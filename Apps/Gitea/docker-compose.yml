@@ -4,7 +4,7 @@ services:
     environment:
       USER_GID: "1000"
       USER_UID: "1000"
-    image: gitea/gitea:1.25
+    image: gitea/gitea:1.26.2
     deploy:
       resources:
         reservations:
@@ -163,69 +163,69 @@ x-casaos:
     en_us: Gitea
   index: /
   port_map: "3002"
-  version: "1.25"
-  updateAt: "2026-03-13"
+  version: "1.26.2"
+  updateAt: "2026-05-20"
   releaseNotes:
     en_US: |-
-      - v1.25.0 adds repository archive streaming, configurable Git remote names, and workflow success/failure emails.
-      - OpenID Connect, repository contents APIs, SSH commit signing, and 3D/CAD previews were improved.
-      - Security updates include a public-key upgrade and all 1.24.x security fixes after 1.25.0-rc0.
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
     en_GB: |-
-      - v1.25.0 adds repository archive streaming, configurable Git remote names, and workflow success/failure emails.
-      - OpenID Connect, repository contents APIs, SSH commit signing, and 3D/CAD previews were improved.
-      - Security updates include a public-key upgrade and all 1.24.x security fixes after 1.25.0-rc0.
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
     it_IT: |-
-      - v1.25.0 aggiunge lo streaming dell'archivio del repository, nomi remoti Git configurabili ed e-mail di successo/fallimento del flusso di lavoro.
-      - OpenID Connect, i contenuti del repository APIs, la firma del commit SSH e le anteprime 3D/CAD sono state migliorate.
-      - Gli aggiornamenti di sicurezza includono un aggiornamento public-key e tutte le correzioni di sicurezza 1.24.x successive a 1.25.0-rc0.
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
     nb_NO: |-
-      - v1.25.0 legger til strømming av arkivarkiv, konfigurerbare Git-fjernnavn og e-poster om suksess/feil i arbeidsflyten.
-      - OpenID Connect, depotinnhold APIs, SSH commit signering og 3D/CAD forhåndsvisninger ble forbedret.
-      - Sikkerhetsoppdateringer inkluderer en public-key-oppgradering og alle 1.24.x-sikkerhetsreparasjoner etter 1.25.0-rc0.
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
     zh_CN: |-
-      - v1.25.0 增加了仓库归档流式传输、可配置的 Git remote 名称，以及 workflow 成功/失败邮件。
-      - 改进了 OpenID Connect、仓库内容 API、SSH commit signing 和 3D/CAD 预览。
-      - 安全更新包括 public-key 升级，以及 1.25.0-rc0 之后所有 1.24.x 安全修复。
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
     ja_JP: |-
-      - v1.25.0 はリポジトリアーカイブのストリーミング、設定可能な Git remote 名、workflow 成功/失敗メールを追加します。
-      - OpenID Connect、リポジトリ contents API、SSH commit signing、3D/CAD プレビューが改善されました。
-      - セキュリティ更新には public-key upgrade と、1.25.0-rc0 以降のすべての 1.24.x セキュリティ修正が含まれます。
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
     ko_KR: |-
-      - v1.25.0은 저장소 아카이브 스트리밍, 구성 가능한 Git remote 이름, workflow 성공/실패 이메일을 추가합니다.
-      - OpenID Connect, 저장소 contents API, SSH commit signing, 3D/CAD 미리보기가 개선되었습니다.
-      - 보안 업데이트에는 public-key 업그레이드와 1.25.0-rc0 이후의 모든 1.24.x 보안 수정이 포함됩니다.
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
     fr_FR: |-
-      - v1.25.0 ajoute le streaming des archives de dépôt, des noms de remote Git configurables et des e-mails de succès/échec de workflow.
-      - OpenID Connect, les API de contenu de dépôt, la signature de commit SSH et les aperçus 3D/CAD ont été améliorés.
-      - Les mises à jour de sécurité incluent une mise à niveau de public-key et tous les correctifs de sécurité 1.24.x après 1.25.0-rc0.
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
     de_DE: |-
-      - v1.25.0 ergänzt Repository-Archiv-Streaming, konfigurierbare Git-Remote-Namen und E-Mails für erfolgreiche oder fehlgeschlagene Workflows.
-      - OpenID Connect, Repository-Contents-APIs, SSH-Commit-Signing und 3D/CAD-Vorschauen wurden verbessert.
-      - Sicherheitsupdates umfassen ein Public-Key-Upgrade und alle 1.24.x-Sicherheitskorrekturen nach 1.25.0-rc0.
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
     sv_SE: |-
-      - v1.25.0 lägger till strömning av arkivarkiv, konfigurerbara Git-fjärrnamn och e-postmeddelanden om framgång/misslyckande i arbetsflödet.
-      - OpenID Connect, förvarsinnehåll APIs, SSH commit signering och 3D/CAD förhandsvisningar förbättrades.
-      - Säkerhetsuppdateringar inkluderar en public-key uppgradering och alla 1.24.x säkerhetsfixar efter 1.25.0-rc0.
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
     el_GR: |-
-      - Το v1.25.0 προσθέτει ροή αρχείου αποθετηρίου, ρυθμιζόμενα ονόματα απομακρυσμένου Git και μηνύματα ηλεκτρονικού ταχυδρομείου επιτυχίας/αποτυχίας ροής εργασιών.
-      - OpenID Σύνδεση, τα περιεχόμενα του αποθετηρίου APIs, η υπογραφή δέσμευσης SSH και οι προεπισκοπήσεις 3D/CAD βελτιώθηκαν.
-      - Οι ενημερώσεις ασφαλείας περιλαμβάνουν μια αναβάθμιση public-key και όλες τις διορθώσεις ασφαλείας 1.24.x μετά το 1.25.0-rc0.
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
     hr_HR: |-
-      - v1.25.0 dodaje strujanje arhive spremišta, konfigurabilna Git udaljena imena i e-poruke o uspjehu/neuspjehu tijeka rada.
-      - OpenID Connect, poboljšani su pregledi sadržaja repozitorija APIs, SSH commit signing i 3D/CAD.
-      - Sigurnosna ažuriranja uključuju nadogradnju public-key i sve sigurnosne popravke 1.24.x nakon 1.25.0-rc0.
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
     pt_PT: |-
-      - v1.25.0 adiciona streaming de ficheiros de repositório, nomes remotos Git configuráveis ​​e e-mails de sucesso/falha de fluxo de trabalho.
-      - OpenID Connect, conteúdo do repositório APIs, assinatura de commit de SSH e visualizações de 3D/CAD foram melhoradas.
-      - As atualizações de segurança incluem uma atualização public-key e todas as correções de segurança 1.24.x posteriores a 1.25.0-rc0.
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
     ru_RU: |-
-      - v1.25.0 добавляет потоковую передачу архива репозитория, настраиваемые удаленные имена Git и электронные письма об успешном/неудачном рабочем процессе.
-      - OpenID Connect, улучшены подписи содержимого репозитория APIs, SSH и предварительный просмотр 3D/CAD.
-      - Обновления безопасности включают обновление public-key и все исправления безопасности 1.24.x после 1.25.0-rc0.
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
     tr_TR: |-
-      - v1.25.0, depo arşiv akışını, yapılandırılabilir Git uzak adlarını ve iş akışı başarı/başarısızlık e-postalarını ekler.
-      - OpenID Bağlan, depo içerikleri APIs, SSH onaylama imzalama ve 3D/CAD önizlemeleri iyileştirildi.
-      - Güvenlik güncellemeleri, public-key yükseltmesini ve 1.25.0-rc0'den sonraki tüm 1.24.x güvenlik düzeltmelerini içerir.
+      - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
+      - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
+      - Dependency security updates are included, such as mermaid v11.15.0 and go-git updates.
   website: "https://about.gitea.com/"
   repo: "https://github.com/go-gitea/gitea"
   support: "https://github.com/go-gitea/gitea/issues"
