@@ -24,7 +24,6 @@ services:
         target: /opt/data
     environment:
       HERMES_DASHBOARD: 1
-      HERMES_DASHBOARD_HOST: 0.0.0.0
       HERMES_DASHBOARD_INSECURE: 1
     x-casaos:
       ports:
@@ -98,23 +97,6 @@ services:
             pt_PT: Ativa o painel web do Hermes
             ru_RU: Включает веб-панель Hermes
             tr_TR: Hermes web panelini etkinleştirir
-        - container: HERMES_DASHBOARD_HOST
-          description:
-            en_US: Bind address for the Hermes web dashboard
-            en_GB: Bind address for the Hermes web dashboard
-            it_IT: Indirizzo di binding per la dashboard web di Hermes
-            nb_NO: Bindingsadresse for Hermes-nettdashbordet
-            zh_CN: Hermes Web 仪表盘的绑定地址
-            ja_JP: Hermes Web ダッシュボードのバインドアドレス
-            ko_KR: Hermes 웹 대시보드의 바인드 주소
-            fr_FR: Adresse de liaison du tableau de bord web de Hermes
-            de_DE: Bind-Adresse fur das Hermes-Web-Dashboard
-            sv_SE: Bindningsadress for Hermes webbpanel
-            el_GR: Διεύθυνση δέσμευσης για τον πίνακα ελέγχου web του Hermes
-            hr_HR: Adresa vezivanja za Hermes web nadzornu plocu
-            pt_PT: Endereco de associacao para o painel web do Hermes
-            ru_RU: Адрес привязки веб-панели Hermes
-            tr_TR: Hermes web paneli icin baglama adresi
         - container: HERMES_DASHBOARD_INSECURE
           description:
             en_US: Allows dashboard access from non-loopback hosts
@@ -392,49 +374,49 @@ x-casaos:
     before_install:
       en_US: |
         In most cases, you can configure models and messaging directly from the Hermes WebUI.
-        If you cannot find the relevant option, see [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) and complete the configuration in the container terminal.
+        If you cannot find the relevant option, see [this guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) and complete the configuration in the container terminal.
       en_GB: |
         In most cases, you can configure models and messaging directly from the Hermes WebUI.
-        If you cannot find the relevant option, see [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) and complete the configuration in the container terminal.
+        If you cannot find the relevant option, see [this guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) and complete the configuration in the container terminal.
       it_IT: |
         Nella maggior parte dei casi, puoi configurare direttamente modelli e messaggistica dalla WebUI di Hermes.
-        Se non trovi l'opzione corrispondente, consulta [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) e completa la configurazione nel terminale del container.
+        Se non trovi l'opzione corrispondente, consulta [questa guida](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) e completa la configurazione nel terminale del container.
       nb_NO: |
         I de fleste tilfeller kan du konfigurere modeller og meldinger direkte fra Hermes WebUI.
-        Hvis du ikke finner det aktuelle alternativet, se [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) og fullfor konfigurasjonen i containerterminalen.
+        Hvis du ikke finner det aktuelle alternativet, se [denne veiledningen](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) og fullfor konfigurasjonen i containerterminalen.
       zh_CN: |
         在大多数情况下，你可以直接通过 Hermes WebUI 配置模型和消息。
         如果找不到相应选项，请参考 [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) 在容器终端完成配置。
       ja_JP: |
         ほとんどの場合、モデル設定やメッセージ機能は Hermes WebUI から直接設定できます。
-        該当する項目が見つからない場合は、[该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) を参照し、コンテナのターミナルで設定を完了してください。
+        該当する項目が見つからない場合は、[このガイド](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) を参照し、コンテナのターミナルで設定を完了してください。
       ko_KR: |
         대부분의 경우 Hermes WebUI에서 모델과 메시징을 직접 설정할 수 있습니다.
-        해당 옵션이 보이지 않으면 [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) 를 참고해 컨테이너 터미널에서 설정을 완료하세요.
+        해당 옵션이 보이지 않으면 [이 가이드](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) 를 참고해 컨테이너 터미널에서 설정을 완료하세요.
       fr_FR: |
         Dans la plupart des cas, vous pouvez configurer directement les modeles et la messagerie depuis l'interface WebUI de Hermes.
-        Si vous ne trouvez pas l'option correspondante, consultez [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) et terminez la configuration dans le terminal du conteneur.
+        Si vous ne trouvez pas l'option correspondante, consultez [ce guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) et terminez la configuration dans le terminal du conteneur.
       de_DE: |
         In den meisten Fallen konnen Sie Modelle und Messaging direkt uber die Hermes WebUI konfigurieren.
-        Wenn Sie die entsprechende Option nicht finden, lesen Sie [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) und schliessen Sie die Konfiguration im Container-Terminal ab.
+        Wenn Sie die entsprechende Option nicht finden, lesen Sie [diese Anleitung](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) und schliessen Sie die Konfiguration im Container-Terminal ab.
       sv_SE: |
         I de flesta fall kan du konfigurera modeller och meddelanden direkt i Hermes WebUI.
-        Om du inte hittar motsvarande alternativ, se [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) och slutför konfigureringen i containerns terminal.
+        Om du inte hittar motsvarande alternativ, se [den här guiden](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) och slutför konfigureringen i containerns terminal.
       el_GR: |
         Στις περισσότερες περιπτώσεις, μπορείτε να ρυθμίσετε μοντέλα και μηνύματα απευθείας από το Hermes WebUI.
-        Αν δεν βρείτε τη σχετική επιλογή, δείτε το [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) και ολοκληρώστε τη ρύθμιση στο τερματικό του container.
+        Αν δεν βρείτε τη σχετική επιλογή, δείτε το [σχετικό οδηγό](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) και ολοκληρώστε τη ρύθμιση στο τερματικό του container.
       hr_HR: |
         U vecini slucajeva modele i razmjenu poruka mozete konfigurirati izravno kroz Hermes WebUI.
-        Ako ne mozete pronaci odgovarajucu opciju, pogledajte [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) i dovrsite konfiguraciju u terminalu kontejnera.
+        Ako ne mozete pronaci odgovarajucu opciju, pogledajte [ovaj vodic](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) i dovrsite konfiguraciju u terminalu kontejnera.
       pt_PT: |
         Na maioria dos casos, pode configurar modelos e mensagens diretamente na WebUI do Hermes.
-        Se nao encontrar a opcao correspondente, consulte [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) e conclua a configuracao no terminal do contentor.
+        Se nao encontrar a opcao correspondente, consulte [este guia](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) e conclua a configuracao no terminal do contentor.
       ru_RU: |
         В большинстве случаев вы можете настроить модели и обмен сообщениями прямо через Hermes WebUI.
-        Если нужный параметр не находится, откройте [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) и завершите настройку в терминале контейнера.
+        Если нужный параметр не находится, откройте [это руководство](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) и завершите настройку в терминале контейнера.
       tr_TR: |
         Cogu durumda modelleri ve mesajlasmayi dogrudan Hermes WebUI uzerinden yapilandirabilirsiniz.
-        Ilgili secenegi bulamazsaniz [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) adresine bakin ve kurulumu konteyner terminalinde tamamlayin.
+        Ilgili secenegi bulamazsaniz [bu rehbere](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) bakin ve kurulumu konteyner terminalinde tamamlayin.
   scheme: http
   port_map: "9119"
   index: /
