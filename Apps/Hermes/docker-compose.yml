@@ -1,0 +1,492 @@
+name: hermes
+services:
+  hermes:
+    image: nousresearch/hermes-agent:v2026.5.29
+    container_name: hermes
+    deploy:
+      resources:
+        reservations:
+          memory: 1G
+    restart: unless-stopped
+    command:
+      - gateway
+      - run
+    ports:
+      - target: 8642
+        published: "8642"
+        protocol: tcp
+      - target: 9119
+        published: "9119"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/
+        target: /opt/data
+    environment:
+      HERMES_DASHBOARD: 1
+      HERMES_DASHBOARD_INSECURE: 1
+    x-casaos:
+      ports:
+        - container: "8642"
+          description:
+            en_US: Gateway API Port
+            en_GB: Gateway API Port
+            it_IT: Porta API del gateway
+            nb_NO: Gateway API-port
+            zh_CN: 网关 API 端口
+            ja_JP: ゲートウェイ API ポート
+            ko_KR: 게이트웨이 API 포트
+            fr_FR: Port API de la passerelle
+            de_DE: Gateway-API-Port
+            sv_SE: Gateway API-port
+            el_GR: Θύρα API πύλης
+            hr_HR: API priključak pristupnika
+            pt_PT: Porta da API do gateway
+            ru_RU: Порт API шлюза
+            tr_TR: Ağ geçidi API bağlantı noktası
+        - container: "9119"
+          description:
+            en_US: Dashboard HTTP Port
+            en_GB: Dashboard HTTP Port
+            it_IT: Porta HTTP della dashboard
+            nb_NO: Dashboard HTTP-port
+            zh_CN: 仪表盘 HTTP 端口
+            ja_JP: ダッシュボード HTTP ポート
+            ko_KR: 대시보드 HTTP 포트
+            fr_FR: Port HTTP du tableau de bord
+            de_DE: Dashboard-HTTP-Port
+            sv_SE: Dashboard HTTP-port
+            el_GR: Θύρα HTTP πίνακα ελέγχου
+            hr_HR: HTTP priključak nadzorne ploče
+            pt_PT: Porta HTTP do painel
+            ru_RU: HTTP-порт панели управления
+            tr_TR: Panel HTTP bağlantı noktası
+      volumes:
+        - container: /opt/data
+          description:
+            en_US: Hermes User Data Directory
+            en_GB: Hermes User Data Directory
+            it_IT: Directory Dati Utente Hermes
+            nb_NO: Hermes brukerdata-katalog
+            zh_CN: Hermes 用户数据目录
+            ja_JP: Hermes ユーザーデータディレクトリ
+            ko_KR: Hermes 사용자 데이터 디렉터리
+            fr_FR: Répertoire des données utilisateur Hermes
+            de_DE: Hermes Benutzerdatenverzeichnis
+            sv_SE: Hermes användardata-katalog
+            el_GR: Κατάλογος δεδομένων χρήστη Hermes
+            hr_HR: Hermes direktorij korisničkih podataka
+            pt_PT: Diretório de dados do utilizador Hermes
+            ru_RU: Каталог пользовательских данных Hermes
+            tr_TR: Hermes kullanıcı veri dizini
+      envs:
+        - container: HERMES_DASHBOARD
+          description:
+            en_US: Enables the Hermes web dashboard
+            en_GB: Enables the Hermes web dashboard
+            it_IT: Abilita la dashboard web di Hermes
+            nb_NO: Aktiverer Hermes-nettdashbordet
+            zh_CN: 启用 Hermes Web 仪表盘
+            ja_JP: Hermes の Web ダッシュボードを有効にします
+            ko_KR: Hermes 웹 대시보드를 활성화합니다
+            fr_FR: Active le tableau de bord web de Hermes
+            de_DE: Aktiviert das Hermes-Web-Dashboard
+            sv_SE: Aktiverar Hermes webbpanel
+            el_GR: Ενεργοποιεί τον πίνακα ελέγχου web του Hermes
+            hr_HR: Omogućuje Hermes web nadzornu ploču
+            pt_PT: Ativa o painel web do Hermes
+            ru_RU: Включает веб-панель Hermes
+            tr_TR: Hermes web panelini etkinleştirir
+        - container: HERMES_DASHBOARD_INSECURE
+          description:
+            en_US: Allows dashboard access from non-loopback hosts
+            en_GB: Allows dashboard access from non-loopback hosts
+            it_IT: Consente l'accesso alla dashboard da host non loopback
+            nb_NO: Tillater dashbordtilgang fra ikke-loopback-verter
+            zh_CN: 允许从非 loopback 主机访问仪表盘
+            ja_JP: loopback 以外のホストからのダッシュボードアクセスを許可します
+            ko_KR: non-loopback 호스트에서 대시보드에 접근할 수 있게 합니다
+            fr_FR: Autorise l'acces au tableau de bord depuis des hotes non loopback
+            de_DE: Erlaubt den Dashboard-Zugriff von Nicht-Loopback-Hosts
+            sv_SE: Tillater dashboardatkomst fran vardar som inte ar loopback
+            el_GR: Επιτρέπει πρόσβαση στο dashboard από hosts εκτός loopback
+            hr_HR: Omogucuje pristup nadzornoj ploci s hostova koji nisu loopback
+            pt_PT: Permite o acesso ao painel a partir de hosts nao loopback
+            ru_RU: Разрешает доступ к панели управления с хостов, отличных от loopback
+            tr_TR: Panel erisimine loopback disi ana makinelerden izin verir
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: hermes
+  category: AI
+  developer: Nous Research
+  author: Nous Research
+  tagline:
+    en_US: A self-improving AI agent with memory, skills, messaging, and a web dashboard.
+    en_GB: A self-improving AI agent with memory, skills, messaging, and a web dashboard.
+    it_IT: Un agente AI auto-migliorante con memoria, competenze, messaggistica e dashboard web.
+    nb_NO: En selvforbedrende AI-agent med minne, ferdigheter, meldinger og et webdashboard.
+    zh_CN: 一款具备记忆、技能、消息功能和 Web 仪表盘的自我改进 AI 代理。
+    ja_JP: メモリ、スキル、メッセージング、Webダッシュボードを備えた自己改善型AIエージェント。
+    ko_KR: 메모리, 스킬, 메시징, 웹 대시보드를 갖춘 자기개선형 AI 에이전트입니다.
+    fr_FR: Un agent IA auto-améliorant avec mémoire, compétences, messagerie et tableau de bord web.
+    de_DE: Ein selbstverbessernder KI-Agent mit Speicher, Fähigkeiten, Messaging und Web-Dashboard.
+    sv_SE: En självförbättrande AI-agent med minne, färdigheter, meddelanden och en webbpanel.
+    el_GR: Ένας αυτοβελτιούμενος πράκτορας AI με μνήμη, δεξιότητες, μηνύματα και πίνακα ελέγχου web.
+    hr_HR: Samopoboljšavajući AI agent s memorijom, vještinama, porukama i web nadzornom pločom.
+    pt_PT: Um agente de IA autoaperfeiçoável com memória, competências, mensagens e painel web.
+    ru_RU: Самообучающийся ИИ-агент с памятью, навыками, сообщениями и веб-панелью.
+    tr_TR: Hafıza, beceriler, mesajlaşma ve web paneline sahip kendini geliştiren bir yapay zeka aracısı.
+  description:
+    en_US: |
+      Hermes Agent is a self-improving AI agent from Nous Research, designed to be a long-running collaborator rather than a one-off chatbot.
+      Its built-in learning loop combines persistent memory, cross-session recall, and reusable skills so it can keep context and improve recurring workflows over time.
+      With a unified gateway, rich toolsets, and a browser-based dashboard, Hermes fits research, automation, cross-platform communication, and ongoing operational work.
+
+      **Main Features:**
+      - Built-in learning loop with persistent memory, session search, and reusable skills
+      - One gateway for CLI, Telegram, Discord, Slack, WhatsApp, Signal, and more
+      - Tool-driven workflows with terminal access, web search, browser automation, file editing, and MCP integration
+      - Automation and coordination with cron jobs, subagents, the web dashboard, and an OpenAI-compatible API
+
+      **Learn More:**
+      - [Hermes Agent Official Website](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Hermes Agent Documentation](https://hermes-agent.nousresearch.com/docs/)
+    en_GB: |
+      Hermes Agent is a self-improving AI agent from Nous Research, designed to be a long-running collaborator rather than a one-off chatbot.
+      Its built-in learning loop combines persistent memory, cross-session recall, and reusable skills so it can keep context and improve recurring workflows over time.
+      With a unified gateway, rich toolsets, and a browser-based dashboard, Hermes fits research, automation, cross-platform communication, and ongoing operational work.
+
+      **Main Features:**
+      - Built-in learning loop with persistent memory, session search, and reusable skills
+      - One gateway for CLI, Telegram, Discord, Slack, WhatsApp, Signal, and more
+      - Tool-driven workflows with terminal access, web search, browser automation, file editing, and MCP integration
+      - Automation and coordination with cron jobs, subagents, the web dashboard, and an OpenAI-compatible API
+
+      **Learn More:**
+      - [Hermes Agent Official Website](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Hermes Agent Documentation](https://hermes-agent.nousresearch.com/docs/)
+    it_IT: |
+      Hermes Agent è un agente AI auto-migliorante di Nous Research, progettato per essere un collaboratore continuativo più che un semplice chatbot occasionale.
+      Il suo ciclo di apprendimento interno combina memoria persistente, richiamo tra sessioni e competenze riutilizzabili, così da mantenere il contesto e migliorare nel tempo i flussi di lavoro ricorrenti.
+      Con un gateway unificato, ricchi set di strumenti e una dashboard accessibile dal browser, Hermes si adatta bene a ricerca, automazione, comunicazione multipiattaforma e lavoro operativo continuativo.
+
+      **Funzionalità Principali:**
+      - Ciclo di apprendimento integrato con memoria persistente, richiamo tra sessioni e competenze riutilizzabili
+      - Un solo gateway per CLI, Telegram, Discord, Slack, WhatsApp, Signal e altre piattaforme
+      - Flussi di lavoro guidati dagli strumenti con terminale, ricerca web, automazione del browser, modifica file e integrazione MCP
+      - Automazione e coordinamento con cron, sottoagenti, dashboard web e API compatibile con OpenAI
+
+      **Ulteriori Informazioni:**
+      - [Sito Ufficiale di Hermes Agent](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Documentazione di Hermes Agent](https://hermes-agent.nousresearch.com/docs/)
+    nb_NO: |
+      Hermes Agent er en selvforbedrende AI-agent fra Nous Research, laget for å være en langsiktig samarbeidspartner heller enn en engangs chatbot.
+      Den innebygde læringssløyfen kombinerer vedvarende minne, søk på tvers av økter og gjenbrukbare ferdigheter, slik at den kan huske kontekst og forbedre tilbakevendende arbeidsflyter over tid.
+      Med en samlet gateway, rike verktøysett og et nettleserbasert dashboard passer Hermes godt til forskning, automatisering, kommunikasjon på tvers av plattformer og løpende operativt arbeid.
+
+      **Hovedfunksjoner:**
+      - Innebygd læringssløyfe med vedvarende minne, øktsøk og gjenbrukbare ferdigheter
+      - Én gateway for CLI, Telegram, Discord, Slack, WhatsApp, Signal og mer
+      - Verktøydrevne arbeidsflyter med terminal, nettsøk, nettleserautomatisering, filredigering og MCP-integrasjon
+      - Automatisering og koordinering med cron, underagenter, webdashboard og OpenAI-kompatibelt API
+
+      **Lær Mer:**
+      - [Hermes Agent Offisielle Nettside](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Hermes Agent-dokumentasjon](https://hermes-agent.nousresearch.com/docs/)
+    zh_CN: |
+      Hermes Agent 是 Nous Research 推出的自我改进 AI 代理，定位不是一次性聊天机器人，而是可以长期协作的智能助手。
+      它内置学习闭环，把长期记忆、跨会话检索和可复用技能结合在一起，能够持续保留上下文，并不断改进重复出现的工作流。
+      借助统一消息网关、丰富工具集和基于浏览器的仪表盘，Hermes 很适合研究整理、任务自动化、跨平台沟通以及持续性的运营工作。
+
+      **主要功能：**
+      - 内置学习闭环，结合长期记忆、会话检索与可复用技能
+      - 单一网关连接 CLI、Telegram、Discord、Slack、WhatsApp、Signal 等多种平台
+      - 可通过工具执行终端操作、网页搜索、浏览器自动化、文件编辑和 MCP 扩展集成
+      - 支持定时任务、子代理协作、Web 仪表盘与 OpenAI 兼容 API 等自动化与协同能力
+
+      **了解更多：**
+      - [Hermes Agent 官网](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Hermes Agent 文档](https://hermes-agent.nousresearch.com/docs/)
+    ja_JP: |
+      Hermes AgentはNous Researchによる自己改善型AIエージェントで、単発のチャットボットではなく長期的な協業相手として設計されています。
+      組み込みの学習ループにより、永続メモリ、セッションをまたぐ検索、再利用可能なスキルを組み合わせ、文脈を保ちながら反復的なワークフローを改善していきます。
+      統合ゲートウェイ、豊富なツールセット、ブラウザベースのダッシュボードを備え、調査、自動化、複数プラットフォームでの連携、継続的な運用業務に適しています。
+
+      **主な機能：**
+      - 永続メモリ、セッション検索、再利用可能スキルを備えた学習ループ
+      - CLI、Telegram、Discord、Slack、WhatsApp、Signal などをつなぐ単一ゲートウェイ
+      - ターミナル操作、Web検索、ブラウザ自動化、ファイル編集、MCP連携によるツール駆動ワークフロー
+      - cron、サブエージェント、Webダッシュボード、OpenAI互換APIによる自動化と調整
+
+      **詳細情報：**
+      - [Hermes Agent 公式サイト](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Hermes Agent ドキュメント](https://hermes-agent.nousresearch.com/docs/)
+    ko_KR: |
+      Hermes Agent는 Nous Research가 만든 자기개선형 AI 에이전트로, 일회성 챗봇이 아니라 오래 함께 일하는 협업 도우미를 지향합니다.
+      내장된 학습 루프는 지속 메모리, 세션 간 검색, 재사용 가능한 스킬을 결합해 문맥을 기억하고 반복되는 워크플로를 시간이 지날수록 더 잘 처리하게 만듭니다.
+      통합 게이트웨이, 풍부한 도구 세트, 브라우저 기반 대시보드를 바탕으로 리서치, 자동화, 다중 플랫폼 커뮤니케이션, 지속적인 운영 업무에 잘 맞습니다。
+
+      **주요 기능:**
+      - 지속 메모리, 세션 검색, 재사용 가능한 스킬을 결합한 내장 학습 루프
+      - CLI, Telegram, Discord, Slack, WhatsApp, Signal 등을 연결하는 단일 게이트웨이
+      - 터미널, 웹 검색, 브라우저 자동화, 파일 편집, MCP 연동을 포함한 도구 기반 작업
+      - 크론 작업, 서브에이전트, 웹 대시보드, OpenAI 호환 API를 통한 자동화와 조정
+
+      **더 알아보기:**
+      - [Hermes Agent 공식 웹사이트](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Hermes Agent 문서](https://hermes-agent.nousresearch.com/docs/)
+    fr_FR: |
+      Hermes Agent est un agent IA auto-améliorant de Nous Research, conçu comme un collaborateur durable plutôt qu'un simple chatbot ponctuel.
+      Sa boucle d'apprentissage intégrée combine mémoire persistante, recherche intersessions et compétences réutilisables afin de conserver le contexte et d'améliorer les flux de travail récurrents au fil du temps.
+      Avec une passerelle unifiée, de riches jeux d'outils et un tableau de bord accessible depuis le navigateur, Hermes convient bien à la recherche, à l'automatisation, à la communication multiplateforme et aux opérations continues.
+
+      **Fonctionnalités Principales :**
+      - Boucle d'apprentissage intégrée avec mémoire persistante, recherche entre sessions et compétences réutilisables
+      - Une seule passerelle pour le CLI, Telegram, Discord, Slack, WhatsApp, Signal et d'autres plateformes
+      - Flux pilotés par outils avec terminal, recherche web, automatisation du navigateur, édition de fichiers et intégration MCP
+      - Automatisation et coordination avec cron, sous-agents, tableau de bord web et API compatible OpenAI
+
+      **En Savoir Plus :**
+      - [Site Officiel Hermes Agent](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Documentation Hermes Agent](https://hermes-agent.nousresearch.com/docs/)
+    de_DE: |
+      Hermes Agent ist ein selbstverbessernder KI-Agent von Nous Research, der als langfristiger Arbeitsbegleiter und nicht als einmaliger Chatbot gedacht ist.
+      Seine integrierte Lernschleife verbindet dauerhaftes Gedächtnis, sitzungsübergreifende Suche und wiederverwendbare Fähigkeiten, damit Kontext erhalten bleibt und wiederkehrende Abläufe mit der Zeit besser werden.
+      Mit einer einheitlichen Gateway-Schicht, umfangreichen Toolsets und einem browserbasierten Dashboard eignet sich Hermes für Recherche, Automatisierung, plattformübergreifende Kommunikation und laufende operative Arbeit.
+
+      **Hauptfunktionen:**
+      - Integrierte Lernschleife mit persistentem Gedächtnis, sitzungsübergreifender Suche und wiederverwendbaren Fähigkeiten
+      - Ein Gateway für CLI, Telegram, Discord, Slack, WhatsApp, Signal und weitere Plattformen
+      - Werkzeuggestützte Workflows mit Terminal, Websuche, Browserautomatisierung, Dateibearbeitung und MCP-Integration
+      - Automatisierung und Koordination mit Cron, Subagenten, Web-Dashboard und OpenAI-kompatibler API
+
+      **Mehr Erfahren:**
+      - [Hermes Agent Offizielle Website](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Hermes Agent Dokumentation](https://hermes-agent.nousresearch.com/docs/)
+    sv_SE: |
+      Hermes Agent är en självförbättrande AI-agent från Nous Research, byggd för att vara en långsiktig samarbetspartner snarare än en engångschattbot.
+      Den inbyggda lärloopen kombinerar beständigt minne, sökning mellan sessioner och återanvändbara färdigheter så att den kan minnas sammanhang och förbättra återkommande arbetsflöden över tid.
+      Med en gemensam gateway, rika verktygsuppsättningar och en webbaserad panel passar Hermes för forskning, automatisering, kommunikation över flera plattformar och löpande operativt arbete.
+
+      **Huvudfunktioner:**
+      - Inbyggd lärloop med beständigt minne, sessionssökning och återanvändbara färdigheter
+      - En gateway för CLI, Telegram, Discord, Slack, WhatsApp, Signal och fler plattformar
+      - Verktygsdrivna arbetsflöden med terminal, webbsökning, webbläsarautomatisering, filredigering och MCP-integration
+      - Automatisering och samordning med cron, underagenter, webbpanel och OpenAI-kompatibelt API
+
+      **Lär Dig Mer:**
+      - [Hermes Agent Officiella Webbplats](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Hermes Agent-dokumentation](https://hermes-agent.nousresearch.com/docs/)
+    el_GR: |
+      Το Hermes Agent είναι ένας αυτοβελτιούμενος πράκτορας AI της Nous Research, σχεδιασμένος ως μακροχρόνιος συνεργάτης και όχι ως ένα απλό εφάπαξ chatbot.
+      Ο ενσωματωμένος βρόχος μάθησης συνδυάζει επίμονη μνήμη, αναζήτηση μεταξύ συνεδριών και επαναχρησιμοποιήσιμες δεξιότητες, ώστε να διατηρεί το πλαίσιο και να βελτιώνει επαναλαμβανόμενες ροές εργασίας με τον χρόνο.
+      Με ενιαία πύλη, πλούσια σύνολα εργαλείων και πίνακα ελέγχου μέσω προγράμματος περιήγησης, το Hermes ταιριάζει σε έρευνα, αυτοματοποίηση, επικοινωνία σε πολλές πλατφόρμες και συνεχή επιχειρησιακή εργασία.
+
+      **Κύριες Λειτουργίες:**
+      - Ενσωματωμένος βρόχος μάθησης με επίμονη μνήμη, αναζήτηση συνεδριών και επαναχρησιμοποιήσιμες δεξιότητες
+      - Μία πύλη για CLI, Telegram, Discord, Slack, WhatsApp, Signal και περισσότερες πλατφόρμες
+      - Ροές εργασίας με εργαλεία όπως τερματικό, αναζήτηση ιστού, αυτοματοποίηση περιηγητή, επεξεργασία αρχείων και ενσωμάτωση MCP
+      - Αυτοματισμός και συντονισμός με cron, υποπράκτορες, web dashboard και API συμβατό με OpenAI
+
+      **Μάθετε Περισσότερα:**
+      - [Επίσημος Ιστότοπος Hermes Agent](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Τεκμηρίωση Hermes Agent](https://hermes-agent.nousresearch.com/docs/)
+    hr_HR: |
+      Hermes Agent je samopoboljšavajući AI agent tvrtke Nous Research, osmišljen kao dugoročni suradnik, a ne kao jednokratni chatbot.
+      Njegova ugrađena petlja učenja spaja trajnu memoriju, pretraživanje između sesija i ponovno upotrebljive vještine kako bi zadržao kontekst i s vremenom unaprijedio ponavljajuće radne tokove.
+      Uz objedinjeni pristupnik, bogate skupove alata i web nadzornu ploču, Hermes je prikladan za istraživanje, automatizaciju, višekanalnu komunikaciju i kontinuirani operativni rad.
+
+      **Glavne Funkcije:**
+      - Ugrađena petlja učenja s trajnom memorijom, pretraživanjem sesija i ponovno upotrebljivim vještinama
+      - Jedan pristupnik za CLI, Telegram, Discord, Slack, WhatsApp, Signal i druge platforme
+      - Radni tokovi vođeni alatima uz terminal, web pretragu, automatizaciju preglednika, uređivanje datoteka i MCP integraciju
+      - Automatizacija i koordinacija uz cron, podagente, web nadzornu ploču i OpenAI-kompatibilni API
+
+      **Saznajte Više:**
+      - [Službena Web Stranica Hermes Agent](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Dokumentacija Hermes Agent](https://hermes-agent.nousresearch.com/docs/)
+    pt_PT: |
+      Hermes Agent é um agente de IA autoaperfeiçoável da Nous Research, concebido para funcionar como colaborador de longo prazo e não apenas como um chatbot ocasional.
+      O seu ciclo de aprendizagem integrado combina memória persistente, pesquisa entre sessões e competências reutilizáveis, permitindo-lhe manter contexto e melhorar fluxos de trabalho recorrentes ao longo do tempo.
+      Com um gateway unificado, conjuntos de ferramentas ricos e um painel baseado no navegador, o Hermes adapta-se bem a investigação, automação, comunicação multiplataforma e trabalho operacional contínuo.
+
+      **Principais Funcionalidades:**
+      - Ciclo de aprendizagem integrado com memória persistente, pesquisa entre sessões e competências reutilizáveis
+      - Um único gateway para CLI, Telegram, Discord, Slack, WhatsApp, Signal e outras plataformas
+      - Fluxos de trabalho orientados por ferramentas com terminal, pesquisa web, automação do navegador, edição de ficheiros e integração MCP
+      - Automação e coordenação com cron, subagentes, painel web e API compatível com OpenAI
+
+      **Saiba Mais:**
+      - [Site Oficial do Hermes Agent](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Documentação do Hermes Agent](https://hermes-agent.nousresearch.com/docs/)
+    ru_RU: |
+      Hermes Agent — это самообучающийся ИИ-агент от Nous Research, созданный не как разовый чат-бот, а как долгосрочный помощник для совместной работы.
+      Его встроенный цикл обучения объединяет постоянную память, поиск между сессиями и переиспользуемые навыки, чтобы сохранять контекст и со временем улучшать повторяющиеся рабочие процессы.
+      Благодаря единому шлюзу, богатому набору инструментов и веб-панели Hermes хорошо подходит для исследований, автоматизации, коммуникации на разных платформах и длительной операционной работы.
+
+      **Основные Функции:**
+      - Встроенный цикл обучения с постоянной памятью, межсессионным поиском и переиспользуемыми навыками
+      - Единый шлюз для CLI, Telegram, Discord, Slack, WhatsApp, Signal и других платформ
+      - Инструментальные рабочие процессы с терминалом, веб-поиском, автоматизацией браузера, редактированием файлов и интеграцией MCP
+      - Автоматизация и координация через cron, субагентов, веб-панель и OpenAI-совместимый API
+
+      **Узнать Больше:**
+      - [Официальный Сайт Hermes Agent](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Документация Hermes Agent](https://hermes-agent.nousresearch.com/docs/)
+    tr_TR: |
+      Hermes Agent, Nous Research tarafından geliştirilen ve tek seferlik bir sohbet botundan ziyade uzun vadeli bir çalışma ortağı olarak tasarlanan kendini geliştiren bir yapay zeka aracısıdır.
+      Yerleşik öğrenme döngüsü kalıcı hafıza, oturumlar arası arama ve yeniden kullanılabilir becerileri bir araya getirerek bağlamı korumasını ve tekrar eden iş akışlarını zamanla iyileştirmesini sağlar.
+      Birleşik ağ geçidi, zengin araç setleri ve tarayıcı tabanlı paneli sayesinde Hermes; araştırma, otomasyon, çok platformlu iletişim ve süreklilik gerektiren operasyonel işler için uygundur.
+
+      **Başlıca İşlevler:**
+      - Kalıcı hafıza, oturumlar arası arama ve yeniden kullanılabilir becerilerle yerleşik öğrenme döngüsü
+      - CLI, Telegram, Discord, Slack, WhatsApp, Signal ve daha fazlası için tek ağ geçidi
+      - Terminal, web araması, tarayıcı otomasyonu, dosya düzenleme ve MCP entegrasyonu ile araç odaklı iş akışları
+      - Cron, alt aracılar, web paneli ve OpenAI uyumlu API ile otomasyon ve koordinasyon
+
+      **Daha Fazla Bilgi:**
+      - [Hermes Agent Resmi Web Sitesi](https://hermes-agent.nousresearch.com/)
+      - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
+      - [Hermes Agent Dokümantasyonu](https://hermes-agent.nousresearch.com/docs/)
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hermes/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hermes/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hermes/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hermes/screenshot-3.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hermes/thumbnail.png
+  tips:
+    before_install:
+      en_US: |
+        In most cases, you can configure models and messaging directly from the Hermes WebUI.
+        If you cannot find the relevant option, see [this guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) and complete the configuration in the container terminal.
+      en_GB: |
+        In most cases, you can configure models and messaging directly from the Hermes WebUI.
+        If you cannot find the relevant option, see [this guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) and complete the configuration in the container terminal.
+      it_IT: |
+        Nella maggior parte dei casi, puoi configurare direttamente modelli e messaggistica dalla WebUI di Hermes.
+        Se non trovi l'opzione corrispondente, consulta [questa guida](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) e completa la configurazione nel terminale del container.
+      nb_NO: |
+        I de fleste tilfeller kan du konfigurere modeller og meldinger direkte fra Hermes WebUI.
+        Hvis du ikke finner det aktuelle alternativet, se [denne veiledningen](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) og fullfor konfigurasjonen i containerterminalen.
+      zh_CN: |
+        在大多数情况下，你可以直接通过 Hermes WebUI 配置模型和消息。
+        如果找不到相应选项，请参考 [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) 在容器终端完成配置。
+      ja_JP: |
+        ほとんどの場合、モデル設定やメッセージ機能は Hermes WebUI から直接設定できます。
+        該当する項目が見つからない場合は、[このガイド](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) を参照し、コンテナのターミナルで設定を完了してください。
+      ko_KR: |
+        대부분의 경우 Hermes WebUI에서 모델과 메시징을 직접 설정할 수 있습니다.
+        해당 옵션이 보이지 않으면 [이 가이드](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) 를 참고해 컨테이너 터미널에서 설정을 완료하세요.
+      fr_FR: |
+        Dans la plupart des cas, vous pouvez configurer directement les modeles et la messagerie depuis l'interface WebUI de Hermes.
+        Si vous ne trouvez pas l'option correspondante, consultez [ce guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) et terminez la configuration dans le terminal du conteneur.
+      de_DE: |
+        In den meisten Fallen konnen Sie Modelle und Messaging direkt uber die Hermes WebUI konfigurieren.
+        Wenn Sie die entsprechende Option nicht finden, lesen Sie [diese Anleitung](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) und schliessen Sie die Konfiguration im Container-Terminal ab.
+      sv_SE: |
+        I de flesta fall kan du konfigurera modeller och meddelanden direkt i Hermes WebUI.
+        Om du inte hittar motsvarande alternativ, se [den här guiden](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) och slutför konfigureringen i containerns terminal.
+      el_GR: |
+        Στις περισσότερες περιπτώσεις, μπορείτε να ρυθμίσετε μοντέλα και μηνύματα απευθείας από το Hermes WebUI.
+        Αν δεν βρείτε τη σχετική επιλογή, δείτε το [σχετικό οδηγό](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) και ολοκληρώστε τη ρύθμιση στο τερματικό του container.
+      hr_HR: |
+        U vecini slucajeva modele i razmjenu poruka mozete konfigurirati izravno kroz Hermes WebUI.
+        Ako ne mozete pronaci odgovarajucu opciju, pogledajte [ovaj vodic](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) i dovrsite konfiguraciju u terminalu kontejnera.
+      pt_PT: |
+        Na maioria dos casos, pode configurar modelos e mensagens diretamente na WebUI do Hermes.
+        Se nao encontrar a opcao correspondente, consulte [este guia](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) e conclua a configuracao no terminal do contentor.
+      ru_RU: |
+        В большинстве случаев вы можете настроить модели и обмен сообщениями прямо через Hermes WebUI.
+        Если нужный параметр не находится, откройте [это руководство](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) и завершите настройку в терминале контейнера.
+      tr_TR: |
+        Cogu durumda modelleri ve mesajlasmayi dogrudan Hermes WebUI uzerinden yapilandirabilirsiniz.
+        Ilgili secenegi bulamazsaniz [bu rehbere](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) bakin ve kurulumu konteyner terminalinde tamamlayin.
+  scheme: http
+  port_map: "9119"
+  index: /
+  title:
+    en_US: Hermes
+  version: "0.15.1"
+  updateAt: "2026-05-29"
+  releaseNotes:
+    en_US: |-
+      - v0.15.1 fixes the dashboard 401 reload loop that affected loopback-mode deployments, including Docker-based fresh installs.
+      - Docker deployments now require explicitly setting `HERMES_DASHBOARD_INSECURE=1` if you want to disable the loopback-only auth guard; it is no longer inferred from the bind host.
+      - MCP servers launched with bare commands like `npx`, `npm`, and `node` now resolve correctly inside the Docker image, alongside several dashboard and worker bug fixes.
+    en_GB: |-
+      - v0.15.1 fixes the dashboard 401 reload loop that affected loopback-mode deployments, including Docker-based fresh installs.
+      - Docker deployments now require explicitly setting `HERMES_DASHBOARD_INSECURE=1` if you want to disable the loopback-only auth guard; it is no longer inferred from the bind host.
+      - MCP servers launched with bare commands like `npx`, `npm`, and `node` now resolve correctly inside the Docker image, alongside several dashboard and worker bug fixes.
+    it_IT: |-
+      - La v0.15.1 corregge il loop di ricarica 401 della dashboard che interessava le distribuzioni in modalita loopback, incluse le nuove installazioni basate su Docker.
+      - Nelle distribuzioni Docker ora e necessario impostare esplicitamente `HERMES_DASHBOARD_INSECURE=1` se si vuole disattivare la protezione di autenticazione solo loopback; non viene piu dedotto dall'host di binding.
+      - I server MCP avviati con comandi semplici come `npx`, `npm` e `node` ora vengono risolti correttamente dentro l'immagine Docker, insieme a varie correzioni per dashboard e worker.
+    nb_NO: |-
+      - v0.15.1 retter dashboardens 401-oppdateringsloekke som pavirket distribusjoner i loopback-modus, inkludert nye Docker-baserte installasjoner.
+      - Docker-distribusjoner krever na at du eksplisitt setter `HERMES_DASHBOARD_INSECURE=1` hvis du vil deaktivere autentiseringsvernet som kun gjelder loopback; det utledes ikke lenger fra bind-verten.
+      - MCP-servere startet med enkle kommandoer som `npx`, `npm` og `node` loses na korrekt inne i Docker-imaget, sammen med flere feilrettinger for dashboard og worker.
+    zh_CN: |-
+      - v0.15.1 修复了仪表盘在 loopback 模式部署下出现的 401 刷新循环问题，其中也包括基于 Docker 的全新安装场景。
+      - 在 Docker 部署中，如果你希望关闭仅限 loopback 的鉴权保护，现在需要显式设置 `HERMES_DASHBOARD_INSECURE=1`，而不再根据绑定主机自动推断。
+      - 通过 `npx`、`npm`、`node` 这类裸命令启动的 MCP 服务器，现在可以在 Docker 镜像内被正确解析，同时还包含多项仪表盘和 worker 相关修复。
+    ja_JP: |-
+      - v0.15.1では、Dockerでの新規導入を含むloopbackモード環境で発生していた、ダッシュボードの401リロードループが修正されました。
+      - Docker環境でloopback専用の認証ガードを無効化したい場合は、`HERMES_DASHBOARD_INSECURE=1` を明示的に設定する必要があり、bind host から自動推定されなくなりました。
+      - `npx`、`npm`、`node` のような素のコマンドで起動するMCPサーバーがDockerイメージ内で正しく解決されるようになり、そのほかダッシュボードやworker周りの不具合も修正されています。
+    ko_KR: |-
+      - v0.15.1은 Docker 기반 신규 설치를 포함한 loopback 모드 배포에서 발생하던 대시보드 401 새로고침 루프를 수정합니다.
+      - Docker 배포에서 loopback 전용 인증 가드를 끄려면 이제 `HERMES_DASHBOARD_INSECURE=1` 을 명시적으로 설정해야 하며, 더 이상 바인드 호스트에서 자동 추론되지 않습니다.
+      - `npx`, `npm`, `node` 같은 bare command로 시작한 MCP 서버가 이제 Docker 이미지 내부에서 올바르게 해석되며, 대시보드와 워커 관련 여러 버그 수정도 포함됩니다.
+    fr_FR: |-
+      - La v0.15.1 corrige la boucle de rechargement 401 du tableau de bord qui affectait les deploiements en mode loopback, y compris les nouvelles installations basees sur Docker.
+      - Dans les deploiements Docker, il faut maintenant definir explicitement `HERMES_DASHBOARD_INSECURE=1` si vous voulez desactiver la protection d'authentification reservee au loopback ; elle n'est plus deduite de l'hote de liaison.
+      - Les serveurs MCP lances avec des commandes simples comme `npx`, `npm` et `node` se resolvent maintenant correctement dans l'image Docker, avec plusieurs autres corrections pour le tableau de bord et les workers.
+    de_DE: |-
+      - v0.15.1 behebt die 401-Neuladeschleife im Dashboard, die Bereitstellungen im Loopback-Modus betraf, einschliesslich neuer Docker-basierter Installationen.
+      - Bei Docker-Bereitstellungen muss `HERMES_DASHBOARD_INSECURE=1` nun explizit gesetzt werden, wenn der nur fur Loopback geltende Auth-Schutz deaktiviert werden soll; dies wird nicht mehr aus dem Bind-Host abgeleitet.
+      - MCP-Server, die mit einfachen Befehlen wie `npx`, `npm` und `node` gestartet werden, werden nun innerhalb des Docker-Images korrekt aufgeloest, zusammen mit mehreren Fehlerbehebungen fur Dashboard und Worker.
+    sv_SE: |-
+      - v0.15.1 fixar dashboardens 401-omladdningsloop som paverkade distributioner i loopback-lage, inklusive nya Docker-baserade installationer.
+      - I Docker-distributioner maste du nu uttryckligen ange `HERMES_DASHBOARD_INSECURE=1` om du vill stanga av autentiseringsskyddet som bara galler loopback; det har inte langre att gora med bind-varden.
+      - MCP-servrar som startas med enkla kommandon som `npx`, `npm` och `node` matchas nu korrekt inne i Docker-imagen, tillsammans med flera andra felrattningar for dashboard och workers.
+    el_GR: |-
+      - Η v0.15.1 διορθώνει το loop επαναφόρτωσης 401 του dashboard που επηρέαζε deployments σε loopback mode, συμπεριλαμβανομένων και νέων εγκαταστάσεων με Docker.
+      - Στα Docker deployments απαιτείται πλέον να ορίσετε ρητά `HERMES_DASHBOARD_INSECURE=1` αν θέλετε να απενεργοποιήσετε την auth προστασία μόνο για loopback, καθώς δεν προκύπτει πλέον από το bind host.
+      - Οι MCP servers που ξεκινούν με απλές εντολές όπως `npx`, `npm` και `node` επιλύονται πλέον σωστά μέσα στο Docker image, μαζί με αρκετές ακόμη διορθώσεις για dashboard και workers.
+    hr_HR: |-
+      - v0.15.1 ispravlja 401 petlju ponovnog ucitavanja nadzorne ploce koja je pogadala deploymente u loopback nacinu rada, ukljucujuci i nove instalacije temeljene na Dockeru.
+      - U Docker deploymentima sada morate izricito postaviti `HERMES_DASHBOARD_INSECURE=1` ako zelite iskljuciti autentikacijsku zastitu samo za loopback; vise se ne izvodi iz bind hosta.
+      - MCP posluzitelji pokrenuti jednostavnim naredbama kao sto su `npx`, `npm` i `node` sada se ispravno razrjesavaju unutar Docker imagea, uz vise dodatnih ispravaka za nadzornu plocu i workere.
+    pt_PT: |-
+      - A v0.15.1 corrige o loop de recarregamento 401 do painel que afetava implementacoes em modo loopback, incluindo instalacoes novas baseadas em Docker.
+      - Nas implementacoes Docker, agora e necessario definir explicitamente `HERMES_DASHBOARD_INSECURE=1` se quiser desativar a protecao de autenticacao apenas para loopback; ja nao e inferida a partir do host de bind.
+      - Os servidores MCP iniciados com comandos simples como `npx`, `npm` e `node` passam agora a ser resolvidos corretamente dentro da imagem Docker, juntamente com varias correcoes adicionais no painel e nos workers.
+    ru_RU: |-
+      - В v0.15.1 исправлен цикл перезагрузки dashboard с ошибкой 401, который затрагивал развертывания в loopback-режиме, включая новые установки на базе Docker.
+      - В Docker-развертываниях теперь нужно явно задавать `HERMES_DASHBOARD_INSECURE=1`, если вы хотите отключить защиту аутентификации только для loopback; она больше не определяется по bind host.
+      - MCP-серверы, запускаемые простыми командами вроде `npx`, `npm` и `node`, теперь корректно разрешаются внутри Docker-образа, а также включены дополнительные исправления для dashboard и worker-процессов.
+    tr_TR: |-
+      - v0.15.1, Docker tabanli yeni kurulumlar dahil loopback modundaki dagitimlari etkileyen dashboard 401 yeniden yukleme dongusunu duzeltir.
+      - Docker dagitimlarinda, sadece loopback icin olan kimlik dogrulama korumasini kapatmak istiyorsaniz artik `HERMES_DASHBOARD_INSECURE=1` degerini acikca ayarlamaniz gerekir; bu bilgi bind hosttan artik cikarilmaz.
+      - `npx`, `npm` ve `node` gibi yalniz komutlarla baslatilan MCP sunuculari artik Docker image icinde dogru sekilde cozulur; buna ek olarak dashboard ve worker tarafinda cesitli hata duzeltmeleri de bulunur.
+  store_app_id: hermes
+  website: "https://hermes-agent.nousresearch.com/"
+  repo: "https://github.com/NousResearch/hermes-agent"
+  support: "https://github.com/NousResearch/hermes-agent/issues"
+  docs: "https://hermes-agent.nousresearch.com/docs/"
