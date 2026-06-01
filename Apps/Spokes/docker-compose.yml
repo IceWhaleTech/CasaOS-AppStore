@@ -1,0 +1,72 @@
+name: spokes
+services:
+  spokes:
+    image: ghcr.io/pcbeeqc/spokes:latest
+    container_name: spokes
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+      # LiveKit TCP Fallback (Must be mapped 1-to-1)
+      - target: 7881
+        published: "7881"
+        protocol: tcp
+      # LiveKit UDP Range (Must be mapped 1-to-1)
+      - target: 50000-50499
+        published: "50000-50499"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    environment:
+      - SPOKES_MASTER_PASSWORD=YourSecureMasterPasswordHere
+    x-casaos:
+      envs:
+        - container: SPOKES_MASTER_PASSWORD
+          description:
+            en_US: Your Secure Master Password (Required)
+      ports:
+        - container: "8080"
+          description:
+            en_US: WebUI HTTP Port
+        - container: "7881"
+          description:
+            en_US: LiveKit TCP Fallback Port (Must be mapped 1-to-1)
+        - container: "50000-50499/udp"
+          description:
+            en_US: LiveKit UDP Range (Must be mapped 1-to-1)
+      volumes:
+        - container: /data
+          description:
+            en_US: Spokes Persistent Data
+x-casaos:
+  architectures:
+    - amd64
+  main: spokes
+  author: PCBeeQC
+  category: Chat
+  description:
+    en_US: |
+      Spokes is a powerful, self-hosted communication platform designed to give small businesses, homelabs, and private groups complete control over their data. It features real-time chat, voice, and video channels with zero-trust security.
+      
+      Spokes uses a "Perpetual Fallback License" model: you pay a flat fee per server for updates, but keep the right to use your installed version forever with unlimited users.
+      
+      Start your free 1-month demo instantly, no credit card required!
+  developer: PCBeeQC
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/screenshot-4.png
+  tagline:
+    en_US: Secure, self-hosted team chat with voice and video.
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/icon.png
+  title:
+    en_US: Spokes
+  index: /
+  port_map: "8080"
+  version: "latest"
+  website: "https://spokes.sh"
