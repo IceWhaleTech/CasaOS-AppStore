@@ -1,0 +1,70 @@
+name: spokes
+services:
+  spokes:
+    image: ghcr.io/pcbeeqc/spokes:latest
+    container_name: spokes
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+      - target: 7881
+        published: "7881"
+        protocol: tcp
+      - target: 50000-50499
+        published: "50000-50499"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    environment:
+      - SPOKES_MASTER_PASSWORD=YourSecureMasterPasswordHere
+    x-casaos:
+      envs:
+        - container: SPOKES_MASTER_PASSWORD
+          description:
+            en_US: Your Secure Master Password (Required)
+      ports:
+        - container: "8080"
+          description:
+            en_US: WebUI HTTP Port
+        - container: "7881"
+          description:
+            en_US: LiveKit TCP Fallback Port
+        - container: "50000-50499/udp"
+          description:
+            en_US: LiveKit UDP Range
+      volumes:
+        - container: /data
+          description:
+            en_US: Spokes Persistent Data
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: spokes
+  author: PCBeeQC
+  category: Chat
+  description:
+    en_US: |
+      Spokes is a self-hosted, secure communication platform designed for small businesses, homelabs, and private groups. 
+      It features a zero-trust offline perpetual licensing model, meaning you pay once per server and keep it forever with unlimited users.
+      
+      Start your free 1-month demo instantly, no credit card required!
+  developer: PCBeeQC
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/screenshot-4.png
+  tagline:
+    en_US: Own Your Communication Platform. Pay Once. Own it Forever.
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/icon.png
+  title:
+    en_US: Spokes
+  index: /
+  port_map: "8080"
+  version: "latest"
+  website: "https://spokes.sh"
