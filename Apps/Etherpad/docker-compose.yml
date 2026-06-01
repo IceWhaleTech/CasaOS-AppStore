@@ -92,14 +92,6 @@ services:
         - container: TRUST_PROXY
           description:
             en_us: Set to "true" when running behind CasaOS's reverse proxy.
-      ports:
-        - container: "9001"
-          description:
-            en_us: WebUI HTTP Port
-      volumes:
-        - container: /opt/etherpad-lite/var
-          description:
-            en_us: Etherpad data directory (pads, sessions, dirty.db, plugins).
 
 x-casaos:
   architectures:
