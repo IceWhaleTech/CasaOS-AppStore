@@ -5,21 +5,11 @@ services:
     container_name: spokes
     restart: unless-stopped
     ports:
-      - target: 8080
-        published: "8080"
-        protocol: tcp
-      # LiveKit TCP Fallback (Must be mapped 1-to-1)
-      - target: 7881
-        published: "7881"
-        protocol: tcp
-      # LiveKit UDP Range (Must be mapped 1-to-1)
-      - target: 50000-50499
-        published: "50000-50499"
-        protocol: udp
+      - "8080:8080/tcp"
+      - "7881:7881/tcp"
+      - "50000-50499:50000-50499/udp"
     volumes:
-      - type: bind
-        source: /DATA/AppData/$AppID/data
-        target: /data
+      - /DATA/AppData/$AppID/data:/data
     environment:
       - SPOKES_MASTER_PASSWORD=YourSecureMasterPasswordHere
     x-casaos:
@@ -44,7 +34,6 @@ services:
 x-casaos:
   architectures:
     - amd64
-    - arm64
   main: spokes
   author: PCBeeQC
   category: Chat
