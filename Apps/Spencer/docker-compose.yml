@@ -1,0 +1,93 @@
+name: spencer
+services:
+  spencer:
+    image: ipetinate/spencer:latest
+    container_name: spencer
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 7070
+        published: "7070"
+        protocol: tcp
+    environment:
+      - PORT=7070
+      - TZ=$TZ
+      - HOST_PROC=/host/proc
+      - HOST_SYS=/host/sys
+      - HOST_DEV=/host/dev
+      - HOST_ROOT=/host/root
+    volumes:
+      - type: bind
+        source: /proc
+        target: /host/proc
+        read_only: true
+      - type: bind
+        source: /sys
+        target: /host/sys
+        read_only: true
+      - type: bind
+        source: /dev
+        target: /host/dev
+        read_only: true
+      - type: bind
+        source: /
+        target: /host/root
+        read_only: true
+    pid: host
+    x-casaos:
+      ports:
+        - container: "7070"
+          description:
+            en_us: Web dashboard
+      volumes:
+        - container: /host/proc
+          description:
+            en_us: Host /proc (read-only, required for metrics)
+        - container: /host/sys
+          description:
+            en_us: Host /sys (read-only, required for metrics)
+        - container: /host/dev
+          description:
+            en_us: Host /dev (read-only, required for metrics)
+        - container: /host/root
+          description:
+            en_us: Host / (read-only, required for disk metrics)
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: spencer
+  author: ipetinate
+  category: Utilities
+  description:
+    en_us: |
+      Spencer is a lightweight real-time server monitoring dashboard with a modern UI.
+
+      It provides live metrics for CPU (aggregate and per-core), memory, disk, network (per-interface), temperature sensors, and running processes — all in a single-page app with drag-and-drop layout, resizable widgets, and 60 fps sparkline charts.
+
+      Features include multiple themes (dark/light with accent color variants), PWA support (installable as a standalone app), and a configurable UI scale. All data is served by a Go backend using gopsutil and requires no database or cloud dependencies — fully self-hosted.
+
+      Note: Spencer requires access to host system metrics via /proc, /sys, and /. Temperature sensors are available on native Linux only (not inside Docker Desktop on macOS).
+  developer: ipetinate
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spencer/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spencer/screenshot-1.png
+  tagline:
+    en_us: Real-time server monitor with a modern drag-and-drop UI
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spencer/thumbnail.png
+  tips:
+    before_install:
+      en_us: >
+        Spencer requires access to host system metrics. The volume mounts
+        (/proc, /sys, /dev, /) and HOST_* environment variables are required
+        for full functionality. Temperature sensors work on native Linux only.
+  title:
+    en_us: Spencer
+  index: /
+  port_map: "7070"
+  scheme: http
+  version: "0.1.0"
+  updateAt: "2026-06-07"
+  website: "https://github.com/ipetinate/spencer"
+  repo: "https://github.com/ipetinate/spencer"
+  support: "https://github.com/ipetinate/spencer/issues"
