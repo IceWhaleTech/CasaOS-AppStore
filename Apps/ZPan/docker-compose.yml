@@ -1,7 +1,7 @@
 name: zpan
 services:
   zpan:
-    image: ghcr.io/saltbo/zpan:2.7.1
+    image: ghcr.io/saltbo/zpan:2.7.2
     deploy:
       resources:
         reservations:
@@ -50,7 +50,7 @@ services:
     container_name: zpan
 
   zpan-downloader:
-    image: ghcr.io/saltbo/zpan:2.7.1-cli
+    image: ghcr.io/saltbo/zpan:2.7.2-cli
     deploy:
       resources:
         reservations:
@@ -137,7 +137,7 @@ x-casaos:
   title:
     en_us: ZPan
     zh_cn: ZPan
-  version: "2.7.1"
+  version: "2.7.2"
   updateAt: "2026-06-07"
   releaseNotes:
     en_US: |-
