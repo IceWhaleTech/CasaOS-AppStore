@@ -1,0 +1,148 @@
+name: zpan
+services:
+  zpan:
+    image: ghcr.io/saltbo/zpan:2.7.1
+    deploy:
+      resources:
+        reservations:
+          memory: "256M"
+    network_mode: bridge
+    ports:
+      - target: 8222
+        published: ${WEBUI_PORT:-8222}
+        protocol: tcp
+    environment:
+      PORT: "8222"
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:-}
+      BETTER_AUTH_URL: http://localhost:${WEBUI_PORT:-8222}
+      DATABASE_URL: /data/zpan.db
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8222/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+      start_period: 20s
+    x-casaos:
+      envs:
+        - container: BETTER_AUTH_SECRET
+          description:
+            en_us: Optional Better Auth secret. Leave empty to let ZPan generate one.
+            zh_cn: 可选 Better Auth 密钥。留空时由 ZPan 自动生成。
+        - container: BETTER_AUTH_URL
+          description:
+            en_us: Public URL used by ZPan authentication callbacks.
+            zh_cn: ZPan 认证回调用的公开访问地址。
+      ports:
+        - container: "8222"
+          description:
+            en_us: WebUI HTTP Port
+            zh_cn: WebUI HTTP 端口
+      volumes:
+        - container: /data
+          description:
+            en_us: ZPan database and application data.
+            zh_cn: ZPan 数据库和应用数据。
+    container_name: zpan
+
+  zpan-downloader:
+    image: ghcr.io/saltbo/zpan:2.7.1-cli
+    deploy:
+      resources:
+        reservations:
+          memory: "128M"
+    network_mode: bridge
+    hostname: zpan-downloader
+    command: ["--config", "/data/config.yaml", "downloader", "up"]
+    ports:
+      - target: 6881
+        published: "6881"
+        protocol: tcp
+      - target: 6881
+        published: "6881"
+        protocol: udp
+    environment:
+      ZPAN_SERVER_URL: http://zpan:8222
+      ZPAN_DOWNLOADER_ENGINE: auto
+      ZPAN_DOWNLOADER_DOWNLOAD_DIR: /data/downloads
+      ZPAN_DOWNLOADER_STATE_DIR: /data/state
+      ZPAN_DOWNLOADER_BT_LISTEN_PORT: "6881"
+      ZPAN_DOWNLOADER_SEED_CACHE_LIMIT: 10GB
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/downloader
+        target: /data
+    depends_on:
+      zpan:
+        condition: service_healthy
+    x-casaos:
+      envs:
+        - container: ZPAN_SERVER_URL
+          description:
+            en_us: Internal ZPan server URL used by the downloader worker.
+            zh_cn: 下载器连接 ZPan 主服务使用的内部地址。
+        - container: ZPAN_DOWNLOADER_ENGINE
+          description:
+            en_us: Downloader engine. Keep auto unless you need to force aria2 or qbittorrent.
+            zh_cn: 下载器引擎。通常保持 auto，除非需要强制使用 aria2 或 qbittorrent。
+        - container: ZPAN_DOWNLOADER_SEED_CACHE_LIMIT
+          description:
+            en_us: Maximum cache size kept for seeding torrent downloads.
+            zh_cn: BT 下载做种缓存的最大保留空间。
+      ports:
+        - container: "6881"
+          description:
+            en_us: BitTorrent listen port (TCP)
+            zh_cn: BitTorrent 监听端口（TCP）
+        - container: "6881"
+          description:
+            en_us: BitTorrent listen port (UDP)
+            zh_cn: BitTorrent 监听端口（UDP）
+          protocol: udp
+      volumes:
+        - container: /data
+          description:
+            en_us: Downloader configuration, state, cache, and temporary files.
+            zh_cn: 下载器配置、状态、缓存和临时文件。
+    container_name: zpan-downloader
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: zpan
+  author: saltbo
+  category: Cloud
+  description:
+    en_US: |
+      ZPan is a lightweight file hosting platform built on top of S3-compatible storage. Clients upload directly to object storage through presigned URLs, so the application server does not sit in the file transfer path.
+
+      Use it as an S3-backed web drive, image host, file sharing portal, personal homepage, or WebDAV-accessible file service. ZPan also includes deployable downloader workers for remote-download workflows; the downloader can run next to the main service or separately in an environment with better network access.
+    zh_CN: |
+      ZPan 是一个基于 S3 兼容对象存储的轻量文件托管平台。客户端通过预签名 URL 直接上传到对象存储，应用服务不会成为文件传输链路中的带宽瓶颈。
+
+      你可以把它用作 S3 网盘、图床、文件分享站、个人主页或支持 WebDAV 的文件服务。ZPan 还包含可独立部署的下载器 worker，适合远程下载场景；下载器可以和主服务一起运行，也可以部署在网络条件更好的独立环境中。
+  developer: saltbo
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ZPan/icon.png
+  port_map: ${WEBUI_PORT:-8222}
+  scheme: http
+  tagline:
+    en_US: Open-source file hosting for your S3-compatible storage.
+    zh_CN: 面向 S3 兼容存储的开源文件托管平台。
+  title:
+    en_us: ZPan
+    zh_cn: ZPan
+  version: "2.7.1"
+  updateAt: "2026-06-07"
+  releaseNotes:
+    en_US: |-
+      - Adds ZPan with the main web service and a deployable downloader worker.
+      - Uses pinned GHCR images instead of latest tags.
+    zh_CN: |-
+      - 新增 ZPan 主服务和可部署的下载器 worker。
+      - 使用固定版本的 GHCR 镜像，不使用 latest 标签。
