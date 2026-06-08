@@ -1,3 +1,4 @@
+---
 name: spencer
 services:
   spencer:
@@ -5,18 +6,21 @@ services:
     container_name: spencer
     restart: unless-stopped
     network_mode: bridge
+    pid: host
     ports:
       - target: 7070
         published: "7070"
         protocol: tcp
     environment:
       - PORT=7070
-      - TZ=$TZ
       - HOST_PROC=/host/proc
       - HOST_SYS=/host/sys
       - HOST_DEV=/host/dev
       - HOST_ROOT=/host/root
     volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /data
       - type: bind
         source: /proc
         target: /host/proc
@@ -29,34 +33,30 @@ services:
         source: /dev
         target: /host/dev
         read_only: true
-      - type: bind
-        source: /
-        target: /host/root
-        read_only: true
-    pid: host
     x-casaos:
       ports:
         - container: "7070"
           description:
             en_us: Web dashboard
       volumes:
+        - container: /data
+          description:
+            en_us: Persistent data (SQLite database)
         - container: /host/proc
           description:
-            en_us: Host /proc (read-only, required for metrics)
+            en_us: Host /proc (read-only, required for CPU/memory/process metrics)
         - container: /host/sys
           description:
-            en_us: Host /sys (read-only, required for metrics)
+            en_us: Host /sys (read-only, required for temperature sensors)
         - container: /host/dev
           description:
-            en_us: Host /dev (read-only, required for metrics)
-        - container: /host/root
-          description:
-            en_us: Host / (read-only, required for disk metrics)
+            en_us: Host /dev (read-only, required for disk metrics)
 x-casaos:
   architectures:
     - amd64
     - arm64
   main: spencer
+  store_app_id: spencer
   author: ipetinate
   category: Utilities
   description:
@@ -67,7 +67,7 @@ x-casaos:
 
       Features include multiple themes (dark/light with accent color variants), PWA support (installable as a standalone app), and a configurable UI scale. All data is served by a Go backend using gopsutil and requires no database or cloud dependencies — fully self-hosted.
 
-      Note: Spencer requires access to host system metrics via /proc, /sys, and /. Temperature sensors are available on native Linux only (not inside Docker Desktop on macOS).
+      Note: Temperature sensors are available on native Linux only (not inside Docker Desktop on macOS).
   developer: ipetinate
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spencer/icon.png
   screenshot_link:
@@ -79,14 +79,14 @@ x-casaos:
     before_install:
       en_us: >
         Spencer requires access to host system metrics. The volume mounts
-        (/proc, /sys, /dev, /) and HOST_* environment variables are required
+        (/proc, /sys, /dev) and HOST_* environment variables are required
         for full functionality. Temperature sensors work on native Linux only.
   title:
     en_us: Spencer
   index: /
   port_map: "7070"
   scheme: http
-  version: "0.1.0"
+  version: "0.1.2"
   updateAt: "2026-06-07"
   website: "https://github.com/ipetinate/spencer"
   repo: "https://github.com/ipetinate/spencer"
