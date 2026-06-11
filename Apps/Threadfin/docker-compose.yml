@@ -1,7 +1,7 @@
 name: threadfin
 services:
   threadfin:
-    image: fyb3roptik/threadfin:latest
+    image: fyb3roptik/threadfin:1.2.37
     restart: unless-stopped
     environment:
       - THREADFIN_BRANCH=main
@@ -66,9 +66,9 @@ x-casaos:
   title:
     en_us: Threadfin
     zh_cn: Threadfin
-  version: "latest"
-  updateAt: "2025-10-20"
-  releaseNotes: ""
+  version: "1.2.37"
+  updateAt: "2025-09-11"
+  releaseNotes: "Threadfin 1.2.37 clears XMLTV cache during updates and adds older glibc to the build process."
   website: ""
   repo: "https://github.com/Threadfin/Threadfin"
   support: "https://github.com/Threadfin/Threadfin/issues"

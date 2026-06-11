@@ -1,7 +1,7 @@
 name: overseerr
 services:
   overseerr:
-    image: linuxserver/overseerr:1.33.2
+    image: linuxserver/overseerr:1.35.0
     restart: unless-stopped
     environment:
       PUID: $PUID
@@ -116,39 +116,69 @@ x-casaos:
     en_us: Overseerr
   category: Media
   port_map: '5055'
-  version: "1.33.2"
-  updateAt: "2025-02-19"
+  version: "1.35.0"
+  updateAt: "2026-02-16"
   releaseNotes:
     en_US: |-
-      - v1.33.2 fixes an issue where incorrect media could change to unknown.
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
     en_GB: |-
-      - v1.33.2 fixes an issue where incorrect media could change to unknown.
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
     it_IT: |-
-      - v1.33.2 risolve un problema per cui i media errati potevano diventare sconosciuti.
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
     nb_NO: |-
-      - v1.33.2 løser et problem der feil media kan endres til ukjent.
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
     zh_CN: |-
-      - v1.33.2 修复了 incorrect media 可能变为 unknown 的问题。
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
     ja_JP: |-
-      - v1.33.2 は incorrect media が unknown に変わる可能性がある問題を修正します。
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
     ko_KR: |-
-      - v1.33.2는 incorrect media가 unknown으로 변경될 수 있는 문제를 수정합니다.
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
     fr_FR: |-
-      - v1.33.2 corrige un probleme ou incorrect media pouvait passer a unknown.
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
     de_DE: |-
-      - v1.33.2 behebt ein Problem, bei dem incorrect media zu unknown wechseln konnte.
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
     sv_SE: |-
-      - v1.33.2 fixar ett problem där felaktig media kan ändras till okänt.
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
     el_GR: |-
-      - Το v1.33.2 διορθώνει ένα πρόβλημα όπου τα εσφαλμένα μέσα θα μπορούσαν να αλλάξουν σε άγνωστα.
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
     hr_HR: |-
-      - v1.33.2 rješava problem gdje se neispravan medij mogao promijeniti u nepoznati.
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
     pt_PT: |-
-      - v1.33.2 corrige um problema em que os suportes incorretos podiam mudar para desconhecidos.
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
     ru_RU: |-
-      - v1.33.2 устраняет проблему, из-за которой неправильный носитель мог измениться на неизвестный.
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
     tr_TR: |-
-      - v1.33.2 yanlış medyanın bilinmeyen olarak değişmesine neden olan sorunu giderir.
+      - Overseerr 1.35.0 includes bug fixes for notifications, web push resubscription, Plex Watchlist URL handling, availability sync, request state updates, and specials handling.
+      - The release also updates Docker build support, including py3-setuptools for arm builds on Node 20.
+      - The linuxserver/overseerr:1.35.0 Docker image tag was published on 2026-02-16.
   website: "https://overseerr.dev"
   repo: "https://github.com/sct/overseerr"
   support: "https://github.com/sct/overseerr/issues"

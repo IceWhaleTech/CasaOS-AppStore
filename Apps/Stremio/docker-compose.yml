@@ -11,7 +11,7 @@ services:
       - AUTO_SERVER_URL=1
     devices:
       - /dev/dri:/dev/dri
-    image: tsaridas/stremio-docker:v1.2.5
+    image: tsaridas/stremio-docker:v1.3.4
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/config
@@ -85,54 +85,69 @@ x-casaos:
     zh_cn: Stremio
   index: /
   port_map: "8100"
-  version: "v1.2.5"
-  updateAt: "2025-10-19"
+  version: "v1.3.4"
+  updateAt: "2026-05-29"
   releaseNotes:
     en_US: |-
-      - v1.2.5 uses Stremio web version v5.0.0-beta.27.
-      - The server URL points to the v4.20.12 desktop server script.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     en_GB: |-
-      - v1.2.5 uses Stremio web version v5.0.0-beta.27.
-      - The server URL points to the v4.20.12 desktop server script.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     it_IT: |-
-      - v1.2.5 utilizza la versione web di Stremio v5.0.0-beta.27.
-      - Il server URL punta allo script del server desktop v4.20.12.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     nb_NO: |-
-      - v1.2.5 bruker Stremio webversjon v5.0.0-beta.27.
-      - Serveren URL peker til v4.20.12 skrivebordsserverskriptet.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     zh_CN: |-
-      - v1.2.5 使用 Stremio web version v5.0.0-beta.27。
-      - server URL 指向 v4.20.12 desktop server script。
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     ja_JP: |-
-      - v1.2.5 は Stremio web version v5.0.0-beta.27 を使用します。
-      - server URL は v4.20.12 desktop server script を指します。
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     ko_KR: |-
-      - v1.2.5는 Stremio web version v5.0.0-beta.27을 사용합니다.
-      - server URL은 v4.20.12 desktop server script를 가리킵니다.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     fr_FR: |-
-      - v1.2.5 utilise Stremio web version v5.0.0-beta.27.
-      - L'URL du serveur pointe vers le v4.20.12 desktop server script.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     de_DE: |-
-      - v1.2.5 verwendet Stremio web version v5.0.0-beta.27.
-      - Die Server-URL verweist auf das v4.20.12 desktop server script.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     sv_SE: |-
-      - v1.2.5 använder Stremio webbversion v5.0.0-beta.27.
-      - Servern URL pekar på v4.20.12 skrivbordsserverskriptet.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     el_GR: |-
-      - Το v1.2.5 χρησιμοποιεί την έκδοση web Stremio v5.0.0-beta.27.
-      - Ο διακομιστής URL δείχνει στη δέσμη ενεργειών διακομιστή επιφάνειας εργασίας v4.20.12.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     hr_HR: |-
-      - v1.2.5 koristi Stremio web verziju v5.0.0-beta.27.
-      - Poslužitelj URL ukazuje na skriptu v4.20.12 stolnog poslužitelja.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     pt_PT: |-
-      - v1.2.5 utiliza a versão web do Stremio v5.0.0-beta.27.
-      - O servidor URL aponta para o script do servidor de ambiente de trabalho v4.20.12.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     ru_RU: |-
-      - v1.2.5 использует веб-версию Stremio v5.0.0-beta.27.
-      - Сервер URL указывает на сценарий настольного сервера v4.20.12.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     tr_TR: |-
-      - v1.2.5, Stremio'nun v5.0.0-beta.27 web sürümünü kullanır.
-      - URL sunucusu, v4.20.12 masaüstü sunucusu komut dosyasına işaret eder.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
   website: "https://www.stremio.com"
   repo: "https://github.com/tsaridas/stremio-docker"
   support: "https://github.com/tsaridas/stremio-docker/issues"

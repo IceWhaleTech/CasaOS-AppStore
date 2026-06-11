@@ -1,7 +1,7 @@
 name: vaultwarden
 services:
   vaultwarden:
-    image: vaultwarden/server:1.32.7
+    image: vaultwarden/server:1.36.0
     deploy:
       resources:
         reservations:
@@ -77,69 +77,69 @@ x-casaos:
     en_us: Vaultwarden
   index: /
   port_map: "10380"
-  version: "1.32.7"
-  updateAt: "2024-12-20"
+  version: "1.36.0"
+  updateAt: "2026-05-03"
   releaseNotes:
     en_US: |-
-      - 1.32.7 includes a security fix for installations with ORG_GROUPS_ENABLED enabled.
-      - SMTP image source values are masked in the support string.
-      - Refactoring, optimizations, connect-src entry support, and updated fern usage are included.
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
     en_GB: |-
-      - 1.32.7 includes a security fix for installations with ORG_GROUPS_ENABLED enabled.
-      - SMTP image source values are masked in the support string.
-      - Refactoring, optimizations, connect-src entry support, and updated fern usage are included.
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
     it_IT: |-
-      - 1.32.7 include una correzione di sicurezza per le installazioni con ORG_GROUPS_ENABLED abilitato.
-      - I valori dell'origine immagine SMTP sono mascherati nella stringa di supporto.
-      - Sono inclusi refactoring, ottimizzazioni, supporto per la voce connect-src e utilizzo aggiornato della felce.
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
     nb_NO: |-
-      - 1.32.7 inkluderer en sikkerhetsfiks for installasjoner med ORG_GROUPS_ENABLED aktivert.
-      - SMTP bildekildeverdier er maskert i støttestrengen.
-      - Refaktorering, optimaliseringer, connect-src-inngangsstøtte og oppdatert bregnebruk er inkludert.
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
     zh_CN: |-
-      - 1.32.7 包含针对启用 ORG_GROUPS_ENABLED 安装的安全修复。
-      - support string 中的 SMTP image source values 会被隐藏。
-      - 该版本还包含重构、优化、connect-src entry 支持，以及更新后的 fern 使用方式。
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
     ja_JP: |-
-      - 1.32.7 は ORG_GROUPS_ENABLED が有効なインストール向けのセキュリティ修正を含みます。
-      - support string 内の SMTP image source values はマスクされます。
-      - リファクタリング、最適化、connect-src entry サポート、更新された fern の使用も含まれます。
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
     ko_KR: |-
-      - 1.32.7은 ORG_GROUPS_ENABLED가 활성화된 설치에 대한 보안 수정을 포함합니다.
-      - support string의 SMTP image source values가 마스킹됩니다.
-      - 리팩터링, 최적화, connect-src entry 지원, 업데이트된 fern 사용도 포함됩니다.
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
     fr_FR: |-
-      - 1.32.7 inclut un correctif de sécurité pour les installations avec ORG_GROUPS_ENABLED activé.
-      - Les SMTP image source values sont masquées dans le support string.
-      - La version inclut aussi du refactoring, des optimisations, la prise en charge des entrées connect-src et une utilisation de fern mise à jour.
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
     de_DE: |-
-      - 1.32.7 enthält eine Sicherheitskorrektur für Installationen mit aktiviertem ORG_GROUPS_ENABLED.
-      - SMTP image source values werden im support string maskiert.
-      - Enthalten sind außerdem Refactoring, Optimierungen, Unterstützung für connect-src entries und aktualisierte fern-Nutzung.
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
     sv_SE: |-
-      - 1.32.7 innehåller en säkerhetskorrigering för installationer med ORG_GROUPS_ENABLED aktiverat.
-      - SMTP bildkällans värden är maskerade i stödsträngen.
-      - Refaktorering, optimeringar, connect-src ingångsstöd och uppdaterad ormbunksanvändning ingår.
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
     el_GR: |-
-      - Το 1.32.7 περιλαμβάνει μια επιδιόρθωση ασφαλείας για εγκαταστάσεις με ενεργοποιημένο το ORG_GROUPS_ENABLED.
-      - Οι τιμές της πηγής εικόνας SMTP καλύπτονται στη συμβολοσειρά υποστήριξης.
-      - Περιλαμβάνονται ανακατασκευή, βελτιστοποιήσεις, υποστήριξη εισόδου connect-src και ενημερωμένη χρήση φτέρης.
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
     hr_HR: |-
-      - 1.32.7 uključuje sigurnosni popravak za instalacije s omogućenim ORG_GROUPS_ENABLED.
-      - SMTP izvorne vrijednosti slike su maskirane u nizu podrške.
-      - Uključeno je refaktoriranje, optimizacije, podrška za unos connect-src i ažurirana upotreba ferna.
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
     pt_PT: |-
-      - 1.32.7 inclui uma correção de segurança para instalações com ORG_GROUPS_ENABLED ativado.
-      - Os valores de origem da imagem SMTP são mascarados na string de suporte.
-      - Refactorização, otimizações, suporte de entrada connect-src e utilização atualizada de fetos estão incluídos.
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
     ru_RU: |-
-      - 1.32.7 включает исправление безопасности для установок с включенным ORG_GROUPS_ENABLED.
-      - Значения источника изображения SMTP маскируются в вспомогательной строке.
-      - Включены рефакторинг, оптимизация, поддержка записи connect-src и обновленное использование папоротника.
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
     tr_TR: |-
-      - 1.32.7, ORG_GROUPS_ENABLED etkinleştirilmiş kurulumlar için bir güvenlik düzeltmesi içerir.
-      - SMTP resim kaynağı değerleri destek dizesinde maskelenmiştir.
-      - Yeniden düzenleme, optimizasyonlar, connect-src giriş desteği ve güncellenmiş eğrelti otu kullanımı dahildir.
+      - Vaultwarden 1.36.0 contains security fixes for SSO login CSRF, user and organization enumeration, SSO existing-user binding, SSRF via the icon endpoint, and crate updates.
+      - This release also adds support for item archiving.
+      - The vaultwarden/server:1.36.0 Docker image tag was published on 2026-05-03.
   website: "https://vaultwarden.net"
   repo: "https://github.com/dani-garcia/vaultwarden"
   support: "https://github.com/dani-garcia/vaultwarden/discussions"
