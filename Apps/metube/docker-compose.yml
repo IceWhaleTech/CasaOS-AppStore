@@ -1,0 +1,83 @@
+name: metube
+services:
+  metube:
+    image: ghcr.io/alexta69/metube:2024-11-19
+    container_name: metube
+    restart: unless-stopped
+    ports:
+      - target: 8081
+        published: ${WEBUI_PORT:-8081}
+        protocol: tcp
+    environment:
+      - UID=${PUID:-1000}
+      - GID=${PGID:-1000}
+      - TZ=${TZ:-Asia/Baku}
+      - DOWNLOAD_DIR=/downloads/video
+      - AUDIO_DOWNLOAD_DIR=/downloads/music
+      - STATE_DIR=/config
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads/YTDownloader/video
+        target: /downloads/video
+      - type: bind
+        source: /DATA/Downloads/YTDownloader/music
+        target: /downloads/music
+    x-casaos:
+      envs:
+        - container: UID
+          description:
+            en_US: Run MeTube as this user ID (maps to CasaOS PUID).
+        - container: GID
+          description:
+            en_US: Run MeTube as this group ID (maps to CasaOS PGID).
+        - container: TZ
+          description:
+            en_US: System timezone, e.g. America/New_York.
+        - container: DOWNLOAD_DIR
+          description:
+            en_US: Container path where video downloads are saved.
+        - container: AUDIO_DOWNLOAD_DIR
+          description:
+            en_US: Container path where music/audio downloads are saved.
+      ports:
+        - container: "8081"
+          description:
+            en_US: MeTube WebUI HTTP Port
+      volumes:
+        - container: /downloads/video
+          description:
+            en_US: Host path for video downloads (/DATA/Downloads/YTDownloader/video).
+        - container: /downloads/music
+          description:
+            en_US: Host path for music/audio downloads (/DATA/Downloads/YTDownloader/music).
+        - container: /config
+          description:
+            en_US: MeTube application config directory.
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm
+    - arm64
+  main: metube
+  author: moderathor12
+  category: Downloader
+  description:
+    en_US: |
+      MeTube is a self-hosted web UI for yt-dlp, the powerful YouTube and media downloader.
+      Paste any YouTube (or 1000+ other site) URL and download it as video or audio with a single click.
+  developer: moderathor12
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/metube/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/metube/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/metube/screenshot-2.png
+  tagline:
+    en_US: Self-hosted YouTube & media downloader with a clean web UI.
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/metube/thumbnail.png
+  title:
+    en_US: MeTube – YT Downloader
+  index: /
+  port_map: "${WEBUI_PORT:-8081}"
