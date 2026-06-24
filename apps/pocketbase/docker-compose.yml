@@ -1,0 +1,27 @@
+name: pocketbase
+services:
+  pocketbase:
+    image: argonptg/pocketbase:0.26.6
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+    network_mode: bridge
+    ports:
+    - target: 8090
+      published: '8090'
+      protocol: tcp
+    restart: always
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/pb_data
+      target: /pb_data
+    container_name: pocketbase
+x-casaos:
+  main: pocketbase
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/pocketbase/assets/icon.svg
+  title:
+    en_US: PocketBase
+  index: /_/
+  port_map: '8090'
+  version: 0.26.6

@@ -1,0 +1,34 @@
+name: tailscale
+services:
+  tailscale:
+    image: tailscale/tailscale:v1.98.3
+    container_name: tailscale
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID
+      target: /var/lib/tailscale
+    - type: bind
+      source: /dev/net/tun
+      target: /dev/net/tun
+    environment:
+      TS_STATE_DIR: /var/lib/tailscale
+    cap_add:
+    - NET_ADMIN
+    - NET_RAW
+    entrypoint: /bin/sh -c "tailscaled --state=/var/lib/tailscale/tailscaled.state
+      & sleep 10; tailscale web --listen 0.0.0.0:5252"
+x-casaos:
+  main: tailscale
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/tailscale/assets/icon.svg
+  scheme: ''
+  port_map: '5252'
+  index: /
+  title:
+    en_US: Tailscale
+  version: 1.98.3

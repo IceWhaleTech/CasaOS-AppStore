@@ -1,0 +1,26 @@
+name: audiobookshelf
+services:
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:2.35.0
+    container_name: audiobookshelf
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    restart: unless-stopped
+    volumes:
+    - /DATA/Media/Audiobooks:/audiobooks
+    - /DATA/Media/Podcasts:/podcasts
+    - /DATA/AppData/$AppID/config:/config
+    - /DATA/AppData/$AppID/metadata:/metadata
+    ports:
+    - 13378:80
+x-casaos:
+  main: audiobookshelf
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/audiobookshelf/assets/icon.svg
+  scheme: http
+  port_map: '13378'
+  index: /
+  title:
+    en_US: Audiobookshelf
+  version: 2.35.0

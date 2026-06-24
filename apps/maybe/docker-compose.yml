@@ -1,0 +1,139 @@
+name: maybe
+services:
+  maybe-web:
+    container_name: maybe-web
+    image: ghcr.io/maybe-finance/maybe@sha256:c2d398bfc334db4d9862f268401dbb46f97848eaaaad8295d1221f2d99d631cc
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/app/storage
+      target: /rails/storage
+    ports:
+    - target: 3000
+      published: '23000'
+      protocol: tcp
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: maybe_user
+      POSTGRES_PASSWORD: maybe_password
+      POSTGRES_DB: maybe_production
+      SECRET_KEY_BASE: a7523c3d0ae56415046ad8abae168d71074a79534a7062258f8d1d51ac2f76d3c3bc86d86b6b0b307df30d9a6a90a2066a3fa9e67c5e6f374dbd7dd4e0778e13
+      SELF_HOSTED: 'true'
+      RAILS_FORCE_SSL: 'false'
+      RAILS_ASSUME_SSL: 'false'
+      DB_HOST: maybe-db
+      DB_PORT: 5432
+      REDIS_URL: redis://maybe-redis:6379/1
+      OPENAI_ACCESS_TOKEN: ${OPENAI_ACCESS_TOKEN}
+    depends_on:
+      maybe-db:
+        condition: service_healthy
+      maybe-redis:
+        condition: service_healthy
+    networks:
+    - maybe_net
+    deploy:
+      resources:
+        reservations:
+          memory: 1024M
+  maybe-worker:
+    container_name: maybe-worker
+    image: ghcr.io/maybe-finance/maybe@sha256:c2d398bfc334db4d9862f268401dbb46f97848eaaaad8295d1221f2d99d631cc
+    command:
+    - bundle
+    - exec
+    - sidekiq
+    restart: unless-stopped
+    depends_on:
+      maybe-redis:
+        condition: service_healthy
+    environment:
+      POSTGRES_USER: maybe_user
+      POSTGRES_PASSWORD: maybe_password
+      POSTGRES_DB: maybe_production
+      SECRET_KEY_BASE: a7523c3d0ae56415046ad8abae168d71074a79534a7062258f8d1d51ac2f76d3c3bc86d86b6b0b307df30d9a6a90a2066a3fa9e67c5e6f374dbd7dd4e0778e13
+      SELF_HOSTED: 'true'
+      RAILS_FORCE_SSL: 'false'
+      RAILS_ASSUME_SSL: 'false'
+      DB_HOST: maybe-db
+      DB_PORT: 5432
+      REDIS_URL: redis://maybe-redis:6379/1
+      OPENAI_ACCESS_TOKEN: ${OPENAI_ACCESS_TOKEN}
+    networks:
+    - maybe_net
+    deploy:
+      resources:
+        reservations:
+          memory: 1024M
+  maybe-db:
+    container_name: maybe-db
+    image: postgres:16
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/pgdata
+      target: /var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: maybe_user
+      POSTGRES_PASSWORD: maybe_password
+      POSTGRES_DB: maybe_production
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U maybe_user -d maybe_production
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+    - maybe_net
+    deploy:
+      resources:
+        reservations:
+          memory: 1024M
+  maybe-redis:
+    container_name: maybe-redis
+    image: redis:8.2.1-alpine3.22
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/redis/data
+      target: /data
+    healthcheck:
+      test:
+      - CMD
+      - redis-cli
+      - ping
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+    - maybe_net
+    deploy:
+      resources:
+        reservations:
+          memory: 1024M
+networks:
+  maybe_net:
+    driver: bridge
+x-casaos:
+  main: maybe-web
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/maybe/assets/icon.svg
+  scheme: http
+  port_map: '23000'
+  index: /
+  title:
+    en_US: Maybe
+    en_GB: Maybe
+    it_IT: Maybe
+    nb_NO: Maybe
+    zh_CN: Maybe
+    ja_JP: Maybe
+    ko_KR: Maybe
+    fr_FR: Maybe
+    de_DE: Maybe
+    sv_SE: Maybe
+    el_GR: Maybe
+    hr_HR: Maybe
+    pt_PT: Maybe
+    ru_RU: Maybe
+    tr_TR: Maybe
+  version: 0.6.0

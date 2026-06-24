@@ -1,0 +1,38 @@
+name: navidrome
+services:
+  navidrome:
+    container_name: navidrome
+    deploy:
+      resources:
+        reservations:
+          memory: 1024M
+    image: deluan/navidrome:0.61.2
+    restart: unless-stopped
+    ports:
+    - target: 4533
+      published: '4533'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    - type: bind
+      source: /DATA/Media/Music
+      target: /music
+    environment:
+      ND_SCANSCHEDULE: 1h
+      ND_LOGLEVEL: info
+      ND_SESSIONTIMEOUT: 24h
+      ND_BASEURL: ''
+      TZ: $TZ
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/navidrome/assets/icon.svg
+  index: /
+  main: navidrome
+  port_map: '4533'
+  scheme: http
+  title:
+    en_US: Navidrome
+  version: 0.61.2

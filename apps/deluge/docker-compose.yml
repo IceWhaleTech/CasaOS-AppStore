@@ -1,0 +1,41 @@
+name: deluge
+services:
+  deluge:
+    environment:
+      DELUGE_LOGLEVEL: error
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: linuxserver/deluge:2.2.0
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    network_mode: bridge
+    ports:
+    - target: 8112
+      published: '8112'
+      protocol: tcp
+    - target: 6881
+      published: '6881'
+      protocol: tcp
+    - target: 6881
+      published: '6881'
+      protocol: udp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA
+      target: /DATA
+    container_name: deluge
+x-casaos:
+  main: deluge
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/deluge/assets/icon.svg
+  title:
+    en_US: Deluge
+  index: /
+  port_map: '8112'
+  version: 2.2.0

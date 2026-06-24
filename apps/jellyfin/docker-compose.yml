@@ -1,0 +1,53 @@
+name: jellyfin
+services:
+  jellyfin:
+    devices:
+    - /dev/dri:/dev/dri
+    - /dev/vcsm:/dev/vcsm
+    - /dev/vchiq:/dev/vchiq
+    - /dev/video10:/dev/video10
+    - /dev/video11:/dev/video11
+    - /dev/video12:/dev/video12
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: linuxserver/jellyfin:10.11.10
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    network_mode: bridge
+    ports:
+    - target: 8096
+      published: '8097'
+      protocol: tcp
+    - target: 8920
+      published: '8921'
+      protocol: tcp
+    - target: 7359
+      published: '7359'
+      protocol: tcp
+    - target: 1900
+      published: '1901'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/Media
+      target: /Media
+    - type: bind
+      source: /opt/vc/lib
+      target: /opt/vc/lib
+    container_name: jellyfin
+x-casaos:
+  main: jellyfin
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/jellyfin/assets/icon.svg
+  title:
+    en_US: Jellyfin
+  index: /
+  port_map: '8097'
+  version: 10.11.10

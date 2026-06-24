@@ -1,0 +1,29 @@
+name: ollama
+services:
+  ollama:
+    image: ollama/ollama:0.24.0
+    container_name: ollama
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 2G
+    restart: unless-stopped
+    ports:
+    - target: 11434
+      published: '11434'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/
+      target: /root/.ollama
+x-casaos:
+  main: ollama
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/ollama/assets/icon.svg
+  scheme: http
+  port_map: '11434'
+  index: /
+  title:
+    en_US: Ollama
+  version: 0.24.0

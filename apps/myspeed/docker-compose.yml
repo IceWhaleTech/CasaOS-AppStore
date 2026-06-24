@@ -1,0 +1,29 @@
+name: myspeed
+services:
+  myspeed:
+    container_name: myspeed
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    image: germannewsmaker/myspeed:1.0.9
+    ports:
+    - target: 5216
+      published: '5216'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /myspeed/data
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  main: myspeed
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/myspeed/assets/icon.svg
+  title:
+    en_US: MySpeed
+    pt_BR: MySpeed
+  index: /
+  port_map: '5216'
+  version: 1.0.9

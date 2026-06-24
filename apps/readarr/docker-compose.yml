@@ -1,0 +1,36 @@
+name: readarr
+services:
+  readarr:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: linuxserver/readarr:0.3.10-develop
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 8787
+      published: '8787'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/Media/Books
+      target: /books
+    - type: bind
+      source: /DATA/Downloads
+      target: /downloads
+    container_name: readarr
+x-casaos:
+  main: readarr
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/readarr/assets/icon.svg
+  title:
+    en_US: Readarr
+  port_map: '8787'
+  version: 0.3.10-develop

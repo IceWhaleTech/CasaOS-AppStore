@@ -1,0 +1,30 @@
+name: embystat
+services:
+  embystat:
+    environment:
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/London
+    image: linuxserver/embystat:0.2.0
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 6555
+      published: '6555'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/embystat/config
+      target: /config
+    container_name: embystat
+x-casaos:
+  main: embystat
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/embystat/assets/icon.svg
+  title:
+    en_US: Embystat
+  port_map: '6555'
+  version: 0.2.0

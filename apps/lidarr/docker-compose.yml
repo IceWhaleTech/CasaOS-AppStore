@@ -1,0 +1,36 @@
+name: lidarr
+services:
+  lidarr:
+    environment:
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/London
+    image: linuxserver/lidarr:3.1.0
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 8686
+      published: '8686'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/lidarr/config
+      target: /config
+    - type: bind
+      source: /DATA/Media/Music
+      target: /music
+    - type: bind
+      source: /DATA/Downloads
+      target: /downloads
+    container_name: lidarr
+x-casaos:
+  main: lidarr
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/lidarr/assets/icon.svg
+  title:
+    en_US: Lidarr
+  port_map: '8686'
+  version: 3.1.0

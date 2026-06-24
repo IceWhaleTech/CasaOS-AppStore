@@ -1,0 +1,33 @@
+name: kavita
+services:
+  kavita:
+    image: jvmilazz0/kavita:0.9.0.2
+    container_name: kavita
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    network_mode: bridge
+    restart: unless-stopped
+    ports:
+    - target: 5000
+      published: '5150'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /kavita/config
+    - type: bind
+      source: /DATA/Media/Manga
+      target: /manga
+    environment:
+      TZ: $TZ
+x-casaos:
+  main: kavita
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/kavita/assets/icon.svg
+  scheme: http
+  port_map: '5150'
+  index: /
+  title:
+    en_US: Kavita
+  version: 0.9.0-2

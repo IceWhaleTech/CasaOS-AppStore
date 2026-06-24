@@ -1,0 +1,32 @@
+version: '3'
+name: firefly
+services:
+  firefly:
+    image: uusec/firefly@sha256:6d32aa84560ba81786d708b7c67b2f20c8321caf1bb164156335ccd1765c87d4
+    container_name: firefly
+    devices:
+    - /dev/net/tun:/dev/net/tun
+    network_mode: host
+    volumes:
+    - /lib/modules:/lib/modules
+    - /DATA/AppData/firefly/conf:/firefly/conf
+    cap_add:
+    - NET_ADMIN
+    - SYS_MODULE
+    restart: unless-stopped
+    environment:
+    - FIREFLY_PASSWORD=firefly
+    deploy:
+      resources:
+        reservations:
+          memory: 32M
+x-casaos:
+  main: firefly
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/firefly/assets/icon.svg
+  title:
+    en_US: Firefly
+    zh_CN: 萤火虫
+  port_map: '50121'
+  scheme: http
+  index: /
+  version: 0.0.1

@@ -1,0 +1,29 @@
+name: chatgpt-next-web
+services:
+  chatgpt-next-web:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+      CODE: ''
+      PROXY_URL: ''
+      BASE_URL: https://api.openai.com
+    image: yidadaa/chatgpt-next-web:v2.16.1
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 3000
+      published: '3000'
+      protocol: tcp
+    restart: unless-stopped
+    container_name: chatgpt-next-web
+x-casaos:
+  main: chatgpt-next-web
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/chatgpt-next-web/assets/icon.svg
+  title:
+    en_US: ChatGPT Next Web
+  port_map: '3000'
+  version: 2.16.1

@@ -1,0 +1,9 @@
+{
+  "id": "etherpad",
+  "description": "Etherpad is a real-time collaborative document editor where multiple people can edit the same pad simultaneously, with every change synchronised instantly and colour-coded per author.\nSelf-hosted, open source, and fully under your control, it is perfect for meeting notes, brainstorming, shared writing, and lightweight knowledge capture.\nIt ships with a built-in admin panel, a plugin ecosystem of 250+ add-ons, native DOCX/PDF/Markdown import & export, and multi-architecture container support (amd64 + arm64).\n\n**Main Features:**\n- Real-time collaborative editing with instant synchronisation\n- Per-author colour coding for clear writing attribution\n- Built-in admin panel and a plugin ecosystem with 250+ add-ons\n- Native DOCX, PDF, and Markdown import & export\n- Open source, self-hosted deployment with amd64 and arm64 support\n\n**Learn More:**\n- [Etherpad Official Website](https://etherpad.org/)\n- [Etherpad GitHub](https://github.com/ether/etherpad)\n- [Etherpad Documentation](https://docs.etherpad.org/)\n",
+  "tagline": "Real-time collaborative document editor",
+  "release_notes": "- Etherpad v3.1.0 adds Tier 4 autonomous self-updates with maintenance windows, preflight checks, and email notifications for failures and rollbacks.\n- It also introduces real SMTP delivery for updater mail and includes API, export, and HTTP security hardening plus localisation updates.",
+  "tips": {
+    "before_install": "Default admin password is \"admin\". Change ADMIN_PASSWORD before exposing Etherpad to the network. Pads are stored on-disk in /DATA/AppData/etherpad/var using the embedded dirty database; this is ideal for personal and small-team use. For heavy multi-user production workloads, switch DB_TYPE to postgres or mysql and point DB_HOST, DB_NAME, DB_USER, and DB_PASS at an external database.\n"
+  }
+}

@@ -1,0 +1,27 @@
+name: vaultwarden
+services:
+  vaultwarden:
+    image: vaultwarden/server:1.36.0
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    network_mode: bridge
+    ports:
+    - target: 80
+      published: '10380'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    container_name: vaultwarden
+x-casaos:
+  main: vaultwarden
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/vaultwarden/assets/icon.svg
+  title:
+    en_US: Vaultwarden
+  index: /
+  port_map: '10380'
+  version: 1.36.0

@@ -1,0 +1,37 @@
+name: lazylibrarian
+services:
+  lazylibrarian:
+    environment:
+      DOCKER_MODS: linuxserver/calibre-web:calibre|linuxserver/mods:lazylibrarian-ffmpeg
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: linuxserver/lazylibrarian:version-169e669f
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 5299
+      published: '5299'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/Downloads
+      target: /downloads
+    - type: bind
+      source: /DATA/Media/Books
+      target: /books
+    - type: bind
+      source: /DATA/AppData/lazylibrarian/config
+      target: /config
+    container_name: lazylibrarian
+x-casaos:
+  main: lazylibrarian
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/lazylibrarian/assets/icon.svg
+  title:
+    en_US: Lazylibrarian
+  port_map: '5299'
+  version: 0.0.0-version-169e669f

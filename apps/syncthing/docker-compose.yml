@@ -1,0 +1,43 @@
+name: syncthing
+services:
+  syncthing:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: linuxserver/syncthing:1.29.7
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    network_mode: bridge
+    ports:
+    - target: 8384
+      published: '8384'
+      protocol: tcp
+    - target: 22000
+      published: '22000'
+      protocol: tcp
+    - target: 22000
+      published: '22000'
+      protocol: udp
+    - target: 21027
+      published: '21027'
+      protocol: udp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA
+      target: /DATA
+    container_name: syncthing
+x-casaos:
+  main: syncthing
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/syncthing/assets/icon.svg
+  title:
+    en_US: Syncthing
+  index: /
+  port_map: '8384'
+  version: 1.29.7

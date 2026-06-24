@@ -1,0 +1,39 @@
+name: glances
+services:
+  glances:
+    container_name: glances
+    image: nicolargo/glances:4.5.4
+    pid: host
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    environment:
+      GLANCES_OPT: -w
+    restart: unless-stopped
+    network_mode: bridge
+    privileged: false
+    volumes:
+    - type: bind
+      source: /var/run/docker.sock
+      target: /var/run/docker.sock
+    - type: bind
+      source: /mnt
+      target: /mnt
+    ports:
+    - target: 61208
+      published: '61208'
+      protocol: tcp
+    - target: 61209
+      published: '61209'
+      protocol: tcp
+x-casaos:
+  main: glances
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/glances/assets/icon.svg
+  title:
+    en_US: Glances
+    zh_CN: Glances
+    pt_BR: Glances
+  index: /
+  port_map: '61208'
+  version: 4.5.4

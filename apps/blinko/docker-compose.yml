@@ -1,0 +1,76 @@
+name: blinko
+services:
+  blinko:
+    image: blinkospace/blinko:1.8.7
+    container_name: blinko
+    restart: unless-stopped
+    networks:
+    - blinko-net
+    depends_on:
+      blinko-postgres:
+        condition: service_healthy
+    ports:
+    - target: 1111
+      published: '1111'
+      protocol: tcp
+    environment:
+      NODE_ENV: production
+      NEXTAUTH_URL: http://localhost:1111
+      NEXT_PUBLIC_BASE_URL: http://localhost:1111
+      NEXTAUTH_SECRET: 22PhaGVvvBTEC5E5G+U+5O1xqdmuzZKzjLeDMvdvB7I=
+      DATABASE_URL: postgresql://postgres:JWD9bxUR7Um9PaGg7FQZ@blinko-postgres:5432/postgres
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/blinko_data
+      target: /app/.blinko
+    logging:
+      options:
+        max-size: 10m
+        max-file: '3'
+    deploy:
+      resources:
+        reservations:
+          memory: 512m
+  blinko-postgres:
+    image: postgres:14
+    container_name: blinko-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: JWD9bxUR7Um9PaGg7FQZ
+      TZ: $TZ
+    networks:
+    - blinko-net
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/postgres_data
+      target: /var/lib/postgresql/data
+    deploy:
+      resources:
+        reservations:
+          memory: 256m
+    healthcheck:
+      test:
+      - CMD
+      - pg_isready
+      - -U
+      - postgres
+      - -d
+      - postgres
+      interval: 5s
+      timeout: 10s
+      retries: 5
+networks:
+  blinko-net:
+    driver: bridge
+x-casaos:
+  title:
+    en_GB: Blinko
+    en_US: Blinko
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/blinko/assets/icon.svg
+  main: blinko
+  port_map: '1111'
+  index: /
+  scheme: http
+  version: 1.8.7

@@ -1,0 +1,34 @@
+name: mineos-node
+services:
+  mineos:
+    image: hexparrot/mineos@sha256:247be835fbdc48932e92dc3dee9e2a9fcee5fa877ce5cbb0edf7abda6f0323f5
+    container_name: mineos_server
+    networks:
+    - mineos
+    restart: unless-stopped
+    stop_grace_period: 10m
+    volumes:
+    - /var/games/mineos/minecraft:/var/games/minecraft
+    environment:
+      USE_HTTPS: 'true'
+      SERVER_PORT: 8443
+      USER_NAME: mc
+      USER_UID: 1000
+      USER_PASSWORD: root
+    ports:
+    - 8444:8443/tcp
+    - 25565-25570:25565-25570/tcp
+    - 25565-25570:25565-25570/udp
+volumes:
+  mineos_data: null
+networks:
+  mineos: null
+x-casaos:
+  main: mineos
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/mineos-node/assets/icon.svg
+  title:
+    en_US: MineOS
+  index: /admin/index.html
+  scheme: https
+  port_map: '8444'
+  version: 1.2.2

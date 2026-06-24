@@ -1,0 +1,32 @@
+name: siyuan-note
+services:
+  siyuan-note:
+    command: --accessAuthCode=casaos --workspace=/siyuan/workspace/
+    environment:
+      PUID: '1000'
+      PGID: '1000'
+    image: b3log/siyuan:v3.6.5
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    network_mode: bridge
+    ports:
+    - target: 6806
+      published: '6806'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/workspace
+      target: /siyuan/workspace
+    container_name: siyuan-note
+x-casaos:
+  main: siyuan-note
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/siyuan-note/assets/icon.svg
+  title:
+    en_US: SiYuan Note
+    zh_CN: 思源笔记
+  index: null
+  port_map: '6806'
+  version: 3.6.5

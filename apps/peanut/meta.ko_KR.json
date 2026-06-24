@@ -1,0 +1,10 @@
+{
+  "id": "peanut",
+  "title": "PeaNUT",
+  "description": "PeaNUT은 무정전 전원 공급 장치(UPS) 모니터링용으로 특별히 설계된 웹 기반 UPS 모니터링 시스템입니다. UPS 상태, 배터리 수명 및 정전 알림을 모니터링하는 사용자 친화적 인터페이스를 제공하여 시스템이 항상 보호되도록 합니다.\n\n**주요 기능:**\n- 실시간 UPS 상태 모니터링 및 제어\n- 배터리 수명 및 충전 수준 모니터링\n- 이메일/Webhook을 통한 자동 정전 알림\n- 과거 데이터 기록 및 보고\n- 다양한 UPS 제조업체 및 모델 지원\n- 원격 액세스용 모바일 친화적 반응형 웹 인터페이스\n- 구성 가능한 경고 임계값 및 알림\n- 쉬운 설치를 위한 Docker 기반 배포\n\n**자세히 알아보기:**\n- [PeaNUT GitHub 저장소](https://github.com/brandawg93/peanut)\n",
+  "tagline": "UPS 모니터링 및 정전 알림 시스템",
+  "release_notes": "- v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.\n- WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.\n- The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.",
+  "tips": {
+    "before_install": "ZimaOS의 UPS 서비스 매개변수는 다음과 같습니다:\n| 서버 주소 | 포트 | 사용자 이름 | 비밀번호 |\n|-----------|------|-------------|----------|\n| ZimaOS IP | `3493` | `monuser` | `secret` |\n"
+  }
+}

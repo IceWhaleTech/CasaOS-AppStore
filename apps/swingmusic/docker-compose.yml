@@ -1,0 +1,24 @@
+name: swingmusic
+services:
+  swingmusic:
+    image: ghcr.io/swingmx/swingmusic:v2.1.4
+    container_name: swingmusic
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/Media/Music
+      target: /music
+    ports:
+    - 1970:1970
+    restart: unless-stopped
+x-casaos:
+  main: swingmusic
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/swingmusic/assets/icon.svg
+  title:
+    en_US: Swing Music
+    zh_CN: Swing Music
+  index: /
+  port_map: '1970'
+  version: 2.1.4

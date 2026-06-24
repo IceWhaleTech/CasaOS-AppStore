@@ -1,0 +1,30 @@
+name: twingate-connector
+services:
+  twingate-connector:
+    image: twingate/connector:1
+    container_name: twingate-connector
+    command:
+    - /connectord
+    environment:
+      TWINGATE_NETWORK: ''
+      TWINGATE_ACCESS_TOKEN: ''
+      TWINGATE_REFRESH_TOKEN: ''
+      TWINGATE_LABEL_HOSTNAME: ${HOSTNAME}
+    restart: unless-stopped
+    sysctls:
+      net.ipv4.ping_group_range: 0 2147483647
+    network_mode: default
+    privileged: false
+    cpu_shares: 90
+    deploy:
+      resources:
+        reservations:
+          memory: 500M
+x-casaos:
+  main: twingate-connector
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/twingate-connector/assets/icon.svg
+  title:
+    en_US: Twingate
+  index: /
+  port_map: ''
+  version: 1.0.0

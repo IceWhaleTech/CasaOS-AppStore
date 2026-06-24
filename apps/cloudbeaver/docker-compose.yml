@@ -1,0 +1,30 @@
+version: '3.7'
+name: cloudbeaver
+services:
+  cloudbeaver:
+    container_name: cloudbeaver
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    image: dbeaver/cloudbeaver:26.0.5
+    ports:
+    - target: 8978
+      published: '8978'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/workspace
+      target: /opt/cloudbeaver/workspace
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  main: cloudbeaver
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/cloudbeaver/assets/icon.svg
+  title:
+    en_US: CloudBeaver
+    pt_BR: CloudBeaver
+  index: /
+  port_map: '8978'
+  version: 26.0.5

@@ -1,0 +1,29 @@
+name: freshrss
+services:
+  freshrss:
+    restart: unless-stopped
+    environment:
+      TZ: ''
+      CRON_MIN: 1,31
+    image: freshrss/freshrss:1.29.1
+    network_mode: bridge
+    ports:
+    - target: 80
+      published: '8749'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/freshrss/data
+      target: /var/www/FreshRSS/data
+    - type: bind
+      source: /DATA/AppData/freshrss/extensions
+      target: /var/www/FreshRSS/extensions
+    container_name: freshrss
+x-casaos:
+  main: freshrss
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/freshrss/assets/icon.svg
+  port_map: '8749'
+  scheme: http
+  title:
+    en_US: FreshRSS
+  version: 1.29.1

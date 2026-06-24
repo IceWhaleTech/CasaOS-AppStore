@@ -1,0 +1,40 @@
+name: plex-nvidia
+services:
+  plex:
+    devices:
+    - /dev/dri:/dev/dri
+    - /dev/dvb:/dev/dvb
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      VERSION: docker
+      CPU_FALLBACK: 'true'
+      NVIDIA_VISIBLE_DEVICES: all
+    image: lscr.io/linuxserver/plex:1.41.3
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+          devices:
+          - driver: nvidia
+            count: all
+            capabilities:
+            - gpu
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/Media
+      target: /Media
+    container_name: plex
+x-casaos:
+  main: plex
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/plex-nvidia/assets/icon.svg
+  title:
+    en_US: Plex(Nvidia GPU)
+  index: /web/index.html
+  port_map: '32400'
+  version: 1.41.3

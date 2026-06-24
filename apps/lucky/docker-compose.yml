@@ -1,0 +1,26 @@
+name: lucky
+services:
+  lucky:
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    image: gdy666/lucky:2.27.2
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/lucky
+      target: /goodluck
+    environment:
+      TZ: $TZ
+    network_mode: host
+    privileged: false
+x-casaos:
+  main: lucky
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/lucky/assets/icon.svg
+  index: /
+  title:
+    en_US: Lucky
+  port_map: '16601'
+  scheme: http
+  version: 2.27.2

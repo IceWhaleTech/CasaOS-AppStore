@@ -1,0 +1,30 @@
+name: memos
+services:
+  memos:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: neosmemo/memos:0.28.0
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 5230
+      published: '5230'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/memos/memos
+      target: /var/opt/memos
+    container_name: memos
+x-casaos:
+  main: memos
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/memos/assets/icon.svg
+  title:
+    en_US: Memos
+  port_map: '5230'
+  version: 0.28.0

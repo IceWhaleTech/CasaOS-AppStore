@@ -1,0 +1,46 @@
+name: emby
+services:
+  emby:
+    devices:
+    - /dev/dri:/dev/dri
+    - /dev/vchiq:/dev/vchiq
+    - /dev/video10:/dev/video10
+    - /dev/video11:/dev/video11
+    - /dev/video12:/dev/video12
+    environment:
+      PGID: '1000'
+      PUID: '1000'
+      TZ: $TZ
+    image: linuxserver/emby:4.9.5
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 8096
+      published: '8096'
+      protocol: tcp
+    - target: 8920
+      published: '8920'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/Media/TV Shows
+      target: /data/tvshows
+    - type: bind
+      source: /DATA/Media/Movies
+      target: /data/movies
+    container_name: emby
+x-casaos:
+  main: emby
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/emby/assets/icon.svg
+  title:
+    en_US: Emby
+  index: /
+  port_map: '8096'
+  version: 4.9.5

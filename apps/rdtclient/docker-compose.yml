@@ -1,0 +1,38 @@
+name: rdtclient
+services:
+  rdtclient:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+      UMASK: '002'
+    cpu_shares: 50
+    command: []
+    container_name: rdtclient
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    image: rogerfar/rdtclient:2.0.136
+    ports:
+    - target: 6500
+      published: '6500'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/Downloads
+      target: /data/downloads
+    - type: bind
+      source: /DATA/AppData/$AppID/db
+      target: /data/db
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/rdtclient/assets/icon.svg
+  index: /
+  port_map: '6500'
+  scheme: http
+  title:
+    en_US: Real-Debrid Torrent Client
+  version: 2.0.136

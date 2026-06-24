@@ -1,0 +1,29 @@
+name: label-studio
+services:
+  label-studio:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: heartexlabs/label-studio:1.23.0
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    network_mode: bridge
+    ports:
+    - target: 8080
+      published: '3080'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /label-studio/data
+x-casaos:
+  main: label-studio
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/label-studio/assets/icon.svg
+  title:
+    en_US: Label Studio
+  port_map: '3080'
+  version: 1.23.0

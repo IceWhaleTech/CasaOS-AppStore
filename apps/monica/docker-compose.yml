@@ -1,0 +1,60 @@
+name: monica
+services:
+  monica:
+    image: monica:4.1.2
+    container_name: monica
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    ports:
+    - target: 80
+      published: '18930'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/storage
+      target: /var/www/html/storage
+    environment:
+      APP_KEY: ChangeMeBy32KeyLengthOrGenerated
+      DB_HOST: monica-db
+      DB_USERNAME: monicauser
+      DB_PASSWORD: monicasecret
+    networks:
+    - monica_network
+    depends_on:
+    - monica-db
+  monica-db:
+    image: mariadb:11.8.2
+    container_name: monica-db
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/mysql
+      target: /var/lib/mysql
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: true
+      MARIADB_DATABASE: monica
+      MARIADB_USER: monicauser
+      MARIADB_PASSWORD: monicasecret
+    restart: unless-stopped
+    networks:
+    - monica_network
+networks:
+  monica_network:
+    driver: bridge
+x-casaos:
+  main: monica
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/monica/assets/icon.svg
+  scheme: ''
+  port_map: '18930'
+  index: /
+  title:
+    en_US: Monica
+  version: 4.1.2

@@ -1,0 +1,36 @@
+{
+  "architectures": [
+    "amd64",
+    "arm",
+    "arm64"
+  ],
+  "author": "Xhofe",
+  "category": "Productivity",
+  "description": "Alist transforms how you manage and access your files at home, whether on your TV, phone, or any other device. Unlike traditional cloud storage, Alist offers a unified experience across multiple platforms, making it a breeze to keep your media and documents at your fingertips.\n\nWith features like easy installation, support for multiple storage providers (local, Aliyundrive, Onedrive, Google Drive), WebDAV support, dark mode, protected routes with password authentication, file previews for videos, audio, office files, PDFs, code, images, package and batch downloads, single sign-on, offline torrent downloads, file encryption, and additional tools like a text editor and Cloudflare workers proxy, Alist ensures a seamless and secure file management experience.\n\nDeploying Alist on private cloud devices like Zima brings unmatched convenience with multi-device access, ensuring your files are always within reach and secure, no matter where you are.\n",
+  "developer": "Xhofe",
+  "screenshot_link": [
+    "/apps/alist/assets/screenshot-1.webp",
+    "/apps/alist/assets/screenshot-2.webp",
+    "/apps/alist/assets/screenshot-3.webp",
+    "/apps/alist/assets/screenshot-4.webp",
+    "/apps/alist/assets/screenshot-5.webp"
+  ],
+  "tagline": "Mount your cloud drive on your home NAS",
+  "thumbnail": "/apps/alist/assets/thumbnail.webp",
+  "tips": {
+    "before_install": "After installation, please check the initial password in the container log (Settings - TopRight - Terminal and Logs - Logs)."
+  },
+  "update_at": "2024-11-22",
+  "release_notes": "- v3.40.0 adds cryptographic random string generation for security and OAuth state generation/verification for SSO.\n- Fixes include Baidu Netdisk timestamps, local file owner preservation, closing closed channels, PikPak captcha_sign errors, and OIDC compatibility mode.",
+  "website": "https://alistgo.com/",
+  "repo": "https://github.com/AlistGo/alist",
+  "support": "https://github.com/AlistGo/alist/issues",
+  "docs": "https://alistgo.com/guide/",
+  "title": "Alist",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "categories": [
+    "productivity"
+  ],
+  "min_memory": 67108864,
+  "min_image_size": 37728905
+}

@@ -1,0 +1,24 @@
+name: autobrr
+services:
+  autobrr:
+    container_name: autobrr
+    image: ghcr.io/autobrr/autobrr:v1.79.0
+    network_mode: bridge
+    restart: unless-stopped
+    environment:
+      TZ: $TZ
+    ports:
+    - target: 7474
+      published: '7474'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+x-casaos:
+  main: autobrr
+  port_map: '7474'
+  title:
+    en_US: Autobrr
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/autobrr/assets/icon.svg
+  version: 1.79.0

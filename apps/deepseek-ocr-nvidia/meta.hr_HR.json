@@ -1,0 +1,9 @@
+{
+  "id": "deepseek-ocr-nvidia",
+  "title": "DeepSeek OCR(Nvidia GPU)",
+  "description": "DeepSeek OCR je moćan alat za OCR (Optical Character Recognition) otvorenog koda temeljen na naprednom modelu DeepSeek-AI. Omogućuje precizno izvlačenje teksta iz slika i skeniranih dokumenata putem korisničkog web sučelja i API-ja. Podržava različite formate slika i nudi konfiguracije za veličinu slike, rezanje i limite učitavanja. Dodatno, DeepSeek OCR sadrži četiri osnovna načina prepoznavanja: Plain OCR za izvorno izvlačenje teksta, Describe za inteligentne opise sadržaja slike, Find za lokalizaciju ključnih riječi s povratom vizualnih okvira ograničenja i Freeform za fleksibilne zadatke razumijevanja slika temeljene na prilagođenim uputama.\n\n**Ključne Značajke:**\n- Visoka točnost prepoznavanja teksta s DeepSeek-OCR, podržava slike i višestranične PDF dokumente\n- Očuvava izgled dokumenta uključujući tablice, formule i strukturno formatiranje\n- Web frontend (React) i REST API (FastAPI) za lako korištenje i integraciju sustava\n- Izvoz rezultata u Markdown, HTML, DOCX ili JSON formate\n- Automatsko izvlačenje i ugradnja slika iz PDF datoteka\n- GPU ubrzanje i Docker implementacija za brzo i skalabilno procesiranje\n\n**Preduvjeti:**\n- ZimaOS verzija 1.5.2 ili novija, ili NVIDIA Open Driver verzija 580 ili novija\n- NVIDIA GPU s >= 8 GB VRAM-a za optimalne performanse\n\n**Saznajte Više:**\n- [DeepSeek OCR aplikacija (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)\n",
+  "tagline": "Moćan OCR napajan DeepSeek AI",
+  "tips": {
+    "before_install": "Prvo pokretanje preuzet će model (~5-10 GB), što može potrajati neko vrijeme."
+  }
+}

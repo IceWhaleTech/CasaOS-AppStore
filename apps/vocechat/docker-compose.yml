@@ -1,0 +1,29 @@
+name: vocechat
+services:
+  vocechat:
+    environment:
+      TZ: $TZ
+    image: privoce/vocechat-server:v0.5.17
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 3000
+      published: '3009'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/home/vocechat-server/data
+      target: /home/vocechat-server/data
+    container_name: vocechat
+x-casaos:
+  main: vocechat
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/vocechat/assets/icon.svg
+  title:
+    en_US: VoceChat
+  index: /
+  port_map: '3009'
+  version: 0.5.17

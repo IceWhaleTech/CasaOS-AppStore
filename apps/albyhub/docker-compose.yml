@@ -1,0 +1,37 @@
+name: albyhub
+services:
+  albyhub:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+      UMASK: '002'
+      WORK_DIR: /data/albyhub
+      LOG_EVENTS: true
+    command: []
+    container_name: albyhub
+    image: ghcr.io/getalby/hub:v1.22.2
+    deploy:
+      resources:
+        reservations:
+          memory: 1024M
+    ports:
+    - target: 8080
+      published: '58000'
+      protocol: tcp
+    restart: on-failure
+    stop_grace_period: 1m
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/albyhub/assets/icon.svg
+  index: /
+  port_map: '58000'
+  scheme: http
+  title:
+    en_US: Alby Hub ✨
+  version: 1.22.2

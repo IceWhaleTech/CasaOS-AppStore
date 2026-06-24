@@ -1,0 +1,45 @@
+name: pingvin-share
+services:
+  pingvin-share:
+    image: stonith404/pingvin-share
+    restart: unless-stopped
+    ports:
+    - target: 3000
+      published: '3410'
+      protocol: tcp
+    environment:
+      TRUST_PROXY: false
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /opt/app/backend/data
+    - type: bind
+      source: /DATA/AppData/$AppID/images
+      target: /opt/app/frontend/public/img
+x-casaos:
+  title:
+    de_DE: Pingvin-Share
+    el_GR: Pingvin-Share
+    en_GB: Pingvin-Share
+    en_US: Pingvin-Share
+    fr_FR: Pingvin-Share
+    hr_HR: Pingvin-Share
+    it_IT: Pingvin-Share
+    ja_JP: Pingvin-Share
+    ko_KR: Pingvin-Share
+    nb_NO: Pingvin-Share
+    pt_PT: Pingvin-Share
+    ru_RU: Pingvin-Share
+    sv_SE: Pingvin-Share
+    tr_TR: Pingvin-Share
+    zh_CN: Pingvin-Share
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/pingvin-share/assets/icon.svg
+  main: pingvin-share
+  port_map: '3410'
+  index: /
+  scheme: http
+  version: 1.13.0

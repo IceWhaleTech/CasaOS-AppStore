@@ -1,0 +1,34 @@
+name: hugo
+services:
+  hugo:
+    image: ghcr.io/gohugoio/hugo:v0.161.1
+    container_name: hugo
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    user: 0:0
+    ports:
+    - target: 1313
+      published: '1313'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/project
+      target: /project
+    - type: bind
+      source: /DATA/AppData/$AppID/cache
+      target: /cache
+    command:
+    - server
+    - --bind=0.0.0.0
+x-casaos:
+  main: hugo
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/hugo/assets/icon.svg
+  scheme: http
+  port_map: '1313'
+  index: /
+  title:
+    en_US: Hugo
+  version: 0.161.1

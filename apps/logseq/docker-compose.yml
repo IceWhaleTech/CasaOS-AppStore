@@ -1,0 +1,36 @@
+name: logseq
+services:
+  logseq:
+    environment:
+      PGID: '0'
+      PUID: '0'
+    image: correctroad/logseq:v0.10.10
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 3000
+      published: '3325'
+      protocol: tcp
+    - target: 12315
+      published: '12315'
+      protocol: tcp
+    privileged: true
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/logseq/config
+      target: /config
+    - type: bind
+      source: /DATA/Documents/Notes
+      target: /notes
+    container_name: logseq
+x-casaos:
+  main: logseq
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/logseq/assets/icon.svg
+  title:
+    en_US: Logseq
+  port_map: '3325'
+  version: 0.10.10

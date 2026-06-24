@@ -1,0 +1,9 @@
+{
+  "id": "turbodiffusion_nvidia",
+  "title": "TurboDiffusion(Nvidia GPU)",
+  "description": "TurboDiffusion은 Latent Consistency Model(LCM)을 기반으로 한 가속 텍스트-비디오 생성 프레임워크입니다. 다양한 TurboWan2 모델을 활용하여 텍스트 설명으로부터 고품질 비디오를 빠르게 생성합니다. 이 프레임워크는 이미지 및 비디오 생성을 지원하며, 다양한 GPU 구성에 최적화된 체크포인트를 제공합니다.\n\n**주요 기능:**\n- 초고속 비디오 및 이미지 생성\n- 직관적인 Gradio WebUI\n- 다양한 GPU 구성에 최적화\n- 양자화 및 비양자화 체크포인트\n- 유연한 모델 구성\n\n**하드웨어 요구 사항:**\n- 권장: RTX 3090 이상\n- GPU VRAM: 30GB 초과\n- 시스템 RAM: 40GB 초과\n- CUDA 호환 NVIDIA 드라이버\n\n**자세히 알아보기:**\n- [TurboDiffusion GitHub](https://github.com/thu-ml/TurboDiffusion)\n",
+  "tagline": "비디오 품질을 유지하면서 엔드투엔드 확산 생성을 가속하는 비디오 생성 프레임워크",
+  "tips": {
+    "before_install": "내장 모델: TurboWan2.1-T2V-1.3B-480P\n\n1. 공식 지원 모델 목록 (TurboDiffusion 공식 HF 조직)\nText-to-Video (T2V)\n- [TurboDiffusion/TurboWan2.1-T2V-1.3B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-1.3B-480P)\n- [TurboDiffusion/TurboWan2.1-T2V-14B-480P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-480P)\n- [TurboDiffusion/TurboWan2.1-T2V-14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.1-T2V-14B-720P)\nImage-to-Video (I2V)\n- [TurboDiffusion/TurboWan2.2-I2V-A14B-720P](https://huggingface.co/TurboDiffusion/TurboWan2.2-I2V-A14B-720P)\n\n2. hf download 설치 (Hugging Face CLI) (터미널에서 실행)\n\n- 방법 A (권장): 공식 원클릭 설치 스크립트\n`curl -LsSf https://hf.co/cli/install.sh | bash`\n\n- 방법 B: pip install (기존 Python 환경에 적합)\n`pip install -U huggingface_hub`\n\n- 설치 후 확인:\n`hf --help`\n\n3. 특정 모델 가중치를 고정 디렉토리에 다운로드 (권장 명령 템플릿)\n템플릿:\n`hf download <repo_id> <filename> --local-dir /DATA/AppData/turbodiffusion_nvidia/models`\n예시: 14B 720P quant 가중치 다운로드 (repo의 실제 파일名에 따라 조정)\n`hf download TurboDiffusion/TurboWan2.1-T2V-14B-720P TurboWan2.1-T2V-14B-720P-quant.pth --local-dir /DATA/AppData/turbodiffusion_nvidia/models`\n\n4. 다운로드 완료 후 적용 방법\n- 가중치 파일이 `/DATA/AppData/turbodiffusion_nvidia/models`에 있는지 확인\n- WebUI에서 모델 목록을 새로고침하고, discover model / refresh model list 클릭\n"
+  }
+}

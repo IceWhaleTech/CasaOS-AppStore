@@ -1,0 +1,41 @@
+name: emulatorjs
+services:
+  emulatorjs:
+    environment:
+    - PGID=$PGID
+    - PUID=$PUID
+    - SUBFOLDER=/
+    - TZ=$TZ
+    image: linuxserver/emulatorjs:1.9.2
+    network_mode: bridge
+    ports:
+    - target: 3000
+      published: '3001'
+      protocol: tcp
+    - target: 4001
+      published: '4001'
+      protocol: tcp
+    - target: 80
+      published: '88'
+      protocol: tcp
+    privileged: true
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    - type: bind
+      source: /ROMS/nes
+      target: /data/nes/roms
+    container_name: emulatorjs
+x-casaos:
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/emulatorjs/assets/icon.svg
+  index: /
+  port_map: '88'
+  scheme: http
+  title:
+    en_US: emulatorjs
+  version: 1.9.2

@@ -1,0 +1,10 @@
+{
+  "id": "peanut",
+  "title": "PeaNUT",
+  "description": "PeaNUT je web-based UPS nadzorni sustav specifično dizajniran za praćenje Neprekidnih Izvora Napajanja (UPS). Pruža korisnički pristupno sučelje za praćenje UPS statusa, trajanja baterije i obavijesti o prekidu napajanja kako bi se osiguralo da su vaši sustavi uvijek zaštićeni.\n\n**Ključne Značajke:**\n- Praćenje i kontrola UPS statusa u stvarnom vremenu\n- Praćenje trajanja baterije i razine napunjenosti\n- Automatske obavijesti o prekidu napajanja putem email/webhook\n- Pohrana povijesnih podataka i izvještavanje\n- Podrška za različite proizvođače i modele UPS\n- Mobilno prilagođeno responsivno web sučelje za daljinski pristup\n- Konfigurabilni pragovi upozorenja i alarmi\n- Implementacija temeljena na Dockeru za laku instalaciju\n\n**Saznajte Više:**\n- [PeaNUT GitHub Repozitorij](https://github.com/brandawg93/peanut)\n",
+  "tagline": "UPS nadzorni sustav i sustav obavijesti o prekidu napajanja",
+  "release_notes": "- v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.\n- WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.\n- The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.",
+  "tips": {
+    "before_install": "Parametri UPS usluge za ZimaOS su sljedeći:\n| Adresa poslužitelja | Port | Korisničko ime | Lozinka |\n|---------------------|------|---------------|---------|\n| ZimaOS IP           | `3493` | `monuser` | `secret` |\n"
+  }
+}

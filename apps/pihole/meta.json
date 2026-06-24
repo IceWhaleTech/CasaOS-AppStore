@@ -1,0 +1,35 @@
+{
+  "architectures": [
+    "amd64",
+    "arm64",
+    "386",
+    "arm"
+  ],
+  "author": "CasaOS Team",
+  "category": "Networking",
+  "description": "Pi-hole is a network-wide ad-blocking platform for Linux hardware, using DNS sinkhole technology to protect devices from unwanted content without requiring client-side software. Designed for home or enterprise networks, it offers efficient ad blocking and network optimization.\n\nCore features include network-wide ad blocking and content blocking in non-browser environments. It uses DNS sinkhole to block ads, covering mobile apps and smart TVs. Caching DNS queries speeds up everyday browsing. A command-line interface ensures interoperability with reliable control options.\n\nIt provides an intuitive web interface dashboard for viewing and managing system status. An optional DHCP server function automatically protects all devices. Capable of handling high query volumes on server-grade hardware, it supports ad blocking over IPv4 and IPv6. With efficiency and versatility at the core, the platform delivers a modern network protection solution.\n\n**Key Features:**\n- Network-wide ad blocking via DNS sinkhole technology\n- Blocking content in non-browser environments, including mobile apps and smart TVs\n- Caching DNS queries to speed up browsing\n- Command-line interface for interoperability\n- Intuitive web interface dashboard for system viewing and control\n- Optional DHCP server function for automatic device protection\n- Ad blocking support for IPv4 and IPv6\n\n**Learn More:**\n- [Pi-hole Official Website](https://pi-hole.net/)\n- [Pi-hole GitHub](https://github.com/pi-hole/pi-hole)\n",
+  "developer": "Pi-hole",
+  "screenshot_link": [
+    "/apps/pihole/assets/screenshot-1.webp",
+    "/apps/pihole/assets/screenshot-2.webp",
+    "/apps/pihole/assets/screenshot-3.webp"
+  ],
+  "tagline": "Network-wide Ad Blocking",
+  "thumbnail": "/apps/pihole/assets/thumbnaill.webp",
+  "tips": {
+    "before_install": "Default password: `casaos`\n"
+  },
+  "update_at": "2026-05-11",
+  "release_notes": "- Docker image 2026.05.0 refreshes the Pi-hole container build and updates container capability documentation.\n- This Docker-specific release is light; review the upstream upgrade impact section before updating production deployments.",
+  "website": "https://pi-hole.net/",
+  "repo": "https://github.com/pi-hole/pi-hole",
+  "support": "https://discourse.pi-hole.net",
+  "docs": "https://docs.pi-hole.net",
+  "title": "Pi-hole",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "categories": [
+    "networking"
+  ],
+  "min_memory": 67108864,
+  "min_image_size": 42256481
+}

@@ -1,0 +1,31 @@
+name: snapdrop
+services:
+  snapdrop:
+    environment:
+    - PGID=$PGID
+    - PUID=$PUID
+    - TZ=$TZ
+    image: linuxserver/snapdrop:version-eac78009
+    network_mode: bridge
+    ports:
+    - target: 443
+      published: '443'
+      protocol: tcp
+    - target: 80
+      published: '89'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    privileged: false
+    container_name: snapdrop
+x-casaos:
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/snapdrop/assets/icon.svg
+  index: /
+  port_map: '89'
+  scheme: http
+  title:
+    en_US: snapdrop
+  version: 0.0.0-version-eac78009

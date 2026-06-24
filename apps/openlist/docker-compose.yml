@@ -1,0 +1,32 @@
+name: openlist
+services:
+  openlist:
+    image: openlistteam/openlist:v4.2.2
+    container_name: openlist
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    network_mode: bridge
+    restart: unless-stopped
+    user: 999:1000
+    ports:
+    - target: 5244
+      published: '5244'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /opt/openlist/data
+    environment:
+      UMASK: '022'
+      OPENLIST_ADMIN_PASSWORD: casaos
+x-casaos:
+  main: openlist
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/openlist/assets/icon.svg
+  scheme: http
+  port_map: '5244'
+  index: /
+  title:
+    en_US: OpenList
+  version: 4.2.2

@@ -1,0 +1,9 @@
+{
+  "id": "etherpad",
+  "description": "Etherpad는 실시간 협업 문서 편집기로, 여러 사람이 같은 패드를 동시에 편집할 수 있으며 모든 변경 사항은 즉시 동기화되고 작성자별로 색상이 구분됩니다.\n자체 호스팅이 가능하고 오픈 소스이며 완전히 직접 제어할 수 있어 회의록, 브레인스토밍, 공동 작성, 가벼운 지식 정리에 적합합니다.\n내장 관리자 패널, 250개 이상의 애드온을 갖춘 플러그인 생태계, DOCX/PDF/Markdown의 기본 가져오기 및 내보내기, amd64와 arm64를 지원하는 멀티 아키텍처 컨테이너를 제공합니다.\n\n**주요 기능:**\n- 즉시 동기화되는 실시간 협업 편집\n- 누가 무엇을 썼는지 보여 주는 작성자별 색상 구분\n- 250개 이상의 애드온을 갖춘 내장 관리자 패널과 플러그인 생태계\n- DOCX, PDF, Markdown의 기본 가져오기 및 내보내기\n- amd64와 arm64를 지원하는 오픈 소스 자체 호스팅 배포\n\n**더 알아보기:**\n- [Etherpad 공식 웹사이트](https://etherpad.org/)\n- [Etherpad GitHub](https://github.com/ether/etherpad)\n- [Etherpad 문서](https://docs.etherpad.org/)\n",
+  "tagline": "실시간 협업 문서 편집기",
+  "release_notes": "- Etherpad v3.1.0은 유지보수 시간대, 사전 점검, 실패 및 롤백 시 이메일 알림을 포함한 Tier 4 자율 자체 업데이트를 추가했습니다.\n- 또한 업데이트 메일의 실제 SMTP 전송을 도입했고 API, 내보내기, HTTP 보안 강화와 현지화 업데이트도 포함합니다.",
+  "tips": {
+    "before_install": "기본 관리자 비밀번호는 \"admin\"입니다. Etherpad를 네트워크에 노출하기 전에 ADMIN_PASSWORD를 변경하세요. 패드는 내장 dirty 데이터베이스를 사용해 /DATA/AppData/etherpad/var 에 디스크로 저장되며, 이 방식은 개인용이나 소규모 팀에 적합합니다. 많은 사용자가 사용하는 운영 환경이라면 DB_TYPE을 postgres 또는 mysql로 바꾸고 DB_HOST, DB_NAME, DB_USER, DB_PASS를 외부 데이터베이스로 지정하세요.\n"
+  }
+}
