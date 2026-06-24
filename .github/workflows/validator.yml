@@ -1,34 +1,76 @@
-name: validate docker compose file
+name: Validate Compose And Build
 
 on:
-    pull_request:
-      types: [opened, synchronize]
-  
+  pull_request:
+    types: [opened, synchronize]
+  workflow_dispatch:
+    inputs:
+      app_path:
+        description: "Optional app folder name under Apps/ (e.g. 2FAuth). Leave empty to validate all."
+        required: false
+        default: ""
+
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
+      - name: Check name field in YAML files
+        env:
+          APP_PATH_INPUT: ${{ inputs.app_path }}
+        run: |
+          set -euo pipefail
+          if [ -n "${APP_PATH_INPUT}" ]; then
+            SEARCH_ROOT="Apps/${APP_PATH_INPUT}"
+          else
+            SEARCH_ROOT="Apps"
+          fi
+          while IFS= read -r file; do
+            if ! grep -qP '^name:\s[a-z0-9_-]*\r?$' "$file"; then
+              echo "Invalid 'name' field in: $file"
+              echo "name must match: ^[a-z0-9_-]+$"
+              exit 1
+            fi
+          done < <(find "${SEARCH_ROOT}" -type f \( -name "docker-compose.yaml" -o -name "docker-compose.yml" \))
 
-      - uses: robinraju/release-downloader@v1.9
+      - name: Validate all docker-compose files
+        env:
+          APP_PATH_INPUT: ${{ inputs.app_path }}
+        run: |
+          set -euo pipefail
+          if [ -n "${APP_PATH_INPUT}" ]; then
+            SEARCH_ROOT="Apps/${APP_PATH_INPUT}"
+          else
+            SEARCH_ROOT="Apps"
+          fi
+          while IFS= read -r file; do
+            echo "Validating: ${file}"
+            docker compose -f "${file}" config -q
+          done < <(find "${SEARCH_ROOT}" -type f \( -name "docker-compose.yaml" -o -name "docker-compose.yml" \))
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          repository: "IceWhaleTech/CasaOS-AppManagement"
-          latest: true
-          fileName: "linux-amd64-casaos-app-management-validator-*.tar.gz"
+          python-version: "3.11"
 
-      - name: Extract
+      - name: Install dependencies
         run: |
-            tar zxf linux-amd64-casaos-app-management-validator-*.tar.gz
+          sudo apt-get update && sudo apt-get install -y librsvg2-bin
+          pip install pyyaml Pillow
 
-      - name: Install
-        run: |
-            chmod +x build/sysroot/usr/bin/casaos-app-management-validator
+      - name: Restore image size cache
+        uses: actions/cache@v4
+        with:
+          path: .cache/build_appstore/image-size-cache.json
+          key: build-appstore-image-size-cache-${{ github.ref_name }}
+          restore-keys: |
+            build-appstore-image-size-cache-
 
-      - name: Check All Docker Compose File
-        id: validate_docker_compose
+      - name: Validate appstore build
         run: |
-            find . -type f \( -name "docker-compose.yaml" -or -name "docker-compose.yml" \) | while read -r file; do
-              echo $file
-              build/sysroot/usr/bin/casaos-app-management-validator $file
-            done
+          python3 scripts/build_appstore.py \
+            --source . \
+            --output /tmp/appstore-dist \
+            --cache-file .cache/build_appstore/image-size-cache.json \
+            --base-url "https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages"

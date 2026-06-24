@@ -52,54 +52,54 @@ services:
       envs:
         - container: TZ
           description:
-            en_us: TimeZone
-            zh_cn: 时区
+            en_US: TimeZone
+            zh_CN: 时区
         - container: PUID
           description:
-            en_us: Run Jellyfin as specified uid.
-            zh_cn: Jellyfin运行的用户ID
+            en_US: Run Jellyfin as specified uid.
+            zh_CN: Jellyfin运行的用户ID
         - container: PGID
           description:
-            en_us: Run Jellyfin as specified gid.
-            zh_cn: Jellyfin运行的用户组ID
+            en_US: Run Jellyfin as specified gid.
+            zh_CN: Jellyfin运行的用户组ID
         - container: JELLYFIN_PublishedServerUrl
           description:
-            en_us: The autodiscovery response domain or IP address.
-            zh_cn: 自动发现响应域名或IP地址
+            en_US: The autodiscovery response domain or IP address.
+            zh_CN: 自动发现响应域名或IP地址
       ports:
         - container: "8096"
           description:
-            en_us: WebUI HTTP Port
-            zh_cn: WebUI HTTP端口
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP端口
 
         - container: "8920"
           description:
-            en_us: WebUI HTTPS Port
-            zh_cn: WebUI HTTPS端口
+            en_US: WebUI HTTPS Port
+            zh_CN: WebUI HTTPS端口
 
         - container: "7359"
           description:
-            en_us: Jellyfin auto-discovery Port
-            zh_cn: Jellyfin自动发现端口
+            en_US: Jellyfin auto-discovery Port
+            zh_CN: Jellyfin自动发现端口
 
         - container: "1900"
           description:
-            en_us: Jellyfin DLNA Port
-            zh_cn: Jellyfin DLNA端口
+            en_US: Jellyfin DLNA Port
+            zh_CN: Jellyfin DLNA端口
 
       volumes:
         - container: /config
           description:
-            en_us: Jellyfin config directory.
-            zh_cn: Jellyfin配置目录
+            en_US: Jellyfin config directory.
+            zh_CN: Jellyfin配置目录
         - container: /Media
           description:
-            en_us: Jellyfin Media directory.
-            zh_cn: Jellyfin媒体目录
+            en_US: Jellyfin Media directory.
+            zh_CN: Jellyfin媒体目录
         - container: /opt/vc/lib
           description:
-            en_us: OpenMax libs
-            zh_cn: OpenMax库
+            en_US: OpenMax libs
+            zh_CN: OpenMax库
     container_name: jellyfin
 x-casaos:
   architectures:
@@ -109,58 +109,58 @@ x-casaos:
   author: CasaOS Team
   category: Media
   description:
-    en_us: |
+    en_US: |
       Imagine having all your movies, TV shows, and music at your fingertips, ready on any device. Jellyfin transforms your media collection into a personalized entertainment hub, surpassing traditional photo albums. Your media is accessible anywhere and beautifully organized.
 
       Jellyfin is free and open-source, offering high-quality streaming, detailed metadata, and personalized recommendations. Multiple users can have their own media libraries.
 
       Deploying Jellyfin on private cloud devices like Zima provides virtually unlimited storage, seamless streaming, and secure, multi-device access. It's perfect for NAS enthusiasts looking to enhance their home media setup.
-    zh_cn: |
+    zh_CN: |
       想象一下，所有的电影、电视节目和音乐触手可及，可以在任何设备上播放。Jellyfin 将您的媒体收藏转变为个性化的娱乐中心，超越传统的照片相册。您的媒体随时随地可访问，并且经过精美的组织。
 
       Jellyfin 是免费的开源软件，提供高质量的流媒体播放、详细的元数据和个性化推荐。多个用户可以拥有各自的媒体库。
 
       在像 Zima 这样的私有云设备上部署 Jellyfin，提供几乎无限的存储空间、无缝的流媒体播放和安全的多设备访问。这对于希望提升家庭媒体设置的 NAS 爱好者来说，是完美的解决方案。
-    ar_sa: يتيح لك Jellyfin جمع وإدارة وتدفق وسائطك. قم بتشغيل خادم Jellyfin على نظامك واحصل على النظام الرائد للترفيه المجاني ، مع الأجهزة الصوتية والمزايا المتضمنة.
-    de_de: Jellyfin ermöglicht es Ihnen, Ihre Medien zu sammeln, zu verwalten und zu streamen. Führen Sie den Jellyfin-Server auf Ihrem System aus und erhalten Sie Zugriff auf das führende kostenlose Softwareunterhaltungssystem, inklusive Klingelton und Dekoration.
-    es_es: Jellyfin le permite recopilar, administrar y transmitir sus medios. Ejecute el servidor Jellyfin en su sistema y obtenga acceso al sistema de entretenimiento de software libre líder, con timbres y adornos incluidos.
-    fr_fr: Jellyfin vous permet de collecter, de gérer et de diffuser vos médias. Exécutez le serveur Jellyfin sur votre système et accédez au système de divertissement logiciel libre de pointe, avec des sonneries et des décorations incluses.
-    hu_hu: A Jellyfin lehetővé teszi, hogy gyűjtsön, kezeljen és adja tovább a médiaanyagait. Futtassa a Jellyfin szerverét a rendszerén, és hozzáférhet a vezető ingyenes szoftveres szórakoztató rendszerhez, csengőhangokkal és díszítésekkel.
-    it_it: Jellyfin consente di raccogliere, gestire e trasmettere i tuoi media. Esegui il server Jellyfin sul tuo sistema e accedi al sistema di intrattenimento software libero leader, con suoni e decorazioni incluse.
-    ru_ru: Jellyfin позволяет собирать, управлять и транслировать свою медиаинформацию. Запустите сервер Jellyfin на своей системе и получите доступ к лидирующей системе развлечений с открытым исходным кодом, включая звонки и украшения.
-    pl_pl: Jellyfin pozwala zbierać, zarządzać i przesyłać swoją multimedialną zawartość. Uruchom serwer Jellyfin na swoim systemie i uzyskaj dostęp do liderującego systemu rozrywki z otwartym oprogramowaniem, w tym dzwonków i ozdób.
-    pt_br: O Jellyfin permite que você colete, gerencie e transmita seus meios de comunicação. Execute o servidor Jellyfin em seu sistema e obtenha acesso ao sistema de entretenimento de software livre líder, com toques e decorações incluídos.
-    sv_se: Jellyfin gör det möjligt att samla in, hantera och strömma dina medier. Kör Jellyfin-servern på ditt system och få tillgång till ledande underhållningssystem med fri mjukvara, med klockor och dekorationer inkluderade.
-    uk_ua: Jellyfin дозволяє збирати, керувати та транслювати вашу медіаінформацію. Запустіть сервер Jellyfin на своєму системі та отримайте доступ до лідерської системи розваг з відкритим програмним забезпеченням, включаючи дзвінки та оздоблення.
+    ar_SA: يتيح لك Jellyfin جمع وإدارة وتدفق وسائطك. قم بتشغيل خادم Jellyfin على نظامك واحصل على النظام الرائد للترفيه المجاني ، مع الأجهزة الصوتية والمزايا المتضمنة.
+    de_DE: Jellyfin ermöglicht es Ihnen, Ihre Medien zu sammeln, zu verwalten und zu streamen. Führen Sie den Jellyfin-Server auf Ihrem System aus und erhalten Sie Zugriff auf das führende kostenlose Softwareunterhaltungssystem, inklusive Klingelton und Dekoration.
+    es_ES: Jellyfin le permite recopilar, administrar y transmitir sus medios. Ejecute el servidor Jellyfin en su sistema y obtenga acceso al sistema de entretenimiento de software libre líder, con timbres y adornos incluidos.
+    fr_FR: Jellyfin vous permet de collecter, de gérer et de diffuser vos médias. Exécutez le serveur Jellyfin sur votre système et accédez au système de divertissement logiciel libre de pointe, avec des sonneries et des décorations incluses.
+    hu_HU: A Jellyfin lehetővé teszi, hogy gyűjtsön, kezeljen és adja tovább a médiaanyagait. Futtassa a Jellyfin szerverét a rendszerén, és hozzáférhet a vezető ingyenes szoftveres szórakoztató rendszerhez, csengőhangokkal és díszítésekkel.
+    it_IT: Jellyfin consente di raccogliere, gestire e trasmettere i tuoi media. Esegui il server Jellyfin sul tuo sistema e accedi al sistema di intrattenimento software libero leader, con suoni e decorazioni incluse.
+    ru_RU: Jellyfin позволяет собирать, управлять и транслировать свою медиаинформацию. Запустите сервер Jellyfin на своей системе и получите доступ к лидирующей системе развлечений с открытым исходным кодом, включая звонки и украшения.
+    pl_PL: Jellyfin pozwala zbierać, zarządzać i przesyłać swoją multimedialną zawartość. Uruchom serwer Jellyfin na swoim systemie i uzyskaj dostęp do liderującego systemu rozrywki z otwartym oprogramowaniem, w tym dzwonków i ozdób.
+    pt_BR: O Jellyfin permite que você colete, gerencie e transmita seus meios de comunicação. Execute o servidor Jellyfin em seu sistema e obtenha acesso ao sistema de entretenimento de software livre líder, com toques e decorações incluídos.
+    sv_SE: Jellyfin gör det möjligt att samla in, hantera och strömma dina medier. Kör Jellyfin-servern på ditt system och få tillgång till ledande underhållningssystem med fri mjukvara, med klockor och dekorationer inkluderade.
+    uk_UA: Jellyfin дозволяє збирати, керувати та транслювати вашу медіаінформацію. Запустіть сервер Jellyfin на своєму системі та отримайте доступ до лідерської системи розваг з відкритим програмним забезпеченням, включаючи дзвінки та оздоблення.
   developer: Jellyfin
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-3.png
   tagline:
-    en_us: The personal Media System
-    zh_cn: 个人媒体系统
-    ar_sa: يضعك تحت سيطرتك على وسائطك.
-    de_de: Stellt Sie in den Mittelpunkt Ihrer Medien.
-    es_es: Le pone en control de sus medios.
-    fr_fr: Vous met en contrôle de vos médias.
-    hu_hu: Ön a média sajátos kezelésében van.
-    it_it: Mette in tuo controllo i tuoi media.
-    ru_ru: Помогает вам контролировать свою медиаинформацию.
-    pl_pl: Umieszcza Cię w centrum swojej multimedialnej zawartości.
-    pt_br: Coloca você no controle de seus meios de comunicação.
-    sv_se: Lägger dig i centrum av dina medier.
-    uk_ua: Помагає вам контролювати вашу медіаінформацію.
+    en_US: The personal Media System
+    zh_CN: 个人媒体系统
+    ar_SA: يضعك تحت سيطرتك على وسائطك.
+    de_DE: Stellt Sie in den Mittelpunkt Ihrer Medien.
+    es_ES: Le pone en control de sus medios.
+    fr_FR: Vous met en contrôle de vos médias.
+    hu_HU: Ön a média sajátos kezelésében van.
+    it_IT: Mette in tuo controllo i tuoi media.
+    ru_RU: Помогает вам контролировать свою медиаинформацию.
+    pl_PL: Umieszcza Cię w centrum swojej multimedialnej zawartości.
+    pt_BR: Coloca você no controle de seus meios de comunicação.
+    sv_SE: Lägger dig i centrum av dina medier.
+    uk_UA: Помагає вам контролювати вашу медіаінформацію.
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.png
   tips: {}
   title:
-    en_us: Jellyfin(Nvidia GPU)
+    en_US: Jellyfin(Nvidia GPU)
   index: /
   port_map: "8097"
   version: "10.10.6"
-  updateAt: "2025-04-01"
-  releaseNotes:
+  update_at: "2025-04-01"
+  release_notes:
     en_US: |-
       - v10.10.6 includes bug fixes for Jellyfin Server.
       - The release fixes Apple silicon crashes by bumping the .NET framework version to 8.0.13.

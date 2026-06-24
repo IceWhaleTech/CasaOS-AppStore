@@ -8,7 +8,7 @@ services:
           memory: 512M
     image: ghcr.io/esphome/esphome:2026.5.1
     labels:
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ESPHome/icon.png
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ESPHome/icon.svg
     restart: always
     ports:
       - target: 6052
@@ -27,36 +27,36 @@ services:
       envs:
         - container: ESPHOME_DASHBOARD_USE_PING
           description:
-            en_us: Ping IP addresses instead of mDNS
-            zh_cn: Ping IP 地址而不是 mDNS
+            en_US: Ping IP addresses instead of mDNS
+            zh_CN: Ping IP 地址而不是 mDNS
         - container: TZ
           description:
-            en_us: TimeZone
-            zh_cn: 时区
+            en_US: TimeZone
+            zh_CN: 时区
       volumes:
         - container: /config
           description:
-            en_us: AppData Path Config File
-            zh_cn: AppData路径配置文件
+            en_US: AppData Path Config File
+            zh_CN: AppData路径配置文件
       ports:
         - container: '6052'
           description:
-            en_us: WebUI Port for ESPHome
-            zh_cn: ESPHome 的 WebUI 端口
+            en_US: WebUI Port for ESPHome
+            zh_CN: ESPHome 的 WebUI 端口
 x-casaos:
   architectures:
     - amd64
     - arm64
     - arm
   author: kd9lsv
-  category: "Home Automation"
+  category: Home
   description:
-    en_us: ESPHome is a system to control your microcontrollers by simple yet powerful configuration files and control them remotely through Home Automation systems.
-    zh_cn: ESPHome 是一个通过简单而强大的配置文件控制微控制器并通过家庭自动化系统远程控制它们的系统。
+    en_US: ESPHome is a system to control your microcontrollers by simple yet powerful configuration files and control them remotely through Home Automation systems.
+    zh_CN: ESPHome 是一个通过简单而强大的配置文件控制微控制器并通过家庭自动化系统远程控制它们的系统。
   tagline:
-    en_us: Home Automation systems
-    zh_cn: 家庭自动化系统
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ESPHome/icon.png
+    en_US: Home Automation systems
+    zh_CN: 家庭自动化系统
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ESPHome/icon.svg
   index: /
   main: esphome
   port_map: "6052"
@@ -66,10 +66,10 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ESPHome/screenshot-2.png
   store_app_id: esphome
   title:
-    en_us: ESPHome
+    en_US: ESPHome
   version: "2026.5.1"
-  updateAt: "2026-05-24"
-  releaseNotes:
+  update_at: "2026-05-24"
+  release_notes:
     en_US: |-
       - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
       - Updates zeroconf dependency versions used by ESPHome.

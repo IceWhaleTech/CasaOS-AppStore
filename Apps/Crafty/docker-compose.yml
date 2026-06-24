@@ -25,80 +25,80 @@ services:
       ports:
         - container: "19132"
           description:
-            en_us: Minecraft Bedrock listening Port (UDP)
-            zh_cn: Minecraft Bedrock监听端口 (UDP)
+            en_US: Minecraft Bedrock listening Port (UDP)
+            zh_CN: Minecraft Bedrock监听端口 (UDP)
           protocol: udp
 
         - container: "25565"
           description:
-            en_us: Minecraft listening Port (TCP)
-            zh_cn: Minecraft监听端口 (TCP)
+            en_US: Minecraft listening Port (TCP)
+            zh_CN: Minecraft监听端口 (TCP)
           protocol: tcp
 
         - container: "25566"
           description:
-            en_us: Minecraft listening Port (TCP)
-            zh_cn: Minecraft监听端口 (TCP)
+            en_US: Minecraft listening Port (TCP)
+            zh_CN: Minecraft监听端口 (TCP)
           protocol: tcp
 
         - container: "25567"
           description:
-            en_us: Minecraft listening Port (TCP)
-            zh_cn: Minecraft监听端口 (TCP)
+            en_US: Minecraft listening Port (TCP)
+            zh_CN: Minecraft监听端口 (TCP)
           protocol: tcp
 
         - container: "25568"
           description:
-            en_us: Minecraft listening Port (TCP)
-            zh_cn: Minecraft监听端口 (TCP)
+            en_US: Minecraft listening Port (TCP)
+            zh_CN: Minecraft监听端口 (TCP)
           protocol: tcp
 
         - container: "25569"
           description:
-            en_us: Minecraft listening Port (TCP)
-            zh_cn: Minecraft监听端口 (TCP)
+            en_US: Minecraft listening Port (TCP)
+            zh_CN: Minecraft监听端口 (TCP)
           protocol: tcp
 
         - container: "25570"
           description:
-            en_us: Minecraft listening Port (TCP)
-            zh_cn: Minecraft监听端口 (TCP)
+            en_US: Minecraft listening Port (TCP)
+            zh_CN: Minecraft监听端口 (TCP)
           protocol: tcp
 
         - container: "25565"
           description:
-            en_us: Minecraft listening Port (UDP)
-            zh_cn: Minecraft监听端口 (UDP)
+            en_US: Minecraft listening Port (UDP)
+            zh_CN: Minecraft监听端口 (UDP)
           protocol: udp
 
         - container: "25566"
           description:
-            en_us: Minecraft listening Port (UDP)
-            zh_cn: Minecraft监听端口 (UDP)
+            en_US: Minecraft listening Port (UDP)
+            zh_CN: Minecraft监听端口 (UDP)
           protocol: udp
 
         - container: "25567"
           description:
-            en_us: Minecraft listening Port (UDP)
-            zh_cn: Minecraft监听端口 (UDP)
+            en_US: Minecraft listening Port (UDP)
+            zh_CN: Minecraft监听端口 (UDP)
           protocol: udp
 
         - container: "25568"
           description:
-            en_us: Minecraft listening Port (UDP)
-            zh_cn: Minecraft监听端口 (UDP)
+            en_US: Minecraft listening Port (UDP)
+            zh_CN: Minecraft监听端口 (UDP)
           protocol: udp
 
         - container: "25569"
           description:
-            en_us: Minecraft listening Port (UDP)
-            zh_cn: Minecraft监听端口 (UDP)
+            en_US: Minecraft listening Port (UDP)
+            zh_CN: Minecraft监听端口 (UDP)
           protocol: udp
 
         - container: "25570"
           description:
-            en_us: Minecraft listening Port (UDP)
-            zh_cn: Minecraft监听端口 (UDP)
+            en_US: Minecraft listening Port (UDP)
+            zh_CN: Minecraft监听端口 (UDP)
           protocol: udp
 x-casaos:
   architectures:
@@ -107,13 +107,13 @@ x-casaos:
     - arm64
   main: crafty
   author: Chàra Rose
-  category: Games
+  category: Media
   description:
-    en_us: Crafty is an open source Minecraft control panel built using Tornado and AdminLTE, featuring server scheduling, a interactive console and the ability to run almost any type of Minecraft server
-    es_es: Crafty es un panel de control de Minecraft de código abierto creado con Tornado y AdminLTE, que incluye programación de servidores, una consola interactiva y la capacidad de ejecutar casi cualquier tipo de servidor de Minecraft.
-    zh_cn: Crafty是一个使用Tornado和AdminLTE构建的开源Minecraft控制面板，具有服务器调度、交互式控制台和运行几乎任何类型的Minecraft服务器的功能。
+    en_US: Crafty is an open source Minecraft control panel built using Tornado and AdminLTE, featuring server scheduling, a interactive console and the ability to run almost any type of Minecraft server
+    es_ES: Crafty es un panel de control de Minecraft de código abierto creado con Tornado y AdminLTE, que incluye programación de servidores, una consola interactiva y la capacidad de ejecutar casi cualquier tipo de servidor de Minecraft.
+    zh_CN: Crafty是一个使用Tornado和AdminLTE构建的开源Minecraft控制面板，具有服务器调度、交互式控制台和运行几乎任何类型的Minecraft服务器的功能。
   developer: Crafty Team
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Crafty/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Crafty/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Crafty/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Crafty/screenshot-2.png
@@ -123,85 +123,85 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Crafty/screenshot-6.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Crafty/screenshot-7.png
   tagline:
-    en_us: Take control of your Minecraft servers.
-    es_es: Toma el control de tus servidores de Minecraft.
-    zh_cn: 掌控你的Minecraft服务器。
+    en_US: Take control of your Minecraft servers.
+    es_ES: Toma el control de tus servidores de Minecraft.
+    zh_CN: 掌控你的Minecraft服务器。
   tips:
     before_install:
-      ar_sa: |
+      ar_SA: |
         الحساب الافتراضي
 
         | اسم المستخدم | كلمة المرور |
         |----------|----------|
         | `admin`    | `app/config/default-creds.txt` |
-      de_de: |
+      de_DE: |
         Standardkonto
         | Benutzername | Passwort |
         |----------|----------|
         | `admin`    | `app/config/default-creds.txt` |
-      en_us: |
+      en_US: |
         Default Account
         | Username | Password |
         |----------|----------|
         | `admin`    | `app/config/default-creds.txt` |
-      es_es: |
+      es_ES: |
         Cuenta predeterminada
         | Nombre de usuario | Contraseña |
         |----------|----------|
         | `admin`    | `app/config/default-creds.txt` |
-      fr_fr: |
+      fr_FR: |
         Compte par défaut
         | Nom d'utilisateur | Mot de passe |
         |----------|----------|
         | `admin`    | `app/config/default-creds.txt` |
-      hu_hu: |
+      hu_HU: |
         Alapértelmezett fiók
         | Felhasználónév | Jelszó |
         |----------|----------|
         | `admin`    | `app/config/default-creds.txt` |
-      it_it: |
+      it_IT: |
         Account predefinito
         | Nome utente | Password |
         |----------|----------|
         | `admin`    | `app/config/default-creds.txt` |
-      pl_pl: |
+      pl_PL: |
         Konto domyślne
         | Nazwa użytkownika | Hasło |
         |----------|----------|
         | `admin`    | `app/config/default-creds.txt` |
-      pt_br: |
+      pt_BR: |
         Conta padrão
         | Nome de usuário | Senha |
         |----------|----------|
         | `admin`    | `app/config/default-creds.txt` |
-      ru_ru: |
+      ru_RU: |
         Учетная запись по умолчанию
         | Имя пользователя | Пароль |
         |----------|----------|
         | `admin`    | `app/config/default-creds.txt` |
-      sv_se: |
+      sv_SE: |
         Standardkonto
         | Användarnamn | Lösenord |
         |----------|----------|
         | `admin`    | `app/config/default-creds.txt` |
-      uk_ua: |
+      uk_UA: |
         Обліковий запис за замовчуванням
         | Ім'я користувача | Пароль |
         |----------|----------|
         | `admin`    | `app/config/default-creds.txt` |
-      zh_cn: |
+      zh_CN: |
         默认账号
         | 用户名 | 密码 |
         |----------|----------|
         | `admin`    | `app/config/default-creds.txt` |
   title:
-    en_us: Crafty
+    en_US: Crafty
   index: /panel
   scheme: https
   port_map: "8111"
   version: "4.10.4"
-  updateAt: "2026-04-20"
-  releaseNotes:
+  update_at: "2026-04-20"
+  release_notes:
     en_US: |-
       - v4.10.4 fixes servers with registered webhooks failing to start.
       - This update follows the Crafty v4.10.4 GitLab release.

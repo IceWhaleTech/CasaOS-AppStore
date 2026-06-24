@@ -23,18 +23,18 @@ services:
       envs:
         - container: TZ
           description:
-            en_us: TimeZone
-            zh_cn: 时区
+            en_US: TimeZone
+            zh_CN: 时区
       ports:
         - container: "5678"
           description:
-            en_us: web port
-            zh_cn: web 端口
+            en_US: web port
+            zh_CN: web 端口
       volumes:
         - container: /home/node/.n8n
           description:
-            en_us: n8n directory.
-            zh_cn: n8n 目录。
+            en_US: n8n directory.
+            zh_CN: n8n 目录。
     container_name: n8n
 
 x-casaos:
@@ -43,7 +43,7 @@ x-casaos:
     - arm64
   main: n8n
   author: YoussofKhawaja
-  category: Utilities
+  category: Productivity
   description:
     en_US: |
       n8n is a powerful open-source workflow automation and conversational AI platform that blends the flexibility of coding with the simplicity of no-code development, empowering users to create efficient and secure automation workflows. It seamlessly connects any app with an API, leveraging native AI capabilities (like LangChain-based AI agent workflows) to process custom data, ideal for personal task management, team collaboration, or enterprise-grade automation. Its vibrant community offers over 400 integrations and 900+ ready-to-use templates, enabling users to deploy automations quickly.
@@ -242,7 +242,7 @@ x-casaos:
       Şablon kütüphanesi, pazarlama otomasyonu, veri analizi ve müşteri desteği gibi senaryolar için 900’den fazla kullanıma hazır iş akışı sunar. Örneğin, bir şablon Shopify’i Mailchimp’e bağlayabilir, yeni müşterileri otomatik olarak e-posta listelerine ekleyebilir ve hoş geldiniz e-postaları gönderebilir, böylece otomasyon teknik olmayan kullanıcılar için de erişilebilir hale gelir. LangChain ile müşteri sorgularını işleme gibi yapay zekâ odaklı iş akışları, n8n’in akıllı etkileşimlerdeki gücünü vurgular.
 
   developer: n8n
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/screenshot-2.png
@@ -266,12 +266,12 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/N8n/thumbnail.png
   tips: {}
   title:
-    en_us: n8n
+    en_US: n8n
   index: /
   port_map: "5678"
   version: "2.22.3"
-  updateAt: "2026-05-25"
-  releaseNotes:
+  update_at: "2026-05-25"
+  release_notes:
     en_US: |-
       - n8n 2.22.3 surfaces SSO claims and role mapping diagnostics.
       - The n8nio/n8n:2.22.3 Docker image tag was published on 2026-05-25.

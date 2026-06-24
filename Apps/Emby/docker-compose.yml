@@ -39,32 +39,32 @@ services:
       envs:
         - container: PUID
           description:
-            en_us: ""
+            en_US: ""
         - container: PGID
           description:
-            en_us: ""
+            en_US: ""
         - container: TZ
           description:
-            en_us: ""
+            en_US: ""
       ports:
         - container: "8096"
           description:
-            en_us: ""
+            en_US: ""
 
         - container: "8920"
           description:
-            en_us: ""
+            en_US: ""
 
       volumes:
         - container: /config
           description:
-            en_us: ""
+            en_US: ""
         - container: /data/tvshows
           description:
-            en_us: ""
+            en_US: ""
         - container: /data/movies
           description:
-            en_us: ""
+            en_US: ""
     container_name: emby
 x-casaos:
   architectures:
@@ -375,7 +375,7 @@ x-casaos:
       **Daha Fazla Bilgi:**
       - [Emby Resmi Web Sitesi](https://emby.media/)
   developer: linuxserver
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-2.png
@@ -403,8 +403,8 @@ x-casaos:
   index: /
   port_map: "8096"
   version: "4.9.5"
-  updateAt: "2026-05-18"
-  releaseNotes:
+  update_at: "2026-05-18"
+  release_notes:
     en_US: |-
       - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
       - This updates the app from the 4.9.1 image line to the 4.9.5 image line.

@@ -39,49 +39,49 @@ services:
       envs:
         - container: PUID
           description:
-            en_us: ""
+            en_US: ""
         - container: PGID
           description:
-            en_us: ""
+            en_US: ""
         - container: TZ
           description:
-            en_us: ""
+            en_US: ""
         - container: TRANSMISSION_WEB_HOME
           description:
-            en_us: ""
+            en_US: ""
         - container: USER
           description:
-            en_us: ""
+            en_US: ""
         - container: PASS
           description:
-            en_us: ""
+            en_US: ""
         - container: PEERPORT
           description:
-            en_us: ""
+            en_US: ""
       ports:
         - container: "9091"
           description:
-            en_us: ""
+            en_US: ""
 
         - container: "51413"
           description:
-            en_us: ""
+            en_US: ""
 
         - container: "51413"
           description:
-            en_us: ""
+            en_US: ""
           protocol: udp
 
       volumes:
         - container: /config
           description:
-            en_us: ""
+            en_US: ""
         - container: /downloads
           description:
-            en_us: ""
+            en_US: ""
         - container: /watch
           description:
-            en_us: ""
+            en_US: ""
     container_name: transmission
 x-casaos:
   architectures:
@@ -89,7 +89,7 @@ x-casaos:
     - arm64
   main: transmission
   author: CasaOS Team
-  category: Downloader
+  category: Media
   description:
     en_US: |
       Transmission is a BitTorrent client designed for simplicity and powerful performance, delivering an efficient and user-friendly downloading experience. It comes equipped with all the essential features you expect, including encryption, a web interface, peer exchange, magnet links, DHT, µTP, UPnP and NAT-PMP port forwarding, webseed support, watch directories, tracker editing, global and per-torrent speed limits, and more.
@@ -152,7 +152,7 @@ x-casaos:
 
       Sezgisel arayüzü ile Transmission, hem yeni başlayanlara hem de ileri düzey kullanıcılara hitap eder. Tek bir indirmeyi yönetiyor olun ya da karmaşık torrent kuyruklarıyla uğraşıyor olun, Transmission optimize edilmiş kaynak kullanımı ve güvenilir performans ile sorunsuz bir deneyim sağlar. Gündelik kullanıcılar ve teknoloji meraklıları için Transmission, ideal BitTorrent çözümüdür。
   developer: Transmission
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Transmission/screenshot-2.png
@@ -237,12 +237,12 @@ x-casaos:
         | ------------- | ----- |
         | `casaos` | `casaos` |
   title:
-    en_us: Transmission
+    en_US: Transmission
   index: /
   port_map: "9091"
   version: "4.1.1"
-  updateAt: "2026-02-20"
-  releaseNotes:
+  update_at: "2026-02-20"
+  release_notes:
     en_US: |-
       - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
       - Fixes more than 20 issues and includes performance improvements.

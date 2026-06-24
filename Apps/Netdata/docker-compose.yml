@@ -13,7 +13,7 @@ services:
           memory: 1794M
     image: netdata/netdata:v2.10.3
     labels:
-      icon: https://icon.casaos.io/main/all/netdata.png
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Netdata/icon.svg
     pid: host
     ports:
       - target: 19999
@@ -58,28 +58,28 @@ x-casaos:
     - arm64
     - arm
   author: f4bio
-  category: Utilities
+  category: Productivity
   description:
-    en_us: Netdata is a real-time performance and health monitoring solution that helps you visualize and understand the behavior of your systems.
-    zh_cn: Netdata是一个实时性能和健康监控解决方案，帮助您可视化并理解系统的行为。
+    en_US: Netdata is a real-time performance and health monitoring solution that helps you visualize and understand the behavior of your systems.
+    zh_CN: Netdata是一个实时性能和健康监控解决方案，帮助您可视化并理解系统的行为。
   tagline:
-    en_us: Real-time Performance Monitoring
-    zh_cn: 实时性能监控
+    en_US: Real-time Performance Monitoring
+    zh_CN: 实时性能监控
   hostname: ""
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Netdata/screenshot-1.jpg
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Netdata/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Netdata/screenshot-3.png
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Netdata/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Netdata/icon.svg
   index: /
   port_map: "19999"
   scheme: http
   store_app_id: netdata
   title:
-    en_us: Netdata
-  version: "v2.10.3"
-  updateAt: "2026-04-27"
-  releaseNotes:
+    en_US: Netdata
+  version: "2.10.3"
+  update_at: "2026-04-27"
+  release_notes:
     en_US: |-
       - v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.
       - SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.

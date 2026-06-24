@@ -16,7 +16,7 @@ services:
         reservations:
           memory: 1024M
     labels:
-      icon: https://cdn.jsdelivr.net/gh/getAlby/umbrel-community-app-store@master/alby-albyhub/images/icon.svg
+      icon: https://cdn.jsdelivr.net/gh/getAlby/hub@master/frontend/public/icon-512.png
     ports:
       - target: 8080
         published: "58000"
@@ -36,7 +36,7 @@ x-casaos:
   author: calganaygun
   category: Finance
   description:
-    en_us: |
+    en_US: |
       Alby Hub is an open-source, self-custodial Bitcoin Lightning wallet, with the easiest-to-use Lightning Network node for everyone.
       Whether you're an individual, creator, or developer, Alby Hub is your centre for seamless Bitcoin payments.
       Effortlessly connect to a variety of apps like the Alby Browser Extension or Alby Go mobile app, create sub-wallets for family and friends, and take full control of your funds—all within an intuitive interface and developer-ready APIs.
@@ -53,28 +53,28 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/getAlby/umbrel-community-app-store@master/alby-albyhub/images/store.png
     - https://cdn.jsdelivr.net/gh/getAlby/umbrel-community-app-store@master/alby-albyhub/images/wallet.png
   tagline:
-    en_us: Self-custodial Bitcoin Lightning wallet with integrated node and app connections.
-    zh_cn: 一个简单的比特币闪电节点，带有钱包、子账户和NWC连接。
-    ar_sa: عقدة بسيكويت لايتنينغ بسيطة مع محفظة، وحسابات فرعية، واتصالات NWC.
-    de_de: Ein einfacher Bitcoin-Lightning-Knoten mit einer Wallet, Unterkonten und NWC-Verbindungen.
-    es_es: Un nodo de Lightning de Bitcoin simple con una cartera, subcuentas y conexiones NWC.
-    fr_fr: Un nœud Bitcoin Lightning simple avec un portefeuille, des sous-comptes et des connexions NWC.
-    hu_hu: Egy egyszerű Bitcoin Lightning csomópont pénztárcával, alszámlákkal és NWC csatlakozásokkal.
-    it_it: Un semplice nodo Bitcoin Lightning con un portafoglio, sottoconti e connessioni NWC.
-    ru_ru: Простой узел Bitcoin Lightning с кошельком, субсчетами и подключениями NWC.
-    pl_pl: Samodzielny węzeł Bitcoin Lightning z portfelem, subkontami i połączeniami NWC.
-    pt_br: Um nó Bitcoin Lightning simples com uma carteira, subcontas e conexões NWC.
-    sv_se: En enkel Bitcoin Lightning-nod med en plånbok, underkonton och NWC-anslutningar.
-    uk_ua: Простий Bitcoin Lightning-вузол з гаманцем, субрахунками та підключеннями NWC.
+    en_US: Self-custodial Bitcoin Lightning wallet with integrated node and app connections.
+    zh_CN: 一个简单的比特币闪电节点，带有钱包、子账户和NWC连接。
+    ar_SA: عقدة بسيكويت لايتنينغ بسيطة مع محفظة، وحسابات فرعية، واتصالات NWC.
+    de_DE: Ein einfacher Bitcoin-Lightning-Knoten mit einer Wallet, Unterkonten und NWC-Verbindungen.
+    es_ES: Un nodo de Lightning de Bitcoin simple con una cartera, subcuentas y conexiones NWC.
+    fr_FR: Un nœud Bitcoin Lightning simple avec un portefeuille, des sous-comptes et des connexions NWC.
+    hu_HU: Egy egyszerű Bitcoin Lightning csomópont pénztárcával, alszámlákkal és NWC csatlakozásokkal.
+    it_IT: Un semplice nodo Bitcoin Lightning con un portafoglio, sottoconti e connessioni NWC.
+    ru_RU: Простой узел Bitcoin Lightning с кошельком, субсчетами и подключениями NWC.
+    pl_PL: Samodzielny węzeł Bitcoin Lightning z portfelem, subkontami i połączeniami NWC.
+    pt_BR: Um nó Bitcoin Lightning simples com uma carteira, subcontas e conexões NWC.
+    sv_SE: En enkel Bitcoin Lightning-nod med en plånbok, underkonton och NWC-anslutningar.
+    uk_UA: Простий Bitcoin Lightning-вузол з гаманцем, субрахунками та підключеннями NWC.
   index: /
   port_map: "58000"
   scheme: http
   store_app_id: albyhub
   title:
-    en_us: Alby Hub ✨
-  version: "v1.22.2"
-  updateAt: "2026-05-11"
-  releaseNotes:
+    en_US: Alby Hub ✨
+  version: "1.22.2"
+  update_at: "2026-05-11"
+  release_notes:
     en_US: |-
       - v1.22.2 adds a new AI & Agents page, integrated on-chain wallet mode, and custom transaction labels.
       - Redesigns settings pages and improves budget selection when creating app connections.

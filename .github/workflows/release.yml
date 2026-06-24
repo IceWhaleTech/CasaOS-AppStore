@@ -1,58 +1,98 @@
-name: release
+name: Build And Publish Dist
 
 on:
   push:
-    tags:
-      - v*.*.*
+    branches:
+    - main
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Base URL used by build_appstore.py"
+        required: false
+        default: "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages"
+
+permissions:
+  contents: write
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: remove all screenshots
-        run: find . -iname "screenshot*" | xargs rm -f
-      - name: remove all thumbnails
-        run: find . -iname "thumbnail*" | xargs rm -f
-      - name: remove all icon
-        run: find . -iname "icon.png" | xargs rm -f
-      - name: remove all app file
-        run: find . -iname "appfile.json" | xargs rm -f
-        
-      - name: create a build with sysroot
-        id: build
-        run: |
-          rm -rf /tmp/build
-          mkdir -p /tmp/build/sysroot/var/lib/casaos/appstore/default.new
-          cp -rv build/* /tmp/build/
-          cp -rv Apps /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
-          cp -v category-list.json /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
-          cp -v recommend-list.json /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
-          cp -v README.md /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
-          pushd /tmp
-          tar zcvf linux-all-appstore-${{ github.ref_name }}.tar.gz build
-      
-      - uses: softprops/action-gh-release@v1
-        if: steps.build.outcome == 'success'
-        with:
-          files: /tmp/linux-all-appstore-${{ github.ref_name }}.tar.gz
-          draft: true
-          prerelease: true
-          fail_on_unmatched_files: true
+    - uses: actions/checkout@v6
 
-      - name: Get version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-      
-      - name: Upload to oss
-        id: upload_to_oss
-        uses: tvrcgo/upload-to-oss@master
-        with:
-          key-id: ${{ secrets.OSS_KEY_ID }}
-          key-secret: ${{ secrets.OSS_KEY_SECRET }}
-          region: oss-cn-shanghai
-          bucket: casaos
-          assets: |
-            /tmp/checksums.txt:/IceWhaleTech/CasaOS-AppStore/releases/download/${{ steps.get_version.outputs.VERSION }}/checksums.txt
-            /tmp/linux-all-appstore-${{ github.ref_name }}.tar.gz:/IceWhaleTech/CasaOS-AppStore/releases/download/${{ steps.get_version.outputs.VERSION }}/linux-all-appstore-${{ github.ref_name }}.tar.gz
-      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update && sudo apt-get install -y librsvg2-bin zip unzip
+        pip install pyyaml Pillow
+
+    - name: Restore image size cache
+      uses: actions/cache@v4
+      with:
+        path: .cache/build_appstore/image-size-cache.json
+        key: build-appstore-image-size-cache-${{ github.ref_name }}
+        restore-keys: |
+          build-appstore-image-size-cache-
+
+    - name: Build static appstore dist
+      env:
+        BASE_URL_INPUT: ${{ inputs.base_url }}
+      run: |
+        BASE_URL="${BASE_URL_INPUT:-https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages}"
+        python3 scripts/build_appstore.py \
+          --source . \
+          --output dist \
+          --cache-file .cache/build_appstore/image-size-cache.json \
+          --base-url "${BASE_URL}"
+        touch dist/.nojekyll
+
+    - name: Build legacy v1 appstore zip
+      run: |
+        set -euo pipefail
+        rm -rf /tmp/appstore-v1
+        mkdir -p /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new
+        cp -rv build/* /tmp/appstore-v1/build/
+        cp -rv Apps /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new/
+        cp -v category-list.json /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new/
+        cp -v featured-apps.json /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new/
+        cp -v recommend-list.json /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new/
+        cp -v README.md /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new/
+        find /tmp/appstore-v1/build -type f -not \( \
+          -name '*.yaml' -or \
+          -name '*.yml' -or \
+          -name 'category-list.json' -or \
+          -name 'featured-apps.json' -or \
+          -name 'recommend-list.json' -or \
+          -name 'README.md' -or \
+          -name '*.sh' \
+        \) -delete
+        mkdir -p dist/store
+        (cd /tmp/appstore-v1 && zip -r "${GITHUB_WORKSPACE}/dist/store/main.zip" build)
+        unzip -t dist/store/main.zip
+
+    - name: Upload main.zip to OSS
+      if: github.ref == 'refs/heads/main'
+      uses: tvrcgo/upload-to-oss@master
+      with:
+        key-id: ${{ secrets.OSS_KEY_ID }}
+        key-secret: ${{ secrets.OSS_KEY_SECRET }}
+        region: oss-cn-shanghai
+        bucket: casaos
+        assets: |
+          dist/store/main.zip:/store/main.zip
+
+    - name: Deploy dist to gh-pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: ./dist
+
+    - name: Refresh jsDelivr cache
+      run: |
+        curl -fsSL "https://purge.jsdelivr.net/gh/${{ github.repository }}@gh-pages/index.json" || true
+        curl -fsSL "https://purge.jsdelivr.net/gh/${{ github.repository }}@gh-pages/store/main.zip" || true

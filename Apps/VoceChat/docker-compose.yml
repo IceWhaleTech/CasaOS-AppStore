@@ -22,25 +22,25 @@ services:
       envs:
         - container: TZ
           description:
-            en_us: TimeZone
-            zh_cn: 时区
+            en_US: TimeZone
+            zh_CN: 时区
       ports:
         - container: "3000"
           description:
-            en_us: WebUI HTTP Port
-            zh_cn: WebUI HTTP 端口
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP 端口
       volumes:
         - container: /home/vocechat-server/data
           description:
-            en_us: VoceChat Data
-            zh_cn: VoceChat 数据
+            en_US: VoceChat Data
+            zh_CN: VoceChat 数据
     container_name: vocechat
 x-casaos:
   architectures:
     - amd64
   main: vocechat
   author: Privoce
-  category: Chat
+  category: Social
   description:
     en_US: |
       VoceChat is a secure chat software designed for independent deployment, offering a flexible solution for seamless communication. It combines instant messaging with channel-based group chats, allowing you to engage in one-on-one conversations or create themed channels for group discussions.
@@ -133,7 +133,7 @@ x-casaos:
 
       Güçlü yönetim özellikleriyle VoceChat, üyeler ve kanallar üzerinde kolay yönetim imkanı sunar, ekibinizin veya grubunuzun iletişim ortamı üzerinde tam kontrol sağlar. Bireysel kullanıcılar veya kurumsal ekipler için VoceChat, güvenli, çok yönlü ve verimli bir sohbet çözümü sunar.
   developer: Privoce
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/screenshot-2.png
@@ -158,12 +158,12 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/thumbnail.png
   tips: {}
   title:
-    en_us: VoceChat
+    en_US: VoceChat
   index: /
   port_map: "3009"
-  version: "v0.5.17"
-  updateAt: "2026-05-17"
-  releaseNotes:
+  version: "0.5.17"
+  update_at: "2026-05-17"
+  release_notes:
     en_US: |-
       - VoceChat image v0.5.17 is available on Docker Hub for amd64.
       - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.

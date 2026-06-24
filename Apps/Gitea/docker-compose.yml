@@ -26,28 +26,28 @@ services:
       envs:
         - container: USER_UID
           description:
-            en_us: The UID (Unix user ID) of the user that runs Gitea
-            zh_cn: Gitea 运行的用户的 UID（Unix 用户 ID）
+            en_US: The UID (Unix user ID) of the user that runs Gitea
+            zh_CN: Gitea 运行的用户的 UID（Unix 用户 ID）
         - container: USER_GID
           description:
-            en_us: The GID (Unix group ID) of the user that runs Gitea
-            zh_cn: Gitea 运行的用户的 GID（Unix 组 ID）
+            en_US: The GID (Unix group ID) of the user that runs Gitea
+            zh_CN: Gitea 运行的用户的 GID（Unix 组 ID）
       ports:
         - container: "3000"
           description:
-            en_us: WebUI Port
-            zh_cn: WebUI 端口
+            en_US: WebUI Port
+            zh_CN: WebUI 端口
 
         - container: "22"
           description:
-            en_us: SSH Port
-            zh_cn: SSH 端口
+            en_US: SSH Port
+            zh_CN: SSH 端口
 
       volumes:
         - container: /data
           description:
-            en_us: Gitea data directory.
-            zh_cn: Gitea 数据目录。
+            en_US: Gitea data directory.
+            zh_CN: Gitea 数据目录。
     container_name: gitea
 x-casaos:
   architectures:
@@ -57,7 +57,7 @@ x-casaos:
   author: CasaOS Team
   category: Developer
   description:
-    en_us: |
+    en_US: |
       Gitea is a painless self-hosted all-in-one software development service, it includes Git hosting, code review, team collaboration, package registry and CI/CD. It is similar to GitHub, Bitbucket and GitLab. 
       
       - Code Hosting
@@ -89,7 +89,7 @@ x-casaos:
       
       - Multilingual Support
       Gitea provides interfaces in multiple languages, catering to users globally and promoting internationalization and localization.
-    zh_cn: |
+    zh_CN: |
       Gitea 是一个轻松自托管的全方位软件开发服务，包含 Git 托管、代码评审、团队协作、包注册表和 CI/CD。它类似于 GitHub、Bitbucket 和 GitLab。
 
       - 代码托管
@@ -121,51 +121,51 @@ x-casaos:
 
       - 多语言支持
       Gitea 提供多语言界面，满足全球用户需求，促进国际化和本地化。
-    ar_sa: Gitea هو حل استضافة الشفرة الخفيفة المدار من قبل المجتمع مكتوب بلغة Go.
-    de_de: Gitea ist eine von der Community verwaltete, leichte Code-Hosting-Lösung, die in Go geschrieben ist.
-    es_es: Gitea es una solución de alojamiento de código ligera administrada por la comunidad escrita en Go.
-    fr_fr: Gitea est une solution d'hébergement de code légère gérée par la communauté écrite en Go.
-    hu_hu: A Gitea egy közösség által kezelt könnyű kódhelyezési megoldás, amelyet Go írt.
-    it_it: Gitea è una soluzione di hosting di codice leggera gestita dalla comunità scritta in Go.
-    ru_ru: Gitea - это легкое решение для размещения кода, управляемое сообществом, написанное на Go.
-    pl_pl: Gitea to lekka rozwiązanie do hostingu kodu zarządzane przez społeczność napisane w Go.
-    pt_br: O Gitea é uma solução de hospedagem de código leve gerenciada pela comunidade escrita em Go.
-    sv_se: Gitea är ett communityhanterat lätthanterat kodhostningslösning skrivet i Go.
-    uk_ua: Gitea - це легке рішення для розміщення коду, кероване спільнотою, написане на Go.
+    ar_SA: Gitea هو حل استضافة الشفرة الخفيفة المدار من قبل المجتمع مكتوب بلغة Go.
+    de_DE: Gitea ist eine von der Community verwaltete, leichte Code-Hosting-Lösung, die in Go geschrieben ist.
+    es_ES: Gitea es una solución de alojamiento de código ligera administrada por la comunidad escrita en Go.
+    fr_FR: Gitea est une solution d'hébergement de code légère gérée par la communauté écrite en Go.
+    hu_HU: A Gitea egy közösség által kezelt könnyű kódhelyezési megoldás, amelyet Go írt.
+    it_IT: Gitea è una soluzione di hosting di codice leggera gestita dalla comunità scritta in Go.
+    ru_RU: Gitea - это легкое решение для размещения кода, управляемое сообществом, написанное на Go.
+    pl_PL: Gitea to lekka rozwiązanie do hostingu kodu zarządzane przez społeczność napisane w Go.
+    pt_BR: O Gitea é uma solução de hospedagem de código leve gerenciada pela comunidade escrita em Go.
+    sv_SE: Gitea är ett communityhanterat lätthanterat kodhostningslösning skrivet i Go.
+    uk_UA: Gitea - це легке рішення для розміщення коду, кероване спільнотою, написане на Go.
   developer: Gitea
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/screenshot-3.png
   tagline:
-    en_us: Self-hosted software development service
-    zh_cn: 自托管软件开发服务
-    ar_sa: Git مع كوب من الشاي
-    de_de: Git mit einem Tässchen Tee
-    es_es: Git con una taza de té
-    fr_fr: Git avec une tasse de thé
-    hu_hu: Git egy csésze tea kíséretében
-    it_it: Git con una tazza di tè
-    ru_ru: Git с чашечкой чая
-    pl_pl: Git z filiżanką herbaty
-    pt_br: Git com uma xícara de chá
-    sv_se: Git med en kopp te
-    uk_ua: Git з чашкою чаю
+    en_US: Self-hosted software development service
+    zh_CN: 自托管软件开发服务
+    ar_SA: Git مع كوب من الشاي
+    de_DE: Git mit einem Tässchen Tee
+    es_ES: Git con una taza de té
+    fr_FR: Git avec une tasse de thé
+    hu_HU: Git egy csésze tea kíséretében
+    it_IT: Git con una tazza di tè
+    ru_RU: Git с чашечкой чая
+    pl_PL: Git z filiżanką herbaty
+    pt_BR: Git com uma xícara de chá
+    sv_SE: Git med en kopp te
+    uk_UA: Git з чашкою чаю
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gitea/thumbnail.png
   tips:
     before_install:
-      en_us: |
+      en_US: |
         When the App is installed, the first account registered will become the administrator account.
-      zh_cn: |
+      zh_CN: |
         安装应用后，注册的第一个账号将成为管理员账号。
   title:
-    en_us: Gitea
+    en_US: Gitea
   index: /
   port_map: "3002"
   version: "1.26.2"
-  updateAt: "2026-05-20"
-  releaseNotes:
+  update_at: "2026-05-20"
+  release_notes:
     en_US: |-
       - v1.26.2 includes security fixes for permissions, artifact signatures, token scope checks, OAuth/PKCE handling, downloads, wiki writes, and LFS token access.
       - It also fixes package permission checks, smart HTTP request scopes, basic auth, maintainer edit permissions, URL sanitization, and attachment Content-Security-Policy.
