@@ -1,8 +1,8 @@
 {
   "id": "deepseek-ocr-nvidia",
   "title": "DeepSeek OCR(Nvidia GPU)",
-  "description": "DeepSeek OCR 是一个基于先进 DeepSeek-AI 模型的强大开源 OCR（光学字符识别）工具。它通过用户友好的 Web 界面和 API，从图像和文档扫描中实现精确文本提取。支持多种图像格式，并提供图像大小、裁剪和上传限制配置。同时，DeepSeek OCR 内置四种核心识别模式：Plain OCR 用于原始文本抽取，Describe 提供智能图像内容描述，Find 支持关键词定位并返回视觉边界框，Freeform 则允许基于自定义提示进行灵活的图像理解任务。\n\n**主要功能：**\n- 使用 DeepSeek-OCR 的高精度文本识别，支持图像和多页 PDF 文档\n- 保留文档布局，包括表格、公式和结构化格式\n- Web 前端（React）和 REST API（FastAPI），便于使用和系统集成\n- 将结果导出为 Markdown、HTML、DOCX 或 JSON 格式\n- 从 PDF 文件中自动提取和嵌入图像\n- GPU 加速和 Docker 部署，实现快速和可扩展的处理\n\n**前置条件:**\n- ZimaOS版本1.5.2及以上，或者NVIDIA Open Driver版本580及以上\n- 具有 ≥ 8 GB 显存的 NVIDIA GPU（推荐，用于获得最佳性能）\n\n**了解更多：**\n- [DeepSeek OCR 应用（GitHub）](https://github.com/rdumasia303/deepseek_ocr_app)\n",
   "tagline": "DeepSeek AI 驱动的强大 OCR",
+  "description": "DeepSeek OCR 是一个基于先进 DeepSeek-AI 模型的强大开源 OCR（光学字符识别）工具。它通过用户友好的 Web 界面和 API，从图像和文档扫描中实现精确文本提取。支持多种图像格式，并提供图像大小、裁剪和上传限制配置。同时，DeepSeek OCR 内置四种核心识别模式：Plain OCR 用于原始文本抽取，Describe 提供智能图像内容描述，Find 支持关键词定位并返回视觉边界框，Freeform 则允许基于自定义提示进行灵活的图像理解任务。\n\n**主要功能：**\n- 使用 DeepSeek-OCR 的高精度文本识别，支持图像和多页 PDF 文档\n- 保留文档布局，包括表格、公式和结构化格式\n- Web 前端（React）和 REST API（FastAPI），便于使用和系统集成\n- 将结果导出为 Markdown、HTML、DOCX 或 JSON 格式\n- 从 PDF 文件中自动提取和嵌入图像\n- GPU 加速和 Docker 部署，实现快速和可扩展的处理\n\n**前置条件:**\n- ZimaOS版本1.5.2及以上，或者NVIDIA Open Driver版本580及以上\n- 具有 ≥ 8 GB 显存的 NVIDIA GPU（推荐，用于获得最佳性能）\n\n**了解更多：**\n- [DeepSeek OCR 应用（GitHub）](https://github.com/rdumasia303/deepseek_ocr_app)\n",
   "tips": {
     "before_install": "首次运行会下载模型（约 5-10GB），可能需要一些时间。"
   }

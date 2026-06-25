@@ -322,7 +322,7 @@ services:
       timeout: 5s
       interval: 10s
       retries: 5
-    image: infiniflow/sandbox-executor-manager:latest
+    image: infiniflow/sandbox-executor-manager@sha256:3515d06f2364e886dd4ac38d0daa28409fa63c7443763d2b9a7311362aa16702
     ports:
     - target: 9385
       published: '9385'

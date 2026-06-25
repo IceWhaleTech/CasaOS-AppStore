@@ -1,8 +1,8 @@
 {
   "id": "hermes",
-  "description": "Hermes Agent 是 Nous Research 推出的自我改进 AI 代理，定位不是一次性聊天机器人，而是可以长期协作的智能助手。\n它内置学习闭环，把长期记忆、跨会话检索和可复用技能结合在一起，能够持续保留上下文，并不断改进重复出现的工作流。\n借助统一消息网关、丰富工具集和基于浏览器的仪表盘，Hermes 很适合研究整理、任务自动化、跨平台沟通以及持续性的运营工作。\n\n**主要功能：**\n- 内置学习闭环，结合长期记忆、会话检索与可复用技能\n- 单一网关连接 CLI、Telegram、Discord、Slack、WhatsApp、Signal 等多种平台\n- 可通过工具执行终端操作、网页搜索、浏览器自动化、文件编辑和 MCP 扩展集成\n- 支持定时任务、子代理协作、Web 仪表盘与 OpenAI 兼容 API 等自动化与协同能力\n\n**了解更多：**\n- [Hermes Agent 官网](https://hermes-agent.nousresearch.com/)\n- [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)\n- [Hermes Agent 文档](https://hermes-agent.nousresearch.com/docs/)\n",
-  "tagline": "一款具备记忆、技能、消息功能和 Web 仪表盘的自我改进 AI 代理。",
   "release_notes": "## 功能更新\n\n- Web 仪表盘现在已经成为更完整的管理面板，你可以直接在浏览器里配置消息渠道、MCP 目录项、凭据、Webhook、记忆和网关设置。\n- 首次配置流程通过 Nous Portal 的 Quick Setup 得到简化，同时 Quick Setup 和 Full Setup 的分工也更清晰，新用户可以更快进入第一次对话。\n- 模型选择器现在在 Web 仪表盘、TUI 和 CLI 中都支持模糊搜索，对多端点 provider 的分组也更清晰，而且模型目录刷新更频繁。\n- `/undo [N]` 现在可以回退最近 N 轮对话，自动带回上一条消息供你编辑后重发，在 CLI、TUI 和消息渠道流程里都更好用。\n- 现在你可以决定 `hermes chat` 默认进入 CLI 还是 TUI，同时 TUI 也新增了统一的 `/model` 命令和 Sessions 浮层。\n- 默认技能集被进一步精简以减少噪音，同时 `NVIDIA/skills` 被加入为内置信任 tap，方便发现和安装经过验证的技能。\n\n[https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)",
+  "tagline": "一款具备记忆、技能、消息功能和 Web 仪表盘的自我改进 AI 代理。",
+  "description": "Hermes Agent 是 Nous Research 推出的自我改进 AI 代理，定位不是一次性聊天机器人，而是可以长期协作的智能助手。\n它内置学习闭环，把长期记忆、跨会话检索和可复用技能结合在一起，能够持续保留上下文，并不断改进重复出现的工作流。\n借助统一消息网关、丰富工具集和基于浏览器的仪表盘，Hermes 很适合研究整理、任务自动化、跨平台沟通以及持续性的运营工作。\n\n**主要功能：**\n- 内置学习闭环，结合长期记忆、会话检索与可复用技能\n- 单一网关连接 CLI、Telegram、Discord、Slack、WhatsApp、Signal 等多种平台\n- 可通过工具执行终端操作、网页搜索、浏览器自动化、文件编辑和 MCP 扩展集成\n- 支持定时任务、子代理协作、Web 仪表盘与 OpenAI 兼容 API 等自动化与协同能力\n\n**了解更多：**\n- [Hermes Agent 官网](https://hermes-agent.nousresearch.com/)\n- [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)\n- [Hermes Agent 文档](https://hermes-agent.nousresearch.com/docs/)\n",
   "tips": {
     "before_install": "在大多数情况下，你可以直接通过 Hermes WebUI 配置模型和消息。\n如果找不到相应选项，请参考 [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) 在容器终端完成配置。\n"
   }
