@@ -1,0 +1,106 @@
+name: valorgrid
+services:
+  valorgrid:
+    image: ghcr.io/aivm23/valorgrid:v3.2.0
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    network_mode: bridge
+    ports:
+      - target: 5173
+        published: "5173"
+        protocol: tcp
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      PORT: 5173
+      PORTFOLIO_DB_PATH: /data/portfolio.sqlite
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/backups
+        target: /app/.backups
+    x-casaos:
+      envs:
+        - container: HOST
+          description:
+            en_US: Host interface used by the web server.
+            es_ES: Interfaz de host usada por el servidor web.
+        - container: PORT
+          description:
+            en_US: Web server listening port.
+            es_ES: Puerto de escucha del servidor web.
+        - container: PORTFOLIO_DB_PATH
+          description:
+            en_US: SQLite database file path inside the container.
+            es_ES: Ruta del archivo SQLite dentro del contenedor.
+      ports:
+        - container: "5173"
+          description:
+            en_US: ValorGrid Web UI HTTP port.
+            es_ES: Puerto HTTP de la interfaz web de ValorGrid.
+      volumes:
+        - container: /data
+          description:
+            en_US: Persistent SQLite data directory.
+            es_ES: Directorio persistente de datos SQLite.
+        - container: /app/.backups
+          description:
+            en_US: Persistent backup directory.
+            es_ES: Directorio persistente de copias de seguridad.
+    container_name: valorgrid
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: valorgrid
+  author: aivm23
+  developer: aivm23
+  category: Finance
+  description:
+    en_US: |
+      ValorGrid is a private, single-user portfolio dashboard for tracking investments locally on a home server.
+
+      It stores portfolio data in SQLite, keeps backups in a persistent CasaOS directory, and provides dashboards for holdings, distribution, movements, monthly tracking, and portfolio history. The app is designed for personal finance tracking on a trusted LAN or VPN, with no external database required.
+
+      ValorGrid does not include built-in authentication yet. Do not expose it directly to the public Internet.
+    es_ES: |
+      ValorGrid es un panel privado de cartera para un solo usuario, pensado para seguir inversiones de forma local en un servidor domestico.
+
+      Guarda los datos de cartera en SQLite, mantiene copias de seguridad en un directorio persistente de CasaOS y ofrece paneles de posiciones, distribucion, movimientos, seguimiento mensual e historico de cartera. La app esta pensada para uso personal en una LAN o VPN de confianza, sin base de datos externa.
+
+      ValorGrid todavia no incluye autenticacion integrada. No lo expongas directamente a Internet publico.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ValorGrid/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ValorGrid/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ValorGrid/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ValorGrid/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ValorGrid/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ValorGrid/screenshot-5.png
+  tagline:
+    en_US: Private local portfolio dashboard
+    es_ES: Panel privado de cartera local
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ValorGrid/thumbnail.png
+  tips:
+    before_install:
+      en_US: Use only on a trusted LAN or behind a VPN until built-in authentication is available.
+      es_ES: Usar solo en una LAN de confianza o detras de una VPN hasta que exista autenticacion integrada.
+  title:
+    en_US: ValorGrid
+    es_ES: ValorGrid
+  index: /
+  port_map: "5173"
+  scheme: http
+  version: "3.2.0"
+  updateAt: "2026-06-02"
+  releaseNotes:
+    en_US: |-
+      Initial CasaOS AppStore submission for ValorGrid 3.2.0.
+    es_ES: |-
+      Primer envio a CasaOS AppStore para ValorGrid 3.2.0.
+  website: https://github.com/aivm23/ValorGrid
+  repo: https://github.com/aivm23/ValorGrid
+  support: https://github.com/aivm23/ValorGrid/issues
