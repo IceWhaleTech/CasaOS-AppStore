@@ -6,7 +6,7 @@
 - 面向构建/部署外部第三方商店的维护者。
 - 如果你是在本仓库提交 PR，请参考 [CONTRIBUTING.md](../../CONTRIBUTING.md)。
 
-> **📢 新增内容：** 我们在 `meta.json` 中新增了 7 个可选字段，可增强商店展示效果：`version`、`update_at`、`release_notes`、`website`、`repo`、`support` 和 `docs`。这些字段在 [meta.json（构建后）](#metajson构建后)中标注为 **[新增，可选]**。现有商店无需修改即可继续工作，但我们建议添加这些字段以改善应用列表的展示效果。
+> **📢 新增内容：** 我们在 `meta.json` 中新增了 7 个可选字段，可增强商店展示效果：`version`、`update_at`、`release_notes`、`website`、`repo`、`support` 和 `docs`。这些字段在 [meta.json（构建后）](#metajson构建后)中标注为 **[新增，可选]**。另外，`x-casaos.app_id` 现在已经是每个源 `docker-compose.yml` 的必填字段，所以现有商店在重新构建前也需要补上它。
 
 ## 概览
 
@@ -123,6 +123,7 @@ services:
         target: /config
     restart: unless-stopped
 x-casaos:
+  app_id: com.example.myapp
   # --- 运行时字段（构建后保留在 compose 中）---
   main: my-app
   index: /
@@ -158,6 +159,7 @@ x-casaos:
 ```
 
 > 你可以在一个 docker-compose.yml 中编写所有内容——构建脚本会自动将其拆分为精简的 compose 文件 + meta.json。
+> `x-casaos.app_id` 是必填字段，且必须使用域名倒置格式，例如 `com.example.myapp`。
 
 **多服务示例**（带数据库的应用）：
 
@@ -502,6 +504,7 @@ v2 要求使用标准化分类。将每个应用 `x-casaos` 块中的 `category`
   "apps": [
     {
       "id": "my-app",
+      "app_id": "com.example.myapp",
       "title": "My App",
       "tagline": "Does amazing things",
       "category": "Productivity",
@@ -528,6 +531,7 @@ v2 要求使用标准化分类。将每个应用 `x-casaos` 块中的 `category`
 
 | 字段 | 用途 | 示例 |
 |------|------|------|
+| `app_id` | 域名倒置格式的源应用标识 | `com.example.myapp` |
 | `main` | 主服务名称（Web UI 入口点） | `my-app` |
 | `index` | Web UI 根路径 | `/` |
 | `port_map` | Web UI 发布端口（必须是**字符串**，使用引号） | `"8080"` |
@@ -543,6 +547,7 @@ v2 要求使用标准化分类。将每个应用 `x-casaos` 块中的 `category`
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
+| `app_id` | `string` | 域名倒置格式的源应用标识 |
 | `tagline` | `string` | 一句话简介（解析为目标语言的纯字符串） |
 | `description` | `string` | 详细描述（解析为纯字符串，支持 Markdown，具体渲染由客户端决定） |
 | `thumbnail` | `string` | 缩略图路径，相对于 `base_url`（如 `apps/my-app/assets/thumbnail.webp`） |
@@ -659,20 +664,13 @@ title:
 
 应用 ID 决定了 Docker 项目名称以及 ZimaOS 如何识别你的应用。
 
-**解析优先级：**
-
-```
-store_app_id  (在 x-casaos 中，如果设置)
-    ↓ 未设置
-compose name  (顶层 "name:" 字段)
-    ↓ 未设置
-directory name (转小写)
-```
-
 **规则：**
-- 必须是小写，匹配 `[a-z0-9-_]`
+- 每个源 `docker-compose.yml` 都必须声明 `x-casaos.app_id`
+- 必须使用域名倒置格式，例如 `com.example.myapp`
+- 仅允许小写字母、数字和点号
 - 在你的商店内必须唯一
 - 不用担心与其他商店冲突——ZimaOS 在安装时会自动通过添加你的 `store_id` 前缀来处理隔离
+- `store_app_id` 仍可用于覆盖构建输出目录名或安装 ID，但不能替代必填的倒置域名 `x-casaos.app_id`
 
 ---
 

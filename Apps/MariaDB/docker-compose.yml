@@ -48,6 +48,7 @@ services:
         target: /config
     container_name: mariadb
 x-casaos:
+  app_id: com.icewhaletech.mariadb
   architectures:
     - amd64
     - arm64

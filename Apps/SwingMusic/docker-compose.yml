@@ -14,6 +14,7 @@ services:
       - "1970:1970"
     restart: unless-stopped
 x-casaos:
+  app_id: com.icewhaletech.swingmusic
   architectures:
     - amd64
   main: swingmusic

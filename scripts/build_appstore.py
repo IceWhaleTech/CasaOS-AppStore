@@ -49,7 +49,16 @@ except ImportError:
 
 
 # Fields to keep in docker-compose.yml x-casaos block (runtime essentials)
-COMPOSE_KEEP_FIELDS = {"main", "index", "port_map", "scheme", "icon", "title", "version"}
+COMPOSE_KEEP_FIELDS = {
+    "app_id",
+    "main",
+    "index",
+    "port_map",
+    "scheme",
+    "icon",
+    "title",
+    "version",
+}
 
 # Image file extensions to copy
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"}
@@ -97,6 +106,9 @@ SEMVER_PATTERN = re.compile(
     r"(?:-((?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*)"
     r"(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*))*))?"
     r"(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$"
+)
+REVERSE_DOMAIN_APP_ID_PATTERN = re.compile(
+    r"^[a-z0-9]+(?:\.[a-z0-9]+)+$"
 )
 
 
@@ -511,6 +523,10 @@ def parse_image_reference_with_digest(image_ref):
     if "@" in image_ref:
         name, digest = image_ref.split("@", 1)
         reference = digest
+        last_slash = name.rfind("/")
+        last_colon = name.rfind(":")
+        if last_colon > last_slash:
+            name = name[:last_colon]
     else:
         last_slash = image_ref.rfind("/")
         last_colon = image_ref.rfind(":")
@@ -1140,6 +1156,29 @@ def resolve_app_id(compose_data, xcasaos, dir_name):
     return dir_name.lower()
 
 
+def validate_app_id(compose_path, compose_data, xcasaos):
+    """Validate required x-casaos.app_id field and return its normalized value."""
+    raw_app_id = xcasaos.get("app_id")
+    if raw_app_id is None or not str(raw_app_id).strip():
+        expected_name = compose_data.get("name") or compose_path.parent.name.lower()
+        raise ValueError(
+            f"App '{compose_path.parent.name}' is missing required x-casaos.app_id "
+            f"in {compose_path}. Expected reverse-domain format like "
+            f"'com.example.{re.sub(r'[^a-z0-9]+', '', str(expected_name).lower())}'."
+        )
+
+    app_id_value = str(raw_app_id).strip()
+    if not REVERSE_DOMAIN_APP_ID_PATTERN.fullmatch(app_id_value):
+        raise ValueError(
+            f"App '{compose_path.parent.name}' has invalid x-casaos.app_id "
+            f"'{app_id_value}' in {compose_path}. It must use reverse-domain "
+            "notation such as 'com.example.myapp', using only lowercase letters, "
+            "digits, and dots."
+        )
+
+    return app_id_value
+
+
 def normalize_categories(category_value):
     """Normalize category metadata to a lowercase category-id array."""
     if not category_value:
@@ -1237,6 +1276,8 @@ def parse_app(app_dir):
         return None
 
     original_xcasaos = dict(compose_data.get("x-casaos", {}))
+    validated_source_app_id = validate_app_id(compose_path, compose_data, original_xcasaos)
+    original_xcasaos["app_id"] = validated_source_app_id
     app_id = resolve_app_id(compose_data, original_xcasaos, app_dir.name)
 
     compose_data, meta = split_compose(compose_data)
@@ -1262,7 +1303,8 @@ def resolve_asset_filename(url_or_name, image_mapping, copied_images):
 
 
 def build_meta_payload(meta, locale, assets_path, copied_images, image_mapping, base_url,
-                       title_i18n=None, strict=False, min_memory=0, min_image_size=0):
+                       title_i18n=None, strict=False, min_memory=0, min_image_size=0,
+                       source_app_id=""):
     """Build locale-resolved meta payload."""
     meta_l = copy.deepcopy(meta)
     category = meta_l.get("category", "")
@@ -1295,15 +1337,16 @@ def build_meta_payload(meta, locale, assets_path, copied_images, image_mapping, 
             meta_l["screenshot_link"] = []
 
     meta_l["base_url"] = normalize_base_url(base_url)
+    meta_l["app_id"] = source_app_id
     meta_l["categories"] = normalize_categories(category)
     meta_l["min_memory"] = int(min_memory)
     meta_l["min_image_size"] = int(min_image_size)
     return meta_l
 
 
-def build_meta_i18n_overlay(app_id, meta, locale, title_i18n=None):
+def build_meta_i18n_overlay(app_id, source_app_id, meta, locale, title_i18n=None):
     """Build locale overlay meta file with id + i18n-only fields."""
-    out = {"id": app_id}
+    out = {"id": app_id, "app_id": source_app_id}
     if isinstance(title_i18n, dict) and locale in title_i18n:
         out["title"] = title_i18n[locale]
     for field in I18N_FIELDS:
@@ -1349,6 +1392,7 @@ def build_index_entry(app_id, original_xcasaos, locale, assets_path, icon_filena
     category = original_xcasaos.get("category", "")
     entry = {
         "id": app_id,
+        "app_id": original_xcasaos.get("app_id", ""),
         "title": resolver(original_xcasaos.get("title", ""), locale),
         "tagline": resolver(original_xcasaos.get("tagline", ""), locale),
         "category": category,
@@ -1371,7 +1415,7 @@ def build_index_entry(app_id, original_xcasaos, locale, assets_path, icon_filena
 
 def build_index_i18n_overlay_entry(app_id, original_xcasaos, locale):
     """Build locale overlay index entry with id + i18n-only fields."""
-    out = {"id": app_id}
+    out = {"id": app_id, "app_id": original_xcasaos.get("app_id", "")}
     for field in INDEX_I18N_FIELDS:
         value = original_xcasaos.get(field)
         if isinstance(value, dict) and locale in value:
@@ -1440,7 +1484,11 @@ def main():
         if not app_dir.is_dir():
             continue
 
-        result = parse_app(app_dir)
+        try:
+            result = parse_app(app_dir)
+        except ValueError as exc:
+            print(f"  WARN  {exc}", file=sys.stderr)
+            sys.exit(1)
         if result is None:
             skipped.append(app_dir.name)
             print(f"  SKIP {app_dir.name}")
@@ -1489,6 +1537,7 @@ def main():
             strict=False,
             min_memory=min_memory,
             min_image_size=min_image_size,
+            source_app_id=original_xcasaos.get("app_id", ""),
         )
         meta_default_content = json.dumps(to_json_safe(meta_default), ensure_ascii=False, indent=2)
         (app_output / "meta.json").write_text(meta_default_content, encoding="utf-8")
@@ -1501,6 +1550,7 @@ def main():
         for locale in sorted(meta_locales):
             meta_locale = build_meta_i18n_overlay(
                 app_id,
+                original_xcasaos.get("app_id", ""),
                 meta,
                 locale,
                 title_i18n=original_xcasaos.get("title"),

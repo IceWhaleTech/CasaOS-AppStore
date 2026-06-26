@@ -46,6 +46,7 @@ services:
           memory: 500M  # Modify as needed since the original command didn't specify memory reservation
 
 x-casaos:
+  app_id: com.icewhaletech.twingateconnector
   architectures:
     - amd64
     - arm64

@@ -30,6 +30,7 @@ services:
     privileged: false
     container_name: icewhale-stable-diffusion-webui
 x-casaos:
+  app_id: com.icewhaletech.icewhalestablediffusionwebui
   architectures:
     - amd64
   main: icewhale-stable-diffusion-webui

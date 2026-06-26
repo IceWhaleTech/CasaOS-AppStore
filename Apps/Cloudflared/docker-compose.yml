@@ -51,6 +51,7 @@ services:
         target: /config
     container_name: cloudflared
 x-casaos:
+  app_id: com.icewhaletech.cloudflared
   architectures:
     - amd64
     - arm

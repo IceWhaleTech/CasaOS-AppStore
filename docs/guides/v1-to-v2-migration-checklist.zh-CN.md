@@ -13,17 +13,19 @@ v1 仓库
   │
   ├─ 1) 添加 store-config.json
   │
-  ├─ 2) 统一 category 到 9 个官方分类
+  ├─ 2) 给每个应用补齐必填的 x-casaos.app_id
   │
-  ├─ 3) 运行 build_appstore.py 生成 dist/
+  ├─ 3) 统一 category 到 9 个官方分类
   │
-  ├─ 4) 部署 dist/ 到静态托管（URL = --base-url）
+  ├─ 4) 运行 build_appstore.py 生成 dist/
   │
-  └─ 5)（推荐）在 v1 zip 中包含同一个 store-config.json
+  ├─ 5) 部署 dist/ 到静态托管（URL = --base-url）
+  │
+  └─ 6)（推荐）在 v1 zip 中包含同一个 store-config.json
          → 让老用户在 v2 中看到“一键恢复旧商店”
 ```
 
-## 你只需要按顺序做这 5 件事
+## 你只需要按顺序做这 6 件事
 
 ## 1. 添加 `store-config.json`（必做）
 
@@ -45,13 +47,27 @@ v1 仓库
 - `store_id` 全局唯一，格式 `[a-z0-9-]`
 - 至少有 `name.en_US`
 
-## 2. 统一应用分类（必做）
+## 2. 给每个应用添加 `x-casaos.app_id`（必做）
+
+在每个应用顶层 `x-casaos` 块中添加一个域名倒置格式的应用标识：
+
+```yaml
+x-casaos:
+  app_id: com.example.myapp
+```
+
+检查点：
+- 每个源 `docker-compose.yml` 都声明了 `x-casaos.app_id`
+- 使用域名倒置格式
+- 仅允许小写字母、数字和点号
+
+## 3. 统一应用分类（必做）
 
 把每个 app 的 `x-casaos.category` 改为官方 9 类之一：
 
 `Media`、`Productivity`、`Home`、`Networking`、`AI`、`Finance`、`Social`、`Developer`、`Others`
 
-## 3. 使用构建脚本生成 v2 输出（必做）
+## 4. 使用构建脚本生成 v2 输出（必做）
 
 ```bash
 python3 scripts/build_appstore.py \
@@ -64,13 +80,14 @@ python3 scripts/build_appstore.py \
 - 生成 `dist/{locale}/store.json`
 - 生成 `dist/{locale}/index.json`
 - 生成 `dist/{locale}/apps/<app-id>/docker-compose.yml` 与 `meta.json`
+- 生成后的 `index.json`、`meta.json`、`docker-compose.yml` 都包含 `app_id`
 
-## 4. 部署 `dist/` 到静态托管（必做）
+## 5. 部署 `dist/` 到静态托管（必做）
 
 可选平台：GitHub Pages / Netlify / Cloudflare Pages / 自建 Nginx。  
 最终用户添加的商店 URL 应与 `--base-url` 对应。
 
-## 5. 保留 v1 -> v2 迁移提示能力（强烈建议）
+## 6. 保留 v1 -> v2 迁移提示能力（强烈建议）
 
 在 v1/v2 并存阶段，`store-config.json` 本身已经是 v2 商店必备文件。
 
@@ -86,6 +103,7 @@ python3 scripts/build_appstore.py \
 ## 最终自检（发布前 30 秒）
 
 - [ ] `store-config.json` 已添加且字段有效
+- [ ] 每个 app 都有合法的 `x-casaos.app_id`
 - [ ] 所有 app 的 `category` 已标准化
 - [ ] `dist/{locale}/store.json` 可访问
 - [ ] `dist/{locale}/index.json` 可访问

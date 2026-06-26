@@ -6,7 +6,7 @@ Scope of this document:
 - For operators building/deploying an external third-party store.
 - For this repository's PR contribution process and repo-specific rules, use [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
-> **📢 What's New:** We've added 7 new optional fields to `meta.json` that enhance store display: `version`, `update_at`, `release_notes`, `website`, `repo`, `support`, and `docs`. These fields are marked with **[New]** in the [meta.json section](#metajson-after-build). Existing stores continue to work without changes, but we recommend adding these fields to improve your app listings.
+> **📢 What's New:** We've added 7 new optional fields to `meta.json` that enhance store display: `version`, `update_at`, `release_notes`, `website`, `repo`, `support`, and `docs`. These fields are marked with **[New]** in the [meta.json section](#metajson-after-build). In addition, `x-casaos.app_id` is now required in every source `docker-compose.yml`, so existing stores should add it before rebuilding.
 
 ## Overview
 
@@ -123,6 +123,7 @@ services:
         target: /config
     restart: unless-stopped
 x-casaos:
+  app_id: com.example.myapp
   # --- Runtime fields (kept in compose after build) ---
   main: my-app
   index: /
@@ -158,6 +159,7 @@ x-casaos:
 ```
 
 > You can write everything in one docker-compose.yml — the build script will automatically split it into a clean compose file + meta.json.
+> `x-casaos.app_id` is required and must use reverse-domain notation, for example `com.example.myapp`.
 
 **Multi-service example** (app with database):
 
@@ -500,6 +502,7 @@ Generated automatically by the build script as `dist/index.json` (default locale
   "apps": [
     {
       "id": "my-app",
+      "app_id": "com.example.myapp",
       "title": "My App",
       "tagline": "Does amazing things",
       "category": "Productivity",
@@ -526,6 +529,7 @@ The build script keeps only these fields in `x-casaos`:
 
 | Field | Purpose | Example |
 |-------|---------|---------|
+| `app_id` | Reverse-domain source app identifier | `com.example.myapp` |
 | `main` | Primary service name (web UI entry point) | `my-app` |
 | `index` | Web UI root path | `/` |
 | `port_map` | Web UI published port (must be a **string**, use quotes) | `"8080"` |
@@ -541,6 +545,7 @@ Everything else is moved to `meta.json`.
 
 | Field | Type | Description |
 |-------|------|-------------|
+| `app_id` | `string` | Reverse-domain source app identifier |
 | `tagline` | `string` | Short description (resolved to plain string for the target locale) |
 | `description` | `string` | Full description (resolved to plain string; markdown text is allowed, rendering depends on client) |
 | `thumbnail` | `string` | Thumbnail path relative to `base_url` (e.g. `apps/my-app/assets/thumbnail.webp`) |
@@ -657,20 +662,13 @@ If `supported-languages.json` is not present, only `en_US` output is generated.
 
 The app ID determines the Docker project name and how ZimaOS identifies your app.
 
-**Resolution priority:**
-
-```
-store_app_id  (in x-casaos, if set)
-    ↓ not set
-compose name  (top-level "name:" field)
-    ↓ not set
-directory name (lowercased)
-```
-
 **Rules:**
-- Must be lowercase, `[a-z0-9-_]`
+- `x-casaos.app_id` is required in every source `docker-compose.yml`
+- Must use reverse-domain notation such as `com.example.myapp`
+- Lowercase letters, digits, and dots only
 - Must be unique within your store
 - Don't worry about conflicts with other stores — ZimaOS handles isolation automatically by prefixing your `store_id` at install time
+- `store_app_id` can still override the build output folder name / install ID, but it does not replace the required reverse-domain `x-casaos.app_id`
 
 ---
 

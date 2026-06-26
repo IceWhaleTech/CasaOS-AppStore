@@ -20,6 +20,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 x-casaos:
+  app_id: com.icewhaletech.anythingllm
   architectures:
     - amd64
   main: anythingllm

@@ -17,6 +17,7 @@ services:
     restart: unless-stopped
 
 x-casaos:
+  app_id: com.icewhaletech.duckdns
   architectures:
     - amd64
     - arm64
