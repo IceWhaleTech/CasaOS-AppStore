@@ -1,8 +1,8 @@
 {
   "id": "weknora",
-  "app_id": "com.icewhaletech.weknora",
+  "app_id": "org.icewhale.weknora",
   "title": "WeKnora",
   "tagline": "WeKnora 是一个由大语言模型驱动的框架，专为深度文档理解和语义检索而设计，特别适用于处理复杂、异构的文档。",
-  "release_notes": "- v0.2.14 在 version detection 中优先使用 environment variables，而不是 Git tags。\n- Completion URL host extraction 现在同时处理 v1 和 non-v1 endpoints。\n- 修复了 parser chunk index logging，改进了 Ollama retest icon alignment，并添加 pg_search migration files。",
-  "description": "WeKnora 是一个基于大型语言模型（LLM）的深度文档理解和语义检索框架，专门为具有复杂结构和异构内容的文档场景设计。它采用模块化架构，集成了多模态预处理、语义向量索引、智能检索和大模型推理等关键技术。基于检索增强生成（RAG）范式，它实现了上下文感知、高质量的问答能力。WeKnora 能够深入理解不同格式的文档内容，将相关文档片段与语言模型推理相结合，输出准确、连贯的语义结果。\n\n**主要特点：**\n- 多模态深度解析：支持从 PDF、Word、TXT、图像等多种格式中提取结构化内容，包括 OCR 图像文本识别。\n- 语义向量索引与智能检索：通过向量检索、关键词检索，甚至知识图谱增强检索相结合，实现高精度的语义匹配和召回。\n- RAG 闭环问答生成：利用大型语言模型推理和检索片段融合，生成准确、连贯的内容答案。\n- Agent 模式增强能力：支持 ReACT Agent 模式，可在多轮迭代中调用内置工具、外部网页搜索等，提升复杂任务处理能力。\n- 多类型知识库管理：可创建 FAQ 和文档型知识库，灵活管理标签、批量导入文件或 URL。\n- 可配置对话策略与 UI：提供直观的 Web 界面和 REST API，支持在线调整模型、检索阈值和 Prompt 以控制对话行为。\n\n**了解更多：**\n- [官方网站](https://weknora.weixin.qq.com)\n- [GitHub 链接](https://github.com/Tencent/WeKnora)\n"
+  "description": "WeKnora 是一个基于大型语言模型（LLM）的深度文档理解和语义检索框架，专门为具有复杂结构和异构内容的文档场景设计。它采用模块化架构，集成了多模态预处理、语义向量索引、智能检索和大模型推理等关键技术。基于检索增强生成（RAG）范式，它实现了上下文感知、高质量的问答能力。WeKnora 能够深入理解不同格式的文档内容，将相关文档片段与语言模型推理相结合，输出准确、连贯的语义结果。\n\n**主要特点：**\n- 多模态深度解析：支持从 PDF、Word、TXT、图像等多种格式中提取结构化内容，包括 OCR 图像文本识别。\n- 语义向量索引与智能检索：通过向量检索、关键词检索，甚至知识图谱增强检索相结合，实现高精度的语义匹配和召回。\n- RAG 闭环问答生成：利用大型语言模型推理和检索片段融合，生成准确、连贯的内容答案。\n- Agent 模式增强能力：支持 ReACT Agent 模式，可在多轮迭代中调用内置工具、外部网页搜索等，提升复杂任务处理能力。\n- 多类型知识库管理：可创建 FAQ 和文档型知识库，灵活管理标签、批量导入文件或 URL。\n- 可配置对话策略与 UI：提供直观的 Web 界面和 REST API，支持在线调整模型、检索阈值和 Prompt 以控制对话行为。\n\n**了解更多：**\n- [官方网站](https://weknora.weixin.qq.com)\n- [GitHub 链接](https://github.com/Tencent/WeKnora)\n",
+  "release_notes": "- v0.2.14 在 version detection 中优先使用 environment variables，而不是 Git tags。\n- Completion URL host extraction 现在同时处理 v1 和 non-v1 endpoints。\n- 修复了 parser chunk index logging，改进了 Ollama retest icon alignment，并添加 pg_search migration files。"
 }

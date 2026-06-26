@@ -36,7 +36,7 @@ services:
       source: /var/run/docker.sock
       target: /var/run/docker.sock
 x-casaos:
-  app_id: com.icewhaletech.fileflows
+  app_id: org.icewhale.fileflows
   main: fileflows
   port_map: '19200'
   scheme: http

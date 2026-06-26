@@ -1,9 +1,9 @@
 {
   "id": "swingmusic",
-  "app_id": "com.icewhaletech.swingmusic",
+  "app_id": "org.icewhale.swingmusic",
   "tagline": "Swing Musicは美しくデザインされたセルフホスト型音楽ストリーミングサーバーです。よりクールなSpotifyのよう...ただし、自分の音楽を持参してください。",
-  "release_notes": "- v2.1.4 patches a path traversal vulnerability in the directory browser endpoint.\n- Bug fixes cover Last.fm scrobbles being saved to user id 1, unsetting the admin role, a Windows startup crash, default artist split ignore rules, and album soundtrack classification.\n- The ghcr.io/swingmx/swingmusic:v2.1.4 Docker image tag exists, and the upstream release was published on 2026-01-18.",
   "description": "Swing Musicは、ローカルのオーディオファイル向けに設計された高速で美しいセルフホスト型音楽プレーヤーで、Spotifyのような洗練された体験を提供しますが、自身の音楽ライブラリで動作します。アプリを起動するだけで、ウェブブラウザを通じて簡単に音楽コレクションにアクセスできます。\n\nSwing Musicは、ユーザーのリスニング習慣に基づいてデイリーミックスを作成し、メタデータの正規化でクリーンで一貫性のあるライブラリを保証し、デラックス版やリマスター版などのアルバムバージョニングや、関連アーティストおよびアルバムの推薦をサポートします。フォルダビューで音楽ライブラリを閲覧したり、プレイリストを管理したり、サイレンス検出やクロスフェードによるシームレスなリスニング体験を楽しめます。追加機能には、リスニング統計、歌詞表示、Last.fmのスクロブリング、マルチユーザーサポート、アルバムやアーティストをグループ化するパーソナライズされたコレクションが含まれます。\n\n見事なブラウザベースのインターフェースと堅牢な機能を備えたSwing Musicは、ローカルの音楽コレクションを美しく実践的に管理し楽しみたい音楽愛好家にとって完璧な選択です。\n",
+  "release_notes": "- v2.1.4 patches a path traversal vulnerability in the directory browser endpoint.\n- Bug fixes cover Last.fm scrobbles being saved to user id 1, unsetting the admin role, a Windows startup crash, default artist split ignore rules, and album soundtrack classification.\n- The ghcr.io/swingmx/swingmusic:v2.1.4 Docker image tag exists, and the upstream release was published on 2026-01-18.",
   "tips": {
     "before_install": "Swing Musicを初めて起動すると、音楽ディレクトリの選択を求められます：音楽はどこで探しますか？\n「特定のディレクトリ」オプションを選択し、「/music」を選択して再スキャンします。\n\nデフォルトアカウント\n| 名前 | パスワード |\n| -------- | -------- |\n| `admin` | `admin` |\n"
   }

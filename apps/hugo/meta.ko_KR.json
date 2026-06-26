@@ -1,9 +1,9 @@
 {
   "id": "hugo",
-  "app_id": "com.icewhaletech.hugo",
+  "app_id": "org.icewhale.hugo",
   "tagline": "웹사이트 구축을 위한 세계에서 가장 빠른 프레임워크",
-  "release_notes": "- v0.161.1 honors Retry-After headers in resources.GetRemote retries.\n- It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.\n- The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.",
   "description": "Hugo는 Go로 작성된 고속 정적 사이트 생성 플랫폼으로, 속도에 최적화되고 유연성을 위해 설계되었습니다. 고급 템플릿 시스템과 빠른 에셋 파이프라인으로 완전한 웹사이트를 몇 초 만에 렌더링하며, 문서 사이트, 랜딩 페이지, 다양한 프로젝트 웹사이트 생성에 이상적입니다.\n\n핵심 기능에는 최적화된 속도와 유연한 프레임워크가 포함됩니다. Go의 동시성이 빠른 렌더링을 가능하게 하며, 이미지 처리(변환, 크기 조정, 자르기, 회전, 색상 조정, 필터 적용, 텍스트/이미지 오버레이, EXIF 데이터 추출), JavaScript 번들링(트리 셰이킹, 코드 분할), Sass 처리, TailwindCSS 지원을 제공합니다. 다국어 지원과 분류법 시스템으로 문서, 뉴스, 이벤트 등 다양한 사이트에 적합합니다.\n\n개발 중 콘텐츠, 구조, 스타일 변경사항을 실시간으로 미리볼 수 있는 내장 웹 서버를 포함합니다. 빈번한 릴리스로 지속적인 기능 향상을 보장하여 최첨단 기술을 유지합니다. 효율성과 유연성을 핵심으로 하여, 이 플랫폼은 현대적인 정적 사이트 생성 솔루션을 제공합니다.\n\n**주요 기능:**\n- 고속 렌더링, 몇 초 만에 사이트 생성\n- 빠른 에셋 파이프라인: 이미지 처리, JavaScript 번들링, Sass, TailwindCSS 지원\n- 다국어 및 분류법 시스템을 갖춘 유연한 프레임워크\n- 실시간 개발 미리보기용 내장 웹 서버\n- 풍부한 테마 및 플러그인 생태계\n\n\n**Hugo 사용을 위한 전제 조건:**\n\n1. 명령줄을 열고 `/DATA/AppData/hugo/project` 디렉토리로 이동\n\n```cd /DATA/AppData/hugo/project```\n\n2. `project` 디렉토리를 빈 Git 저장소로 초기화\n\n```git init```\n\n3. Ananke 테마 다운로드\n\n```git submodule add https://github.com/theNewDynamic/gohugo-theme-ananke.git themes/ananke```\n\n4. 현재 테마 지정\n\n```echo \"theme = 'ananke'\" >> hugo.toml```\n\n5. Hugo 재시작\n\n\n**자세히 알아보기:**\n- [Hugo 공식 웹사이트](https://gohugo.io/)\n- [Hugo GitHub](https://github.com/gohugoio/hugo)\n",
+  "release_notes": "- v0.161.1 honors Retry-After headers in resources.GetRemote retries.\n- It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.\n- The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.",
   "tips": {
     "before_install": "Hugo 사용 방법을 배우기 위해 [빠른 시작](https://gohugo.io/getting-started/quick-start/) 문서를 검토할 것을 권장합니다."
   }

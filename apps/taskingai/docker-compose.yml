@@ -181,7 +181,7 @@ configs:
       \ /imgs/ {\n      proxy_pass http://backend-web:8000;\n  }\n\n  location / {\n\
       \      proxy_pass http://frontend:80;\n  }\n}\n"
 x-casaos:
-  app_id: com.icewhaletech.taskingai
+  app_id: org.icewhale.taskingai
   main: frontend
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/taskingai/assets/icon.svg
   title:
