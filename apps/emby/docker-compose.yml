@@ -37,6 +37,7 @@ services:
       target: /data/movies
     container_name: emby
 x-casaos:
+  app_id: com.icewhaletech.emby
   main: emby
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/emby/assets/icon.svg
   title:

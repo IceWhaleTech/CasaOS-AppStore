@@ -24,6 +24,7 @@ services:
       target: /data
     container_name: gitea
 x-casaos:
+  app_id: com.icewhaletech.gitea
   main: gitea
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/gitea/assets/icon.svg
   title:

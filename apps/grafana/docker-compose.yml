@@ -18,6 +18,7 @@ services:
       target: /var/lib/grafana
     container_name: grafana
 x-casaos:
+  app_id: com.icewhaletech.grafana
   main: grafana
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/grafana/assets/icon.svg
   title:

@@ -20,6 +20,7 @@ services:
       target: /data/db
     container_name: mongo
 x-casaos:
+  app_id: com.icewhaletech.mongodb
   main: mongo
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/mongodb/assets/icon.svg
   title:

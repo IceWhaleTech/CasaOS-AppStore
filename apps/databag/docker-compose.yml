@@ -13,6 +13,7 @@ services:
       target: /var/lib/databag
     container_name: databag
 x-casaos:
+  app_id: com.icewhaletech.databag
   main: databag
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/databag/assets/icon.svg
   title:

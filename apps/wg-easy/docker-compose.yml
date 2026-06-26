@@ -28,6 +28,7 @@ services:
     - net.ipv4.conf.all.src_valid_mark=1
     container_name: wg-easy
 x-casaos:
+  app_id: com.icewhaletech.wgeasy
   main: wg-easy
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/wg-easy/assets/icon.svg
   title:

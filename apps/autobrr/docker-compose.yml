@@ -16,6 +16,7 @@ services:
       source: /DATA/AppData/$AppID/config
       target: /config
 x-casaos:
+  app_id: com.icewhaletech.autobrr
   main: autobrr
   port_map: '7474'
   title:

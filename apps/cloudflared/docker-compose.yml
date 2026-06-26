@@ -14,6 +14,7 @@ services:
       target: /config
     container_name: cloudflared
 x-casaos:
+  app_id: com.icewhaletech.cloudflared
   main: cloudflared
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/cloudflared/assets/icon.svg
   title:

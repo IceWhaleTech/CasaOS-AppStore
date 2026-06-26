@@ -1,8 +1,9 @@
 {
   "id": "peanut",
+  "app_id": "com.icewhaletech.peanut",
   "title": "PeaNUT",
-  "release_notes": "- v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.\n- WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.\n- The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.",
   "tagline": "UPS övervakning och strömavbrott notifikationssystem",
+  "release_notes": "- v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.\n- WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.\n- The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.",
   "description": "PeaNUT är ett webbaserat UPS övervakningssystem specifikt designat för övervakning av Oavbrutna Kraftkällor (UPS). Det ger ett användarvänligt gränssnitt för övervakning av UPS-status, batterilivslängd och strömavbrottsnotifieringar för att säkerställa att dina system alltid är skyddade.\n\n**Nyckelfunktioner:**\n- Realtidsövervakning och kontroll av UPS-status\n- Övervakning av batterilivslängd och laddningsnivå\n- Automatiska strömavbrottsnotifieringar via e-post/webhook\n- Historisk dataloggning och rapportering\n- Stöd för olika UPS-tillverkare och modeller\n- Mobilvänligt responsivt webbgränssnitt för fjärråtkomst\n- Konfigurerbara varningsgränser och larm\n- Docker-baserad distribution för enkel installation\n\n**Läs Mer:**\n- [PeaNUT GitHub Repository](https://github.com/brandawg93/peanut)\n",
   "tips": {
     "before_install": "UPS-tjänsteparametrarna för ZimaOS är följande:\n| Serveradress | Port | Användarnamn | Lösenord |\n|---------------|------|--------------|----------|\n| ZimaOS IP     | `3493` | `monuser` | `secret` |\n"

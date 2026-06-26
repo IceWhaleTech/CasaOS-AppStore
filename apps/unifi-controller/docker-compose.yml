@@ -47,6 +47,7 @@ services:
       target: /config
     container_name: unifi-controller
 x-casaos:
+  app_id: com.icewhaletech.unificontroller
   main: unifi-controller
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/unifi-controller/assets/icon.svg
   title:

@@ -10,6 +10,7 @@ services:
     restart: unless-stopped
     container_name: holoplay
 x-casaos:
+  app_id: com.icewhaletech.holoplay
   main: holoplay
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/holoplay/assets/icon.svg
   title:

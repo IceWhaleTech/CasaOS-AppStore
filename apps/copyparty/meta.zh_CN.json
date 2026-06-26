@@ -1,8 +1,9 @@
 {
   "id": "copyparty",
+  "app_id": "com.icewhaletech.copyparty",
   "title": "CopyParty",
-  "release_notes": "- v1.20.13 增加了 .hidden 支持，用于外观层面的目录列表过滤。\n- 新增了缩略图预生成，以及在分享中显示 dotfile 的能力。\n- 修复内容包括旧系统缺少 JXL 支持时的缩略图、新版本提醒权限、mkdir 阻止、Web 根目录的 nohtml/noscript 行为，以及分享中的 dotfile 处理。",
   "tagline": "一个简单、私密的文件服务器。",
+  "release_notes": "- v1.20.13 增加了 .hidden 支持，用于外观层面的目录列表过滤。\n- 新增了缩略图预生成，以及在分享中显示 dotfile 的能力。\n- 修复内容包括旧系统缺少 JXL 支持时的缩略图、新版本提醒权限、mkdir 阻止、Web 根目录的 nohtml/noscript 行为，以及分享中的 dotfile 处理。",
   "description": "**CopyParty** 是一款快速、注重隐私的文件共享服务器，采用本地优先、单文件架构，确保对数据拥有完全控制权，且不依赖云服务。其直观的界面支持离线使用，具备跨平台兼容性和多协议访问能力，提供安全、高效的文件管理体验，是寻求直接数据所有权和轻量级解决方案的用户的理想选择。\n\n该应用的核心功能包括加速可恢复上传（通过 up2k 协议），确保可靠的大文件传输，以及自动去重以优化存储。它通过一个基于网络的 文件管理器帮助用户轻松组织文件夹和媒体，该管理器内置媒体索引器和缩略图生成器，可实现快速预览。细粒度的权限控制允许设置特定的用户访问规则。“边下载边上传”功能提高了共享效率，零依赖设计确保它几乎可以在任何硬件上运行。\n\n它集成了多种访问协议，包括 HTTP、WebDAV、FTP 和 TFTP，支持来自标准网页浏览器、专用文件客户端和旧硬件（如 PSP）的连接。该应用支持 Docker 和 Python 部署，简化了各种服务器环境的设置。它无需复杂配置即可实现对本地文件的无缝访问。社区文档增强了可用性，该应用简单的操作和高度的灵活性提供了一个现代化的本地文件服务解决方案。\n\n**主要功能：**\n- 注重隐私的本地文件共享\n- 零依赖的单文件架构\n- 加速可恢复上传\n- 多协议支持（HTTP、WebDAV、FTP 等）\n- 跨平台兼容性\n- 媒体索引和流媒体\n- 智能去重\n- 用户权限管理\n\n**了解更多：**\n- [CopyParty GitHub Repository](https://github.com/9001/copyparty)\n",
   "tips": {
     "before_install": "## 默认账户\n\n- 用户名：casaos\n- 密码：casaos\n\n## 修改用户名和密码\n\n如需修改默认用户名和密码，可以通过映射 `/cfg/` 路径，并在该目录中添加 `copyparty.conf` 配置文件进行配置。\n\n具体配置请参考：[example](https://github.com/9001/copyparty/blob/hovudstraum/docs/example.conf)\n"

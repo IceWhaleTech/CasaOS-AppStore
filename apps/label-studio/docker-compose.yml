@@ -21,6 +21,7 @@ services:
       source: /DATA/AppData/$AppID/data
       target: /label-studio/data
 x-casaos:
+  app_id: com.icewhaletech.labelstudio
   main: label-studio
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/label-studio/assets/icon.svg
   title:

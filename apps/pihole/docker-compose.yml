@@ -33,6 +33,7 @@ services:
     - NET_ADMIN
     container_name: pihole
 x-casaos:
+  app_id: com.icewhaletech.pihole
   main: pihole
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/pihole/assets/icon.svg
   title:

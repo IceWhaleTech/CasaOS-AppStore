@@ -21,6 +21,7 @@ services:
     restart: unless-stopped
     container_name: chatgpt-next-web
 x-casaos:
+  app_id: com.icewhaletech.chatgptnextweb
   main: chatgpt-next-web
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/chatgpt-next-web/assets/icon.svg
   title:

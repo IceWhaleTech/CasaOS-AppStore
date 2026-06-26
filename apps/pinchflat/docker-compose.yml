@@ -25,6 +25,7 @@ services:
       target: /downloads
     container_name: pinchflat
 x-casaos:
+  app_id: com.icewhaletech.pinchflat
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/pinchflat/assets/icon.svg
   main: pinchflat
   port_map: '8945'

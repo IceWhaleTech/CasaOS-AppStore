@@ -44,6 +44,7 @@ services:
       target: /opt/vc/lib
     container_name: jellyfin
 x-casaos:
+  app_id: com.icewhaletech.jellyfin
   main: jellyfin
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/jellyfin/assets/icon.svg
   title:

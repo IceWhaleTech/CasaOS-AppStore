@@ -19,6 +19,7 @@ services:
     - /DATA/AppData/crafty/config:/crafty/app/config
     - /DATA/AppData/crafty/import:/crafty/import
 x-casaos:
+  app_id: com.icewhaletech.crafty
   main: crafty
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/crafty/assets/icon.svg
   title:

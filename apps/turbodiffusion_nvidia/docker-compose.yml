@@ -35,6 +35,7 @@ services:
     - turbodiffusion/app_gradio.py
     restart: unless-stopped
 x-casaos:
+  app_id: com.icewhaletech.turbodiffusionnvidia
   title:
     de_DE: TurboDiffusion(Nvidia GPU)
     el_GR: TurboDiffusion(Nvidia GPU)

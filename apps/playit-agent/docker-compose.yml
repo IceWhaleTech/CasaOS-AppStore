@@ -6,6 +6,7 @@ services:
     network_mode: bridge
     container_name: playit-agent
 x-casaos:
+  app_id: com.icewhaletech.playitagent
   main: playit-agent
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/playit-agent/assets/icon.svg
   title:

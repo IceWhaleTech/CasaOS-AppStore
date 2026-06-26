@@ -24,6 +24,7 @@ services:
     entrypoint: /bin/sh -c "tailscaled --state=/var/lib/tailscale/tailscaled.state
       & sleep 10; tailscale web --listen 0.0.0.0:5252"
 x-casaos:
+  app_id: com.icewhaletech.tailscale
   main: tailscale
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/tailscale/assets/icon.svg
   scheme: ''
