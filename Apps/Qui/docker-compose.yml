@@ -1,0 +1,102 @@
+# Configuration for Qui setup
+name: QUI
+services:
+  # Qui Application
+  qui:
+    container_name: qui
+    image: ghcr.io/autobrr/qui:pr-1530
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "7476:7476"
+    volumes:
+      - /DATA/AppData/$AppID/qui:/config
+    environment:
+      QUI__DATABASE_ENGINE: postgres
+      QUI__DATABASE_DSN: postgres://qui:qui@qui-postgres:5432/qui?sslmode=disable
+    networks:
+      - big_bear_qui_network
+    x-casaos:
+      envs:
+        - container: QUI__DATABASE_ENGINE
+          description:
+            en_us: "Container Variable: QUI__DATABASE_ENGINE"
+        - container: QUI__DATABASE_DSN
+          description:
+            en_us: "Container Variable: QUI__DATABASE_DSN"
+      volumes:
+        - container: /config
+          description:
+            en_us: "Container Path: /config"
+      ports:
+        - container: "7476"
+          description:
+            en_us: "Container Port: 7476"
+
+  # PostgreSQL Database
+  postgres:
+    container_name: qui-postgres
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: qui
+      POSTGRES_PASSWORD: qui
+      POSTGRES_DB: qui
+    volumes:
+      - /DATA/AppData/$AppID/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - big_bear_qui_network
+    x-casaos:
+      envs:
+        - container: POSTGRES_USER
+          description:
+            en_us: "Container Variable: POSTGRES_USER"
+        - container: POSTGRES_PASSWORD
+          description:
+            en_us: "Container Variable: POSTGRES_PASSWORD"
+        - container: POSTGRES_DB
+          description:
+            en_us: "Container Variable: POSTGRES_DB"
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_us: "Container Path: /var/lib/postgresql/data"
+
+networks:
+  big_bear_qui_network:
+    driver: bridge
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+
+  main: qui
+
+  description:
+    en_us: A modern, self-hosted download queue manager from the autobrr project.
+
+  tagline:
+    en_us: Modern download queue manager
+
+  developer: autobrr
+
+  author: BigBearTechWorld
+
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/qui.png
+
+  thumbnail: ""
+
+  title:
+    en_us: Qui
+
+  category: BigBearCasaOS
+
+  port_map: "7476"
