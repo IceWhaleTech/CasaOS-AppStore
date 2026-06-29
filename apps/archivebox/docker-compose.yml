@@ -1,7 +1,7 @@
 name: archivebox
 services:
   archivebox:
-    image: archivebox/archivebox:0.7.4
+    image: archivebox/archivebox@sha256:1a5a37331091d9df865ead2b9c231aa5a892fc26fe0422ce6140d9e2d9532327
     container_name: archivebox
     deploy:
       resources:
@@ -42,7 +42,7 @@ services:
       interval: 1m
       timeout: 3s
   archivebox_scheduler:
-    image: archivebox/archivebox:0.7.4
+    image: archivebox/archivebox@sha256:1a5a37331091d9df865ead2b9c231aa5a892fc26fe0422ce6140d9e2d9532327
     container_name: archivebox_scheduler
     deploy:
       resources:
@@ -68,7 +68,7 @@ services:
       source: /DATA/AppData/$AppID/data
       target: /data
   archivebox_sonic:
-    image: archivebox/sonic:1.4.9
+    image: archivebox/sonic@sha256:452064bfdab535fb8a6019937f1d753e0dfb2c94d2a87ebd166e2d556de78692
     container_name: archivebox_sonic
     deploy:
       resources:

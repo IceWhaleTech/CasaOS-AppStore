@@ -1,6 +1,6 @@
 services:
   linkwarden:
-    image: ghcr.io/linkwarden/linkwarden:v2.14.1
+    image: ghcr.io/linkwarden/linkwarden@sha256:31cf4bd2a2e111991fa5c9de03174c8698869c83722105c6ce529e4c911e6861
     container_name: linkwarden
     restart: unless-stopped
     depends_on:
@@ -33,7 +33,7 @@ services:
         reservations:
           memory: 512m
   linkwarden-postgres:
-    image: postgres:16-alpine
+    image: postgres@sha256:e013e867e712fec275706a6c51c966f0bb0c93cfa8f51000f85a15f9865a28cb
     container_name: linkwarden-postgres
     restart: unless-stopped
     environment:
@@ -59,7 +59,7 @@ services:
         reservations:
           memory: 256m
   linkwarden-meilisearch:
-    image: getmeili/meilisearch:v1.12.8
+    image: getmeili/meilisearch@sha256:c9fac23131cca4db95173d41cc50fd5639121ee381795528fdd7522d7978a7b8
     container_name: linkwarden-meilisearch
     restart: unless-stopped
     environment:

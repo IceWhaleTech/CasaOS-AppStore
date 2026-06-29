@@ -5,7 +5,7 @@ services:
       PHOTOPRISM_ADMIN_PASSWORD: casaos
       PHOTOPRISM_UPLOAD_NSFW: 'true'
       TZ: $TZ
-    image: photoprism/photoprism:260523
+    image: photoprism/photoprism@sha256:ee3d15cf76f80c2fb4a28c336a63173b0c671ed7a3dd9ec0ed6231b7defa8876
     deploy:
       resources:
         reservations:

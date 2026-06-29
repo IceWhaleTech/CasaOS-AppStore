@@ -6,7 +6,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/calibre-web:0.6.24
+    image: linuxserver/calibre-web@sha256:241009026e6fa74238b2cb3fec755c4c64474e94a1e434f5731ed6ca409c8054
     deploy:
       resources:
         reservations:

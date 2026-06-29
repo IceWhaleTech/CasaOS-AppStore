@@ -66,7 +66,7 @@ services:
           memory: 1024M
   maybe-db:
     container_name: maybe-db
-    image: postgres:16
+    image: postgres@sha256:fe03a7605299a34ddf5e4f285dff78c3d7190a576b3c6b46f2fcff69f4bffd54
     restart: unless-stopped
     volumes:
     - type: bind
@@ -91,7 +91,7 @@ services:
           memory: 1024M
   maybe-redis:
     container_name: maybe-redis
-    image: redis:8.2.1-alpine3.22
+    image: redis@sha256:987c376c727652f99625c7d205a1cba3cb2c53b92b0b62aade2bd48ee1593232
     restart: unless-stopped
     volumes:
     - type: bind

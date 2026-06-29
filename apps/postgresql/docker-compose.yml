@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: casaos
       POSTGRES_PASSWORD: casaos
       POSTGRES_DB: casaos
-    image: postgres:17.4
+    image: postgres@sha256:304ab813518754228f9f792f79d6da36359b82d8ecf418096c636725f8c930ad
     deploy:
       resources:
         reservations:

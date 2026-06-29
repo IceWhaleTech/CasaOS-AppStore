@@ -1,7 +1,7 @@
 name: karakeep
 services:
   karakeep:
-    image: ghcr.io/karakeep-app/karakeep:0.32.0
+    image: ghcr.io/karakeep-app/karakeep@sha256:64d6a9bbf2d37b5c808cf06b5d87f1f1c7846fdd3844724145a9741aeb06fd31
     container_name: karakeep
     deploy:
       resources:
@@ -27,7 +27,7 @@ services:
       MEILI_MASTER_KEY: change_this_to_a_long_random_string
       OPENAI_API_KEY: ''
   karakeep-chrome:
-    image: gcr.io/zenika-hub/alpine-chrome:124
+    image: gcr.io/zenika-hub/alpine-chrome@sha256:1a0046448e0bb6c275c88f86e01faf0de62b02ec8572901256ada0a8c08be23f
     container_name: karakeep-chrome
     deploy:
       resources:
@@ -44,7 +44,7 @@ services:
     - --remote-debugging-port=9222
     - --hide-scrollbars
   karakeep-meilisearch:
-    image: getmeili/meilisearch:v1.41.0
+    image: getmeili/meilisearch@sha256:860fa4baed04ae1c235de870edab0c8006227546dea1bbb6411fbfc5e27cf1db
     container_name: karakeep-meilisearch
     deploy:
       resources:

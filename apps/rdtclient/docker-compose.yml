@@ -13,7 +13,7 @@ services:
       resources:
         reservations:
           memory: 64M
-    image: rogerfar/rdtclient:2.0.136
+    image: rogerfar/rdtclient@sha256:a05f0427946a4c3c64dc9d556c017f9a181acec320ecf218b6334a1066c11d1f
     ports:
     - target: 6500
       published: '6500'

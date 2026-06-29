@@ -1,14 +1,14 @@
 name: taskingai
 services:
   frontend:
-    image: taskingai/taskingai-console:v0.3.0
+    image: taskingai/taskingai-console@sha256:8d0f85f3984437baaa7b8a82ab0081511b221d25dbeeedae560097b7edfbeb6d
     depends_on:
     - backend-web
     - backend-api
     networks:
     - taskingai_network
   backend-inference:
-    image: taskingai/taskingai-inference:v0.2.14
+    image: taskingai/taskingai-inference@sha256:91d7abc1269fb200e53973812cceabb8be93516df57f60952e377af285089c9b
     environment:
       AES_ENCRYPTION_KEY: b90e4648ad699c3bdf62c0860e09eb9efc098ee75f215bf750847ae19d41e4b0
       ICON_URL_PREFIX: http://nginx:3080
@@ -25,7 +25,7 @@ services:
     networks:
     - taskingai_network
   backend-plugin:
-    image: taskingai/taskingai-plugin:v0.2.10
+    image: taskingai/taskingai-plugin@sha256:39a13c02ce93b1e1c0bc454049ecee02e9dcab61dc0cf002587e071f2e525481
     environment:
       AES_ENCRYPTION_KEY: b90e4648ad699c3bdf62c0860e09eb9efc098ee75f215bf750847ae19d41e4b0
       ICON_URL_PREFIX: http://nginx:3080
@@ -47,7 +47,7 @@ services:
     networks:
     - taskingai_network
   backend-api:
-    image: taskingai/taskingai-server:v0.3.0
+    image: taskingai/taskingai-server@sha256:5032f3015bbc03e4d0fc263a8f04a75fbf2cda48de01943436b2e8d398ddd2a8
     environment:
       POSTGRES_URL: postgres://postgres:TaskingAI321@db:5432/taskingai
       REDIS_URL: redis://:TaskingAI321@cache:6379/0
@@ -77,7 +77,7 @@ services:
     networks:
     - taskingai_network
   backend-web:
-    image: taskingai/taskingai-server:v0.3.0
+    image: taskingai/taskingai-server@sha256:5032f3015bbc03e4d0fc263a8f04a75fbf2cda48de01943436b2e8d398ddd2a8
     environment:
       POSTGRES_URL: postgres://postgres:TaskingAI321@db:5432/taskingai
       REDIS_URL: redis://:TaskingAI321@cache:6379/0
@@ -111,7 +111,7 @@ services:
     networks:
     - taskingai_network
   db:
-    image: ankane/pgvector:v0.5.1
+    image: ankane/pgvector@sha256:d3a9d8ac27bb7e05e333ef25b634d2625adaa85336ab729954b9e94859bf6fa7
     environment:
       POSTGRES_DB: taskingai
       POSTGRES_USER: postgres
@@ -129,7 +129,7 @@ services:
     networks:
     - taskingai_network
   cache:
-    image: redis:7-alpine
+    image: redis@sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99
     command:
     - redis-server
     - --requirepass
@@ -150,7 +150,7 @@ services:
     networks:
     - taskingai_network
   nginx:
-    image: nginx:1.24
+    image: nginx@sha256:f6daac2445b0ce70e64d77442ccf62839f3f1b4c24bf6746a857eff014e798c8
     ports:
     - 3080:80
     volumes:

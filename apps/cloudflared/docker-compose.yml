@@ -1,7 +1,7 @@
 name: cloudflared
 services:
   cloudflared:
-    image: wisdomsky/cloudflared-web:2026.5.0
+    image: wisdomsky/cloudflared-web@sha256:8bdc2e261bdf4b7824c67af8a4acc04fdaa3f1848e82a3ca56ccfd30040855ff
     restart: unless-stopped
     network_mode: host
     ports:

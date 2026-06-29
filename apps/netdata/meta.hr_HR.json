@@ -1,5 +1,6 @@
 {
   "id": "netdata",
   "app_id": "org.icewhale.netdata",
+  "version": "2.10.3",
   "release_notes": "- v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.\n- SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.\n- Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed."
 }

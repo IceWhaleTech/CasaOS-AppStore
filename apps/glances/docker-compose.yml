@@ -2,7 +2,7 @@ name: glances
 services:
   glances:
     container_name: glances
-    image: nicolargo/glances:4.5.4
+    image: nicolargo/glances@sha256:a11e836511ff83cd123b460c21bb4cf2795ac149ac7a18f9b01587bfcb5a5033
     pid: host
     deploy:
       resources:

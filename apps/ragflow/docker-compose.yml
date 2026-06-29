@@ -20,7 +20,7 @@ services:
     - TZ=$TZ
     extra_hosts:
     - host.docker.internal:host-gateway
-    image: icewhaletech/ragflow:v0.21.1
+    image: icewhaletech/ragflow@sha256:c41d9ec1b8f14e8e049ff4472aec58276fa1cb483584078557ee957b81b9bb74
     ports:
     - target: 9380
       published: '9380'
@@ -81,7 +81,7 @@ services:
       timeout: 10s
       interval: 10s
       retries: 120
-    image: elasticsearch:8.11.3
+    image: elasticsearch@sha256:58a3a280935d830215802322e9a0373faaacdfd646477aa7e718939c2f29292a
     ports:
     - target: 9200
       published: '9200'
@@ -107,7 +107,7 @@ services:
       timeout: 10s
       interval: 10s
       retries: 120
-    image: icewhaletech/ragflow-infinity:v0.6.1
+    image: icewhaletech/ragflow-infinity@sha256:4ee72ae8b41cffcb138b049628eaf0cadb6792f04c40e64f9db57994035b8cc1
     ports:
     - target: 23817
       published: '23817'
@@ -159,7 +159,7 @@ services:
       timeout: 20s
       interval: 30s
       retries: 3
-    image: quay.io/minio/minio:RELEASE.2025-06-13T11-33-47Z
+    image: quay.io/minio/minio@sha256:064117214caceaa8d8a90ef7caa58f2b2aeb316b5156afe9ee8da5b4d83e12c8
     ports:
     - target: 9000
       published: '9000'
@@ -204,7 +204,7 @@ services:
       interval: 10s
       retries: 10
       start_period: 90s
-    image: icewhaletech/ragflow-mysql:8.0.39
+    image: icewhaletech/ragflow-mysql@sha256:18f906d9d814740b58848003b5727c3b0ff81c137f7c6b960a53ad5f12b374ba
     ports:
     - target: 3306
       published: '5455'
@@ -245,7 +245,7 @@ services:
       timeout: 10s
       interval: 10s
       retries: 120
-    image: opensearchproject/opensearch:2.19.1
+    image: opensearchproject/opensearch@sha256:72fe2fc84be8295906b8efca020b46c58ed45c8da60cd9b8b49e1991e38e89a4
     ports:
     - target: 9201
       published: '9201'
@@ -284,7 +284,7 @@ services:
       interval: 5s
       retries: 3
       start_period: 10s
-    image: valkey/valkey:8
+    image: valkey/valkey@sha256:c6d4637d757379a2ff040148b95c85936d85a06c129eafa5fbe582f9e720e12f
     ports:
     - target: 6379
       published: '6379'

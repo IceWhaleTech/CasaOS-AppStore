@@ -5,7 +5,7 @@ services:
       PGID: '1000'
       PUID: '1000'
       TZ: Europe/London
-    image: linuxserver/duplicati:2.1.0
+    image: linuxserver/duplicati@sha256:ea0fc5050e0369e3d6736ac4633c65a977668889aed949aaa312ba4c73c8c772
     deploy:
       resources:
         reservations:

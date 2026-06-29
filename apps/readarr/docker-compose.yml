@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/readarr:0.3.10-develop
+    image: linuxserver/readarr@sha256:c39c1fe2e48e9353a2d81294d70b7624975ae8d603c3cae8df77583d3efeca5b
     deploy:
       resources:
         reservations:

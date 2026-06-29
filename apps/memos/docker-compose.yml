@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: neosmemo/memos:0.28.0
+    image: neosmemo/memos@sha256:06066de94333c091ee67c2ad5dec5f15bf5f35b31498c90092f9915dd05e9f92
     deploy:
       resources:
         reservations:

@@ -7,7 +7,7 @@ services:
       resources:
         reservations:
           memory: 256M
-    image: triliumnext/trilium:v0.103.0
+    image: triliumnext/trilium@sha256:8e6bc939a6d5dbeed42d1b5b155bc790b1c28ca3ac414382d04d626903c62081
     ports:
     - target: 8080
       published: '8088'

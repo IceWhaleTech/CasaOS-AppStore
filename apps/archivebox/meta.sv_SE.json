@@ -1,9 +1,10 @@
 {
   "id": "archivebox",
   "app_id": "org.icewhale.archivebox",
+  "version": "0.7.4",
   "title": "ArchiveBox",
-  "tagline": "Självhostad internetarkiveringslösning",
   "description": "ArchiveBox är en kraftfull, självhostad internetarkiveringslösning som låter dig skapa ditt eget personliga arkiv av webbsidor, PDF:er, videor och mer. Den fungerar som ett personligt internetarkiv och sparar innehåll i flera format för långtidsbevarande.\n\nSystemet består av flera komponenter:\n- **ArchiveBox**: Huvudapplikationen som tillhandahåller webbgränssnitt och arkiveringsfunktioner\n- **Sonic**: Ett snabbt sökbackend för fulltextsökning över arkiverat innehåll\n- **ArchiveBox Scheduler**: En bakgrundstjänst för schemalagda arkiveringsuppgifter\n- **NoVNC**: En webbaserad VNC-klient för webbläsarbaserad arkivering\n\n**Nyckelfunktioner:**\n- Spara webbsidor i flera format (HTML, PDF, skärmdumpar, etc.)\n- Fulltextsökning över allt arkiverat innehåll\n- Schemalagd arkivering av webbplatser och RSS-flöden\n- Webbläsarbaserad arkivering med NoVNC\n- Användarautentisering och åtkomstkontroll\n- Extrahera och spara mediefiler (videor, ljud, PDF:er, etc.)\n\n**Läs mer:**\n- [ArchiveBox officiella webbplats](https://archivebox.io)\n- [ArchiveBox GitHub Repository](https://github.com/ArchiveBox/ArchiveBox)\n- [ArchiveBox Dokumentation](https://github.com/ArchiveBox/ArchiveBox/wiki)\n",
+  "tagline": "Självhostad internetarkiveringslösning",
   "release_notes": "- v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.\n- Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.\n- Back up archives before upgrading and run archivebox version after the update.",
   "tips": {
     "before_install": "**Standardkonto**\n\n| Användarnamn | Lösenord |\n|--------------|----------|\n| `casaos`     | `casaos`  |\n"

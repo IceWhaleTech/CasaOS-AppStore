@@ -2,7 +2,7 @@ name: sure
 services:
   sure-web:
     container_name: sure-web
-    image: ghcr.io/we-promise/sure:0.6.5-hotfix.1
+    image: ghcr.io/we-promise/sure@sha256:d6416171d5b0c13194fe2be9fa1d433f48c1783a8a4c7422ab6001a3ff0ea2af
     volumes:
     - type: bind
       source: /DATA/AppData/$AppID/app/storage
@@ -37,7 +37,7 @@ services:
           memory: 1024M
   sure-worker:
     container_name: sure-worker
-    image: ghcr.io/we-promise/sure:0.6.5-hotfix.1
+    image: ghcr.io/we-promise/sure@sha256:d6416171d5b0c13194fe2be9fa1d433f48c1783a8a4c7422ab6001a3ff0ea2af
     command:
     - bundle
     - exec
@@ -70,7 +70,7 @@ services:
           memory: 1024M
   sure-db:
     container_name: sure-db
-    image: postgres:16
+    image: postgres@sha256:fe03a7605299a34ddf5e4f285dff78c3d7190a576b3c6b46f2fcff69f4bffd54
     restart: unless-stopped
     volumes:
     - type: bind
@@ -95,7 +95,7 @@ services:
           memory: 1024M
   sure-redis:
     container_name: sure-redis
-    image: redis:8.2.1-alpine3.22
+    image: redis@sha256:987c376c727652f99625c7d205a1cba3cb2c53b92b0b62aade2bd48ee1593232
     restart: unless-stopped
     volumes:
     - type: bind

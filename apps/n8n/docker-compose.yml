@@ -4,7 +4,7 @@ services:
     environment:
       TZ: $TZ
       N8N_SECURE_COOKIE: 'false'
-    image: n8nio/n8n:2.22.3
+    image: n8nio/n8n@sha256:75d18a9ecc588c32ece70d87bfd3319004601cf1d0d4fea5f4ba3640acb87f7b
     deploy:
       resources:
         reservations:

@@ -14,7 +14,7 @@ services:
       TZ: $TZ
       CPU_FALLBACK: 'true'
       NVIDIA_VISIBLE_DEVICES: all
-    image: linuxserver/jellyfin:10.10.6
+    image: linuxserver/jellyfin@sha256:3ade631e7085ce6d8ce4b477191152ab51316f0293f23be7531508324cae7b37
     deploy:
       resources:
         reservations:

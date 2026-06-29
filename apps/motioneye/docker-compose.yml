@@ -2,7 +2,7 @@ name: motioneye
 services:
   motioneye:
     container_name: motioneye
-    image: ccrisan/motioneye:master-amd64
+    image: ccrisan/motioneye@sha256:1704cddc44e0bc7e1c4aff9f1f6546127584e8351c04a0faa1d46c7fb791180b
     ports:
     - target: 8765
       published: '8765'

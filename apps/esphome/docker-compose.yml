@@ -6,7 +6,7 @@ services:
       resources:
         reservations:
           memory: 512M
-    image: ghcr.io/esphome/esphome:2026.5.1
+    image: ghcr.io/esphome/esphome@sha256:7886a4b0f04bd7d5e092e0b0cae277a47e39088d4d9028935df3304655300acd
     restart: always
     ports:
     - target: 6052

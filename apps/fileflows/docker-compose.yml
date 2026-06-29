@@ -9,7 +9,7 @@ services:
       PUID: $PUID
       TZ: $TZ
     hostname: fileflows
-    image: revenz/fileflows:stable
+    image: revenz/fileflows@sha256:377d3b7c05ba705ac0fe2b338c1f5eef9426d0493a0a91101de97071cbbc0b9b
     restart: unless-stopped
     ports:
     - target: 5000

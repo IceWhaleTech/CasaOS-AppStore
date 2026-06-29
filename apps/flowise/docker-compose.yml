@@ -1,7 +1,7 @@
 name: flowise
 services:
   flowise:
-    image: flowiseai/flowise:3.1.2
+    image: flowiseai/flowise@sha256:3f96eb1fe88ba038a028b024f98d9f9cf7c62bdbe170ea190d90698936165f94
     container_name: flowise
     restart: unless-stopped
     deploy:

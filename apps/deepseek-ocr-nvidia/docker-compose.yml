@@ -1,7 +1,7 @@
 name: deepseek-ocr-nvidia
 services:
   deepseek-ocr-backend:
-    image: icewhaletech/deepseek-ocr-backend:v2.2.0
+    image: icewhaletech/deepseek-ocr-backend@sha256:37f3d2d92ddb05e2936ed0757bd5b27628ff2327f8f77b2ce95e32a52a2f339d
     container_name: deepseek-ocr-backend
     environment:
       API_HOST: 0.0.0.0
@@ -32,7 +32,7 @@ services:
     networks:
     - deepseek-ocr-network
   deepseek-ocr-frontend:
-    image: icewhaletech/deepseek-ocr-frontend:v2.2.0
+    image: icewhaletech/deepseek-ocr-frontend@sha256:ec3450367b2bc77146c669c61f38d3e29832d6b4012501720371a530f3c83b5d
     container_name: deepseek-ocr-frontend
     ports:
     - target: 80

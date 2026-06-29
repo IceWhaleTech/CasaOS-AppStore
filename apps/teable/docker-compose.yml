@@ -1,7 +1,7 @@
 name: teable
 services:
   teable:
-    image: teableio/teable@sha256:88af98eaa0b2c48e7c64d30b71373354a67d4572eed4c14930990b7b9afd2baa
+    image: teableio/teable@sha256:96a86f966168ef76a4055b72689555f9ebc8ebe204b49c0fc30fb13adedbd329
     container_name: teable
     restart: unless-stopped
     deploy:
@@ -31,7 +31,7 @@ services:
       teable-cache:
         condition: service_healthy
   teable-db:
-    image: postgres:15
+    image: postgres@sha256:3b0d656f5fff31c7d8a64f500a703dcf3f35e98ce78f602831a73059a5e6a012
     restart: unless-stopped
     container_name: teable-db
     deploy:
@@ -57,7 +57,7 @@ services:
       timeout: 3s
       retries: 3
   teable-cache:
-    image: redis:7.2.4
+    image: redis@sha256:5a93f6b2e391b78e8bd3f9e7e1e1e06aeb5295043b4703fb88392835cec924a0
     restart: unless-stopped
     container_name: teable-cache
     deploy:

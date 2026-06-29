@@ -5,7 +5,7 @@ services:
       resources:
         reservations:
           memory: 64M
-    image: gdy666/lucky:2.27.2
+    image: gdy666/lucky@sha256:96a530d208af31c45951520c0723767c29efb8cd461073dda0ccfb8bcca53e44
     restart: unless-stopped
     volumes:
     - type: bind

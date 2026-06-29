@@ -8,7 +8,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       VERSION: docker
-    image: lscr.io/linuxserver/plex:1.43.2
+    image: lscr.io/linuxserver/plex@sha256:f79738b25b19d8e11658e3f2233067732023a1ab2ead8be610d75c55e425ecb8
     deploy:
       resources:
         reservations:

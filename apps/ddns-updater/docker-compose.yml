@@ -1,7 +1,7 @@
 name: ddns-updater
 services:
   ddns-updater:
-    image: qmcgaw/ddns-updater:v2.10.0
+    image: qmcgaw/ddns-updater@sha256:3e2aa558946b5a293def4d73008fa4651c072b2c12932cecd02126fb23979831
     network_mode: bridge
     command:
     - touch /data/config.json

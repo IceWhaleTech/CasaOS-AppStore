@@ -1,7 +1,7 @@
 name: blinko
 services:
   blinko:
-    image: blinkospace/blinko:1.8.7
+    image: blinkospace/blinko@sha256:f7c1167f8c86db586599d849539a732929d89adb10977046e7b427813b2a84b4
     container_name: blinko
     restart: unless-stopped
     networks:
@@ -32,7 +32,7 @@ services:
         reservations:
           memory: 512m
   blinko-postgres:
-    image: postgres:14
+    image: postgres@sha256:3e7dd0bfd7bfb4fc1278d1a354da44375dfe924bed8eaf83ae14967d84dede5b
     container_name: blinko-postgres
     restart: unless-stopped
     environment:

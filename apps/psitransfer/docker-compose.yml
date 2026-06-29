@@ -1,7 +1,7 @@
 name: psitransfer
 services:
   psitransfer:
-    image: psitrax/psitransfer:v2.4.1
+    image: psitrax/psitransfer@sha256:8fc64c1cac1142a0fc0b6be3874e96bd2a65385c5e0622eb91d3c599bcf35fa8
     container_name: psitransfer
     ports:
     - target: '3000'

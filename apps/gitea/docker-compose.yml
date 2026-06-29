@@ -4,7 +4,7 @@ services:
     environment:
       USER_GID: '1000'
       USER_UID: '1000'
-    image: gitea/gitea:1.26.2
+    image: gitea/gitea@sha256:7d13848af12645600a5f9d93ee2560daa9c6fa6b5b859b7bff3a5e1c0b661031
     deploy:
       resources:
         reservations:

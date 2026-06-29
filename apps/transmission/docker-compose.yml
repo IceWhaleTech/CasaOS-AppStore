@@ -8,7 +8,7 @@ services:
       PUID: '1000'
       TZ: Europe/London
       USER: casaos
-    image: linuxserver/transmission:4.1.1
+    image: linuxserver/transmission@sha256:cc1b5ba5b79ff201cb9a8c3cb5d94f1fb2b22baea87ad476a5bde087ec26c4be
     deploy:
       resources:
         reservations:

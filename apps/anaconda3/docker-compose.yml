@@ -2,7 +2,7 @@ name: anaconda3
 services:
   anaconda3:
     container_name: anaconda3
-    image: continuumio/anaconda3:2024.10-1
+    image: continuumio/anaconda3@sha256:b2c5350cc4e2338a1705c15dcca4fff520b1728f49752d390d92aaec02cf8c3a
     network_mode: bridge
     restart: unless-stopped
     environment:

@@ -1,8 +1,9 @@
 {
   "id": "immich",
   "app_id": "org.icewhale.immich",
-  "tagline": "自托管媒体管理解决方案",
+  "version": "2.7.2",
   "description": "Immich：革新您的家庭媒体体验\n\nImmich 致力于改变您在家庭电视、智能手机和其他设备上管理和享受媒体文件的方式。与传统相册或主流云服务不同，Immich 提供了一个无缝且现代的平台，用于组织、分享和访问您的照片和视频。想象一下，从移动设备轻松备份您珍贵的时刻，立即在电视上观看，或与家人分享——Immich 让这一切成为可能。\n\nImmich 以其从移动设备自动备份、优雅的基于网页的界面便于浏览媒体，以及人脸识别和物体检测等高级功能而脱颖而出。您可以按位置组织媒体，享受 4K 视频播放，甚至管理 RAW 格式照片。此外，通过多用户支持，与朋友和家人分享回忆变得轻而易举。最棒的是？Immich 以低成本提供这些强大功能，确保您无需花费过多即可获得优质体验。\n\n在 Zima 等私有云设备上部署 Immich 带来无与伦比的便利。享受无限存储容量、极快的本地网络速度和轻松的多设备访问。使用 Zima 私有云上的 Immich，您的媒体始终触手可及，在家中安全无忧。\n",
+  "tagline": "自托管媒体管理解决方案",
   "release_notes": "- v2.7.2 修复了默认 helmet.json 文件处理。\n- 通过降级 numpy 修复了部分旧 CPU 上的 machine-learning containers。\n- 修正了 external library import batch sizing。",
   "tips": {
     "before_install": "⚠️ 该项目正处于非常活跃的开发阶段。\n⚠️ 可能会出现错误和重大变更。\n⚠️ 请勿将该应用作为存储照片和视频的唯一方式。\n⚠️ 请始终遵循 3-2-1 备份计划以保护您珍贵的照片和视频！\n\n## 授权的媒体文件和数据\n1. 点击应用右上角的设置图标。\n2. 在 immich-server 选项卡中，在 Volumes 部分映射您的相册存储位置（默认为 `/DATA/Gallery/immich`）。\n\n有关完整的项目文档和安装说明，请[参考](https://immich.app)。\n"

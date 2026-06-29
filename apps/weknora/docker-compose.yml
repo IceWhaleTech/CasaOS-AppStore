@@ -1,7 +1,7 @@
 name: weknora
 services:
   weknora:
-    image: wechatopenai/weknora-ui:v0.2.14
+    image: wechatopenai/weknora-ui@sha256:4bee4ac139ef23af48c9072ac3d0a81086e2f0da8802bf1e805e86c814e6b67e
     container_name: weknora
     ports:
     - target: 80
@@ -20,7 +20,7 @@ services:
         reservations:
           memory: 128M
   app:
-    image: wechatopenai/weknora-app:v0.2.14
+    image: wechatopenai/weknora-app@sha256:5846159d58fa455667b058416611a7ac5f802f012df68e42a29667106d2b6cc9
     container_name: weknora-app
     volumes:
     - type: bind
@@ -93,7 +93,7 @@ services:
     extra_hosts:
     - host.docker.internal:host-gateway
   weknora-docreader:
-    image: wechatopenai/weknora-docreader:v0.2.14
+    image: wechatopenai/weknora-docreader@sha256:ca88aa630906279e6c18aade5706944cb201ba480137d5f95626f4db2fe1c4fe
     container_name: weknora-docreader
     environment:
     - MAX_FILE_SIZE_MB=50
@@ -120,7 +120,7 @@ services:
     extra_hosts:
     - host.docker.internal:host-gateway
   weknora-postgres:
-    image: paradedb/paradedb:v0.18.9-pg17
+    image: paradedb/paradedb@sha256:7ba49d1b8bdc1460f50073c7d33b3306ddec0e9610b49e17a4d32e9a2c95c570
     container_name: weknora-postgres
     environment:
     - POSTGRES_USER=postgres
@@ -147,7 +147,7 @@ services:
     restart: unless-stopped
     stop_grace_period: 1m
   weknora-redis:
-    image: redis:7.0-alpine
+    image: redis@sha256:c9d92d840fd011c908f040592857c724ae6d877f2aba5c40ad963276507386b2
     container_name: weknora-redis
     command:
     - redis-server
@@ -162,7 +162,7 @@ services:
     networks:
     - weknora-network
   minio:
-    image: minio/minio:RELEASE.2025-09-07T16-13-09Z
+    image: minio/minio@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e
     container_name: weknora-minio
     ports:
     - target: 9000
@@ -200,7 +200,7 @@ services:
     - weknora-network
     restart: unless-stopped
   jaeger:
-    image: jaegertracing/all-in-one:1.76.0
+    image: jaegertracing/all-in-one@sha256:ab6f1a1f0fb49ea08bcd19f6b84f6081d0d44b364b6de148e1798eb5816bacac
     container_name: weknora-jaeger
     ports:
     - target: 6831
@@ -245,7 +245,7 @@ services:
     - weknora-network
     restart: unless-stopped
   neo4j:
-    image: neo4j:2025.10.1
+    image: neo4j@sha256:155c8aad10d5c838bc3bbc476c0418779086547822acb214ec5e3d49ba336907
     container_name: weknora-neo4j
     profiles:
     - neo4j
@@ -275,7 +275,7 @@ services:
     networks:
     - weknora-network
   qdrant:
-    image: qdrant/qdrant:v1.16.2
+    image: qdrant/qdrant@sha256:dab6de32f7b2cc599985a7c764db3e8b062f70508fb85ca074aa856f829bf335
     container_name: weknora-qdrant
     profiles:
     - qdrant

@@ -17,7 +17,7 @@ services:
     networks:
     - dify
   api:
-    image: langgenius/dify-api:0.15.8
+    image: langgenius/dify-api@sha256:a6ed75b1a9c08b1997b9e6282930b819c4d0b3e150b705a0133a531d7475a3e4
     container_name: dify-api
     restart: unless-stopped
     environment:
@@ -70,7 +70,7 @@ services:
     - ssrf_proxy_network
     - dify
   worker:
-    image: langgenius/dify-api:0.15.8
+    image: langgenius/dify-api@sha256:a6ed75b1a9c08b1997b9e6282930b819c4d0b3e150b705a0133a531d7475a3e4
     container_name: dify-worker
     restart: unless-stopped
     environment:
@@ -102,7 +102,7 @@ services:
     - ssrf_proxy_network
     - dify
   web:
-    image: langgenius/dify-web:0.15.8
+    image: langgenius/dify-web@sha256:3ccefa505a2756a4e89f210d3b9f9a95d66750c1e76f63e13757818eaf675354
     container_name: dify-web
     restart: unless-stopped
     environment:
@@ -115,7 +115,7 @@ services:
     networks:
     - dify
   db:
-    image: postgres:15-alpine
+    image: postgres@sha256:cd17e2ac98240fce1541ad2a803b34009b4eea5aec8a832363cdc7eca62e722e
     container_name: dify-db
     restart: unless-stopped
     environment:
@@ -138,7 +138,7 @@ services:
     networks:
     - dify
   redis:
-    image: redis:6-alpine
+    image: redis@sha256:c9ab371a96b057d3642be9bd71cb1b3fe97920d345dc949860578bffb3d54460
     container_name: dify-redis
     restart: unless-stopped
     environment:
@@ -154,7 +154,7 @@ services:
     networks:
     - dify
   weaviate:
-    image: semitechnologies/weaviate:1.19.0
+    image: semitechnologies/weaviate@sha256:17a5238fcfc31d50427bb0e8338f01c3a0d62e27fbe3b6a9a6832b6e43b638bf
     container_name: dify-weaviate
     restart: unless-stopped
     volumes:
@@ -173,7 +173,7 @@ services:
     networks:
     - dify
   sandbox:
-    image: langgenius/dify-sandbox:0.2.11
+    image: langgenius/dify-sandbox@sha256:9692656f31212a54f4f275e55d5b49f656357649aeed383e7397877d13854a2e
     container_name: dify-sandbox
     restart: unless-stopped
     environment:

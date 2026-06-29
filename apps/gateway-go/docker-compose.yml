@@ -1,7 +1,7 @@
 name: gateway-go
 services:
   gateway-go:
-    image: openiothub/gateway-go:v2.0.12
+    image: openiothub/gateway-go@sha256:6c1bac113165d9ef2b505c8dfbef87c7a89b00ecfb757e86bd562447d0e3280b
     network_mode: host
     deploy:
       resources:
