@@ -306,10 +306,10 @@ def registry_json_request(url, headers=None, registry=None):
             raise
 
 
-def fetch_latest_digest(image_ref):
-    """Resolve a :latest image reference to a content digest."""
+def resolve_image_to_digest(image_ref):
+    """Resolve any tagged image reference to a digest-pinned reference."""
     parsed = parse_image_reference(image_ref)
-    if not parsed or parsed["tag"] != "latest":
+    if not parsed or not parsed.get("tag"):
         return image_ref
 
     manifest_url = (
@@ -325,16 +325,16 @@ def fetch_latest_digest(image_ref):
         )
         digest = response_headers.get("Docker-Content-Digest")
     except Exception as exc:
-        raise RuntimeError(f"Failed to resolve latest image digest: {image_ref}") from exc
+        raise RuntimeError(f"Failed to resolve image digest: {image_ref}") from exc
 
     if not digest:
-        raise RuntimeError(f"Registry did not return digest for latest image: {image_ref}")
+        raise RuntimeError(f"Registry did not return digest for image: {image_ref}")
 
     return f"{parsed['name']}@{digest}"
 
 
-def pin_latest_service_images(compose_data, app_id):
-    """Replace service images tagged :latest with digest-pinned references."""
+def pin_service_images_to_digests(compose_data, app_id):
+    """Replace all tagged service images with digest-pinned references."""
     services = compose_data.get("services", {})
     if not isinstance(services, dict):
         return
@@ -345,11 +345,13 @@ def pin_latest_service_images(compose_data, app_id):
         image_ref = service_def.get("image")
         if not isinstance(image_ref, str):
             continue
+        if "@" in image_ref:
+            continue
         parsed = parse_image_reference(image_ref)
-        if not parsed or parsed["tag"] != "latest":
+        if not parsed or not parsed.get("tag"):
             continue
         try:
-            service_def["image"] = fetch_latest_digest(image_ref)
+            service_def["image"] = resolve_image_to_digest(image_ref)
         except Exception as exc:
             registry = parsed.get("registry") if isinstance(parsed, dict) else None
             if is_registry_rate_limited_error(exc):
@@ -357,13 +359,13 @@ def pin_latest_service_images(compose_data, app_id):
                     app_id,
                     registry,
                     image_ref,
-                    "skipped digest pinning",
+                    "skipped image digest pinning",
                 )
                 continue
-            # Some registries intermittently fail auth or TLS handshakes for manifest
-            # requests. Keep the original :latest reference so the build can proceed.
+            # Keep the original tagged reference if the registry cannot resolve
+            # the digest during this build run.
             print(
-                f"  WARN  App '{app_id}' could not pin latest image for "
+                f"  WARN  App '{app_id}' could not pin image digest for "
                 f"service '{service_name}': {image_ref} ({exc})"
             )
 
@@ -1304,7 +1306,7 @@ def resolve_asset_filename(url_or_name, image_mapping, copied_images):
 
 def build_meta_payload(meta, locale, assets_path, copied_images, image_mapping, base_url,
                        title_i18n=None, strict=False, min_memory=0, min_image_size=0,
-                       source_app_id=""):
+                       source_app_id="", source_version=""):
     """Build locale-resolved meta payload."""
     meta_l = copy.deepcopy(meta)
     category = meta_l.get("category", "")
@@ -1338,15 +1340,16 @@ def build_meta_payload(meta, locale, assets_path, copied_images, image_mapping, 
 
     meta_l["base_url"] = normalize_base_url(base_url)
     meta_l["app_id"] = source_app_id
+    meta_l["version"] = source_version
     meta_l["categories"] = normalize_categories(category)
     meta_l["min_memory"] = int(min_memory)
     meta_l["min_image_size"] = int(min_image_size)
     return meta_l
 
 
-def build_meta_i18n_overlay(app_id, source_app_id, meta, locale, title_i18n=None):
+def build_meta_i18n_overlay(app_id, source_app_id, source_version, meta, locale, title_i18n=None):
     """Build locale overlay meta file with id + i18n-only fields."""
-    out = {"id": app_id, "app_id": source_app_id}
+    out = {"id": app_id, "app_id": source_app_id, "version": source_version}
     if isinstance(title_i18n, dict) and locale in title_i18n:
         out["title"] = title_i18n[locale]
     for field in I18N_FIELDS:
@@ -1509,7 +1512,7 @@ def main():
         assets_path = f"/apps/{app_id}/assets"
 
         compose_l = copy.deepcopy(compose_data)
-        pin_latest_service_images(compose_l, app_id)
+        pin_service_images_to_digests(compose_l, app_id)
         min_memory = calculate_min_memory(compose_data)
         min_image_size = calculate_min_image_size(compose_data, app_id)
         compose_xc = compose_l.get("x-casaos", {})
@@ -1538,6 +1541,7 @@ def main():
             min_memory=min_memory,
             min_image_size=min_image_size,
             source_app_id=original_xcasaos.get("app_id", ""),
+            source_version=str(original_xcasaos.get("version", "")).strip(),
         )
         meta_default_content = json.dumps(to_json_safe(meta_default), ensure_ascii=False, indent=2)
         (app_output / "meta.json").write_text(meta_default_content, encoding="utf-8")
@@ -1551,6 +1555,7 @@ def main():
             meta_locale = build_meta_i18n_overlay(
                 app_id,
                 original_xcasaos.get("app_id", ""),
+                str(original_xcasaos.get("version", "")).strip(),
                 meta,
                 locale,
                 title_i18n=original_xcasaos.get("title"),
