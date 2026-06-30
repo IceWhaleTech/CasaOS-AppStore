@@ -1,0 +1,35 @@
+name: flaresolverr
+services:
+  flaresolverr:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+      UMASK: '002'
+      LOG_LEVEL: info
+      LOG_HTML: 'false'
+      CAPTCHA_SOLVER: none
+    cpu_shares: 50
+    command: []
+    container_name: flaresolverr
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    image: ghcr.io/flaresolverr/flaresolverr:v3.4.6
+    ports:
+    - target: 8191
+      published: '8191'
+      protocol: tcp
+    restart: unless-stopped
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  app_id: org.icewhale.flaresolverr
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.flaresolverr/assets/icon.svg
+  index: /
+  port_map: '8191'
+  scheme: http
+  title:
+    en_US: FlareSolverr
+  version: 3.4.6

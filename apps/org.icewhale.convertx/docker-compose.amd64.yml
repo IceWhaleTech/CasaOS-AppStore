@@ -1,0 +1,30 @@
+name: convertx
+services:
+  convertx:
+    image: c4illin/convertx:v0.17.0@sha256:3a4b39015e732149792569f8f3f6058c8a2863dc07276e6250939d42dde9abbd
+    container_name: convertx
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 500M
+    ports:
+    - 3333:3000
+    environment:
+    - JWT_SECRET=aLongAndSecretStringUsedToSignTheJSONWebToken1234
+    - HTTP_ALLOWED=true
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /app/data
+    network_mode: bridge
+x-casaos:
+  app_id: org.icewhale.convertx
+  main: convertx
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.convertx/assets/icon.svg
+  port_map: '3333'
+  index: /
+  scheme: http
+  title:
+    en_US: ConvertX
+  version: 0.17.0

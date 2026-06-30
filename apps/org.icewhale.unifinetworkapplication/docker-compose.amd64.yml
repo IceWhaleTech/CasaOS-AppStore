@@ -1,0 +1,80 @@
+name: unifi-network-application
+services:
+  unifi-network-application:
+    container_name: unifi-network-application
+    depends_on:
+      unifi-db:
+        condition: service_started
+        required: true
+    environment:
+    - MONGO_DBNAME=unifi-db
+    - MONGO_HOST=unifi-db
+    - MONGO_PASS=pass
+    - MONGO_PORT=27017
+    - MONGO_USER=unifi
+    - PGID=$PGID
+    - PUID=$PUID
+    - TZ=$TZ
+    image: lscr.io/linuxserver/unifi-network-application:latest@sha256:c39879a7bd0ecf4df1d41e2a9c4f7dd2777d7324957bfbca2ce4e4a714d94303
+    ports:
+    - target: 8443
+      published: '8443'
+      protocol: tcp
+    - target: 3478
+      published: '3478'
+      protocol: udp
+    - target: 10001
+      published: '10001'
+      protocol: udp
+    - target: 8080
+      published: '8080'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/unifi-network-application
+      target: /config
+    networks:
+    - unifi-bridge
+    privileged: false
+  unifi-db:
+    container_name: unifi-db
+    image: docker.io/mongo:3.6
+    configs:
+    - source: init-mongo.js
+      target: /docker-entrypoint-initdb.d/init-mongo.js
+    environment:
+    - PGID=$PGID
+    - PUID=$PUID
+    - TZ=$TZ
+    ports:
+    - target: 27017
+      published: '27017'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/unifi-db
+      target: /data/db
+    networks:
+    - unifi-bridge
+    privileged: false
+networks:
+  unifi-bridge:
+    driver: bridge
+configs:
+  init-mongo.js:
+    content: "db.getSiblingDB(\"unifi-db\").createUser({user: \"unifi\", pwd: \"pass\"\
+      , roles: [{role: \"dbOwner\", db: \"unifi-db\"}]}); \ndb.getSiblingDB(\"unifi-db_stat\"\
+      ).createUser({user: \"unifi\", pwd: \"pass\", roles: [{role: \"dbOwner\", db:\
+      \ \"unifi-db_stat\"}]});\n"
+x-casaos:
+  app_id: org.icewhale.unifinetworkapplication
+  main: unifi-network-application
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.unifinetworkapplication/assets/icon.svg
+  index: /
+  port_map: '8443'
+  scheme: https
+  title:
+    en_US: Unifi Network Application
+  version: 10.4.57-ls133

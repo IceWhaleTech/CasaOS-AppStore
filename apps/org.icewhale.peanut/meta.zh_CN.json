@@ -1,0 +1,10 @@
+{
+  "id": "org.icewhale.peanut",
+  "title": "PeaNUT",
+  "description": "PeaNUT是一个基于Web的UPS监控系统，专门设计用于监控不间断电源（UPS）。它提供用户友好的界面来监控UPS状态、电池寿命和停电通知，确保您的系统始终受到保护。\n\n**主要功能：**\n- 实时UPS状态监控和控制\n- 电池寿命和充电水平监控\n- 通过邮件/Webhook自动发送停电通知\n- 历史数据记录和报告\n- 支持各种UPS制造商和型号\n- 移动友好的响应式Web界面，支持远程访问\n- 可配置的警告阈值和警报\n- 基于Docker的部署，便于安装\n\n**了解更多：**\n- [PeaNUT GitHub仓库](https://github.com/brandawg93/peanut)\n",
+  "tagline": "UPS监控和停电通知系统",
+  "release_note": "- v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.\n- WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.\n- The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.",
+  "tips": {
+    "before_install": "ZimaOS 的 UPS 服务参数如下：\n| 服务器地址 | 端口号 | 用户名 | 密码 |\n|------------|--------|--------|------|\n| ZimaOS IP  | `3493` | `monuser` | `secret` |\n"
+  }
+}

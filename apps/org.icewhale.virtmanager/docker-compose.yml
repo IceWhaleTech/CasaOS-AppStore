@@ -1,0 +1,35 @@
+name: virt-manager
+services:
+  virt-manager:
+    restart: always
+    devices:
+    - /dev/kvm:/dev/kvm
+    environment:
+      DARK_MODE: 'false'
+      HOSTS: '[''qemu:///system'']'
+    image: mber5/virt-manager:latest
+    network_mode: bridge
+    ports:
+    - target: 80
+      published: '8185'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /var/run/libvirt/libvirt-sock
+      target: /var/run/libvirt/libvirt-sock
+    - type: bind
+      source: /var/lib/libvirt
+      target: /var/lib/libvirt
+    - type: bind
+      source: /DATA/Downloads
+      target: /DATA/Downloads
+    container_name: virt-manager
+x-casaos:
+  app_id: org.icewhale.virtmanager
+  main: virt-manager
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.virtmanager/assets/icon.svg
+  port_map: '8185'
+  scheme: http
+  title:
+    en_US: Virtual Machine Manager
+  version: 0.0.1

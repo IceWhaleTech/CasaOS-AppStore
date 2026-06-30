@@ -1,0 +1,38 @@
+name: duplicati
+services:
+  duplicati:
+    environment:
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/London
+    image: linuxserver/duplicati:2.1.0
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 8200
+      published: '8200'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/Duplicati/backups
+      target: /backups
+    - type: bind
+      source: /DATA/Duplicati/source
+      target: /source
+    container_name: duplicati
+x-casaos:
+  app_id: org.icewhale.duplicati
+  main: duplicati
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.duplicati/assets/icon.svg
+  title:
+    en_US: Duplicati
+  index: /
+  port_map: '8200'
+  version: 2.1.0

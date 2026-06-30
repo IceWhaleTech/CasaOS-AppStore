@@ -1,0 +1,38 @@
+{
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "CasaOS Team",
+  "category": "Media",
+  "description": "**Elevate Your Home Media Experience**. qBittorrent transforms your home media setup with a polished interface reminiscent of µTorrent, minus the ads. Unlike traditional download tools, it offers a streamlined, efficient, and ad-free experience. This makes it a perfect fit for those seeking a hassle-free way to manage and enjoy their media collections at home.\n\n**Feature-Rich and User-Friendly**. With qBittorrent, you gain access to a well-integrated and extensible search engine, allowing simultaneous searches across multiple torrent sites, and category-specific searches for books, music, and software. Its support for RSS feeds with advanced filters, magnet links, encrypted connections, and more, ensures you have complete control over your downloads. Available on all major platforms and in around 70 languages, qBittorrent is both versatile and accessible.\n\n**Seamless Integration with Private Clouds like Zima**. Deploying qBittorrent on private cloud devices such as Zima offers unparalleled convenience. Enjoy virtually unlimited storage, enhanced privacy for your data, and local network speeds that make downloading and streaming effortless. This setup ensures that your media library is always at your fingertips, securely and swiftly.\n",
+  "developer": "qBittorrent",
+  "screenshot_link": [
+    "/apps/org.icewhale.qbittorrent/assets/screenshot-1.webp",
+    "/apps/org.icewhale.qbittorrent/assets/screenshot-2.webp",
+    "/apps/org.icewhale.qbittorrent/assets/screenshot-3.webp"
+  ],
+  "tagline": "P2P bittorrent download",
+  "thumbnail": "/apps/org.icewhale.qbittorrent/assets/thumbnail.webp",
+  "tips": {
+    "before_install": "Default Account\n\n| Username | Password |\n|----------|----------|\n| `admin`    | Get from log |\n\nPasswords need to be viewed in the log\n\nDefault Accessible Path in qBittorrent\n\n| Name | Value |\n| ---- | ----- |\n| DATA Path | `/DATA` |\n| Downloads Path | `/DATA/Downloads` |\n| Media Path | `/DATA/Media` |\n\nThe paths of other DATA subdirectories in CasaOS are also similar.\nPlease make sure you use the correct path when using qBittorrent.\n"
+  },
+  "update_at": "2025-04-09",
+  "website": "https://www.qbittorrent.org",
+  "repo": "https://github.com/qbittorrent/qBittorrent",
+  "support": "https://github.com/qbittorrent/qBittorrent/issues",
+  "docs": "https://github.com/qbittorrent/qBittorrent/wiki",
+  "title": "qBittorrent",
+  "release_note": "- release-5.0.4 fixes removing trackers via WebAPI and torrent content checkbox state handling.\n- Peer-list zero/infinity values are hidden only when that setting is Always.\n- Fixes include stopped torrents in the error tracker filter, WebUI context-menu memory leaks, WebAPI string trimming, Windows Qt style handling, and a macOS memory leak.",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "org.icewhale.qbittorrent",
+  "version": "5.0.4",
+  "categories": [
+    "media"
+  ],
+  "min_memory": 268435456,
+  "min_image_size": {
+    "amd64": 59171209,
+    "arm64": 60651583
+  }
+}

@@ -1,0 +1,38 @@
+name: portainer
+services:
+  portainer:
+    image: portainer/portainer-ce:2.31.3
+    deploy:
+      resources:
+        reservations:
+          memory: 32M
+    network_mode: bridge
+    ports:
+    - target: 8000
+      published: '8000'
+      protocol: tcp
+    - target: 9000
+      published: '9000'
+      protocol: tcp
+    - target: 9443
+      published: '9443'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID
+      target: /data
+    - type: bind
+      source: /var/run/docker.sock
+      target: /var/run/docker.sock
+    container_name: portainer
+x-casaos:
+  app_id: org.icewhale.portainer
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.portainer/assets/icon.svg
+  main: portainer
+  title:
+    en_US: Portainer
+  index: /
+  port_map: '9000'
+  scheme: http
+  version: 2.31.3

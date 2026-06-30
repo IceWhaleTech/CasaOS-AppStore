@@ -1,0 +1,55 @@
+name: lyrionmusicserver
+services:
+  lyrionmusicserver:
+    image: lmscommunity/lyrionmusicserver:9.1.1
+    container_name: lyrionmusicserver
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    network_mode: bridge
+    restart: unless-stopped
+    ports:
+    - target: 9000
+      published: '9000'
+      protocol: tcp
+    - target: 9090
+      published: '9090'
+      protocol: tcp
+    - target: 3483
+      published: '3483'
+      protocol: tcp
+    - target: 3483
+      published: '3483'
+      protocol: udp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/Media/Music
+      target: /music
+      read_only: true
+    - type: bind
+      source: /DATA/AppData/$AppID/playlists
+      target: /playlist
+    - type: bind
+      source: /etc/localtime
+      target: /etc/localtime
+      read_only: true
+    - type: bind
+      source: /etc/timezone
+      target: /etc/timezone
+      read_only: true
+    environment:
+      HTTP_PORT: '9000'
+x-casaos:
+  app_id: org.icewhale.lyrionmusicserver
+  main: lyrionmusicserver
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.lyrionmusicserver/assets/icon.svg
+  scheme: http
+  port_map: '9000'
+  index: /
+  title:
+    en_US: LyrionMusicServer
+  version: 9.1.1

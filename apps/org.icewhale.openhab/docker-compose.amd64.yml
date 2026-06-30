@@ -1,0 +1,42 @@
+name: openhab
+services:
+  openhab:
+    environment:
+      CRYPTO_POLICY: unlimited
+      PGID: $PGID
+      PUID: $PUID
+    image: openhab/openhab:5.1.4
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /etc/localtime
+      target: /etc/localtime
+      read_only: true
+    - type: bind
+      source: /etc/timezone
+      target: /etc/timezone
+      read_only: true
+    - type: bind
+      source: /DATA/AppData/$AppID/addons
+      target: /openhab/addons
+    - type: bind
+      source: /DATA/AppData/$AppID/conf
+      target: /openhab/conf
+    - type: bind
+      source: /DATA/AppData/$AppID/userdata
+      target: /openhab/userdata
+    container_name: openhab
+x-casaos:
+  app_id: org.icewhale.openhab
+  main: openhab
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.openhab/assets/icon.svg
+  title:
+    en_US: OpenHAB
+  index: /
+  port_map: '8080'
+  version: 5.1.4

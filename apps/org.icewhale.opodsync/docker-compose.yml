@@ -1,0 +1,41 @@
+name: opodsync
+services:
+  opodsync:
+    image: ganeshlab/opodsync:latest
+    container_name: opodsync
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    ports:
+    - target: 8080
+      published: '8086'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID
+      target: /var/www/server/data
+x-casaos:
+  app_id: org.icewhale.opodsync
+  title:
+    de_DE: oPodSync
+    el_GR: oPodSync
+    en_GB: oPodSync
+    en_US: oPodSync
+    fr_FR: oPodSync
+    hr_HR: oPodSync
+    it_IT: oPodSync
+    ja_JP: oPodSync
+    ko_KR: oPodSync
+    nb_NO: oPodSync
+    pt_PT: oPodSync
+    ru_RU: oPodSync
+    sv_SE: oPodSync
+    tr_TR: oPodSync
+    zh_CN: oPodSync
+  main: opodsync
+  port_map: '8086'
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.opodsync/assets/icon.svg
+  index: /
+  scheme: http
+  version: 0.0.1

@@ -1,0 +1,44 @@
+name: peanut
+services:
+  peanut:
+    image: brandawg93/peanut:6.0.0
+    container_name: PeaNUT
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    ports:
+    - target: 8080
+      published: '8084'
+      protocol: tcp
+    environment:
+      WEB_PORT: 8080
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+x-casaos:
+  app_id: org.icewhale.peanut
+  title:
+    de_DE: PeaNUT
+    el_GR: PeaNUT
+    en_GB: PeaNUT
+    en_US: PeaNUT
+    fr_FR: PeaNUT
+    hr_HR: PeaNUT
+    it_IT: PeaNUT
+    ja_JP: PeaNUT
+    ko_KR: PeaNUT
+    nb_NO: PeaNUT
+    pt_PT: PeaNUT
+    ru_RU: PeaNUT
+    sv_SE: PeaNUT
+    tr_TR: PeaNUT
+    zh_CN: PeaNUT
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.peanut/assets/icon.svg
+  main: peanut
+  port_map: '8084'
+  index: /
+  scheme: http
+  version: 6.0.0

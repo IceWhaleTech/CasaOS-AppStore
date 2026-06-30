@@ -1,0 +1,24 @@
+name: openspeedtest
+services:
+  openspeedtest:
+    image: openspeedtest/latest:v2.0.6
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 3000
+      published: '3004'
+      protocol: tcp
+    restart: always
+    container_name: openspeedtest
+x-casaos:
+  app_id: org.icewhale.openspeedtest
+  main: openspeedtest
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.openspeedtest/assets/icon.svg
+  title:
+    en_US: OpenSpeedTest
+  index: /
+  port_map: '3004'
+  version: 2.0.6

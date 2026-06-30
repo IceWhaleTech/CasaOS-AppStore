@@ -1,0 +1,369 @@
+name: ragflow
+services:
+  ragflow:
+    container_name: ragflow-server
+    depends_on:
+      ragflow-mysql:
+        condition: service_healthy
+        required: true
+    deploy:
+      resources:
+        reservations:
+          memory: 8G
+    environment:
+    - ES_HOST=ragflow-es01
+    - INFINITY_HOST=ragflow-infinity
+    - MINIO_HOST=ragflow-minio
+    - MYSQL_HOST=ragflow-mysql
+    - OS_HOST=ragflow-opensearch01
+    - REDIS_HOST=ragflow-redis
+    - TZ=$TZ
+    extra_hosts:
+    - host.docker.internal:host-gateway
+    image: icewhaletech/ragflow:v0.21.1
+    ports:
+    - target: 9380
+      published: '9380'
+      protocol: tcp
+    - target: 80
+      published: '30080'
+      protocol: tcp
+    - target: 443
+      published: '10443'
+      protocol: tcp
+    - target: 5678
+      published: '5678'
+      protocol: tcp
+    - target: 5679
+      published: '5679'
+      protocol: tcp
+    - target: 9382
+      published: '9382'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/ragflow-logs
+      target: /ragflow/logs
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /DATA/AppData/$AppID/history_data_agent
+      target: /ragflow/history_data_agent
+      bind:
+        create_host_path: true
+    networks:
+    - ragflow
+    privileged: false
+    cpu_shares: 90
+  ragflow-es01:
+    container_name: ragflow-es01
+    deploy:
+      resources:
+        reservations:
+          memory: 3G
+    environment:
+    - ELASTIC_PASSWORD=infini_rag_flow
+    - TZ=$TZ
+    - bootstrap.memory_lock=false
+    - cluster.routing.allocation.disk.watermark.flood_stage=2gb
+    - cluster.routing.allocation.disk.watermark.high=3gb
+    - cluster.routing.allocation.disk.watermark.low=5gb
+    - discovery.type=single-node
+    - node.name=es01
+    - xpack.security.enabled=true
+    - xpack.security.http.ssl.enabled=false
+    - xpack.security.transport.ssl.enabled=false
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - curl http://localhost:9200
+      timeout: 10s
+      interval: 10s
+      retries: 120
+    image: elasticsearch:8.11.3
+    ports:
+    - target: 9200
+      published: '9200'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/es01
+      target: /usr/share/elasticsearch/data
+    networks:
+    - ragflow
+    privileged: false
+    cpu_shares: 90
+  ragflow-infinity:
+    container_name: ragflow-infinity
+    environment:
+    - TZ=$TZ
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - http://localhost:23820/admin/node/current
+      timeout: 10s
+      interval: 10s
+      retries: 120
+    image: icewhaletech/ragflow-infinity:v0.6.1
+    ports:
+    - target: 23817
+      published: '23817'
+      protocol: tcp
+    - target: 23820
+      published: '23820'
+      protocol: tcp
+    - target: 5432
+      published: '15432'
+      protocol: tcp
+    restart: unless-stopped
+    ulimits:
+      nofile:
+        soft: 500000
+        hard: 500000
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/infinity
+      target: /var/infinity
+    networks:
+    - ragflow
+    privileged: false
+    cpu_shares: 90
+    deploy:
+      resources:
+        reservations:
+          memory: 1.5G
+  ragflow-minio:
+    command:
+    - server
+    - --console-address
+    - :9001
+    - /data
+    container_name: ragflow-minio
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    environment:
+    - MINIO_ROOT_PASSWORD=infini_rag_flow
+    - MINIO_ROOT_USER=rag_flow
+    - TZ=$TZ
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:9000/minio/health/live
+      timeout: 20s
+      interval: 30s
+      retries: 3
+    image: quay.io/minio/minio:RELEASE.2025-06-13T11-33-47Z@sha256:1c681ce493064759564b10039bc3bbc73ec305a37d6c64919f70d9e1785164b1
+    ports:
+    - target: 9000
+      published: '9000'
+      protocol: tcp
+    - target: 9001
+      published: '9001'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/minio
+      target: /data
+    networks:
+    - ragflow
+    privileged: false
+    cpu_shares: 90
+  ragflow-mysql:
+    command:
+    - --max_connections=1000
+    - --character-set-server=utf8mb4
+    - --collation-server=utf8mb4_unicode_ci
+    - --default-authentication-plugin=mysql_native_password
+    - --tls_version=TLSv1.2,TLSv1.3
+    - --binlog_expire_logs_seconds=604800
+    container_name: ragflow-mysql
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    environment:
+    - MYSQL_PASSWORD=infini_rag_flow
+    - MYSQL_ROOT_PASSWORD=mysql
+    - TZ=$TZ
+    healthcheck:
+      test:
+      - CMD
+      - mysqladmin
+      - ping
+      - -uroot
+      - -pinfini_rag_flow
+      timeout: 10s
+      interval: 10s
+      retries: 10
+      start_period: 90s
+    image: icewhaletech/ragflow-mysql:8.0.39
+    ports:
+    - target: 3306
+      published: '5455'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/mysql
+      target: /var/lib/mysql
+    networks:
+    - ragflow
+    privileged: false
+    cpu_shares: 90
+  ragflow-opensearch01:
+    container_name: ragflow-opensearch-01
+    deploy:
+      resources:
+        reservations:
+          memory: 2G
+    environment:
+    - OPENSEARCH_INITIAL_ADMIN_PASSWORD=infini_rag_flow_OS_01
+    - OPENSEARCH_PASSWORD=infini_rag_flow_OS_01
+    - TZ=$TZ
+    - bootstrap.memory_lock=false
+    - cluster.routing.allocation.disk.watermark.flood_stage=2gb
+    - cluster.routing.allocation.disk.watermark.high=3gb
+    - cluster.routing.allocation.disk.watermark.low=5gb
+    - discovery.type=single-node
+    - http.port=9201
+    - node.name=opensearch01
+    - plugins.security.disabled=false
+    - plugins.security.ssl.http.enabled=false
+    - plugins.security.ssl.transport.enabled=true
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - curl http://localhost:9201
+      timeout: 10s
+      interval: 10s
+      retries: 120
+    image: opensearchproject/opensearch:2.19.1
+    ports:
+    - target: 9201
+      published: '9201'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/opensearch01
+      target: /usr/share/opensearch/data
+    networks:
+    - ragflow
+    privileged: false
+    cpu_shares: 90
+  ragflow-redis:
+    command:
+    - redis-server
+    - --requirepass
+    - infini_rag_flow
+    - --maxmemory
+    - 128mb
+    - --maxmemory-policy
+    - allkeys-lru
+    container_name: ragflow-redis
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    healthcheck:
+      test:
+      - CMD
+      - redis-cli
+      - -a
+      - infini_rag_flow
+      - ping
+      timeout: 3s
+      interval: 5s
+      retries: 3
+      start_period: 10s
+    image: valkey/valkey:8
+    ports:
+    - target: 6379
+      published: '6379'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/redis
+      target: /data
+    networks:
+    - ragflow
+    privileged: false
+    cpu_shares: 90
+  ragflow-sandbox-executor-manager:
+    container_name: ragflow-sandbox-executor-manager
+    deploy:
+      resources:
+        limits:
+          memory: 7656M
+        reservations:
+          memory: 512M
+    environment:
+    - SANDBOX_BASE_NODEJS_IMAGE=infiniflow/sandbox-base-nodejs:latest
+    - SANDBOX_BASE_PYTHON_IMAGE=infiniflow/sandbox-base-python:latest
+    - SANDBOX_ENABLE_SECCOMP=false
+    - SANDBOX_EXECUTOR_MANAGER_POOL_SIZE=3
+    - SANDBOX_MAX_MEMORY=256m
+    - SANDBOX_TIMEOUT=10s
+    - TZ=$TZ
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - http://localhost:9385/healthz
+      timeout: 5s
+      interval: 10s
+      retries: 5
+    image: infiniflow/sandbox-executor-manager:latest
+    ports:
+    - target: 9385
+      published: '9385'
+      protocol: tcp
+    privileged: true
+    restart: unless-stopped
+    security_opt:
+    - no-new-privileges:true
+    volumes:
+    - type: bind
+      source: /var/run/docker.sock
+      target: /var/run/docker.sock
+      bind:
+        create_host_path: true
+    networks:
+    - ragflow
+    cpu_shares: 90
+networks:
+  ragflow:
+    driver: bridge
+x-casaos:
+  app_id: org.icewhale.ragflow
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.ragflow/assets/icon.svg
+  index: /
+  main: ragflow
+  port_map: '30080'
+  scheme: http
+  title:
+    de_DE: RagFlow
+    el_GR: RagFlow
+    en_GB: RagFlow
+    en_US: RagFlow
+    fr_FR: RagFlow
+    hr_HR: RagFlow
+    it_IT: RagFlow
+    ja_JP: RagFlow
+    ko_KR: RagFlow
+    nb_NO: RagFlow
+    pt_PT: RagFlow
+    ru_RU: RagFlow
+    sv_SE: RagFlow
+    tr_TR: RagFlow
+    zh_CN: RagFlow
+  version: 0.21.1

@@ -1,0 +1,47 @@
+name: fileflows
+services:
+  fileflows:
+    container_name: fileflows
+    devices:
+    - /dev/dri:/dev/dri
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    hostname: fileflows
+    image: revenz/fileflows:stable
+    restart: unless-stopped
+    ports:
+    - target: 5000
+      published: '19200'
+      protocol: tcp
+    network_mode: bridge
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /app/Data
+    - type: bind
+      source: /DATA/AppData/$AppID/logs
+      target: /app/Logs
+    - type: bind
+      source: /DATA/AppData/$AppID/common
+      target: /app/common
+    - type: bind
+      source: /DATA/AppData/$AppID/temp
+      target: /temp
+    - type: bind
+      source: /DATA/Media
+      target: /Media
+    - type: bind
+      source: /var/run/docker.sock
+      target: /var/run/docker.sock
+x-casaos:
+  app_id: org.icewhale.fileflows
+  main: fileflows
+  port_map: '19200'
+  scheme: http
+  title:
+    en_US: FileFlows
+  index: /
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.fileflows/assets/icon.svg
+  version: 0.0.1

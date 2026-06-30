@@ -1,0 +1,105 @@
+services:
+  linkwarden:
+    image: ghcr.io/linkwarden/linkwarden:v2.14.1@sha256:93a543cca29362849c98e4504a43c65a7222c5a3868da86da9bec364360a8733
+    container_name: linkwarden
+    restart: unless-stopped
+    depends_on:
+      linkwarden-postgres:
+        condition: service_healthy
+      linkwarden-meilisearch:
+        condition: service_started
+    ports:
+    - target: 3000
+      published: '3428'
+      protocol: tcp
+    environment:
+      TZ: $TZ
+      NEXTAUTH_URL: http://localhost:3000/api/v1/auth
+      NEXTAUTH_SECRET: abc123
+      DATABASE_URL: postgresql://postgres:abc123@linkwarden-postgres:5432/linkwarden
+      STORAGE_FOLDER: /data
+      MEILI_HOST: http://linkwarden-meilisearch:7700
+      MEILI_MASTER_KEY: kZWvi7wFylRjEnOTnNrNucG3d7c892HlIBtN3Vr8M-0
+      NEXT_PUBLIC_DISABLE_REGISTRATION: 'false'
+      NEXT_PUBLIC_CREDENTIALS_ENABLED: 'true'
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data/data
+    networks:
+    - linkwarden-net
+    deploy:
+      resources:
+        reservations:
+          memory: 512m
+  linkwarden-postgres:
+    image: postgres:16-alpine
+    container_name: linkwarden-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: abc123
+      POSTGRES_DB: linkwarden
+      TZ: $TZ
+    networks:
+    - linkwarden-net
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/pgdata
+      target: /var/lib/postgresql/data
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - pg_isready -U postgres -d linkwarden
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    deploy:
+      resources:
+        reservations:
+          memory: 256m
+  linkwarden-meilisearch:
+    image: getmeili/meilisearch:v1.12.8
+    container_name: linkwarden-meilisearch
+    restart: unless-stopped
+    environment:
+      MEILI_MASTER_KEY: kZWvi7wFylRjEnOTnNrNucG3d7c892HlIBtN3Vr8M-0
+      MEILI_ENV: production
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/meili_data
+      target: /meili_data
+    networks:
+    - linkwarden-net
+    deploy:
+      resources:
+        reservations:
+          memory: 256m
+networks:
+  linkwarden-net:
+    driver: bridge
+name: linkwarden
+x-casaos:
+  app_id: org.icewhale.linkwarden
+  title:
+    de_DE: Linkwarden
+    el_GR: Linkwarden
+    en_GB: Linkwarden
+    en_US: Linkwarden
+    fr_FR: Linkwarden
+    hr_HR: Linkwarden
+    it_IT: Linkwarden
+    ja_JP: Linkwarden
+    ko_KR: Linkwarden
+    nb_NO: Linkwarden
+    pt_PT: Linkwarden
+    ru_RU: Linkwarden
+    sv_SE: Linkwarden
+    tr_TR: Linkwarden
+    zh_CN: Linkwarden
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.linkwarden/assets/icon.svg
+  main: linkwarden
+  port_map: '3428'
+  index: /
+  scheme: http
+  version: 2.14.1

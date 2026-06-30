@@ -1,0 +1,36 @@
+name: beaverhabittracker
+services:
+  beaverhabittracker:
+    image: daya0576/beaverhabits:0.9.1@sha256:01f14accda372a6d13ef89808a682f0c491350fd516f52842d1e0c7bafb19ad8
+    container_name: beaverhabittracker
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+        reservations:
+          memory: 128M
+    restart: unless-stopped
+    user: 1000:1000
+    ports:
+    - target: 8080
+      published: '15580'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/
+      target: /app/.user
+    environment:
+      HABITS_STORAGE: USER_DISK
+      TRUSTED_LOCAL_EMAIL: your@email.com
+      INDEX_HABIT_DATE_COLUMNS: 5
+      ENABLE_IOS_STANDALONE: true
+x-casaos:
+  app_id: org.icewhale.beaverhabittracker
+  main: beaverhabittracker
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.beaverhabittracker/assets/icon.svg
+  scheme: http
+  port_map: '15580'
+  index: /
+  title:
+    en_US: BeaverHabitTracker
+  version: 0.9.1

@@ -1,0 +1,30 @@
+name: filedrop
+services:
+  filedrop:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: noecl/filedrop:1.0.1
+    deploy:
+      resources:
+        reservations:
+          memory: 2048M
+    restart: unless-stopped
+    ports:
+    - target: 8000
+      published: '8000'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/filedrop/data
+      target: /var/file_drop_files
+    container_name: filedrop
+x-casaos:
+  app_id: org.icewhale.filedrop
+  main: filedrop
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.filedrop/assets/icon.svg
+  title:
+    en_US: FileDrop
+  port_map: '8000'
+  version: 1.0.1

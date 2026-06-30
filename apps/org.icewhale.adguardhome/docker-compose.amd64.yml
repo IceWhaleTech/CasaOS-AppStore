@@ -1,0 +1,43 @@
+name: adguard-home
+services:
+  adguard-home:
+    image: adguard/adguardhome:v0.107.76@sha256:904e081ea2d67fc6440696960eac009c0f649a5eabf44da409dfc36c8b3304c9
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 53
+      published: '531'
+      protocol: tcp
+    - target: 53
+      published: '531'
+      protocol: udp
+    - target: 3000
+      published: '3001'
+      protocol: tcp
+    - target: 853
+      published: '853'
+      protocol: tcp
+    - target: 784
+      published: '784'
+      protocol: udp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/opt/adguardhome/work
+      target: /opt/adguardhome/work
+    - type: bind
+      source: /DATA/AppData/$AppID/opt/adguardhome/conf
+      target: /opt/adguardhome/conf
+    container_name: adguard-home
+x-casaos:
+  app_id: org.icewhale.adguardhome
+  main: adguard-home
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.adguardhome/assets/icon.svg
+  title:
+    en_US: AdGuard Home
+  index: /
+  port_map: '3001'
+  version: 0.107.76

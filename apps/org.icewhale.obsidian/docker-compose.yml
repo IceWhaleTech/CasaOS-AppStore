@@ -1,0 +1,37 @@
+name: obsidian
+services:
+  obsidian:
+    image: lscr.io/linuxserver/obsidian:1.12.7
+    container_name: obsidian
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    shm_size: 1gb
+    network_mode: bridge
+    ports:
+    - target: 3000
+      published: '15323'
+      protocol: tcp
+    - target: 3001
+      published: '15324'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: $TZ
+x-casaos:
+  app_id: org.icewhale.obsidian
+  main: obsidian
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.obsidian/assets/icon.svg
+  scheme: https
+  port_map: '15324'
+  index: /
+  title:
+    en_US: Obsidian
+  version: 1.12.7

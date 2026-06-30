@@ -1,0 +1,30 @@
+name: jenkins
+services:
+  jenkins:
+    image: jenkins/jenkins:lts-jdk17
+    privileged: false
+    user: root
+    restart: always
+    network_mode: bridge
+    cpu_shares: 50
+    ports:
+    - target: 8080
+      published: '8080'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/Jenkins/data
+      target: /data
+    - type: bind
+      source: /var/lib/docker/volumes/b098c98b2c5dec792246dc33375853c05958ace7c144f4aa157326a6f6c0de4c/_data
+      target: /var/jenkins_home
+    container_name: Jenkins
+    hostname: Jenkins
+x-casaos:
+  app_id: org.icewhale.jenkins
+  main: jenkins
+  title:
+    en_US: Jenkins CI/CD
+  port_map: '8080'
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.jenkins/assets/icon.svg
+  version: 2.569.0

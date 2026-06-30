@@ -1,0 +1,41 @@
+name: open-webui-ollama
+services:
+  open-webui-ollama:
+    image: ghcr.io/open-webui/open-webui:ollama@sha256:2ea6539c2fd2eec9c80be99fff6d640c563a51f91f13bf9ac29a1bb588a2ec7d
+    runtime: nvidia
+    ipc: host
+    environment:
+      CPU_FALLBACK: 'true'
+      NVIDIA_VISIBLE_DEVICES: all
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    network_mode: bridge
+    ports:
+    - target: 8080
+      published: '3050'
+      protocol: tcp
+    restart: always
+    volumes:
+    - type: bind
+      source: /DATA/AppData/open-webui-ollama/open-webui
+      target: /app/backend/data
+    - type: bind
+      source: /DATA/AppData/open-webui-ollama/ollama
+      target: /root/.ollama
+    privileged: false
+    container_name: open-webui-ollama
+x-casaos:
+  app_id: org.icewhale.openwebuiollama
+  main: open-webui-ollama
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.openwebuiollama/assets/icon.svg
+  scheme: http
+  title:
+    en_US: Open WebUI
+    en_GB: Open WebUI
+    zh_CN: Open WebUI
+    ja_JP: Open WebUI
+  index: /
+  port_map: '3050'
+  version: 0.9.6

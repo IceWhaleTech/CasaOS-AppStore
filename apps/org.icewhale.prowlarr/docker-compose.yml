@@ -1,0 +1,31 @@
+name: prowlarr
+services:
+  prowlarr:
+    environment:
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/London
+    image: linuxserver/prowlarr:2.3.5
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 9696
+      published: '9696'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/prowlarr/config
+      target: /config
+    container_name: prowlarr
+x-casaos:
+  app_id: org.icewhale.prowlarr
+  main: prowlarr
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.prowlarr/assets/icon.svg
+  title:
+    en_US: Prowlarr
+  port_map: '9696'
+  version: 2.3.5

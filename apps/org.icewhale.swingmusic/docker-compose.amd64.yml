@@ -1,0 +1,25 @@
+name: swingmusic
+services:
+  swingmusic:
+    image: ghcr.io/swingmx/swingmusic:v2.1.4@sha256:ecef8036167876a7d6d81d3a9f0bcbd7641e334afda24b6c9666b1e00112a4ad
+    container_name: swingmusic
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/Media/Music
+      target: /music
+    ports:
+    - 1970:1970
+    restart: unless-stopped
+x-casaos:
+  app_id: org.icewhale.swingmusic
+  main: swingmusic
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.swingmusic/assets/icon.svg
+  title:
+    en_US: Swing Music
+    zh_CN: Swing Music
+  index: /
+  port_map: '1970'
+  version: 2.1.4

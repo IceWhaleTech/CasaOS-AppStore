@@ -1,0 +1,32 @@
+name: postgresql
+services:
+  postgresql:
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      POSTGRES_USER: casaos
+      POSTGRES_PASSWORD: casaos
+      POSTGRES_DB: casaos
+    image: postgres:17.4
+    deploy:
+      resources:
+        reservations:
+          memory: 2048M
+    restart: unless-stopped
+    ports:
+    - target: 5432
+      published: '5432'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/postgresql/data
+      target: /var/lib/postgresql/data
+    container_name: postgresql
+x-casaos:
+  app_id: org.icewhale.postgresql
+  main: postgresql
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.postgresql/assets/icon.svg
+  title:
+    en_US: PostgreSQL
+  version: 17.4.0

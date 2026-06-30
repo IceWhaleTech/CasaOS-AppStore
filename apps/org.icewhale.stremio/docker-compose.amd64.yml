@@ -1,0 +1,39 @@
+name: stremio
+services:
+  stremio:
+    container_name: stremio
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+    environment:
+    - NO_CORS=1
+    - AUTO_SERVER_URL=1
+    devices:
+    - /dev/dri:/dev/dri
+    image: tsaridas/stremio-docker:v1.3.4
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /root/.stremio-server
+    ports:
+    - target: 11470
+      published: '11470'
+      protocol: tcp
+    - target: 8080
+      published: '8100'
+      protocol: tcp
+    restart: unless-stopped
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  app_id: org.icewhale.stremio
+  main: stremio
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.stremio/assets/icon.svg
+  title:
+    en_US: Stremio
+    pt_BR: Stremio
+    zh_CN: Stremio
+  index: /
+  port_map: '8100'
+  version: 1.3.4

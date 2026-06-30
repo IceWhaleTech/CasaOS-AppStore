@@ -1,0 +1,25 @@
+name: duckdns
+services:
+  duckdns:
+    image: lscr.io/linuxserver/duckdns:latest@sha256:0eb181ba4ad101e7ba6976bb7c8f79c4c99234836f8dcb8b3b1c59f7415b312d
+    container_name: duckdns
+    network_mode: host
+    environment:
+    - PUID=1000
+    - PGID=1000
+    - TZ=Etc/UTC
+    - SUBDOMAINS=subdomain1,subdomain2
+    - TOKEN=token
+    - UPDATE_IP=ipv6
+    - LOG_FILE=false
+    volumes:
+    - /DATA/AppData/duckdns:/config
+    restart: unless-stopped
+x-casaos:
+  app_id: org.icewhale.duckdns
+  main: duckdns
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.duckdns/assets/icon.svg
+  title:
+    en_US: duckdns
+  index: /
+  version: 0.0.1

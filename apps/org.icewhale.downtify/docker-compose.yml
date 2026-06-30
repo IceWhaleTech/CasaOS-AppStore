@@ -1,0 +1,34 @@
+name: downtify
+services:
+  downtify:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: ghcr.io/henriquesebastiao/downtify:2.7.0
+    deploy:
+      resources:
+        reservations:
+          memory: 2048M
+    ports:
+    - target: 8000
+      published: '8582'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/Downloads/downtify
+      target: /downloads
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    container_name: downtify
+x-casaos:
+  app_id: org.icewhale.downtify
+  main: downtify
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.downtify/assets/icon.svg
+  title:
+    en_US: Downtify
+  index: /
+  port_map: '8582'
+  version: 2.7.0

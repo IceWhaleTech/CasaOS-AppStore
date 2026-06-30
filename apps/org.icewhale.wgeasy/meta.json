@@ -1,0 +1,40 @@
+{
+  "architectures": [
+    "amd64",
+    "arm",
+    "arm64"
+  ],
+  "tagline": "WEB UI to manage WireGuard VPN.",
+  "description": "You have found the easiest way to install & manage WireGuard on any Linux host!",
+  "screenshot_link": [
+    "/apps/org.icewhale.wgeasy/assets/screenshot-1.webp",
+    "/apps/org.icewhale.wgeasy/assets/screenshot-2.webp",
+    "/apps/org.icewhale.wgeasy/assets/screenshot-3.webp"
+  ],
+  "developer": "WeejeWel",
+  "author": "Sawy",
+  "thumbnail": "",
+  "category": "Networking",
+  "tips": {
+    "before_install": "🔧 Settings\n\nDefault password: `casaos`\n\n⚠️ Warning!\n\nYou need to change at least change the mandatory parameter `WG_HOST` for this app to work properly.\nIt's value has to be a domain (or an IP address) that points to this server (accesible from WAN).\n\nSame applies to the `WG_PORT` parameter. Change it to the port accessible from outside your LAN if it differs from the default 51820.\n"
+  },
+  "update_at": "2024-07-16",
+  "website": "",
+  "repo": "https://github.com/wg-easy/wg-easy",
+  "support": "https://github.com/wg-easy/wg-easy/issues",
+  "docs": "https://wg-easy.github.io/wg-easy/v15.1/",
+  "title": "WireGuard Easy",
+  "release_note": "- v13.0.0 introduces the new h3 framework.\n- It adds UI_CHART_TYPE and includes bug fixes.",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "org.icewhale.wgeasy",
+  "version": "13.0.0",
+  "categories": [
+    "networking"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 52044297,
+    "arm": 50333695,
+    "arm64": 52656355
+  }
+}

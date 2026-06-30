@@ -1,0 +1,22 @@
+name: databag
+services:
+  databag:
+    image: balzack/databag:0.1.18
+    restart: unless-stopped
+    ports:
+    - target: 7000
+      published: 7000
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/databag/data
+      target: /var/lib/databag
+    container_name: databag
+x-casaos:
+  app_id: org.icewhale.databag
+  main: databag
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.databag/assets/icon.svg
+  title:
+    en_US: Databag
+  port_map: '7000'
+  version: 0.1.18

@@ -1,0 +1,37 @@
+name: hermes
+services:
+  hermes:
+    image: nousresearch/hermes-agent:v2026.6.5
+    container_name: hermes
+    deploy:
+      resources:
+        reservations:
+          memory: 1G
+    restart: unless-stopped
+    command:
+    - gateway
+    - run
+    ports:
+    - target: 8642
+      published: '8642'
+      protocol: tcp
+    - target: 9119
+      published: '9119'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/
+      target: /opt/data
+    environment:
+      HERMES_DASHBOARD: 1
+      HERMES_DASHBOARD_INSECURE: 1
+x-casaos:
+  app_id: org.icewhale.hermes
+  main: hermes
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.hermes/assets/icon.svg
+  scheme: http
+  port_map: '9119'
+  index: /
+  title:
+    en_US: Hermes
+  version: 0.16.0

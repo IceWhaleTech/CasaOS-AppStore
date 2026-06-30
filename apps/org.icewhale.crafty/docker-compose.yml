@@ -1,0 +1,30 @@
+name: crafty
+version: '3'
+services:
+  crafty:
+    container_name: crafty-container
+    image: registry.gitlab.com/crafty-controller/crafty-4:4.10.4
+    restart: always
+    environment:
+    - TZ=Etc/UTC
+    ports:
+    - 8111:8443
+    - 8112:8123
+    - 19132:19132/udp
+    - 25500-25600:25500-25600
+    volumes:
+    - /DATA/AppData/crafty/backups:/crafty/backups
+    - /DATA/AppData/crafty/logs:/crafty/logs
+    - /DATA/AppData/crafty/servers:/crafty/servers
+    - /DATA/AppData/crafty/config:/crafty/app/config
+    - /DATA/AppData/crafty/import:/crafty/import
+x-casaos:
+  app_id: org.icewhale.crafty
+  main: crafty
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.crafty/assets/icon.svg
+  title:
+    en_US: Crafty
+  index: /panel
+  scheme: https
+  port_map: '8111'
+  version: 4.10.4

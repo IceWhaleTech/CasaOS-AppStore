@@ -1,0 +1,24 @@
+name: chatbot-ui
+services:
+  chatbot-ui:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: ghcr.io/mckaywrigley/chatbot-ui:main@sha256:257ab32dd5c4796717038cb796c329ade3753f60008fe0df999b379e7e8d8b22
+    network_mode: bridge
+    ports:
+    - target: 3000
+      published: '3080'
+      protocol: tcp
+    restart: unless-stopped
+    container_name: chatbot-ui
+x-casaos:
+  app_id: org.icewhale.chatbotui
+  main: chatbot-ui
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.chatbotui/assets/icon.jpg
+  title:
+    en_US: Chatbot UI
+  index: /
+  port_map: '3080'
+  version: 0.0.1

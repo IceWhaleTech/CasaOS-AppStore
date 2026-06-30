@@ -1,0 +1,35 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "author": "kieraneglin",
+  "category": "Media",
+  "description": "Pinchflat is a self-hosted app for downloading YouTube content built using yt-dlp. It's designed to be lightweight, self-contained, and easy to use. You set up rules for how to download content from YouTube channels or playlists and it'll do the rest, periodically checking for new content.\n\nKey features include:\n- Self-contained - just one Docker container with no external dependencies\n- Powerful naming system so content is stored where and how you want it\n- Easy-to-use web interface with presets to get you started right away\n- First-class support for media center apps like Plex, Jellyfin, and Kodi\n- Supports serving RSS feeds to your favourite podcast app\n- Automatically downloads new content from channels and playlists\n- Supports downloading audio content\n- Custom rules for handling YouTube Shorts and livestreams\n- Apprise support for notifications\n- Optionally automatically delete old content\n- Advanced options like setting cutoff dates and filtering by title\n- Reliable hands-off operation\n- Can pass cookies to YouTube to download your private playlists\n- Sponsorblock integration\n- Supports running custom scripts when after downloading/deleting media\n\nPerfect for people who want to download content for use with a media center app or for those who want to archive media!\n",
+  "developer": "kieraneglin",
+  "screenshot_link": [
+    "/apps/org.icewhale.pinchflat/assets/screenshot-1.webp",
+    "/apps/org.icewhale.pinchflat/assets/screenshot-2.webp"
+  ],
+  "tagline": "Your next YouTube media manager",
+  "thumbnail": "",
+  "tips": {
+    "before_install": "Pinchflat will automatically create the necessary directories and start downloading content based on your configured sources.\n\nMake sure you have enough storage space for your downloads. The app uses /downloads as the default download directory.\n\nAfter installation, access the web interface to configure your YouTube channels and playlists for automatic downloading.\n"
+  },
+  "update_at": "2025-09-27",
+  "website": "",
+  "repo": "https://github.com/kieraneglin/pinchflat",
+  "support": "https://github.com/kieraneglin/pinchflat/issues",
+  "docs": "https://github.com/kieraneglin/pinchflat#readme",
+  "title": "Pinchflat",
+  "release_note": "- Latest upstream release v2025.9.26 includes an important note referencing upstream issue #800.\n- Dockerfiles now include Deno.",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "org.icewhale.pinchflat",
+  "version": "2025.9.26",
+  "categories": [
+    "media"
+  ],
+  "min_memory": 268435456,
+  "min_image_size": {
+    "amd64": 387559721
+  }
+}

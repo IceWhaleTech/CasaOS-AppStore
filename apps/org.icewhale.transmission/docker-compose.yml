@@ -1,0 +1,47 @@
+name: transmission
+services:
+  transmission:
+    environment:
+      PASS: casaos
+      PEERPORT: '51413'
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/London
+      USER: casaos
+    image: linuxserver/transmission:4.1.1
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 9091
+      published: '9091'
+      protocol: tcp
+    - target: 51413
+      published: '51413'
+      protocol: tcp
+    - target: 51413
+      published: '51413'
+      protocol: UDP
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/Downloads
+      target: /downloads
+    - type: bind
+      source: /DATA/Downloads/watch
+      target: /watch
+    container_name: transmission
+x-casaos:
+  app_id: org.icewhale.transmission
+  main: transmission
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.transmission/assets/icon.svg
+  title:
+    en_US: Transmission
+  index: /
+  port_map: '9091'
+  version: 4.1.1

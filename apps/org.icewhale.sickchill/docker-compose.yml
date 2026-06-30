@@ -1,0 +1,37 @@
+name: sickchill
+services:
+  sickchill:
+    environment:
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/London
+    image: linuxserver/sickchill:2023.6.27
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 8081
+      published: '8081'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/sickchill/config
+      target: /config
+    - type: bind
+      source: /DATA/Downloads
+      target: /downloads
+    - type: bind
+      source: /DATA/Media/TV Shows
+      target: /tv
+    container_name: sickchill
+x-casaos:
+  app_id: org.icewhale.sickchill
+  main: sickchill
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.sickchill/assets/icon.svg
+  title:
+    en_US: Sickchill
+  port_map: '8081'
+  version: 2023.6.27

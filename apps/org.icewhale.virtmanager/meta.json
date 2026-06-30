@@ -1,0 +1,36 @@
+{
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "mber5",
+  "category": "Developer",
+  "tips": {
+    "before_install": "# PLEASE READ WELL!\n## Installing Necessary Dependencies on Host\n\nTo make sure that everything works, you should first install ``qemu`` and ``libvirt`` on your system for the Virtual Machine Manager application to work, because otherwise it doesn't and won't be able to connect to the QEMU/KVM connection (this always applies if you have left HOST at the default).\n\nUbuntu/Debian/Raspberry Pi OS:\n```\nsudo apt update\nsudo apt install -y qemu-kvm libvirt-daemon-system libvirt-clients\n```\nAlpine Linux:\n```\nsudo apk update\nsudo apk add qemu libvirt qemu-img\nsudo rc-update add libvirtd default\nsudo systemctl enable --now libvirtd\n```\nOpenWrt (compile from source):\n```\n# Install necessary packages to compile from source\nsudo opkg update\nsudo opkg install build-essential libtool automake autoconf pkg-config libudev-dev libnl-tiny-dev glib2-dev libssl-dev\n\n# Clone QEMU and libvirt repositories\ngit clone https://github.com/qemu/qemu.git\ngit clone https://github.com/libvirt/libvirt.git\n\n# Build and install QEMU\ncd qemu\n./configure\nmake -j$(nproc)\nsudo make install\n\n# Build and install libvirt\ncd ../libvirt\n./autogen.sh\n./configure\nmake -j$(nproc)\nsudo make install\n```\nArch Linux:\n```\nsudo pacman -S --noconfirm qemu libvirt virt-manager\nsudo systemctl enable --now libvirtd\n```\n\n## Setting up Directories (for ISO Images, Hard Disk Images etc.)\n\nIn order to set up directories and volumes for storing and accessing things (ISO and hard disk images for example), you can go to the panel for Virtual Machine Manager, right click on the 'QEMU/KVM' text at the homepage of Virtual Machine Manager and click on on 'Details'. From there, go to 'Storage' and click on the green plus icon. From there, you can choose a pool name and use 'Target Path' to choose the desired directory. E.g. for ISO images you can choose /DATA/Downloads (mounted on container at default) as directory to store ISO images. Then create it, and you're good to go! You can do the same if you'd want to store the hard disk images on another location or another drive (a volume/mount first needs to be configured with the settings of the Docker container of Virtual Machine Manager) and make sure to point it to the same path as on the host, in order to resolve conflicts when connecting to the server remotely! Also, if you desire you could also choose the ISO images manually from a path later on, but it has to be on the drive that the server uses and mounted.\n## Troubleshooting\n### No Connection Found\n\nJust go to 'File' > 'Add Connection...'. Make sure that the hypervisor is on QEMU/KVM and do NOT check the SSH option. I'd recommend to leave the automatic connection option turned on, and click 'Connect'. It should then be fixed!\n"
+  },
+  "description": "A GTK Broadway web UI for libvirt and virt-manager, to run virtual machines using QEMU/KVM.",
+  "developer": "Red Hat",
+  "screenshot_link": [
+    "/apps/org.icewhale.virtmanager/assets/screenshot-1.webp",
+    "/apps/org.icewhale.virtmanager/assets/screenshot-2.webp"
+  ],
+  "tagline": "A GTK Broadway web UI for libvirt and virt-manager.",
+  "update_at": "2023-02-01",
+  "website": "https://virt-manager.org",
+  "repo": "https://github.com/m-bers/docker-virt-manager",
+  "support": "https://github.com/m-bers/docker-virt-manager/issues",
+  "docs": "https://github.com/m-bers/docker-virt-manager#readme",
+  "title": "Virtual Machine Manager",
+  "release_note": "",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "org.icewhale.virtmanager",
+  "version": "0.0.1",
+  "categories": [
+    "developer"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 0,
+    "arm64": 0
+  }
+}

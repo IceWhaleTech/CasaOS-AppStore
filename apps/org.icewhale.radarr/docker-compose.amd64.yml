@@ -1,0 +1,38 @@
+name: radarr
+services:
+  radarr:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: linuxserver/radarr:6.1.1
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    network_mode: bridge
+    ports:
+    - target: 7878
+      published: '7878'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA/Media/Movies
+      target: /movies
+    - type: bind
+      source: /DATA/Downloads
+      target: /downloads
+    container_name: radarr
+x-casaos:
+  app_id: org.icewhale.radarr
+  main: radarr
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.radarr/assets/icon.svg
+  title:
+    en_US: Radarr
+  index: /
+  port_map: '7878'
+  version: 6.1.1

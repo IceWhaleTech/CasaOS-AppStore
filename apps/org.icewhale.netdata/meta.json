@@ -1,0 +1,36 @@
+{
+  "architectures": [
+    "amd64",
+    "arm64",
+    "arm"
+  ],
+  "author": "f4bio",
+  "category": "Productivity",
+  "description": "Netdata is a real-time performance and health monitoring solution that helps you visualize and understand the behavior of your systems.",
+  "tagline": "Real-time Performance Monitoring",
+  "hostname": "",
+  "screenshot_link": [
+    "/apps/org.icewhale.netdata/assets/screenshot-1.webp",
+    "/apps/org.icewhale.netdata/assets/screenshot-2.webp",
+    "/apps/org.icewhale.netdata/assets/screenshot-3.webp"
+  ],
+  "update_at": "2026-04-27",
+  "website": "https://www.netdata.cloud",
+  "repo": "https://github.com/netdata/netdata",
+  "support": "https://github.com/netdata/netdata/issues",
+  "docs": "https://learn.netdata.cloud/docs",
+  "title": "Netdata",
+  "release_note": "- v2.10.3 fixes an eBPF per-PID shared-memory pool leak that could fill the pool and peg a CPU core.\n- SNMP uptime collection now uses snmpEngineTime first to avoid TimeTicks wraparound, while keeping the existing systemUptime metric name.\n- Dynamic configuration name validation and go.d/powerstore hardware decoding were fixed.",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "org.icewhale.netdata",
+  "version": "2.10.3",
+  "categories": [
+    "productivity"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 0,
+    "arm": 0,
+    "arm64": 0
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "category": "Productivity",
+  "developer": "ArchiveBox",
+  "author": "ArchiveBox",
+  "tagline": "Self-hosted internet archiving solution",
+  "description": "ArchiveBox is a powerful, self-hosted internet archiving solution that allows you to create your own personal archive of web pages, PDFs, videos, and more. It functions as a personal internet archive, saving content in multiple formats for long-term preservation.\n\nThe system consists of multiple components:\n- **ArchiveBox**: The main application providing the web interface and archiving capabilities\n- **Sonic**: A fast search backend for full-text search across archived content\n- **ArchiveBox Scheduler**: A background service for scheduled archiving tasks\n- **NoVNC**: A web-based VNC client for browser-based archiving\n\n**Key Features:**\n- Save web pages in multiple formats (HTML, PDF, screenshots, etc.)\n- Full-text search across all archived content\n- Scheduled archiving of websites and RSS feeds\n- Browser-based archiving with NoVNC\n- User authentication and access control\n- Extract and save media files (videos, audio, PDFs, etc.)\n\n**Learn More:**\n- [ArchiveBox Official Website](https://archivebox.io)\n- [ArchiveBox GitHub Repository](https://github.com/ArchiveBox/ArchiveBox)\n- [ArchiveBox Documentation](https://github.com/ArchiveBox/ArchiveBox/wiki)\n",
+  "screenshot_link": [
+    "/apps/org.icewhale.archivebox/assets/screenshot-1.webp",
+    "/apps/org.icewhale.archivebox/assets/screenshot-2.webp",
+    "/apps/org.icewhale.archivebox/assets/screenshot-3.webp"
+  ],
+  "thumbnail": "/apps/org.icewhale.archivebox/assets/thumbnail.webp",
+  "tips": {
+    "before_install": "**Default Account**\n\n| Username | Password |\n|----------|----------|\n| `casaos`    | `casaos` |\n"
+  },
+  "update_at": "2026-05-18",
+  "website": "https://archivebox.io",
+  "repo": "https://github.com/ArchiveBox/ArchiveBox",
+  "support": "https://github.com/ArchiveBox/ArchiveBox/issues",
+  "docs": "https://github.com/ArchiveBox/ArchiveBox/wiki",
+  "title": "ArchiveBox",
+  "release_note": "- v0.7.4 refreshes Docker container dependencies and 0.7.x package metadata/lockfiles.\n- Chromium, Node.js, gosu, yt-dlp, single-file, curl, wget, git, ripgrep, ffmpeg, and Python dependencies were updated.\n- Back up archives before upgrading and run archivebox version after the update.",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "org.icewhale.archivebox",
+  "version": "0.7.4",
+  "categories": [
+    "productivity"
+  ],
+  "min_memory": 536870912,
+  "min_image_size": {
+    "amd64": 1313938483
+  }
+}

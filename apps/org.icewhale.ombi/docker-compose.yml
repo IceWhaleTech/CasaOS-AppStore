@@ -1,0 +1,32 @@
+name: ombi
+services:
+  ombi:
+    environment:
+      BASE_URL: /ombi
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/London
+    image: linuxserver/ombi:4.53.5
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 3579
+      published: '3579'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/ombi/config
+      target: /config
+    container_name: ombi
+x-casaos:
+  app_id: org.icewhale.ombi
+  main: ombi
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.ombi/assets/icon.svg
+  title:
+    en_US: Ombi
+  port_map: '3579'
+  version: 4.53.5

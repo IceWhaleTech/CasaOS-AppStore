@@ -1,0 +1,44 @@
+{
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "mafen",
+  "category": "Networking",
+  "tips": {
+    "before_install": "This is the agent for use with playit.gg's reverse proxy. After having installed the container/app, you have to go to the settings of the container/app and go to the logs. The logs will tell you to click a link to activate the agent. Copy the link (you will have to do it manually with your cursor) and paste it in your web browser in a new tab. This will open a page asking you to login or register. If you have an account already then you can login. If not, register an account. Once you're logged in, it will ask to allow the agent. Allow the agent and remember the agent name. Then head over to https://playit.gg/account/agents. From there you need to select the correct agent, according to the agent name you just were to remember. From there you can add tunnels. Choose the options for the tunnel as you need, and a port in case of doing it manually with TCP, UDP and TCP+UDP. After that use the provided domain and port to connect to the tunnel and use that to get access to your tunneled service!\n",
+    "en_US": "playit.gg is a global proxy that allows anyone to host a server without port forwarding. We use tunneling. Only the server needs to run the program, not every player!",
+    "zh_CN": "playit.gg 是一款全球代理服务器，允许任何人在无需端口转发的情况下托管服务器。我们使用隧道技术。只有服务器需要运行该程序，而不是每个玩家！",
+    "ar_SA": "playit.gg هو وكيل عالمي يسمح لأي شخص باستضافة خادم دون إعادة توجيه المنفذ. نحن نستخدم النفق. يحتاج الخادم فقط إلى تشغيل البرنامج، وليس كل لاعب!",
+    "de_DE": "playit.gg ist ein globaler Proxy, der es jedem ermöglicht, einen Server ohne Portweiterleitung zu hosten. Wir verwenden Tunneling. Nur der Server muss das Programm ausführen, nicht jeder Spieler!",
+    "es_ES": "playit.gg es un proxy global que permite a cualquiera alojar un servidor sin reenvío de puertos. Utilizamos tunneling. Sólo el servidor necesita ejecutar el programa, ¡no todos los jugadores!",
+    "fr_FR": "playit.gg est un proxy global qui permet à n'importe qui d'héberger un serveur sans transfert de port. Nous utilisons le tunneling. Seul le serveur a besoin d'exécuter le programme, pas tous les joueurs !",
+    "hu_HU": "A playit.gg egy globális proxy, amely lehetővé teszi, hogy bárki porttovábbítás nélkül szervert üzemeltessen. Mi tunnelinget használunk. Csak a szervernek kell futtatnia a programot, nem minden játékosnak!",
+    "it_IT": "playit.gg è un proxy globale che consente a chiunque di ospitare un server senza port forwarding. Utilizziamo il tunneling. Solo il server deve eseguire il programma, non tutti i giocatori!",
+    "ru_RU": "playit.gg - это глобальный прокси-сервер, который позволяет любому желающему разместить у себя сервер без проброса портов. Мы используем туннелирование. Только сервер должен запускать программу, а не каждый игрок!",
+    "pl_PL": "playit.gg to globalne proxy, które pozwala każdemu na hostowanie serwera bez przekierowania portów. Używamy tunelowania. Tylko serwer musi uruchomić program, nie każdy gracz!",
+    "pt_BR": "O playit.gg é um proxy global que permite a qualquer pessoa hospedar um servidor sem encaminhamento de porta. Usamos o tunelamento. Somente o servidor precisa executar o programa, não todos os jogadores!",
+    "sv_SE": "playit.gg är en global proxy som gör det möjligt för vem som helst att vara värd för en server utan port vidarebefordran. Vi använder tunnlar. Endast servern behöver köra programmet, inte varje spelare!",
+    "uk_UA": "playit.gg - це глобальний проксі, який дозволяє будь-кому розмістити сервер без переадресації портів. Ми використовуємо тунелювання. Тільки сервер повинен запускати програму, а не кожен гравець!"
+  },
+  "developer": "Patrick Lorio",
+  "tagline": "A free reverse proxy for tunneling services (not self-hosted).",
+  "update_at": "2024-11-11",
+  "website": "https://playit.gg",
+  "repo": "https://github.com/playit-cloud/playit-agent",
+  "support": "https://playit.gg/support/",
+  "docs": "https://playit.gg/docs",
+  "title": "Playit Agent",
+  "release_note": "",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "org.icewhale.playitagent",
+  "version": "1.0.10",
+  "categories": [
+    "networking"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 108347890,
+    "arm64": 107118347
+  }
+}

@@ -1,0 +1,31 @@
+name: nextcloud
+services:
+  nextcloud:
+    image: nextcloud:33.0.3
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    network_mode: bridge
+    ports:
+    - target: 80
+      published: '10081'
+      protocol: tcp
+    - target: 443
+      published: '10443'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/var/www/html
+      target: /var/www/html
+    container_name: nextcloud
+x-casaos:
+  app_id: org.icewhale.nextcloud
+  main: nextcloud
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.nextcloud/assets/icon.svg
+  title:
+    en_US: Nextcloud
+  index: /
+  port_map: '10081'
+  version: 33.0.3

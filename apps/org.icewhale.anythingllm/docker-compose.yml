@@ -1,0 +1,34 @@
+version: '3.8'
+name: anythingllm
+services:
+  anythingllm:
+    image: mintplexlabs/anythingllm
+    container_name: anythingllm
+    ports:
+    - target: 3001
+      published: 3051
+      protocol: tcp
+    cap_add:
+    - SYS_ADMIN
+    volumes:
+    - type: bind
+      source: /DATA/AppData/anythingllm/storage
+      target: /app/server/storage
+    environment:
+    - STORAGE_DIR=/app/server/storage
+    restart: always
+    extra_hosts:
+    - host.docker.internal:host-gateway
+x-casaos:
+  app_id: org.icewhale.anythingllm
+  main: anythingllm
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.anythingllm/assets/icon.svg
+  scheme: http
+  title:
+    en_US: AnythingLLM
+    en_UK: AnythingLLM
+    zh_CN: AnythingLLM
+    ja_JP: AnythingLLM
+  index: /
+  port_map: '3051'
+  version: 1.14.2

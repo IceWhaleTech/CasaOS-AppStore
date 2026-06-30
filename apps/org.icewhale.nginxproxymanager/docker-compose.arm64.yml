@@ -1,0 +1,38 @@
+name: nginxproxymanager
+services:
+  nginxproxymanager:
+    image: jc21/nginx-proxy-manager:2.13.5
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    network_mode: bridge
+    ports:
+    - target: 80
+      published: '80'
+      protocol: tcp
+    - target: 443
+      published: '443'
+      protocol: tcp
+    - target: 81
+      published: '81'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    - type: bind
+      source: /DATA/AppData/$AppID/etc/letsencrypt
+      target: /etc/letsencrypt
+    container_name: nginxproxymanager
+x-casaos:
+  app_id: org.icewhale.nginxproxymanager
+  main: nginxproxymanager
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.nginxproxymanager/assets/icon.svg
+  title:
+    en_US: Nginx Proxy Manager
+    zh_CN: Nginx 代理管理器
+  index: /
+  port_map: '81'
+  version: 2.13.5

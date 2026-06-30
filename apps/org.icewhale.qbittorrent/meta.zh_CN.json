@@ -1,0 +1,9 @@
+{
+  "id": "org.icewhale.qbittorrent",
+  "description": "**提升家庭媒体体验**。qBittorrent 通过一个类似于 µTorrent 的精美界面来改造您的家庭媒体设置，但没有广告。与传统下载工具不同，它提供了简洁、高效且无广告的体验，非常适合那些希望在家中轻松管理和享受媒体收藏的人。\n\n**功能丰富且用户友好**。使用 qBittorrent，您可以访问一个集成良好的可扩展搜索引擎，允许同时在多个种子站点进行搜索，并针对书籍、音乐和软件进行分类搜索。它支持带有高级过滤器的 RSS 提要、磁力链接、加密连接等功能，确保您完全控制下载过程。qBittorrent 在所有主要平台上可用，并支持约 70 种语言，既多功能又易于访问。\n\n**与 Zima 等私有云的无缝集成**。在像 Zima 这样的私有云设备上部署 qBittorrent，提供无与伦比的便利。享受几乎无限的存储空间、增强的数据隐私以及使下载和流媒体播放变得轻而易举的本地网络速度。这种设置确保您的媒体库始终触手可及，安全且快速。\n",
+  "tagline": "P2P BT 下载",
+  "release_note": "- release-5.0.4 修复了通过 WebAPI 删除 trackers，以及 torrent content checkbox state 处理。\n- peer list 中的 zero/infinity 值只会在该设置为 Always 时隐藏。\n- 修复还包括 error tracker filter 中的 stopped torrents、WebUI context-menu 内存泄漏、WebAPI 字符串 trim、Windows Qt style 处理，以及一个 macOS 内存泄漏。",
+  "tips": {
+    "before_install": "默认账号\n\n| Username | Password   |\n| -------- | ---------- |\n| admin    | 从日志中获取 |\n\n需要在日志中查看密码\n\n\nqBittorrent 默认可访问路径\n\n| 名称 | 值 |\n| ---- | ----- |\n| DATA 路径 | `/DATA` |\n| 下载路径 | `/DATA/Downloads` |\n| 媒体路径 | `/DATA/Media` |\n\nCasaOS 其他 DATA 子目录的路径也类似。\n请确保在使用 qBittorrent 时使用正确的路径。\n\n使用教程\n1. [QB使用教程](https://blog.scio.icu/index.php/archives/12/#cl-13)\n\nFQA:\n1. 下载没有速度怎么办\n可以添加tracker。教程：https://www.bilibili.com/read/cv5734112/\n\n2. 如何重置密码\nWIP\n"
+  }
+}

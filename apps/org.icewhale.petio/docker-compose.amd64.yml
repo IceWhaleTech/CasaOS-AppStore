@@ -1,0 +1,47 @@
+name: petio
+services:
+  petio:
+    image: ghcr.io/petio-team/petio@sha256:1c5a9276a844f4284601cbe332905864950545ebdeaad74bacb9097ea4f4b333
+    restart: unless-stopped
+    networks:
+    - petio-network
+    depends_on:
+    - mongo
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+    ports:
+    - target: 7777
+      published: '7777'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/petio/config
+      target: /app/api/config
+    - type: bind
+      source: /DATA/AppData/petio/logs
+      target: /app/logs
+    container_name: petio-petio
+  mongo:
+    image: mongo:4.4.22
+    restart: unless-stopped
+    hostname: mongo
+    networks:
+    - petio-network
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+    container_name: petio-mongo
+networks:
+  petio-network:
+    driver: bridge
+x-casaos:
+  app_id: org.icewhale.petio
+  main: petio
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.petio/assets/icon.svg
+  title:
+    en_US: Petio
+  port_map: '7777'
+  version: 0.5.5

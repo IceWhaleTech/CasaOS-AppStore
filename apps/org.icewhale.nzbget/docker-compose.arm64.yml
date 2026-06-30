@@ -1,0 +1,36 @@
+name: nzbget
+services:
+  nzbget:
+    environment:
+      NZBGET_PASS: tegbzn6789
+      NZBGET_USER: nzbget
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/London
+    image: linuxserver/nzbget:26.1.20260522
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 6789
+      published: '6789'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/nzbget/config
+      target: /config
+    - type: bind
+      source: /DATA/Downloads
+      target: /downloads
+    container_name: nzbget
+x-casaos:
+  app_id: org.icewhale.nzbget
+  main: nzbget
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.nzbget/assets/icon.svg
+  title:
+    en_US: Nzbget
+  port_map: '6789'
+  version: 26.1.20260522

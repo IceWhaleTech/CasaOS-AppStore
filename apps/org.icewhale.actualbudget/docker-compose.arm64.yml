@@ -1,0 +1,28 @@
+name: actualbudget
+services:
+  actualbudget:
+    image: actualbudget/actual-server:26.5.2@sha256:d5e6acebe5935dd3eddc94639914e0d1c1a5a63aa392085de6a8d1c4f4e81f0f
+    container_name: actualbudget
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID
+      target: /data
+    ports:
+    - target: 5006
+      published: '15006'
+      protocol: tcp
+x-casaos:
+  app_id: org.icewhale.actualbudget
+  main: actualbudget
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.actualbudget/assets/icon.svg
+  scheme: http
+  port_map: '15006'
+  index: /
+  title:
+    en_US: Actual Budget
+  version: 26.5.2

@@ -1,0 +1,22 @@
+name: alist-sync
+services:
+  alist-sync:
+    image: xjxjin/alist-sync:1.1.5@sha256:843eb6d64cfb64802482774344f0aa014bd5e8aeab4ab814948b7044b797b296
+    container_name: alist-sync
+    restart: unless-stopped
+    ports:
+    - 52441:52441
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /app/data
+    environment:
+    - TZ=Asia/Shanghai
+x-casaos:
+  app_id: org.icewhale.alistsync
+  main: alist-sync
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.alistsync/assets/icon.svg
+  title:
+    en_US: Alist-Sync
+  port_map: '52441'
+  version: 1.1.5

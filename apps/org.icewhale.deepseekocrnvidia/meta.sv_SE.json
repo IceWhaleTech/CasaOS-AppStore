@@ -1,0 +1,9 @@
+{
+  "id": "org.icewhale.deepseekocrnvidia",
+  "title": "DeepSeek OCR(Nvidia GPU)",
+  "description": "DeepSeek OCR är ett kraftfullt open source OCR-verktyg (Optical Character Recognition) baserat på den avancerade DeepSeek-AI-modellen. Det möjliggör exakt textutvinning från bilder och documentskanningar via ett användarvänligt webbgränssnitt och API. Stödjer olika bildformat och erbjuder konfigurationer för bildstorlek, beskärning och uppladdningsgränser. Dessutom har DeepSeek OCR fyra kärnigenkänningslägen: Plain OCR för rå textextrahering, Describe för intelligenta bildinnehållsbeskrivningar, Find för nyckelordslokalisering med visuella begränsningsrutor, och Freeform för flexibla bildförståelseuppgifter baserade på anpassade uppmaningar.\n\n**Nyckelfunktioner:**\n- Hög noggrannhet textigenkänning med DeepSeek-OCR, stöder bilder och flersidiga PDF-dokument\n- Bevarar dokumentlayout inklusive tabeller, formler och strukturerad formatering\n- Webb-frontend (React) och REST API (FastAPI) för enkel användning och systemintegration\n- Exportera resultat till Markdown, HTML, DOCX eller JSON-format\n- Automatisk extrahering och inbäddning av bilder från PDF-filer\n- GPU-acceleration och Docker-distribution för snabb och skalbar bearbetning\n\n**Förutsättningar:**\n- ZimaOS version 1.5.2 eller högre, eller NVIDIA Open Driver version 580 eller högre\n- NVIDIA GPU med >= 8 GB VRAM för optimal prestanda\n\n**Läs Mer:**\n- [DeepSeek OCR App (GitHub)](https://github.com/rdumasia303/deepseek_ocr_app)\n",
+  "tagline": "Kraftfull OCR drivet av DeepSeek AI",
+  "tips": {
+    "before_install": "Vid första körningen laddas modellen ned (~5–10 GB), vilket kan ta en stund."
+  }
+}

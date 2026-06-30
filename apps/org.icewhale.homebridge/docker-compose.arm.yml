@@ -1,0 +1,23 @@
+name: homebridge
+version: '2'
+services:
+  homebridge:
+    image: homebridge/homebridge:latest
+    restart: always
+    network_mode: host
+    volumes:
+    - /DATA/AppData/$AppID/config:/homebridge
+    logging:
+      driver: json-file
+      options:
+        max-size: 10mb
+        max-file: '1'
+x-casaos:
+  app_id: org.icewhale.homebridge
+  main: homebridge
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.homebridge/assets/icon.svg
+  title:
+    en_US: Homebridge
+  index: /
+  port_map: '8581'
+  version: 2.1.0

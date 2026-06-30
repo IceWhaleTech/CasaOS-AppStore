@@ -1,0 +1,20 @@
+name: adminer
+services:
+  adminer:
+    image: adminer:5.4.2@sha256:967935ea259337ce78709e40448da9518fe4c12de5f28e2ebb332f0ac266e6bc
+    deploy:
+      resources:
+        reservations:
+          memory: 32M
+    restart: unless-stopped
+    ports:
+    - 8080:8080
+    container_name: adminer
+x-casaos:
+  app_id: org.icewhale.adminer
+  main: adminer
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.adminer/assets/icon.svg
+  title:
+    en_US: Adminer
+  port_map: '8080'
+  version: 5.4.2

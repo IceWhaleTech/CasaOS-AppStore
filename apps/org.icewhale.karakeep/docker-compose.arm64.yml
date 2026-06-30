@@ -1,0 +1,75 @@
+name: karakeep
+services:
+  karakeep:
+    image: ghcr.io/karakeep-app/karakeep:0.32.0@sha256:215d9c8ef733ec823368a95495ac434bd87fdfe4257f9fdb0309c8914ffeae51
+    container_name: karakeep
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    restart: unless-stopped
+    ports:
+    - target: 3000
+      published: '14592'
+      protocol: tcp
+    networks:
+    - karakeep
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /data
+    environment:
+      MEILI_ADDR: http://karakeep-meilisearch:7700
+      BROWSER_WEB_URL: http://karakeep-chrome:9222
+      DATA_DIR: /data
+      NEXTAUTH_URL: http://localhost:14592
+      NEXTAUTH_SECRET: change_this_to_a_long_random_string
+      MEILI_MASTER_KEY: change_this_to_a_long_random_string
+      OPENAI_API_KEY: ''
+  karakeep-chrome:
+    image: gcr.io/zenika-hub/alpine-chrome:124@sha256:2863b1331800da46a405761a3b00d6140b0b6808136700f53b16e1f2d7e12710
+    container_name: karakeep-chrome
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    restart: unless-stopped
+    networks:
+    - karakeep
+    command:
+    - --no-sandbox
+    - --disable-gpu
+    - --disable-dev-shm-usage
+    - --remote-debugging-address=0.0.0.0
+    - --remote-debugging-port=9222
+    - --hide-scrollbars
+  karakeep-meilisearch:
+    image: getmeili/meilisearch:v1.41.0
+    container_name: karakeep-meilisearch
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    networks:
+    - karakeep
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/meilisearch
+      target: /meili_data
+    environment:
+      MEILI_MASTER_KEY: change_this_to_a_long_random_string
+      MEILI_NO_ANALYTICS: 'true'
+networks:
+  karakeep:
+    driver: bridge
+x-casaos:
+  app_id: org.icewhale.karakeep
+  main: karakeep
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.karakeep/assets/icon.svg
+  scheme: http
+  port_map: '14592'
+  index: /
+  title:
+    en_US: Karakeep
+  version: 0.32.0

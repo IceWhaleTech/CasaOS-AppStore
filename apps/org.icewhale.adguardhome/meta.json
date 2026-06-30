@@ -1,0 +1,42 @@
+{
+  "architectures": [
+    "386",
+    "amd64",
+    "arm",
+    "arm64",
+    "ppc64le"
+  ],
+  "author": "CasaOS Team",
+  "category": "Networking",
+  "description": "Difference from Traditional Ad Blockers. Unlike traditional ad-blocking plugins that work only on individual devices, AdGuard Home offers a network-wide solution. By setting it up, you can block ads and trackers across all your home devices without needing to install any additional software on each device. This means comprehensive protection with minimal effort.\n\nHow AdGuard Home Works and How to Use It. AdGuard Home functions as a DNS server that reroutes tracking domains to a \"black hole,\" effectively preventing your devices from connecting to these servers. This blocks ads and trackers not only on your computer but also on your smartphone and smart home devices. To start using AdGuard Home, deploy it on your device, then change the DNS address assigned by DHCP on your router to the IP address of your AdGuard Home server.\n\nBenefits of Deploying AdGuard Home on Zima Private Cloud. Deploying AdGuard Home on a Zima device simplifies network-wide ad and tracker blocking, providing a seamless and secure browsing experience for all your home devices. With Zima, you gain the flexibility to monitor network activity and create custom filtering rules tailored to your needs.\n",
+  "developer": "AdguardTeam",
+  "screenshot_link": [
+    "/apps/org.icewhale.adguardhome/assets/screenshot-1.webp",
+    "/apps/org.icewhale.adguardhome/assets/screenshot-2.webp",
+    "/apps/org.icewhale.adguardhome/assets/screenshot-3.webp"
+  ],
+  "tagline": "Blocking ads & tracking Network-widly",
+  "thumbnail": "/apps/org.icewhale.adguardhome/assets/thumbnail.webp",
+  "tips": {},
+  "update_at": "2026-05-21",
+  "website": "https://adguard.com/en/adguard-home/overview.html",
+  "repo": "https://github.com/AdguardTeam/AdGuardHome",
+  "support": "https://github.com/AdguardTeam/AdGuardHome/issues",
+  "docs": "https://github.com/AdguardTeam/AdGuardHome/wiki",
+  "title": "AdGuard Home",
+  "release_note": "- v0.107.76 fixes DNS caching when DNSSEC is disabled.\n- YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "org.icewhale.adguardhome",
+  "version": "0.107.76",
+  "categories": [
+    "networking"
+  ],
+  "min_memory": 67108864,
+  "min_image_size": {
+    "386": 27515246,
+    "amd64": 28507910,
+    "arm": 27125259,
+    "arm64": 26895182,
+    "ppc64le": 26692433
+  }
+}

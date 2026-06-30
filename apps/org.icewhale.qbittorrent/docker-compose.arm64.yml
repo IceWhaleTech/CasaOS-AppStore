@@ -1,0 +1,36 @@
+name: qbittorrent
+services:
+  qbittorrent:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+      UMASK: '002'
+    image: ghcr.io/hotio/qbittorrent:release-5.0.4@sha256:0bcd0fe12995a9eeff6aa3668d54982656f74e86c86b17310758a5ee33ac6e65
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    network_mode: bridge
+    ports:
+    - target: 8080
+      published: '8181'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/config
+      target: /config
+    - type: bind
+      source: /DATA
+      target: /DATA
+    container_name: qbittorrent
+x-casaos:
+  app_id: org.icewhale.qbittorrent
+  main: qbittorrent
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.qbittorrent/assets/icon.svg
+  title:
+    en_US: qBittorrent
+  index: /
+  port_map: '8181'
+  version: 5.0.4

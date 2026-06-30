@@ -1,0 +1,20 @@
+name: holoplay
+services:
+  holoplay:
+    image: spout8301/holoplay:1.12.3
+    ports:
+    - target: 3000
+      published: '3000'
+      protocol: tcp
+    privileged: true
+    restart: unless-stopped
+    container_name: holoplay
+x-casaos:
+  app_id: org.icewhale.holoplay
+  main: holoplay
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.holoplay/assets/icon.svg
+  title:
+    en_US: HoloPlay
+  index: /
+  port_map: '3000'
+  version: 1.12.3

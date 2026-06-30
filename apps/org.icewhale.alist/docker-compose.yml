@@ -1,0 +1,28 @@
+name: alist
+services:
+  alist:
+    image: xhofe/alist:v3.40.0
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 5244
+      published: '5244'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /opt/alist/data
+    container_name: alist
+x-casaos:
+  app_id: org.icewhale.alist
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.alist/assets/icon.svg
+  main: alist
+  port_map: '5244'
+  scheme: http
+  title:
+    en_US: Alist
+  version: 3.40.0

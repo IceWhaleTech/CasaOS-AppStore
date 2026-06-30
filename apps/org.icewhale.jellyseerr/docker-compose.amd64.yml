@@ -1,0 +1,37 @@
+name: jellyseerr
+services:
+  jellyseerr:
+    cpu_shares: 50
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 256M
+    environment:
+    - LOG_LEVEL=debug
+    - TZ=$TZ
+    image: fallenbagel/jellyseerr:2.7.3
+    ports:
+    - mode: ingress
+      target: 5055
+      published: '5055'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID
+      target: /app/config
+      bind:
+        create_host_path: true
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  app_id: org.icewhale.jellyseerr
+  scheme: http
+  title:
+    en_US: Jellyseerr
+  main: jellyseerr
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.jellyseerr/assets/icon.svg
+  port_map: '5055'
+  version: 2.7.3

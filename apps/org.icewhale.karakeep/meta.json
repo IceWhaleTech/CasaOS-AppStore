@@ -1,0 +1,38 @@
+{
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "category": "Productivity",
+  "developer": "karakeep-app",
+  "author": "karakeep",
+  "tagline": "The Bookmark Everything App",
+  "description": "Karakeep is an open-source, self-hosted bookmark manager for links, notes, images, PDFs, and highlights, built to keep everything you want to save in one place.\nIt automatically fetches titles, descriptions, and previews, then helps you organize your library with AI tagging, full-text search, lists, and rule-based automation.\nWith browser extensions, mobile apps, RSS ingestion, and page archiving, Karakeep works well as both a read-later tool and a durable personal content archive.\n\n**Main Features:**\n- Save links, notes, images, PDFs, and text highlights in one library\n- Auto-fetch titles, descriptions, images, and archived pages for later reading\n- Use AI tagging, summarization, OCR, and full-text search to rediscover content quickly\n- Organize content with tags, collaborative lists, RSS feeds, and rule-based workflows\n- Access your collection through the web app, mobile apps, browser extensions, REST API, and CLI\n\n**Learn More:**\n- [Karakeep Official Website](https://karakeep.app/)\n- [Karakeep GitHub](https://github.com/karakeep-app/karakeep)\n- [Karakeep Documentation](https://docs.karakeep.app/)\n",
+  "screenshot_link": [
+    "/apps/org.icewhale.karakeep/assets/screenshot-1.webp",
+    "/apps/org.icewhale.karakeep/assets/screenshot-2.webp",
+    "/apps/org.icewhale.karakeep/assets/screenshot-3.webp"
+  ],
+  "thumbnail": "/apps/org.icewhale.karakeep/assets/thumbnail.webp",
+  "tips": {
+    "before_install": "Set `NEXTAUTH_URL` to the address you will use to access Karakeep.\nUse long random strings for `NEXTAUTH_SECRET` and `MEILI_MASTER_KEY`, and keep the `MEILI_MASTER_KEY` identical in both `karakeep` and `meilisearch`.\nThe first user to sign up on your instance becomes the admin.\n"
+  },
+  "update_at": "2026-05-08",
+  "website": "https://karakeep.app/",
+  "repo": "https://github.com/karakeep-app/karakeep",
+  "support": "https://github.com/karakeep-app/karakeep/issues",
+  "docs": "https://docs.karakeep.app/",
+  "title": "Karakeep",
+  "release_note": "- v0.32.0 updates the default Meilisearch version to 1.41.0 and improves the Docker Compose development environment.\n- It improves self-hosted operation with granular API key scopes, CLI authentication config storage, new MCP/API capabilities, event logging, and rule engine enhancements.\n- It includes server-side security fixes for SSRF, rate limiting, stored XSS, and password reset tokens, plus crawler, import, search, and Meilisearch batching fixes.",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "org.icewhale.karakeep",
+  "version": "0.32.0",
+  "categories": [
+    "productivity"
+  ],
+  "min_memory": 1342177280,
+  "min_image_size": {
+    "amd64": 837327310,
+    "arm64": 815936415
+  }
+}

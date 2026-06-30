@@ -1,0 +1,37 @@
+name: webdav
+services:
+  webdav:
+    cpu_shares: 90
+    command: []
+    container_name: webdav
+    deploy:
+      resources:
+        limits:
+          memory: 15806M
+    environment:
+    - GID=1000
+    - PASSWORD=casaos
+    - TZ=Europe/Madrid
+    - UDI=1000
+    - USERNAME=casaos
+    image: ugeek/webdav:amd64
+    ports:
+    - target: 80
+      published: '5005'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /media/ZimaOS-HD/Media
+      target: /media
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  app_id: org.icewhale.webdav
+  main: webdav
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.webdav/assets/icon.svg
+  title:
+    en_US: WebDAV
+  index: /
+  port_map: '5005'
+  version: 0.0.1

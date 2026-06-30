@@ -1,0 +1,37 @@
+name: bazarr
+services:
+  bazarr:
+    environment:
+      PGID: '1000'
+      PUID: '1000'
+      TZ: Europe/London
+    image: linuxserver/bazarr:1.5.6@sha256:0b68397d2df7176720cf06080a7e4ac0db48fe67b586a9779055c094141ed4c4
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 6767
+      published: '6767'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/Media/Movies
+      target: /movies
+    - type: bind
+      source: /DATA/Media/TV Shows
+      target: /tv
+    - type: bind
+      source: /DATA/AppData/bazarr/config
+      target: /config
+    container_name: bazarr
+x-casaos:
+  app_id: org.icewhale.bazarr
+  main: bazarr
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.bazarr/assets/icon.svg
+  title:
+    en_US: Bazarr
+  port_map: '6767'
+  version: 1.5.6

@@ -1,0 +1,115 @@
+name: teable
+services:
+  teable:
+    image: teableio/teable:latest
+    container_name: teable
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    ports:
+    - target: 3000
+      published: '3200'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/assets
+      target: /app/.assets
+    environment:
+    - TZ=$TZ
+    - NEXT_ENV_IMAGES_ALL_REMOTE=true
+    - PUBLIC_ORIGIN=http://127.0.0.1:3000
+    - PRISMA_DATABASE_URL=postgresql://example:example@teable-db:5432/teable-db
+    - BACKEND_CACHE_PROVIDER=redis
+    - BACKEND_CACHE_REDIS_URI=redis://default:password@teable-cache:6379/0
+    networks:
+    - teable-network
+    depends_on:
+      teable-db:
+        condition: service_healthy
+      teable-cache:
+        condition: service_healthy
+  teable-db:
+    image: postgres:15
+    restart: unless-stopped
+    container_name: teable-db
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/data
+      target: /var/lib/postgresql/data
+    environment:
+    - TZ=$TZ
+    - POSTGRES_DB=teable-db
+    - POSTGRES_USER=example
+    - POSTGRES_PASSWORD=example
+    networks:
+    - teable-network
+    healthcheck:
+      test:
+      - CMD-SHELL
+      - sh -c 'pg_isready -U example -d teable-db'
+      interval: 10s
+      timeout: 3s
+      retries: 3
+  teable-cache:
+    image: redis:7.2.4
+    restart: unless-stopped
+    container_name: teable-cache
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    expose:
+    - '6379'
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/teable-cache-data
+      target: /data
+    networks:
+    - teable-network
+    command:
+    - redis-server
+    - --requirepass password
+    healthcheck:
+      test:
+      - CMD
+      - redis-cli
+      - --raw
+      - incr
+      - ping
+      interval: 10s
+      timeout: 3s
+      retries: 3
+networks:
+  teable-network:
+    name: teable-network
+    driver: bridge
+x-casaos:
+  app_id: org.icewhale.teable
+  title:
+    de_DE: Teable
+    el_GR: Teable
+    en_GB: Teable
+    en_US: Teable
+    fr_FR: Teable
+    hr_HR: Teable
+    it_IT: Teable
+    ja_JP: Teable
+    ko_KR: Teable
+    nb_NO: Teable
+    pt_PT: Teable
+    ru_RU: Teable
+    sv_SE: Teable
+    tr_TR: Teable
+    zh_CN: Teable
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.teable/assets/icon.svg
+  main: teable
+  port_map: '3200'
+  index: /
+  scheme: http
+  version: 0.0.1

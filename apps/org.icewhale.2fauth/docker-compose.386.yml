@@ -1,0 +1,30 @@
+name: 2fauth
+services:
+  2fauth:
+    image: 2fauth/2fauth:6.1.3@sha256:2c5cbe5d0999be1ec61b074d7a611c568402c390eb2ea05c4edf5ea559330fc0
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+    - target: 8000
+      published: '8000'
+      protocol: tcp
+    restart: always
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID
+      target: /2fauth
+    environment:
+      APP_KEY: SomeRandomStringOf32CharsExactly
+    container_name: 2fauth
+x-casaos:
+  app_id: org.icewhale.2fauth
+  main: 2fauth
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.2fauth/assets/icon.svg
+  title:
+    en_US: 2FAuth
+  index: /
+  port_map: '8000'
+  version: 6.1.3

@@ -1,0 +1,28 @@
+name: mongodb
+services:
+  mongo:
+    image: mongo:8.2.2
+    restart: unless-stopped
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+    ports:
+    - target: 27017
+      published: 27017
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/mongo/data/configdb
+      target: /data/configdb
+    - type: bind
+      source: /DATA/AppData/mongo/data/db
+      target: /data/db
+    container_name: mongo
+x-casaos:
+  app_id: org.icewhale.mongodb
+  main: mongo
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.mongodb/assets/icon.svg
+  title:
+    en_US: MongoDB
+  version: 8.2.2

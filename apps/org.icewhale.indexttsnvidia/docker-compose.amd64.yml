@@ -1,0 +1,45 @@
+name: index-tts-nvidia
+services:
+  index-tts-nvidia:
+    image: icewhaletech/index-tts:2.0
+    container_name: index-tts
+    restart: unless-stopped
+    ports:
+    - target: 7860
+      published: '7867'
+      protocol: tcp
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+    deploy:
+      resources:
+        reservations:
+          memory: 8G
+          devices:
+          - driver: nvidia
+            count: all
+            capabilities:
+            - gpu
+x-casaos:
+  app_id: org.icewhale.indexttsnvidia
+  title:
+    de_DE: Index-TTS(Nvidia GPU)
+    el_GR: Index-TTS(Nvidia GPU)
+    en_GB: Index-TTS(Nvidia GPU)
+    en_US: Index-TTS(Nvidia GPU)
+    fr_FR: Index-TTS(Nvidia GPU)
+    hr_HR: Index-TTS(Nvidia GPU)
+    it_IT: Index-TTS(Nvidia GPU)
+    ja_JP: Index-TTS(Nvidia GPU)
+    ko_KR: Index-TTS(Nvidia GPU)
+    nb_NO: Index-TTS(Nvidia GPU)
+    pt_PT: Index-TTS(Nvidia GPU)
+    ru_RU: Index-TTS(Nvidia GPU)
+    sv_SE: Index-TTS(Nvidia GPU)
+    tr_TR: Index-TTS(Nvidia GPU)
+    zh_CN: Index-TTS(Nvidia GPU)
+  main: index-tts-nvidia
+  port_map: '7867'
+  index: /
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.indexttsnvidia/assets/icon.svg
+  version: 2.0.0

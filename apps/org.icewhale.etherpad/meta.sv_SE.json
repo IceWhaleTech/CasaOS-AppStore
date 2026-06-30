@@ -1,0 +1,9 @@
+{
+  "id": "org.icewhale.etherpad",
+  "description": "Etherpad är en samarbetseditor för dokument i realtid där flera personer kan redigera samma pad samtidigt, och varje ändring synkroniseras direkt och färgkodas per författare.\nSjälvhostad, öppen källkod och helt under din kontroll passar den bra för mötesanteckningar, brainstorming, gemensamt skrivande och lätt kunskapsinsamling.\nDen levereras med en inbyggd administrationspanel, ett plugin-ekosystem med över 250 tillägg, inbyggd import och export för DOCX/PDF/Markdown samt containerstöd för flera arkitekturer (amd64 + arm64).\n\n**Huvudfunktioner:**\n- Samarbetsredigering i realtid med omedelbar synkronisering\n- Färgkodning per författare för tydlig attribution\n- Inbyggd administrationspanel och plugin-ekosystem med över 250 tillägg\n- Inbyggd import och export av DOCX, PDF och Markdown\n- Öppen källkod och självhostad drift med stöd för amd64 och arm64\n\n**Lär Dig Mer:**\n- [Etherpad Officiella Webbplats](https://etherpad.org/)\n- [Etherpad GitHub](https://github.com/ether/etherpad)\n- [Etherpad Dokumentation](https://docs.etherpad.org/)\n",
+  "tagline": "Samarbetseditor för dokument i realtid",
+  "release_note": "- Etherpad v3.1.0 lägger till autonoma självuppdateringar på nivå 4 med underhållsfönster, förhandskontroller och e-postaviseringar vid fel och återställningar.\n- Det inför också riktig SMTP-leverans för uppdateringsmejl och innehåller säkerhetshärdning för API, export och HTTP samt lokaliseringsuppdateringar.",
+  "tips": {
+    "before_install": "Standardlösenordet för administratören är \"admin\". Ändra ADMIN_PASSWORD innan du exponerar Etherpad mot nätverket. Pads lagras på disk i /DATA/AppData/etherpad/var med den inbyggda dirty-databasen; detta passar bra för personligt bruk och små team. För tyngre produktionsmiljöer med många användare bör du byta DB_TYPE till postgres eller mysql och peka DB_HOST, DB_NAME, DB_USER och DB_PASS mot en extern databas.\n"
+  }
+}

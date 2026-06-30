@@ -1,0 +1,37 @@
+name: pdfding
+services:
+  pdfding:
+    image: mrmn/pdfding:v1.7.2
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    network_mode: bridge
+    ports:
+    - target: 8000
+      published: '8000'
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/db
+      target: /home/nonroot/pdfding/db
+    - type: bind
+      source: /DATA/AppData/$AppID/media
+      target: /home/nonroot/pdfding/media
+    environment:
+    - HOST_NAME=*
+    - SECRET_KEY=your_secret_key_here
+    - CSRF_COOKIE_SECURE=FALSE
+    - SESSION_COOKIE_SECURE=FALSE
+    - DEBUG=FALSE
+    container_name: pdfding
+x-casaos:
+  app_id: org.icewhale.pdfding
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.pdfding/assets/icon.svg
+  main: pdfding
+  port_map: '8000'
+  scheme: http
+  title:
+    en_US: PdfDing
+  version: 1.7.2
