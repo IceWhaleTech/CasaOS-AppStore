@@ -1,7 +1,7 @@
 name: jdownloader2
 services:
   jdownloader2:
-    image: jlesage/jdownloader-2:latest@sha256:58434680f299d09b2732bc64296d77f53b37be0a15eee9ec5a66a9d0ca5687ba
+    image: jlesage/jdownloader-2:latest
     restart: unless-stopped
     environment:
     - USER_ID=$PUID

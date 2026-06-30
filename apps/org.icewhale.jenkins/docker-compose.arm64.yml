@@ -1,7 +1,7 @@
 name: jenkins
 services:
   jenkins:
-    image: jenkins/jenkins:lts-jdk17@sha256:b8f8ecca8c0cf7159f08e4122511c8fd22cb9ac4e42243ea8ec14e7f6e42663b
+    image: jenkins/jenkins:lts-jdk17
     privileged: false
     user: root
     restart: always
