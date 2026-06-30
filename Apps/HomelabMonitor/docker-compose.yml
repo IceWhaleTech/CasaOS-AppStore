@@ -1,0 +1,59 @@
+name: homelab-monitor
+services:
+  homelab-monitor:
+    container_name: homelab-monitor
+    image: sikamikaniko123/homelab-monitor:0.16.0
+    restart: unless-stopped
+    network_mode: bridge
+    privileged: false
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+    ports:
+      - target: 9800
+        published: "9800"
+        protocol: tcp
+
+    x-casaos:
+      ports:
+        - container: "9800"
+          description:
+            en_us: WebUI HTTP Port
+          protocol: tcp
+
+      volumes:
+        - container: /var/run/docker.sock
+          description:
+            en_us: Docker socket for container health monitoring
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: homelab-monitor
+  author: SikamikanikoBG
+  category: Utility
+  description:
+    en_us: Self-hosted homelab dashboard in one Docker container. Per-container GPU/VRAM attribution, Docker health, systemd service status, host vitals, and multiple machines over SSH.
+  developer: SikamikanikoBG
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomelabMonitor/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomelabMonitor/screenshot-1.png
+  tagline:
+    en_us: GPU, Docker, systemd, host health - one container.
+  title:
+    en_us: HomeLab Monitor
+  index: /
+  port_map: "9800"
+  scheme: http
+  version: "0.16.0"
+  updateAt: "2026-06-14"
+  website: https://sikamikanikobg.github.io/homelab-monitor/
+  repo: https://github.com/SikamikanikoBG/homelab-monitor
+  support: https://github.com/SikamikanikoBG/homelab-monitor/issues
+  docs: https://sikamikanikobg.github.io/homelab-monitor/
