@@ -6,7 +6,7 @@ Scope of this document:
 - For operators building/deploying an external third-party store.
 - For this repository's PR contribution process and repo-specific rules, use [CONTRIBUTING.md](../../CONTRIBUTING.md).
 
-> **📢 What's New:** We've added 7 new optional fields to `meta.json` that enhance store display: `version`, `update_at`, `release_notes`, `website`, `repo`, `support`, and `docs`. These fields are marked with **[New]** in the [meta.json section](#metajson-after-build). In addition, `x-casaos.app_id` is now required in every source `docker-compose.yml`, so existing stores should add it before rebuilding.
+> **📢 What's New:** We've added 7 new optional fields to `meta.json` that enhance store display: `version`, `update_at`, `release_note`, `website`, `repo`, `support`, and `docs`. These fields are marked with **[New]** in the [meta.json section](#metajson-after-build). In addition, `x-casaos.app_id` is now required in every source `docker-compose.yml`, so existing stores should add it before rebuilding.
 
 ## Overview
 
@@ -98,7 +98,9 @@ This file identifies your store. The build script reads it and outputs `store.js
 ```
 
 **Rules for `store_id`:**
-- Lowercase only, `[a-z0-9-]`
+- Letters, digits, dot (`.`), underscore (`_`), and hyphen (`-`) only
+- Uppercase input is allowed, but normalized to lowercase during build
+- Must contain at least one letter or digit
 - Must be globally unique (choose something distinctive)
 - Cannot be `zimaos-appstore` (reserved; also avoid historical reserved value `zimaos-official`)
 
@@ -159,7 +161,8 @@ x-casaos:
 ```
 
 > You can write everything in one docker-compose.yml — the build script will automatically split it into a clean compose file + meta.json.
-> `x-casaos.app_id` is required and must use reverse-domain notation, for example `com.example.myapp`.
+> `x-casaos.app_id` is required and must use reverse-domain style such as `com.example.myapp`. It may only contain letters, digits, `.`, `_`, and `-`, and is normalized to lowercase during build.
+> In source compose, keep using `release_notes`; the build output writes this field as `release_note` inside `meta.json`.
 
 **Multi-service example** (app with database):
 
@@ -463,7 +466,7 @@ Why this matters:
 
 ### Optional improvements
 
-- Add the 7 new metadata fields (`version`, `update_at`, `release_notes`, `website`, `repo`, `support`, `docs`) to enhance store display — see [meta.json](#metajson-after-build)
+- Add the 7 new metadata fields (`version`, `update_at`, `release_note`, `website`, `repo`, `support`, `docs`) to enhance store display — see [meta.json](#metajson-after-build)
 - Add `supported-languages.json` for multi-language output
 - Replace PNG icons with SVG for better quality
 
@@ -483,7 +486,7 @@ You write `store-config.json` in your repository root. The build script always g
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `version` | `int` | Yes | Protocol version, must be `2` |
-| `store_id` | `string` | Yes | Unique store identifier, `[a-z0-9-]` |
+| `store_id` | `string` | Yes | Unique store identifier using letters, digits, `.`, `_`, and `-` |
 | `name` | `object` | Yes | Store display name (i18n) |
 | `description` | `object` | No | Store description (i18n) |
 | `maintainer` | `string` | Yes | Maintainer name |
@@ -557,7 +560,7 @@ Everything else is moved to `meta.json`.
 | `architectures` | `string[]` | Supported CPU architectures |
 | `version` | `string` | **[New, optional]** App version, enhances store display |
 | `update_at` | `string` | **[New, optional]** Update date (recommended `YYYY-MM-DD`, e.g. `"2026-03-01"`), enhances store display |
-| `release_notes` | `string` | **[New, optional]** Release notes (resolved to plain string), enhances store display |
+| `release_note` | `string` | **[New, optional]** Release notes (resolved to plain string), enhances store display |
 | `website` | `string` | **[New, optional]** Official website, enhances store display |
 | `repo` | `string` | **[New, optional]** Source repository, enhances store display |
 | `support` | `string` | **[New, optional]** Support URL, enhances store display |
@@ -639,6 +642,7 @@ All locale keys must use `ll_CC` format (language lowercase + country uppercase)
 The build script normalizes locale keys automatically for:
 - `store-config.json`: `name`, `description`
 - `x-casaos`: `title`, `tagline`, `description`, `release_notes`, and each nested locale object under `tips`
+  The source field name stays `release_notes`, but build output renames it to `release_note` in `meta.json`.
 
 At minimum, provide `en_US` for all i18n fields. For generated locale-specific files, only explicitly defined locales are emitted.
 
@@ -664,11 +668,14 @@ The app ID determines the Docker project name and how ZimaOS identifies your app
 
 **Rules:**
 - `x-casaos.app_id` is required in every source `docker-compose.yml`
-- Must use reverse-domain notation such as `com.example.myapp`
-- Lowercase letters, digits, and dots only
+- Must use reverse-domain style such as `com.example.myapp`
+- Only letters, digits, dots (`.`), underscores (`_`), and hyphens (`-`) are allowed
+- Uppercase input is normalized to lowercase during build
+- The value must contain at least one letter or digit
+- It must contain at least two non-empty dot-separated segments
 - Must be unique within your store
 - Don't worry about conflicts with other stores — ZimaOS handles isolation automatically by prefixing your `store_id` at install time
-- `store_app_id` can still override the build output folder name / install ID, but it does not replace the required reverse-domain `x-casaos.app_id`
+- `store_app_id` can still override the build output folder name / install ID, but it does not replace the required `x-casaos.app_id`
 
 ---
 

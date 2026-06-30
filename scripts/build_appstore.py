@@ -11,6 +11,7 @@ Generates a flat output layout:
     store.{locale}.json            # only when locale is explicitly defined in store i18n
     apps/{app_id}/
       docker-compose.yml
+      docker-compose.{architecture}.yml
       meta.json
       meta.{locale}.json           # only when locale is explicitly defined in app i18n
       assets/
@@ -20,6 +21,7 @@ Generates a flat output layout:
 """
 
 import argparse
+import base64
 import copy
 import hashlib
 import json
@@ -91,12 +93,16 @@ DOCKER_MANIFEST_ACCEPT = ", ".join([
     "application/vnd.docker.distribution.manifest.v2+json",
 ])
 
-PREFERRED_PLATFORM = ("linux", "amd64")
 IMAGE_SIZE_CACHE = {}
+DIGEST_CACHE_ENTRIES = {}
+IMAGE_DIGEST_CACHE = {}
 REGISTRY_TOKEN_CACHE = {}
 RATE_LIMITED_REGISTRIES = {}
 RATE_LIMIT_WARNED_REGISTRIES = set()
 IMAGE_SIZE_CACHE_FILE = None
+DIGEST_CACHE_FILE = None
+DOCKERHUB_USERNAME = os.environ.get("DOCKERHUB_USERNAME", "").strip()
+DOCKERHUB_TOKEN = os.environ.get("DOCKERHUB_TOKEN", "").strip()
 NETWORK_RETRY_ATTEMPTS = 4
 NETWORK_RETRYABLE_HTTP_CODES = {408, 425, 429, 500, 502, 503, 504}
 SEMVER_PATTERN = re.compile(
@@ -107,9 +113,50 @@ SEMVER_PATTERN = re.compile(
     r"(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*))*))?"
     r"(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$"
 )
-REVERSE_DOMAIN_APP_ID_PATTERN = re.compile(
-    r"^[a-z0-9]+(?:\.[a-z0-9]+)+$"
+SAFE_ID_PATTERN = re.compile(
+    r"^(?=.*[a-z0-9])[a-z0-9._-]+$"
 )
+REVERSE_DOMAIN_APP_ID_PATTERN = re.compile(
+    r"^(?=.{3,}$)(?=.*[a-z0-9])[a-z0-9_-]+(?:\.[a-z0-9_-]+)+$"
+)
+
+
+class ArchitectureMismatchError(RuntimeError):
+    """Raised when an app declares an architecture unsupported by its image."""
+
+
+def normalize_safe_id(value):
+    """Normalize a store/app identifier by trimming whitespace and lowercasing."""
+    return str(value or "").strip().lower()
+
+
+def validate_safe_id(raw_value, field_name, context_label):
+    """Validate a safe identifier shared by store_id and x-casaos.app_id."""
+    normalized_value = normalize_safe_id(raw_value)
+    if not normalized_value:
+        raise ValueError(f"{context_label} is missing required {field_name}.")
+
+    if not SAFE_ID_PATTERN.fullmatch(normalized_value):
+        raise ValueError(
+            f"{context_label} has invalid {field_name} '{raw_value}'. It may only "
+            "contain letters, digits, dots (.), underscores (_), and hyphens (-), "
+            "and must include at least one letter or digit."
+        )
+
+    return normalized_value
+
+
+def validate_reverse_domain_app_id(raw_value, context_label):
+    """Validate x-casaos.app_id as a reverse-domain style safe identifier."""
+    normalized_value = validate_safe_id(raw_value, "x-casaos.app_id", context_label)
+    if not REVERSE_DOMAIN_APP_ID_PATTERN.fullmatch(normalized_value):
+        raise ValueError(
+            f"{context_label} has invalid x-casaos.app_id '{raw_value}'. It must "
+            "use reverse-domain style such as 'com.example.myapp', with at least "
+            "two non-empty dot-separated segments, using only letters, digits, "
+            "dots (.), underscores (_), and hyphens (-)."
+        )
+    return normalized_value
 
 
 # ---------------------------------------------------------------------------
@@ -139,6 +186,11 @@ def parse_args():
         "--cache-file",
         default="",
         help="Optional JSON cache file for image metadata (default: <source>/.cache/build_appstore/image-size-cache.json)",
+    )
+    parser.add_argument(
+        "--digest-cache-file",
+        default="",
+        help="Optional JSON cache file for image digest metadata (default: <source>/.cache/build_appstore/image-digest-cache.json)",
     )
     return parser.parse_args()
 
@@ -221,13 +273,16 @@ def get_registry_bearer_token(auth_header):
     if token_url in REGISTRY_TOKEN_CACHE:
         return REGISTRY_TOKEN_CACHE[token_url]
 
-    request = Request(
-        token_url,
-        headers={
-            "User-Agent": "ZimaOS-AppStore-Build/1.0",
-            "Accept": "application/json",
-        },
-    )
+    request_headers = {
+        "User-Agent": "ZimaOS-AppStore-Build/1.0",
+        "Accept": "application/json",
+    }
+    if DOCKERHUB_USERNAME and DOCKERHUB_TOKEN and "auth.docker.io" in token_url:
+        credentials = f"{DOCKERHUB_USERNAME}:{DOCKERHUB_TOKEN}".encode("utf-8")
+        basic_token = base64.b64encode(credentials).decode("ascii")
+        request_headers["Authorization"] = f"Basic {basic_token}"
+
+    request = Request(token_url, headers=request_headers)
     with open_url_with_retries(request, timeout=30) as response:
         body = response.read().decode("utf-8")
     try:
@@ -306,35 +361,107 @@ def registry_json_request(url, headers=None, registry=None):
             raise
 
 
-def resolve_image_to_digest(image_ref):
-    """Resolve any tagged image reference to a digest-pinned reference."""
+def load_digest_cache(cache_file):
+    """Load persisted digest cache from disk."""
+    global DIGEST_CACHE_FILE
+    DIGEST_CACHE_FILE = cache_file
+    if not cache_file.exists():
+        return
+    try:
+        payload = json.loads(cache_file.read_text(encoding="utf-8"))
+    except Exception as exc:
+        print(f"  WARN  Failed to load image digest cache: {cache_file} ({exc})")
+        return
+
+    entries = payload.get("image_digest_cache", {})
+    if not isinstance(entries, dict):
+        return
+
+    for cache_key, image_value in entries.items():
+        if isinstance(cache_key, str) and isinstance(image_value, str) and image_value.strip():
+            IMAGE_DIGEST_CACHE[cache_key] = image_value.strip()
+
+
+def save_digest_cache():
+    """Persist digest cache to disk atomically."""
+    if not DIGEST_CACHE_FILE:
+        return
+    DIGEST_CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "version": 1,
+        "image_digest_cache": {
+            cache_key: image_ref
+            for cache_key, image_ref in sorted(IMAGE_DIGEST_CACHE.items())
+        },
+    }
+    tmp_file = DIGEST_CACHE_FILE.with_suffix(".tmp")
+    tmp_file.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    os.replace(tmp_file, DIGEST_CACHE_FILE)
+
+
+def update_digest_cache_entry(image_ref, architecture, resolved_image):
+    """Store one resolved digest-pinned image and immediately persist cache."""
+    IMAGE_DIGEST_CACHE[get_cache_key(image_ref, architecture)] = resolved_image
+    save_digest_cache()
+
+
+def map_architecture_to_platform(architecture):
+    """Map CasaOS architecture names to OCI manifest platform values."""
+    arch = normalize_architecture_name(architecture)
+    mapping = {
+        "amd64": ("linux", "amd64", None),
+        "arm64": ("linux", "arm64", None),
+        "386": ("linux", "386", None),
+        "arm": ("linux", "arm", None),
+    }
+    return mapping.get(arch, ("linux", arch, None))
+
+
+def resolve_image_to_digest(image_ref, architecture):
+    """Resolve any tagged image reference to a digest-pinned reference for one architecture."""
     parsed = parse_image_reference(image_ref)
     if not parsed or not parsed.get("tag"):
         return image_ref
 
-    manifest_url = (
-        f"https://{parsed['registry']}/v2/{parsed['repository']}/manifests/{parsed['tag']}"
-    )
-    headers = {"Accept": DOCKER_MANIFEST_ACCEPT}
+    cache_key = get_cache_key(image_ref, architecture)
+    cached = IMAGE_DIGEST_CACHE.get(cache_key)
+    if cached:
+        digest = cached.split("@", 1)[1] if "@" in cached else None
+        if digest:
+            DIGEST_CACHE_ENTRIES.setdefault(image_ref, digest)
+        return cached
 
     try:
-        _payload, response_headers = registry_json_request(
-            manifest_url,
-            headers=headers,
-            registry=parsed["registry"],
-        )
-        digest = response_headers.get("Docker-Content-Digest")
+        manifest_payload, response_headers, manifest_parsed = fetch_registry_manifest(image_ref)
     except Exception as exc:
         raise RuntimeError(f"Failed to resolve image digest: {image_ref}") from exc
+
+    media_type = manifest_payload.get("mediaType", "")
+    digest = response_headers.get("Docker-Content-Digest")
+
+    if media_type in (
+        "application/vnd.docker.distribution.manifest.list.v2+json",
+        "application/vnd.oci.image.index.v1+json",
+    ):
+        chosen = pick_platform_manifest(manifest_payload, architecture)
+        digest = chosen.get("digest")
+        if not digest:
+            raise RuntimeError(
+                f"Manifest list did not contain a digest for architecture '{architecture}': {image_ref}"
+            )
+        fetch_child_manifest(manifest_parsed, digest)
 
     if not digest:
         raise RuntimeError(f"Registry did not return digest for image: {image_ref}")
 
-    return f"{parsed['name']}@{digest}"
+    DIGEST_CACHE_ENTRIES.setdefault(image_ref, digest)
+    resolved_image = f"{parsed['name']}:{parsed['tag']}@{digest}"
+    update_digest_cache_entry(image_ref, architecture, resolved_image)
+    return resolved_image
 
 
-def pin_service_images_to_digests(compose_data, app_id):
-    """Replace all tagged service images with digest-pinned references."""
+def pin_service_images_to_digests(compose_data, app_id, architecture):
+    """Replace all tagged service images with digest-pinned references for one architecture."""
     services = compose_data.get("services", {})
     if not isinstance(services, dict):
         return
@@ -351,7 +478,14 @@ def pin_service_images_to_digests(compose_data, app_id):
         if not parsed or not parsed.get("tag"):
             continue
         try:
-            service_def["image"] = resolve_image_to_digest(image_ref)
+            service_def["image"] = resolve_image_to_digest(image_ref, architecture)
+        except ArchitectureMismatchError as exc:
+            raise ArchitectureMismatchError(
+                f"App '{app_id}' declares architecture '{architecture}', but service "
+                f"'{service_name}' image '{image_ref}' does not provide that platform. "
+                f"Please fix x-casaos.architectures or use an image tag that supports it. "
+                f"Details: {exc}"
+            ) from exc
         except Exception as exc:
             registry = parsed.get("registry") if isinstance(parsed, dict) else None
             if is_registry_rate_limited_error(exc):
@@ -359,14 +493,14 @@ def pin_service_images_to_digests(compose_data, app_id):
                     app_id,
                     registry,
                     image_ref,
-                    "skipped image digest pinning",
+                    f"skipped image digest pinning for architecture '{architecture}'",
                 )
                 continue
             # Keep the original tagged reference if the registry cannot resolve
             # the digest during this build run.
             print(
                 f"  WARN  App '{app_id}' could not pin image digest for "
-                f"service '{service_name}': {image_ref} ({exc})"
+                f"service '{service_name}' on architecture '{architecture}': {image_ref} ({exc})"
             )
 
 
@@ -396,6 +530,38 @@ def normalize_base_url(base):
 def default_cache_file(source_root):
     """Return the default on-disk cache file path."""
     return source_root / ".cache" / "build_appstore" / "image-size-cache.json"
+
+
+def default_digest_cache_file(source_root):
+    """Return the default on-disk digest cache file path for v2 builds."""
+    return source_root / ".cache" / "build_appstore" / "image-digest-cache.json"
+
+
+def normalize_architecture_name(architecture):
+    """Normalize architecture names to stable lowercase identifiers."""
+    return str(architecture or "").strip().lower()
+
+
+def get_cache_key(image_ref, architecture):
+    """Build a cache key for an image reference and target architecture."""
+    return f"{image_ref}|{normalize_architecture_name(architecture)}"
+
+
+def get_supported_architectures(original_xcasaos):
+    """Return normalized, de-duplicated architecture list from x-casaos."""
+    values = original_xcasaos.get("architectures", [])
+    if not isinstance(values, list):
+        return []
+
+    architectures = []
+    seen = set()
+    for value in values:
+        arch = normalize_architecture_name(value)
+        if not arch or arch in seen:
+            continue
+        seen.add(arch)
+        architectures.append(arch)
+    return architectures
 
 
 def serialize_image_descriptors(descriptors):
@@ -458,9 +624,9 @@ def save_image_size_cache():
     os.replace(tmp_file, IMAGE_SIZE_CACHE_FILE)
 
 
-def update_image_size_cache_entry(image_ref, descriptors):
+def update_image_size_cache_entry(image_ref, architecture, descriptors):
     """Store one resolved image entry and immediately persist cache to disk."""
-    IMAGE_SIZE_CACHE[image_ref] = descriptors
+    IMAGE_SIZE_CACHE[get_cache_key(image_ref, architecture)] = descriptors
     save_image_size_cache()
 
 
@@ -580,27 +746,36 @@ def fetch_registry_manifest(image_ref):
     return json.loads(payload), headers, parsed
 
 
-def pick_platform_manifest(index_payload):
-    """Choose the preferred platform manifest from a manifest list/index."""
+def pick_platform_manifest(index_payload, architecture):
+    """Choose the target platform manifest from a manifest list/index."""
     manifests = index_payload.get("manifests", [])
     if not isinstance(manifests, list) or not manifests:
         raise RuntimeError("Manifest list/index did not contain manifests")
+
+    target_os, target_arch, target_variant = map_architecture_to_platform(architecture)
 
     for item in manifests:
         platform = item.get("platform", {})
         if (
             isinstance(platform, dict)
-            and platform.get("os") == PREFERRED_PLATFORM[0]
-            and platform.get("architecture") == PREFERRED_PLATFORM[1]
+            and platform.get("os") == target_os
+            and platform.get("architecture") == target_arch
+            and (target_variant is None or platform.get("variant") == target_variant)
         ):
             return item
 
     for item in manifests:
         platform = item.get("platform", {})
-        if isinstance(platform, dict) and platform.get("os") == PREFERRED_PLATFORM[0]:
+        if (
+            isinstance(platform, dict)
+            and platform.get("os") == target_os
+            and platform.get("architecture") == target_arch
+        ):
             return item
 
-    return manifests[0]
+    raise ArchitectureMismatchError(
+        f"Manifest list/index did not contain a matching platform for architecture '{architecture}'"
+    )
 
 
 def fetch_child_manifest(parsed, digest):
@@ -614,7 +789,7 @@ def fetch_child_manifest(parsed, digest):
     return json.loads(payload)
 
 
-def estimate_image_blob_descriptors(image_ref):
+def estimate_image_blob_descriptors(image_ref, architecture):
     """Return unique blob descriptors that make up an image's storage footprint."""
     manifest_payload, _headers, parsed = fetch_registry_manifest(image_ref)
     media_type = manifest_payload.get("mediaType", "")
@@ -623,7 +798,7 @@ def estimate_image_blob_descriptors(image_ref):
         "application/vnd.docker.distribution.manifest.list.v2+json",
         "application/vnd.oci.image.index.v1+json",
     ):
-        chosen = pick_platform_manifest(manifest_payload)
+        chosen = pick_platform_manifest(manifest_payload, architecture)
         manifest_payload = fetch_child_manifest(parsed, chosen.get("digest"))
 
     descriptors = []
@@ -637,7 +812,7 @@ def estimate_image_blob_descriptors(image_ref):
     return descriptors
 
 
-def calculate_min_image_size(compose_data, app_id):
+def calculate_min_image_size(compose_data, app_id, architecture):
     """Estimate image storage size by summing unique blobs across all service images."""
     services = compose_data.get("services", {})
     if not isinstance(services, dict):
@@ -654,27 +829,35 @@ def calculate_min_image_size(compose_data, app_id):
         parsed = parse_image_reference_with_digest(image_ref)
         registry = parsed.get("registry") if isinstance(parsed, dict) else None
         try:
-            descriptors = IMAGE_SIZE_CACHE.get(image_ref)
+            cache_key = get_cache_key(image_ref, architecture)
+            descriptors = IMAGE_SIZE_CACHE.get(cache_key)
             if descriptors is None:
-                descriptors = estimate_image_blob_descriptors(image_ref)
-                update_image_size_cache_entry(image_ref, descriptors)
+                descriptors = estimate_image_blob_descriptors(image_ref, architecture)
+                update_image_size_cache_entry(image_ref, architecture, descriptors)
             for digest, size in descriptors:
                 if digest in seen:
                     continue
                 seen.add(digest)
                 total += size
+        except ArchitectureMismatchError as exc:
+            raise ArchitectureMismatchError(
+                f"App '{app_id}' declares architecture '{architecture}', but service "
+                f"'{service_name}' image '{image_ref}' does not provide that platform. "
+                f"Please fix x-casaos.architectures or use an image tag that supports it. "
+                f"Details: {exc}"
+            ) from exc
         except Exception as exc:
             if is_registry_rate_limited_error(exc):
                 warn_registry_rate_limited_once(
                     app_id,
                     registry,
                     image_ref,
-                    "skipped image-size estimation",
+                    f"skipped image-size estimation for architecture '{architecture}'",
                 )
                 continue
             print(
                 f"  WARN  App '{app_id}' could not estimate image size for "
-                f"service '{service_name}': {image_ref} ({exc})"
+                f"service '{service_name}' on architecture '{architecture}': {image_ref} ({exc})"
             )
     return total
 
@@ -1149,15 +1332,6 @@ def process_app_assets(source_root, app_dir, assets_output, original_xcasaos, me
 # Config loaders
 # ---------------------------------------------------------------------------
 
-def resolve_app_id(compose_data, xcasaos, dir_name):
-    """Determine the canonical app ID."""
-    if xcasaos.get("store_app_id"):
-        return xcasaos["store_app_id"]
-    if compose_data.get("name"):
-        return compose_data["name"]
-    return dir_name.lower()
-
-
 def validate_app_id(compose_path, compose_data, xcasaos):
     """Validate required x-casaos.app_id field and return its normalized value."""
     raw_app_id = xcasaos.get("app_id")
@@ -1165,20 +1339,14 @@ def validate_app_id(compose_path, compose_data, xcasaos):
         expected_name = compose_data.get("name") or compose_path.parent.name.lower()
         raise ValueError(
             f"App '{compose_path.parent.name}' is missing required x-casaos.app_id "
-            f"in {compose_path}. Expected reverse-domain format like "
-            f"'com.example.{re.sub(r'[^a-z0-9]+', '', str(expected_name).lower())}'."
+            f"in {compose_path}. Expected a reverse-domain style ID like "
+            f"'com.example.{re.sub(r'[^a-z0-9._-]+', '-', str(expected_name).lower()).strip('-') or 'app'}'."
         )
 
-    app_id_value = str(raw_app_id).strip()
-    if not REVERSE_DOMAIN_APP_ID_PATTERN.fullmatch(app_id_value):
-        raise ValueError(
-            f"App '{compose_path.parent.name}' has invalid x-casaos.app_id "
-            f"'{app_id_value}' in {compose_path}. It must use reverse-domain "
-            "notation such as 'com.example.myapp', using only lowercase letters, "
-            "digits, and dots."
-        )
-
-    return app_id_value
+    return validate_reverse_domain_app_id(
+        raw_app_id,
+        f"App '{compose_path.parent.name}' in {compose_path}",
+    )
 
 
 def normalize_categories(category_value):
@@ -1210,6 +1378,12 @@ def load_store_config(source):
         return None
     with open(config_path, "r", encoding="utf-8") as f:
         config = json.load(f)
+    raw_store_id = config.get("store_id")
+    config["store_id"] = validate_safe_id(
+        raw_store_id,
+        "store_id",
+        f"{STORE_CONFIG_FILE} ({config_path})",
+    )
     for field in ("name", "description"):
         if field in config and isinstance(config[field], dict):
             config[field] = normalize_locale_dict(config[field])
@@ -1226,6 +1400,8 @@ def split_compose(compose_data):
     compose_xcasaos = {}
     meta = {}
     for key, value in xcasaos.items():
+        if key == "store_app_id":
+            continue
         if key in COMPOSE_KEEP_FIELDS:
             compose_xcasaos[key] = value
         else:
@@ -1280,7 +1456,7 @@ def parse_app(app_dir):
     original_xcasaos = dict(compose_data.get("x-casaos", {}))
     validated_source_app_id = validate_app_id(compose_path, compose_data, original_xcasaos)
     original_xcasaos["app_id"] = validated_source_app_id
-    app_id = resolve_app_id(compose_data, original_xcasaos, app_dir.name)
+    app_id = validated_source_app_id
 
     compose_data, meta = split_compose(compose_data)
 
@@ -1305,8 +1481,8 @@ def resolve_asset_filename(url_or_name, image_mapping, copied_images):
 
 
 def build_meta_payload(meta, locale, assets_path, copied_images, image_mapping, base_url,
-                       title_i18n=None, strict=False, min_memory=0, min_image_size=0,
-                       source_app_id="", source_version=""):
+                       title_i18n=None, strict=False, min_memory=0, min_image_size=None,
+                       app_id="", source_version=""):
     """Build locale-resolved meta payload."""
     meta_l = copy.deepcopy(meta)
     category = meta_l.get("category", "")
@@ -1322,6 +1498,8 @@ def build_meta_payload(meta, locale, assets_path, copied_images, image_mapping, 
             meta_l[field] = resolve_i18n_nested(meta_l[field], locale, strict=strict)
 
     meta_l.pop("icon", None)
+    if "release_notes" in meta_l:
+        meta_l["release_note"] = meta_l.pop("release_notes")
 
     if "thumbnail" in meta_l:
         thumb_fname = resolve_asset_filename(meta_l["thumbnail"], image_mapping, copied_images)
@@ -1339,23 +1517,27 @@ def build_meta_payload(meta, locale, assets_path, copied_images, image_mapping, 
             meta_l["screenshot_link"] = []
 
     meta_l["base_url"] = normalize_base_url(base_url)
-    meta_l["app_id"] = source_app_id
+    meta_l["id"] = app_id
     meta_l["version"] = source_version
     meta_l["categories"] = normalize_categories(category)
     meta_l["min_memory"] = int(min_memory)
-    meta_l["min_image_size"] = int(min_image_size)
+    meta_l["min_image_size"] = {
+        normalize_architecture_name(arch): int(size)
+        for arch, size in sorted((min_image_size or {}).items())
+    }
     return meta_l
 
 
-def build_meta_i18n_overlay(app_id, source_app_id, source_version, meta, locale, title_i18n=None):
+def build_meta_i18n_overlay(app_id, meta, locale, title_i18n=None):
     """Build locale overlay meta file with id + i18n-only fields."""
-    out = {"id": app_id, "app_id": source_app_id, "version": source_version}
+    out = {"id": app_id}
     if isinstance(title_i18n, dict) and locale in title_i18n:
         out["title"] = title_i18n[locale]
     for field in I18N_FIELDS:
         value = meta.get(field)
         if isinstance(value, dict) and locale in value:
-            out[field] = value[locale]
+            output_field = "release_note" if field == "release_notes" else field
+            out[output_field] = value[locale]
     for field in I18N_NESTED_FIELDS:
         value = meta.get(field)
         if not isinstance(value, dict):
@@ -1395,7 +1577,6 @@ def build_index_entry(app_id, original_xcasaos, locale, assets_path, icon_filena
     category = original_xcasaos.get("category", "")
     entry = {
         "id": app_id,
-        "app_id": original_xcasaos.get("app_id", ""),
         "title": resolver(original_xcasaos.get("title", ""), locale),
         "tagline": resolver(original_xcasaos.get("tagline", ""), locale),
         "category": category,
@@ -1418,7 +1599,7 @@ def build_index_entry(app_id, original_xcasaos, locale, assets_path, icon_filena
 
 def build_index_i18n_overlay_entry(app_id, original_xcasaos, locale):
     """Build locale overlay index entry with id + i18n-only fields."""
-    out = {"id": app_id, "app_id": original_xcasaos.get("app_id", "")}
+    out = {"id": app_id}
     for field in INDEX_I18N_FIELDS:
         value = original_xcasaos.get(field)
         if isinstance(value, dict) and locale in value:
@@ -1440,6 +1621,19 @@ def write_json(path, data):
     path.write_text(json.dumps(to_json_safe(data), ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def write_digest_cache(path):
+    """Write legacy digest cache mapping as 'image_ref digest' lines."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lines = [
+        f"{image_ref} {digest}"
+        for image_ref, digest in sorted(DIGEST_CACHE_ENTRIES.items())
+    ]
+    content = "\n".join(lines)
+    if content:
+        content += "\n"
+    path.write_text(content, encoding="utf-8")
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -1450,14 +1644,25 @@ def main():
     output = Path(args.output).resolve()
     base_url = args.base_url
     cache_file = Path(args.cache_file).resolve() if args.cache_file else default_cache_file(source)
+    digest_cache_file = (
+        Path(args.digest_cache_file).resolve()
+        if args.digest_cache_file
+        else default_digest_cache_file(source)
+    )
 
     print(f"Source: {source}")
     print(f"Output: {output}")
     print(f"Base URL: {base_url or '(relative)'}")
     print(f"Cache file: {cache_file}")
+    print(f"Digest cache file: {digest_cache_file}")
+    print(
+        "Docker Hub auth: "
+        + (f"enabled for user '{DOCKERHUB_USERNAME}'" if DOCKERHUB_USERNAME and DOCKERHUB_TOKEN else "disabled")
+    )
     print()
 
     load_image_size_cache(cache_file)
+    load_digest_cache(digest_cache_file)
 
     if output.exists():
         shutil.rmtree(output)
@@ -1499,35 +1704,57 @@ def main():
 
         app_id, compose_data, meta, original_xcasaos = result
 
-        app_output = output / "apps" / app_id
-        assets_output = app_output / "assets"
-        copied_images, image_mapping, icon_filename = process_app_assets(
-            source,
-            app_dir,
-            assets_output,
-            original_xcasaos,
-            meta,
-        )
+        try:
+            app_output = output / "apps" / app_id
+            assets_output = app_output / "assets"
+            copied_images, image_mapping, icon_filename = process_app_assets(
+                source,
+                app_dir,
+                assets_output,
+                original_xcasaos,
+                meta,
+            )
 
-        assets_path = f"/apps/{app_id}/assets"
+            assets_path = f"/apps/{app_id}/assets"
 
-        compose_l = copy.deepcopy(compose_data)
-        pin_service_images_to_digests(compose_l, app_id)
-        min_memory = calculate_min_memory(compose_data)
-        min_image_size = calculate_min_image_size(compose_data, app_id)
-        compose_xc = compose_l.get("x-casaos", {})
-        compose_xc["icon"] = url_join(base_url, f"{assets_path}/{icon_filename}")
-        compose_l["x-casaos"] = compose_xc
+            min_memory = calculate_min_memory(compose_data)
+            architectures = get_supported_architectures(original_xcasaos)
+            min_image_size = {}
 
-        app_output.mkdir(parents=True, exist_ok=True)
-        compose_content = yaml.dump(
-            compose_l,
-            default_flow_style=False,
-            allow_unicode=True,
-            sort_keys=False,
-        )
-        compose_path = app_output / "docker-compose.yml"
-        compose_path.write_text(compose_content, encoding="utf-8")
+            compose_default = copy.deepcopy(compose_data)
+            compose_xc = compose_default.get("x-casaos", {})
+            compose_xc["icon"] = url_join(base_url, f"{assets_path}/{icon_filename}")
+            compose_default["x-casaos"] = compose_xc
+
+            app_output.mkdir(parents=True, exist_ok=True)
+            compose_content = yaml.dump(
+                compose_default,
+                default_flow_style=False,
+                allow_unicode=True,
+                sort_keys=False,
+            )
+            compose_path = app_output / "docker-compose.yml"
+            compose_path.write_text(compose_content, encoding="utf-8")
+
+            for architecture in architectures:
+                compose_arch = copy.deepcopy(compose_default)
+                pin_service_images_to_digests(compose_arch, app_id, architecture)
+                min_image_size[architecture] = calculate_min_image_size(
+                    compose_data,
+                    app_id,
+                    architecture,
+                )
+                compose_arch_content = yaml.dump(
+                    compose_arch,
+                    default_flow_style=False,
+                    allow_unicode=True,
+                    sort_keys=False,
+                )
+                compose_arch_path = app_output / f"docker-compose.{architecture}.yml"
+                compose_arch_path.write_text(compose_arch_content, encoding="utf-8")
+        except ArchitectureMismatchError as exc:
+            print(f"  ERROR {exc}", file=sys.stderr)
+            sys.exit(1)
 
         meta_default = build_meta_payload(
             meta,
@@ -1540,7 +1767,7 @@ def main():
             strict=False,
             min_memory=min_memory,
             min_image_size=min_image_size,
-            source_app_id=original_xcasaos.get("app_id", ""),
+            app_id=app_id,
             source_version=str(original_xcasaos.get("version", "")).strip(),
         )
         meta_default_content = json.dumps(to_json_safe(meta_default), ensure_ascii=False, indent=2)
@@ -1554,8 +1781,6 @@ def main():
         for locale in sorted(meta_locales):
             meta_locale = build_meta_i18n_overlay(
                 app_id,
-                original_xcasaos.get("app_id", ""),
-                str(original_xcasaos.get("version", "")).strip(),
                 meta,
                 locale,
                 title_i18n=original_xcasaos.get("title"),
@@ -1668,6 +1893,8 @@ def main():
         write_json(output / f"index.{locale}.json", index_locale)
         print(f"  index.{locale}.json ({len(locale_entries)} apps)")
 
+    write_digest_cache(output / "store" / "digest_cache.txt")
+
     print(f"\n{'=' * 50}")
     print(f"Done! {len(app_records)} apps")
     print(f"Output: {output}/")
@@ -1675,12 +1902,14 @@ def main():
     print("  index.{locale}.json (only when locale is explicitly defined)")
     print("  store.json / store.{locale}.json")
     print("  apps/{app_id}/docker-compose.yml")
+    print("  apps/{app_id}/docker-compose.{architecture}.yml")
     print("  apps/{app_id}/meta.json / meta.{locale}.json")
     print("  apps/{app_id}/assets/*")
     if skipped:
         print(f"  Skipped: {', '.join(skipped)}")
 
     save_image_size_cache()
+    save_digest_cache()
 
 
 if __name__ == "__main__":

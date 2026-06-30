@@ -59,18 +59,22 @@ jobs:
           sudo apt-get update && sudo apt-get install -y librsvg2-bin
           pip install pyyaml Pillow
 
-      - name: Restore image size cache
+      - name: Restore build caches
         uses: actions/cache@v4
         with:
-          path: .cache/build_appstore/image-size-cache.json
-          key: build-appstore-image-size-cache-${{ github.ref_name }}
+          path: .cache/build_appstore
+          key: build-appstore-cache-${{ github.ref_name }}
           restore-keys: |
-            build-appstore-image-size-cache-
+            build-appstore-cache-
 
       - name: Validate appstore build
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
           python3 scripts/build_appstore.py \
             --source . \
             --output /tmp/appstore-dist \
             --cache-file .cache/build_appstore/image-size-cache.json \
+            --digest-cache-file .cache/build_appstore/image-digest-cache.json \
             --base-url "https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages"

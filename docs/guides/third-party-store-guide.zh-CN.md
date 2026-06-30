@@ -6,7 +6,7 @@
 - 面向构建/部署外部第三方商店的维护者。
 - 如果你是在本仓库提交 PR，请参考 [CONTRIBUTING.md](../../CONTRIBUTING.md)。
 
-> **📢 新增内容：** 我们在 `meta.json` 中新增了 7 个可选字段，可增强商店展示效果：`version`、`update_at`、`release_notes`、`website`、`repo`、`support` 和 `docs`。这些字段在 [meta.json（构建后）](#metajson构建后)中标注为 **[新增，可选]**。另外，`x-casaos.app_id` 现在已经是每个源 `docker-compose.yml` 的必填字段，所以现有商店在重新构建前也需要补上它。
+> **📢 新增内容：** 我们在 `meta.json` 中新增了 7 个可选字段，可增强商店展示效果：`version`、`update_at`、`release_note`、`website`、`repo`、`support` 和 `docs`。这些字段在 [meta.json（构建后）](#metajson构建后)中标注为 **[新增，可选]**。另外，`x-casaos.app_id` 现在已经是每个源 `docker-compose.yml` 的必填字段，所以现有商店在重新构建前也需要补上它。
 
 ## 概览
 
@@ -98,7 +98,9 @@ my-appstore/
 ```
 
 **`store_id` 规则：**
-- 仅小写字符，匹配 `[a-z0-9-]`
+- 仅允许字母、数字、点号（`.`）、下划线（`_`）和连字符（`-`）
+- 允许大写输入，但构建时会规范化为小写
+- 必须至少包含一个字母或数字
 - 必须全局唯一（选择一个有特色的名称）
 - 不能使用保留值 `zimaos-appstore`（建议同时避免历史保留值 `zimaos-official`）
 
@@ -159,7 +161,8 @@ x-casaos:
 ```
 
 > 你可以在一个 docker-compose.yml 中编写所有内容——构建脚本会自动将其拆分为精简的 compose 文件 + meta.json。
-> `x-casaos.app_id` 是必填字段，且必须使用域名倒置格式，例如 `com.example.myapp`。
+> `x-casaos.app_id` 是必填字段，并且必须使用域名倒置风格，例如 `com.example.myapp`。它只允许字母、数字、`.`、`_`、`-`，并会在构建时自动规范化为小写。
+> 在源 compose 中请继续使用 `release_notes`；构建输出到 `meta.json` 时会改名为 `release_note`。
 
 **多服务示例**（带数据库的应用）：
 
@@ -465,7 +468,7 @@ v2 要求使用标准化分类。将每个应用 `x-casaos` 块中的 `category`
 
 ### 可选改进
 
-- 添加 7 个新增元数据字段（`version`、`update_at`、`release_notes`、`website`、`repo`、`support`、`docs`）以增强商店展示——参见 [meta.json](#metajson构建后)
+- 添加 7 个新增元数据字段（`version`、`update_at`、`release_note`、`website`、`repo`、`support`、`docs`）以增强商店展示——参见 [meta.json](#metajson构建后)
 - 添加 `supported-languages.json` 以支持多语言输出
 - 将 PNG 图标替换为 SVG 以获得更好的质量
 
@@ -485,7 +488,7 @@ v2 要求使用标准化分类。将每个应用 `x-casaos` 块中的 `category`
 | 字段 | 类型 | 必填 | 说明 |
 |------|------|------|------|
 | `version` | `int` | 是 | 协议版本，必须为 `2` |
-| `store_id` | `string` | 是 | 商店唯一标识，`[a-z0-9-]` |
+| `store_id` | `string` | 是 | 商店唯一标识，仅允许字母、数字、`.`、`_`、`-` |
 | `name` | `object` | 是 | 商店名称（i18n） |
 | `description` | `object` | 否 | 商店描述（i18n） |
 | `maintainer` | `string` | 是 | 维护者 |
@@ -559,7 +562,7 @@ v2 要求使用标准化分类。将每个应用 `x-casaos` 块中的 `category`
 | `architectures` | `string[]` | 支持的 CPU 架构 |
 | `version` | `string` | **[新增，可选]** 应用版本号，可增强商店展示 |
 | `update_at` | `string` | **[新增，可选]** 应用更新日期（建议 `YYYY-MM-DD`，如 `"2026-03-01"`），可增强商店展示 |
-| `release_notes` | `string` | **[新增，可选]** 版本更新日志（解析为纯字符串），可增强商店展示 |
+| `release_note` | `string` | **[新增，可选]** 版本更新日志（解析为纯字符串），可增强商店展示 |
 | `website` | `string` | **[新增，可选]** 官方网站地址，可增强商店展示 |
 | `repo` | `string` | **[新增，可选]** 源码仓库地址，可增强商店展示 |
 | `support` | `string` | **[新增，可选]** 支持地址，可增强商店展示 |
@@ -641,6 +644,7 @@ volumes:
 构建脚本会自动归一化以下字段的语言键：
 - `store-config.json`：`name`、`description`
 - `x-casaos`：`title`、`tagline`、`description`、`release_notes`、`tips` 下的每个嵌套 locale 对象
+  源字段名仍然是 `release_notes`，但构建输出到 `meta.json` 时会重命名为 `release_note`。
 
 至少为所有 i18n 字段提供 `en_US`。locale 专属输出文件只会为显式定义过的 locale 生成。
 
@@ -666,11 +670,14 @@ title:
 
 **规则：**
 - 每个源 `docker-compose.yml` 都必须声明 `x-casaos.app_id`
-- 必须使用域名倒置格式，例如 `com.example.myapp`
-- 仅允许小写字母、数字和点号
+- 必须使用域名倒置风格，例如 `com.example.myapp`
+- 仅允许字母、数字、点号（`.`）、下划线（`_`）和连字符（`-`）
+- 大写输入会在构建时规范化为小写
+- 必须至少包含一个字母或数字
+- 必须至少包含两个非空的点分段
 - 在你的商店内必须唯一
 - 不用担心与其他商店冲突——ZimaOS 在安装时会自动通过添加你的 `store_id` 前缀来处理隔离
-- `store_app_id` 仍可用于覆盖构建输出目录名或安装 ID，但不能替代必填的倒置域名 `x-casaos.app_id`
+- `store_app_id` 仍可用于覆盖构建输出目录名或安装 ID，但不能替代必填的 `x-casaos.app_id`
 
 ---
 

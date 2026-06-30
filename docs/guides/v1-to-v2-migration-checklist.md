@@ -44,12 +44,15 @@ Create this file at repo root:
 ```
 
 Checks:
-- `store_id` is globally unique and matches `[a-z0-9-]`
+- `store_id` is globally unique
+- `store_id` uses only letters, digits, dots (`.`), underscores (`_`), and hyphens (`-`)
+- uppercase input is normalized to lowercase during build
+- `store_id` contains at least one letter or digit
 - at least `name.en_US` is present
 
 ## 2. Add `x-casaos.app_id` to Every App (Required)
 
-Add a reverse-domain app identifier to each app's top-level `x-casaos` block:
+Add an app identifier to each app's top-level `x-casaos` block:
 
 ```yaml
 x-casaos:
@@ -58,8 +61,11 @@ x-casaos:
 
 Checks:
 - every source `docker-compose.yml` includes `x-casaos.app_id`
-- use reverse-domain notation
-- use only lowercase letters, digits, and dots
+- use reverse-domain style such as `com.example.myapp`
+- use only letters, digits, dots (`.`), underscores (`_`), and hyphens (`-`)
+- uppercase input is normalized to lowercase during build
+- the value contains at least one letter or digit
+- the value contains at least two non-empty dot-separated segments
 
 ## 3. Normalize App Categories (Required)
 

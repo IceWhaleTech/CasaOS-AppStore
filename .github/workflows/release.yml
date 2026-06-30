@@ -30,23 +30,26 @@ jobs:
         sudo apt-get update && sudo apt-get install -y librsvg2-bin zip unzip
         pip install pyyaml Pillow
 
-    - name: Restore image size cache
+    - name: Restore build caches
       uses: actions/cache@v4
       with:
-        path: .cache/build_appstore/image-size-cache.json
-        key: build-appstore-image-size-cache-${{ github.ref_name }}
+        path: .cache/build_appstore
+        key: build-appstore-cache-${{ github.ref_name }}
         restore-keys: |
-          build-appstore-image-size-cache-
+          build-appstore-cache-
 
     - name: Build static appstore dist
       env:
         BASE_URL_INPUT: ${{ inputs.base_url }}
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       run: |
         BASE_URL="${BASE_URL_INPUT:-https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages}"
         python3 scripts/build_appstore.py \
           --source . \
           --output dist \
           --cache-file .cache/build_appstore/image-size-cache.json \
+          --digest-cache-file .cache/build_appstore/image-digest-cache.json \
           --base-url "${BASE_URL}"
         touch dist/.nojekyll
 
@@ -61,12 +64,14 @@ jobs:
         cp -v featured-apps.json /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new/
         cp -v recommend-list.json /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new/
         cp -v README.md /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new/
+        cp -v dist/store/digest_cache.txt /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new/
         find /tmp/appstore-v1/build -type f -not \( \
           -name '*.yaml' -or \
           -name '*.yml' -or \
           -name 'category-list.json' -or \
           -name 'featured-apps.json' -or \
           -name 'recommend-list.json' -or \
+          -name 'digest_cache.txt' -or \
           -name 'README.md' -or \
           -name '*.sh' \
         \) -delete
@@ -84,6 +89,7 @@ jobs:
         bucket: casaos
         assets: |
           dist/store/main.zip:/store/main.zip
+          dist/store/digest_cache.txt:/store/digest_cache.txt
 
     - name: Deploy dist to gh-pages
       uses: peaceiris/actions-gh-pages@v4
@@ -96,3 +102,4 @@ jobs:
       run: |
         curl -fsSL "https://purge.jsdelivr.net/gh/${{ github.repository }}@gh-pages/index.json" || true
         curl -fsSL "https://purge.jsdelivr.net/gh/${{ github.repository }}@gh-pages/store/main.zip" || true
+        curl -fsSL "https://purge.jsdelivr.net/gh/${{ github.repository }}@gh-pages/store/digest_cache.txt" || true
