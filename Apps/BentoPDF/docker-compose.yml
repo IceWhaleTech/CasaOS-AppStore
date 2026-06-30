@@ -1,0 +1,113 @@
+name: bentopdf
+services:
+  bentopdf:
+    container_name: bentopdf
+    image: ghcr.io/alam00000/bentopdf-simple:1.15.4
+    network_mode: bridge
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: "64M"
+    ports:
+      - target: 8080
+        published: "3000"
+        protocol: tcp
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      DISABLE_IPV6: "false"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: Run BentoPDF as the specified user id (non-root image).
+            zh_CN: 以指定的用户 ID 运行 BentoPDF（非 root 镜像）。
+        - container: PGID
+          description:
+            en_US: Run BentoPDF as the specified group id (non-root image).
+            zh_CN: 以指定的组 ID 运行 BentoPDF（非 root 镜像）。
+        - container: DISABLE_IPV6
+          description:
+            en_US: Set to "true" to disable the container's IPv6 listener.
+            zh_CN: 设为 "true" 可禁用容器的 IPv6 监听。
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web UI HTTP port.
+            zh_CN: Web 界面 HTTP 端口。
+
+x-casaos:
+  app_id: org.icewhale.bentopdf
+  main: bentopdf
+  index: /
+  port_map: "3000"
+  scheme: http
+  title:
+    en_US: BentoPDF
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BentoPDF/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BentoPDF/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BentoPDF/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BentoPDF/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BentoPDF/screenshot-3.png
+  tagline:
+    en_US: Privacy-first, self-hosted PDF toolkit
+    zh_CN: 隐私优先的自托管 PDF 工具箱
+  description:
+    en_US: |
+      **Your PDFs never leave your device.** BentoPDF is a privacy-first PDF toolkit that runs entirely in your browser. Every merge, split, conversion, and edit happens locally on your machine — no file is ever uploaded to a server. More than 50 tools are bundled into one clean, fast, ad-free interface.
+
+      **One app for every PDF job.** Organize and edit your documents (merge, split, reorder, rotate, crop, watermark, page numbers, redaction, annotations and forms), convert to and from PDF (images, Word, Excel, PowerPoint, EPUB, Markdown and more), run OCR, and secure your files with compression, encryption, digital signatures, and metadata cleanup.
+
+      **Made for your private cloud.** Self-hosting BentoPDF on a private cloud device like Zima gives your whole household or team a single, ad-free PDF workshop on hardware you control — fast over the local network, with your documents staying private by design.
+    zh_CN: |
+      **你的 PDF 永不离开设备。** BentoPDF 是一款隐私优先的 PDF 工具箱，完全在浏览器中运行。合并、拆分、转换和编辑等所有操作都在本地完成——任何文件都不会上传到服务器。它将 50 多种工具集成到一个简洁、快速、无广告的界面中。
+
+      **一个应用搞定所有 PDF 任务。** 整理与编辑文档（合并、拆分、重排、旋转、裁剪、水印、页码、涂黑、批注与表单），在 PDF 与多种格式之间互转（图片、Word、Excel、PowerPoint、EPUB、Markdown 等），运行 OCR，并通过压缩、加密、数字签名和元数据清理来保护文件。
+
+      **为你的私有云而生。** 在 Zima 等私有云设备上自托管 BentoPDF，可为你的家庭或团队提供一个由你完全掌控、无广告的 PDF 工作台——本地网络访问飞快，文档天然保持私密。
+  tips:
+    before_install:
+      en_US: |
+        ## Getting Started
+
+        Open the Web UI at `http://<your-zima-ip>:3000`. BentoPDF is ready to use immediately — there is no account or setup, and files are processed entirely in your browser, never uploaded to a server.
+
+        ## HTTPS for Office conversions
+
+        Converting Office files (Word, Excel, PowerPoint) relies on the browser feature `SharedArrayBuffer`, which is only available in a secure context. When you access BentoPDF over a LAN IP or hostname (anything other than `localhost`), serve it behind HTTPS — for example through CasaOS's reverse proxy — to enable these conversions.
+      zh_CN: |
+        ## 快速开始
+
+        通过 `http://<你的-zima-IP>:3000` 打开 Web 界面。BentoPDF 即开即用——无需账户或设置，所有文件都在浏览器中处理，绝不会上传到服务器。
+
+        ## Office 转换需要 HTTPS
+
+        转换 Office 文件（Word、Excel、PowerPoint）依赖浏览器的 `SharedArrayBuffer` 功能，而该功能仅在安全上下文中可用。当你通过局域网 IP 或主机名（而非 `localhost`）访问 BentoPDF 时，请将其置于 HTTPS 之后（例如通过 CasaOS 的反向代理），以启用这些转换功能。
+  author: CasaOS Team
+  developer: BentoPDF
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+  version: "1.15.4"
+  update_at: "2026-06-27"
+  release_notes:
+    en_US: |-
+      - Self-hosted BentoPDF build (bentopdf-simple) with the full set of 50+ PDF tools.
+      - Runs fully client-side — files are processed in the browser and never uploaded.
+      - Multi-architecture image (amd64 and arm64), served by unprivileged nginx.
+    zh_CN: |-
+      - 自托管 BentoPDF 构建（bentopdf-simple），包含完整的 50 多种 PDF 工具。
+      - 完全在客户端运行——文件在浏览器中处理，绝不上传。
+      - 多架构镜像（amd64 与 arm64），由非特权 nginx 提供服务。
+  website: "https://bentopdf.com"
+  repo: "https://github.com/alam00000/bentopdf"
+  support: "https://github.com/alam00000/bentopdf/issues"
+  docs: "https://www.bentopdf.com/docs"
