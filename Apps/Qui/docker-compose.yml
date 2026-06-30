@@ -1,0 +1,167 @@
+name: qui
+services:
+  # Qui Application
+  qui:
+    container_name: qui
+    image: ghcr.io/autobrr/qui:v1.21.0
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    deploy:
+      resources:
+        reservations:
+          memory: "128M"
+    ports:
+      - "7476:7476"
+    volumes:
+      - /DATA/AppData/$AppID/qui:/config
+    environment:
+      QUI__DATABASE_ENGINE: postgres
+      QUI__DATABASE_DSN: postgres://qui:qui@qui-postgres:5432/qui?sslmode=disable
+    networks:
+      - qui_network
+    x-casaos:
+      envs:
+        - container: QUI__DATABASE_ENGINE
+          description:
+            en_US: Database engine to use (postgres or sqlite).
+            zh_CN: 使用的数据库引擎（postgres 或 sqlite）。
+        - container: QUI__DATABASE_DSN
+          description:
+            en_US: PostgreSQL connection string (DSN).
+            zh_CN: PostgreSQL 连接字符串（DSN）。
+      volumes:
+        - container: /config
+          description:
+            en_US: Qui configuration directory.
+            zh_CN: Qui 配置目录。
+      ports:
+        - container: "7476"
+          description:
+            en_US: Web UI HTTP port.
+            zh_CN: Web 界面 HTTP 端口。
+
+  # PostgreSQL Database
+  postgres:
+    container_name: qui-postgres
+    image: postgres:16-alpine
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: "128M"
+    environment:
+      POSTGRES_USER: qui
+      POSTGRES_PASSWORD: qui
+      POSTGRES_DB: qui
+    volumes:
+      - /DATA/AppData/$AppID/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - qui_network
+    x-casaos:
+      envs:
+        - container: POSTGRES_USER
+          description:
+            en_US: PostgreSQL database user.
+            zh_CN: PostgreSQL 数据库用户。
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: PostgreSQL database password.
+            zh_CN: PostgreSQL 数据库密码。
+        - container: POSTGRES_DB
+          description:
+            en_US: PostgreSQL database name.
+            zh_CN: PostgreSQL 数据库名称。
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_US: PostgreSQL data directory.
+            zh_CN: PostgreSQL 数据目录。
+
+networks:
+  qui_network:
+    driver: bridge
+
+x-casaos:
+  app_id: org.icewhale.qui
+  architectures:
+    - amd64
+    - arm64
+  main: qui
+  author: CasaOS Team
+  developer: autobrr
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Qui/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Qui/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Qui/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Qui/screenshot-3.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Qui/thumbnail.png
+  description:
+    en_US: |
+      **One dashboard for all your qBittorrent instances.** Qui is a fast, modern web interface for qBittorrent. Instead of juggling several separate WebUI tabs, you connect every qBittorrent instance to Qui and manage them all from a single, responsive dashboard. It ships as a lightweight single binary, so it stays quick and resource-friendly even when you are watching thousands of torrents.
+
+      **Automation and cross-seeding built in.** Built by the team behind autobrr, Qui goes well beyond basic torrent listing. It adds powerful rule-based automation, built-in cross-seeding that automatically finds and adds matching torrents across your trackers, scheduled backups with restore, and a clean multi-language interface. Point it at your Torznab-compatible indexers — such as Prowlarr or Jackett — to put cross-seeding on autopilot, then filter, search, and bulk-manage torrents across every instance at once.
+
+      **Made for your private cloud.** Running Qui on a private cloud device like Zima keeps everything in one place on hardware you control. Pair it with your qBittorrent containers for local-network speeds, full ownership of your data, and a single tidy interface for your entire download stack — accessible from any device in your home.
+    zh_CN: |
+      **一个面板管理所有 qBittorrent 实例。** Qui 是一个快速、现代的 qBittorrent 网页界面。无需在多个独立的 WebUI 标签页之间切换，您只需将每个 qBittorrent 实例连接到 Qui，即可在一个响应迅速的面板中统一管理。它以轻量级单二进制文件的形式发布，即使在监控成千上万个种子时也能保持快速且占用资源极少。
+
+      **内置自动化与交叉做种。** Qui 由 autobrr 团队打造，功能远不止于种子列表。它提供强大的基于规则的自动化、内置的交叉做种（自动在各个 tracker 之间查找并添加匹配的种子）、带恢复功能的定时备份，以及简洁的多语言界面。将其指向兼容 Torznab 的索引器（例如 Prowlarr 或 Jackett），即可让交叉做种自动运行，并可一次性跨所有实例筛选、搜索和批量管理种子。
+
+      **为您的私有云而生。** 在 Zima 等私有云设备上运行 Qui，可将一切集中在您自己掌控的硬件上。将其与您的 qBittorrent 容器搭配使用，即可享受本地网络速度、对数据的完全掌控，以及管理整个下载栈的单一简洁界面——可从家中任意设备访问。
+  tagline:
+    en_US: Fast, modern web interface for qBittorrent
+    zh_CN: 快速、现代的 qBittorrent 网页管理界面
+  title:
+    en_US: Qui
+  tips:
+    before_install:
+      en_US: |
+        ## Getting Started
+
+        1. Open the Web UI at `http://<your-zima-ip>:7476`.
+        2. On first launch, create your administrator account on the setup screen.
+        3. Add one or more qBittorrent instances (host, port, username and password) to start managing them from Qui.
+
+        ## Cross-seeding & indexers
+
+        Qui can automatically find and add matching torrents across your trackers. Point it at your Torznab-compatible indexers (for example Prowlarr or Jackett) to enable cross-seeding.
+
+        > A PostgreSQL database is deployed automatically alongside Qui — no manual setup required.
+      zh_CN: |
+        ## 快速开始
+
+        1. 通过 `http://<您的-zima-IP>:7476` 打开 Web 界面。
+        2. 首次启动时，在设置页面创建您的管理员账户。
+        3. 添加一个或多个 qBittorrent 实例（主机、端口、用户名和密码），即可在 Qui 中开始管理。
+
+        ## 交叉做种与索引器
+
+        Qui 可以自动在各个 tracker 之间查找并添加匹配的种子。将其指向兼容 Torznab 的索引器（例如 Prowlarr 或 Jackett）即可启用交叉做种。
+
+        > Qui 会自动部署一个 PostgreSQL 数据库——无需手动配置。
+  index: /
+  port_map: "7476"
+  scheme: http
+  version: "1.21.0"
+  update_at: "2026-06-27"
+  release_notes:
+    en_US: |-
+      - v1.21.0 adds API version reporting and new automation conditions.
+      - Adds Italian, Korean and Ukrainian translations.
+      - Includes first-class PostgreSQL backend support alongside various bug fixes and improvements.
+    zh_CN: |-
+      - v1.21.0 新增 API 版本上报与新的自动化条件。
+      - 新增意大利语、韩语和乌克兰语翻译。
+      - 提供一流的 PostgreSQL 后端支持，并包含多项错误修复与改进。
+  website: "https://getqui.com"
+  repo: "https://github.com/autobrr/qui"
+  support: "https://github.com/autobrr/qui/issues"
+  docs: "https://getqui.com/docs"
