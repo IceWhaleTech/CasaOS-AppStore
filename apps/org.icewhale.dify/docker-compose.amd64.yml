@@ -3,7 +3,7 @@ services:
   config:
     container_name: dify-config
     restart: unless-stopped
-    image: ns2kracy/dify-config:latest
+    image: ns2kracy/dify-config:latest@sha256:1db157e99f99ad85ee895c9ee8deb53bb5be1d506c7fb572a212ea58eb710b5e
     volumes:
     - type: bind
       source: /DATA/AppData/$AppID/data/nginx
@@ -17,7 +17,7 @@ services:
     networks:
     - dify
   api:
-    image: langgenius/dify-api:0.15.8
+    image: langgenius/dify-api:0.15.8@sha256:21b74f7e1e12c11b8952112c616162e5337dae5a9b1e5f1b8581b5cb5385c26b
     container_name: dify-api
     restart: unless-stopped
     environment:
@@ -70,7 +70,7 @@ services:
     - ssrf_proxy_network
     - dify
   worker:
-    image: langgenius/dify-api:0.15.8
+    image: langgenius/dify-api:0.15.8@sha256:21b74f7e1e12c11b8952112c616162e5337dae5a9b1e5f1b8581b5cb5385c26b
     container_name: dify-worker
     restart: unless-stopped
     environment:
@@ -102,7 +102,7 @@ services:
     - ssrf_proxy_network
     - dify
   web:
-    image: langgenius/dify-web:0.15.8
+    image: langgenius/dify-web:0.15.8@sha256:7cfd80bce25122973997e48f2501912713e8881b03c10476da2d3cfcb013ad1a
     container_name: dify-web
     restart: unless-stopped
     environment:
@@ -115,7 +115,7 @@ services:
     networks:
     - dify
   db:
-    image: postgres:15-alpine
+    image: postgres:15-alpine@sha256:878ac61a6367f60973ed0eef22ade9956e075f1a21f4604867e33a2edb6939e0
     container_name: dify-db
     restart: unless-stopped
     environment:
@@ -138,7 +138,7 @@ services:
     networks:
     - dify
   redis:
-    image: redis:6-alpine
+    image: redis:6-alpine@sha256:e8773aa976bf0e4ca3e7707b759110c893be504da1f25a61bb4000d1d56b7bd3
     container_name: dify-redis
     restart: unless-stopped
     environment:
@@ -154,7 +154,7 @@ services:
     networks:
     - dify
   weaviate:
-    image: semitechnologies/weaviate:1.19.0
+    image: semitechnologies/weaviate:1.19.0@sha256:306596fe98ef489fe80fddc04f58f744d364909a9d477c5321bfc2ad700ec2f8
     container_name: dify-weaviate
     restart: unless-stopped
     volumes:
@@ -173,7 +173,7 @@ services:
     networks:
     - dify
   sandbox:
-    image: langgenius/dify-sandbox:0.2.11
+    image: langgenius/dify-sandbox:0.2.11@sha256:5c5f3d440bdd0eed0a2dd0fc304ce107003736fd04abbf76354fed6503adac55
     container_name: dify-sandbox
     restart: unless-stopped
     environment:
@@ -191,7 +191,7 @@ services:
     depends_on:
     - config
   ssrf_proxy:
-    image: ubuntu/squid:latest
+    image: ubuntu/squid:latest@sha256:8fafd41d6ddceb295d26eea9938321d825ac5351c7e46cf6a8aa5d093b8ed1ce
     container_name: dify-ssrf_proxy
     restart: unless-stopped
     environment:
@@ -208,7 +208,7 @@ services:
     depends_on:
     - config
   nginx:
-    image: nginx:latest
+    image: nginx:latest@sha256:3b2371e667437fb3b406f090081775daf1ebcdb981d19bc497703b150f49e356
     container_name: dify-nginx
     restart: unless-stopped
     volumes:

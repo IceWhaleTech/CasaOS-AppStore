@@ -6,7 +6,7 @@ services:
     - PUID=$PUID
     - SUBFOLDER=/
     - TZ=$TZ
-    image: linuxserver/emulatorjs:1.9.2
+    image: linuxserver/emulatorjs:1.9.2@sha256:d6722289d23b727f1b025fb6a2965839a438c270619141d97c560c7bfd38c77f
     network_mode: bridge
     ports:
     - target: 3000

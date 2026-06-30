@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: homeassistant/home-assistant:2026.5.4
+    image: homeassistant/home-assistant:2026.5.4@sha256:ad64ac1cccf4f768c040e032ef9c436142e3cf11e43ef9e3c746967f13a2d027
     deploy:
       resources:
         reservations:

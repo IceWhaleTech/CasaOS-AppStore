@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: noecl/filedrop:1.0.1
+    image: noecl/filedrop:1.0.1@sha256:97c3864499313911071ce31ee2be69600bd18ddb80c0c195623ecaf11c3aaa4f
     deploy:
       resources:
         reservations:

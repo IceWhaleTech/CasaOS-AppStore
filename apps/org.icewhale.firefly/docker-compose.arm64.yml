@@ -2,7 +2,7 @@ version: '3'
 name: firefly
 services:
   firefly:
-    image: uusec/firefly:latest
+    image: uusec/firefly:latest@sha256:c31638551f25db7125521dc62274b952adf78f6808196a80d35c096c38b1ba2e
     container_name: firefly
     devices:
     - /dev/net/tun:/dev/net/tun

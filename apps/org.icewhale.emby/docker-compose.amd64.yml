@@ -11,7 +11,7 @@ services:
       PGID: '1000'
       PUID: '1000'
       TZ: $TZ
-    image: linuxserver/emby:4.9.5
+    image: linuxserver/emby:4.9.5@sha256:53e0f4460d0b8cd13d61aec570c5ab5d5afc3130ce780070f8fb4fbd2246920a
     deploy:
       resources:
         reservations:

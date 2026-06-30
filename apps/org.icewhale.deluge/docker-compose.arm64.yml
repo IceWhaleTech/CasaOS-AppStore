@@ -6,7 +6,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/deluge:2.2.0
+    image: linuxserver/deluge:2.2.0@sha256:a6b2c65f406e80b99a109023d0db05fafeebb56b2a3f76b803ed9054ffd1ddc2
     deploy:
       resources:
         reservations:

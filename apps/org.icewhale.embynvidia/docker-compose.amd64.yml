@@ -13,7 +13,7 @@ services:
       TZ: $TZ
       CPU_FALLBACK: 'true'
       NVIDIA_VISIBLE_DEVICES: all
-    image: linuxserver/emby:4.9.1
+    image: linuxserver/emby:4.9.1@sha256:50c9e2b2afd88a02365b36f2722d93449579f6d84eb659613f702a2631b22b45
     deploy:
       resources:
         reservations:
