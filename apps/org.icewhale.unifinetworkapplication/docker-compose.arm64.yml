@@ -39,7 +39,7 @@ services:
     privileged: false
   unifi-db:
     container_name: unifi-db
-    image: docker.io/mongo:3.6
+    image: docker.io/mongo:3.6@sha256:f9b01e368fd95a783a68471930a15c2494d525318ff65a1b408ff3e6bc83e3d4
     configs:
     - source: init-mongo.js
       target: /docker-entrypoint-initdb.d/init-mongo.js

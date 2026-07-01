@@ -1,7 +1,7 @@
 name: romm
 services:
   romm:
-    image: rommapp/romm:4.8.1
+    image: rommapp/romm:4.8.1@sha256:adb60df357a491f27eb8f2b40c6c255dd482867019ccd1ffe8eb6ca3db66d53e
     container_name: romm
     deploy:
       resources:
@@ -34,7 +34,7 @@ services:
         condition: service_healthy
         restart: true
   romm-db:
-    image: mariadb:11.8.2
+    image: mariadb:11.8.2@sha256:bb961ca672bcbde3df9e385d4ce84b31bb826792711c777f6ce97e49fcd9d38c
     container_name: romm-db
     restart: unless-stopped
     networks:

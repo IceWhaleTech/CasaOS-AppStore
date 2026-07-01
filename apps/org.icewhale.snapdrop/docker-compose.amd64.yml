@@ -5,7 +5,7 @@ services:
     - PGID=$PGID
     - PUID=$PUID
     - TZ=$TZ
-    image: linuxserver/snapdrop:version-eac78009
+    image: linuxserver/snapdrop:version-eac78009@sha256:12e359db1dd3857e723031ead2732e38356c20ce97bb246fdcd16c2b87bde6fd
     network_mode: bridge
     ports:
     - target: 443

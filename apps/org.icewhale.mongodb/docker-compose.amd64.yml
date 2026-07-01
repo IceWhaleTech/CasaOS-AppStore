@@ -1,7 +1,7 @@
 name: mongodb
 services:
   mongo:
-    image: mongo:8.2.2
+    image: mongo:8.2.2@sha256:c6b62ae11dacc284b4ac99c815b6acf36fbe2691f7e822d4964673767b4b53a2
     restart: unless-stopped
     environment:
       PUID: $PUID

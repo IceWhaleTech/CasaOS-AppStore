@@ -1,7 +1,7 @@
 name: threadfin
 services:
   threadfin:
-    image: fyb3roptik/threadfin:1.2.37
+    image: fyb3roptik/threadfin:1.2.37@sha256:a2105dc3ec2367775fcf140b4260a7cf7bbe54c5e797867792269aa9a5a5ce6c
     restart: unless-stopped
     environment:
     - THREADFIN_BRANCH=main

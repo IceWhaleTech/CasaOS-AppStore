@@ -7,7 +7,7 @@ services:
     environment:
       DARK_MODE: 'false'
       HOSTS: '[''qemu:///system'']'
-    image: mber5/virt-manager:latest
+    image: mber5/virt-manager:latest@sha256:cd6964c9683b1d70706013a6344c8e837c69a817b21aa716debf70c0edf03375
     network_mode: bridge
     ports:
     - target: 80

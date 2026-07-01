@@ -24,7 +24,7 @@ services:
       target: /app/logs
     container_name: petio-petio
   mongo:
-    image: mongo:4.4.22
+    image: mongo:4.4.22@sha256:00d5d7e4df9aa132ae50996efe1d7c32746145ef6ff249289c8b6a58bbf68391
     restart: unless-stopped
     hostname: mongo
     networks:
