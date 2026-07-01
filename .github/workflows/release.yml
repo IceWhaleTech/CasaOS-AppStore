@@ -69,15 +69,22 @@ jobs:
         DEFAULT_BASE_URL="https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages"
 
         # Accept plain URLs and common Markdown-link pastes like [label](https://example.com).
-        if [[ "$RAW_BASE_URL" =~ ^\[([^\]]+)\]\((https?://[^)]+)\)$ ]]; then
-          if [[ "${BASH_REMATCH[1]}" =~ ^https?:// ]]; then
-            BASE_URL="${BASH_REMATCH[1]}"
-          else
-            BASE_URL="${BASH_REMATCH[2]}"
-          fi
-        else
-          BASE_URL="$RAW_BASE_URL"
-        fi
+        case "$RAW_BASE_URL" in
+          \[*\]\(http://*\)|\[*\]\(https://*\))
+            LINK_LABEL="${RAW_BASE_URL%%]*}"
+            LINK_LABEL="${LINK_LABEL#[}"
+            LINK_TARGET="${RAW_BASE_URL##*\(}"
+            LINK_TARGET="${LINK_TARGET%\)}"
+            if [[ "$LINK_LABEL" == http://* || "$LINK_LABEL" == https://* ]]; then
+              BASE_URL="$LINK_LABEL"
+            else
+              BASE_URL="$LINK_TARGET"
+            fi
+            ;;
+          *)
+            BASE_URL="$RAW_BASE_URL"
+            ;;
+        esac
 
         BASE_URL="${BASE_URL:-$DEFAULT_BASE_URL}"
 
