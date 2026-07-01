@@ -88,7 +88,7 @@ jobs:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
         run: |
-          python3 scripts/build_appstore.py \
+          python3 -u scripts/build_appstore.py \
             --source . \
             --output /tmp/appstore-dist \
             --cache-file .cache/build_appstore/image-size-cache.json \

@@ -94,7 +94,7 @@ jobs:
         fi
 
         echo "Using base URL: $BASE_URL"
-        python3 scripts/build_appstore.py \
+        python3 -u scripts/build_appstore.py \
           --source . \
           --output dist \
           --cache-file .cache/build_appstore/image-size-cache.json \
