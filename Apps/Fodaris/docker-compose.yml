@@ -1,0 +1,130 @@
+name: fodaris
+services:
+  fodaris:
+    container_name: fodaris
+    image: goodhallsolutions/fodaris:1.0.5
+    restart: unless-stopped
+    privileged: true
+    pid: host
+    network_mode: bridge
+    environment:
+      TZ: $TZ
+      FODARIS_HOST: 0.0.0.0
+      FODARIS_PORT: "8443"
+      FODARIS_INGEST_PORT: "24443"
+      FODARIS_OTEL_PORT: "24444"
+      FODARIS_CONFIG_DIR: /app/server/config
+      FODARIS_DATA_DIR: /app/server/data
+      FODARIS_RETENTION_DAYS: "30"
+      FODARIS_SERVER_NAME: fodaris
+    ports:
+      - target: 8443
+        published: "8443"
+        protocol: tcp
+      - target: 24443
+        published: "24443"
+        protocol: tcp
+      - target: 24444
+        published: "24444"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /app/server/config
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/server/data
+      - type: bind
+        source: /DATA/AppData/$AppID/backups
+        target: /app/server/backups
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone (uses ZimaOS system timezone by default)
+        - container: FODARIS_RETENTION_DAYS
+          description:
+            en_US: Number of days of monitoring history to retain before pruning
+        - container: FODARIS_SERVER_NAME
+          description:
+            en_US: Display name for this Fodaris server in the dashboard
+      ports:
+        - container: "8443"
+          description:
+            en_US: Web UI and management API (HTTPS)
+        - container: "24443"
+          description:
+            en_US: Fodaris agent ingest port (HTTPS)
+        - container: "24444"
+          description:
+            en_US: OpenTelemetry ingest port (OTLP/HTTP)
+      volumes:
+        - container: /app/server/config
+          description:
+            en_US: Server configuration and global settings
+        - container: /app/server/data
+          description:
+            en_US: PostgreSQL database, encryption key and monitoring history
+        - container: /app/server/backups
+          description:
+            en_US: Backup archives produced by the built-in backup scheduler
+        - container: /var/run/docker.sock
+          description:
+            en_US: Read-only Docker socket for container monitoring
+x-casaos:
+  app_id: com.goodhallsolutions.fodaris
+  main: fodaris
+  architectures:
+    - amd64
+    - arm64
+  port_map: "8443"
+  scheme: https
+  index: /
+  title:
+    en_US: Fodaris
+  author: Goodhall Solutions
+  developer: Goodhall Solutions
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Fodaris/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Fodaris/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Fodaris/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Fodaris/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Fodaris/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Fodaris/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Fodaris/screenshot-5.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Fodaris/screenshot-6.png
+  tagline:
+    en_US: Self-hosted monitoring for servers, containers, websites and databases.
+  description:
+    en_US: |-
+      Fodaris is a self-hosted monitoring and observability platform for homelabs and small businesses. One Docker container with PostgreSQL bundled in, monitoring servers, Docker containers, network devices over SNMP, websites with SSL expiry tracking, and databases (PostgreSQL, MySQL, MariaDB, Redis, MongoDB, MSSQL, Oracle, SQLite). Native lightweight agents for Linux, macOS, Windows and Docker push metrics over an encrypted channel.
+
+      Built-in features include real-time dashboards, alert rules with email, Slack and webhook delivery, log shipping with redaction, IPAM, network topology mapping, scheduled reports, maintenance windows, backups (local and S3-compatible), MFA, RBAC and 40+ integrations for self-hosted applications including Pi-hole, Plex, Jellyfin, Home Assistant, Nextcloud and Portainer.
+
+      Free tier covers 5 servers, 5 websites, 5 databases and 5 applications. Data stays on your hardware - no telemetry, no cloud accounts.
+  tips:
+    before_install:
+      en_US: |-
+        Default login is admin / Fodaris2026; you will be prompted to change the password on first sign-in.
+
+        The web UI is on port 8443. For agents installed on other machines, point them at https://your-zimaos-ip:24443.
+
+        Fodaris auto-generates an encryption key on first boot and stores it in the data volume. Back up the data volume regularly - if you lose it, encrypted labels and credentials cannot be recovered.
+  version: "1.0.5"
+  update_at: "2026-07-01"
+  release_notes:
+    en_US: |-
+      Initial submission of Fodaris v1.0.5 to the ZimaOS AppStore.
+      - Alpine-based image, multi-arch (amd64, arm64)
+      - Bundled PostgreSQL 17 for the monitoring database
+      - Encryption key auto-generated on first boot
+      - Compatible with the free tier out of the box
+  website: https://fodaris.co.uk
+  repo: https://hub.docker.com/r/goodhallsolutions/fodaris
+  support: https://discord.gg/9HN47kBFgm
+  docs: https://docs.fodaris.co.uk
