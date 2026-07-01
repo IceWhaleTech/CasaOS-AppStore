@@ -101,6 +101,8 @@ RATE_LIMITED_REGISTRIES = {}
 RATE_LIMIT_WARNED_REGISTRIES = set()
 PENDING_DIGEST_WARNINGS = {}
 PENDING_IMAGE_SIZE_WARNINGS = {}
+REGISTRY_MANIFEST_CACHE = {}
+REGISTRY_CHILD_MANIFEST_CACHE = {}
 IMAGE_SIZE_CACHE_FILE = None
 DIGEST_CACHE_FILE = None
 DOCKERHUB_USERNAME = os.environ.get("DOCKERHUB_USERNAME", "").strip()
@@ -476,6 +478,8 @@ def resolve_image_to_digest(image_ref, architecture):
     try:
         manifest_payload, response_headers, manifest_parsed = fetch_registry_manifest(image_ref)
     except Exception as exc:
+        if is_registry_rate_limited_error(exc):
+            raise
         raise RuntimeError(f"Failed to resolve image digest: {image_ref}") from exc
 
     media_type = manifest_payload.get("mediaType", "")
@@ -491,7 +495,6 @@ def resolve_image_to_digest(image_ref, architecture):
             raise RuntimeError(
                 f"Manifest list did not contain a digest for architecture '{architecture}': {image_ref}"
             )
-        fetch_child_manifest(manifest_parsed, digest)
 
     if not digest:
         raise RuntimeError(f"Registry did not return digest for image: {image_ref}")
@@ -640,10 +643,10 @@ def load_image_size_cache(cache_file):
     if not isinstance(entries, dict):
         return
 
-    for image_ref, descriptors in entries.items():
+    for cache_key, descriptors in entries.items():
         parsed = deserialize_image_descriptors(descriptors)
         if parsed:
-            IMAGE_SIZE_CACHE[image_ref] = parsed
+            IMAGE_SIZE_CACHE[str(cache_key)] = parsed
 
 
 def save_image_size_cache():
@@ -770,6 +773,10 @@ def parse_image_reference_with_digest(image_ref):
 
 def fetch_registry_manifest(image_ref):
     """Fetch the registry manifest or manifest list payload for an image reference."""
+    cached = REGISTRY_MANIFEST_CACHE.get(image_ref)
+    if cached is not None:
+        return cached
+
     parsed = parse_image_reference_with_digest(image_ref)
     if not parsed:
         raise RuntimeError(f"Unsupported image reference: {image_ref}")
@@ -782,7 +789,9 @@ def fetch_registry_manifest(image_ref):
         headers={"Accept": DOCKER_MANIFEST_ACCEPT},
         registry=parsed["registry"],
     )
-    return json.loads(payload), headers, parsed
+    result = (json.loads(payload), headers, parsed)
+    REGISTRY_MANIFEST_CACHE[image_ref] = result
+    return result
 
 
 def pick_platform_manifest(index_payload, architecture):
@@ -819,13 +828,20 @@ def pick_platform_manifest(index_payload, architecture):
 
 def fetch_child_manifest(parsed, digest):
     """Fetch a platform-specific child manifest by digest."""
+    cache_key = f"{parsed['registry']}/{parsed['repository']}@{digest}"
+    cached = REGISTRY_CHILD_MANIFEST_CACHE.get(cache_key)
+    if cached is not None:
+        return cached
+
     manifest_url = f"https://{parsed['registry']}/v2/{parsed['repository']}/manifests/{digest}"
     payload, _headers = registry_json_request(
         manifest_url,
         headers={"Accept": DOCKER_MANIFEST_ACCEPT},
         registry=parsed["registry"],
     )
-    return json.loads(payload)
+    result = json.loads(payload)
+    REGISTRY_CHILD_MANIFEST_CACHE[cache_key] = result
+    return result
 
 
 def estimate_image_blob_descriptors(image_ref, architecture):
@@ -1776,7 +1792,7 @@ def main():
                 compose_arch = copy.deepcopy(compose_default)
                 pin_service_images_to_digests(compose_arch, app_id, architecture)
                 min_image_size[architecture] = calculate_min_image_size(
-                    compose_data,
+                    compose_arch,
                     app_id,
                     architecture,
                 )
