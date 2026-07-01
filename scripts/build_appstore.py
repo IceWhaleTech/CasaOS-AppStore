@@ -99,6 +99,8 @@ IMAGE_DIGEST_CACHE = {}
 REGISTRY_TOKEN_CACHE = {}
 RATE_LIMITED_REGISTRIES = {}
 RATE_LIMIT_WARNED_REGISTRIES = set()
+PENDING_DIGEST_WARNINGS = {}
+PENDING_IMAGE_SIZE_WARNINGS = {}
 IMAGE_SIZE_CACHE_FILE = None
 DIGEST_CACHE_FILE = None
 DOCKERHUB_USERNAME = os.environ.get("DOCKERHUB_USERNAME", "").strip()
@@ -319,6 +321,46 @@ def warn_registry_rate_limited_once(app_id, registry, image_ref, operation):
     )
 
 
+def record_digest_warning(app_id, service_name, image_ref, architecture, exc):
+    """Aggregate digest pinning warnings across architectures."""
+    key = (app_id, service_name, image_ref, str(exc))
+    PENDING_DIGEST_WARNINGS.setdefault(key, set()).add(architecture)
+
+
+def record_image_size_warning(app_id, service_name, image_ref, architecture, exc):
+    """Aggregate image-size warnings across architectures."""
+    key = (app_id, service_name, image_ref, str(exc))
+    PENDING_IMAGE_SIZE_WARNINGS.setdefault(key, set()).add(architecture)
+
+
+def format_architecture_list(architectures):
+    """Render a stable architecture list for logs."""
+    return ", ".join(sorted(architectures))
+
+
+def flush_app_warnings(app_id):
+    """Emit aggregated warnings for one app and clear them from memory."""
+    digest_keys = [key for key in PENDING_DIGEST_WARNINGS if key[0] == app_id]
+    for key in sorted(digest_keys):
+        _, service_name, image_ref, error_text = key
+        architectures = format_architecture_list(PENDING_DIGEST_WARNINGS.pop(key))
+        print(
+            f"  WARN  App '{app_id}' could not pin image digest for "
+            f"service '{service_name}' on architectures [{architectures}]: "
+            f"{image_ref} ({error_text})"
+        )
+
+    image_size_keys = [key for key in PENDING_IMAGE_SIZE_WARNINGS if key[0] == app_id]
+    for key in sorted(image_size_keys):
+        _, service_name, image_ref, error_text = key
+        architectures = format_architecture_list(PENDING_IMAGE_SIZE_WARNINGS.pop(key))
+        print(
+            f"  WARN  App '{app_id}' could not estimate image size for "
+            f"service '{service_name}' on architectures [{architectures}]: "
+            f"{image_ref} ({error_text})"
+        )
+
+
 def registry_json_request(url, headers=None, registry=None):
     """Perform a registry JSON request, retrying with bearer auth if required."""
     if registry and registry in RATE_LIMITED_REGISTRIES:
@@ -498,10 +540,7 @@ def pin_service_images_to_digests(compose_data, app_id, architecture):
                 continue
             # Keep the original tagged reference if the registry cannot resolve
             # the digest during this build run.
-            print(
-                f"  WARN  App '{app_id}' could not pin image digest for "
-                f"service '{service_name}' on architecture '{architecture}': {image_ref} ({exc})"
-            )
+            record_digest_warning(app_id, service_name, image_ref, architecture, exc)
 
 
 def hash_directory_files(root_dir):
@@ -855,10 +894,7 @@ def calculate_min_image_size(compose_data, app_id, architecture):
                     f"skipped image-size estimation for architecture '{architecture}'",
                 )
                 continue
-            print(
-                f"  WARN  App '{app_id}' could not estimate image size for "
-                f"service '{service_name}' on architecture '{architecture}': {image_ref} ({exc})"
-            )
+            record_image_size_warning(app_id, service_name, image_ref, architecture, exc)
     return total
 
 
@@ -1808,6 +1844,7 @@ def main():
             "content_hash": chash,
             "index_locales": index_locales,
         })
+        flush_app_warnings(app_id)
         print(f"  OK   {app_id}")
 
     app_records.sort(key=lambda x: x["app_id"])

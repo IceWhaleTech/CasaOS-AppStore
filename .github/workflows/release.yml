@@ -9,34 +9,54 @@ on:
       base_url:
         description: "Base URL used by build_appstore.py"
         required: false
-        default: "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages"
+        default: ""
 
 permissions:
   contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
       with:
         python-version: "3.11"
+        cache: pip
+        cache-dependency-path: |
+          scripts/build_appstore.py
 
     - name: Install dependencies
       run: |
         sudo apt-get update && sudo apt-get install -y librsvg2-bin zip unzip
         pip install pyyaml Pillow
 
+    - name: Prewarm remote build caches
+      run: |
+        set -euo pipefail
+        mkdir -p .cache/build_appstore
+        CACHE_URL="https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages/store/build_appstore_cache.tar.gz"
+        if curl -fsSL "$CACHE_URL" -o /tmp/build_appstore_cache.tar.gz; then
+          tar -xzf /tmp/build_appstore_cache.tar.gz -C .cache/build_appstore
+          echo "Prewarmed build caches from $CACHE_URL"
+        else
+          echo "No remote build cache bundle found at $CACHE_URL"
+        fi
+
     - name: Restore build caches
-      uses: actions/cache@v4
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
       with:
         path: .cache/build_appstore
-        key: build-appstore-cache-${{ github.ref_name }}
+        key: build-appstore-cache-${{ runner.os }}-${{ github.ref_name }}-${{ hashFiles('scripts/build_appstore.py', 'store-config.json', 'supported-languages.json', 'Apps/**/docker-compose.yaml', 'Apps/**/docker-compose.yml') }}
         restore-keys: |
-          build-appstore-cache-
+          build-appstore-cache-${{ runner.os }}-${{ github.ref_name }}-
+          build-appstore-cache-${{ runner.os }}-
 
     - name: Build static appstore dist
       env:
@@ -44,7 +64,29 @@ jobs:
         DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
       run: |
-        BASE_URL="${BASE_URL_INPUT:-https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages}"
+        set -euo pipefail
+        RAW_BASE_URL="${BASE_URL_INPUT:-}"
+        DEFAULT_BASE_URL="https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages"
+
+        # Accept plain URLs and common Markdown-link pastes like [label](https://example.com).
+        if [[ "$RAW_BASE_URL" =~ ^\[([^\]]+)\]\((https?://[^)]+)\)$ ]]; then
+          if [[ "${BASH_REMATCH[1]}" =~ ^https?:// ]]; then
+            BASE_URL="${BASH_REMATCH[1]}"
+          else
+            BASE_URL="${BASH_REMATCH[2]}"
+          fi
+        else
+          BASE_URL="$RAW_BASE_URL"
+        fi
+
+        BASE_URL="${BASE_URL:-$DEFAULT_BASE_URL}"
+
+        if [[ ! "$BASE_URL" =~ ^https?://[^[:space:]]+$ ]]; then
+          echo "::error::Invalid base_url input: $RAW_BASE_URL"
+          exit 1
+        fi
+
+        echo "Using base URL: $BASE_URL"
         python3 scripts/build_appstore.py \
           --source . \
           --output dist \
@@ -79,9 +121,16 @@ jobs:
         (cd /tmp/appstore-v1 && zip -r "${GITHUB_WORKSPACE}/dist/store/main.zip" build)
         unzip -t dist/store/main.zip
 
+    - name: Package build cache bundle
+      run: |
+        set -euo pipefail
+        mkdir -p dist/store
+        tar -czf dist/store/build_appstore_cache.tar.gz -C .cache/build_appstore .
+        tar -tzf dist/store/build_appstore_cache.tar.gz >/dev/null
+
     - name: Upload main.zip to OSS
       if: github.ref == 'refs/heads/main'
-      uses: tvrcgo/upload-to-oss@master
+      uses: tvrcgo/upload-to-oss@71ef328191ba4a13d42b67083e959c2d760fc8e1
       with:
         key-id: ${{ secrets.OSS_KEY_ID }}
         key-secret: ${{ secrets.OSS_KEY_SECRET }}
@@ -90,16 +139,20 @@ jobs:
         assets: |
           dist/store/main.zip:/store/main.zip
           dist/store/digest_cache.txt:/store/digest_cache.txt
+          dist/store/build_appstore_cache.tar.gz:/store/build_appstore_cache.tar.gz
 
     - name: Deploy dist to gh-pages
-      uses: peaceiris/actions-gh-pages@v4
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@329bcc8f12caed2cefe5a5b80781499a6f3b361b
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
         publish_dir: ./dist
 
     - name: Refresh jsDelivr cache
+      if: github.ref == 'refs/heads/main'
       run: |
         curl -fsSL "https://purge.jsdelivr.net/gh/${{ github.repository }}@gh-pages/index.json" || true
         curl -fsSL "https://purge.jsdelivr.net/gh/${{ github.repository }}@gh-pages/store/main.zip" || true
         curl -fsSL "https://purge.jsdelivr.net/gh/${{ github.repository }}@gh-pages/store/digest_cache.txt" || true
+        curl -fsSL "https://purge.jsdelivr.net/gh/${{ github.repository }}@gh-pages/store/build_appstore_cache.tar.gz" || true
