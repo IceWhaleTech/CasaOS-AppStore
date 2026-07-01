@@ -1,8 +1,8 @@
 {
   "id": "org.icewhale.pinchflat",
-  "description": "Pinchflat 是一个基于 yt-dlp 构建的自托管 YouTube 内容下载应用。它设计轻量、自包含且易于使用。你可以设置从 YouTube 频道或播放列表下载内容的规则，它会自动完成其余工作，定期检查新内容。\n\n主要功能包括：\n- 自包含 - 只需一个 Docker 容器，无外部依赖\n- 强大的命名系统，让内容按你想要的方式存储\n- 易于使用的 Web 界面，预设帮你快速开始\n- 对 Plex、Jellyfin 和 Kodi 等媒体中心应用的一流支持\n- 支持为你喜爱的播客应用提供 RSS 源\n- 自动从频道和播放列表下载新内容\n- 支持下载音频内容\n- 处理 YouTube Shorts 和直播的自定义规则\n- Apprise 通知支持\n- 可选择自动删除旧内容\n- 高级选项如设置截止日期和按标题过滤\n- 可靠的免维护操作\n- 可传递 cookies 到 YouTube 以下载私人播放列表\n- Sponsorblock 集成\n- 支持在下载/删除媒体后运行自定义脚本\n\n非常适合想要下载内容用于媒体中心应用或想要存档媒体的用户！\n",
-  "tagline": "你的下一个 YouTube 媒体管理器",
   "release_note": "- 上游最新版本 v2025.9.26 包含一个重要说明，指向上游 issue #800。\n- Dockerfiles 现在包含 Deno。",
+  "tagline": "你的下一个 YouTube 媒体管理器",
+  "description": "Pinchflat 是一个基于 yt-dlp 构建的自托管 YouTube 内容下载应用。它设计轻量、自包含且易于使用。你可以设置从 YouTube 频道或播放列表下载内容的规则，它会自动完成其余工作，定期检查新内容。\n\n主要功能包括：\n- 自包含 - 只需一个 Docker 容器，无外部依赖\n- 强大的命名系统，让内容按你想要的方式存储\n- 易于使用的 Web 界面，预设帮你快速开始\n- 对 Plex、Jellyfin 和 Kodi 等媒体中心应用的一流支持\n- 支持为你喜爱的播客应用提供 RSS 源\n- 自动从频道和播放列表下载新内容\n- 支持下载音频内容\n- 处理 YouTube Shorts 和直播的自定义规则\n- Apprise 通知支持\n- 可选择自动删除旧内容\n- 高级选项如设置截止日期和按标题过滤\n- 可靠的免维护操作\n- 可传递 cookies 到 YouTube 以下载私人播放列表\n- Sponsorblock 集成\n- 支持在下载/删除媒体后运行自定义脚本\n\n非常适合想要下载内容用于媒体中心应用或想要存档媒体的用户！\n",
   "tips": {
     "before_install": "Pinchflat 将自动创建必要的目录并根据你配置的源开始下载内容。\n\n确保你有足够的存储空间用于下载。应用使用 /downloads 作为默认下载目录。\n\n安装后，访问 Web 界面配置你的 YouTube 频道和播放列表以进行自动下载。\n"
   }
