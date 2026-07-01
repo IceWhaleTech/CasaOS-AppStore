@@ -1,0 +1,194 @@
+name: tela
+services:
+  tela-proxy:
+    image: ghcr.io/zcag/tela-proxy:0.7.0
+    container_name: tela-proxy
+    restart: unless-stopped
+    ports:
+      - target: 80
+        published: "8780"
+        protocol: tcp
+    environment:
+      TELA_SITE_ADDRESS: ":80"
+      TELA_UPSTREAM_BACKEND: tela-backend:8080
+      TELA_UPSTREAM_FRONTEND: tela-frontend:80
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/caddy-data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/caddy-config
+        target: /config
+    depends_on:
+      - tela-backend
+      - tela-frontend
+    networks:
+      - tela-network
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_US: WebUI HTTP Port
+      volumes:
+        - container: /data
+          description:
+            en_US: Caddy Data Directory
+        - container: /config
+          description:
+            en_US: Caddy Config Directory
+
+  tela-backend:
+    image: ghcr.io/zcag/tela-backend:0.7.0
+    container_name: tela-backend
+    restart: unless-stopped
+    environment:
+      TELA_PUBLIC_BASE_URL: http://localhost:8780
+      TELA_DATABASE_URL: postgres://tela:00fdf37689f30d97907e5ccb00845efc@tela-postgres:5432/tela?sslmode=disable
+      TELA_SHARE_SECRET: 682f2b1679cf9094ce5d02b66c6973526acc185b332c13b3b0780a5de45410f6
+      TELA_API_KEY_SECRET: 9795ceb7f57207162a6effdc2f5d795145ed16a8ee4b8a85dca20f58e036af9a
+      TELA_GOTENBERG_URL: http://tela-gotenberg:3000
+      TELA_PDF_RENDER_BASE_URL: http://tela-proxy
+      TELA_DECK_URL: http://tela-deck:3344
+    depends_on:
+      tela-postgres:
+        condition: service_healthy
+    networks:
+      - tela-network
+    x-casaos:
+      envs:
+        - container: TELA_PUBLIC_BASE_URL
+          description:
+            en_US: Public base URL of your wiki, e.g. http://your-host:8780
+        - container: TELA_DATABASE_URL
+          description:
+            en_US: PostgreSQL connection URL
+        - container: TELA_SHARE_SECRET
+          description:
+            en_US: Secret for signed share links (keep stable; rotating invalidates outstanding share links)
+        - container: TELA_API_KEY_SECRET
+          description:
+            en_US: Secret for API / personal access tokens (keep stable; rotating invalidates all tokens)
+
+  tela-frontend:
+    image: ghcr.io/zcag/tela-frontend:0.7.0
+    container_name: tela-frontend
+    restart: unless-stopped
+    networks:
+      - tela-network
+
+  tela-postgres:
+    image: pgvector/pgvector:pg17
+    container_name: tela-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: tela
+      POSTGRES_PASSWORD: 00fdf37689f30d97907e5ccb00845efc
+      POSTGRES_DB: tela
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/pgdata
+        target: /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tela -d tela"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+    networks:
+      - tela-network
+    x-casaos:
+      envs:
+        - container: POSTGRES_USER
+          description:
+            en_US: PostgreSQL User
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: PostgreSQL Password
+        - container: POSTGRES_DB
+          description:
+            en_US: PostgreSQL Database Name
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_US: PostgreSQL Data Directory
+
+  tela-deck:
+    image: ghcr.io/zcag/tela-deck:0.7.0
+    container_name: tela-deck
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/deck-cache
+        target: /data
+    networks:
+      - tela-network
+    x-casaos:
+      volumes:
+        - container: /data
+          description:
+            en_US: Slidev Deck Render Cache Directory
+
+  tela-gotenberg:
+    image: gotenberg/gotenberg:8
+    container_name: tela-gotenberg
+    restart: unless-stopped
+    networks:
+      - tela-network
+
+networks:
+  tela-network:
+    driver: bridge
+
+x-casaos:
+  app_id: com.telawiki.tela
+  main: tela-proxy
+  index: /
+  port_map: "8780"
+  scheme: http
+  title:
+    en_US: tela
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/tela/icon.png
+  thumbnail: ""
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/tela/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/tela/screenshot-2.png
+  tagline:
+    en_US: Markdown-native team wiki with live collaboration and first-class agents
+  description:
+    en_US: |
+      tela is a self-hostable, markdown-native team wiki. A Go and PostgreSQL backend serves a React editor with live Yjs collaboration, while page bodies stay canonical Markdown — so your content is never locked into a proprietary format.
+
+      It pairs a rich block editor (callouts, tabs, diagrams, collapsibles, Slidev decks) with full-text search and optional semantic search, WebDAV folder sync, public/blog spaces, PDF export, and a built-in MCP server so AI agents are first-class editors of your wiki.
+
+      After installing, open the WebUI and complete the first-boot /setup wizard to create your admin account.
+
+      Key Features:
+      - Markdown-native pages — bodies are canonical Markdown, no proprietary block store
+      - Live real-time collaborative editing (Yjs)
+      - Spaces for organizing pages by team or project, with private and public visibility
+      - Full-text search, plus optional semantic search over your content
+      - WebDAV sync — edit your wiki as plain files from your file manager
+      - Slidev decks and PDF export
+      - Built-in MCP server so AI agents can read and write pages directly
+
+      Learn More:
+      - Website: https://telawiki.com
+      - Source: https://github.com/zcag/tela
+  tips:
+    before_install:
+      en_US: |
+        tela ships with pre-generated secrets and a self-contained PostgreSQL (pgvector) database — it works out of the box. After install, open the WebUI and complete the /setup wizard to create your admin account. For remote access, set TELA_PUBLIC_BASE_URL on the tela-backend service to your public URL (e.g. http://your-host:8780).
+  author: zcag
+  developer: zcag
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+  version: "0.7.0"
+  update_at: "2026-06-30"
+  release_notes:
+    en_US: First CasaOS release of tela (v0.7.0).
+  website: "https://telawiki.com"
+  repo: "https://github.com/zcag/tela"
+  support: "https://github.com/zcag/tela/issues"
+  docs: "https://telawiki.com/public/spaces/16"
