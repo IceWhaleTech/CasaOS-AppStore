@@ -1,9 +1,9 @@
 {
   "id": "org.icewhale.peanut",
   "title": "PeaNUT",
-  "tagline": "Sistema di monitoraggio UPS e notifica interruzione di corrente",
   "release_note": "- v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.\n- WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.\n- The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.",
   "description": "PeaNUT è un sistema di monitoraggio UPS basato sul web, specificamente progettato per monitorare i Gruppi di Continuità (UPS). Fornisce un'interfaccia user-friendly per monitorare lo stato UPS, la durata della batteria e le notifiche di interruzione di corrente per garantire che i sistemi siano sempre protetti.\n\n**Funzionalità Principali:**\n- Monitoraggio e controllo dello stato UPS in tempo reale\n- Monitoraggio della durata della batteria e del livello di carica\n- Notifiche automatiche di interruzione di corrente via email/webhook\n- Registrazione dati storici e reportistica\n- Supporto per vari produttori e modelli UPS\n- Interfaccia web responsive adatta ai dispositivi mobili per accesso remoto\n- Soglie di avviso e allarmi configurabili\n- Distribuzione basata su Docker per facile installazione\n\n**Scopri di Più:**\n- [Repository GitHub PeaNUT](https://github.com/brandawg93/peanut)\n",
+  "tagline": "Sistema di monitoraggio UPS e notifica interruzione di corrente",
   "tips": {
     "before_install": "I parametri del servizio UPS di ZimaOS sono i seguenti:\n| Indirizzo server | Porta | Nome utente | Password |\n|------------------|-------|-------------|----------|\n| ZimaOS IP        | `3493` | `monuser` | `secret` |\n"
   }
