@@ -91,7 +91,7 @@ services:
           memory: 1024M
   maybe-redis:
     container_name: maybe-redis
-    image: redis:8.2.1-alpine3.22@sha256:f887e6dacdcfa8e14af2f625fdf4474ff8c37dc36ce13b9e89e6e9a901f155ad
+    image: redis:8.2.1-alpine3.22
     restart: unless-stopped
     volumes:
     - type: bind

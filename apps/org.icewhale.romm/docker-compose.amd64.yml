@@ -34,7 +34,7 @@ services:
         condition: service_healthy
         restart: true
   romm-db:
-    image: mariadb:11.8.2@sha256:cc77bc4f4dfe94d1c0c5d0f2bc9133e7c8211944bdd3c06df2c84028eb269196
+    image: mariadb:11.8.2
     container_name: romm-db
     restart: unless-stopped
     networks:

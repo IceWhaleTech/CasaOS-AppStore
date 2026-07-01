@@ -7,7 +7,7 @@ services:
     depends_on:
     - librechat-mongodb
     - librechat-rag-api
-    image: ghcr.io/danny-avila/librechat-dev:latest@sha256:f8f1afe2ed0509467c66fb3655ae53834de3530b189c6df79a50a00059c756a0
+    image: ghcr.io/danny-avila/librechat-dev:latest@sha256:b2fa0da56bd59c3a7541b7bde8dcf8970cd9aae68283e210e1ba0b655304a547
     restart: unless-stopped
     extra_hosts:
     - host.docker.internal:host-gateway
@@ -90,7 +90,7 @@ services:
           memory: 1024M
   librechat-mongodb:
     container_name: librechat-mongodb
-    image: mongo:6.0@sha256:268eb517abcb8a1bb4cf5f290ec2ac37185e78bfb62e7111576bbb3d8b092456
+    image: mongo:6.0
     restart: unless-stopped
     volumes:
     - type: bind
@@ -107,7 +107,7 @@ services:
           memory: 1024M
   librechat-meilisearch:
     container_name: librechat-meilisearch
-    image: getmeili/meilisearch:v1.12.3@sha256:de8e1614648d2e9bd9c22140ca96395b704698373fe99c69b93c1aaa46486218
+    image: getmeili/meilisearch:v1.12.3
     restart: unless-stopped
     user: 1000:1000
     environment:
@@ -122,7 +122,7 @@ services:
     - librechat-net
   librechat-vectordb:
     container_name: librechat-vectordb
-    image: ankane/pgvector:v0.5.1@sha256:e24d0c7f0e1166b25052f48c2d935b0c74db3b412891a7c70294ee9287ec7427
+    image: ankane/pgvector:v0.5.1
     environment:
       POSTGRES_DB: mydatabase
       POSTGRES_USER: myuser

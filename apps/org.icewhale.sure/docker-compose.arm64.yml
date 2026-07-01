@@ -70,7 +70,7 @@ services:
           memory: 1024M
   sure-db:
     container_name: sure-db
-    image: postgres:16@sha256:8b5e6f503c0eca45ddfe7b55f7e2e694b32affc4d9675911f8d91a032edb6269
+    image: postgres:16
     restart: unless-stopped
     volumes:
     - type: bind
@@ -95,7 +95,7 @@ services:
           memory: 1024M
   sure-redis:
     container_name: sure-redis
-    image: redis:8.2.1-alpine3.22@sha256:48330375193882f20967f5d0817eb6db7b8bbfebce66b7ff9db1c34320690e18
+    image: redis:8.2.1-alpine3.22
     restart: unless-stopped
     volumes:
     - type: bind

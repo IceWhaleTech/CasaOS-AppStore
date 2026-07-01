@@ -10,7 +10,7 @@ services:
       resources:
         limits:
           memory: 1794M
-    image: netdata/netdata:v2.10.3@sha256:7602e8a5c3a843eecb08e060a5ef149d8dd4a6a8214686944fea2e13acfbb84a
+    image: netdata/netdata:v2.10.3
     pid: host
     ports:
     - target: 19999

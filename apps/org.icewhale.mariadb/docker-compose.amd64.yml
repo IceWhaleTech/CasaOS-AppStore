@@ -1,7 +1,7 @@
 name: mariadb
 services:
   mariadb:
-    image: linuxserver/mariadb:11.4.8@sha256:11fa225bdec1f3300712be7e712222afe2c0ab69008a6ef43d216032696ae22b
+    image: linuxserver/mariadb:11.4.8
     restart: unless-stopped
     environment:
       PUID: $PUID
