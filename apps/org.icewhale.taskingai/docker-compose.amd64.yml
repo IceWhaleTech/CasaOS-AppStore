@@ -111,7 +111,7 @@ services:
     networks:
     - taskingai_network
   db:
-    image: ankane/pgvector:v0.5.1
+    image: ankane/pgvector:v0.5.1@sha256:e24d0c7f0e1166b25052f48c2d935b0c74db3b412891a7c70294ee9287ec7427
     environment:
       POSTGRES_DB: taskingai
       POSTGRES_USER: postgres

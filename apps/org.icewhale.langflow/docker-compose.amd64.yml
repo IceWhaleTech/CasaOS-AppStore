@@ -2,7 +2,7 @@ name: langflow
 services:
   langflow:
     container_name: langflow
-    image: langflowai/langflow:1.9.3
+    image: langflowai/langflow:1.9.3@sha256:310e0707248d5077e49880ad1157df095aa71664810d885ab5d006cea8f053f3
     user: 0:0
     ports:
     - target: 7860
@@ -19,7 +19,7 @@ services:
     - /DATA/AppData/$AppID/backend:/app/langflow
   langflow-postgres:
     container_name: langflow-postgress
-    image: postgres:16
+    image: postgres:16@sha256:4f6c1ec9743885ba6438a91f7c08c4ef4d645a41eae31fc8521c2d831c622107
     environment:
     - POSTGRES_USER=langflow
     - POSTGRES_PASSWORD=langflow

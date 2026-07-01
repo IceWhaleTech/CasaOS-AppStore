@@ -8,7 +8,7 @@ services:
           memory: 7848M
     environment:
     - TZ= $TZ
-    image: pymedusa/medusa:master
+    image: pymedusa/medusa:master@sha256:481cb695f2ad422a4cbf555663d9831041d80e9ee0c052cbecb63c32eb453aab
     ports:
     - target: 8081
       published: '8081'

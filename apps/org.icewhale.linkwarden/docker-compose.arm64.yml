@@ -59,7 +59,7 @@ services:
         reservations:
           memory: 256m
   linkwarden-meilisearch:
-    image: getmeili/meilisearch:v1.12.8
+    image: getmeili/meilisearch:v1.12.8@sha256:459f539c1f3e14dfddbc7451f3cb3506c998661cc0daef82828260242fe6c71f
     container_name: linkwarden-meilisearch
     restart: unless-stopped
     environment:

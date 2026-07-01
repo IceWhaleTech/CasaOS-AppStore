@@ -44,7 +44,7 @@ services:
     - --remote-debugging-port=9222
     - --hide-scrollbars
   karakeep-meilisearch:
-    image: getmeili/meilisearch:v1.41.0
+    image: getmeili/meilisearch:v1.41.0@sha256:d84b081420b2e5899f5acc3745e1d6510950430fef3ee6b9df5e53b0bf3e19c9
     container_name: karakeep-meilisearch
     deploy:
       resources:
