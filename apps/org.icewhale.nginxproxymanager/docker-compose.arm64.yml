@@ -27,7 +27,7 @@ services:
       target: /etc/letsencrypt
     container_name: nginxproxymanager
 x-casaos:
-  app_id: org.icewhale.nginxproxymanager
+  id: org.icewhale.nginxproxymanager
   main: nginxproxymanager
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.nginxproxymanager/assets/icon.svg
   title:

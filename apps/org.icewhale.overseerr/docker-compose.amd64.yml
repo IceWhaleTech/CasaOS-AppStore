@@ -1,7 +1,7 @@
 name: overseerr
 services:
   overseerr:
-    image: linuxserver/overseerr:1.35.0@sha256:c98a9572fdf189933906220e41bbab814c2dfa8773c71a352b97c4990340f99f
+    image: linuxserver/overseerr:1.35.0
     restart: unless-stopped
     environment:
       PUID: $PUID
@@ -17,7 +17,7 @@ services:
       target: /config
     container_name: overseerr
 x-casaos:
-  app_id: org.icewhale.overseerr
+  id: org.icewhale.overseerr
   main: overseerr
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.overseerr/assets/icon.svg
   title:

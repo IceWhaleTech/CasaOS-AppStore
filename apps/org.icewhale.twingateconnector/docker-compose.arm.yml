@@ -1,7 +1,7 @@
 name: twingate-connector
 services:
   twingate-connector:
-    image: twingate/connector:1@sha256:1bf20f49784e5d433780030a124530356f895ec4556c58e87dfd9eaf15b129d7
+    image: twingate/connector:1
     container_name: twingate-connector
     command:
     - /connectord
@@ -21,7 +21,7 @@ services:
         reservations:
           memory: 500M
 x-casaos:
-  app_id: org.icewhale.twingateconnector
+  id: org.icewhale.twingateconnector
   main: twingate-connector
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.twingateconnector/assets/icon.svg
   title:

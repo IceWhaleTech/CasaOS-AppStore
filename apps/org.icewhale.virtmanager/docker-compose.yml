@@ -25,7 +25,7 @@ services:
       target: /DATA/Downloads
     container_name: virt-manager
 x-casaos:
-  app_id: org.icewhale.virtmanager
+  id: org.icewhale.virtmanager
   main: virt-manager
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.virtmanager/assets/icon.svg
   port_map: '8185'

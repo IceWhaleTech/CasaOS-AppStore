@@ -8,7 +8,7 @@ services:
       PUID: '1000'
       TZ: Europe/London
       USER: casaos
-    image: linuxserver/transmission:4.1.1@sha256:15bba5d288d53b7eb1fbf2624c011a1cb4feeecf9204185cbce607ead72531dd
+    image: linuxserver/transmission:4.1.1
     deploy:
       resources:
         reservations:
@@ -37,7 +37,7 @@ services:
       target: /watch
     container_name: transmission
 x-casaos:
-  app_id: org.icewhale.transmission
+  id: org.icewhale.transmission
   main: transmission
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.transmission/assets/icon.svg
   title:

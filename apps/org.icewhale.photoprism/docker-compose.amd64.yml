@@ -5,7 +5,7 @@ services:
       PHOTOPRISM_ADMIN_PASSWORD: casaos
       PHOTOPRISM_UPLOAD_NSFW: 'true'
       TZ: $TZ
-    image: photoprism/photoprism:260523@sha256:5e11e2ec0d7a4c80d9cb3feb8af1abcf726c7c3df7df081365fd7426899526f5
+    image: photoprism/photoprism:260523
     deploy:
       resources:
         reservations:
@@ -25,7 +25,7 @@ services:
       target: /photoprism/originals
     container_name: photoprism
 x-casaos:
-  app_id: org.icewhale.photoprism
+  id: org.icewhale.photoprism
   main: photoprism
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.photoprism/assets/icon.svg
   title:

@@ -23,7 +23,7 @@ services:
     - /DATA/AppData/$AppID:/root/.flowise
     entrypoint: /bin/sh -c "sleep 3; flowise start"
 x-casaos:
-  app_id: org.icewhale.flowise
+  id: org.icewhale.flowise
   main: flowise
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.flowise/assets/icon.svg
   title:

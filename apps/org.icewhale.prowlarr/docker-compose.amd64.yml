@@ -5,7 +5,7 @@ services:
       PGID: '1000'
       PUID: '1000'
       TZ: Europe/London
-    image: linuxserver/prowlarr:2.3.5@sha256:3351beaea8f64492318f154234f556e2a9351c9a7b5d014934b755ca056e2409
+    image: linuxserver/prowlarr:2.3.5
     deploy:
       resources:
         reservations:
@@ -22,7 +22,7 @@ services:
       target: /config
     container_name: prowlarr
 x-casaos:
-  app_id: org.icewhale.prowlarr
+  id: org.icewhale.prowlarr
   main: prowlarr
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.prowlarr/assets/icon.svg
   title:

@@ -16,7 +16,7 @@ services:
     - /DATA/AppData/duckdns:/config
     restart: unless-stopped
 x-casaos:
-  app_id: org.icewhale.duckdns
+  id: org.icewhale.duckdns
   main: duckdns
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.duckdns/assets/icon.svg
   title:

@@ -1,6 +1,6 @@
 services:
   openclaw:
-    image: icewhaletech/openclaw:2026.5.7@sha256:2795433a46e06ef63dd5a3da64dce663450705c32ccfb9c11e5ded1bad4cdb99
+    image: icewhaletech/openclaw:2026.5.7
     environment:
       HOME: /home/node
       TERM: xterm-256color
@@ -32,7 +32,7 @@ services:
     container_name: openclaw
 name: openclaw
 x-casaos:
-  app_id: org.icewhale.openclaw
+  id: org.icewhale.openclaw
   title:
     de_DE: OpenClaw
     el_GR: OpenClaw

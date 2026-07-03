@@ -1,7 +1,7 @@
 name: wallabag
 services:
   wallabag:
-    image: wallabag/wallabag:2.6.14@sha256:82ade66b403d67c05732f9f08003034509f6499e9f487b858c0b77524b28545d
+    image: wallabag/wallabag:2.6.14
     container_name: wallabag
     deploy:
       resources:
@@ -31,7 +31,7 @@ services:
       interval: 1m
       timeout: 3s
 x-casaos:
-  app_id: org.icewhale.wallabag
+  id: org.icewhale.wallabag
   main: wallabag
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.wallabag/assets/icon.svg
   scheme: http

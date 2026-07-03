@@ -14,7 +14,7 @@ services:
     - TZ=Europe/Madrid
     - UDI=1000
     - USERNAME=casaos
-    image: ugeek/webdav:amd64@sha256:5e2b55f5eb0e2335f82b8dfbb02d0b0a8939779a9358f8cc2010c8c1c34e3e56
+    image: ugeek/webdav:amd64
     ports:
     - target: 80
       published: '5005'
@@ -27,7 +27,7 @@ services:
     network_mode: bridge
     privileged: false
 x-casaos:
-  app_id: org.icewhale.webdav
+  id: org.icewhale.webdav
   main: webdav
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.webdav/assets/icon.svg
   title:

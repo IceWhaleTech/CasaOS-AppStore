@@ -1,7 +1,7 @@
 name: openspeedtest
 services:
   openspeedtest:
-    image: openspeedtest/latest:v2.0.6@sha256:f8b32fc550ab3bf080cb960938a0aad6dc84fe8b914cc7c2ae945cc614b68f35
+    image: openspeedtest/latest:v2.0.6
     deploy:
       resources:
         reservations:
@@ -14,7 +14,7 @@ services:
     restart: always
     container_name: openspeedtest
 x-casaos:
-  app_id: org.icewhale.openspeedtest
+  id: org.icewhale.openspeedtest
   main: openspeedtest
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.openspeedtest/assets/icon.svg
   title:

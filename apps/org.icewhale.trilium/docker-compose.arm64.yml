@@ -7,7 +7,7 @@ services:
       resources:
         reservations:
           memory: 256M
-    image: triliumnext/trilium:v0.103.0@sha256:d691a4003c21cfe2c54aaa4b15bc0b0293fb81042c41ba48b6d7eb38c3c9c39b
+    image: triliumnext/trilium:v0.103.0
     ports:
     - target: 8080
       published: '8088'
@@ -20,7 +20,7 @@ services:
     network_mode: bridge
     privileged: false
 x-casaos:
-  app_id: org.icewhale.trilium
+  id: org.icewhale.trilium
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.trilium/assets/icon.svg
   index: /
   port_map: '8088'

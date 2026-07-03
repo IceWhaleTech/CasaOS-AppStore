@@ -1,7 +1,7 @@
 name: turbodiffusion_nvidia
 services:
   turbodiffusion:
-    image: icewhaletech/turbodiffusion:20260312@sha256:7536ee67bafdc61c34fc91b1b8804636deaf575dd956d5025712fbacb152545a
+    image: icewhaletech/turbodiffusion:20260312
     container_name: turbodiffusion
     deploy:
       resources:
@@ -35,7 +35,7 @@ services:
     - turbodiffusion/app_gradio.py
     restart: unless-stopped
 x-casaos:
-  app_id: org.icewhale.turbodiffusionnvidia
+  id: org.icewhale.turbodiffusionnvidia
   title:
     de_DE: TurboDiffusion(Nvidia GPU)
     el_GR: TurboDiffusion(Nvidia GPU)

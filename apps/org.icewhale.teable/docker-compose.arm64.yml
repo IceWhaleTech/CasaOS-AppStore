@@ -1,7 +1,7 @@
 name: teable
 services:
   teable:
-    image: teableio/teable:latest@sha256:13923ea8172c0e2c9f93e8ff6c1421ec66880162ca1dc618184e9cd1c1693fd9
+    image: teableio/teable:latest
     container_name: teable
     restart: unless-stopped
     deploy:
@@ -31,7 +31,7 @@ services:
       teable-cache:
         condition: service_healthy
   teable-db:
-    image: postgres:15@sha256:0b1022a07ed77e09af42ca3f1ccb284be1926c5bb258f0e8469eee0a001a89c3
+    image: postgres:15
     restart: unless-stopped
     container_name: teable-db
     deploy:
@@ -57,7 +57,7 @@ services:
       timeout: 3s
       retries: 3
   teable-cache:
-    image: redis:7.2.4@sha256:4da694ba727afad9a027c075a3e32356affea4db13482d489822107dcf09d4ed
+    image: redis:7.2.4
     restart: unless-stopped
     container_name: teable-cache
     deploy:
@@ -90,7 +90,7 @@ networks:
     name: teable-network
     driver: bridge
 x-casaos:
-  app_id: org.icewhale.teable
+  id: org.icewhale.teable
   title:
     de_DE: Teable
     el_GR: Teable

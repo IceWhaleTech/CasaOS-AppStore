@@ -1,7 +1,7 @@
 name: ztnet
 services:
   ztnet:
-    image: sinamics/ztnet:0.7.18@sha256:ee7ad23fcbb5a4272decd72b9f91d02b65f25687b90131a0bd202d6b8bc665ae
+    image: sinamics/ztnet:0.7.18
     container_name: ztnet
     deploy:
       resources:
@@ -33,7 +33,7 @@ services:
     - ztnet-postgres
   ztnet-postgres:
     container_name: ztnet-postgres
-    image: postgres:15.2-alpine@sha256:12cbba911ab20aff0594c832f0639f71bb2b6a6d5ea72adc91f3eafe7c152afd
+    image: postgres:15.2-alpine
     restart: unless-stopped
     environment:
       POSTGRES_USER: ztnet
@@ -53,7 +53,7 @@ networks:
       config:
       - subnet: 172.31.255.0/29
 x-casaos:
-  app_id: org.icewhale.ztnet
+  id: org.icewhale.ztnet
   main: ztnet
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.ztnet/assets/icon.svg
   scheme: http

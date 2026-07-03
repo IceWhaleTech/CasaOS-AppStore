@@ -6,7 +6,7 @@ services:
       MEM_STARTUP: '1024'
       PGID: '1000'
       PUID: '1000'
-    image: linuxserver/unifi-controller:8.0.7@sha256:01152472070f53aad09287193430be40883b8ba48281a5b264ba3df121e321a5
+    image: linuxserver/unifi-controller:8.0.7
     deploy:
       resources:
         reservations:
@@ -47,7 +47,7 @@ services:
       target: /config
     container_name: unifi-controller
 x-casaos:
-  app_id: org.icewhale.unificontroller
+  id: org.icewhale.unificontroller
   main: unifi-controller
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.unificontroller/assets/icon.svg
   title:

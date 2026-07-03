@@ -5,7 +5,7 @@ services:
       PGID: '1000'
       PUID: '1000'
       TZ: Europe/London
-    image: linuxserver/sabnzbd:5.0.3@sha256:9a03c5a75dfce25328bbce0820e1828bd76d3743b2abe333bc9778676685bc02
+    image: linuxserver/sabnzbd:5.0.3
     deploy:
       resources:
         reservations:
@@ -28,7 +28,7 @@ services:
       target: /downloads
     container_name: sabnzbd
 x-casaos:
-  app_id: org.icewhale.sabnzbd
+  id: org.icewhale.sabnzbd
   main: sabnzbd
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.sabnzbd/assets/icon.svg
   title:

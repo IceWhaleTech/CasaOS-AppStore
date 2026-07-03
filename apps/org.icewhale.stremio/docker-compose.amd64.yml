@@ -11,7 +11,7 @@ services:
     - AUTO_SERVER_URL=1
     devices:
     - /dev/dri:/dev/dri
-    image: tsaridas/stremio-docker:v1.3.4@sha256:06842b88a1bcb78e0b146479506b4ddf2afcac4aa008f2c26894909d013defa4
+    image: tsaridas/stremio-docker:v1.3.4
     volumes:
     - type: bind
       source: /DATA/AppData/$AppID/config
@@ -27,7 +27,7 @@ services:
     network_mode: bridge
     privileged: false
 x-casaos:
-  app_id: org.icewhale.stremio
+  id: org.icewhale.stremio
   main: stremio
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.stremio/assets/icon.svg
   title:

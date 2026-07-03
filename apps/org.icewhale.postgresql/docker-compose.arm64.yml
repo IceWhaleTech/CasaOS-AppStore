@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: casaos
       POSTGRES_PASSWORD: casaos
       POSTGRES_DB: casaos
-    image: postgres:17.4@sha256:51a22dd7011534315b3c3f641e4a27204e90ce543674c945072176147824834e
+    image: postgres:17.4
     deploy:
       resources:
         reservations:
@@ -24,7 +24,7 @@ services:
       target: /var/lib/postgresql/data
     container_name: postgresql
 x-casaos:
-  app_id: org.icewhale.postgresql
+  id: org.icewhale.postgresql
   main: postgresql
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.postgresql/assets/icon.svg
   title:

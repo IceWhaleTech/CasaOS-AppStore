@@ -20,7 +20,7 @@ services:
     - TZ=$TZ
     extra_hosts:
     - host.docker.internal:host-gateway
-    image: icewhaletech/ragflow:v0.21.1@sha256:c41d9ec1b8f14e8e049ff4472aec58276fa1cb483584078557ee957b81b9bb74
+    image: icewhaletech/ragflow:v0.21.1
     ports:
     - target: 9380
       published: '9380'
@@ -81,7 +81,7 @@ services:
       timeout: 10s
       interval: 10s
       retries: 120
-    image: elasticsearch:8.11.3@sha256:0e47a784b266b7f30d8071a25f774b10a38f3bb9bb41e23a2767ba464aafcb21
+    image: elasticsearch:8.11.3
     ports:
     - target: 9200
       published: '9200'
@@ -107,7 +107,7 @@ services:
       timeout: 10s
       interval: 10s
       retries: 120
-    image: icewhaletech/ragflow-infinity:v0.6.1@sha256:4ee72ae8b41cffcb138b049628eaf0cadb6792f04c40e64f9db57994035b8cc1
+    image: icewhaletech/ragflow-infinity:v0.6.1
     ports:
     - target: 23817
       published: '23817'
@@ -204,7 +204,7 @@ services:
       interval: 10s
       retries: 10
       start_period: 90s
-    image: icewhaletech/ragflow-mysql:8.0.39@sha256:18f906d9d814740b58848003b5727c3b0ff81c137f7c6b960a53ad5f12b374ba
+    image: icewhaletech/ragflow-mysql:8.0.39
     ports:
     - target: 3306
       published: '5455'
@@ -245,7 +245,7 @@ services:
       timeout: 10s
       interval: 10s
       retries: 120
-    image: opensearchproject/opensearch:2.19.1@sha256:7ad3c515e43fb1642ddf2181dfd03402e42e85a16030e098ed1f3fc1404d7e89
+    image: opensearchproject/opensearch:2.19.1
     ports:
     - target: 9201
       published: '9201'
@@ -284,7 +284,7 @@ services:
       interval: 5s
       retries: 3
       start_period: 10s
-    image: valkey/valkey:8@sha256:d1ce1ca9fd866a502c1776208f181a0fc6860906c931a4e34a19fe1b7a409046
+    image: valkey/valkey:8
     ports:
     - target: 6379
       published: '6379'
@@ -322,7 +322,7 @@ services:
       timeout: 5s
       interval: 10s
       retries: 5
-    image: infiniflow/sandbox-executor-manager:latest@sha256:3515d06f2364e886dd4ac38d0daa28409fa63c7443763d2b9a7311362aa16702
+    image: infiniflow/sandbox-executor-manager:latest
     ports:
     - target: 9385
       published: '9385'
@@ -344,7 +344,7 @@ networks:
   ragflow:
     driver: bridge
 x-casaos:
-  app_id: org.icewhale.ragflow
+  id: org.icewhale.ragflow
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.ragflow/assets/icon.svg
   index: /
   main: ragflow

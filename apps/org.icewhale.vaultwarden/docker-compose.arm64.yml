@@ -1,7 +1,7 @@
 name: vaultwarden
 services:
   vaultwarden:
-    image: vaultwarden/server:1.36.0@sha256:e13c149709c054ce262e24b66a9a25bc436a5956b7e5635e0e3719530f6cfe7f
+    image: vaultwarden/server:1.36.0
     deploy:
       resources:
         reservations:
@@ -18,7 +18,7 @@ services:
       target: /data
     container_name: vaultwarden
 x-casaos:
-  app_id: org.icewhale.vaultwarden
+  id: org.icewhale.vaultwarden
   main: vaultwarden
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.vaultwarden/assets/icon.svg
   title:

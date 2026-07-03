@@ -1,7 +1,7 @@
 name: uptimekuma
 services:
   uptimekuma:
-    image: louislam/uptime-kuma:2.4.0@sha256:213b0ec84db1673f5e77d3bd3f98e1750408b05c264fd7cab30a5bd5760a2655
+    image: louislam/uptime-kuma:2.4.0
     deploy:
       resources:
         reservations:
@@ -18,7 +18,7 @@ services:
       target: /app/data
     container_name: uptimekuma
 x-casaos:
-  app_id: org.icewhale.uptimekuma
+  id: org.icewhale.uptimekuma
   main: uptimekuma
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.uptimekuma/assets/icon.svg
   title:

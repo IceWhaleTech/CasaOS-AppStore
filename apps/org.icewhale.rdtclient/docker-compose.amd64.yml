@@ -13,7 +13,7 @@ services:
       resources:
         reservations:
           memory: 64M
-    image: rogerfar/rdtclient:2.0.136@sha256:4124985d8b29e3a149c87706423c0a4daee087feb960fe1ece8745a0667b20f6
+    image: rogerfar/rdtclient:2.0.136
     ports:
     - target: 6500
       published: '6500'
@@ -29,7 +29,7 @@ services:
     network_mode: bridge
     privileged: false
 x-casaos:
-  app_id: org.icewhale.rdtclient
+  id: org.icewhale.rdtclient
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.rdtclient/assets/icon.svg
   index: /
   port_map: '6500'

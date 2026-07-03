@@ -1,7 +1,7 @@
 name: threadfin
 services:
   threadfin:
-    image: fyb3roptik/threadfin:1.2.37@sha256:3f5ce27744bc2784c7ed4b531f7a5518b9aa2d5007288a8d392dd6e18ce6a8fc
+    image: fyb3roptik/threadfin:1.2.37
     restart: unless-stopped
     environment:
     - THREADFIN_BRANCH=main
@@ -19,7 +19,7 @@ services:
       target: /home/threadfin/conf/backup
     container_name: threadfin
 x-casaos:
-  app_id: org.icewhale.threadfin
+  id: org.icewhale.threadfin
   main: threadfin
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.threadfin/assets/icon.svg
   index: /web/

@@ -1,7 +1,7 @@
 name: romm
 services:
   romm:
-    image: rommapp/romm:4.8.1@sha256:adb60df357a491f27eb8f2b40c6c255dd482867019ccd1ffe8eb6ca3db66d53e
+    image: rommapp/romm:4.8.1
     container_name: romm
     deploy:
       resources:
@@ -61,7 +61,7 @@ networks:
   romm-network:
     driver: bridge
 x-casaos:
-  app_id: org.icewhale.romm
+  id: org.icewhale.romm
   main: romm
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.romm/assets/icon.svg
   scheme: http

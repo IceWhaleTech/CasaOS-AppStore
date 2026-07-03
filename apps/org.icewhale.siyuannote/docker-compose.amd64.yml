@@ -5,7 +5,7 @@ services:
     environment:
       PUID: '1000'
       PGID: '1000'
-    image: b3log/siyuan:v3.6.5@sha256:09591e042f032e6236a9df1a2dba6b733223095b135518d91f734d454bae5a85
+    image: b3log/siyuan:v3.6.5
     deploy:
       resources:
         reservations:
@@ -22,7 +22,7 @@ services:
       target: /siyuan/workspace
     container_name: siyuan-note
 x-casaos:
-  app_id: org.icewhale.siyuannote
+  id: org.icewhale.siyuannote
   main: siyuan-note
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.siyuannote/assets/icon.svg
   title:

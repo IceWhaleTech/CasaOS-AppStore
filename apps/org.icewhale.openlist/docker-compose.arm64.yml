@@ -1,7 +1,7 @@
 name: openlist
 services:
   openlist:
-    image: openlistteam/openlist:v4.2.2@sha256:abe8146a24475fdc6623df675a4590f50beac5a19ea4d5010c310eb1c1ed699d
+    image: openlistteam/openlist:v4.2.2
     container_name: openlist
     deploy:
       resources:
@@ -22,7 +22,7 @@ services:
       UMASK: '022'
       OPENLIST_ADMIN_PASSWORD: casaos
 x-casaos:
-  app_id: org.icewhale.openlist
+  id: org.icewhale.openlist
   main: openlist
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.openlist/assets/icon.svg
   scheme: http

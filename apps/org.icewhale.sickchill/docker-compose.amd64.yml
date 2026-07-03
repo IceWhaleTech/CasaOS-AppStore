@@ -5,7 +5,7 @@ services:
       PGID: '1000'
       PUID: '1000'
       TZ: Europe/London
-    image: linuxserver/sickchill:2023.6.27@sha256:684048484a92a69335f56273cf6f9c21303f8df866b2533b46b8f6f120287a54
+    image: linuxserver/sickchill:2023.6.27
     deploy:
       resources:
         reservations:
@@ -28,7 +28,7 @@ services:
       target: /tv
     container_name: sickchill
 x-casaos:
-  app_id: org.icewhale.sickchill
+  id: org.icewhale.sickchill
   main: sickchill
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.sickchill/assets/icon.svg
   title:

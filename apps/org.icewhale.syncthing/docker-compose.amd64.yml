@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/syncthing:1.29.7@sha256:0eef062da150a3e78186b6498bb3f4c8129e4fe74026039148c539c3cff3427e
+    image: linuxserver/syncthing:1.29.7
     deploy:
       resources:
         reservations:
@@ -34,7 +34,7 @@ services:
       target: /DATA
     container_name: syncthing
 x-casaos:
-  app_id: org.icewhale.syncthing
+  id: org.icewhale.syncthing
   main: syncthing
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.syncthing/assets/icon.svg
   title:

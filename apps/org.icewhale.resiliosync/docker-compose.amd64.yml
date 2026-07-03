@@ -5,7 +5,7 @@ services:
     - PGID=$PGID
     - PUID=$PUID
     - TZ=$TZ
-    image: linuxserver/resilio-sync:3.1.2@sha256:a766abff45adcb9e6da3b575503e29764c4cd97d6eec6f790fe3e49e2fdaf45a
+    image: linuxserver/resilio-sync:3.1.2
     network_mode: bridge
     ports:
     - target: 55555
@@ -28,7 +28,7 @@ services:
     privileged: false
     container_name: resilio-sync
 x-casaos:
-  app_id: org.icewhale.resiliosync
+  id: org.icewhale.resiliosync
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.resiliosync/assets/icon.svg
   index: /
   port_map: '8888'

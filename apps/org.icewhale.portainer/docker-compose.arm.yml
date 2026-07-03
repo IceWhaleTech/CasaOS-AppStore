@@ -1,7 +1,7 @@
 name: portainer
 services:
   portainer:
-    image: portainer/portainer-ce:2.31.3@sha256:6859b2a988351826190969f354ad764481b50b764eb0aa83af678300dd24e839
+    image: portainer/portainer-ce:2.31.3
     deploy:
       resources:
         reservations:
@@ -27,7 +27,7 @@ services:
       target: /var/run/docker.sock
     container_name: portainer
 x-casaos:
-  app_id: org.icewhale.portainer
+  id: org.icewhale.portainer
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.portainer/assets/icon.svg
   main: portainer
   title:

@@ -1,7 +1,7 @@
 name: v2raya
 services:
   v2raya:
-    image: mzz2017/v2raya:v2.2.7.5@sha256:2d522453b1dfe3c52a2a5e06ae5252db6a851d813bb84a80794dad5a30849c35
+    image: mzz2017/v2raya:v2.2.7.5
     container_name: v2raya
     deploy:
       resources:
@@ -22,7 +22,7 @@ services:
       source: /DATA/AppData/$AppID
       target: /etc/v2raya
 x-casaos:
-  app_id: org.icewhale.v2raya
+  id: org.icewhale.v2raya
   main: v2raya
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.v2raya/assets/icon.svg
   scheme: http

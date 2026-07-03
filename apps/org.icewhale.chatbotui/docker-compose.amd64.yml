@@ -14,7 +14,7 @@ services:
     restart: unless-stopped
     container_name: chatbot-ui
 x-casaos:
-  app_id: org.icewhale.chatbotui
+  id: org.icewhale.chatbotui
   main: chatbot-ui
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.chatbotui/assets/icon.jpg
   title:

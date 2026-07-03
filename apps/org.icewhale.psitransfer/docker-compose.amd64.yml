@@ -1,7 +1,7 @@
 name: psitransfer
 services:
   psitransfer:
-    image: psitrax/psitransfer:v2.4.1@sha256:ad9bcaf45438e3aa4a40bb08fca73215044ac40a358b8f00786a20a40e6a809b
+    image: psitrax/psitransfer:v2.4.1
     container_name: psitransfer
     ports:
     - target: '3000'
@@ -19,7 +19,7 @@ services:
           memory: 256M
     restart: unless-stopped
 x-casaos:
-  app_id: org.icewhale.psitransfer
+  id: org.icewhale.psitransfer
   title:
     de_DE: PsiTransfer
     el_GR: PsiTransfer

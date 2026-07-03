@@ -1,7 +1,7 @@
 name: monica
 services:
   monica:
-    image: monica:4.1.2@sha256:3027bcfdb37de3482737cdc0fde97b87b4240ee1fbdaf8fab868cf2462792448
+    image: monica:4.1.2@sha256:5662f3d9860b9b9dfad588d334b18f76d41d58fac4934207886d789759fe0edc
     container_name: monica
     deploy:
       resources:
@@ -50,7 +50,7 @@ networks:
   monica_network:
     driver: bridge
 x-casaos:
-  app_id: org.icewhale.monica
+  id: org.icewhale.monica
   main: monica
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.monica/assets/icon.svg
   scheme: ''
