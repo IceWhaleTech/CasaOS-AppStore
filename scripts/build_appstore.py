@@ -52,7 +52,7 @@ except ImportError:
 
 # Fields to keep in docker-compose.yml x-casaos block (runtime essentials)
 COMPOSE_KEEP_FIELDS = {
-    "app_id",
+    "id",
     "main",
     "index",
     "port_map",
@@ -135,7 +135,7 @@ def normalize_safe_id(value):
 
 
 def validate_safe_id(raw_value, field_name, context_label):
-    """Validate a safe identifier shared by store_id and x-casaos.app_id."""
+    """Validate a safe identifier shared by store_id and x-casaos.id."""
     normalized_value = normalize_safe_id(raw_value)
     if not normalized_value:
         raise ValueError(f"{context_label} is missing required {field_name}.")
@@ -151,11 +151,11 @@ def validate_safe_id(raw_value, field_name, context_label):
 
 
 def validate_reverse_domain_app_id(raw_value, context_label):
-    """Validate x-casaos.app_id as a reverse-domain style safe identifier."""
-    normalized_value = validate_safe_id(raw_value, "x-casaos.app_id", context_label)
+    """Validate x-casaos.id as a reverse-domain style safe identifier."""
+    normalized_value = validate_safe_id(raw_value, "x-casaos.id", context_label)
     if not REVERSE_DOMAIN_APP_ID_PATTERN.fullmatch(normalized_value):
         raise ValueError(
-            f"{context_label} has invalid x-casaos.app_id '{raw_value}'. It must "
+            f"{context_label} has invalid x-casaos.id '{raw_value}'. It must "
             "use reverse-domain style such as 'com.example.myapp', with at least "
             "two non-empty dot-separated segments, using only letters, digits, "
             "dots (.), underscores (_), and hyphens (-)."
@@ -1385,12 +1385,12 @@ def process_app_assets(source_root, app_dir, assets_output, original_xcasaos, me
 # ---------------------------------------------------------------------------
 
 def validate_app_id(compose_path, compose_data, xcasaos):
-    """Validate required x-casaos.app_id field and return its normalized value."""
-    raw_app_id = xcasaos.get("app_id")
+    """Validate required x-casaos.id field and return its normalized value."""
+    raw_app_id = xcasaos.get("id")
     if raw_app_id is None or not str(raw_app_id).strip():
         expected_name = compose_data.get("name") or compose_path.parent.name.lower()
         raise ValueError(
-            f"App '{compose_path.parent.name}' is missing required x-casaos.app_id "
+            f"App '{compose_path.parent.name}' is missing required x-casaos.id "
             f"in {compose_path}. Expected a reverse-domain style ID like "
             f"'com.example.{re.sub(r'[^a-z0-9._-]+', '-', str(expected_name).lower()).strip('-') or 'app'}'."
         )
@@ -1507,7 +1507,7 @@ def parse_app(app_dir):
 
     original_xcasaos = dict(compose_data.get("x-casaos", {}))
     validated_source_app_id = validate_app_id(compose_path, compose_data, original_xcasaos)
-    original_xcasaos["app_id"] = validated_source_app_id
+    original_xcasaos["id"] = validated_source_app_id
     app_id = validated_source_app_id
 
     compose_data, meta = split_compose(compose_data)
