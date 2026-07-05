@@ -43,9 +43,9 @@ services:
     restart: unless-stopped
     environment:
       TELA_PUBLIC_BASE_URL: http://localhost:8780
-      TELA_DATABASE_URL: postgres://tela:00fdf37689f30d97907e5ccb00845efc@tela-postgres:5432/tela?sslmode=disable
-      TELA_SHARE_SECRET: 682f2b1679cf9094ce5d02b66c6973526acc185b332c13b3b0780a5de45410f6
-      TELA_API_KEY_SECRET: 9795ceb7f57207162a6effdc2f5d795145ed16a8ee4b8a85dca20f58e036af9a
+      TELA_DATABASE_URL: postgres://tela@tela-postgres:5432/tela?sslmode=disable
+      TELA_SHARE_SECRET: tela-share-secret-change-me
+      TELA_API_KEY_SECRET: tela-api-key-secret-change-me
       TELA_GOTENBERG_URL: http://tela-gotenberg:3000
       TELA_PDF_RENDER_BASE_URL: http://tela-proxy
       TELA_DECK_URL: http://tela-deck:3344
@@ -64,10 +64,10 @@ services:
             en_US: PostgreSQL connection URL
         - container: TELA_SHARE_SECRET
           description:
-            en_US: Secret for signed share links (keep stable; rotating invalidates outstanding share links)
+            en_US: Secret for signed share links — CHANGE THIS to a long random value, then keep it stable (rotating invalidates outstanding share links)
         - container: TELA_API_KEY_SECRET
           description:
-            en_US: Secret for API / personal access tokens (keep stable; rotating invalidates all tokens)
+            en_US: Secret for API / personal access tokens — CHANGE THIS to a long random value, then keep it stable (rotating invalidates all tokens)
 
   tela-frontend:
     image: ghcr.io/zcag/tela-frontend:0.7.0
@@ -82,8 +82,10 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: tela
-      POSTGRES_PASSWORD: 00fdf37689f30d97907e5ccb00845efc
       POSTGRES_DB: tela
+      # Password auth is not used: Postgres is only reachable on the internal
+      # tela-network bridge (no published port), so it trusts connections there.
+      POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/pgdata
@@ -101,9 +103,6 @@ services:
         - container: POSTGRES_USER
           description:
             en_US: PostgreSQL User
-        - container: POSTGRES_PASSWORD
-          description:
-            en_US: PostgreSQL Password
         - container: POSTGRES_DB
           description:
             en_US: PostgreSQL Database Name
@@ -177,7 +176,11 @@ x-casaos:
   tips:
     before_install:
       en_US: |
-        tela ships with pre-generated secrets and a self-contained PostgreSQL (pgvector) database — it works out of the box. After install, open the WebUI and complete the /setup wizard to create your admin account. For remote access, set TELA_PUBLIC_BASE_URL on the tela-backend service to your public URL (e.g. http://your-host:8780).
+        tela ships with a self-contained PostgreSQL (pgvector) database — it works out of the box. After install, open the WebUI and complete the /setup wizard to create your admin account.
+
+        Recommended: before first use, change TELA_SHARE_SECRET and TELA_API_KEY_SECRET on the tela-backend service to your own long, random values and keep them stable — the bundled defaults are placeholders, and leaving them lets others forge share links and access tokens.
+
+        For remote access, set TELA_PUBLIC_BASE_URL on the tela-backend service to your public URL (e.g. http://your-host:8780).
   author: zcag
   developer: zcag
   category: Productivity
