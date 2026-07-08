@@ -1,0 +1,288 @@
+name: smart-file-search
+
+services:
+  llm_server:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/llm_server:2.1
+    container_name: llm_server
+    restart: unless-stopped
+    volumes:
+      - /DATA:/DATA:rslave
+      - /media:/media:rslave
+
+      - type: bind
+        source: /DATA/AppData/AI_MODELS/llm-server
+        target: /data/models
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /tmp
+        target: /tmp
+        bind:
+          create_host_path: true
+    environment:
+      LLM_CPU_PINNING: "true"
+      LLM_CPU_THREADS: "4"
+      LLM_OV_NUM_STREAMS: "1"
+      MODEL_ROOT: /data/models
+      TOKENIZERS_PARALLELISM: "false"
+      TZ: Asia/Shanghai
+    network_mode: host
+    privileged: true
+    command:
+      - python3
+      - launcher.py
+    entrypoint: []
+    devices:
+      - /dev/dri:/dev/dri
+    cpu_shares: 90
+    deploy:
+      resources:
+        limits:
+          memory: "33180065792"
+        reservations: {}
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+        compress: "true"
+
+  pgvector-nas:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/pgvector/pgvector:pg18-trixie
+    container_name: pgvector-nas
+    restart: unless-stopped
+    ports:
+      - "5434:5432"
+    volumes:
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/pgvector_nas_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: lcfc
+      POSTGRES_PASSWORD: lcfc
+      POSTGRES_DB: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+      TZ: Asia/Shanghai
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+        compress: "true"
+
+  file-search-service:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/file-rag-nas:v2.0.0_20260706
+    container_name: file-search-service
+    restart: unless-stopped
+    volumes:
+      # User file roots. Keep original host paths inside the container.
+      - /DATA:/DATA:rslave
+      - /media:/media:rslave
+
+      # Service state and config.
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/file-search-service/parsing_service:/data/ai-core/parsing_service
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/file-search-service/config:/NAS_Route/config
+
+      # Service logs.
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/logs/file-search-service/parsing_service:/RagBaseHaystack_svn/parsing_log
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/logs/file-search-service/document_analysis:/RagBaseHaystack_svn/data_loader/RagDocumentAnalysis/log
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/logs/file-search-service/nas_query:/data/ai-core/nas_query/logs
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/logs/file-search-service/nas_retrieval:/Nas_Retrieval_Final_031/logs
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/logs/file-search-service/nas_route:/NAS_Route/logs
+    environment:
+      PYTHONUNBUFFERED: "1"
+      LC_ALL: C.UTF-8
+      LANG: C.UTF-8
+      FLASK_ENV: production
+      FLASK_DEBUG: "false"
+      HOST: 0.0.0.0
+      PORT: "20194"
+      TZ: Asia/Shanghai
+      OPENAI_API_KEY: sk-fafd563dd30c4e11a2e92f7f5ca363f8
+      OPENAI_BASE_URL: https://dashscope.aliyuncs.com/compatible-mode/v1
+      OPENAI_MODEL: qwen-plus
+      RAG_TEMPERATURE: "0"
+      GENERATION_TEMPERATURE: "0.7"
+      MODEL_NAME: OpenAI
+      NAS_ROUTE_PORT: "20191"
+      CONFIG_DIR: /NAS_Route/config
+      LOG_DIR: /NAS_Route/logs
+      AUTO_INIT_CONFIG: "true"
+    network_mode: host
+    healthcheck:
+      test:
+        - CMD
+        - sh
+        - -c
+        - curl -f http://localhost:20194/health && curl -f http://localhost:20193/health && curl -f http://localhost:20192/docs && curl -f http://localhost:20191/health
+      interval: 60s
+      timeout: 15s
+      retries: 5
+      start_period: 120s
+    command:
+      - sh
+      - -c
+      - /start.sh
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 12G
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+        compress: "true"
+
+  asr-server:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/asr-server:v1.0.0_20260114
+    container_name: asr-server
+    restart: unless-stopped
+    ports:
+      - "20105:8000"
+    volumes:
+      # ASR needs to read media files.
+      - /DATA:/DATA:rslave
+      - /media:/media:rslave
+
+      # ASR model and logs.
+      - /DATA/AppData/AI_MODELS/asr-server/funasr_models:/app/funasr_models
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/asr-server/logs:/app/logs
+      - /usr/share/zoneinfo/Asia/Shanghai:/usr/share/zoneinfo/Asia/Shanghai
+      - /etc/timezone:/etc/timezone
+    environment:
+      PYTHONUNBUFFERED: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+      TZ: Asia/Shanghai
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:8000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    working_dir: /app/asr_src
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2G
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+        compress: "true"
+
+  ai-api:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/ai-api:v2.0.0_202607080936
+    container_name: ai-api
+    restart: unless-stopped
+    depends_on:
+      - llm_server
+      - pgvector-nas
+      - asr-server
+      - file-search-service
+    volumes:
+      # API service data.
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/data_base:/app/data/data_base
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/vector_db:/app/data/vector_db
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/vector_cache:/app/data/vector_cache
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/logs/ai-api:/app/data/logs
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/configs:/app/data/configs
+
+      - /DATA/.config/secrets:/app/data/secrets
+      # File watcher config. Keep both targets for old/new code compatibility.
+      - type: bind
+        source: /DATA/.config/rag/filewatchsettings.yaml
+        target: /app/filewatchsettings.yaml
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: /DATA/.config/rag/filewatchsettings.yaml
+        target: /filewatchsettings.yaml
+        read_only: true
+        bind:
+          create_host_path: false
+
+      # Shared model root.
+      - /DATA/AppData/AI_MODELS/llm-server:/data/models
+
+      # User file roots. Keep original host paths inside the container.
+      - /DATA:/DATA:rslave
+      - /media:/media:rslave
+
+      # ILAB data.
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/ilab_data_base:/app/ilab/data/data_base
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/ilab_vector_db:/app/ilab/data/vector_db
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/ilab_milvus_data:/app/ilab/data/milvus_data
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/ilab_logs:/app/ilab/data/logs
+      - /DATA/AppData/LCFC_APP/data/ai_api_data/ilab_config:/app/ilab/data/configs
+
+      # Host system info required by the API.
+      - /sys/class/dmi/id:/sys/class/dmi/id:ro
+      - /opt:/opt
+      - /tmp:/tmp
+    environment:
+      TZ: Asia/Shanghai
+      FILE_WATCH_SETTINGS_PATH: /app/filewatchsettings.yaml
+    network_mode: host
+    privileged: true
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - curl -f http://localhost:20100/docs && curl -f http://localhost:20190/docs || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: "8.0"
+          memory: 10G
+        reservations:
+          memory: 2G
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+        compress: "true"
+
+networks:
+  default:
+    name: smart-file-search_default
+
+x-casaos:
+  app_id: com.mycyberwing.smart-file-search
+  icon: "icon.png"
+  title:
+    en_US: "RAG Service"
+    zh_CN: 智能检索服务
+  tagline:
+    en_US: "RAG Service for Cyberwing Device"
+    zh_CN: 智能检索服务
+  description:
+    en_US: "RAG Service for Cyberwing Device"
+    zh_CN: 智能检索服务
+  tips: {}
+  author: LCFC
+  developer: nmh
+  category: AI
+  architectures:
+    - amd64
+  version: "v1.0.0"
+  update_at: "2026-07-08"
+  release_notes:
+    en_US: |-
+      - First release
+    zh_CN: |-
+      - 首次上线
