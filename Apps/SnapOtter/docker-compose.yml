@@ -1,0 +1,116 @@
+name: snapotter
+services:
+  snapotter:
+    image: snapotter/snapotter:2.0.0
+    deploy:
+      resources:
+        reservations:
+          memory: "1024M"
+    network_mode: bridge
+    ports:
+      - target: 1349
+        published: "1349"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/workspace
+        target: /tmp/workspace
+    environment:
+      - AUTH_ENABLED=true
+      - DEFAULT_USERNAME=admin
+      - DEFAULT_PASSWORD=admin
+      - MAX_UPLOAD_SIZE_MB=0
+      - MAX_BATCH_SIZE=0
+      - CONCURRENT_JOBS=0
+      - REDIS_MAXMEMORY=512mb
+      - TRUST_PROXY=true
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:1349/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 90s
+    x-casaos:
+      ports:
+        - container: "1349"
+          description:
+            en_US: Web UI and API port
+      volumes:
+        - container: /data
+          description:
+            en_US: SnapOtter data, user files, AI models, logs, embedded PostgreSQL, and embedded Redis
+        - container: /tmp/workspace
+          description:
+            en_US: Temporary file-processing workspace
+      envs:
+        - container: AUTH_ENABLED
+          description:
+            en_US: Require login before using SnapOtter
+        - container: DEFAULT_USERNAME
+          description:
+            en_US: Initial administrator username, used only on first run
+        - container: DEFAULT_PASSWORD
+          description:
+            en_US: Initial administrator password, change after first login
+        - container: MAX_UPLOAD_SIZE_MB
+          description:
+            en_US: Maximum upload size in MB, set to 0 for unlimited
+        - container: MAX_BATCH_SIZE
+          description:
+            en_US: Maximum files per batch, set to 0 for unlimited
+        - container: CONCURRENT_JOBS
+          description:
+            en_US: Number of concurrent jobs, set to 0 to auto-detect
+        - container: REDIS_MAXMEMORY
+          description:
+            en_US: Memory cap for embedded Redis
+        - container: TRUST_PROXY
+          description:
+            en_US: Trust reverse proxy headers
+    container_name: snapotter
+x-casaos:
+  id: com.snapotter.snapotter
+  main: snapotter
+  index: /
+  port_map: "1349"
+  scheme: http
+  title:
+    en_US: SnapOtter
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SnapOtter/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SnapOtter/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SnapOtter/screenshot-1.png
+  tagline:
+    en_US: Self-hosted file toolkit for images, video, audio, PDFs, and files
+  description:
+    en_US: |
+      SnapOtter is an open-source, self-hosted file manipulation suite with 200+ tools across images, video, audio, PDFs, and files. It includes batch processing, reusable pipelines, local AI tools, a browser image editor, and a REST API so files stay on your own server.
+
+      This package uses SnapOtter's single-container embedded mode for an easy CasaOS install. PostgreSQL 17 and Redis 8 run inside the container when DATABASE_URL and REDIS_URL are left unset, with persistent data stored under /data.
+
+      Default login is admin / admin. SnapOtter asks you to change the default password after first login.
+  tips:
+    before_install:
+      en_US: |
+        Default login is admin / admin. You will be asked to change the password after first login.
+
+        This package uses SnapOtter embedded mode, so leave DATABASE_URL and REDIS_URL unset unless you are moving to the upstream multi-container PostgreSQL and Redis stack.
+  author: SnapOtter
+  developer: SnapOtter
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+  version: "2.0.0"
+  update_at: "2026-07-08"
+  release_notes:
+    en_US: |
+      SnapOtter 2.0 adds a single-container embedded PostgreSQL and Redis mode, 200+ tools across five modalities, durable background jobs, reusable pipelines, local AI tools, and a browser image editor.
+  website: https://snapotter.com
+  repo: https://github.com/snapotter-hq/SnapOtter
+  support: https://discord.gg/hr3s7HPUsr
+  docs: https://docs.snapotter.com/guide/getting-started
