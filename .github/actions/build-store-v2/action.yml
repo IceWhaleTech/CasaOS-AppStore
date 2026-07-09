@@ -1,0 +1,58 @@
+name: Build AppStore V2
+description: Build the v2 AppStore dist and emit a structured build report.
+
+inputs:
+  source:
+    description: Source repository root.
+    required: false
+    default: .
+  output:
+    description: Output directory.
+    required: false
+    default: dist
+  base-url:
+    description: Base URL prefix for generated asset links.
+    required: false
+    default: ""
+  cache-file:
+    description: Optional image metadata cache file.
+    required: false
+    default: ""
+  digest-cache-file:
+    description: Optional image digest cache file.
+    required: false
+    default: ""
+  report-json:
+    description: Path to the generated build report JSON file.
+    required: false
+    default: out/build-v2-report.json
+  report-title:
+    description: Title used in the structured report.
+    required: false
+    default: Build V2 Store Report
+
+outputs:
+  output-dir:
+    description: Output directory used by the build.
+    value: ${{ steps.build.outputs.output-dir }}
+  report-json:
+    description: Path to the generated build report JSON file.
+    value: ${{ steps.build.outputs.report-json }}
+  status:
+    description: Build status captured in the report.
+    value: ${{ steps.build.outputs.status }}
+
+runs:
+  using: composite
+  steps:
+    - name: Run upstream build action
+      id: build
+      uses: IceWhaleTech/build-appstore-action@fe690d05358b34c66541811df520feeefc92ac1a
+      with:
+        source: ${{ inputs.source }}
+        output: ${{ inputs.output }}
+        base-url: ${{ inputs.base-url }}
+        cache-file: ${{ inputs.cache-file }}
+        digest-cache-file: ${{ inputs.digest-cache-file }}
+        report-json: ${{ inputs.report-json }}
+        report-title: ${{ inputs.report-title }}
