@@ -25,7 +25,8 @@ Each app directory under `Apps/` should include at least:
 
 - Compose file must be valid YAML.
 - Do not use image tag `latest`; pin explicit versions.
-- Top-level `name` is the app ID and must be unique.
+- Top-level `name` is the Docker Compose project name and must be unique within this repository.
+- Top-level `x-casaos.id` is the stable store-protocol app ID.
 - `services.<service>.container_name` should usually match service name.
 
 Supported runtime variables include `$PUID`, `$PGID`, `$TZ`, `$AppID`.
@@ -46,7 +47,7 @@ Field semantics:
 
 For full field reference and build output behavior, see:
 - [docs/guides/third-party-store-guide.md](docs/guides/third-party-store-guide.md)
-- [docs/internal-dev-guide.md](docs/internal-dev-guide.md)
+- [docs/specs/compose-and-x-casaos.md](docs/specs/compose-and-x-casaos.md)
 
 ## 5. i18n Rules
 
@@ -59,10 +60,8 @@ At minimum, include `en_US` for i18n blocks.
 Run local build validation before submitting:
 
 ```bash
-python3 scripts/build_appstore.py \
-  --source . \
-  --output dist \
-  --base-url "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages"
+BASE_URL="https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages" \
+./scripts/build_dist.sh
 ```
 
 Expected result:
@@ -77,12 +76,15 @@ Repository CI validates compose and build pipeline automatically on PR.
 Please keep changes compatible with:
 - `.github/workflows/validator.yml`
 - `.github/workflows/release.yml`
+- `.github/workflows/release-store.yml`
 
 ## 8. Asset Recommendations
 
 For apps intended for recommendation/featured placement:
 - `icon`: transparent background, recommended 256x256 SVG/PNG
-- `thumbnail`: recommended 784x442 (publish pipeline converts to WebP)
-- `screenshot`: recommended 1280x800 (16:10, pipeline converts to WebP)
+- `thumbnail`: recommended 784x442
+- `screenshot`: recommended 1280x800 (16:10)
+
+The publish pipeline may optimize raster assets or convert them when the build environment supports it. Always treat the generated asset paths in `dist/` as the final source of truth.
 
 If you have suggestions for this process, please open an Issue or PR.

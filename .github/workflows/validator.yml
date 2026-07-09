@@ -13,125 +13,87 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    env:
+      BUILD_CACHE_KEY: build-appstore-cache-${{ github.ref_name }}-${{ github.run_id }}
+      BUILD_CACHE_PREFIX: build-appstore-cache-${{ github.ref_name }}-
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v6
 
-      - name: Check name field in YAML files
-        env:
-          APP_PATH_INPUT: ${{ inputs.app_path }}
-        run: |
-          set -euo pipefail
-          if [ -n "${APP_PATH_INPUT}" ]; then
-            SEARCH_ROOT="Apps/${APP_PATH_INPUT}"
-          else
-            SEARCH_ROOT="Apps"
-          fi
-          while IFS= read -r file; do
-            if ! grep -qP '^name:\s[a-z0-9_-]*\r?$' "$file"; then
-              echo "Invalid 'name' field in: $file"
-              echo "name must match: ^[a-z0-9_-]+$"
-              exit 1
-            fi
-          done < <(find "${SEARCH_ROOT}" -type f \( -name "docker-compose.yaml" -o -name "docker-compose.yml" \))
-
-      - name: Validate all docker-compose files
-        env:
-          APP_PATH_INPUT: ${{ inputs.app_path }}
-        run: |
-          set -euo pipefail
-          if [ -n "${APP_PATH_INPUT}" ]; then
-            SEARCH_ROOT="Apps/${APP_PATH_INPUT}"
-          else
-            SEARCH_ROOT="Apps"
-          fi
-          while IFS= read -r file; do
-            echo "Validating: ${file}"
-            docker compose -f "${file}" config -q
-          done < <(find "${SEARCH_ROOT}" -type f \( -name "docker-compose.yaml" -o -name "docker-compose.yml" \))
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
+      - name: Validate compose metadata
+        id: validate_compose
+        continue-on-error: true
+        uses: ./.github/actions/validate-compose
         with:
-          python-version: "3.11"
-          cache: pip
-          cache-dependency-path: |
-            scripts/build_appstore.py
+          app-path: ${{ inputs.app_path }}
+          report-json: out/validation-report.json
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update && sudo apt-get install -y librsvg2-bin
-          pip install pyyaml Pillow
-
-      - name: Check x-casaos id fields
-        env:
-          APP_PATH_INPUT: ${{ inputs.app_path }}
-        run: |
-          set -euo pipefail
-          if [ -n "${APP_PATH_INPUT}" ]; then
-            SEARCH_ROOT="Apps/${APP_PATH_INPUT}"
-          else
-            SEARCH_ROOT="Apps"
-          fi
-          python3 - <<'PY' "${SEARCH_ROOT}"
-import sys
-from pathlib import Path
-
-import yaml
-
-search_root = Path(sys.argv[1])
-compose_files = sorted(
-    path for path in search_root.rglob("*")
-    if path.is_file() and path.name in {"docker-compose.yml", "docker-compose.yaml"}
-)
-
-for compose_file in compose_files:
-    with compose_file.open("r", encoding="utf-8") as handle:
-        compose_data = yaml.safe_load(handle) or {}
-
-    xcasaos = compose_data.get("x-casaos")
-    if not isinstance(xcasaos, dict):
-        print(f"Missing x-casaos block in: {compose_file}")
-        sys.exit(1)
-
-    if "app_id" in xcasaos:
-        print(f"Legacy x-casaos.app_id found in: {compose_file}")
-        sys.exit(1)
-
-    raw_id = xcasaos.get("id")
-    if raw_id is None or not str(raw_id).strip():
-        print(f"Missing required x-casaos.id in: {compose_file}")
-        sys.exit(1)
-PY
-
-      - name: Prewarm remote build caches
-        run: |
-          set -euo pipefail
-          mkdir -p .cache/build_appstore
-          CACHE_URL="https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages/store/build_appstore_cache.tar.gz"
-          if curl -fsSL "$CACHE_URL" -o /tmp/build_appstore_cache.tar.gz; then
-            tar -xzf /tmp/build_appstore_cache.tar.gz -C .cache/build_appstore
-            echo "Prewarmed build caches from $CACHE_URL"
-          else
-            echo "No remote build cache bundle found at $CACHE_URL"
-          fi
+      - name: Upload validation report artifacts
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: validation-report
+          path: |
+            out/validation-report.json
 
       - name: Restore build caches
-        uses: actions/cache@v6
+        uses: actions/cache/restore@v5
         with:
-          path: .cache/build_appstore
-          key: build-appstore-cache-${{ runner.os }}-${{ github.ref_name }}-${{ hashFiles('scripts/build_appstore.py', 'store-config.json', 'supported-languages.json', 'Apps/**/docker-compose.yaml', 'Apps/**/docker-compose.yml') }}
+          path: |
+            .cache/build_appstore/image-size-cache.json
+            .cache/build_appstore/image-digest-cache.json
+          key: ${{ env.BUILD_CACHE_KEY }}
           restore-keys: |
-            build-appstore-cache-${{ runner.os }}-${{ github.ref_name }}-
-            build-appstore-cache-${{ runner.os }}-
+            ${{ env.BUILD_CACHE_PREFIX }}
 
       - name: Validate appstore build
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+        id: validate_build
+        continue-on-error: true
+        uses: ./.github/actions/build-store-v2
+        with:
+          source: .
+          output: /tmp/appstore-dist
+          base-url: https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages
+          cache-file: .cache/build_appstore/image-size-cache.json
+          digest-cache-file: .cache/build_appstore/image-digest-cache.json
+          report-json: out/build-v2-validation-report.json
+          report-title: Validation Build Report
+
+      - name: Upload build validation report artifacts
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: build-v2-validation-report
+          path: |
+            out/build-v2-validation-report.json
+
+      - name: Save build caches
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            .cache/build_appstore/image-size-cache.json
+            .cache/build_appstore/image-digest-cache.json
+          key: ${{ env.BUILD_CACHE_KEY }}
+
+      - name: Write validation job summary
+        if: always()
+        uses: ./.github/actions/write-job-summary
+        with:
+          title: Validation Summary
+          report-jsons: |
+            out/validation-report.json
+            out/build-v2-validation-report.json
+
+      - name: Fail workflow if validation failed
+        if: always()
+        shell: bash
         run: |
-          python3 -u scripts/build_appstore.py \
-            --source . \
-            --output /tmp/appstore-dist \
-            --cache-file .cache/build_appstore/image-size-cache.json \
-            --digest-cache-file .cache/build_appstore/image-digest-cache.json \
-            --base-url "https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages"
+          set -euo pipefail
+          if [ "${{ steps.validate_compose.outcome }}" != "success" ]; then
+            echo "Compose validation failed. See validation-report artifact."
+            exit 1
+          fi
+          if [ "${{ steps.validate_build.outcome }}" != "success" ]; then
+            echo "AppStore build validation failed. See workflow logs."
+            exit 1
+          fi
