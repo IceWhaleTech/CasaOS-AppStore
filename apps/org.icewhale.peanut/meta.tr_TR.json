@@ -1,8 +1,8 @@
 {
   "id": "org.icewhale.peanut",
   "title": "PeaNUT",
-  "release_note": "- v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.\n- WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.\n- The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.",
   "description": "PeaNUT, Kesintisiz Güç Kaynakları (UPS) izleme için özel olarak tasarlanmış web tabanlı bir UPS izleme sistemidir. Sistemlerinizin her zaman korunduğundan emin olmak için UPS durumunu, pil ömrünü ve güç kesintisi bildirimlerini izlemek için kullanıcı dostu bir arayüz sağlar.\n\n**Temel Özellikler:**\n- Gerçek zamanlı UPS durumu izleme ve kontrol\n- Pil ömrü ve şarj seviyesi izleme\n- E-posta/webhook yoluyla otomatik güç kesintisi bildirimleri\n- Geçmiş veri kaydı ve raporlama\n- Çeşitli UPS üreticileri ve modelleri için destek\n- Uzaktan erişim için mobil dostu duyarlı web arayüzü\n- Yapılandırılabilir uyarı eşiği ve alarmlar\n- Kolay kurulum için Docker tabanlı dağıtım\n\n**Daha Fazla Bilgi:**\n- [PeaNUT GitHub Deposu](https://github.com/brandawg93/peanut)\n",
+  "release_note": "- v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.\n- WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.\n- The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.",
   "tagline": "UPS izleme ve güç kesintisi bildirim sistemi",
   "tips": {
     "before_install": "ZimaOS için UPS hizmeti parametreleri aşağıdaki gibidir:\n| Sunucu adresi | Port | Kullanıcı adı | Parola |\n|---------------|------|---------------|--------|\n| ZimaOS IP     | `3493` | `monuser` | `secret` |\n"

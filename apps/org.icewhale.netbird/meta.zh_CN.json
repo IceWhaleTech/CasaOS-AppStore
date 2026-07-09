@@ -1,7 +1,7 @@
 {
   "id": "org.icewhale.netbird",
-  "release_note": "- v0.62.3 增加了 management 侧配置兼容性检查。\n- 官方更新日志指向完整的 v0.62.2...v0.62.3 对比。",
   "description": "NetBird 将基于 WireGuard® 的覆盖网络与零信任网络访问相结合，提供一个统一的开源平台，实现可靠且安全的连接。\n\n- 安全远程访问 – 轻松实现最小权限网络访问\n- 零配置部署 – 使用点对点 WireGuard® 网络取代传统 VPN\n- 无缝 SSO 与 MFA – 通过基于会话的 SSO 和 MFA 保护网络访问\n- 动态 Posture 检查 – 仅允许符合安全规则的设备访问\n- 集中网络管理 – 从单一位置控制您的私有网络\n- 详细活动日志 – 识别网络中的操作者和操作时间\n\n**了解更多：**\n- [NetBird 官网](https://netbird.io)\n- [文档](https://docs.netbird.io)\n- [自托管指南](https://docs.netbird.io/selfhosted/selfhosted-quickstart)\n- [NetBird GitHub](https://github.com/netbirdio/netbird)\n- [Slack 社区](https://docs.netbird.io/slack-url)\n",
+  "release_note": "- v0.62.3 增加了 management 侧配置兼容性检查。\n- 官方更新日志指向完整的 v0.62.2...v0.62.3 对比。",
   "tagline": "将设备连接到安全的 WireGuard® 覆盖网络，支持 SSO、MFA 和细粒度访问控制。",
   "tips": {
     "before_install": "### 入门\n\n1. 访问您的 NetBird 仪表板（[app.netbird.io](https://app.netbird.io) 或您的自托管实例）并登录或创建新账户\n2. 导航到 **Setup Keys** 页面\n3. 点击 **Create Setup Key** 创建新密钥\n4. 为您的密钥命名（例如\"Zima Server\"）并复制生成的设置密钥\n5. 在 ZimaOS 中，点击应用图块右上角的设置图标\n6. 在 **NB_SETUP_KEY** 字段中粘贴设置密钥\n7. （可选）如果使用自托管的 NetBird 仪表板，请在 **NB_MANAGEMENT_URL** 中输入 URL\n8. （可选）在 **NB_HOSTNAME** 中自定义主机名（默认：Zima）\n9. 保存并重启应用\n\n您的设备现在将出现在您的 NetBird 仪表板中，并可以连接到网格网络中的其他设备。\n"

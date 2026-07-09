@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/syncthing:1.29.7
+    image: linuxserver/syncthing:1.29.7@sha256:0eef062da150a3e78186b6498bb3f4c8129e4fe74026039148c539c3cff3427e
     deploy:
       resources:
         reservations:

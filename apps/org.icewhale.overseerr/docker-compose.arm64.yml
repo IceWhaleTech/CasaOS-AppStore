@@ -1,7 +1,7 @@
 name: overseerr
 services:
   overseerr:
-    image: linuxserver/overseerr:1.35.0
+    image: linuxserver/overseerr:1.35.0@sha256:a4744a297c6844f9c4ca8b2f2ddc980316db78cdf4b4c72284bf53eddfe96d44
     restart: unless-stopped
     environment:
       PUID: $PUID

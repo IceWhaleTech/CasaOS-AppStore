@@ -1,7 +1,7 @@
 {
   "id": "org.icewhale.karakeep",
-  "release_note": "- v0.32.0 将默认 Meilisearch 版本更新到 1.41.0，并改进了 Docker Compose 开发环境。\n- 改进自托管使用体验，包含细粒度 API Key 权限、CLI 认证配置保存、新的 MCP/API 能力、事件日志以及规则引擎增强。\n- 包含 SSRF、限流、存储型 XSS、密码重置令牌等服务端安全修复，并修复了抓取、导入、搜索和 Meilisearch 批处理相关问题。",
   "description": "Karakeep 是一款开源、自托管的收藏管理应用，可以把链接、笔记、图片、PDF 和网页高亮集中保存到同一个资料库中。\n它会自动抓取标题、描述和预览内容，并结合 AI 标签、全文搜索、列表和规则引擎，帮助你更快整理与找回收藏。\n借助浏览器扩展、移动端应用、RSS 导入和整页归档能力，Karakeep 既适合作为稍后读工具，也适合作为长期保存个人内容的归档库。\n\n**主要功能：**\n- 在同一个资料库中保存链接、笔记、图片、PDF 和文本高亮\n- 自动抓取标题、描述、图片和归档页面，方便后续阅读\n- 借助 AI 标签、摘要、OCR 和全文搜索，更快找回需要的内容\n- 通过标签、协作列表、RSS 订阅和规则工作流整理收藏\n- 可通过 Web 应用、移动端应用、浏览器扩展、REST API 和 CLI 访问内容\n\n**了解更多：**\n- [Karakeep 官网](https://karakeep.app/)\n- [Karakeep GitHub](https://github.com/karakeep-app/karakeep)\n- [Karakeep 文档](https://docs.karakeep.app/)\n",
+  "release_note": "- v0.32.0 将默认 Meilisearch 版本更新到 1.41.0，并改进了 Docker Compose 开发环境。\n- 改进自托管使用体验，包含细粒度 API Key 权限、CLI 认证配置保存、新的 MCP/API 能力、事件日志以及规则引擎增强。\n- 包含 SSRF、限流、存储型 XSS、密码重置令牌等服务端安全修复，并修复了抓取、导入、搜索和 Meilisearch 批处理相关问题。",
   "tagline": "什么都能收藏的应用",
   "tips": {
     "before_install": "请将 `NEXTAUTH_URL` 设置为你实际访问 Karakeep 时使用的地址。\n请为 `NEXTAUTH_SECRET` 和 `MEILI_MASTER_KEY` 使用足够长的随机字符串，并确保 `karakeep` 与 `meilisearch` 两个服务中的 `MEILI_MASTER_KEY` 保持一致。\n你的实例中第一个注册的用户会成为管理员。\n"

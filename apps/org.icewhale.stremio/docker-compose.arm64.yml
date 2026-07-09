@@ -11,7 +11,7 @@ services:
     - AUTO_SERVER_URL=1
     devices:
     - /dev/dri:/dev/dri
-    image: tsaridas/stremio-docker:v1.3.4
+    image: tsaridas/stremio-docker:v1.3.4@sha256:792dd8d14d87a65d577a7a300ad88ef32f96486f8240ce2fa986643ddc99bc46
     volumes:
     - type: bind
       source: /DATA/AppData/$AppID/config
