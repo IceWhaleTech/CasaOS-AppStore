@@ -147,7 +147,7 @@ export default defineConfig({
   vite: {
     plugins: [
       llmstxt({
-        ignoreFiles: ["zh/**"],
+        ignoreFiles: ["README.md", "zh/**"],
         injectLLMHint: false
       })
     ]
