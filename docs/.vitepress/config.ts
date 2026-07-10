@@ -1,4 +1,5 @@
 import { defineConfig } from "vitepress";
+import llmstxt from "vitepress-plugin-llms";
 
 const enNav = [
   { text: "Home", link: "/" },
@@ -143,6 +144,14 @@ export default defineConfig({
   description: "Development documentation for the ZimaOS AppStore repository and third-party stores.",
   cleanUrls: true,
   ignoreDeadLinks: true,
+  vite: {
+    plugins: [
+      llmstxt({
+        ignoreFiles: ["zh/**"],
+        injectLLMHint: false
+      })
+    ]
+  },
   head: [
     ["link", { rel: "icon", href: "/zimaos-logo.svg", type: "image/svg+xml" }]
   ],
