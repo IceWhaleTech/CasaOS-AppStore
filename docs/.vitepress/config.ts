@@ -147,6 +147,7 @@ export default defineConfig({
   vite: {
     plugins: [
       llmstxt({
+        // Keep generated LLM docs aligned with the public English site content only.
         ignoreFiles: ["README.md", "zh/**"],
         injectLLMHint: false
       })
