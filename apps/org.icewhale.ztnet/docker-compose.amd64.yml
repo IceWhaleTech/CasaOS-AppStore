@@ -1,7 +1,7 @@
 name: ztnet
 services:
   ztnet:
-    image: sinamics/ztnet:0.7.18@sha256:b063d7e9db92219bac1887c72d6230a231424e51bfe40866403936bbe558292f
+    image: sinamics/ztnet:0.7.18
     container_name: ztnet
     deploy:
       resources:
@@ -33,7 +33,7 @@ services:
     - ztnet-postgres
   ztnet-postgres:
     container_name: ztnet-postgres
-    image: postgres:15.2-alpine@sha256:07ec36ad2d5ab9250f38c8ef749239b662cf15d03c9ddb7167422edbbdf71156
+    image: postgres:15.2-alpine
     restart: unless-stopped
     environment:
       POSTGRES_USER: ztnet

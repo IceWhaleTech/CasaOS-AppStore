@@ -32,7 +32,7 @@ services:
         reservations:
           memory: 512m
   blinko-postgres:
-    image: postgres:14@sha256:73dcc7a50fbda3ca72782f4ae507b75b65b29bf92161efaea88968ff8a278c00
+    image: postgres:14@sha256:8c275478cde65bb6896f44e37f71ed9b5f9e96ef1c2118d7690ad54ca2645b20
     container_name: blinko-postgres
     restart: unless-stopped
     environment:

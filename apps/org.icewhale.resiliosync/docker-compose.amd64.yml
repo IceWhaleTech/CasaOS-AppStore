@@ -5,7 +5,7 @@ services:
     - PGID=$PGID
     - PUID=$PUID
     - TZ=$TZ
-    image: linuxserver/resilio-sync:3.1.2@sha256:b4bcdf75208d707949fdc4b81d2929d5351bb84ecf1c1bd9c05ece204bb02250
+    image: linuxserver/resilio-sync:3.1.2
     network_mode: bridge
     ports:
     - target: 55555

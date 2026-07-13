@@ -33,7 +33,7 @@ services:
         reservations:
           memory: 512m
   linkwarden-postgres:
-    image: postgres:16-alpine@sha256:0fc5c901ec0a3c55ce70b99b040daeb89d5b35b61febbced1b4b24dbc3153ec8
+    image: postgres:16-alpine@sha256:7a396fd264a2067788b6551122b50f162bf6136312c7fc9d74381cb92c648382
     container_name: linkwarden-postgres
     restart: unless-stopped
     environment:

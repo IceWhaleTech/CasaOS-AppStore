@@ -115,7 +115,7 @@ services:
     networks:
     - dify
   db:
-    image: postgres:15-alpine@sha256:878ac61a6367f60973ed0eef22ade9956e075f1a21f4604867e33a2edb6939e0
+    image: postgres:15-alpine@sha256:cae15a3b718f23497a60b7cafdcf205216d7949680972da0584db00fb68bf3e6
     container_name: dify-db
     restart: unless-stopped
     environment:

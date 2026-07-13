@@ -70,7 +70,7 @@ services:
           memory: 1024M
   sure-db:
     container_name: sure-db
-    image: postgres:16@sha256:8b5e6f503c0eca45ddfe7b55f7e2e694b32affc4d9675911f8d91a032edb6269
+    image: postgres:16@sha256:4d8b6faf28fe73125ec3853583f4fbbb57de2bb5d92fb663d0c6aa963c287b14
     restart: unless-stopped
     volumes:
     - type: bind

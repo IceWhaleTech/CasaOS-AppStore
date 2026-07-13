@@ -19,7 +19,7 @@ services:
     - /DATA/AppData/$AppID/backend:/app/langflow
   langflow-postgres:
     container_name: langflow-postgress
-    image: postgres:16@sha256:4f6c1ec9743885ba6438a91f7c08c4ef4d645a41eae31fc8521c2d831c622107
+    image: postgres:16@sha256:67d92986b34dce02e7a8fc0c3cbed2f905356d74c8e52b96b898e48b18e20018
     environment:
     - POSTGRES_USER=langflow
     - POSTGRES_PASSWORD=langflow

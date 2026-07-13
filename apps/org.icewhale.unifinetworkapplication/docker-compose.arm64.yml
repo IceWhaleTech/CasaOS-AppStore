@@ -15,7 +15,7 @@ services:
     - PGID=$PGID
     - PUID=$PUID
     - TZ=$TZ
-    image: lscr.io/linuxserver/unifi-network-application:latest@sha256:531e4fcb4c91a895db04134a72763a5fb72dac489d063811b7f732914a3becbe
+    image: lscr.io/linuxserver/unifi-network-application:latest@sha256:52e4bf240ce7fb3276cc31857052576b9e5a4b19a8d34f6a0e14d11e038344ad
     ports:
     - target: 8443
       published: '8443'
@@ -39,7 +39,7 @@ services:
     privileged: false
   unifi-db:
     container_name: unifi-db
-    image: docker.io/mongo:3.6@sha256:f9b01e368fd95a783a68471930a15c2494d525318ff65a1b408ff3e6bc83e3d4
+    image: docker.io/mongo:3.6
     configs:
     - source: init-mongo.js
       target: /docker-entrypoint-initdb.d/init-mongo.js

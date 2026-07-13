@@ -1,14 +1,14 @@
 name: taskingai
 services:
   frontend:
-    image: taskingai/taskingai-console:v0.3.0@sha256:f3aef57dac18f840da20c84b1c33380ea1257edaf1b76254614060b4a9b63cda
+    image: taskingai/taskingai-console:v0.3.0
     depends_on:
     - backend-web
     - backend-api
     networks:
     - taskingai_network
   backend-inference:
-    image: taskingai/taskingai-inference:v0.2.14@sha256:c85a38fc79b20ac5465355147205591390badcda38a4d48236be94e871c340c9
+    image: taskingai/taskingai-inference:v0.2.14
     environment:
       AES_ENCRYPTION_KEY: b90e4648ad699c3bdf62c0860e09eb9efc098ee75f215bf750847ae19d41e4b0
       ICON_URL_PREFIX: http://nginx:3080
@@ -25,7 +25,7 @@ services:
     networks:
     - taskingai_network
   backend-plugin:
-    image: taskingai/taskingai-plugin:v0.2.10@sha256:fd972fb3337118557e102b3d8ff899f3041caf6af9486bc7cfee8754118bbbdd
+    image: taskingai/taskingai-plugin:v0.2.10
     environment:
       AES_ENCRYPTION_KEY: b90e4648ad699c3bdf62c0860e09eb9efc098ee75f215bf750847ae19d41e4b0
       ICON_URL_PREFIX: http://nginx:3080
@@ -47,7 +47,7 @@ services:
     networks:
     - taskingai_network
   backend-api:
-    image: taskingai/taskingai-server:v0.3.0@sha256:3add884df40552d0c07b80838d13874138bf001188b5b5ff0484743ee0434fbf
+    image: taskingai/taskingai-server:v0.3.0
     environment:
       POSTGRES_URL: postgres://postgres:TaskingAI321@db:5432/taskingai
       REDIS_URL: redis://:TaskingAI321@cache:6379/0
@@ -77,7 +77,7 @@ services:
     networks:
     - taskingai_network
   backend-web:
-    image: taskingai/taskingai-server:v0.3.0@sha256:3add884df40552d0c07b80838d13874138bf001188b5b5ff0484743ee0434fbf
+    image: taskingai/taskingai-server:v0.3.0
     environment:
       POSTGRES_URL: postgres://postgres:TaskingAI321@db:5432/taskingai
       REDIS_URL: redis://:TaskingAI321@cache:6379/0
@@ -129,7 +129,7 @@ services:
     networks:
     - taskingai_network
   cache:
-    image: redis:7-alpine@sha256:b1addbe72465a718643cff9e60a58e6df1841e29d6d7d60c9a85d8d72f08d1a7
+    image: redis:7-alpine
     command:
     - redis-server
     - --requirepass
@@ -150,7 +150,7 @@ services:
     networks:
     - taskingai_network
   nginx:
-    image: nginx:1.24@sha256:2e26275ed7a47e8e93f264d39a09ca4bc3f4058c904c75087e237f4ea883f2a1
+    image: nginx:1.24
     ports:
     - 3080:80
     volumes:

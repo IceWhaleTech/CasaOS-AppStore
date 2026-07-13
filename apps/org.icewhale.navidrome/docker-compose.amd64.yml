@@ -6,7 +6,7 @@ services:
       resources:
         reservations:
           memory: 1024M
-    image: deluan/navidrome:0.61.2@sha256:6d0b0a670a488adc3ee8101aa9e054378c024f4c9d934cfaf6f5ce2a112fbb9e
+    image: deluan/navidrome:0.61.2
     restart: unless-stopped
     ports:
     - target: 4533
