@@ -1,0 +1,123 @@
+name: openhabittracker
+services:
+  openhabittracker:
+    image: jinjinov/openhabittracker:1.2.3
+    container_name: openhabittracker
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "8425"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/.OpenHabitTracker
+    environment:
+      TZ: $TZ
+      AppSettings__UserName: admin
+      AppSettings__Email: admin@example.com
+      AppSettings__Password: "change_this_password"
+      AppSettings__JwtSecret: "change_this_to_a_long_random_string"
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_US: WebUI HTTP Port
+      volumes:
+        - container: /app/.OpenHabitTracker
+          description:
+            en_US: OpenHabitTracker Data Directory (SQLite database)
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone - sets the day boundary for habit tracking
+        - container: AppSettings__UserName
+          description:
+            en_US: Login username for the single user
+        - container: AppSettings__Email
+          description:
+            en_US: Login email for the single user
+        - container: AppSettings__Password
+          description:
+            en_US: Login password for the single user - change it before installing
+        - container: AppSettings__JwtSecret
+          description:
+            en_US: Secret used to sign login tokens - use a long random string
+x-casaos:
+  id: net.openhabittracker.openhabittracker
+  architectures:
+    - amd64
+    - arm64
+  main: openhabittracker
+  category: Productivity
+  developer: Jinjinov
+  author: Jinjinov
+  tagline:
+    en_US: Habit tracker, to-do list and Markdown notes. Free, open source, no account.
+    cs_CZ: Návyky, úkoly a poznámky v Markdownu. Zdarma, open source, bez účtu.
+    da_DK: Vanetracker, to-do-liste og Markdown-noter. Gratis, open source, ingen konto.
+    de_DE: Gewohnheiten, Aufgaben und Markdown-Notizen. Kostenlos und Open Source.
+    es_ES: Hábitos, tareas y notas Markdown. Gratis, de código abierto, sin cuenta.
+    fi_FI: Tavat, tehtävät ja Markdown-muistiinpanot. Ilmainen, avoin lähdekoodi.
+    fr_FR: Habitudes, tâches et notes Markdown. Gratuit, open source, sans compte.
+    hr_HR: Navike, zadaci i Markdown bilješke. Besplatno, open source, bez računa.
+    it_IT: Abitudini, compiti e note Markdown. Gratis, open source, senza account.
+    ja_JP: 習慣トラッカー、タスク管理、Markdownメモ。無料・オープンソース・アカウント不要。
+    ko_KR: 습관 트래커, 할 일 목록, Markdown 메모. 무료, 오픈소스, 계정 불필요.
+    nb_NO: Vanetracker, gjøremålsliste og Markdown-notater. Gratis og åpen kildekode.
+    nl_NL: Gewoontes volgen, taken plannen, Markdown-notities. Gratis en open source.
+    pl_PL: Nawyki, zadania i notatki Markdown. Za darmo, open source, bez konta.
+    pt_PT: Hábitos, tarefas e notas Markdown. Gratuito, open source, sem conta.
+    sk_SK: Návyky, úlohy a poznámky v Markdowne. Zadarmo, open source, bez účtu.
+    sl_SI: Sledenje navadam, naloge in zapiski Markdown. Brezplačno, odprtokodno.
+    sr_RS: Navike, zadaci i Markdown beleške. Besplatno, open source, bez naloga.
+    sv_SE: Vanor, uppgifter och Markdown-anteckningar. Gratis, öppen källkod.
+    zh_CN: 习惯打卡、任务清单和 Markdown 笔记。免费、开源、无需账户。
+  description:
+    en_US: |
+      OpenHabitTracker is a free, ad-free, open source app for Markdown notes, tasks and habits - no account, no telemetry.
+      This container is the self-hosted sync server: native OpenHabitTracker apps for Windows, Linux, Android, iOS and macOS log into it and keep all devices in sync, with all data on your server.
+      Habits work without streak guilt: instead of a streak that resets to zero, each habit shows how overdue it is compared to your desired interval. Streaks exist as opt-in extra information, off by default.
+
+      **Main Features:**
+      - Markdown notes with categories, priorities and colors
+      - Tasks with checklists and time tracking
+      - Habits with flexible intervals, statistics and calendar backfill
+      - Advanced search, filter and sort
+      - Import your notes from Google Keep
+      - Data export and import: JSON, YAML, TSV, Markdown
+      - REST API with OpenAPI UI at /scalar/v1
+      - 26 themes with dark and light modes, localized to 20 languages
+
+      **Learn More:**
+      - [OpenHabitTracker Website](https://openhabittracker.net)
+      - [OpenHabitTracker GitHub](https://github.com/Jinjinov/OpenHabitTracker)
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHabitTracker/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHabitTracker/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHabitTracker/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenHabitTracker/screenshot-3.png
+  tips:
+    before_install:
+      en_US: |
+        Set `AppSettings__Password` to your own password and `AppSettings__JwtSecret` to a long random string before installing.
+        Log in at the web UI with the username and password you set.
+        To sync the native apps (Windows, Linux, Android, iOS, macOS), enter this server's address and the same credentials under Data - Online sync.
+  scheme: http
+  port_map: "8425"
+  index: /
+  title:
+    en_US: OpenHabitTracker
+  version: "1.2.3"
+  update_at: "2026-07-10"
+  release_notes:
+    en_US: |-
+      - Initial CasaOS release of OpenHabitTracker 1.2.3.
+  store_app_id: openhabittracker
+  website: "https://openhabittracker.net"
+  repo: "https://github.com/Jinjinov/OpenHabitTracker"
+  support: "https://github.com/Jinjinov/OpenHabitTracker/issues"
