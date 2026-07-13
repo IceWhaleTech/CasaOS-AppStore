@@ -14,7 +14,7 @@ services:
         protocol: tcp
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://dokploy:dokploy@dokploy-db:5432/dokploy
+      DATABASE_URL: postgresql://dokploy:v8k2mxpq93nw5ztl@dokploy-db:5432/dokploy
       TZ: UTC
     volumes:
       - type: bind
@@ -84,7 +84,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: dokploy
-      POSTGRES_PASSWORD: dokploy
+      POSTGRES_PASSWORD: v8k2mxpq93nw5ztl
       POSTGRES_DB: dokploy
     volumes:
       - type: bind
