@@ -72,6 +72,10 @@ jobs:
         run: |
           touch dist/.nojekyll
 
+      - name: Write custom domain file
+        run: |
+          printf 'casaos.app\n' > dist/CNAME
+
       - name: Build legacy v1 appstore zip
         id: build_v1
         continue-on-error: true
