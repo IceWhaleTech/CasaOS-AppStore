@@ -103,9 +103,9 @@ The top-level `x-casaos` block contains two kinds of fields:
 | `tips` | `object` | No | Yes | `meta.json` |
 | `author` | `string` | Recommended | No | `meta.json`, index listing |
 | `developer` | `string` | Recommended | No | `meta.json`, index listing |
-| `category` | `string` | Required in practice | No | `meta.json`, index listing |
+| `category` | `string` | Yes | No | `meta.json`, index listing |
 | `architectures` | `string[]` | Recommended | No | `meta.json`, index listing |
-| `version` | `string` | No | No | `meta.json`, index listing |
+| `version` | `string` | Yes | No | `meta.json`, index listing |
 | `update_at` | `string` | No | No | `meta.json` |
 | `release_notes` | `object` | No | Yes | `meta.json.release_note` |
 | `website` | `string` | No | No | `meta.json` |
@@ -407,17 +407,31 @@ Build behavior:
 ### `version`
 
 Purpose:
-Optional display version shown to users.
+Application version shown to users and used to understand upgrades.
 
 Rules:
 
-- optional
+- required for apps published to the new store
 - plain string
+- should change when the published app update changes in a way users should receive as a new version
+- should use a semver-style value whenever possible, for example `1.2.3`
 
 Build behavior:
 
 - emitted into `meta.json`
 - may also appear in listing data
+
+Why it matters:
+
+- future app upgrade decisions rely on this field to determine what version users are moving to
+- without it, users and clients must fall back to lower-level change signals such as `content_hash`
+- missing or non-semver versions weaken update transparency and may be skipped from some listing-facing output
+
+Common mistakes:
+
+- treating `version` as a cosmetic field only
+- forgetting to update it when publishing a meaningful app update
+- using ad-hoc strings that do not behave like a normal release version
 
 ### `update_at`
 

@@ -64,15 +64,17 @@ At minimum, v2 needs:
 - normalized locale keys such as `en_US`, `zh_CN`, `de_DE`
 - a v2 build and publish workflow
 
-## Optional display fields added in v2
+## Version and other display fields added in v2
 
-The migration can stop after the required changes above. However, v2 also supports a few optional fields that improve app detail pages, listings, and update presentation.
+The migration can stop after the required changes above. However, `version` is
+required in the new store. The remaining fields improve app detail pages,
+listings, and update presentation.
 
 Add these fields under the top-level `x-casaos` block when the information is available:
 
 | Field | Source type | Migration note |
 |---|---|---|
-| `version` | `string` | New, optional. App version number for richer store display. |
+| `version` | `string` | New and required. Used for app version tracking, upgrade communication, and richer store display. |
 | `update_at` | `string` | New, optional. App update date, recommended as `YYYY-MM-DD`, for example `"2026-03-01"`. |
 | `release_notes` | `object` | New, optional. Locale-keyed release notes in source; each locale value is plain text. Built output uses `release_note`. |
 | `website` | `string` | New, optional. Official website URL for richer store display. |

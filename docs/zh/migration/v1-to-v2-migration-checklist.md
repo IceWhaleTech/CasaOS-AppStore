@@ -105,13 +105,15 @@ BASE_URL="https://your-store-domain" \
 - `dist/apps/<app-id>/meta.json` 存在
 - 生成的应用列表包含 `id`、`compose_url`、`meta_url` 和 `content_hash`
 
-## 8. 补充可选展示字段
+## 8. 补充版本号和其他展示字段
 
-这些字段不是兼容性的必需项，但可以提升商店展示效果：
+其中 `version` 在新版商店里是必填字段。即使旧仓库里没有等价字段，也建议在迁移时补齐。
+
+其余字段不是兼容性的必需项，但可以提升商店展示效果：
 
 | 字段 | 类型 | 说明 |
 |---|---|---|
-| `version` | `string` | **新增，可选。** 应用版本号。 |
+| `version` | `string` | **新增，且必填。** 未来应用升级判断会依赖这个字段。建议尽量使用 semver 风格值。 |
 | `update_at` | `string` | **新增，可选。** 应用更新日期，建议使用 `YYYY-MM-DD`。 |
 | `release_notes` | `object` | **新增，可选。** locale-keyed 更新日志，每个 locale 的值是纯字符串。 |
 | `website` | `string` | **新增，可选。** 官方网站地址。 |
@@ -142,7 +144,8 @@ dist/store/main.zip
 - [ ] `supported-languages.json` 存在且有效
 - [ ] 每个应用都有有效的 `x-casaos.id`
 - [ ] 旧 locale key 已规范
-- [ ] 已按需补充可选展示字段
+- [ ] `x-casaos.version` 已填写，并与本次发布对应
+- [ ] 已按需补充其他展示字段
 - [ ] 所有应用分类都使用 v2 值
 - [ ] `dist/store.json` 和 `dist/index.json` 可访问
 - [ ] 如果仍需 v1 兼容，已构建 `dist/store/main.zip`

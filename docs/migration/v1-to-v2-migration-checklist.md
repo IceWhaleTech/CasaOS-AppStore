@@ -105,13 +105,17 @@ Checks:
 - `dist/apps/<app-id>/meta.json` exists
 - generated app listing items include `id`, `compose_url`, `meta_url`, and `content_hash`
 
-## 8. Add optional display fields
+## 8. Add version and other display fields
 
-These fields are not required for compatibility, but they improve the store experience:
+`version` is required in the new store, even if older source repositories did
+not carry an equivalent field.
+
+The remaining fields are not required for compatibility, but they improve the
+store experience:
 
 | Field | Type | Note |
 |---|---|---|
-| `version` | `string` | New, optional app version number. |
+| `version` | `string` | New and required. Future app upgrade decisions rely on this field. Use a semver-style value whenever possible. |
 | `update_at` | `string` | New, optional update date. Use `YYYY-MM-DD` when possible. |
 | `release_notes` | `object` | New, optional locale-keyed release notes. Each locale value is plain text. |
 | `website` | `string` | New, optional official website URL. |
@@ -142,6 +146,7 @@ Publish `dist/` to static hosting. The URL users add should match the build `bas
 - [ ] `supported-languages.json` is present and valid
 - [ ] every app has a valid `x-casaos.id`
 - [ ] old locale keys are normalized
+- [ ] `x-casaos.version` is present and updated for this release
 - [ ] optional display fields are added where useful
 - [ ] all app categories use v2 values
 - [ ] `dist/store.json` and `dist/index.json` are reachable

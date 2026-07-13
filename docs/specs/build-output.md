@@ -57,7 +57,8 @@ Each app item includes data such as:
 
 #### `version`
 
-- optional display version from source metadata
+- app version from `x-casaos.version`
+- important for user-facing upgrade understanding and version tracking
 
 #### `author`
 
@@ -124,7 +125,7 @@ During build:
 
 ## Built `meta.json`
 
-Built `meta.json` holds app metadata, including optional display enhancements:
+Built `meta.json` holds app metadata, including upgrade- and display-related fields:
 
 - `version`
 - `update_at`
@@ -133,6 +134,9 @@ Built `meta.json` holds app metadata, including optional display enhancements:
 - `repo`
 - `support`
 - `docs`
+
+In practice, `version` should not be treated as a cosmetic extra. It is a key
+field for communicating application upgrades in the new store.
 
 `title` and `icon` are intentionally not written into `meta.json`, because they remain part of built compose runtime/display information.
 

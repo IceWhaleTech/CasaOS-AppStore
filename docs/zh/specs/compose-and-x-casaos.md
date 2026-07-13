@@ -103,9 +103,9 @@ x-casaos:
 | `tips` | `object` | 否 | 是 | `meta.json` |
 | `author` | `string` | 建议提供 | 否 | `meta.json`，也常进入 index 列表 |
 | `developer` | `string` | 建议提供 | 否 | `meta.json`，也常进入 index 列表 |
-| `category` | `string` | 实际上应视为必填 | 否 | `meta.json`，也常进入 index 列表 |
+| `category` | `string` | 是 | 否 | `meta.json`，也常进入 index 列表 |
 | `architectures` | `string[]` | 建议提供 | 否 | `meta.json`，也常进入 index 列表 |
-| `version` | `string` | 否 | 否 | `meta.json`，也可能进入 index 列表 |
+| `version` | `string` | 是 | 否 | `meta.json`，也可能进入 index 列表 |
 | `update_at` | `string` | 否 | 否 | `meta.json` |
 | `release_notes` | `object` | 否 | 是 | `meta.json.release_note` |
 | `website` | `string` | 否 | 否 | `meta.json` |
@@ -407,17 +407,31 @@ tips:
 ### `version`
 
 作用：
-可选的展示版本号。
+用于商店展示和升级理解的应用版本号。
 
 规则：
 
-- 可选
+- 对发布到新版商店的应用，必填
 - 纯字符串
+- 当发布的应用更新发生了用户应感知的变化时，应同步变更
+- 建议尽量使用 semver 风格值，例如 `1.2.3`
 
 构建行为：
 
 - 写入 `meta.json`
 - 也可能进入列表数据
+
+为什么重要：
+
+- 未来应用升级判断会依赖这个字段来判断用户将升级到哪个版本
+- 如果没有这个字段，用户和客户端只能退回到 `content_hash` 这类底层变化信号
+- 缺失或非 semver 的版本号会削弱更新透明度，并可能不进入部分面向列表的输出
+
+常见错误：
+
+- 把 `version` 仅当作展示文案
+- 有实际更新却不修改版本号
+- 使用难以作为正常发布版本解释的随意字符串
 
 ### `update_at`
 
