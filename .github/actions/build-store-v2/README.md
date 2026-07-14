@@ -21,7 +21,7 @@ be rendered to HTML.
 
 ## Behavior
 
-- Internally forwards to `IceWhaleTech/build-appstore-action@v1`
+- Internally forwards to a commit pinned to the current `IceWhaleTech/build-appstore-action@v1` release
 - Uses the upstream action's native structured build report support
 - Keeps this local wrapper as a stable repo-local entrypoint for workflows
 
