@@ -11,6 +11,13 @@ Community store sources for ZimaOS. Copy a source link, then import it in ZimaOS
   maintainer="Cp0204"
 />
 
+<StoreSourceCard
+  title="Big Bear ZimaOS App Store"
+  summary="Community-maintained apps for CasaOS and ZimaOS by BigBearTechWorld."
+  url="https://cdn.jsdelivr.net/gh/bigbeartechworld/big-bear-casaos@gh-pages/"
+  maintainer="BigBearTechWorld"
+/>
+
 ## About this list
 
 - This is a community discovery page, not a formal endorsement list.

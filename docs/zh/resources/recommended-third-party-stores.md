@@ -14,6 +14,16 @@
   open-label="打开链接"
 />
 
+<StoreSourceCard
+  title="Big Bear ZimaOS 应用商店"
+  summary="由 BigBearTechWorld 维护，提供适用于 CasaOS 和 ZimaOS 的社区应用。"
+  url="https://cdn.jsdelivr.net/gh/bigbeartechworld/big-bear-casaos@gh-pages/"
+  maintainer="BigBearTechWorld"
+  copy-label="复制链接"
+  copied-label="已复制"
+  open-label="打开链接"
+/>
+
 ## 页面说明
 
 - 这是一个社区发现页，不是正式背书列表。
