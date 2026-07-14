@@ -285,6 +285,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   min-width: 112px;
   padding: 0.7rem 1rem;
   border: 1px solid var(--vp-c-border);
@@ -292,6 +293,12 @@ body {
   text-decoration: none;
   font-weight: 600;
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.store-source-card__button-icon {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
 }
 
 .store-source-card__button:hover {

@@ -12,6 +12,8 @@
   copy-label="复制链接"
   copied-label="已复制"
   open-label="打开链接"
+  repo-label="GitHub 仓库"
+  repo-url="https://github.com/Cp0204/CasaOS-AppStore-Play"
 />
 
 <StoreSourceCard
@@ -22,6 +24,8 @@
   copy-label="复制链接"
   copied-label="已复制"
   open-label="打开链接"
+  repo-label="GitHub 仓库"
+  repo-url="https://github.com/bigbeartechworld/big-bear-casaos/"
 />
 
 ## 页面说明
