@@ -9,6 +9,7 @@ This folder contains the VitePress documentation site for the ZimaOS AppStore so
 - [Migrate from v1](./migration/overview.md): Add v2 support to an existing v1 store while preserving v1 compatibility.
 - [Protocol Reference](./specs/overview.md): Required files, fields, generated output, assets, and localization rules.
 - [CI/CD](./cicd/overview.md): Validation, build, release, publish, and official action reuse.
+- [Resources](./resources/recommended-third-party-stores.md): Community resource pages such as awesome public third-party store sources.
 - [FAQ](./faq/overview.md): Short answers to common protocol and migration questions.
 
 ## Locales

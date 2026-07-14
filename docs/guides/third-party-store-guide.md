@@ -2,6 +2,8 @@
 
 This page is kept as a compact compatibility entry for older links. The documentation now uses five clearer sections.
 
+Looking for public community store sources? See [Awesome Third-party Stores](../resources/recommended-third-party-stores.md).
+
 ## Choose your path
 
 - New store: [Create a Store](../quick-start/overview.md)

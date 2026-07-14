@@ -7,6 +7,7 @@ const enNav = [
   { text: "Migrate from v1", link: "/migration/overview" },
   { text: "Protocol Reference", link: "/specs/overview" },
   { text: "CI/CD", link: "/cicd/overview" },
+  { text: "Resources", link: "/resources/recommended-third-party-stores" },
   { text: "FAQ", link: "/faq/overview" }
 ];
 
@@ -16,6 +17,7 @@ const zhNav = [
   { text: "从 v1 迁移", link: "/zh/migration/overview" },
   { text: "协议规范", link: "/zh/specs/overview" },
   { text: "CI/CD", link: "/zh/cicd/overview" },
+  { text: "生态资源", link: "/zh/resources/recommended-third-party-stores" },
   { text: "FAQ", link: "/zh/faq/overview" }
 ];
 
@@ -35,6 +37,14 @@ const enSidebar = {
       items: [
         { text: "Third-party Store Guide", link: "/guides/third-party-store-guide" },
         { text: "Official Actions Reuse", link: "/guides/official-actions-and-workflows" }
+      ]
+    }
+  ],
+  "/resources/": [
+    {
+      text: "Resources",
+      items: [
+        { text: "Awesome Third-party Stores", link: "/resources/recommended-third-party-stores" }
       ]
     }
   ],
@@ -95,6 +105,14 @@ const zhSidebar = {
       items: [
         { text: "第三方商店指南", link: "/zh/guides/third-party-store-guide" },
         { text: "复用官方 Actions", link: "/zh/guides/official-actions-and-workflows" }
+      ]
+    }
+  ],
+  "/zh/resources/": [
+    {
+      text: "生态资源",
+      items: [
+        { text: "推荐第三方商店源", link: "/zh/resources/recommended-third-party-stores" }
       ]
     }
   ],

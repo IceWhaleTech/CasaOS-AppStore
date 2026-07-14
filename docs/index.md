@@ -37,9 +37,14 @@ features:
     details: Get short answers for ID conflicts, hosting, base URLs, build requirements, and minimum store structure.
     link: /faq/overview
     linkText: Read FAQ
+  - title: Community resources
+    details: Discover community third-party store sources and copy the one you want to import into ZimaOS.
+    link: /resources/recommended-third-party-stores
+    linkText: Browse awesome stores
 ---
 
 ## Choose a Path
 
 - Creating a new store? Start with [Create a Store](/quick-start/overview).
 - Updating an existing v1 store? Start with [Migrate from v1](/migration/overview).
+- Looking for public community stores? See [Awesome Third-party Stores](/resources/recommended-third-party-stores).
