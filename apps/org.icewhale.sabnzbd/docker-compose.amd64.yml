@@ -5,7 +5,7 @@ services:
       PGID: '1000'
       PUID: '1000'
       TZ: Europe/London
-    image: linuxserver/sabnzbd:5.0.3
+    image: linuxserver/sabnzbd:5.0.3@sha256:9a03c5a75dfce25328bbce0820e1828bd76d3743b2abe333bc9778676685bc02
     deploy:
       resources:
         reservations:
