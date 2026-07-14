@@ -1,7 +1,7 @@
 name: pocketbase
 services:
   pocketbase:
-    image: argonptg/pocketbase:0.25.9
+    image: argonptg/pocketbase:0.26.6
     deploy:
       resources:
         limits:
@@ -18,73 +18,89 @@ services:
         target: /pb_data
     container_name: pocketbase
 x-casaos:
+  id: org.icewhale.pocketbase
   architectures:
     - amd64
   main: pocketbase
   author: CasaOS Team
   category: Developer
   description:
-    en_us: PocketBase is an open-source backend solution that combines a real-time database, authentication, file storage, and an admin dashboard into a single, portable executable. 
-    pt_br: PocketBase é uma solução de backend de código aberto que combina um banco de dados em tempo real, autenticação, armazenamento de arquivos e um painel de administração em um único executável portátil.
+    en_US: PocketBase is an open-source backend solution that combines a real-time database, authentication, file storage, and an admin dashboard into a single, portable executable. 
+    pt_BR: PocketBase é uma solução de backend de código aberto que combina um banco de dados em tempo real, autenticação, armazenamento de arquivos e um painel de administração em um único executável portátil.
   developer: Gani Georgiev
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PocketBase/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PocketBase/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PocketBase/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PocketBase/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PocketBase/screenshot-3.png
   tagline:
-    en_us: "Open Source realtime backend in 1 file"
-    pt_br: "Backend open source em tempo real em um único arquivo"
+    en_US: "Open Source realtime backend in 1 file"
+    pt_BR: "Backend open source em tempo real em um único arquivo"
   tips:
     before_install:
-      en_us: |
+      en_US: |
         Default Account
         | Email | Password |
         | ----- | -------- |
         | `casaos@admin.local` | `adminpocketbase` |
-      pt_br: |
+      pt_BR: |
         Conta Padrão
         | Email | Senha |
         | ----- | -------- |
         | `casaos@admin.local` | `adminpocketbase` |
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PocketBase/thumbnail.png
   title:
-    en_us: PocketBase
+    en_US: PocketBase
   index: /_/
   port_map: "8090"
-  version: "0.25.9"
-  updateAt: "2025-03-13"
-  releaseNotes:
+  version: "0.26.6"
+  update_at: "2025-04-14"
+  release_notes:
     en_US: |-
-      - v0.25.9 fixes DynamicModel object/array property reflect type caching.
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
     en_GB: |-
-      - v0.25.9 fixes DynamicModel object/array property reflect type caching.
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
     it_IT: |-
-      - v0.25.9 corregge la proprietà dell'oggetto/array DynamicModel che riflette la memorizzazione nella cache del tipo.
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
     nb_NO: |-
-      - v0.25.9 fikser DynamicModel objekt/array-egenskap reflekterer typebufring.
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
     zh_CN: |-
-      - v0.25.9 修复了 DynamicModel object/array property reflect type caching。
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
     ja_JP: |-
-      - v0.25.9 は DynamicModel object/array property reflect type caching を修正します。
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
     ko_KR: |-
-      - v0.25.9는 DynamicModel object/array property reflect type caching을 수정합니다.
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
     fr_FR: |-
-      - v0.25.9 corrige DynamicModel object/array property reflect type caching.
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
     de_DE: |-
-      - v0.25.9 behebt DynamicModel object/array property reflect type caching.
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
     sv_SE: |-
-      - v0.25.9 fixar DynamicModel objekt/array-egenskapen återspeglar typcachelagring.
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
     el_GR: |-
-      - Η v0.25.9 διορθώνει την DynamicModel ιδιότητα αντικειμένου/πίνακα αντικατοπτρίζει την προσωρινή αποθήκευση τύπου.
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
     hr_HR: |-
-      - v0.25.9 popravlja svojstvo objekta/niza DynamicModel koje odražava predmemoriju tipa.
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
     pt_PT: |-
-      - v0.25.9 corrige a propriedade do objeto/array DynamicModel que reflete a cache de tipos.
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
     ru_RU: |-
-      - v0.25.9 исправляет свойство объекта/массива DynamicModel, отражающее кэширование типов.
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
     tr_TR: |-
-      - v0.25.9, tür önbelleğe almayı yansıtan DynamicModel nesne/dizi özelliğini düzeltir.
+      - PocketBase v0.26.6 allows OIDC email_verified values to be int or boolean strings for non-standard providers such as AWS Cognito.
+      - It also updates modernc.org/sqlite to 1.36.3.
   website: "https://pocketbase.io"
   repo: "https://github.com/pocketbase/pocketbase"
   support: "https://github.com/pocketbase/pocketbase/discussions"

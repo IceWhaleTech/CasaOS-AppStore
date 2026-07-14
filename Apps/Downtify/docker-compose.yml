@@ -26,34 +26,35 @@ services:
       envs:
         - container: PUID
           description:
-            en_us: for UserID
+            en_US: for UserID
         - container: PGID
           description:
-            en_us: for GroupID
+            en_US: for GroupID
         - container: TZ
           description:
-            en_us: specify a timezone to use, see this list.
+            en_US: specify a timezone to use, see this list.
       volumes:
         - container: /downloads
           description:
-            en_us: Directory where the files will be saved.
-            pt_br: Diretório onde os arquivos serão salvos.
+            en_US: Directory where the files will be saved.
+            pt_BR: Diretório onde os arquivos serão salvos.
         - container: /data
           description:
-            en_us: Directory where the app will save its data.
-            pt_br: Diretório onde o aplicativo salvará seus dados.
+            en_US: Directory where the app will save its data.
+            pt_BR: Diretório onde o aplicativo salvará seus dados.
     container_name: downtify
 x-casaos:
+  id: org.icewhale.downtify
   architectures:
     - amd64
     - arm64
   main: downtify
   author: Henrique Sebastião
-  category: Downloader
+  category: Media
   description:
-    en_us: |
+    en_US: |
       With Downtify you can download Spotify musics containing album art, track names, album title and other metadata about the songs. Just copy the Spotify link, whether it's a single song, an album, etc. As soon as your downloads are complete you will be notified!
-    pt_br: |
+    pt_BR: |
       Com o Downtify você pode baixar músicas do Spotify contendo capas de álbuns, nomes de faixas, títulos de álbuns e outros metadados sobre as músicas. Basta copiar o link do Spotify, seja uma música única, um álbum, etc. Assim que seus downloads forem concluídos, você será notificado!
   developer: Henrique Sebastião
   icon: https://raw.githubusercontent.com/henriquesebastiao/downtify/refs/heads/main/assets/casaos-icon.png
@@ -61,15 +62,15 @@ x-casaos:
     - https://raw.githubusercontent.com/henriquesebastiao/downtify/refs/heads/main/assets/screenshot-1.png
     - https://raw.githubusercontent.com/henriquesebastiao/downtify/refs/heads/main/assets/screenshot-2.png
   tagline:
-    en_us: Download Spotify music with album art and metadata
-    pt_br: Baixe músicas do Spotify com a capa do álbum e metadados
+    en_US: Download Spotify music with album art and metadata
+    pt_BR: Baixe músicas do Spotify com a capa do álbum e metadados
   title:
-    en_us: Downtify
+    en_US: Downtify
   index: /
   port_map: "8582"
   version: "2.7.0"
-  updateAt: "2026-05-11"
-  releaseNotes:
+  update_at: "2026-05-11"
+  release_notes:
     en_US: |-
       - v2.7.0 adds configurable parallel downloads.
       - It adds weekly and monthly playlist synchronization intervals.

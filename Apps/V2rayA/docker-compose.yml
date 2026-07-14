@@ -1,7 +1,7 @@
 name: v2raya
 services:
   v2raya:
-    image: mzz2017/v2raya:v2.2.6.7
+    image: mzz2017/v2raya:v2.2.7.5
     container_name: v2raya
     deploy:
       resources:
@@ -75,11 +75,12 @@ services:
             ru_RU: Каталог конфигурации V2rayA
             tr_TR: V2rayA Yapılandırma Dizini
 x-casaos:
+  id: org.icewhale.v2raya
   architectures:
     - amd64
     - arm64
   main: v2raya
-  category: Network
+  category: Networking
   developer: v2rayA
   author: v2rayA
   tagline:
@@ -369,7 +370,7 @@ x-casaos:
       **Daha Fazla Bilgi:**
       - [V2rayA Resmi Web Sitesi](https://v2raya.org/)
       - [V2rayA GitHub](https://github.com/v2rayA/v2rayA)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/V2rayA/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/V2rayA/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/V2rayA/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/V2rayA/screenshot-2.png
@@ -380,54 +381,69 @@ x-casaos:
   index: /
   title:
     en_US: V2rayA
-  version: "v2.2.6.7"
-  updateAt: "2025-03-27"
-  releaseNotes:
+  version: "2.2.7-5"
+  update_at: "2026-01-25"
+  release_notes:
     en_US: |-
-      - v2.2.6.7 fixes English text in latency test notifications.
-      - Core startup timeout handling on old devices was fixed.
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
     en_GB: |-
-      - v2.2.6.7 fixes English text in latency test notifications.
-      - Core startup timeout handling on old devices was fixed.
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
     it_IT: |-
-      - v2.2.6.7 corregge il testo inglese nelle notifiche dei test di latenza.
-      - La gestione del timeout di avvio del core sui vecchi dispositivi è stata corretta.
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
     nb_NO: |-
-      - v2.2.6.7 fikser engelsk tekst i forsinkelsestestvarsler.
-      - Håndtering av kjerneoppstartstidsavbrudd på gamle enheter ble fikset.
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
     zh_CN: |-
-      - v2.2.6.7 修复了 latency test notifications 中的英文文本。
-      - 修复了旧设备上的 core startup timeout handling。
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
     ja_JP: |-
-      - v2.2.6.7 は latency test notifications の英語テキストを修正します。
-      - 古いデバイスでの core startup timeout handling が修正されました。
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
     ko_KR: |-
-      - v2.2.6.7은 latency test notifications의 영어 텍스트를 수정합니다.
-      - 오래된 장치의 core startup timeout handling이 수정되었습니다.
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
     fr_FR: |-
-      - v2.2.6.7 corrige le texte anglais dans latency test notifications.
-      - Core startup timeout handling sur les anciens appareils a ete corrige.
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
     de_DE: |-
-      - v2.2.6.7 behebt englischen Text in latency test notifications.
-      - Core startup timeout handling auf alten Geraeten wurde korrigiert.
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
     sv_SE: |-
-      - v2.2.6.7 fixar engelsk text i meddelanden om latenstest.
-      - Hantering av kärnstartstimeout på gamla enheter fixades.
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
     el_GR: |-
-      - Το v2.2.6.7 διορθώνει το αγγλικό κείμενο στις ειδοποιήσεις δοκιμής λανθάνοντος χρόνου.
-      - Διορθώθηκε ο χειρισμός του βασικού χρονικού ορίου εκκίνησης σε παλιές συσκευές.
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
     hr_HR: |-
-      - v2.2.6.7 popravlja engleski tekst u obavijestima o testiranju kašnjenja.
-      - Ispravljeno je rukovanje timeoutom pri pokretanju jezgre na starim uređajima.
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
     pt_PT: |-
-      - v2.2.6.7 corrige o texto em inglês nas notificações de teste de latência.
-      - O tratamento do tempo limite de arranque principal em dispositivos antigos foi corrigido.
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
     ru_RU: |-
-      - v2.2.6.7 исправляет английский текст в уведомлениях о тестировании задержки.
-      - Исправлена ​​обработка тайм-аута запуска ядра на старых устройствах.
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
     tr_TR: |-
-      - v2.2.6.7 gecikme testi bildirimlerindeki İngilizce metni düzeltir.
-      - Eski cihazlarda çekirdek başlatma zaman aşımı işlemi düzeltildi.
+      - v2rayA v2.2.7.5 fixes Trojan gRPC parameter handling.
+      - Corrects LRU cache list operations.
+      - Adds XHTTP support powered by Xray.
   website: "https://v2raya.org/"
   repo: "https://github.com/v2rayA/v2rayA"
   support: "https://github.com/v2rayA/v2rayA/issues"

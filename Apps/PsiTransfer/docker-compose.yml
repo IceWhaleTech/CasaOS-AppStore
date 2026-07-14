@@ -74,6 +74,7 @@ services:
             tr_TR: Yüklenen dosyaların ve uygulama verilerinin depolama konumu.
             zh_CN: 上传文件和应用数据的存储位置。
 x-casaos:
+  id: org.icewhale.psitransfer
   title:
     de_DE: PsiTransfer
     el_GR: PsiTransfer
@@ -317,7 +318,7 @@ x-casaos:
 
       **了解更多：**
       - [PsiTransfer GitHub Repository](https://github.com/psi-4ward/psitransfer)
-  category: Utilities
+  category: Productivity
   author: psitrax
   developer: psitrax
   architectures:
@@ -331,9 +332,9 @@ x-casaos:
   main: psitransfer
   port_map: "13001"
   scheme: http
-  version: "v2.4.1"
-  updateAt: "2026-02-14"
-  releaseNotes:
+  version: "2.4.1"
+  update_at: "2026-02-14"
+  release_notes:
     en_US: |-
       - v2.4.1 includes security fixes and should be updated.
       - UTF-8 support was added for content disposition in file downloads.

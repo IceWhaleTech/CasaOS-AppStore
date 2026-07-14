@@ -24,14 +24,15 @@ services:
     entrypoint: /bin/sh -c "sleep 3; flowise start"
 
 x-casaos:
+  id: org.icewhale.flowise
   architectures:
     - amd64
   main: flowise
   store_app_id: flowise
-  category: Developer
+  category: AI
   author: Flowise
   developer: Flowise
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FlowiseAi/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FlowiseAi/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FlowiseAi/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FlowiseAi/screenshot-2.png
@@ -367,8 +368,8 @@ x-casaos:
   scheme: http
   index: /
   version: "3.1.2"
-  updateAt: "2026-04-14"
-  releaseNotes:
+  update_at: "2026-04-14"
+  release_notes:
     en_US: |-
       - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
       - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.

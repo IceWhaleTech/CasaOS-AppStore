@@ -131,11 +131,12 @@ services:
             ru_RU: Включает автономный режим iOS
             tr_TR: iOS bağımsız modunu etkinleştirir
 x-casaos:
+  id: org.icewhale.beaverhabittracker
   architectures:
     - amd64
     - arm64
   main: beaverhabittracker
-  category: Utilities
+  category: Productivity
   developer: daya0576
   author: daya0576
   tagline:
@@ -410,7 +411,7 @@ x-casaos:
       **Daha Fazla Bilgi:**
       - [Beaver Habit Tracker Resmi Web Sitesi](https://beaverhabits.com/)
       - [Beaver Habit Tracker GitHub](https://github.com/daya0576/beaverhabits)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BeaverHabitTracker/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BeaverHabitTracker/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BeaverHabitTracker/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BeaverHabitTracker/screenshot-2.png
@@ -422,8 +423,8 @@ x-casaos:
   title:
     en_US: BeaverHabitTracker
   version: "0.9.1"
-  updateAt: "2026-05-20"
-  releaseNotes:
+  update_at: "2026-05-20"
+  release_notes:
     en_US: |-
       - v0.9.1 adds a completion-status page for default and custom status configuration.
       - It adds the TIME_ZONE environment variable to override the browser-detected timezone.

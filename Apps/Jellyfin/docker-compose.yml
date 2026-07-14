@@ -12,7 +12,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/jellyfin:10.10.7
+    image: linuxserver/jellyfin:10.11.10
     deploy:
       resources:
         reservations:
@@ -46,56 +46,57 @@ services:
       envs:
         - container: TZ
           description:
-            en_us: TimeZone
-            zh_cn: 时区
+            en_US: TimeZone
+            zh_CN: 时区
         - container: PUID
           description:
-            en_us: Run Jellyfin as specified uid.
-            zh_cn: Jellyfin运行的用户ID
+            en_US: Run Jellyfin as specified uid.
+            zh_CN: Jellyfin运行的用户ID
         - container: PGID
           description:
-            en_us: Run Jellyfin as specified gid.
-            zh_cn: Jellyfin运行的用户组ID
+            en_US: Run Jellyfin as specified gid.
+            zh_CN: Jellyfin运行的用户组ID
         - container: JELLYFIN_PublishedServerUrl
           description:
-            en_us: The autodiscovery response domain or IP address.
-            zh_cn: 自动发现响应域名或IP地址
+            en_US: The autodiscovery response domain or IP address.
+            zh_CN: 自动发现响应域名或IP地址
       ports:
         - container: "8096"
           description:
-            en_us: WebUI HTTP Port
-            zh_cn: WebUI HTTP端口
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP端口
 
         - container: "8920"
           description:
-            en_us: WebUI HTTPS Port
-            zh_cn: WebUI HTTPS端口
+            en_US: WebUI HTTPS Port
+            zh_CN: WebUI HTTPS端口
 
         - container: "7359"
           description:
-            en_us: Jellyfin auto-discovery Port
-            zh_cn: Jellyfin自动发现端口
+            en_US: Jellyfin auto-discovery Port
+            zh_CN: Jellyfin自动发现端口
 
         - container: "1900"
           description:
-            en_us: Jellyfin DLNA Port
-            zh_cn: Jellyfin DLNA端口
+            en_US: Jellyfin DLNA Port
+            zh_CN: Jellyfin DLNA端口
 
       volumes:
         - container: /config
           description:
-            en_us: Jellyfin config directory.
-            zh_cn: Jellyfin配置目录
+            en_US: Jellyfin config directory.
+            zh_CN: Jellyfin配置目录
         - container: /Media
           description:
-            en_us: Jellyfin Media directory.
-            zh_cn: Jellyfin媒体目录
+            en_US: Jellyfin Media directory.
+            zh_CN: Jellyfin媒体目录
         - container: /opt/vc/lib
           description:
-            en_us: OpenMax libs
-            zh_cn: OpenMax库
+            en_US: OpenMax libs
+            zh_CN: OpenMax库
     container_name: jellyfin
 x-casaos:
+  id: org.icewhale.jellyfin
   architectures:
     - amd64
     - arm64
@@ -194,7 +195,7 @@ x-casaos:
       Jellyfin, yüksek kaliteli akış, otomatik meta veri alma ve kişiselleştirilmiş öneriler sunar, hepsi ücretsizdir. Birden fazla kullanıcıyı destekler, her biri kendi medya kütüphanesine sahip olup, ailelerin veya ekiplerin çeşitli ihtiyaçlarını karşılar.
       Zima gibi özel bulut cihazlarına Jellyfin'i kurmak, neredeyse sınırsız depolama, sorunsuz akış ve güvenli çoklu cihaz erişimi sağlar. NAS meraklıları veya ev medya kurulumlarını geliştirmek isteyen herkes için Jellyfin mükemmel bir çözümdür.
   developer: Jellyfin
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-2.png
@@ -218,72 +219,72 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.png
   tips: {}
   title:
-    en_us: Jellyfin
+    en_US: Jellyfin
   index: /
   port_map: "8097"
-  version: "10.10.7"
-  updateAt: "2025-10-07"
-  releaseNotes:
+  version: "10.11.10"
+  update_at: "2026-05-24"
+  release_notes:
     en_US: |-
-      - v10.10.7 includes bug fixes and security fixes for Jellyfin Server.
-      - Reverse-proxy deployments must explicitly configure trusted proxies after this release.
-      - Fixes include FFmpeg API parameter validation, forward-header trust handling, metadata search, rating formats, and media source counting.
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
     en_GB: |-
-      - v10.10.7 includes bug fixes and security fixes for Jellyfin Server.
-      - Reverse-proxy deployments must explicitly configure trusted proxies after this release.
-      - Fixes include FFmpeg API parameter validation, forward-header trust handling, metadata search, rating formats, and media source counting.
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
     it_IT: |-
-      - v10.10.7 include correzioni di bug e correzioni di sicurezza per Jellyfin Server.
-      - Le distribuzioni Reverse-proxy devono configurare in modo esplicito i proxy attendibili dopo questo rilascio.
-      - Le correzioni includono la convalida dei parametri FFmpeg API, la gestione della fiducia forward-header, la ricerca dei metadati, i formati di classificazione e il conteggio delle fonti multimediali.
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
     nb_NO: |-
-      - v10.10.7 inkluderer feilrettinger og sikkerhetsrettinger for Jellyfin Server.
-      - Reverse-proxy-distribusjoner må eksplisitt konfigurere klarerte proxyer etter denne utgivelsen.
-      - Rettelser inkluderer FFmpeg API parametervalidering, forward-header tillitshåndtering, metadatasøk, rangeringsformater og mediekildetelling.
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
     zh_CN: |-
-      - v10.10.7 包含 Jellyfin Server 的错误修复和安全修复。
-      - 此版本之后，反向代理部署必须显式配置受信任代理。
-      - 修复内容包括 FFmpeg API 参数校验、转发头信任处理、元数据搜索、评分格式和媒体源计数。
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
     ja_JP: |-
-      - v10.10.7 には Jellyfin Server のバグ修正とセキュリティ修正が含まれます。
-      - このリリース以降、リバースプロキシ構成では信頼済みプロキシを明示的に設定する必要があります。
-      - 修正には、FFmpeg API パラメータ検証、転送ヘッダーの信頼処理、メタデータ検索、評価形式、メディアソース数の処理が含まれます。
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
     ko_KR: |-
-      - v10.10.7에는 Jellyfin Server의 버그 수정과 보안 수정이 포함됩니다.
-      - 이 릴리스 이후 리버스 프록시 배포는 신뢰할 수 있는 프록시를 명시적으로 구성해야 합니다.
-      - 수정 사항에는 FFmpeg API 매개변수 검증, 전달 헤더 신뢰 처리, 메타데이터 검색, 평점 형식, 미디어 소스 계산이 포함됩니다.
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
     fr_FR: |-
-      - v10.10.7 inclut des corrections de bugs et de sécurité pour Jellyfin Server.
-      - Après cette version, les déploiements avec proxy inverse doivent configurer explicitement les proxys de confiance.
-      - Les correctifs couvrent la validation des paramètres de l'API FFmpeg, la gestion de confiance des en-têtes transférés, la recherche de métadonnées, les formats de notation et le comptage des sources média.
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
     de_DE: |-
-      - v10.10.7 enthält Fehlerkorrekturen und Sicherheitskorrekturen für Jellyfin Server.
-      - Reverse-Proxy-Installationen müssen nach diesem Release vertrauenswürdige Proxys explizit konfigurieren.
-      - Korrekturen betreffen FFmpeg-API-Parameterprüfung, Forward-Header-Vertrauen, Metadatensuche, Bewertungsformate und Medienquellenzählung.
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
     sv_SE: |-
-      - v10.10.7 inkluderar buggfixar och säkerhetsfixar för Jellyfin Server.
-      - Reverse-proxy-distributioner måste uttryckligen konfigurera betrodda proxyservrar efter denna version.
-      - Fixningar inkluderar FFmpeg API parametervalidering, forward-header förtroendehantering, metadatasökning, klassificeringsformat och mediekällor.
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
     el_GR: |-
-      - Το v10.10.7 περιλαμβάνει διορθώσεις σφαλμάτων και διορθώσεις ασφαλείας για τον διακομιστή Jellyfin.
-      - Οι αναπτύξεις Reverse-proxy πρέπει να διαμορφώνουν ρητά αξιόπιστους διακομιστές μεσολάβησης μετά από αυτήν την έκδοση.
-      - Οι διορθώσεις περιλαμβάνουν επικύρωση παραμέτρων FFmpeg API, χειρισμό αξιοπιστίας forward-header, αναζήτηση μεταδεδομένων, μορφές αξιολόγησης και καταμέτρηση πηγών πολυμέσων.
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
     hr_HR: |-
-      - v10.10.7 uključuje ispravke grešaka i sigurnosne popravke za Jellyfin Server.
-      - Reverse-proxy implementacije moraju eksplicitno konfigurirati pouzdane proxyje nakon ovog izdanja.
-      - Popravci uključuju provjeru valjanosti parametara FFmpeg API, upravljanje pouzdanošću forward-header, pretraživanje metapodataka, formate ocjenjivanja i brojanje izvora medija.
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
     pt_PT: |-
-      - v10.10.7 inclui correções de bugs e correções de segurança para o Jellyfin Server.
-      - As implementações Reverse-proxy devem configurar explicitamente proxies fidedignos após esta versão.
-      - As correções incluem a validação de parâmetros FFmpeg API, a manipulação de confiança forward-header, a pesquisa de metadados, os formatos de classificação e a contagem de fontes de media.
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
     ru_RU: |-
-      - v10.10.7 включает исправления ошибок и исправления безопасности для Jellyfin Server.
-      - После этого выпуска развертывания Reverse-proxy должны явно настраивать доверенные прокси-серверы.
-      - Исправления включают проверку параметров FFmpeg API, обработку доверия forward-header, поиск метаданных, форматы рейтингов и подсчет медиа-источников.
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
     tr_TR: |-
-      - v10.10.7 Jellyfin Sunucusu için hata düzeltmeleri ve güvenlik düzeltmeleri içerir.
-      - Reverse-proxy dağıtımları, bu sürümden sonra güvenilen proxy'leri açıkça yapılandırmalıdır.
-      - Düzeltmeler arasında FFmpeg API parametre doğrulaması, forward-header güven yönetimi, meta veri araması, derecelendirme formatları ve medya kaynağı sayımı yer alır.
+      - Jellyfin 10.11.10 is a stable bugfix release.
+      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
+      - Also fixes stale UserData cache and user manager collation issues.
   website: "https://jellyfin.org/"
   repo: "https://github.com/jellyfin/jellyfin"
   support: "https://github.com/jellyfin/jellyfin/issues"

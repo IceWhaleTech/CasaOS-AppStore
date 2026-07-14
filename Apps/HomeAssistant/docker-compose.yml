@@ -98,13 +98,13 @@ services:
             tr_TR: HomeAssistant yapılandırma dizini.
     container_name: homeassistant
 x-casaos:
+  id: org.icewhale.homeassistant
   architectures:
     - amd64
     - arm64
-    - arm
   main: homeassistant
   author: CasaOS Team
-  category: Home Automation
+  category: Home
   description:
     en_US: |
       Home Assistant is a smart home management app prioritizing local control and data privacy, managing devices through an intuitive interface with data stored locally, eliminating cloud dependency. Its robust features and community support make it ideal for DIY enthusiasts and home users creating personalized home experiences.
@@ -452,7 +452,7 @@ x-casaos:
       - [Home Assistant Topluluğu](https://community.home-assistant.io)
       - [Home Assistant Eklentileri](https://www.home-assistant.io/addons)
   developer: Home Assistant
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-1.jpg
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HomeAssistant/screenshot-2.jpg
@@ -481,8 +481,8 @@ x-casaos:
   index: /
   port_map: "8123"
   version: "2026.5.4"
-  updateAt: "2026-05-22"
-  releaseNotes:
+  update_at: "2026-05-22"
+  release_notes:
     en_US: |-
       - 2026.5.4 includes OpenAI conversation citation handling for GPT-5.x web search citations.
       - Fixes include ZHA downgrade blocking, SmartThings timestamp crashes, PowerView shade position crashes, Wyoming TTS crashes, Shelly media hash and MIME validation, and multiple integration updates.

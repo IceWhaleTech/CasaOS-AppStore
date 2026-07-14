@@ -29,75 +29,76 @@ services:
       ports:
         - container: "80"
           description:
-            en_us: Nginx HTTP Port
-            zh_cn: Nginx HTTP 端口
+            en_US: Nginx HTTP Port
+            zh_CN: Nginx HTTP 端口
 
         - container: "443"
           description:
-            en_us: Nginx HTTPS Port
-            zh_cn: Nginx HTTPS 端口
+            en_US: Nginx HTTPS Port
+            zh_CN: Nginx HTTPS 端口
 
         - container: "81"
           description:
-            en_us: WebUI Port
-            zh_cn: WebUI 端口
+            en_US: WebUI Port
+            zh_CN: WebUI 端口
 
       volumes:
         - container: /data
           description:
-            en_us: Nginx Proxy Manager data directory.
-            zh_cn: Nginx 代理管理器数据目录。
+            en_US: Nginx Proxy Manager data directory.
+            zh_CN: Nginx 代理管理器数据目录。
         - container: /etc/letsencrypt
           description:
-            en_us: Nginx Proxy Manager letsencrypt directory.
-            zh_cn: Nginx 代理管理器 letsencrypt 目录。
+            en_US: Nginx Proxy Manager letsencrypt directory.
+            zh_CN: Nginx 代理管理器 letsencrypt 目录。
     container_name: nginxproxymanager
 x-casaos:
+  id: org.icewhale.nginxproxymanager
   architectures:
     - amd64
     - arm64
     - arm
   main: nginxproxymanager
   author: CasaOS Team
-  category: Network
+  category: Networking
   description:
-    en_us: Nginx Proxy Manager is a simple, powerful tool to help you host multiple websites on a single server.
-    zh_cn: Nginx 代理管理器是一个简单、强大的工具，可帮助您在单个服务器上托管多个网站。
-    ar_sa: Nginx Proxy Manager هو أداة بسيطة وقوية تساعدك على استضافة مواقع ويب متعددة على خادم واحد.
-    de_de: Nginx Proxy Manager ist ein einfaches und leistungsstarkes Tool, mit dem Sie mehrere Websites auf einem Server hosten können.
-    es_es: Nginx Proxy Manager es una herramienta simple y poderosa para ayudarlo a alojar varios sitios web en un solo servidor.
-    fr_fr: Nginx Proxy Manager est un outil simple et puissant pour vous aider à héberger plusieurs sites Web sur un seul serveur.
-    hu_hu: A Nginx Proxy Manager egy egyszerű, erőteljes eszköz, amely segít több webhelyet egyetlen kiszolgálón tárolni.
-    it_it: Nginx Proxy Manager è un semplice strumento potente per ospitare più siti Web su un singolo server.
-    ru_ru: Nginx Proxy Manager - это простой и мощный инструмент, который поможет вам разместить несколько веб-сайтов на одном сервере.
-    pl_pl: Nginx Proxy Manager to prosty, potężny narzędzie do hostowania wielu witryn na jednym serwerze.
-    pt_br: O Nginx Proxy Manager é uma ferramenta simples e poderosa para ajudá-lo a hospedar vários sites em um único servidor.
-    sv_se: Nginx Proxy Manager är ett enkelt och kraftfullt verktyg som hjälper dig att hosta flera webbplatser på en server.
-    uk_ua: Nginx Proxy Manager - це простий і потужний інструмент, який допоможе вам розмістити кілька веб-сайтів на одному сервері.
+    en_US: Nginx Proxy Manager is a simple, powerful tool to help you host multiple websites on a single server.
+    zh_CN: Nginx 代理管理器是一个简单、强大的工具，可帮助您在单个服务器上托管多个网站。
+    ar_SA: Nginx Proxy Manager هو أداة بسيطة وقوية تساعدك على استضافة مواقع ويب متعددة على خادم واحد.
+    de_DE: Nginx Proxy Manager ist ein einfaches und leistungsstarkes Tool, mit dem Sie mehrere Websites auf einem Server hosten können.
+    es_ES: Nginx Proxy Manager es una herramienta simple y poderosa para ayudarlo a alojar varios sitios web en un solo servidor.
+    fr_FR: Nginx Proxy Manager est un outil simple et puissant pour vous aider à héberger plusieurs sites Web sur un seul serveur.
+    hu_HU: A Nginx Proxy Manager egy egyszerű, erőteljes eszköz, amely segít több webhelyet egyetlen kiszolgálón tárolni.
+    it_IT: Nginx Proxy Manager è un semplice strumento potente per ospitare più siti Web su un singolo server.
+    ru_RU: Nginx Proxy Manager - это простой и мощный инструмент, который поможет вам разместить несколько веб-сайтов на одном сервере.
+    pl_PL: Nginx Proxy Manager to prosty, potężny narzędzie do hostowania wielu witryn na jednym serwerze.
+    pt_BR: O Nginx Proxy Manager é uma ferramenta simples e poderosa para ajudá-lo a hospedar vários sites em um único servidor.
+    sv_SE: Nginx Proxy Manager är ett enkelt och kraftfullt verktyg som hjälper dig att hosta flera webbplatser på en server.
+    uk_UA: Nginx Proxy Manager - це простий і потужний інструмент, який допоможе вам розмістити кілька веб-сайтів на одному сервері.
   developer: Nginx Proxy Manager
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/screenshot-1.jpg
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/screenshot-2.jpg
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/screenshot-3.jpg
   tagline:
-    en_us: Managing Nginx proxy hosts with a simple, powerful interface.
-    zh_cn: 通过简单、强大的界面管理 Nginx 代理主机。
-    ar_sa: إدارة مضيفي Nginx proxy بواسطة واجهة بسيطة وقوية.
-    de_de: Verwalten von Nginx-Proxy-Hosts mit einer einfachen und leistungsstarken Schnittstelle.
-    es_es: Administración de hosts proxy de Nginx con una interfaz simple y poderosa.
-    fr_fr: Gestion des hôtes proxy Nginx avec une interface simple et puissante.
-    hu_hu: Nginx proxy kiszolgálók kezelése egyszerű, erőteljes felülettel.
-    it_it: Gestione degli host proxy Nginx con un'interfaccia semplice e potente.
-    ru_ru: Управление хостами прокси Nginx с помощью простого и мощного интерфейса.
-    pl_pl: Zarządzanie hostami proxy Nginx za pomocą prostego i potężnego interfejsu.
-    pt_br: Gerenciando hosts proxy do Nginx com uma interface simples e poderosa.
-    sv_se: Hantering av Nginx-proxyvärdar med ett enkelt och kraftfullt gränssnitt.
-    uk_ua: Управління хостами проксі Nginx за допомогою простого і потужного інтерфейсу.
+    en_US: Managing Nginx proxy hosts with a simple, powerful interface.
+    zh_CN: 通过简单、强大的界面管理 Nginx 代理主机。
+    ar_SA: إدارة مضيفي Nginx proxy بواسطة واجهة بسيطة وقوية.
+    de_DE: Verwalten von Nginx-Proxy-Hosts mit einer einfachen und leistungsstarken Schnittstelle.
+    es_ES: Administración de hosts proxy de Nginx con una interfaz simple y poderosa.
+    fr_FR: Gestion des hôtes proxy Nginx avec une interface simple et puissante.
+    hu_HU: Nginx proxy kiszolgálók kezelése egyszerű, erőteljes felülettel.
+    it_IT: Gestione degli host proxy Nginx con un'interfaccia semplice e potente.
+    ru_RU: Управление хостами прокси Nginx с помощью простого и мощного интерфейса.
+    pl_PL: Zarządzanie hostami proxy Nginx za pomocą prostego i potężnego interfejsu.
+    pt_BR: Gerenciando hosts proxy do Nginx com uma interface simples e poderosa.
+    sv_SE: Hantering av Nginx-proxyvärdar med ett enkelt och kraftfullt gränssnitt.
+    uk_UA: Управління хостами проксі Nginx за допомогою простого і потужного інтерфейсу.
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NginxProxyManager/thumbnail.png
   tips:
     before_install:
-      en_us: |
+      en_US: |
         ⚠️ Warning!
         This is a technical app, please make sure you know what you are doing.
         Nginx Proxy Manager occupies ports 80 and 443 by default for built-in Nginx use. It occupies port 81 for the admin page.
@@ -108,7 +109,7 @@ x-casaos:
         | Username | Password |
         | -------- | -------- |
         | `admin@example.com` | `changeme` |
-      zh_cn: |
+      zh_CN: |
         ⚠️ 警告！
         这是一个技术类应用，请确保你知道你在做什么。
         Nginx Proxy Manager 默认占用 80 和 443 端口给内置 Nginx 使用。占用 81 端口给管理页面。
@@ -120,13 +121,13 @@ x-casaos:
         | -------- | -------- |
         | `admin@example.com` | `changeme` |
   title:
-    en_us: Nginx Proxy Manager
-    zh_cn: Nginx 代理管理器
+    en_US: Nginx Proxy Manager
+    zh_CN: Nginx 代理管理器
   index: /
   port_map: "81"
   version: "2.13.5"
-  updateAt: "2025-11-18"
-  releaseNotes:
+  update_at: "2025-11-18"
+  release_notes:
     en_US: |-
       - v2.13.5 adds Vietnamese and Italian locales, with Dutch added and Polish, Russian, Slovak, and Chinese translations updated.
       - Fixes include web crashes when viewing Custom Certificates and translation text spacing issues.

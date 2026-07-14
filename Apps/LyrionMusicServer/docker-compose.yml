@@ -218,6 +218,7 @@ services:
             ru_RU: HTTP порт для веб-интерфейса
             tr_TR: Web arayüzü için HTTP portu
 x-casaos:
+  id: org.icewhale.lyrionmusicserver
   architectures:
     - amd64
     - arm
@@ -494,7 +495,7 @@ x-casaos:
       - Sunucu işlevselliği, etkileşim yöntemleri ve arayüz görünümü için kapsamlı özelleştirme seçenekleri
       - Telefonlar, bilgisayarlar ve diğer oynatıcılarda tutarlı deneyim sağlayan birleşik çoklu cihaz arayüzü
       - Kurulumları optimize etmek ve işlevselliği genişletmek için topluluk belge desteği
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LyrionMusicServer/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LyrionMusicServer/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LyrionMusicServer/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LyrionMusicServer/screenshot-2.png
@@ -506,8 +507,8 @@ x-casaos:
   title:
     en_US: LyrionMusicServer
   version: "9.1.1"
-  updateAt: "2026-05-24"
-  releaseNotes:
+  update_at: "2026-05-24"
+  release_notes:
     en_US: |-
       - The lmscommunity/lyrionmusicserver:9.1.1 stable Docker image tag was published on 2026-05-24.
       - This keeps the app on the stable 9.1.x image line and avoids the newer development image tags.

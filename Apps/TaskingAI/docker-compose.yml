@@ -154,40 +154,41 @@ networks:
     driver: bridge
 
 x-casaos:
+  id: org.icewhale.taskingai
   architectures:
     - amd64
     - arm64
   main: frontend
   author: CasaOS Team
-  category: Chat
+  category: AI
   description:
-    en_us: The developer-friendly cloud platform for building and running LLM agents for AI-native applications.
-    zh_cn: 开发人员友好的云平台，用于构建和运行AI原生应用程序的LLM代理。
+    en_US: The developer-friendly cloud platform for building and running LLM agents for AI-native applications.
+    zh_CN: 开发人员友好的云平台，用于构建和运行AI原生应用程序的LLM代理。
   developer: TaskingAI Team
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/screenshot-3.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/screenshot-4.png
   tagline:
-    en_us: The developer-friendly cloud platform for building and running LLM agents for AI-native applications.
-    zh_cn: 开发人员友好的云平台，用于构建和运行AI原生应用程序的LLM代理。
+    en_US: The developer-friendly cloud platform for building and running LLM agents for AI-native applications.
+    zh_CN: 开发人员友好的云平台，用于构建和运行AI原生应用程序的LLM代理。
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TaskingAI/thumbnail.png
   tips: 
     before_install:
-      en_us: |
+      en_US: |
         | Username | Password   |
         | -------- | ---------- |
         | admin    | TaskingAI321 |
 
   title:
-    en_us: TaskingAI
+    en_US: TaskingAI
   port_map: "3080"
 
-  version: "v0.3.0"
-  updateAt: "2024-05-30"
-  releaseNotes:
+  version: "0.3.0"
+  update_at: "2024-05-30"
+  release_notes:
     en_US: |-
       - v0.3.0 adds Markdown rendering and image uploads in Playground.
       - An OpenAI-compatible chat completions API was introduced for LLM tasks and agent invocations.

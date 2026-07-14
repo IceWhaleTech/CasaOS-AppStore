@@ -23,53 +23,54 @@ services:
       envs:
         - container: TZ
           description:
-            en_us: "timezone"
-            zh_cn: "时区"
+            en_US: "timezone"
+            zh_CN: "时区"
         - container: CODE
           description:
-            en_us: Access password, separated by comma.
-            zh_cn: 访问密码，用英文逗号分隔。
+            en_US: Access password, separated by comma.
+            zh_CN: 访问密码，用英文逗号分隔。
         - container: PROXY_URL
           description:
-            en_us: "http proxy"
-            zh_cn: "http 代理"
+            en_US: "http proxy"
+            zh_CN: "http 代理"
         - container: BASE_URL
           description:
-            en_us: Override OpenAI API request base URL.
-            zh_cn: 覆盖 OpenAI API 请求基础 URL。
+            en_US: Override OpenAI API request base URL.
+            zh_CN: 覆盖 OpenAI API 请求基础 URL。
       ports:
         - container: "3000"
           description:
-            en_us: WebUI HTTP Port
-            zh_cn: WebUI HTTP 端口
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP 端口
 
     container_name: chatgpt-next-web
 x-casaos:
+  id: org.icewhale.chatgptnextweb
   architectures:
     - amd64
     - arm64
   main: chatgpt-next-web
   author: CorrectRoadH,Cp0204
-  category: Utilities
+  category: AI
   description:
-    en_us: An intelligent chat application based on ChatGPT, supports fast deployment, Markdown, beautiful UI, fluid response, privacy and security, and allows customization of preset roles for quick creation, sharing, and debugging of personalized conversations.
-    zh_cn: 一个基于 ChatGPT 的智能聊天应用，支持快速部署、Markdown 支持、精美 UI、流式响应、隐私安全等多个功能，并且能够自定义预制角色快速创建、分享和调试个性化对话。
+    en_US: An intelligent chat application based on ChatGPT, supports fast deployment, Markdown, beautiful UI, fluid response, privacy and security, and allows customization of preset roles for quick creation, sharing, and debugging of personalized conversations.
+    zh_CN: 一个基于 ChatGPT 的智能聊天应用，支持快速部署、Markdown 支持、精美 UI、流式响应、隐私安全等多个功能，并且能够自定义预制角色快速创建、分享和调试个性化对话。
   developer: Yidadaa
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ChatGPT-Next-Web/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ChatGPT-Next-Web/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ChatGPT-Next-Web/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ChatGPT-Next-Web/screenshot-2.png
   tagline:
-    en_us: A well-designed cross-platform ChatGPT UI.
-    zh_cn: 精心设计的跨平台 ChatGPT UI
+    en_US: A well-designed cross-platform ChatGPT UI.
+    zh_CN: 精心设计的跨平台 ChatGPT UI
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ChatGPT-Next-Web/thumbnail.png
   tips: {}
   title:
-    en_us: ChatGPT Next Web
+    en_US: ChatGPT Next Web
   port_map: "3000"
-  version: "v2.16.1"
-  updateAt: "2025-07-29"
-  releaseNotes:
+  version: "2.16.1"
+  update_at: "2025-07-29"
+  release_notes:
     en_US: |-
       - v2.16.1 adds Alibaba vision and omni model support, GPT-4.1/GPT-4.5-preview, OpenAI o3/o4-mini, Gemini 2.5, Grok 3, Claude 4, Moonshot model updates, and 302.AI provider support.
       - Fixes include Mistral icon detection, first-message enforcement, Gemini/Claude multimodal image upload regexes, o1/o3 markdown encouragement, unit test failures, and duplicate links.

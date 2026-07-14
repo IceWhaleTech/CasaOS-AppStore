@@ -81,12 +81,13 @@ services:
             tr_TR: Portainer veri dizini
     container_name: portainer
 x-casaos:
+  id: org.icewhale.portainer
   architectures:
     - amd64
     - arm
     - arm64
   author: Cp0204
-  category: Utilities
+  category: Developer
   description:
     en_US: |
       Portainer Community Edition (CE) is a lightweight container management tool offering an intuitive Web interface to simplify building, managing, and monitoring containerized applications. With over 500,000 active users, it is widely appreciated for its ease of use and robust functionality, ideal for individual developers, home lab users, and small teams.
@@ -344,7 +345,7 @@ x-casaos:
       - [Portainer Resmi Web Sitesi](https://www.portainer.io/)
       - [Portainer GitHub Deposu](https://github.com/portainer/portainer)
   developer: Portainer
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Portainer/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Portainer/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Portainer/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Portainer/screenshot-2.png
@@ -373,8 +374,8 @@ x-casaos:
   port_map: "9000"
   scheme: http
   version: "2.31.3"
-  updateAt: "2025-07-03"
-  releaseNotes:
+  update_at: "2025-07-03"
+  release_notes:
     en_US: |-
       - 2.31.3 adds the --trusted-origins CLI option and TRUSTED_ORIGINS environment variable.
       - The option is used to configure allowed domains when Portainer is behind a reverse proxy and avoids Origin invalid errors.

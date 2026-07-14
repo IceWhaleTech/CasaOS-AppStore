@@ -36,11 +36,12 @@ services:
             ru_RU: HTTP порт веб-интерфейса
             tr_TR: WebUI HTTP Portu
 x-casaos:
+  id: org.icewhale.retroarch
   architectures:
     - amd64
     - arm64
   main: retroarch
-  category: Games
+  category: Media
   developer: inglebard
   author: inglebard
   tagline:
@@ -375,7 +376,7 @@ x-casaos:
       **Daha fazla bilgi:**
       - [RetroArch resmi web sitesi](https://www.retroarch.com)
       - [RetroArch GitHub deposu](https://github.com/libretro/RetroArch)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RetroArch/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RetroArch/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RetroArch/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RetroArch/screenshot-2.png
@@ -386,9 +387,9 @@ x-casaos:
   index: /
   title:
     en_US: RetroArch
-  version: "latest"
-  updateAt: "2025-11-20"
-  releaseNotes: ""
+  version: "0.0.1"
+  update_at: "2025-11-20"
+  release_notes: ""
   website: "https://www.retroarch.com"
   repo: "https://github.com/libretro/RetroArch"
   support: "https://github.com/libretro/RetroArch/issues"

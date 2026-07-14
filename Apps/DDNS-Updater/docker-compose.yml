@@ -42,35 +42,36 @@ services:
       ports:
         - container: "8000"
           description:
-            en_us: WebUI HTTP Port
+            en_US: WebUI HTTP Port
       volumes:
         - container: /updater/data
           description:
-            en_us: ddns-updater config directory.
+            en_US: ddns-updater config directory.
 x-casaos:
+  id: org.icewhale.ddnsupdater
   architectures:
     - amd64
     - arm
     - arm64
   author: rstuhlmuller
-  category: Network
+  category: Networking
   description:
-    en_us: Program to keep DNS A and/or AAAA records updated for multiple DNS providers
+    en_US: Program to keep DNS A and/or AAAA records updated for multiple DNS providers
   developer: qmcgaw
   screenshot:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DDNS-Updater/screenshot-1.png
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DDNS-Updater/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DDNS-Updater/icon.svg
   main: ddns-updater
   port_map: "8000"
   scheme: http
   tagline:
-    en_us: Simple and easy to use DDNS
-    zh_cn: 简单好用的DDNS
+    en_US: Simple and easy to use DDNS
+    zh_CN: 简单好用的DDNS
   title:
-    en_us: ddns-updater
-  version: "v2.10.0"
-  updateAt: "2026-05-01"
-  releaseNotes:
+    en_US: ddns-updater
+  version: "2.10.0"
+  update_at: "2026-05-01"
+  release_notes:
     en_US: |-
       - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
       - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.

@@ -1,7 +1,7 @@
 name: hermes
 services:
   hermes:
-    image: nousresearch/hermes-agent:v2026.5.29
+    image: nousresearch/hermes-agent:v2026.6.5
     container_name: hermes
     deploy:
       resources:
@@ -115,6 +115,7 @@ services:
             ru_RU: Разрешает доступ к панели управления с хостов, отличных от loopback
             tr_TR: Panel erisimine loopback disi ana makinelerden izin verir
 x-casaos:
+  id: org.icewhale.hermes
   architectures:
     - amd64
     - arm64
@@ -364,7 +365,7 @@ x-casaos:
       - [Hermes Agent Resmi Web Sitesi](https://hermes-agent.nousresearch.com/)
       - [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)
       - [Hermes Agent Dokümantasyonu](https://hermes-agent.nousresearch.com/docs/)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hermes/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hermes/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hermes/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hermes/screenshot-2.png
@@ -422,69 +423,174 @@ x-casaos:
   index: /
   title:
     en_US: Hermes
-  version: "0.15.1"
-  updateAt: "2026-05-29"
-  releaseNotes:
+  version: "0.16.0"
+  update_at: "2026-06-05"
+  release_notes:
     en_US: |-
-      - v0.15.1 fixes the dashboard 401 reload loop that affected loopback-mode deployments, including Docker-based fresh installs.
-      - Docker deployments now require explicitly setting `HERMES_DASHBOARD_INSECURE=1` if you want to disable the loopback-only auth guard; it is no longer inferred from the bind host.
-      - MCP servers launched with bare commands like `npx`, `npm`, and `node` now resolve correctly inside the Docker image, alongside several dashboard and worker bug fixes.
+      ## Functional Updates
+
+      - The web dashboard is now a much more complete admin panel: you can configure messaging channels, MCP catalog entries, credentials, webhooks, memory, and gateway settings directly from the browser.
+      - First-run setup is simpler with Quick Setup via Nous Portal and a clearer split between Quick Setup and Full Setup, so new users can get to their first message faster.
+      - The model picker now supports fuzzy search across the web dashboard, TUI, and CLI, groups multi-endpoint providers more cleanly, and refreshes the model catalog more frequently.
+      - `/undo [N]` lets you roll back the last N turns, prefill your last message for editing, and resend it more easily across CLI, TUI, and messaging flows.
+      - You can now choose whether `hermes chat` opens the CLI or the TUI by default, and the TUI also gets a unified `/model` command plus a Sessions overlay.
+      - The default skill set was trimmed to reduce noise, while `NVIDIA/skills` was added as a built-in trusted tap for easier discovery and installation of verified skills.
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
     en_GB: |-
-      - v0.15.1 fixes the dashboard 401 reload loop that affected loopback-mode deployments, including Docker-based fresh installs.
-      - Docker deployments now require explicitly setting `HERMES_DASHBOARD_INSECURE=1` if you want to disable the loopback-only auth guard; it is no longer inferred from the bind host.
-      - MCP servers launched with bare commands like `npx`, `npm`, and `node` now resolve correctly inside the Docker image, alongside several dashboard and worker bug fixes.
+      ## Functional Updates
+
+      - The web dashboard is now a much more complete admin panel: you can configure messaging channels, MCP catalog entries, credentials, webhooks, memory, and gateway settings directly from the browser.
+      - First-run setup is simpler with Quick Setup via Nous Portal and a clearer split between Quick Setup and Full Setup, so new users can get to their first message faster.
+      - The model picker now supports fuzzy search across the web dashboard, TUI, and CLI, groups multi-endpoint providers more cleanly, and refreshes the model catalog more frequently.
+      - `/undo [N]` lets you roll back the last N turns, prefill your last message for editing, and resend it more easily across CLI, TUI, and messaging flows.
+      - You can now choose whether `hermes chat` opens the CLI or the TUI by default, and the TUI also gets a unified `/model` command plus a Sessions overlay.
+      - The default skill set was trimmed to reduce noise, while `NVIDIA/skills` was added as a built-in trusted tap for easier discovery and installation of verified skills.
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
     it_IT: |-
-      - La v0.15.1 corregge il loop di ricarica 401 della dashboard che interessava le distribuzioni in modalita loopback, incluse le nuove installazioni basate su Docker.
-      - Nelle distribuzioni Docker ora e necessario impostare esplicitamente `HERMES_DASHBOARD_INSECURE=1` se si vuole disattivare la protezione di autenticazione solo loopback; non viene piu dedotto dall'host di binding.
-      - I server MCP avviati con comandi semplici come `npx`, `npm` e `node` ora vengono risolti correttamente dentro l'immagine Docker, insieme a varie correzioni per dashboard e worker.
+      ## Aggiornamenti Funzionali
+
+      - La dashboard web e ora un pannello di amministrazione molto piu completo: puoi configurare canali di messaggistica, voci del catalogo MCP, credenziali, webhook, memoria e impostazioni del gateway direttamente dal browser.
+      - La configurazione iniziale e stata semplificata con Quick Setup via Nous Portal e con una distinzione piu chiara tra Quick Setup e Full Setup, cosi i nuovi utenti arrivano prima al primo messaggio.
+      - Il selettore dei modelli ora supporta la ricerca fuzzy nella dashboard web, nella TUI e nella CLI, raggruppa meglio i provider con piu endpoint e aggiorna il catalogo modelli piu spesso.
+      - `/undo [N]` permette di annullare gli ultimi N turni, precompilare l'ultimo messaggio per modificarlo e reinviarlo piu facilmente in CLI, TUI e flussi di messaggistica.
+      - Ora puoi scegliere se `hermes chat` deve aprire di default la CLI o la TUI, e la TUI riceve anche un comando `/model` unificato piu un overlay Sessions.
+      - Il set di skill predefinito e stato snellito per ridurre il rumore, mentre `NVIDIA/skills` e stato aggiunto come trusted tap integrato per facilitare scoperta e installazione di skill verificate.
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
     nb_NO: |-
-      - v0.15.1 retter dashboardens 401-oppdateringsloekke som pavirket distribusjoner i loopback-modus, inkludert nye Docker-baserte installasjoner.
-      - Docker-distribusjoner krever na at du eksplisitt setter `HERMES_DASHBOARD_INSECURE=1` hvis du vil deaktivere autentiseringsvernet som kun gjelder loopback; det utledes ikke lenger fra bind-verten.
-      - MCP-servere startet med enkle kommandoer som `npx`, `npm` og `node` loses na korrekt inne i Docker-imaget, sammen med flere feilrettinger for dashboard og worker.
+      ## Funksjonelle Oppdateringer
+
+      - Nettdashbordet er nå et langt mer komplett administrasjonspanel: du kan konfigurere meldingskanaler, MCP-katalogoppføringer, legitimasjon, webhooks, minne og gateway-innstillinger direkte fra nettleseren.
+      - Førstegangsoppsettet er enklere med Quick Setup via Nous Portal og et tydeligere skille mellom Quick Setup og Full Setup, slik at nye brukere raskere kommer til sin første melding.
+      - Modellvelgeren støtter nå fuzzy-søk i nettdashbordet, TUI og CLI, grupperer leverandører med flere endepunkter bedre og oppdaterer modellkatalogen oftere.
+      - `/undo [N]` lar deg rulle tilbake de siste N rundene, forhåndsfylle den siste meldingen for redigering og sende den på nytt enklere på tvers av CLI, TUI og meldingsflyter.
+      - Du kan nå velge om `hermes chat` skal åpne CLI eller TUI som standard, og TUI-en får også en samlet `/model`-kommando og et Sessions-overlay.
+      - Standardsettet med ferdigheter er slanket for å redusere støy, mens `NVIDIA/skills` er lagt til som en innebygd trusted tap for enklere oppdagelse og installasjon av verifiserte ferdigheter.
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
     zh_CN: |-
-      - v0.15.1 修复了仪表盘在 loopback 模式部署下出现的 401 刷新循环问题，其中也包括基于 Docker 的全新安装场景。
-      - 在 Docker 部署中，如果你希望关闭仅限 loopback 的鉴权保护，现在需要显式设置 `HERMES_DASHBOARD_INSECURE=1`，而不再根据绑定主机自动推断。
-      - 通过 `npx`、`npm`、`node` 这类裸命令启动的 MCP 服务器，现在可以在 Docker 镜像内被正确解析，同时还包含多项仪表盘和 worker 相关修复。
+      ## 功能更新
+
+      - Web 仪表盘现在已经成为更完整的管理面板，你可以直接在浏览器里配置消息渠道、MCP 目录项、凭据、Webhook、记忆和网关设置。
+      - 首次配置流程通过 Nous Portal 的 Quick Setup 得到简化，同时 Quick Setup 和 Full Setup 的分工也更清晰，新用户可以更快进入第一次对话。
+      - 模型选择器现在在 Web 仪表盘、TUI 和 CLI 中都支持模糊搜索，对多端点 provider 的分组也更清晰，而且模型目录刷新更频繁。
+      - `/undo [N]` 现在可以回退最近 N 轮对话，自动带回上一条消息供你编辑后重发，在 CLI、TUI 和消息渠道流程里都更好用。
+      - 现在你可以决定 `hermes chat` 默认进入 CLI 还是 TUI，同时 TUI 也新增了统一的 `/model` 命令和 Sessions 浮层。
+      - 默认技能集被进一步精简以减少噪音，同时 `NVIDIA/skills` 被加入为内置信任 tap，方便发现和安装经过验证的技能。
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
     ja_JP: |-
-      - v0.15.1では、Dockerでの新規導入を含むloopbackモード環境で発生していた、ダッシュボードの401リロードループが修正されました。
-      - Docker環境でloopback専用の認証ガードを無効化したい場合は、`HERMES_DASHBOARD_INSECURE=1` を明示的に設定する必要があり、bind host から自動推定されなくなりました。
-      - `npx`、`npm`、`node` のような素のコマンドで起動するMCPサーバーがDockerイメージ内で正しく解決されるようになり、そのほかダッシュボードやworker周りの不具合も修正されています。
+      ## 機能アップデート
+
+      - Webダッシュボードは、ブラウザーからメッセージチャネル、MCPカタログ項目、認証情報、Webhook、メモリ、ゲートウェイ設定を直接管理できる、より完成度の高い管理パネルになりました。
+      - 初回セットアップは Nous Portal の Quick Setup によって簡単になり、Quick Setup と Full Setup の役割もより明確になったため、新規ユーザーが最初のメッセージまでたどり着きやすくなりました。
+      - モデルピッカーは Webダッシュボード、TUI、CLI でファジー検索に対応し、複数エンドポイントを持つプロバイダーの整理も改善され、モデルカタログの更新頻度も上がりました。
+      - `/undo [N]` により直近 N ターンを巻き戻し、直前のメッセージを編集用に再入力して送り直しやすくなり、CLI、TUI、メッセージフロー全体で使いやすくなりました。
+      - `hermes chat` を既定で CLI と TUI のどちらで開くか選べるようになり、TUI には統一された `/model` コマンドと Sessions オーバーレイも追加されました。
+      - デフォルトのスキルセットはノイズ削減のために整理され、`NVIDIA/skills` は検証済みスキルを見つけて導入しやすい組み込み trusted tap として追加されました。
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
     ko_KR: |-
-      - v0.15.1은 Docker 기반 신규 설치를 포함한 loopback 모드 배포에서 발생하던 대시보드 401 새로고침 루프를 수정합니다.
-      - Docker 배포에서 loopback 전용 인증 가드를 끄려면 이제 `HERMES_DASHBOARD_INSECURE=1` 을 명시적으로 설정해야 하며, 더 이상 바인드 호스트에서 자동 추론되지 않습니다.
-      - `npx`, `npm`, `node` 같은 bare command로 시작한 MCP 서버가 이제 Docker 이미지 내부에서 올바르게 해석되며, 대시보드와 워커 관련 여러 버그 수정도 포함됩니다.
+      ## 기능 업데이트
+
+      - 웹 대시보드는 이제 메시징 채널, MCP 카탈로그 항목, 자격 증명, 웹훅, 메모리, 게이트웨이 설정을 브라우저에서 직접 구성할 수 있는 훨씬 더 완성도 높은 관리 패널이 되었습니다.
+      - 초기 설정은 Nous Portal의 Quick Setup 으로 더 단순해졌고, Quick Setup 과 Full Setup 의 구분도 더 명확해져 신규 사용자가 첫 메시지까지 더 빠르게 도달할 수 있습니다.
+      - 모델 선택기는 이제 웹 대시보드, TUI, CLI 전반에서 퍼지 검색을 지원하고, 다중 엔드포인트 provider 를 더 깔끔하게 묶어 주며, 모델 카탈로그도 더 자주 갱신됩니다.
+      - `/undo [N]` 은 최근 N개 턴을 되돌리고, 마지막 메시지를 편집용으로 다시 채워 넣어 CLI, TUI, 메시징 흐름 전반에서 더 쉽게 다시 보낼 수 있게 해줍니다.
+      - 이제 `hermes chat` 이 기본적으로 CLI 와 TUI 중 무엇을 열지 선택할 수 있고, TUI 에는 통합 `/model` 명령과 Sessions 오버레이도 추가되었습니다.
+      - 기본 스킬 세트는 노이즈를 줄이기 위해 정리되었고, `NVIDIA/skills` 는 검증된 스킬을 더 쉽게 찾고 설치할 수 있는 내장 trusted tap 으로 추가되었습니다.
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
     fr_FR: |-
-      - La v0.15.1 corrige la boucle de rechargement 401 du tableau de bord qui affectait les deploiements en mode loopback, y compris les nouvelles installations basees sur Docker.
-      - Dans les deploiements Docker, il faut maintenant definir explicitement `HERMES_DASHBOARD_INSECURE=1` si vous voulez desactiver la protection d'authentification reservee au loopback ; elle n'est plus deduite de l'hote de liaison.
-      - Les serveurs MCP lances avec des commandes simples comme `npx`, `npm` et `node` se resolvent maintenant correctement dans l'image Docker, avec plusieurs autres corrections pour le tableau de bord et les workers.
+      ## Mises a Jour Fonctionnelles
+
+      - Le tableau de bord web est maintenant un panneau d'administration bien plus complet : vous pouvez configurer directement depuis le navigateur les canaux de messagerie, les entrees du catalogue MCP, les identifiants, les webhooks, la memoire et les parametres de la passerelle.
+      - La configuration initiale est plus simple grace a Quick Setup via Nous Portal et a une separation plus claire entre Quick Setup et Full Setup, ce qui permet aux nouveaux utilisateurs d'atteindre plus vite leur premier message.
+      - Le selecteur de modeles prend maintenant en charge la recherche floue dans le tableau de bord web, la TUI et la CLI, regroupe plus proprement les fournisseurs a plusieurs endpoints et actualise plus souvent le catalogue de modeles.
+      - `/undo [N]` permet de revenir sur les N derniers tours, de pre-remplir votre dernier message pour le modifier puis le renvoyer plus facilement dans les flux CLI, TUI et messagerie.
+      - Vous pouvez maintenant choisir si `hermes chat` ouvre par defaut la CLI ou la TUI, et la TUI gagne aussi une commande `/model` unifiee ainsi qu'un overlay Sessions.
+      - Le jeu de skills par defaut a ete allege pour reduire le bruit, tandis que `NVIDIA/skills` a ete ajoute comme trusted tap integre pour faciliter la decouverte et l'installation de skills verifiees.
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
     de_DE: |-
-      - v0.15.1 behebt die 401-Neuladeschleife im Dashboard, die Bereitstellungen im Loopback-Modus betraf, einschliesslich neuer Docker-basierter Installationen.
-      - Bei Docker-Bereitstellungen muss `HERMES_DASHBOARD_INSECURE=1` nun explizit gesetzt werden, wenn der nur fur Loopback geltende Auth-Schutz deaktiviert werden soll; dies wird nicht mehr aus dem Bind-Host abgeleitet.
-      - MCP-Server, die mit einfachen Befehlen wie `npx`, `npm` und `node` gestartet werden, werden nun innerhalb des Docker-Images korrekt aufgeloest, zusammen mit mehreren Fehlerbehebungen fur Dashboard und Worker.
+      ## Funktionale Updates
+
+      - Das Web-Dashboard ist jetzt ein deutlich vollstaendigeres Administrationspanel: Messaging-Kanaele, MCP-Katalogeintraege, Zugangsdaten, Webhooks, Memory und Gateway-Einstellungen lassen sich direkt im Browser konfigurieren.
+      - Die Ersteinrichtung wurde mit Quick Setup ueber Nous Portal vereinfacht, und die Trennung zwischen Quick Setup und Full Setup ist klarer geworden, sodass neue Nutzer schneller zur ersten Nachricht kommen.
+      - Der Modellwaehler unterstuetzt jetzt Fuzzy-Suche im Web-Dashboard, in der TUI und in der CLI, gruppiert Anbieter mit mehreren Endpunkten sauberer und aktualisiert den Modellkatalog haeufiger.
+      - `/undo [N]` erlaubt es, die letzten N Zuege zurueckzunehmen, die letzte Nachricht zum Bearbeiten vorzufuellen und sie ueber CLI, TUI und Messaging-Ablaufe leichter erneut zu senden.
+      - Sie koennen jetzt waehlen, ob `hermes chat` standardmaessig die CLI oder die TUI oeffnet, und die TUI erhaelt zusaetzlich einen vereinheitlichten `/model`-Befehl sowie ein Sessions-Overlay.
+      - Das Standard-Skill-Set wurde verschlankt, um Rauschen zu reduzieren, waehrend `NVIDIA/skills` als integrierter trusted tap fuer die einfachere Entdeckung und Installation verifizierter Skills hinzugefuegt wurde.
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
     sv_SE: |-
-      - v0.15.1 fixar dashboardens 401-omladdningsloop som paverkade distributioner i loopback-lage, inklusive nya Docker-baserade installationer.
-      - I Docker-distributioner maste du nu uttryckligen ange `HERMES_DASHBOARD_INSECURE=1` om du vill stanga av autentiseringsskyddet som bara galler loopback; det har inte langre att gora med bind-varden.
-      - MCP-servrar som startas med enkla kommandon som `npx`, `npm` och `node` matchas nu korrekt inne i Docker-imagen, tillsammans med flera andra felrattningar for dashboard och workers.
+      ## Funktionella Uppdateringar
+
+      - Webbpanelen ar nu ett mycket mer komplett administrationsverktyg: du kan konfigurera meddelandekanaler, MCP-katalogposter, autentiseringsuppgifter, webbkopplingar, minne och gateway-inställningar direkt i webblasaren.
+      - Forstagangsinstallationen ar enklare med Quick Setup via Nous Portal och en tydligare uppdelning mellan Quick Setup och Full Setup, sa att nya anvandare snabbare kan komma till sitt forsta meddelande.
+      - Modellvaljaren har nu fuzzy-sok i webbpanelen, TUI och CLI, grupperar leverantorer med flera endpunkter renare och uppdaterar modellkatalogen oftare.
+      - `/undo [N]` later dig rulla tillbaka de senaste N turerna, forifylla ditt senaste meddelande for redigering och skicka om det enklare over CLI, TUI och meddelandefloden.
+      - Du kan nu valja om `hermes chat` som standard ska oppna CLI eller TUI, och TUI far dessutom ett enhetligt `/model`-kommando och ett Sessions-overlay.
+      - Standarduppsattningen av skills har bantats ned for att minska brus, medan `NVIDIA/skills` har lagts till som en inbyggd trusted tap for enklare upptackt och installation av verifierade skills.
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
     el_GR: |-
-      - Η v0.15.1 διορθώνει το loop επαναφόρτωσης 401 του dashboard που επηρέαζε deployments σε loopback mode, συμπεριλαμβανομένων και νέων εγκαταστάσεων με Docker.
-      - Στα Docker deployments απαιτείται πλέον να ορίσετε ρητά `HERMES_DASHBOARD_INSECURE=1` αν θέλετε να απενεργοποιήσετε την auth προστασία μόνο για loopback, καθώς δεν προκύπτει πλέον από το bind host.
-      - Οι MCP servers που ξεκινούν με απλές εντολές όπως `npx`, `npm` και `node` επιλύονται πλέον σωστά μέσα στο Docker image, μαζί με αρκετές ακόμη διορθώσεις για dashboard και workers.
+      ## Λειτουργικες Ενημερωσεις
+
+      - Το web dashboard ειναι τωρα ενα πολυ πιο ολοκληρωμενο admin panel: μπορειτε να ρυθμισετε messaging channels, καταχωρησεις MCP catalog, credentials, webhooks, memory και gateway settings απευθειας απο τον browser.
+      - Η αρχικη ρυθμιση ειναι πλεον πιο απλη με Quick Setup μεσω Nous Portal και με πιο καθαρο διαχωρισμο αναμεσα σε Quick Setup και Full Setup, ωστε οι νεοι χρηστες να φτανουν γρηγοροτερα στο πρωτο τους μηνυμα.
+      - Ο επιλογεας μοντελων υποστηριζει πλεον fuzzy search στο web dashboard, στο TUI και στο CLI, ομαδοποιει καλυτερα τους providers με πολλα endpoints και ανανεωνει συχνοτερα τον καταλογο μοντελων.
+      - Το `/undo [N]` σας επιτρεπει να αναιρεσετε τα τελευταια N turns, να επαναφερετε το τελευταιο μηνυμα για επεξεργασια και να το ξαναστειλετε πιο ευκολα σε CLI, TUI και messaging flows.
+      - Μπορειτε πλεον να επιλεξετε αν το `hermes chat` θα ανοιγει απο προεπιλογη το CLI ή το TUI, και το TUI αποκτα επισης ενοποιημενη εντολη `/model` και overlay Sessions.
+      - Το προεπιλεγμενο skill set μειωθηκε για λιγοτερο θορυβο, ενω το `NVIDIA/skills` προστεθηκε ως ενσωματωμενο trusted tap για ευκολοτερη ανακαλυψη και εγκατασταση verified skills.
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
     hr_HR: |-
-      - v0.15.1 ispravlja 401 petlju ponovnog ucitavanja nadzorne ploce koja je pogadala deploymente u loopback nacinu rada, ukljucujuci i nove instalacije temeljene na Dockeru.
-      - U Docker deploymentima sada morate izricito postaviti `HERMES_DASHBOARD_INSECURE=1` ako zelite iskljuciti autentikacijsku zastitu samo za loopback; vise se ne izvodi iz bind hosta.
-      - MCP posluzitelji pokrenuti jednostavnim naredbama kao sto su `npx`, `npm` i `node` sada se ispravno razrjesavaju unutar Docker imagea, uz vise dodatnih ispravaka za nadzornu plocu i workere.
+      ## Funkcionalna Azuriranja
+
+      - Web nadzorna ploca sada je znatno potpuniji administracijski panel: izravno u pregledniku mozete konfigurirati kanale za poruke, MCP katalog stavke, vjerodajnice, webhookove, memoriju i gateway postavke.
+      - Pocetno postavljanje sada je jednostavnije uz Quick Setup preko Nous Portala i jasniju podjelu izmedu Quick Setup i Full Setup, tako da novi korisnici brze dolaze do prve poruke.
+      - Odabir modela sada podrzava fuzzy pretragu u web nadzornoj ploci, TUI-u i CLI-u, urednije grupira providere s vise endpointa i cesce osvjezava katalog modela.
+      - `/undo [N]` omogucuje vracanje posljednjih N poteza, ponovno popunjavanje zadnje poruke za uredjivanje i jednostavnije ponovno slanje kroz CLI, TUI i tokove poruka.
+      - Sada mozete odabrati hoce li `hermes chat` zadano otvarati CLI ili TUI, a TUI dobiva i objedinjenu `/model` naredbu te Sessions overlay.
+      - Zadani skup skillova je smanjen kako bi bilo manje suma, dok je `NVIDIA/skills` dodan kao ugradeni trusted tap za lakse otkrivanje i instalaciju provjerenih skillova.
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
     pt_PT: |-
-      - A v0.15.1 corrige o loop de recarregamento 401 do painel que afetava implementacoes em modo loopback, incluindo instalacoes novas baseadas em Docker.
-      - Nas implementacoes Docker, agora e necessario definir explicitamente `HERMES_DASHBOARD_INSECURE=1` se quiser desativar a protecao de autenticacao apenas para loopback; ja nao e inferida a partir do host de bind.
-      - Os servidores MCP iniciados com comandos simples como `npx`, `npm` e `node` passam agora a ser resolvidos corretamente dentro da imagem Docker, juntamente com varias correcoes adicionais no painel e nos workers.
+      ## Atualizacoes Funcionais
+
+      - O dashboard web e agora um painel de administracao muito mais completo: pode configurar canais de mensagens, entradas do catalogo MCP, credenciais, webhooks, memoria e definicoes do gateway diretamente no browser.
+      - A configuracao inicial ficou mais simples com o Quick Setup via Nous Portal e com uma separacao mais clara entre Quick Setup e Full Setup, para que novos utilizadores cheguem mais rapidamente a primeira mensagem.
+      - O seletor de modelos passa agora a suportar pesquisa difusa no dashboard web, na TUI e na CLI, agrupa melhor providers com varios endpoints e atualiza o catalogo de modelos com mais frequencia.
+      - `/undo [N]` permite recuar os ultimos N turnos, preencher novamente a ultima mensagem para edicao e reenviá-la com mais facilidade em fluxos de CLI, TUI e mensagens.
+      - Agora pode escolher se `hermes chat` abre por defeito a CLI ou a TUI, e a TUI tambem recebe um comando `/model` unificado e um overlay Sessions.
+      - O conjunto de skills por defeito foi reduzido para diminuir o ruido, enquanto `NVIDIA/skills` foi adicionado como um trusted tap integrado para facilitar a descoberta e instalacao de skills verificadas.
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
     ru_RU: |-
-      - В v0.15.1 исправлен цикл перезагрузки dashboard с ошибкой 401, который затрагивал развертывания в loopback-режиме, включая новые установки на базе Docker.
-      - В Docker-развертываниях теперь нужно явно задавать `HERMES_DASHBOARD_INSECURE=1`, если вы хотите отключить защиту аутентификации только для loopback; она больше не определяется по bind host.
-      - MCP-серверы, запускаемые простыми командами вроде `npx`, `npm` и `node`, теперь корректно разрешаются внутри Docker-образа, а также включены дополнительные исправления для dashboard и worker-процессов.
+      ## Функциональные Обновления
+
+      - Веб-панель теперь стала гораздо более полноценной административной панелью: прямо из браузера можно настраивать каналы сообщений, записи каталога MCP, учетные данные, вебхуки, память и параметры gateway.
+      - Первичная настройка стала проще благодаря Quick Setup через Nous Portal и более понятному разделению между Quick Setup и Full Setup, поэтому новым пользователям легче быстрее дойти до первого сообщения.
+      - Выбор модели теперь поддерживает нечеткий поиск в веб-панели, TUI и CLI, аккуратнее группирует providers с несколькими endpoints и чаще обновляет каталог моделей.
+      - `/undo [N]` позволяет откатить последние N ходов, вернуть последнюю реплику для редактирования и проще отправить ее заново в CLI, TUI и потоках сообщений.
+      - Теперь можно выбрать, будет ли `hermes chat` по умолчанию открывать CLI или TUI, а TUI также получила унифицированную команду `/model` и overlay Sessions.
+      - Набор навыков по умолчанию был сокращен, чтобы уменьшить шум, а `NVIDIA/skills` добавлен как встроенный trusted tap для более простого поиска и установки проверенных навыков.
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
     tr_TR: |-
-      - v0.15.1, Docker tabanli yeni kurulumlar dahil loopback modundaki dagitimlari etkileyen dashboard 401 yeniden yukleme dongusunu duzeltir.
-      - Docker dagitimlarinda, sadece loopback icin olan kimlik dogrulama korumasini kapatmak istiyorsaniz artik `HERMES_DASHBOARD_INSECURE=1` degerini acikca ayarlamaniz gerekir; bu bilgi bind hosttan artik cikarilmaz.
-      - `npx`, `npm` ve `node` gibi yalniz komutlarla baslatilan MCP sunuculari artik Docker image icinde dogru sekilde cozulur; buna ek olarak dashboard ve worker tarafinda cesitli hata duzeltmeleri de bulunur.
+      ## Islevsel Guncellemeler
+
+      - Web panosu artik cok daha tamamlanmis bir yonetim paneli: mesajlasma kanallari, MCP katalog girdileri, kimlik bilgileri, webhook'lar, bellek ve gateway ayarlari dogrudan tarayicidan yapilandirilabiliyor.
+      - Ilk kurulum, Nous Portal uzerinden Quick Setup ve Quick Setup ile Full Setup arasindaki daha net ayrim sayesinde sadeleşti; boylece yeni kullanicilar ilk mesajlarina daha hizli ulasabiliyor.
+      - Model secici artik web panosu, TUI ve CLI genelinde bulanik aramayi destekliyor, coklu endpoint'e sahip provider'lari daha duzenli grupluyor ve model katalogunu daha sik yeniliyor.
+      - `/undo [N]`, son N turu geri almanizi, son mesaji duzenleme icin yeniden doldurmanizi ve CLI, TUI ve mesajlasma akislarinda daha kolay yeniden gondermenizi saglar.
+      - Artik `hermes chat` komutunun varsayilan olarak CLI mi yoksa TUI mi acacagini secebiliyorsunuz; TUI'ye ayrica birlesik `/model` komutu ve Sessions overlay de eklendi.
+      - Varsayilan skill set'i gurultuyu azaltmak icin sadeleştirildi; `NVIDIA/skills` ise dogrulanmis skill'leri daha kolay kesfetmek ve kurmak icin yerlesik bir trusted tap olarak eklendi.
+
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
   store_app_id: hermes
   website: "https://hermes-agent.nousresearch.com/"
   repo: "https://github.com/NousResearch/hermes-agent"

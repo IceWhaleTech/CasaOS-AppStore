@@ -43,6 +43,7 @@ services:
             zh_CN: LLaMA Factory Web UI 端口
 
 x-casaos:
+  id: org.icewhale.llamafactorynvidia
   architectures:
     - amd64
   author: hiyouga
@@ -304,7 +305,7 @@ x-casaos:
       - [GitHub Repository](https://github.com/hiyouga/LLaMA-Factory)
       - [官方文档](https://llamafactory.readthedocs.io/)
   developer: hiyouga
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LLaMA-Factory_Nvidia/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LLaMA-Factory_Nvidia/icon.svg
   screenshot_link: 
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LLaMA-Factory_Nvidia/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LLaMA-Factory_Nvidia/screenshot-2.png
@@ -346,8 +347,8 @@ x-casaos:
   main: llama-factory-nvidia
   port_map: "18877"
   version: "0.9.4"
-  updateAt: "2025-12-31"
-  releaseNotes:
+  update_at: "2025-12-31"
+  release_notes:
     en_US: |-
       - v0.9.4 updates the project name from LLaMA-Factory to LlamaFactory.
       - Older Python runtimes are deprecated; the supported Python runtime range was raised.

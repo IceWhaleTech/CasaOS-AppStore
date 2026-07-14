@@ -18,7 +18,7 @@ services:
           memory: 64M
     image: ghcr.io/flaresolverr/flaresolverr:v3.4.6
     labels:
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FlareSolverr/icon.png
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FlareSolverr/icon.svg
     ports:
       - target: 8191
         published: "8191"
@@ -27,13 +27,14 @@ services:
     network_mode: bridge
     privileged: false
 x-casaos:
+  id: org.icewhale.flaresolverr
   architectures:                  # a list of architectures that the app supports
       - amd64
       - arm
       - arm64
   author: calganaygun
-  category: Network
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FlareSolverr/icon.png
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FlareSolverr/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FlareSolverr/screenshot-1.png
   index: /
@@ -41,10 +42,10 @@ x-casaos:
   scheme: http
   store_app_id: flaresolverr
   title:
-    en_us: FlareSolverr
-  version: "v3.4.6"
-  updateAt: "2025-11-29"
-  releaseNotes:
+    en_US: FlareSolverr
+  version: "3.4.6"
+  update_at: "2025-11-29"
+  release_notes:
     en_US: |-
       - v3.4.6 adds an option to disable image, CSS, and font loading through CDP.
       - The README was updated.

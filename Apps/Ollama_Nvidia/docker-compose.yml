@@ -60,11 +60,12 @@ services:
             ru_RU: Каталог моделей и данных Ollama
             tr_TR: Ollama Modeller ve Veri Dizini
 x-casaos:
+  id: org.icewhale.ollamanvidia
   architectures:
     - amd64
     - arm64
   main: ollama
-  category: Chat
+  category: AI
   developer: ollama
   author: ollama
   tagline:
@@ -669,7 +670,7 @@ x-casaos:
       - [Ollama Resmi Web Sitesi](https://ollama.com/)
       - [Ollama GitHub Deposu](https://github.com/ollama/ollama)
       - [Model Kütüphanesi](https://ollama.com/library)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ollama/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ollama/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ollama/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ollama/screenshot-2.png
@@ -681,8 +682,8 @@ x-casaos:
   title:
     en_US: Ollama(Nvidia GPU)
   version: "0.9.5"
-  updateAt: "2025-07-02"
-  releaseNotes:
+  update_at: "2025-07-02"
+  release_notes:
     en_US: |-
       - v0.9.5 updates the macOS and Windows applications.
       - Ollama can now be exposed on the network, and the model storage directory can be changed.

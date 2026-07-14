@@ -1,7 +1,7 @@
 name: nextcloud
 services:
   nextcloud:
-    image: nextcloud:32.0
+    image: nextcloud:33.0.3
     deploy:
       resources:
         reservations:
@@ -23,58 +23,58 @@ services:
       ports:
         - container: "80"
           description:
-            en_us: WebUI HTTP Port
-            zh_cn: WebUI HTTP 端口
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP 端口
 
         - container: "443"
           description:
-            en_us: WebUI HTTPS Port
-            zh_cn: WebUI HTTPS 端口
+            en_US: WebUI HTTPS Port
+            zh_CN: WebUI HTTPS 端口
 
       volumes:
         - container: /var/www/html
           description:
-            en_us: Nextcloud config directory.
-            zh_cn: Nextcloud 配置目录。
+            en_US: Nextcloud config directory.
+            zh_CN: Nextcloud 配置目录。
     container_name: nextcloud
 x-casaos:
+  id: org.icewhale.nextcloud
   architectures:
     - amd64
     - arm
     - arm64
     - "386"
-    - mips64le
     - ppc64le
     - s390x
   main: nextcloud
   author: CasaOS Team
-  category: Cloud
+  category: Productivity
   description:
-    en_us: |
+    en_US: |
       Discover the ultimate solution for remote collaboration with Nextcloud. Unlike traditional office software, Nextcloud seamlessly integrates files, communication, and productivity tools into one platform, enhancing teamwork and streamlining your workflow. Say goodbye to the limitations of conventional tools and embrace a new era of collaboration.
       
       Nextcloud stands out with its robust features tailored for every need. Enjoy secure file storage, real-time communication via Talk, comprehensive groupware, and powerful office integration, all in one place. Experience these top-notch features at an affordable price, making it accessible for everyone to elevate their collaboration game.
       
       Deploying Nextcloud on a Zima private cloud device brings unparalleled convenience. Benefit from unlimited storage, secure data privacy, local network speeds, and multi-device access, ensuring you have everything you need at your fingertips.
-    zh_cn: |
+    zh_CN: |
       发现远程协作的终极解决方案——Nextcloud。不同于传统的办公软件，Nextcloud 将文件、通信和生产力工具无缝整合到一个平台中，增强团队合作并简化您的工作流程。告别传统工具的局限，迎接协作新时代。
 
       Nextcloud 以其强大的功能脱颖而出，满足各种需求。享受安全的文件存储，通过 Talk 实现实时通信，综合群件以及强大的办公集成，一切尽在一个平台。体验这些一流功能，以实惠的价格，使每个人都能提升协作水平。
 
       在 Zima 私有云设备上部署 Nextcloud 带来无与伦比的便利。享受无限存储、安全的数据隐私、本地网络速度和多设备访问，确保您所需的一切触手可及。
-    ar_sa: يضع Nextcloud بياناتك في أصابعك، تحت سيطرتك. احفظ مستنداتك والتقويم وجهات الاتصال والصور على خادم في المنزل أو في أحد مزودينا أو في مركز بيانات تثق به.
-    de_de: Nextcloud stellt Ihre Daten in Ihren Händen, unter Ihrer Kontrolle. Speichern Sie Ihre Dokumente, Kalender, Kontakte und Fotos auf einem Server zu Hause, bei einem unserer Anbieter oder in einem von Ihnen vertrauten Datenzentrum.
-    es_es: Nextcloud pone sus datos a su alcance, bajo su control. Almacene sus documentos, calendario, contactos y fotos en un servidor en casa, en uno de nuestros proveedores o en un centro de datos que confíe.
-    fr_fr: Nextcloud met vos données à votre portée, sous votre contrôle. Stockez vos documents, calendriers, contacts et photos sur un serveur à la maison, chez l'un de nos fournisseurs ou dans un centre de données que vous pouvez faire confiance.
-    hu_hu: A Nextcloud adatait a saját kezében tartja, saját irányítása alatt. Tárolja dokumentumait, naptárát, kapcsolatait és fényképeit otthoni szerverén, szolgáltatóink egyikén vagy megbízható adatközpontjában.
-    it_it: Nextcloud mette i tuoi dati a portata di mano, sotto il tuo controllo. Memorizza i tuoi documenti, calendario, contatti e foto su un server in casa tua, su uno dei nostri fornitori o in un data center che ti fidi.
-    ru_ru: Nextcloud помещает ваши данные под вашим контролем. Храните свои документы, календарь, контакты и фотографии на сервере дома, у одного из наших поставщиков или в доверенном вам центре данных.
-    pl_pl: Nextcloud umożliwia przechowywanie danych w Twoim domu, w Twoim zakresie kontroli. Przechowuj dokumenty, kalendarz, kontakty i zdjęcia na serwerze w domu, u jednego z naszych dostawców lub w zaufanym centrum danych.
-    pt_br: O Nextcloud coloca seus dados nas suas mãos, sob o seu controle. Armazene seus documentos, calendário, contatos e fotos em um servidor em casa, em um de nossos provedores ou em um centro de dados que você confia.
-    sv_se: Nextcloud ger dig kontroll över dina data. Lagra dina dokument, kalender, kontakter och foton på en server hemma, hos en av våra leverantörer eller i ett datacenter du litar på.
-    uk_ua: Nextcloud розташовує ваші дані під вашим контролем. Зберігайте свої документи, календар, контакти та фотографії на сервері вдома, у одного з наших постачальників або у довіреному центрі даних.
+    ar_SA: يضع Nextcloud بياناتك في أصابعك، تحت سيطرتك. احفظ مستنداتك والتقويم وجهات الاتصال والصور على خادم في المنزل أو في أحد مزودينا أو في مركز بيانات تثق به.
+    de_DE: Nextcloud stellt Ihre Daten in Ihren Händen, unter Ihrer Kontrolle. Speichern Sie Ihre Dokumente, Kalender, Kontakte und Fotos auf einem Server zu Hause, bei einem unserer Anbieter oder in einem von Ihnen vertrauten Datenzentrum.
+    es_ES: Nextcloud pone sus datos a su alcance, bajo su control. Almacene sus documentos, calendario, contactos y fotos en un servidor en casa, en uno de nuestros proveedores o en un centro de datos que confíe.
+    fr_FR: Nextcloud met vos données à votre portée, sous votre contrôle. Stockez vos documents, calendriers, contacts et photos sur un serveur à la maison, chez l'un de nos fournisseurs ou dans un centre de données que vous pouvez faire confiance.
+    hu_HU: A Nextcloud adatait a saját kezében tartja, saját irányítása alatt. Tárolja dokumentumait, naptárát, kapcsolatait és fényképeit otthoni szerverén, szolgáltatóink egyikén vagy megbízható adatközpontjában.
+    it_IT: Nextcloud mette i tuoi dati a portata di mano, sotto il tuo controllo. Memorizza i tuoi documenti, calendario, contatti e foto su un server in casa tua, su uno dei nostri fornitori o in un data center che ti fidi.
+    ru_RU: Nextcloud помещает ваши данные под вашим контролем. Храните свои документы, календарь, контакты и фотографии на сервере дома, у одного из наших поставщиков или в доверенном вам центре данных.
+    pl_PL: Nextcloud umożliwia przechowywanie danych w Twoim domu, w Twoim zakresie kontroli. Przechowuj dokumenty, kalendarz, kontakty i zdjęcia na serwerze w domu, u jednego z naszych dostawców lub w zaufanym centrum danych.
+    pt_BR: O Nextcloud coloca seus dados nas suas mãos, sob o seu controle. Armazene seus documentos, calendário, contatos e fotos em um servidor em casa, em um de nossos provedores ou em um centro de dados que você confia.
+    sv_SE: Nextcloud ger dig kontroll över dina data. Lagra dina dokument, kalender, kontakter och foton på en server hemma, hos en av våra leverantörer eller i ett datacenter du litar på.
+    uk_UA: Nextcloud розташовує ваші дані під вашим контролем. Зберігайте свої документи, календар, контакти та фотографії на сервері вдома, у одного з наших постачальників або у довіреному центрі даних.
   developer: Nextcloud
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-2.png
@@ -82,73 +82,88 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-4.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/screenshot-5.png
   tagline:
-    en_us: Content collaboration platform
-    zh_cn: 内容协作平台
-    ar_sa: منصة الإنتاجية التي تبقيك تحت سيطرتك
-    de_de: Die Produktivitätsplattform, die Sie unter Kontrolle hält
-    es_es: La plataforma de productividad que te mantiene en control
-    fr_fr: La plate-forme de productivité qui vous permet de rester en contrôle
-    hu_hu: A termelékenységi platform, amely megőrzi a kontrollot
-    it_it: La piattaforma di produttività che ti mantiene in controllo
-    ru_ru: Платформа производительности, которая держит вас под контролем
-    pl_pl: Platforma produktywności, która utrzymuje cię w kontroli
-    pt_br: A plataforma de produtividade que mantém você sob controle
-    sv_se: Produktivitetsplattformen som håller dig i kontroll
-    uk_ua: Платформа продуктивності, яка дозволяє вам залишатися під контролем
+    en_US: Content collaboration platform
+    zh_CN: 内容协作平台
+    ar_SA: منصة الإنتاجية التي تبقيك تحت سيطرتك
+    de_DE: Die Produktivitätsplattform, die Sie unter Kontrolle hält
+    es_ES: La plataforma de productividad que te mantiene en control
+    fr_FR: La plate-forme de productivité qui vous permet de rester en contrôle
+    hu_HU: A termelékenységi platform, amely megőrzi a kontrollot
+    it_IT: La piattaforma di produttività che ti mantiene in controllo
+    ru_RU: Платформа производительности, которая держит вас под контролем
+    pl_PL: Platforma produktywności, która utrzymuje cię w kontroli
+    pt_BR: A plataforma de produtividade que mantém você sob controle
+    sv_SE: Produktivitetsplattformen som håller dig i kontroll
+    uk_UA: Платформа продуктивності, яка дозволяє вам залишатися під контролем
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nextcloud/thumbnail.png
   tips: {}
   title:
-    en_us: Nextcloud
+    en_US: Nextcloud
   index: /
   port_map: "10081"
-  version: "32.0"
-  updateAt: "2026-05-12"
-  releaseNotes:
+  version: "33.0.3"
+  update_at: "2026-04-30"
+  release_notes:
     en_US: |-
-      - v32.0.0 points to the corresponding Nextcloud server release package.
-      - This app tracks the Nextcloud 32.0.0 server release referenced by the upstream GitHub release.
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
     en_GB: |-
-      - v32.0.0 points to the corresponding Nextcloud server release package.
-      - This app tracks the Nextcloud 32.0.0 server release referenced by the upstream GitHub release.
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
     it_IT: |-
-      - v32.0.0 punta al pacchetto di rilascio del server Nextcloud corrispondente.
-      - Questa app tiene traccia della versione del server Nextcloud 32.0.0 a cui fa riferimento la versione the upstream GitHub.
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
     nb_NO: |-
-      - v32.0.0 peker på den tilsvarende Nextcloud-serverutgivelsespakken.
-      - Denne appen sporer Nextcloud 32.0.0-serverutgivelsen referert av the oppstrøms GitHub-utgivelsen.
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
     zh_CN: |-
-      - v32.0.0 指向对应的 Nextcloud server release package。
-      - 这个应用跟踪上游 GitHub release 中引用的 Nextcloud 32.0.0 server release。
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
     ja_JP: |-
-      - v32.0.0 は対応する Nextcloud server release package を指します。
-      - このアプリは上流 GitHub release で参照されている Nextcloud 32.0.0 server release を追跡します。
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
     ko_KR: |-
-      - v32.0.0은 해당 Nextcloud server release package를 가리킵니다.
-      - 이 앱은 업스트림 GitHub release에서 참조된 Nextcloud 32.0.0 server release를 따릅니다.
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
     fr_FR: |-
-      - v32.0.0 pointe vers le Nextcloud server release package correspondant.
-      - Cette application suit le Nextcloud 32.0.0 server release référencé par la release GitHub amont.
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
     de_DE: |-
-      - v32.0.0 verweist auf das entsprechende Nextcloud server release package.
-      - Diese App folgt dem Nextcloud 32.0.0 server release, das im Upstream-GitHub-Release referenziert wird.
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
     sv_SE: |-
-      - v32.0.0 pekar på motsvarande Nextcloud-serverversionspaket.
-      - Den här appen spårar Nextcloud 32.0.0-serverversionen som refereras av the uppströms GitHub-release.
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
     el_GR: |-
-      - Το v32.0.0 δείχνει το αντίστοιχο πακέτο έκδοσης διακομιστή Nextcloud.
-      - Αυτή η εφαρμογή παρακολουθεί την έκδοση διακομιστή Nextcloud 32.0.0 που αναφέρεται από την έκδοση the upstream GitHub.
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
     hr_HR: |-
-      - v32.0.0 pokazuje na odgovarajući paket izdanja poslužitelja Nextcloud.
-      - Ova aplikacija prati izdanje poslužitelja Nextcloud 32.0.0 na koje upućuje the uzvodno izdanje GitHub.
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
     pt_PT: |-
-      - v32.0.0 aponta para o pacote de lançamento do servidor Nextcloud correspondente.
-      - Esta aplicação rastreia a versão do servidor Nextcloud 32.0.0 referenciada pela versão the upstream GitHub.
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
     ru_RU: |-
-      - v32.0.0 указывает на соответствующий пакет выпуска сервера Nextcloud.
-      - Это приложение отслеживает выпуск сервера Nextcloud 32.0.0, на который ссылается вышестоящий выпуск the GitHub.
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
     tr_TR: |-
-      - v32.0.0 ilgili Nextcloud sunucu sürüm paketine işaret eder.
-      - Bu uygulama, the yukarı akış GitHub sürümü tarafından başvurulan Nextcloud 32.0.0 sunucu sürümünü izler.
+      - Nextcloud 33.0.3 includes server fixes for external storage options, sharing user ID alignment, OAuth2 throttle metadata, and iCalendar event URI search.
+      - The release improves preview regeneration, chunked upload parallel-count handling, drag-and-drop folder uploads, zip downloads, dashboard/settings edge cases, and LDAP configuration flows.
+      - The nextcloud:33.0.3 Docker image tag was published on 2026-05-23.
   website: "https://nextcloud.com"
   repo: "https://github.com/nextcloud/server"
   support: "https://help.nextcloud.com"

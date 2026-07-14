@@ -74,43 +74,36 @@ services:
       envs:
         - container: TITLE
           description:
-            en_us: Name of your Etherpad instance (shown in the browser tab).
+            en_US: Name of your Etherpad instance (shown in the browser tab).
         - container: ADMIN_PASSWORD
           description:
-            en_us: Password for the "admin" user used to reach /admin. CHANGE THIS.
+            en_US: Password for the "admin" user used to reach /admin. CHANGE THIS.
         - container: DEFAULT_PAD_TEXT
           description:
-            en_us: Text shown inside every freshly created pad.
+            en_US: Text shown inside every freshly created pad.
         - container: AUTHENTICATION_METHOD
           description:
-            en_us: 'Authentication mode. "apikey" (default here) enables admin login; "sso" enables OAuth2.'
+            en_US: 'Authentication mode. "apikey" (default here) enables admin login; "sso" enables OAuth2.'
         - container: REQUIRE_AUTHENTICATION
           description:
-            en_us: If "true", every pad requires a login. Default "false" means public pads.
+            en_US: If "true", every pad requires a login. Default "false" means public pads.
         - container: DB_TYPE
           description:
-            en_us: Database backend. "dirty" is a zero-config embedded file store suitable for single-user CasaOS installs. Use "postgres"/"mysql" for production.
+            en_US: Database backend. "dirty" is a zero-config embedded file store suitable for single-user CasaOS installs. Use "postgres"/"mysql" for production.
         - container: DB_FILENAME
           description:
-            en_us: Path inside the container for the dirty-db file. Kept on the persistent volume.
+            en_US: Path inside the container for the dirty-db file. Kept on the persistent volume.
         - container: TRUST_PROXY
           description:
-            en_us: Set to "true" when running behind CasaOS's reverse proxy.
-      ports:
-        - container: "9001"
-          description:
-            en_us: WebUI HTTP Port
-      volumes:
-        - container: /opt/etherpad-lite/var
-          description:
-            en_us: Etherpad data directory (pads, sessions, dirty.db, plugins).
+            en_US: Set to "true" when running behind CasaOS's reverse proxy.
 
 x-casaos:
+  id: org.icewhale.etherpad
   architectures:
     - amd64
     - arm64
   main: etherpad
-  category: Notes
+  category: Productivity
   developer: Etherpad Foundation
   author: CasaOS Community
   tagline:
@@ -370,7 +363,7 @@ x-casaos:
       - [Etherpad Resmi Web Sitesi](https://etherpad.org/)
       - [Etherpad GitHub](https://github.com/ether/etherpad)
       - [Etherpad Dokümantasyonu](https://docs.etherpad.org/)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Etherpad/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Etherpad/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Etherpad/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Etherpad/screenshot-2.png
@@ -414,8 +407,8 @@ x-casaos:
   title:
     en_US: Etherpad
   version: "3.1.0"
-  updateAt: "2026-05-17"
-  releaseNotes:
+  update_at: "2026-05-17"
+  release_notes:
     en_US: |-
       - Etherpad v3.1.0 adds Tier 4 autonomous self-updates with maintenance windows, preflight checks, and email notifications for failures and rollbacks.
       - It also introduces real SMTP delivery for updater mail and includes API, export, and HTTP security hardening plus localisation updates.

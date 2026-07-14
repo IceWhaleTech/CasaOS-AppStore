@@ -32,61 +32,62 @@ services:
       envs:
         - container: GLANCES_OPT
           description:
-            en_us: Glances mode  
-            zh_cn: Glances模式
+            en_US: Glances mode  
+            zh_CN: Glances模式
   
       ports:
         - container: "61208"
           description:
-            en_us: WebUI HTTP Port
-            zh_cn: WebUI HTTP端口
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP端口
           protocol: tcp
 
         - container: "61209"
           description:
-            en_us: Glances API port
-            zh_cn: Glances API 端口
+            en_US: Glances API port
+            zh_CN: Glances API 端口
           protocol: tcp
 
       volumes:
         - container: /var/run/docker.sock
           description:
-            en_us: Docker socket
-            zh_cn: Docker socket
+            en_US: Docker socket
+            zh_CN: Docker socket
 
         - container: /mnt
           description:
-            en_us: Drivers mount folder
-            zh_cn: 驱动器挂载点
+            en_US: Drivers mount folder
+            zh_CN: 驱动器挂载点
 
 x-casaos:
+  id: org.icewhale.glances
   architectures:
     - amd64
     - arm64
   main: glances
   author: joaobosconff
-  category: Utility
+  category: Productivity
   description:
-    en_us: Glances is an open-source system cross-platform monitoring tool. It allows real-time monitoring of various aspects of your system such as CPU, memory, disk, network usage etc.
-    zh_cn: Glances 是一个开源的跨平台系统监控工具。它允许实时监控系统的各个方面，如 CPU、内存、磁盘、网络使用情况等。
-    pt_br: Glances é uma ferramenta de monitoramento de sistema de plataforma cruzada de código aberto. Ele permite o monitoramento em tempo real de vários aspectos do seu sistema, como CPU, memória, disco, uso da rede, etc.
+    en_US: Glances is an open-source system cross-platform monitoring tool. It allows real-time monitoring of various aspects of your system such as CPU, memory, disk, network usage etc.
+    zh_CN: Glances 是一个开源的跨平台系统监控工具。它允许实时监控系统的各个方面，如 CPU、内存、磁盘、网络使用情况等。
+    pt_BR: Glances é uma ferramenta de monitoramento de sistema de plataforma cruzada de código aberto. Ele permite o monitoramento em tempo real de vários aspectos do seu sistema, como CPU, memória, disco, uso da rede, etc.
   developer: Nicolas Hennion
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Glances/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Glances/icon.svg
   screenshot_link:
   - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Glances/screenshot-1.png
   tagline:
-    en_us: Cross-platform monitoring tool.
-    zh_cn: 跨平台监控工具
-    pt_br: Ferramenta de monitoramento multiplataforma.
+    en_US: Cross-platform monitoring tool.
+    zh_CN: 跨平台监控工具
+    pt_BR: Ferramenta de monitoramento multiplataforma.
   title:
-    en_us: Glances
-    zh_cn: Glances
-    pt_br: Glances
+    en_US: Glances
+    zh_CN: Glances
+    pt_BR: Glances
   index: /
   port_map: "61208"
   version: "4.5.4"
-  updateAt: "2026-04-19"
-  releaseNotes:
+  update_at: "2026-04-19"
+  release_notes:
     en_US: |-
       - v4.5.4 fixes temperature thresholds, negative memory values, Docker container counts through Home Assistant, and LXD container filtering.
       - It adds Rockchip MPP monitoring, clamps LXC memory values, and improves single-core Rockchip NPU parsing and device naming.

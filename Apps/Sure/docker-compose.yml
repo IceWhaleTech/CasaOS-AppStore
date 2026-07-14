@@ -195,6 +195,7 @@ networks:
     driver: bridge
 
 x-casaos:
+  id: org.icewhale.sure
   architectures:
     - amd64
     - arm64
@@ -540,7 +541,7 @@ x-casaos:
       
       **Daha Fazla Bilgi:**
       - [Sure GitHub Deposu](https://github.com/we-promise/sure)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sure/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sure/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sure/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sure/screenshot-2.png
@@ -569,8 +570,8 @@ x-casaos:
     ru_RU: Sure
     tr_TR: Sure
   version: "0.6.5-hotfix.1"
-  updateAt: "2025-12-03"
-  releaseNotes:
+  update_at: "2025-12-03"
+  release_notes:
     en_US: |-
       - v0.6.5-hotfix.1 fixes mobile drag and re-order behavior.
       - Simplefin liabilities recording was fixed.

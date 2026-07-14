@@ -1,34 +1,99 @@
-name: validate docker compose file
+name: Validate Compose And Build
 
 on:
-    pull_request:
-      types: [opened, synchronize]
-  
+  pull_request:
+    types: [opened, synchronize]
+  workflow_dispatch:
+    inputs:
+      app_path:
+        description: "Optional app folder name under Apps/ (e.g. 2FAuth). Leave empty to validate all."
+        required: false
+        default: ""
+
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
+    env:
+      BUILD_CACHE_KEY: build-appstore-cache-${{ github.ref_name }}-${{ github.run_id }}
+      BUILD_CACHE_PREFIX: build-appstore-cache-${{ github.ref_name }}-
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-
-      - uses: robinraju/release-downloader@v1.9
+      - name: Validate compose metadata
+        id: validate_compose
+        continue-on-error: true
+        uses: ./.github/actions/validate-compose
         with:
-          repository: "IceWhaleTech/CasaOS-AppManagement"
-          latest: true
-          fileName: "linux-amd64-casaos-app-management-validator-*.tar.gz"
+          app-path: ${{ inputs.app_path }}
+          report-json: out/validation-report.json
 
-      - name: Extract
-        run: |
-            tar zxf linux-amd64-casaos-app-management-validator-*.tar.gz
+      - name: Upload validation report artifacts
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: validation-report
+          path: |
+            out/validation-report.json
 
-      - name: Install
-        run: |
-            chmod +x build/sysroot/usr/bin/casaos-app-management-validator
+      - name: Restore build caches
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            .cache/build_appstore/image-size-cache.json
+            .cache/build_appstore/image-digest-cache.json
+          key: ${{ env.BUILD_CACHE_KEY }}
+          restore-keys: |
+            ${{ env.BUILD_CACHE_PREFIX }}
 
-      - name: Check All Docker Compose File
-        id: validate_docker_compose
+      - name: Validate appstore build
+        id: validate_build
+        continue-on-error: true
+        uses: ./.github/actions/build-store-v2
+        with:
+          source: .
+          output: /tmp/appstore-dist
+          base-url: https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages
+          cache-file: .cache/build_appstore/image-size-cache.json
+          digest-cache-file: .cache/build_appstore/image-digest-cache.json
+          report-json: out/build-v2-validation-report.json
+          report-title: Validation Build Report
+
+      - name: Upload build validation report artifacts
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: build-v2-validation-report
+          path: |
+            out/build-v2-validation-report.json
+
+      - name: Save build caches
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            .cache/build_appstore/image-size-cache.json
+            .cache/build_appstore/image-digest-cache.json
+          key: ${{ env.BUILD_CACHE_KEY }}
+
+      - name: Write validation job summary
+        if: always()
+        uses: ./.github/actions/write-job-summary
+        with:
+          title: Validation Summary
+          report-jsons: |
+            out/validation-report.json
+            out/build-v2-validation-report.json
+
+      - name: Fail workflow if validation failed
+        if: always()
+        shell: bash
         run: |
-            find . -type f \( -name "docker-compose.yaml" -or -name "docker-compose.yml" \) | while read -r file; do
-              echo $file
-              build/sysroot/usr/bin/casaos-app-management-validator $file
-            done
+          set -euo pipefail
+          if [ "${{ steps.validate_compose.outcome }}" != "success" ]; then
+            echo "Compose validation failed. See validation-report artifact."
+            exit 1
+          fi
+          if [ "${{ steps.validate_build.outcome }}" != "success" ]; then
+            echo "AppStore build validation failed. See workflow logs."
+            exit 1
+          fi

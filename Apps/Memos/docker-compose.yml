@@ -24,34 +24,35 @@ services:
       envs:
         - container: PUID
           description:
-            en_us: ""
+            en_US: ""
         - container: PGID
           description:
-            en_us: ""
+            en_US: ""
         - container: TZ
           description:
-            en_us: "timezone"
-            zh_cn: "时区"
+            en_US: "timezone"
+            zh_CN: "时区"
       ports:
         - container: "5230"
           description:
-            en_us: WebUI HTTP Port
-            zh_cn: WebUI HTTP 端口
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP 端口
       volumes:
         - container: /var/opt/memos
           description:
-            en_us: memos data directory.
-            zh_cn: memos 数据目录
+            en_US: memos data directory.
+            zh_CN: memos 数据目录
 
     container_name: memos
 x-casaos:
+  id: org.icewhale.memos
   architectures:
     - amd64
     - arm64
     - arm
   main: memos
   author: usememos Team
-  category: Notes
+  category: Productivity
   description:
     en_US: |
       Memos is a lightweight, open-source, self-hosted note-taking application that offers a secure and streamlined solution for users prioritizing privacy and data control. All notes are stored on the user’s own server, eliminating risks associated with third-party cloud services. Its minimalist Web interface supports Markdown syntax and tag-based organization, enabling effortless capture of ideas, personal knowledge management, or small-scale team collaboration. The open-source design ensures transparency, long-term maintainability, and no subscription costs, making it ideal for users seeking data ownership and cost efficiency.
@@ -147,7 +148,7 @@ x-casaos:
       Uzun vadeli kişisel bilgi arşivleme veya ekip işbirliği için hafif bir araç olarak kullanılsın, Memos güvenli, esnek ve kullanıcı dostu bir çözüm sunar, kullanıcıların verileri üzerinde tam kontrol sahibi olmalarını sağlarken akıcı bir not alma deneyimi sunar。
 
   developer: usememos Team
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/screenshot-2.png
@@ -172,11 +173,11 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Memos/thumbnail.png
   tips: {}
   title:
-    en_us: Memos
+    en_US: Memos
   port_map: "5230"
   version: "0.28.0"
-  updateAt: "2026-04-27"
-  releaseNotes:
+  update_at: "2026-04-27"
+  release_notes:
     en_US: |-
       - v0.28.0 improves SSO account handling by linking external provider identities to local Memos users.
       - The release redesigns account and SSO management and adds memo created/updated time display controls.

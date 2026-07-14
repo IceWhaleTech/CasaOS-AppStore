@@ -276,6 +276,7 @@ networks:
   blinko-net:
     driver: bridge
 x-casaos:
+  id: org.icewhale.blinko
   title:
     en_GB: Blinko
     en_US: Blinko
@@ -566,10 +567,10 @@ x-casaos:
       **了解更多：**
 
       - [Blinko GitHub](https://github.com/blinkospace/blinko)
-  category: Notes
+  category: Productivity
   author: blinkospace
   developer: blinkospace
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Blinko/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Blinko/icon.svg
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Blinko/thumbnail.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Blinko/screenshot-1.png
@@ -583,8 +584,8 @@ x-casaos:
   index: /
   scheme: http
   version: "1.8.7"
-  updateAt: "2026-04-12"
-  releaseNotes:
+  update_at: "2026-04-12"
+  release_notes:
     en_US: |-
       - Blinko 1.8.7 adds MiniMax as a first-class LLM provider.
       - It fixes upload filename sanitization, tag filter reset behavior, and Turkish translations.

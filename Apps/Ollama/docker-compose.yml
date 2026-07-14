@@ -1,7 +1,7 @@
 name: ollama
 services:
   ollama:
-    image: ollama/ollama:0.9.5
+    image: ollama/ollama:0.24.0
     container_name: ollama
     deploy:
       resources:
@@ -56,11 +56,12 @@ services:
             ru_RU: Каталог моделей и данных Ollama
             tr_TR: Ollama Modeller ve Veri Dizini
 x-casaos:
+  id: org.icewhale.ollama
   architectures:
     - amd64
     - arm64
   main: ollama
-  category: Chat
+  category: AI
   developer: ollama
   author: ollama
   tagline:
@@ -665,7 +666,7 @@ x-casaos:
       - [Ollama Resmi Web Sitesi](https://ollama.com/)
       - [Ollama GitHub Deposu](https://github.com/ollama/ollama)
       - [Model Kütüphanesi](https://ollama.com/library)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ollama/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ollama/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ollama/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ollama/screenshot-2.png
@@ -676,69 +677,69 @@ x-casaos:
   index: /
   title:
     en_US: Ollama
-  version: "0.9.5"
-  updateAt: "2025-07-02"
-  releaseNotes:
+  version: "0.24.0"
+  update_at: "2026-05-14"
+  release_notes:
     en_US: |-
-      - v0.9.5 updates the macOS and Windows applications.
-      - Ollama can now be exposed on the network, and the model storage directory can be changed.
-      - The macOS app is now native with a smaller footprint and faster startup, and fixes include CLI installation and notarization issues.
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
     en_GB: |-
-      - v0.9.5 updates the macOS and Windows applications.
-      - Ollama can now be exposed on the network, and the model storage directory can be changed.
-      - The macOS app is now native with a smaller footprint and faster startup, and fixes include CLI installation and notarization issues.
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
     it_IT: |-
-      - v0.9.5 aggiorna le applicazioni macOS e Windows.
-      - Ollama ora può essere esposto in rete e la directory di archiviazione del modello può essere modificata.
-      - L'app macOS è ora nativa con un ingombro ridotto e un avvio più rapido e le correzioni includono problemi di installazione e autenticazione di CLI.
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
     nb_NO: |-
-      - v0.9.5 oppdaterer macOS- og Windows-applikasjonene.
-      - Ollama kan nå eksponeres på nettverket, og modelllagringskatalogen kan endres.
-      - MacOS-appen er nå innebygd med et mindre fotavtrykk og raskere oppstart, og fikser inkluderer CLI-installasjons- og notariseringsproblemer.
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
     zh_CN: |-
-      - v0.9.5 更新了 macOS 和 Windows applications。
-      - Ollama 现在可以暴露到网络上，并且可以更改 model storage directory。
-      - macOS app 现在是 native，体积更小、启动更快，并修复了 CLI installation 和 notarization issues。
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
     ja_JP: |-
-      - v0.9.5 は macOS と Windows applications を更新します。
-      - Ollama をネットワークに公開できるようになり、model storage directory も変更できるようになりました。
-      - macOS app は native になり、サイズが小さく起動が速くなり、CLI installation と notarization issues も修正されました。
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
     ko_KR: |-
-      - v0.9.5는 macOS 및 Windows applications를 업데이트합니다.
-      - Ollama를 이제 네트워크에 노출할 수 있고 model storage directory를 변경할 수 있습니다.
-      - macOS app은 이제 native이며 더 작고 빠르게 시작하고 CLI installation 및 notarization issues가 수정되었습니다.
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
     fr_FR: |-
-      - v0.9.5 met a jour les macOS et Windows applications.
-      - Ollama peut maintenant etre expose sur le reseau et le model storage directory peut etre modifie.
-      - La macOS app est maintenant native, plus legere et demarre plus vite; les problemes CLI installation et notarization issues sont corriges.
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
     de_DE: |-
-      - v0.9.5 aktualisiert die macOS- und Windows applications.
-      - Ollama kann nun im Netzwerk freigegeben werden, und das model storage directory kann geaendert werden.
-      - Die macOS app ist nun native, kleiner und startet schneller; ausserdem wurden CLI installation und notarization issues behoben.
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
     sv_SE: |-
-      - v0.9.5 uppdaterar macOS- och Windows-applikationerna.
-      - Ollama kan nu exponeras på nätverket, och modelllagringskatalogen kan ändras.
-      - MacOS-appen är nu inbyggd med ett mindre fotavtryck och snabbare uppstart, och korrigeringar inkluderar CLI installations- och notariseringsproblem.
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
     el_GR: |-
-      - Το v0.9.5 ενημερώνει τις εφαρμογές macOS και Windows.
-      - Το Ollama μπορεί τώρα να εκτεθεί στο δίκτυο και ο κατάλογος αποθήκευσης μοντέλου μπορεί να αλλάξει.
-      - Η εφαρμογή macOS είναι πλέον εγγενής με μικρότερο αποτύπωμα και ταχύτερη εκκίνηση και οι διορθώσεις περιλαμβάνουν προβλήματα εγκατάστασης CLI και συμβολαιογραφικής.
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
     hr_HR: |-
-      - v0.9.5 ažurira macOS i Windows aplikacije.
-      - Ollama sada može biti izložen na mreži, a direktorij za pohranu modela se može promijeniti.
-      - Aplikacija macOS sada je izvorna s manjim otiskom i bržim pokretanjem, a popravci uključuju probleme s instalacijom CLI i ovjerom kod javnog bilježnika.
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
     pt_PT: |-
-      - v0.9.5 atualiza as aplicações macOS e Windows.
-      - O Ollama pode agora ser exposto na rede e o diretório de armazenamento do modelo pode ser alterado.
-      - A aplicação macOS é agora nativa, ocupa menos espaço e tem um arranque mais rápido, e as correções incluem problemas de instalação e reconhecimento de assinaturas do CLI.
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
     ru_RU: |-
-      - v0.9.5 обновляет приложения macOS и Windows.
-      - Олламу теперь можно открыть в сети, а каталог хранения модели можно изменить.
-      - Приложение macOS теперь является встроенным, занимает меньше места и быстрее запускается, а исправления включают проблемы с установкой CLI и нотариальным заверением.
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
     tr_TR: |-
-      - v0.9.5 macOS ve Windows uygulamalarını günceller.
-      - Ollama artık ağ üzerinde gösterilebilir ve model depolama dizini değiştirilebilir.
-      - macOS uygulaması artık daha az yer kaplayan ve daha hızlı başlatılabilen yerel bir uygulamadır ve düzeltmeler arasında CLI yükleme ve noter tasdiki sorunları yer alır.
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
   website: "https://ollama.com/"
   repo: "https://github.com/ollama/ollama"
   support: "https://github.com/ollama/ollama/issues"

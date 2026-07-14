@@ -23,18 +23,19 @@ services:
       ports:
         - container: "8978"
           description:
-            en_us: WebUI HTTP Port
-            pt_br: Porta da WebUI
-            zh_cn: WebUI HTTP端口
+            en_US: WebUI HTTP Port
+            pt_BR: Porta da WebUI
+            zh_CN: WebUI HTTP端口
           protocol: tcp
       volumes:
         - container: /opt/cloudbeaver/workspace
           description:
-            en_us: Workspace directory.
-            pt_br: Diretório do workspace
-            zh_cn: 工作目录
+            en_US: Workspace directory.
+            pt_BR: Diretório do workspace
+            zh_CN: 工作目录
 
 x-casaos:
+  id: org.icewhale.cloudbeaver
   architectures:
     - amd64
     - arm64
@@ -42,27 +43,27 @@ x-casaos:
   author: joaobosconff
   category: Developer
   description:
-    en_us: CloudBeaver is a web-based database GUI tool which provides rich web interface. You can use it to manage PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, DB2, Firebird, H2, Trino.
-    pt_br: CloudBeaver é uma ferramenta GUI de banco de dados baseada na web que oferece uma interface web abrangente. Você pode usá-lo para gerenciar PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, DB2, Firebird, H2 e Trino.
-    zh_cn: CloudBeaver是一个基于Web的数据库GUI工具，提供丰富的Web界面。您可以使用它来管理PostgreSQL、MySQL、MariaDB、SQL Server、Oracle、DB2、Firebird、H2和Trino。
+    en_US: CloudBeaver is a web-based database GUI tool which provides rich web interface. You can use it to manage PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, DB2, Firebird, H2, Trino.
+    pt_BR: CloudBeaver é uma ferramenta GUI de banco de dados baseada na web que oferece uma interface web abrangente. Você pode usá-lo para gerenciar PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, DB2, Firebird, H2 e Trino.
+    zh_CN: CloudBeaver是一个基于Web的数据库GUI工具，提供丰富的Web界面。您可以使用它来管理PostgreSQL、MySQL、MariaDB、SQL Server、Oracle、DB2、Firebird、H2和Trino。
   developer: dbeaver
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CloudBeaver/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CloudBeaver/icon.svg
   screenshot_link:
   - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CloudBeaver/screenshot-1.png
   - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CloudBeaver/screenshot-2.png
   - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CloudBeaver/screenshot-3.png
   tagline:
-    en_us: Cloud Database Manager.
-    pt_br: Administrador de Banco de Dados na Nuvem.
-    zh_cn: 云数据库管理器。
+    en_US: Cloud Database Manager.
+    pt_BR: Administrador de Banco de Dados na Nuvem.
+    zh_CN: 云数据库管理器。
   title:
-    en_us: CloudBeaver
-    pt_br: CloudBeaver
+    en_US: CloudBeaver
+    pt_BR: CloudBeaver
   index: /
   port_map: "8978"
   version: "26.0.5"
-  updateAt: "2026-05-18"
-  releaseNotes:
+  update_at: "2026-05-18"
+  release_notes:
     en_US: |-
       - The 26.0.5 Docker image tag was published on Docker Hub, but dbeaver/cloudbeaver has no matching GitHub Release object.
       - Keep this entry tied to the CloudBeaver 26.0 image line until upstream publishes per-tag release notes.

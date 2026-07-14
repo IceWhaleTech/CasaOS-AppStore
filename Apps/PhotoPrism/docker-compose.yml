@@ -5,7 +5,7 @@ services:
       PHOTOPRISM_ADMIN_PASSWORD: casaos
       PHOTOPRISM_UPLOAD_NSFW: "true"
       TZ: $TZ
-    image: photoprism/photoprism:250228
+    image: photoprism/photoprism:260523
     deploy:
       resources:
         reservations:
@@ -27,41 +27,42 @@ services:
       envs:
         - container: TZ
           description:
-            en_us: TimeZone
-            zh_cn: 时区
+            en_US: TimeZone
+            zh_CN: 时区
         - container: PHOTOPRISM_UPLOAD_NSFW
           description:
-            en_us: true or false, is it possible to upload NSFW
-            zh_cn: true 或 false，是否允许上传 NSFW
+            en_US: true or false, is it possible to upload NSFW
+            zh_CN: true 或 false，是否允许上传 NSFW
         - container: PHOTOPRISM_ADMIN_PASSWORD
           description:
-            en_us: The password of admin
-            zh_cn: 管理员密码
+            en_US: The password of admin
+            zh_CN: 管理员密码
       ports:
         - container: "2342"
           description:
-            en_us: WebUI HTTP Port
-            zh_cn: WebUI HTTP 端口
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP 端口
 
       volumes:
         - container: /photoprism/storage
           description:
-            en_us: PhotoPrism storage directory.
-            zh_cn: PhotoPrism 存储目录
+            en_US: PhotoPrism storage directory.
+            zh_CN: PhotoPrism 存储目录
         - container: /photoprism/originals
           description:
-            en_us: PhotoPrism originals directory.
-            zh_cn: PhotoPrism 原始文件目录
+            en_US: PhotoPrism originals directory.
+            zh_CN: PhotoPrism 原始文件目录
     container_name: photoprism
 x-casaos:
+  id: org.icewhale.photoprism
   architectures:
     - amd64
     - arm64
   main: photoprism
   author: CasaOS Team
-  category: Gallery
+  category: Media
   description:
-    en_us: |
+    en_US: |
       Your AI-Powered Photos App for the Decentralized Web
 
       PhotoPrism brings the magic of AI to your home TV, phone, and multiple devices, revolutionizing the way you manage and share your photos. Unlike traditional photo albums that require manual organization, PhotoPrism automatically tags and finds your pictures, making it easier than ever to relive your memories. Whether you're showing family photos on your TV or sharing vacation snapshots on your phone, PhotoPrism makes the experience seamless and enjoyable.
@@ -69,7 +70,7 @@ x-casaos:
       PhotoPrism offers a host of features designed to enhance your photo management experience. With powerful search capabilities, automatic tagging, and a user-friendly interface, you'll find it easy to keep your photo collection organized. The app is free to use, with premium options available for those seeking additional features and support. Users can expect a smooth, intuitive experience that blends cutting-edge technology with everyday convenience.
 
       Deploying PhotoPrism on Zima private cloud devices offers unparalleled convenience. Enjoy unlimited storage capacity, the speed of your local network, and access from multiple devices without the need for the internet. It's the perfect solution for NAS enthusiasts who value privacy and performance.
-    zh_cn: |
+    zh_CN: |
       您的去中心化的，AI驱动的照片应用程序
 
       PhotoPrism 将 AI 的魔力带入您的家庭电视、手机和多设备中，彻底改变了您管理和分享照片的方式。不像传统的照片相册需要手动整理，PhotoPrism 自动标记和查找您的照片，让您更轻松地重温美好回忆。无论是通过电视展示家庭照片，还是在手机上分享度假快照，PhotoPrism 都能使这一过程变得无缝且愉快。
@@ -77,41 +78,41 @@ x-casaos:
       PhotoPrism 提供了一系列旨在增强您照片管理体验的功能。借助强大的搜索功能、自动标记和用户友好的界面，您将发现整理照片收藏变得轻而易举。该应用程序免费使用，并为那些寻求更多功能和支持的用户提供高级选项。用户可以期待一种融合前沿技术与日常便利的顺畅、直观的体验。
 
       在 Zima 私有云设备上部署 PhotoPrism 带来了无与伦比的便利。享受无限存储容量、本地网络速度以及无需互联网的多设备访问。这是重视隐私和性能的 NAS 爱好者的完美解决方案。
-    ar_sa: PhotoPrism® هو تطبيق يعمل بقوة AI لاستعراض وتنظيم ومشاركة مجموعة صورك. يستخدمها التقنيات الأحدث للتسمية والعثور على الصور بشكل تلقائي دون أن يتدخل في طريقك. يمكنك تشغيله في المنزل أو على خادم خاص أو في السحابة.
-    de_de: PhotoPrism® ist eine mit AI betriebene App zum Durchsuchen, Organisieren und Teilen Ihrer Foto-Sammlung. Es nutzt die neuesten Technologien, um Bilder automatisch zu kennzeichnen und zu finden, ohne Sie dabei zu stören. Sie können es zu Hause, auf einem privaten Server oder in der Cloud ausführen.
-    es_es: PhotoPrism® es una aplicación impulsada por IA para navegar, organizar y compartir su colección de fotos. Hace uso de las últimas tecnologías para etiquetar y encontrar fotos automáticamente sin molestarte. Puedes ejecutarlo en casa, en un servidor privado o en la nube.
-    fr_fr: PhotoPrism® est une application alimentée par l'IA pour parcourir, organiser et partager votre collection de photos. Il utilise les dernières technologies pour étiqueter et trouver des photos automatiquement sans vous déranger. Vous pouvez l'exécuter à la maison, sur un serveur privé ou dans le cloud.
-    hu_hu: A PhotoPrism® egy AI-meghajtott alkalmazás, amely lehetővé teszi a fényképek böngészését, rendezését és megosztását. A legújabb technológiákat használja a képek automatikus címkézéséhez és megtalálásához, anélkül, hogy bármit is akadályozna. Otthon, egy privát szerveren vagy felhőben futtathatja.
-    it_it: PhotoPrism® è un'app alimentata da IA per sfogliare, organizzare e condividere la tua collezione di foto. Fa uso delle ultime tecnologie per etichettare e trovare le foto automaticamente senza disturbarti. Puoi eseguirlo a casa, su un server privato o in cloud.
-    ru_ru: PhotoPrism® - это приложение, работающее на AI, для просмотра, организации и обмена фотоколлекцией. Оно использует последние технологии для автоматической маркировки и поиска фотографий без помех. Вы можете запустить его дома, на частном сервере или в облаке.
-    pl_pl: PhotoPrism® to aplikacja napędzana przez AI do przeglądania, organizowania i udostępniania kolekcji zdjęć. Wykorzystuje najnowsze technologie do automatycznego oznaczania i wyszukiwania zdjęć bez przeszkadzania. Możesz uruchomić ją w domu, na prywatnym serwerze lub w chmurze.
-    pt_br: PhotoPrism® é um aplicativo alimentado por IA para navegar, organizar e compartilhar sua coleção de fotos. Ele usa as últimas tecnologias para marcar e encontrar fotos automaticamente sem te incomodar. Você pode executá-lo em casa, em um servidor privado ou na nuvem.
-    sv_se: PhotoPrism® är en AI-drivet app för att bläddra, organisera och dela din fotokollektion. Den använder de senaste teknologierna för att märka och hitta bilder automatiskt utan att störa dig. Du kan köra det hemma, på en privat server eller i molnet.
-    uk_ua: PhotoPrism® - це додаток, працюючий на AI, для перегляду, організації та обміну фотоколекцією. Він використовує останні технології для автоматичного позначення та пошуку фотографій без перешкод. Ви можете запустити його додому, на приватному сервері або у хмарі.
+    ar_SA: PhotoPrism® هو تطبيق يعمل بقوة AI لاستعراض وتنظيم ومشاركة مجموعة صورك. يستخدمها التقنيات الأحدث للتسمية والعثور على الصور بشكل تلقائي دون أن يتدخل في طريقك. يمكنك تشغيله في المنزل أو على خادم خاص أو في السحابة.
+    de_DE: PhotoPrism® ist eine mit AI betriebene App zum Durchsuchen, Organisieren und Teilen Ihrer Foto-Sammlung. Es nutzt die neuesten Technologien, um Bilder automatisch zu kennzeichnen und zu finden, ohne Sie dabei zu stören. Sie können es zu Hause, auf einem privaten Server oder in der Cloud ausführen.
+    es_ES: PhotoPrism® es una aplicación impulsada por IA para navegar, organizar y compartir su colección de fotos. Hace uso de las últimas tecnologías para etiquetar y encontrar fotos automáticamente sin molestarte. Puedes ejecutarlo en casa, en un servidor privado o en la nube.
+    fr_FR: PhotoPrism® est une application alimentée par l'IA pour parcourir, organiser et partager votre collection de photos. Il utilise les dernières technologies pour étiqueter et trouver des photos automatiquement sans vous déranger. Vous pouvez l'exécuter à la maison, sur un serveur privé ou dans le cloud.
+    hu_HU: A PhotoPrism® egy AI-meghajtott alkalmazás, amely lehetővé teszi a fényképek böngészését, rendezését és megosztását. A legújabb technológiákat használja a képek automatikus címkézéséhez és megtalálásához, anélkül, hogy bármit is akadályozna. Otthon, egy privát szerveren vagy felhőben futtathatja.
+    it_IT: PhotoPrism® è un'app alimentata da IA per sfogliare, organizzare e condividere la tua collezione di foto. Fa uso delle ultime tecnologie per etichettare e trovare le foto automaticamente senza disturbarti. Puoi eseguirlo a casa, su un server privato o in cloud.
+    ru_RU: PhotoPrism® - это приложение, работающее на AI, для просмотра, организации и обмена фотоколлекцией. Оно использует последние технологии для автоматической маркировки и поиска фотографий без помех. Вы можете запустить его дома, на частном сервере или в облаке.
+    pl_PL: PhotoPrism® to aplikacja napędzana przez AI do przeglądania, organizowania i udostępniania kolekcji zdjęć. Wykorzystuje najnowsze technologie do automatycznego oznaczania i wyszukiwania zdjęć bez przeszkadzania. Możesz uruchomić ją w domu, na prywatnym serwerze lub w chmurze.
+    pt_BR: PhotoPrism® é um aplicativo alimentado por IA para navegar, organizar e compartilhar sua coleção de fotos. Ele usa as últimas tecnologias para marcar e encontrar fotos automaticamente sem te incomodar. Você pode executá-lo em casa, em um servidor privado ou na nuvem.
+    sv_SE: PhotoPrism® är en AI-drivet app för att bläddra, organisera och dela din fotokollektion. Den använder de senaste teknologierna för att märka och hitta bilder automatiskt utan att störa dig. Du kan köra det hemma, på en privat server eller i molnet.
+    uk_UA: PhotoPrism® - це додаток, працюючий на AI, для перегляду, організації та обміну фотоколекцією. Він використовує останні технології для автоматичного позначення та пошуку фотографій без перешкод. Ви можете запустити його додому, на приватному сервері або у хмарі.
   developer: PhotoPrism
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/screenshot-3.png
   tagline:
-    en_us: Browse Your Life in Images
-    zh_cn: 用照片回忆您的生活
-    ar_sa: تصفح وتنظيم ومشاركة مجموعة صورك
-    de_de: Durchsuchen, Organisieren und Teilen Ihrer Foto-Sammlung
-    es_es: Navegar, organizar y compartir su colección de fotos
-    fr_fr: Parcourir, organiser et partager votre collection de photos
-    hu_hu: A fényképek böngészése, rendezése és megosztása
-    it_it: Sfogliare, organizzare e condividere la tua collezione di foto
-    ru_ru: Просмотр, организация и обмен фотоколлекцией
-    pl_pl: Przeglądanie, organizowanie i udostępnianie kolekcji zdjęć
-    pt_br: Navegando, organizando e compartilhando sua coleção de fotos
-    sv_se: Bläddra, organisera och dela din fotokollektion
-    uk_ua: Перегляд, організація та обмін фотоколекцією
+    en_US: Browse Your Life in Images
+    zh_CN: 用照片回忆您的生活
+    ar_SA: تصفح وتنظيم ومشاركة مجموعة صورك
+    de_DE: Durchsuchen, Organisieren und Teilen Ihrer Foto-Sammlung
+    es_ES: Navegar, organizar y compartir su colección de fotos
+    fr_FR: Parcourir, organiser et partager votre collection de photos
+    hu_HU: A fényképek böngészése, rendezése és megosztása
+    it_IT: Sfogliare, organizzare e condividere la tua collezione di foto
+    ru_RU: Просмотр, организация и обмен фотоколлекцией
+    pl_PL: Przeglądanie, organizowanie i udostępnianie kolekcji zdjęć
+    pt_BR: Navegando, organizando e compartilhando sua coleção de fotos
+    sv_SE: Bläddra, organisera och dela din fotokollektion
+    uk_UA: Перегляд, організація та обмін фотоколекцією
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PhotoPrism/thumbnail.png
   tips:
     before_install:
-      en_us: |
+      en_US: |
         ## PhotoPrism
 
         Default Account
@@ -119,7 +120,7 @@ x-casaos:
         | Username | Password |
         | -------- | -------- |
         | `admin`    | `casaos`   |
-      zh_cn: |
+      zh_CN: |
         ## PhotoPrism
 
         默认账号
@@ -128,57 +129,72 @@ x-casaos:
         | -------- | -------- |
         | `admin`    | `casaos`   |
   title:
-    en_us: PhotoPrism
+    en_US: PhotoPrism
   index: /
   port_map: "2342"
-  version: "250228"
-  updateAt: "2025-02-28"
-  releaseNotes:
+  version: "260523.0.0"
+  update_at: "2026-05-23"
+  release_notes:
     en_US: |-
-      - PhotoPrism build 250228 adds a Retina 5K thumbnail size and usability/performance improvements.
-      - Viewer updates reduce eager preloading, WebDAV upload actions now depend on sharing being enabled, and M4V files are treated as MP4-compatible.
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
     en_GB: |-
-      - PhotoPrism build 250228 adds a Retina 5K thumbnail size and usability/performance improvements.
-      - Viewer updates reduce eager preloading, WebDAV upload actions now depend on sharing being enabled, and M4V files are treated as MP4-compatible.
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
     it_IT: |-
-      - PhotoPrism build 250228 aggiunge una dimensione della miniatura Retina 5K e miglioramenti di usabilità/prestazioni.
-      - Gli aggiornamenti del visualizzatore riducono il precaricamento impaziente, le azioni di caricamento WebDAV ora dipendono dall'abilitazione della condivisione e i file M4V vengono trattati come MP4-compatible.
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
     nb_NO: |-
-      - PhotoPrism build 250228 legger til en Retina 5K miniatyrstørrelse og forbedringer av brukervennlighet/ytelse.
-      - Seeroppdateringer reduserer ivrig forhåndsinnlasting, WebDAV opplastingshandlinger er nå avhengig av at deling er aktivert, og M4V filer behandles som MP4-compatible.
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
     zh_CN: |-
-      - PhotoPrism build 250228 增加了 Retina 5K 缩略图尺寸，并带来可用性和性能改进。
-      - Viewer 更新减少了提前预加载；WebDAV 上传操作现在取决于是否启用分享；M4V 文件会按兼容 MP4 的方式处理。
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
     ja_JP: |-
-      - PhotoPrism build 250228 は Retina 5K サムネイルサイズと、使いやすさおよびパフォーマンスの改善を追加します。
-      - Viewer の更新により先行プリロードが抑えられ、WebDAV アップロード操作は共有が有効な場合に依存するようになり、M4V ファイルは MP4 互換として扱われます。
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
     ko_KR: |-
-      - PhotoPrism build 250228은 Retina 5K 썸네일 크기와 사용성 및 성능 개선을 추가합니다.
-      - Viewer 업데이트는 선행 프리로드를 줄이고, WebDAV 업로드 작업은 이제 공유 활성화 여부에 따라 달라지며, M4V 파일은 MP4 호환으로 처리됩니다.
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
     fr_FR: |-
-      - PhotoPrism build 250228 ajoute une taille de miniature Retina 5K ainsi que des ameliorations d'ergonomie et de performances.
-      - Les mises a jour du viewer reduisent le prechargement anticipe, les actions d'upload WebDAV dependent desormais du partage active, et les fichiers M4V sont traites comme compatibles MP4.
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
     de_DE: |-
-      - PhotoPrism Build 250228 ergaenzt eine Retina-5K-Thumbnail-Groesse sowie Verbesserungen bei Bedienbarkeit und Leistung.
-      - Viewer-Updates reduzieren fruehes Vorladen, WebDAV-Upload-Aktionen haengen nun von aktivierter Freigabe ab, und M4V-Dateien werden als MP4-kompatibel behandelt.
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
     sv_SE: |-
-      - PhotoPrism build 250228 lägger till en Retina 5K miniatyrstorlek och förbättringar av användbarhet/prestanda.
-      - Viewer-uppdateringar minskar ivrig förladdning, WebDAV uppladdningsåtgärder är nu beroende av att delning är aktiverad och M4V-filer behandlas som MP4-compatible.
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
     el_GR: |-
-      - Το PhotoPrism build 250228 προσθέτει ένα μέγεθος μικρογραφίας Retina 5K και βελτιώσεις χρηστικότητας/απόδοσης.
-      - Οι ενημερώσεις προγράμματος προβολής μειώνουν την πρόθυμη προφόρτωση, οι ενέργειες μεταφόρτωσης WebDAV εξαρτώνται πλέον από την ενεργοποίηση της κοινής χρήσης και τα αρχεία M4V αντιμετωπίζονται ως MP4-compatible.
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
     hr_HR: |-
-      - PhotoPrism build 250228 dodaje veličinu minijature Retina 5K i poboljšanja upotrebljivosti/performansi.
-      - Ažuriranja preglednika smanjuju nestrpljivo prethodno učitavanje, radnje prijenosa WebDAV sada ovise o omogućenom dijeljenju, a datoteke M4V tretiraju se kao MP4-compatible.
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
     pt_PT: |-
-      - PhotoPrism build 250228 adiciona um tamanho de miniatura Retina 5K e melhorias de usabilidade/desempenho.
-      - As atualizações do visualizador reduzem o pré-carregamento rápido, as ações de upload de WebDAV dependem agora da ativação da partilha e os ficheiros M4V são tratados como MP4-compatible.
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
     ru_RU: |-
-      - В сборке PhotoPrism 250228 добавлен размер миниатюр Retina 5K, а также улучшено удобство использования и производительность.
-      - Обновления средства просмотра уменьшают необходимость предварительной загрузки, действия по загрузке WebDAV теперь зависят от включения общего доступа, а файлы M4V обрабатываются как MP4-compatible.
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
     tr_TR: |-
-      - PhotoPrism build 250228, Retina 5K küçük resim boyutu ve kullanılabilirlik/performans iyileştirmeleri ekler.
-      - Görüntüleyici güncellemeleri istekli ön yüklemeyi azaltır, WebDAV yükleme işlemleri artık paylaşımın etkinleştirilmesine bağlıdır ve M4V dosyaları MP4-compatible olarak değerlendirilir.
+      - PhotoPrism build 260523 redesigns the Info Sidebar with editable metadata, albums, labels, and face tagging.
+      - Modernizes media handling with FFmpeg 8 Vulkan transcoding, native HEIC/AVIF reading, and layered TIFF/PSD support.
+      - Adds drag-and-drop uploads, zstd/pre-compressed frontend assets, MCP read-only support, and parameterized search queries.
   website: "https://www.photoprism.app"
   repo: "https://github.com/photoprism/photoprism"
   support: "https://www.photoprism.app/contact"

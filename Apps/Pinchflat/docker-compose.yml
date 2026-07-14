@@ -79,9 +79,9 @@ services:
             tr_TR: Pinchflat indirme dizini.
     container_name: pinchflat
 x-casaos:
+  id: org.icewhale.pinchflat
   architectures:
     - amd64
-    - arm64
   author: kieraneglin
   category: Media
   description:
@@ -401,7 +401,7 @@ x-casaos:
 
       Medya merkezi uygulamasıyla kullanmak için içerik indirmek isteyen kişiler veya medyayı arşivlemek isteyenler için mükemmel!
   developer: kieraneglin
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pinchflat/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pinchflat/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pinchflat/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pinchflat/screenshot-2.png
@@ -424,7 +424,7 @@ x-casaos:
     pt_PT: O seu próximo gestor multimédia YouTube
     ru_RU: Ваш следующий менеджер медиа YouTube
     tr_TR: Bir sonraki YouTube medya yöneticiniz
-  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pinchflat/thumbnail.png
+  thumbnail: ""
   tips:
     before_install:
       en_US: |
@@ -519,9 +519,9 @@ x-casaos:
         Kurulumdan sonra, otomatik indirme için YouTube kanallarınızı ve çalma listelerinizi yapılandırmak için web arayüzüne erişin.
   title:
     en_US: Pinchflat
-  version: "latest"
-  updateAt: "2025-09-27"
-  releaseNotes:
+  version: "2025.9.26"
+  update_at: "2025-09-27"
+  release_notes:
     en_US: |-
       - Latest upstream release v2025.9.26 includes an important note referencing upstream issue #800.
       - Dockerfiles now include Deno.

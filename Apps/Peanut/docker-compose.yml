@@ -2,7 +2,7 @@ name: peanut
 
 services:
   peanut:
-    image: brandawg93/peanut:5.19.1
+    image: brandawg93/peanut:6.0.0
     container_name: PeaNUT
     restart: unless-stopped
     volumes:
@@ -76,6 +76,7 @@ services:
             zh_CN: PeaNUT配置目录
 
 x-casaos:
+  id: org.icewhale.peanut
   title:
     de_DE: PeaNUT
     el_GR: PeaNUT
@@ -441,9 +442,9 @@ x-casaos:
       **了解更多：**
       - [PeaNUT GitHub仓库](https://github.com/brandawg93/peanut)
 
-  category: Utilities
+  category: Home
   author: brandawg93
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Peanut/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Peanut/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Peanut/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Peanut/screenshot-2.png
@@ -457,54 +458,69 @@ x-casaos:
   scheme: http
   developer: brandawg93
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Peanut/thumbnail.png
-  version: "5.19.1"
-  updateAt: "2025-12-05"
-  releaseNotes:
+  version: "6.0.0"
+  update_at: "2026-05-02"
+  release_notes:
     en_US: |-
-      - v5.19.1 updates Next.js for a CVE fix.
-      - The official changelog points to the full v5.19.0...v5.19.1 comparison.
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
     en_GB: |-
-      - v5.19.1 updates Next.js for a CVE fix.
-      - The official changelog points to the full v5.19.0...v5.19.1 comparison.
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
     it_IT: |-
-      - v5.19.1 aggiorna Next.js per una correzione CVE.
-      - Il registro delle modifiche ufficiale punta al confronto completo v5.19.0...v5.19.1.
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
     nb_NO: |-
-      - v5.19.1 oppdaterer Next.js for en CVE-fiks.
-      - Den offisielle endringsloggen peker på den fullstendige v5.19.0...v5.19.1 sammenligningen.
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
     zh_CN: |-
-      - v5.19.1 更新 Next.js 以修复一个 CVE。
-      - 官方更新日志指向完整的 v5.19.0...v5.19.1 对比。
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
     ja_JP: |-
-      - v5.19.1 は CVE 修正のために Next.js を更新します。
-      - 公式 changelog は v5.19.0...v5.19.1 の完全な比較を参照します。
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
     ko_KR: |-
-      - v5.19.1은 CVE 수정을 위해 Next.js를 업데이트합니다.
-      - 공식 변경 로그는 전체 v5.19.0...v5.19.1 비교를 가리킵니다.
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
     fr_FR: |-
-      - v5.19.1 met à jour Next.js pour corriger un CVE.
-      - Le changelog officiel renvoie à la comparaison complète v5.19.0...v5.19.1.
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
     de_DE: |-
-      - v5.19.1 aktualisiert Next.js für eine CVE-Korrektur.
-      - Das offizielle Changelog verweist auf den vollständigen Vergleich v5.19.0...v5.19.1.
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
     sv_SE: |-
-      - v5.19.1 uppdaterar Next.js för en CVE-fix.
-      - Den officiella ändringsloggen pekar på den fullständiga v5.19.0...v5.19.1 jämförelsen.
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
     el_GR: |-
-      - Το v5.19.1 ενημερώνει το Next.js για μια επιδιόρθωση CVE.
-      - Το επίσημο αρχείο καταγραφής αλλαγών δείχνει την πλήρη σύγκριση v5.19.0...v5.19.1.
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
     hr_HR: |-
-      - v5.19.1 ažurira Next.js za popravak CVE.
-      - Službeni dnevnik promjena ukazuje na punu usporedbu v5.19.0...v5.19.1.
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
     pt_PT: |-
-      - v5.19.1 atualiza Next.js para uma correção de CVE.
-      - O changelog oficial aponta para a comparação completa de v5.19.0...v5.19.1.
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
     ru_RU: |-
-      - v5.19.1 обновляет Next.js для исправления CVE.
-      - Официальный журнал изменений указывает на полное сравнение v5.19.0...v5.19.1.
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
     tr_TR: |-
-      - v5.19.1, CVE düzeltmesi için Next.js'yi günceller.
-      - Resmi değişiklik günlüğü tam v5.19.0...v5.19.1 karşılaştırmasına işaret ediyor.
+      - v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.
+      - WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.
+      - The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.
   website: ""
   repo: "https://github.com/brandawg93/peanut"
   support: "https://github.com/brandawg93/PeaNUT/issues"

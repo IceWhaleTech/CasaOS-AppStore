@@ -54,6 +54,7 @@ services:
             ru_RU: Порт Веб-Интерфейса Actual Budget
             tr_TR: Actual Budget Web Arayüzü Portu
 x-casaos:
+  id: org.icewhale.actualbudget
   architectures:
     - amd64
     - arm64
@@ -423,7 +424,7 @@ x-casaos:
       - [Actual Budget Resmi Web Sitesi](https://actualbudget.org)
       - [Actual Budget GitHub Deposu](https://github.com/actualbudget/actual)
       - [Actual Budget Docker İmajı](https://hub.docker.com/r/actualbudget/actual-server)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ActualBudget/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ActualBudget/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ActualBudget/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ActualBudget/screenshot-2.png
@@ -469,8 +470,8 @@ x-casaos:
   title:
     en_US: Actual Budget
   version: "26.5.2"
-  updateAt: "2026-05-08"
-  releaseNotes:
+  update_at: "2026-05-08"
+  release_notes:
     en_US: |-
       - v26.5.2 is functionally identical to v26.5.1 and was published to resolve Windows Store release packaging.
       - It fixes authentication rate limiting, desktop self-signed certificates, and UUID generation in insecure HTTP contexts.

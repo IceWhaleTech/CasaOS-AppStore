@@ -1,58 +1,124 @@
-name: release
+name: Build Store Artifacts
 
 on:
   push:
-    tags:
-      - v*.*.*
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Base URL used by the build action"
+        required: false
+        default: "https://cdn.jsdelivr.net/gh/jerrykuku/ZimaOS-AppStore@gh-pages"
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      BUILD_CACHE_KEY: build-appstore-cache-${{ github.ref_name }}-${{ github.run_id }}
+      BUILD_CACHE_PREFIX: build-appstore-cache-${{ github.ref_name }}-
     steps:
-      - uses: actions/checkout@v4
-      - name: remove all screenshots
-        run: find . -iname "screenshot*" | xargs rm -f
-      - name: remove all thumbnails
-        run: find . -iname "thumbnail*" | xargs rm -f
-      - name: remove all icon
-        run: find . -iname "icon.png" | xargs rm -f
-      - name: remove all app file
-        run: find . -iname "appfile.json" | xargs rm -f
-        
-      - name: create a build with sysroot
-        id: build
-        run: |
-          rm -rf /tmp/build
-          mkdir -p /tmp/build/sysroot/var/lib/casaos/appstore/default.new
-          cp -rv build/* /tmp/build/
-          cp -rv Apps /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
-          cp -v category-list.json /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
-          cp -v recommend-list.json /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
-          cp -v README.md /tmp/build/sysroot/var/lib/casaos/appstore/default.new/
-          pushd /tmp
-          tar zcvf linux-all-appstore-${{ github.ref_name }}.tar.gz build
-      
-      - uses: softprops/action-gh-release@v1
-        if: steps.build.outcome == 'success'
-        with:
-          files: /tmp/linux-all-appstore-${{ github.ref_name }}.tar.gz
-          draft: true
-          prerelease: true
-          fail_on_unmatched_files: true
+      - uses: actions/checkout@v6
 
-      - name: Get version
-        id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-      
-      - name: Upload to oss
-        id: upload_to_oss
-        uses: tvrcgo/upload-to-oss@master
+      - name: Restore build caches
+        uses: actions/cache/restore@v5
         with:
-          key-id: ${{ secrets.OSS_KEY_ID }}
-          key-secret: ${{ secrets.OSS_KEY_SECRET }}
-          region: oss-cn-shanghai
-          bucket: casaos
-          assets: |
-            /tmp/checksums.txt:/IceWhaleTech/CasaOS-AppStore/releases/download/${{ steps.get_version.outputs.VERSION }}/checksums.txt
-            /tmp/linux-all-appstore-${{ github.ref_name }}.tar.gz:/IceWhaleTech/CasaOS-AppStore/releases/download/${{ steps.get_version.outputs.VERSION }}/linux-all-appstore-${{ github.ref_name }}.tar.gz
-      
+          path: |
+            .cache/build_appstore/image-size-cache.json
+            .cache/build_appstore/image-digest-cache.json
+          key: ${{ env.BUILD_CACHE_KEY }}
+          restore-keys: |
+            ${{ env.BUILD_CACHE_PREFIX }}
+
+      - name: Build static appstore dist
+        id: build_v2
+        continue-on-error: true
+        uses: ./.github/actions/build-store-v2
+        with:
+          source: .
+          output: dist
+          base-url: ${{ inputs.base_url }}
+          cache-file: .cache/build_appstore/image-size-cache.json
+          digest-cache-file: .cache/build_appstore/image-digest-cache.json
+          report-json: out/build-v2-report.json
+          report-title: Build V2 Store Report
+
+      - name: Upload build report artifacts
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: build-v2-report
+          path: |
+            out/build-v2-report.json
+          if-no-files-found: warn
+
+      - name: Fail workflow if v2 build failed
+        if: always() && steps.build_v2.outcome != 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "V2 store build failed. See build-v2-report artifact."
+          exit 1
+
+      - name: Disable Jekyll
+        run: |
+          touch dist/.nojekyll
+
+      - name: Build legacy v1 appstore zip
+        id: build_v1
+        continue-on-error: true
+        uses: ./.github/actions/build-store-v1
+        with:
+          source: .
+          output-zip: dist/store/main.zip
+          report-json: out/build-v1-report.json
+          report-title: Build V1 Store Report
+
+      - name: Upload v1 build report artifacts
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: build-v1-report
+          path: |
+            out/build-v1-report.json
+            dist/store/main.zip
+          if-no-files-found: warn
+
+      - name: Fail workflow if v1 build failed
+        if: always() && steps.build_v1.outcome != 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "V1 store build failed. See build-v1-report artifact."
+          exit 1
+
+      - name: Upload store deliverables
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: store-deliverables
+          path: |
+            dist
+            dist/store/main.zip
+          if-no-files-found: warn
+
+      - name: Save build caches
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            .cache/build_appstore/image-size-cache.json
+            .cache/build_appstore/image-digest-cache.json
+          key: ${{ env.BUILD_CACHE_KEY }}
+
+      - name: Write build job summary
+        if: always()
+        uses: ./.github/actions/write-job-summary
+        with:
+          title: Build Summary
+          report-jsons: |
+            out/build-v2-report.json
+            out/build-v1-report.json

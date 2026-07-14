@@ -73,15 +73,16 @@ networks:
     driver: bridge
 
 x-casaos:
+  id: org.icewhale.immich
   architectures:
     - amd64
     - arm64
   main: immich-server
   store_app_id: immich
-  category: Gallery
+  category: Media
   author: Cp0204
   developer: alextran1502
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/screenshot-2.png
@@ -226,7 +227,7 @@ x-casaos:
     ru_RU: Самоуправляемое решение для управления медиа
     tr_TR: Kendi kendine barındırılan medya yönetimi çözümü
   title:
-    en_us: Immich
+    en_US: Immich
   tips:
     before_install:
       en_US: |
@@ -397,9 +398,9 @@ x-casaos:
   port_map: "2283"
   scheme: http
   index: /
-  version: "v2.7.2"
-  updateAt: "2026-04-07"
-  releaseNotes:
+  version: "2.7.2"
+  update_at: "2026-04-07"
+  release_notes:
     en_US: |-
       - v2.7.2 fixes the default helmet.json file handling.
       - Machine-learning containers were fixed for some older CPUs by downgrading numpy.

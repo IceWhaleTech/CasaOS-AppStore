@@ -3,7 +3,7 @@ services:
   vocechat:
     environment:
       TZ: $TZ
-    image: privoce/vocechat-server:v0.3.33
+    image: privoce/vocechat-server:v0.5.17
     deploy:
       resources:
         reservations:
@@ -22,25 +22,26 @@ services:
       envs:
         - container: TZ
           description:
-            en_us: TimeZone
-            zh_cn: 时区
+            en_US: TimeZone
+            zh_CN: 时区
       ports:
         - container: "3000"
           description:
-            en_us: WebUI HTTP Port
-            zh_cn: WebUI HTTP 端口
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP 端口
       volumes:
         - container: /home/vocechat-server/data
           description:
-            en_us: VoceChat Data
-            zh_cn: VoceChat 数据
+            en_US: VoceChat Data
+            zh_CN: VoceChat 数据
     container_name: vocechat
 x-casaos:
+  id: org.icewhale.vocechat
   architectures:
     - amd64
   main: vocechat
   author: Privoce
-  category: Chat
+  category: Social
   description:
     en_US: |
       VoceChat is a secure chat software designed for independent deployment, offering a flexible solution for seamless communication. It combines instant messaging with channel-based group chats, allowing you to engage in one-on-one conversations or create themed channels for group discussions.
@@ -133,7 +134,7 @@ x-casaos:
 
       Güçlü yönetim özellikleriyle VoceChat, üyeler ve kanallar üzerinde kolay yönetim imkanı sunar, ekibinizin veya grubunuzun iletişim ortamı üzerinde tam kontrol sağlar. Bireysel kullanıcılar veya kurumsal ekipler için VoceChat, güvenli, çok yönlü ve verimli bir sohbet çözümü sunar.
   developer: Privoce
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/screenshot-2.png
@@ -158,57 +159,57 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/VoceChat/thumbnail.png
   tips: {}
   title:
-    en_us: VoceChat
+    en_US: VoceChat
   index: /
   port_map: "3009"
-  version: "v0.3.33"
-  updateAt: "2023-06-08"
-  releaseNotes:
+  version: "0.5.17"
+  update_at: "2026-05-17"
+  release_notes:
     en_US: |-
-      - The configured VoceChat image tag is v0.3.33.
-      - The Privoce/vocechat-server-rust GitHub repository currently exposes tags only through v0.3.20, so this image tag cannot be mapped to a matching GitHub changelog.
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
     en_GB: |-
-      - The configured VoceChat image tag is v0.3.33.
-      - The Privoce/vocechat-server-rust GitHub repository currently exposes tags only through v0.3.20, so this image tag cannot be mapped to a matching GitHub changelog.
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
     it_IT: |-
-      - Il tag immagine VoceChat configurato è v0.3.33.
-      - Il repository Privoce/vocechat-server-rust GitHub attualmente espone i tag solo tramite v0.3.20, quindi questo tag immagine non può essere mappato su un log delle modifiche GitHub corrispondente.
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
     nb_NO: |-
-      - Den konfigurerte VoceChat bildekoden er v0.3.33.
-      - Privoce/vocechat-server-rust GitHub-depotet eksponerer for øyeblikket bare tagger gjennom v0.3.20, så denne bildekoden kan ikke tilordnes en samsvarende GitHub endringslogg.
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
     zh_CN: |-
-      - 当前配置的 VoceChat 镜像标签是 v0.3.33。
-      - Privoce/vocechat-server-rust GitHub 仓库当前只公开到 v0.3.20 的标签，因此这个镜像标签无法映射到匹配的 GitHub 更新日志。
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
     ja_JP: |-
-      - 設定されている VoceChat イメージタグは v0.3.33 です。
-      - Privoce/vocechat-server-rust の GitHub リポジトリは現在 v0.3.20 までのタグしか公開していないため、このイメージタグに対応する GitHub changelog は見つけられません。
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
     ko_KR: |-
-      - 구성된 VoceChat 이미지 태그는 v0.3.33입니다.
-      - Privoce/vocechat-server-rust GitHub 저장소는 현재 v0.3.20까지만 태그를 공개하므로 이 이미지 태그를 일치하는 GitHub 변경 로그에 매핑할 수 없습니다.
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
     fr_FR: |-
-      - Le tag d'image VoceChat configuré est v0.3.33.
-      - Le dépôt GitHub Privoce/vocechat-server-rust expose actuellement des tags seulement jusqu'à v0.3.20, ce tag d'image ne peut donc pas être associé à un changelog GitHub correspondant.
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
     de_DE: |-
-      - Der konfigurierte VoceChat-Image-Tag ist v0.3.33.
-      - Das GitHub-Repository Privoce/vocechat-server-rust stellt derzeit nur Tags bis v0.3.20 bereit, daher kann dieser Image-Tag keinem passenden GitHub-Changelog zugeordnet werden.
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
     sv_SE: |-
-      - Den konfigurerade VoceChat-bildtaggen är v0.3.33.
-      - Privoce/vocechat-server-rust GitHub-förrådet exponerar för närvarande endast taggar genom v0.3.20, så denna bildtagg kan inte mappas till en matchande GitHub-ändringslogg.
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
     el_GR: |-
-      - Η ρυθμισμένη ετικέτα εικόνας VoceChat είναι v0.3.33.
-      - Το αποθετήριο Privoce/vocechat-server-rust GitHub εκθέτει επί του παρόντος ετικέτες μόνο μέσω v0.3.20, επομένως αυτή η ετικέτα εικόνας δεν μπορεί να αντιστοιχιστεί σε ένα αντίστοιχο αρχείο καταγραφής αλλαγών GitHub.
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
     hr_HR: |-
-      - Konfigurirana oznaka slike VoceChat je v0.3.33.
-      - Repozitorij Privoce/vocechat-server-rust GitHub trenutno izlaže oznake samo kroz v0.3.20, tako da se ova oznaka slike ne može preslikati na odgovarajući GitHub dnevnik promjena.
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
     pt_PT: |-
-      - A etiqueta de imagem VoceChat configurada é v0.3.33.
-      - O repositório Privoce/vocechat-server-rust GitHub expõe atualmente as etiquetas apenas através de v0.3.20, pelo que esta etiqueta de imagem não pode ser mapeada para um changelog GitHub correspondente.
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
     ru_RU: |-
-      - Настроенный тег изображения VoceChat — v0.3.33.
-      - Репозиторий Privoce/vocechat-server-rust GitHub в настоящее время предоставляет теги только через v0.3.20, поэтому этот тег изображения нельзя сопоставить с соответствующим журналом изменений GitHub.
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
     tr_TR: |-
-      - Yapılandırılmış VoceChat resim etiketi v0.3.33'dir.
-      - Privoce/vocechat-server-rust GitHub deposu şu anda etiketleri yalnızca v0.3.20 aracılığıyla kullanıma sunuyor, dolayısıyla bu resim etiketi eşleşen bir GitHub değişiklik günlüğüyle eşleştirilemez.
+      - VoceChat image v0.5.17 is available on Docker Hub for amd64.
+      - The Privoce/vocechat-server-rust GitHub repository still only exposes tags through v0.3.20, so this update is based on the published Docker image tag.
   website: "https://voce.chat"
   repo: "https://github.com/Privoce/vocechat-server-rust"
   support: "https://github.com/Privoce/vocechat-server-rust/issues"

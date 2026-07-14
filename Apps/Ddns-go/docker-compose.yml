@@ -1,7 +1,7 @@
 name: ddns-go
 services:
   ddns-go:
-    image: jeessy/ddns-go:v6.17.0
+    image: jeessy/ddns-go:v6.17.1
     network_mode: bridge
     deploy:
       resources:
@@ -20,90 +20,106 @@ services:
       ports:
         - container: "9876"
           description:
-            en_us: WebUI HTTP Port
-            zh_cn: WebUI HTTP 端口
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP 端口
       volumes:
         - container: /root
           description:
-            en_us: ddns-go config directory.
-            zh_cn: ddns-go 配置目录
+            en_US: ddns-go config directory.
+            zh_CN: ddns-go 配置目录
     container_name: ddns-go
 x-casaos:
+  id: org.icewhale.ddnsgo
   architectures:
     - amd64
     - arm
     - arm64
   author: zxxhz,Cp0204
-  category: Network
+  category: Networking
   description:
-    en_us: |
+    en_US: |
       A simple and easy-to-use DDNS tool. Automatically updates domain name resolution to your public IP (supports Alibaba Cloud, Tencent Cloud, Dnspod, Cloudflare, Callback, Huawei Cloud, Baidu Cloud, Porkbun, GoDaddy, and Google Domain).
 
       Deploy DDNS-go on Zima, and you can bind the public IP of your Zima device to your domain name. This way, you can access your Zima device via the domain name while you are away.
-    zh_cn: | 
+    zh_CN: | 
       简单好用的 DDNS 工具。自动更新域名解析到公网IP(支持阿里云、腾讯云、Dnspod、Cloudflare、Callback、华为云、百度云、Porkbun、GoDaddy、Google Domain)。
 
       在 Zima 上部署 DDNS-go， 你可以把你的 Zima 设备对应的公网IP绑定到你的域名上。 这样你在外面就可以通过域名访问你的 Zima 设备了。
   developer: jeessy2 
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ddns-go/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ddns-go/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ddns-go/screenshot-1.png
   main: ddns-go
   port_map: "9876"
   scheme: http
   tagline:
-    en_us: Simple and easy to use DDNS
-    zh_cn: 简单好用的DDNS
+    en_US: Simple and easy to use DDNS
+    zh_CN: 简单好用的DDNS
   title:
-    en_us: ddns-go
-  version: "v6.17.0"
-  updateAt: "2026-05-01"
-  releaseNotes:
+    en_US: ddns-go
+  version: "6.17.1"
+  update_at: "2026-05-31"
+  release_notes:
     en_US: |-
-      - v6.17.0 adds ClouDNS support.
-      - It fixes callback handling so protocol enablement is respected and the correct HTTP client is used.
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
     en_GB: |-
-      - v6.17.0 adds ClouDNS support.
-      - It fixes callback handling so protocol enablement is respected and the correct HTTP client is used.
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
     it_IT: |-
-      - v6.17.0 aggiunge il supporto ClouDNS.
-      - Corregge la gestione del callback in modo che venga rispettata l'abilitazione del protocollo e venga utilizzato il client HTTP corretto.
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
     nb_NO: |-
-      - v6.17.0 legger til ClouDNS-støtte.
-      - Den fikser tilbakeringingshåndtering slik at protokollaktivering respekteres og riktig HTTP-klient brukes.
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
     zh_CN: |-
-      - v6.17.0 增加了 ClouDNS 支持。
-      - 修复了回调处理，使其遵循协议启用状态并使用正确的 HTTP 客户端。
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
     ja_JP: |-
-      - v6.17.0 は ClouDNS サポートを追加します。
-      - コールバック処理が修正され、プロトコルの有効化状態を尊重し、正しい HTTP クライアントを使用します。
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
     ko_KR: |-
-      - v6.17.0은 ClouDNS 지원을 추가합니다.
-      - 콜백 처리가 수정되어 프로토콜 활성화 상태를 따르고 올바른 HTTP 클라이언트를 사용합니다.
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
     fr_FR: |-
-      - v6.17.0 ajoute la prise en charge de ClouDNS.
-      - La gestion des callbacks est corrigée afin de respecter l'activation des protocoles et d'utiliser le bon client HTTP.
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
     de_DE: |-
-      - v6.17.0 fügt Unterstützung für ClouDNS hinzu.
-      - Die Callback-Verarbeitung wurde korrigiert, sodass die Protokollaktivierung beachtet und der richtige HTTP-Client verwendet wird.
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
     sv_SE: |-
-      - v6.17.0 lägger till ClouDNS-stöd.
-      - Den fixar återuppringningshantering så att protokollaktivering respekteras och rätt HTTP-klient används.
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
     el_GR: |-
-      - Το v6.17.0 προσθέτει υποστήριξη ClouDNS.
-      - Διορθώνει τον χειρισμό επανάκλησης, ώστε να γίνεται σεβαστή η ενεργοποίηση του πρωτοκόλλου και να χρησιμοποιείται ο σωστός πελάτης HTTP.
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
     hr_HR: |-
-      - v6.17.0 dodaje podršku za ClouDNS.
-      - Popravlja rukovanje povratnim pozivom tako da se poštuje omogućenost protokola i koristi ispravan HTTP klijent.
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
     pt_PT: |-
-      - v6.17.0 adiciona suporte a ClouDNS.
-      - Corrige o tratamento de callback para que a ativação do protocolo seja respeitada e o cliente HTTP correto seja utilizado.
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
     ru_RU: |-
-      - v6.17.0 добавляет поддержку ClouDNS.
-      - Исправлена ​​обработка обратного вызова, поэтому учитывается включение протокола и используется правильный клиент HTTP.
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
     tr_TR: |-
-      - v6.17.0, ClouDNS desteğini ekler.
-      - Protokol etkinleştirmesine uyulmasını ve doğru HTTP istemcisinin kullanılmasını sağlayacak şekilde geri arama işlemini düzeltir.
+      - v6.17.1 optimizes the HiPMDnsMgr adapter with English logs and pagination support.
+      - Improves the HiDNS DNSMgr provider with a two-stage query strategy for better performance.
+      - Updates Go crypto and network dependencies from the upstream release stream.
   website: ""
   repo: "https://github.com/jeessy2/ddns-go"
   support: "https://github.com/jeessy2/ddns-go/issues"

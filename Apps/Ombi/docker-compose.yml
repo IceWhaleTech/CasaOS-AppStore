@@ -6,7 +6,7 @@ services:
       PGID: "1000"
       PUID: "1000"
       TZ: Europe/London
-    image: linuxserver/ombi:4.47.1
+    image: linuxserver/ombi:4.53.5
     deploy:
       resources:
         reservations:
@@ -25,27 +25,28 @@ services:
       envs:
         - container: PUID
           description:
-            en_us: ""
+            en_US: ""
         - container: PGID
           description:
-            en_us: ""
+            en_US: ""
         - container: TZ
           description:
-            en_us: ""
+            en_US: ""
         - container: BASE_URL
           description:
-            en_us: ""
+            en_US: ""
       ports:
         - container: "3579"
           description:
-            en_us: ""
+            en_US: ""
 
       volumes:
         - container: /config
           description:
-            en_us: ""
+            en_US: ""
     container_name: ombi
 x-casaos:
+  id: org.icewhale.ombi
   architectures:
     - amd64
     - arm64
@@ -53,92 +54,107 @@ x-casaos:
   author: CasaOS Team
   category: Media
   description:
-    en_us: Ombi is a self-hosted web application that automatically gives your shared Plex or Emby users the ability to request content by themselves! Ombi can be linked to multiple TV Show and Movie DVR tools to create a seamless end-to-end experience for your users.
-    zh_cn: Ombi是一个自托管的Web应用程序，它可以自动为您的共享Plex或Emby用户提供自助请求内容的功能！ Ombi可以链接到多个电视节目和电影DVR工具，为用户提供无缝的端到端体验。
-    ar_sa: يمكن لـ Ombi أن يكون تطبيقًا ويبًا مستضافًا بشكل ذاتي يمنح مستخدمي Plex أو Emby المشتركين بشكل ذاتي القدرة على طلب المحتوى بنفسهم! يمكن لـ Ombi أن يربط بعدة أدوات DVR للمسلسلات التلفزيونية والأفلام لإنشاء تجربة نهائية للمستخدمين بدون توقف.
-    de_de: Ombi ist eine selbst gehostete Webanwendung, mit der Ihre freigegebenen Plex- oder Emby-Nutzer sich selbst um Inhalte bewerben können! Ombi kann mit mehreren TV-Show- und Movie-DVR-Tools verbunden werden, um eine nahtlose End-to-End-Erfahrung für Ihre Benutzer zu schaffen.
-    es_es: Ombi es una aplicación web autohospedada que le permite a sus usuarios de Plex o Emby compartir solicitar contenido por sí mismos. ¡Ombi se puede vincular a varias herramientas DVR de TV Show y Movie para crear una experiencia sin interrupciones para sus usuarios!
-    fr_fr: Ombi est une application Web auto-hébergée qui permet à vos utilisateurs de Plex ou d'Emby de demander du contenu par eux-mêmes. Ombi peut être lié à plusieurs outils DVR de TV Show et Movie pour créer une expérience sans interruption pour vos utilisateurs!
-    hu_hu: Az Ombi egy önálló webalkalmazás, amely automatikusan megadja a megosztott Plex vagy Emby felhasználóknak a lehetőséget arra, hogy önállóan kérjenek tartalmat! Az Ombi több TV Show és Movie DVR eszközhöz is csatlakozhat, hogy egy folyamatos végponti élményt biztosítsanak a felhasználóknak.
-    it_it: Ombi è un'applicazione web autohosted che consente ai tuoi utenti di Plex o Emby di richiedere autonomamente contenuti. Ombi può essere collegato a più strumenti DVR TV Show e Movie per creare un'esperienza senza interruzioni per i tuoi utenti!
-    ru_ru: Ombi - это самохостинговое веб-приложение, которое автоматически предоставляет вашим общим пользователям Plex или Emby возможность самостоятельно запрашивать контент! Ombi может быть связан с несколькими инструментами DVR TV Show и Movie для создания беспрерывного конечного опыта для ваших пользователей.
-    pl_pl: Ombi to aplikacja sieciowa, która automatycznie udostępnia użytkownikom udostępnionych serwerów Plex lub Emby możliwość samodzielnego żądania treści! Ombi może być połączony z wieloma narzędziami DVR TV Show i Movie, aby stworzyć bezprzerwową końcową doświadczenie dla użytkowników.
-    pt_br: O Ombi é um aplicativo da Web auto-hospedado que permite que seus usuários do Plex ou do Emby solicitem conteúdo por conta própria. O Ombi pode ser vinculado a várias ferramentas DVR de TV Show e Movie para criar uma experiência sem interrupções para seus usuários!
-    sv_se: Ombi är en självvärd webbapplikation som automatiskt ger dina delade Plex- eller Emby-användare självbetjäningsmöjligheter för att begära innehåll! Ombi kan kopplas samman med flera TV-program och film-DVR-verktyg för en sömlös helhetsupplevelse för användarna.
-    uk_ua: Ombi є самохостованою веб-додатком, який автоматично надає можливості самообслуговування для запитування вмісту вашим спільними користувачами Plex або Emby! Ombi може бути пов'язаний з декількома інструментами для запису телевізійних шоу та фільмів, що забезпечує користувачам безшовний досвід від початку до кінця.
+    en_US: Ombi is a self-hosted web application that automatically gives your shared Plex or Emby users the ability to request content by themselves! Ombi can be linked to multiple TV Show and Movie DVR tools to create a seamless end-to-end experience for your users.
+    zh_CN: Ombi是一个自托管的Web应用程序，它可以自动为您的共享Plex或Emby用户提供自助请求内容的功能！ Ombi可以链接到多个电视节目和电影DVR工具，为用户提供无缝的端到端体验。
+    ar_SA: يمكن لـ Ombi أن يكون تطبيقًا ويبًا مستضافًا بشكل ذاتي يمنح مستخدمي Plex أو Emby المشتركين بشكل ذاتي القدرة على طلب المحتوى بنفسهم! يمكن لـ Ombi أن يربط بعدة أدوات DVR للمسلسلات التلفزيونية والأفلام لإنشاء تجربة نهائية للمستخدمين بدون توقف.
+    de_DE: Ombi ist eine selbst gehostete Webanwendung, mit der Ihre freigegebenen Plex- oder Emby-Nutzer sich selbst um Inhalte bewerben können! Ombi kann mit mehreren TV-Show- und Movie-DVR-Tools verbunden werden, um eine nahtlose End-to-End-Erfahrung für Ihre Benutzer zu schaffen.
+    es_ES: Ombi es una aplicación web autohospedada que le permite a sus usuarios de Plex o Emby compartir solicitar contenido por sí mismos. ¡Ombi se puede vincular a varias herramientas DVR de TV Show y Movie para crear una experiencia sin interrupciones para sus usuarios!
+    fr_FR: Ombi est une application Web auto-hébergée qui permet à vos utilisateurs de Plex ou d'Emby de demander du contenu par eux-mêmes. Ombi peut être lié à plusieurs outils DVR de TV Show et Movie pour créer une expérience sans interruption pour vos utilisateurs!
+    hu_HU: Az Ombi egy önálló webalkalmazás, amely automatikusan megadja a megosztott Plex vagy Emby felhasználóknak a lehetőséget arra, hogy önállóan kérjenek tartalmat! Az Ombi több TV Show és Movie DVR eszközhöz is csatlakozhat, hogy egy folyamatos végponti élményt biztosítsanak a felhasználóknak.
+    it_IT: Ombi è un'applicazione web autohosted che consente ai tuoi utenti di Plex o Emby di richiedere autonomamente contenuti. Ombi può essere collegato a più strumenti DVR TV Show e Movie per creare un'esperienza senza interruzioni per i tuoi utenti!
+    ru_RU: Ombi - это самохостинговое веб-приложение, которое автоматически предоставляет вашим общим пользователям Plex или Emby возможность самостоятельно запрашивать контент! Ombi может быть связан с несколькими инструментами DVR TV Show и Movie для создания беспрерывного конечного опыта для ваших пользователей.
+    pl_PL: Ombi to aplikacja sieciowa, która automatycznie udostępnia użytkownikom udostępnionych serwerów Plex lub Emby możliwość samodzielnego żądania treści! Ombi może być połączony z wieloma narzędziami DVR TV Show i Movie, aby stworzyć bezprzerwową końcową doświadczenie dla użytkowników.
+    pt_BR: O Ombi é um aplicativo da Web auto-hospedado que permite que seus usuários do Plex ou do Emby solicitem conteúdo por conta própria. O Ombi pode ser vinculado a várias ferramentas DVR de TV Show e Movie para criar uma experiência sem interrupções para seus usuários!
+    sv_SE: Ombi är en självvärd webbapplikation som automatiskt ger dina delade Plex- eller Emby-användare självbetjäningsmöjligheter för att begära innehåll! Ombi kan kopplas samman med flera TV-program och film-DVR-verktyg för en sömlös helhetsupplevelse för användarna.
+    uk_UA: Ombi є самохостованою веб-додатком, який автоматично надає можливості самообслуговування для запитування вмісту вашим спільними користувачами Plex або Emby! Ombi може бути пов'язаний з декількома інструментами для запису телевізійних шоу та фільмів, що забезпечує користувачам безшовний досвід від початку до кінця.
   developer: Sabnzbd Team
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/screenshot-3.png
   tagline:
-    en_us: Friendly media request tool, automatically syncs with your media servers!
-    zh_cn: 友好的媒体请求工具，自动与您的媒体服务器同步！
-    ar_sa: أداة طلب الوسائط الصديقة ، تتزامن تلقائيًا مع خوادم الوسائط الخاصة بك!
-    de_de: Freundliches Medienanforderungstool, das automatisch mit Ihren Medienservern synchronisiert wird!
-    es_es: ¡Herramienta de solicitud de medios amigable, sincroniza automáticamente con tus servidores de medios!
-    fr_fr: Outil de demande de médias amical, synchronise automatiquement avec vos serveurs multimédia!
-    hu_hu: Barátságos média kérési eszköz, automatikusan szinkronizálja a médiaszervereivel!
-    it_it: Strumento di richiesta di media amichevole, sincronizza automaticamente con i tuoi server multimediali!
-    ru_ru: Дружественный инструмент запроса медиа, автоматически синхронизируется с вашими медиа-серверами!
-    pl_pl: Przyjazny narzędzie do żądania mediów, automatycznie synchronizuje się z twoimi serwerami mediów!
-    pt_br: Ferramenta de solicitação de mídia amigável, sincroniza automaticamente com seus servidores de mídia!
-    sv_se: Vänlig mediaförfrågan, synkroniserar automatiskt med dina mediaservrar!
-    uk_ua: Дружній інструмент запиту медіа, автоматично синхронізується з вашими медіа-серверами!
+    en_US: Friendly media request tool, automatically syncs with your media servers!
+    zh_CN: 友好的媒体请求工具，自动与您的媒体服务器同步！
+    ar_SA: أداة طلب الوسائط الصديقة ، تتزامن تلقائيًا مع خوادم الوسائط الخاصة بك!
+    de_DE: Freundliches Medienanforderungstool, das automatisch mit Ihren Medienservern synchronisiert wird!
+    es_ES: ¡Herramienta de solicitud de medios amigable, sincroniza automáticamente con tus servidores de medios!
+    fr_FR: Outil de demande de médias amical, synchronise automatiquement avec vos serveurs multimédia!
+    hu_HU: Barátságos média kérési eszköz, automatikusan szinkronizálja a médiaszervereivel!
+    it_IT: Strumento di richiesta di media amichevole, sincronizza automaticamente con i tuoi server multimediali!
+    ru_RU: Дружественный инструмент запроса медиа, автоматически синхронизируется с вашими медиа-серверами!
+    pl_PL: Przyjazny narzędzie do żądania mediów, automatycznie synchronizuje się z twoimi serwerami mediów!
+    pt_BR: Ferramenta de solicitação de mídia amigável, sincroniza automaticamente com seus servidores de mídia!
+    sv_SE: Vänlig mediaförfrågan, synkroniserar automatiskt med dina mediaservrar!
+    uk_UA: Дружній інструмент запиту медіа, автоматично синхронізується з вашими медіа-серверами!
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ombi/thumbnail.png
   tips: {}
   title:
-    en_us: Ombi
+    en_US: Ombi
   port_map: "3579"
-  version: "4.47.1"
-  updateAt: "2025-12-27"
-  releaseNotes:
+  version: "4.53.5"
+  update_at: "2026-04-20"
+  release_notes:
     en_US: |-
-      - Ombi v4.47.1 is the upstream release used by this image and publishes Linux, macOS, and Windows artifacts on GitHub.
-      - The GitHub Release body for v4.47.1 is empty, so no feature or fix notes are available for this exact tag.
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
     en_GB: |-
-      - Ombi v4.47.1 is the upstream release used by this image and publishes Linux, macOS, and Windows artifacts on GitHub.
-      - The GitHub Release body for v4.47.1 is empty, so no feature or fix notes are available for this exact tag.
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
     it_IT: |-
-      - Ombi v4.47.1 è la versione upstream utilizzata dall'immagine this e pubblica artefatti Linux, macOS e Windows su GitHub.
-      - Il corpo della versione GitHub per v4.47.1 è vuoto, quindi non sono disponibili funzionalità o note di correzione per questo tag esatto.
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
     nb_NO: |-
-      - Ombi v4.47.1 er oppstrømsutgivelsen som brukes av this image og publiserer Linux-, macOS- og Windows-artefakter på GitHub.
-      - GitHub-utgivelsesteksten for v4.47.1 er tom, så ingen funksjon eller reparasjonsnotater er tilgjengelige for akkurat denne taggen.
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
     zh_CN: |-
-      - Ombi v4.47.1 是该镜像使用的上游版本，并在 GitHub 上发布 Linux、macOS 和 Windows 构建产物。
-      - v4.47.1 的 GitHub Release 正文为空，因此该精确标签没有可用的功能或修复说明。
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
     ja_JP: |-
-      - Ombi v4.47.1 はこのイメージで使用されている上流リリースで、GitHub に Linux、macOS、Windows 向け成果物を公開しています。
-      - v4.47.1 の GitHub Release 本文は空のため、この正確なタグに対する機能や修正のノートはありません。
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
     ko_KR: |-
-      - Ombi v4.47.1은 이 이미지에서 사용하는 업스트림 릴리스이며 GitHub에 Linux, macOS, Windows 아티팩트를 게시합니다.
-      - v4.47.1의 GitHub Release 본문은 비어 있으므로 이 정확한 태그에 대한 기능 또는 수정 노트는 없습니다.
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
     fr_FR: |-
-      - Ombi v4.47.1 est la version amont utilisée par cette image et publie des artefacts Linux, macOS et Windows sur GitHub.
-      - Le corps du GitHub Release v4.47.1 est vide, aucune note de fonctionnalité ou de correctif n'est donc disponible pour ce tag précis.
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
     de_DE: |-
-      - Ombi v4.47.1 ist das von diesem Image verwendete Upstream-Release und veröffentlicht Linux-, macOS- und Windows-Artefakte auf GitHub.
-      - Der GitHub-Release-Text für v4.47.1 ist leer, daher sind für diesen exakten Tag keine Funktions- oder Fehlerbehebungsnotizen verfügbar.
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
     sv_SE: |-
-      - Ombi v4.47.1 är uppströmsversionen som används av this image och publicerar Linux-, macOS- och Windows-artefakter på GitHub.
-      - GitHub Release-kroppen för v4.47.1 är tom, så inga funktioner eller fixanteckningar är tillgängliga för denna exakta tagg.
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
     el_GR: |-
-      - Το Ombi v4.47.1 είναι η ανοδική κυκλοφορία που χρησιμοποιείται από την εικόνα this και δημοσιεύει τεχνουργήματα Linux, macOS και Windows στο GitHub.
-      - Το σώμα έκδοσης GitHub για v4.47.1 είναι κενό, επομένως δεν υπάρχουν διαθέσιμες σημειώσεις λειτουργίας ή επιδιόρθωσης για αυτήν ακριβώς την ετικέτα.
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
     hr_HR: |-
-      - Ombi v4.47.1 je uzvodno izdanje koje koristi slika this i objavljuje Linux, macOS i Windows artefakte na GitHub.
-      - Tijelo izdanja GitHub za v4.47.1 je prazno, tako da nema dostupnih značajki ili bilješki o popravcima za točnu oznaku.
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
     pt_PT: |-
-      - Ombi v4.47.1 é a versão upstream utilizada pela imagem this e publica artefactos Linux, macOS e Windows em GitHub.
-      - O corpo da versão GitHub para v4.47.1 está vazio, pelo que não estão disponíveis quaisquer características ou notas de correção para esta etiqueta exata.
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
     ru_RU: |-
-      - Ombi v4.47.1 — это исходная версия, используемая образом this, которая публикует артефакты Linux, macOS и Windows на GitHub.
-      - Тело релиза GitHub для v4.47.1 пусто, поэтому для этого конкретного тега нет примечаний к функциям или исправлениям.
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
     tr_TR: |-
-      - Ombi v4.47.1, this görüntüsü tarafından kullanılan yukarı akış sürümüdür ve Linux, macOS ve Windows yapıtlarını GitHub üzerinde yayınlar.
-      - v4.47.1 için GitHub Sürüm gövdesi boş olduğundan bu etiket için hiçbir özellik veya düzeltme notu mevcut değildir.
+      - Ombi 4.53.5 fixes sqlite_sequence reset after cache table deletes.
+      - The fix prevents Int32 overflow after cache cleanup.
+      - The linuxserver/ombi:4.53.5 Docker image tag was published on 2026-05-16.
   website: "https://ombi.io"
   repo: "https://github.com/Ombi-app/Ombi"
   support: "https://github.com/Ombi-app/Ombi/issues"

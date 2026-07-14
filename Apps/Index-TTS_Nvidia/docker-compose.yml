@@ -58,6 +58,7 @@ services:
             zh_CN: Gradio WebUI端口
 
 x-casaos:
+  id: org.icewhale.indexttsnvidia
   title:
     de_DE: Index-TTS(Nvidia GPU)
     el_GR: Index-TTS(Nvidia GPU)
@@ -405,7 +406,7 @@ x-casaos:
 
       **了解更多：**
       - [IndexTTS GitHub](https://github.com/index-tts/index-tts)
-  category: Utilities
+  category: AI
   author: index-tts
   developer: icewhaletech
   main: index-tts-nvidia
@@ -414,15 +415,15 @@ x-casaos:
     - amd64
   index: /
   scheme: http
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/screenshot-3.png
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Index-TTS_Nvidia/thumbnail.png
-  version: "2.0"
-  updateAt: "2025-12-19"
-  releaseNotes:
+  version: "2.0.0"
+  update_at: "2025-12-19"
+  release_notes:
     en_US: |-
       - IndexTTS 2.0 tracks the upstream IndexTTS2 release.
       - IndexTTS2 adds controllable and uncontrollable precise speech duration generation for autoregressive TTS.

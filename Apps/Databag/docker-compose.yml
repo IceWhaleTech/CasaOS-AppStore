@@ -7,13 +7,13 @@ services:
       volumes:
         - container: /var/lib/databag
           description:
-            en_us: database and asset store
-            zh_cn: 数据库和资源存储
+            en_US: database and asset store
+            zh_CN: 数据库和资源存储
       ports:
         - container: '7000'
           description:
-            en_us: rest api port
-            zh_cn: REST API端口
+            en_US: rest api port
+            zh_CN: REST API端口
     ports:
       - target: 7000
         published: 7000
@@ -24,29 +24,30 @@ services:
         target: /var/lib/databag
     container_name: databag
 x-casaos:
+  id: org.icewhale.databag
   architectures:
     - amd64
     - arm64
   main: databag
   description:
-    en_us: Databag is a federated chat app for self-hosting that focuses on user privacy and security; the service includes clients for iOS, Android, and browser.
-    zh_cn: Databag是一个自托管的联邦聊天应用，专注于用户隐私和安全；该服务包括iOS、Android和浏览器的客户端。
+    en_US: Databag is a federated chat app for self-hosting that focuses on user privacy and security; the service includes clients for iOS, Android, and browser.
+    zh_CN: Databag是一个自托管的联邦聊天应用，专注于用户隐私和安全；该服务包括iOS、Android和浏览器的客户端。
   tagline:
-    en_us: Messenger for the Decentralized Web
-    zh_cn: 分布式网络的通讯应用
+    en_US: Messenger for the Decentralized Web
+    zh_CN: 分布式网络的通讯应用
   developer: balzack
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Databag/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Databag/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Databag/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Databag/screenshot-2.png
   author: Pierre Balzack
-  category: Chat
+  category: Social
   title:
-    en_us: Databag
+    en_US: Databag
   port_map: "7000"
   version: "0.1.18"
-  updateAt: "2025-10-15"
-  releaseNotes: ""
+  update_at: "2025-10-15"
+  release_notes: ""
   website: ""
   repo: "https://github.com/balzack/databag"
   support: "https://github.com/balzack/databag/discussions"

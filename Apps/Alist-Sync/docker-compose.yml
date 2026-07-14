@@ -13,33 +13,34 @@ services:
     environment:
       - TZ=Asia/Shanghai
 x-casaos:
+  id: org.icewhale.alistsync
   envs:
     - container: TZ
       description:
-        en_us: Set the timezone for the alist-sync application.
+        en_US: Set the timezone for the alist-sync application.
   ports:
     - container: "52441"
       description:
-        en_us: The port used by alist-sync for its service.
+        en_US: The port used by alist-sync for its service.
   volumes:
     - container: /app/data
       description:
-        en_us: Directory where the alist-sync application stores its data.
-        zh_cn: alist-sync 配置目录
+        en_US: Directory where the alist-sync application stores its data.
+        zh_CN: alist-sync 配置目录
   architectures:
     - amd64
     - arm
     - arm64
   main: alist-sync
   author: xjxjin
-  category: Cloud
+  category: Productivity
   description:
-    en_us: |
+    en_US: |
       Alist-Sync is a storage synchronization tool based on the Web interface. It can achieve data synchronization and mutual backup among multiple network disks, and also has practical functions such as multi-task management, scheduled synchronization and difference handling.
-    zh_cn: |
+    zh_CN: |
       Alist-Sync 是一款基于 Web 界面的存储同步工具，它能够在多个网盘之间实现数据同步以及相互备份，并且具备多任务管理、定时同步、差异处理等实用功能。
   developer: xjxjin
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist-Sync/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist-Sync/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist-Sync/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist-Sync/screenshot-2.png
@@ -47,20 +48,20 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist-Sync/screenshot-4.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist-Sync/screenshot-5.png
   tagline:
-    en_us: An Alist storage synchronization tool based on the Web interface.
-    zh_cn: 一个基于 Web 界面的 Alist 存储同步工具。
+    en_US: An Alist storage synchronization tool based on the Web interface.
+    zh_CN: 一个基于 Web 界面的 Alist 存储同步工具。
 
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist-Sync/thumbnail.png
   title:
-    en_us: Alist-Sync
+    en_US: Alist-Sync
   tips:
     before_install:
-      en_us: The default login password is admin/admin.
-      zh_cn: 默认登录密码 admin/admin。
+      en_US: The default login password is admin/admin.
+      zh_CN: 默认登录密码 admin/admin。
   port_map: "52441"
   version: "1.1.5"
-  updateAt: "2025-03-15"
-  releaseNotes:
+  update_at: "2025-03-15"
+  release_notes:
     en_US: |-
       - v1.1.5 fixes an error when the regular expression is empty.
     en_GB: |-

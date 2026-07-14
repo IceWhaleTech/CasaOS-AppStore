@@ -21,55 +21,56 @@ services:
       envs:
         - container: TWINGATE_NETWORK
           description:
-            en_us: ""
+            en_US: ""
         - container: TWINGATE_ACCESS_TOKEN
           description:
-            en_us: ""
+            en_US: ""
         - container: TWINGATE_REFRESH_TOKEN
           description:
-            en_us: ""
+            en_US: ""
         - container: TWINGATE_LABEL_HOSTNAME
           description:
-            en_us: ""
+            en_US: ""
         - container: PATH
           description:
-            en_us: ""
+            en_US: ""
         - container: SSL_CERT_FILE
           description:
-            en_us: ""
+            en_US: ""
         - container: TWINGATE_API_ENDPOINT
           description:
-            en_us: ""  
+            en_US: ""  
     deploy:
       resources:
         reservations:
           memory: 500M  # Modify as needed since the original command didn't specify memory reservation
 
 x-casaos:
+  id: org.icewhale.twingateconnector
   architectures:
     - amd64
     - arm64
     - arm
   main: twingate-connector
   author: Shubhankar Trivedi
-  category: Network
+  category: Networking
   description: 
-    en_us: It's a connector for Twingate".
+    en_US: It's a connector for Twingate".
   developer: Twingate
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Twingate/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Twingate/icon.svg
   screenshot_link:
   tagline:
-    en_us: Twingate Connector for CasaOS
+    en_US: Twingate Connector for CasaOS
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Twingate/thumbnail.png
   tips: {}
   title:
-    en_us: Twingate
+    en_US: Twingate
   hostname: ""
   index: /
   port_map: ""
-  version: "1"
-  updateAt: "2026-04-22"
-  releaseNotes: ""
+  version: "1.0.0"
+  update_at: "2026-04-22"
+  release_notes: ""
   website: "https://www.twingate.com"
   repo: ""
   support: "https://www.twingate.com/support"

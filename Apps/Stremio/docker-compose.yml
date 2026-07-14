@@ -11,7 +11,7 @@ services:
       - AUTO_SERVER_URL=1
     devices:
       - /dev/dri:/dev/dri
-    image: tsaridas/stremio-docker:v1.2.5
+    image: tsaridas/stremio-docker:v1.3.4
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/config
@@ -30,35 +30,36 @@ services:
       ports:
         - container: "11470"
           description:
-            en_us: Server Port
-            pt_br: Porta do Server
-            zh_cn: Server HTTP端口
+            en_US: Server Port
+            pt_BR: Porta do Server
+            zh_CN: Server HTTP端口
           protocol: tcp
         - container: "8100"
           description:
-            en_us: WebUI HTTPS Port
-            pt_br: Porta da WebUI
-            zh_cn: WebUI HTTPS端口
+            en_US: WebUI HTTPS Port
+            pt_BR: Porta da WebUI
+            zh_CN: WebUI HTTPS端口
           protocol: tcp
       envs:
         - container: NO_CORS
           description:
-            en_us: CORS config.
-            zh_cn: CORS配置
-            pt_br: Configuração do CORS
+            en_US: CORS config.
+            zh_CN: CORS配置
+            pt_BR: Configuração do CORS
         - container: AUTO_SERVER_URL
           description:
-            en_us: Enables automatic server URL detection for remote clients.
-            zh_cn: 为远程客户端启用自动服务器 URL 检测。
-            pt_br: Habilita a detecção automática da URL do servidor para clientes remotos.
+            en_US: Enables automatic server URL detection for remote clients.
+            zh_CN: 为远程客户端启用自动服务器 URL 检测。
+            pt_BR: Habilita a detecção automática da URL do servidor para clientes remotos.
       volumes:
         - container: /root/.stremio-server
           description:
-            en_us: Stremio config directory.
-            zh_cn: Stremio配置目录
-            pt_br: Diretório de configurações do Stremio
+            en_US: Stremio config directory.
+            zh_CN: Stremio配置目录
+            pt_BR: Diretório de configurações do Stremio
 
 x-casaos:
+  id: org.icewhale.stremio
   architectures:
     - amd64
     - arm64
@@ -66,73 +67,88 @@ x-casaos:
   author: joaobosconff
   category: Media
   description:
-    en_us: Stremio offers a secure, modern and seamless entertainment experience. With its easy-to-use interface and diverse content library, including 4K HDR support, users can enjoy their favorite movies and TV shows across all their devices. And with its commitment to security, Stremio is the ultimate choice for a worry-free, high-quality streaming experience.
-    pt_br: Stremio oferece uma experiência de entretenimento segura, moderna e perfeita. Com sua interface fácil de usar e uma biblioteca de conteúdo diversificada, incluindo suporte a 4K HDR, os usuários podem curtir seus filmes e programas de TV favoritos em todos os seus dispositivos. E com seu compromisso com a segurança, o Stremio é a escolha definitiva para uma experiência de streaming sem preocupações e de alta qualidade.
-    zh_cn: Stremio提供了一个安全、现代且无缝的娱乐体验。通过其易于使用的界面和多样化的内容库，包括对4K HDR的支持，用户可以在所有设备上欣赏他们喜爱的电影和电视节目。并且凭借其对安全的承诺，Stremio是一个无忧、高质量的流媒体体验的最佳选择。
+    en_US: Stremio offers a secure, modern and seamless entertainment experience. With its easy-to-use interface and diverse content library, including 4K HDR support, users can enjoy their favorite movies and TV shows across all their devices. And with its commitment to security, Stremio is the ultimate choice for a worry-free, high-quality streaming experience.
+    pt_BR: Stremio oferece uma experiência de entretenimento segura, moderna e perfeita. Com sua interface fácil de usar e uma biblioteca de conteúdo diversificada, incluindo suporte a 4K HDR, os usuários podem curtir seus filmes e programas de TV favoritos em todos os seus dispositivos. E com seu compromisso com a segurança, o Stremio é a escolha definitiva para uma experiência de streaming sem preocupações e de alta qualidade.
+    zh_CN: Stremio提供了一个安全、现代且无缝的娱乐体验。通过其易于使用的界面和多样化的内容库，包括对4K HDR的支持，用户可以在所有设备上欣赏他们喜爱的电影和电视节目。并且凭借其对安全的承诺，Stremio是一个无忧、高质量的流媒体体验的最佳选择。
   developer: Andreas Tsarida / Stremio
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stremio/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stremio/icon.svg
   screenshot_link:
   - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stremio/screenshot-1.png
   - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stremio/screenshot-2.png
   - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stremio/screenshot-3.png
   tagline:
-    en_us: Stremio is a modern media center that gives you the freedom to watch everything you want.
-    pt_br: Stremio é um centro de mídia moderno que lhe dá a liberdade de assistir a tudo o que você quiser.
-    zh_cn: 现代的媒体中心，提供自由观看您喜欢的一切的体验。
+    en_US: Stremio is a modern media center that gives you the freedom to watch everything you want.
+    pt_BR: Stremio é um centro de mídia moderno que lhe dá a liberdade de assistir a tudo o que você quiser.
+    zh_CN: 现代的媒体中心，提供自由观看您喜欢的一切的体验。
   title:
-    en_us: Stremio
-    pt_br: Stremio
-    zh_cn: Stremio
+    en_US: Stremio
+    pt_BR: Stremio
+    zh_CN: Stremio
   index: /
   port_map: "8100"
-  version: "v1.2.5"
-  updateAt: "2025-10-19"
-  releaseNotes:
+  version: "1.3.4"
+  update_at: "2026-05-29"
+  release_notes:
     en_US: |-
-      - v1.2.5 uses Stremio web version v5.0.0-beta.27.
-      - The server URL points to the v4.20.12 desktop server script.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     en_GB: |-
-      - v1.2.5 uses Stremio web version v5.0.0-beta.27.
-      - The server URL points to the v4.20.12 desktop server script.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     it_IT: |-
-      - v1.2.5 utilizza la versione web di Stremio v5.0.0-beta.27.
-      - Il server URL punta allo script del server desktop v4.20.12.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     nb_NO: |-
-      - v1.2.5 bruker Stremio webversjon v5.0.0-beta.27.
-      - Serveren URL peker til v4.20.12 skrivebordsserverskriptet.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     zh_CN: |-
-      - v1.2.5 使用 Stremio web version v5.0.0-beta.27。
-      - server URL 指向 v4.20.12 desktop server script。
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     ja_JP: |-
-      - v1.2.5 は Stremio web version v5.0.0-beta.27 を使用します。
-      - server URL は v4.20.12 desktop server script を指します。
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     ko_KR: |-
-      - v1.2.5는 Stremio web version v5.0.0-beta.27을 사용합니다.
-      - server URL은 v4.20.12 desktop server script를 가리킵니다.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     fr_FR: |-
-      - v1.2.5 utilise Stremio web version v5.0.0-beta.27.
-      - L'URL du serveur pointe vers le v4.20.12 desktop server script.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     de_DE: |-
-      - v1.2.5 verwendet Stremio web version v5.0.0-beta.27.
-      - Die Server-URL verweist auf das v4.20.12 desktop server script.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     sv_SE: |-
-      - v1.2.5 använder Stremio webbversion v5.0.0-beta.27.
-      - Servern URL pekar på v4.20.12 skrivbordsserverskriptet.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     el_GR: |-
-      - Το v1.2.5 χρησιμοποιεί την έκδοση web Stremio v5.0.0-beta.27.
-      - Ο διακομιστής URL δείχνει στη δέσμη ενεργειών διακομιστή επιφάνειας εργασίας v4.20.12.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     hr_HR: |-
-      - v1.2.5 koristi Stremio web verziju v5.0.0-beta.27.
-      - Poslužitelj URL ukazuje na skriptu v4.20.12 stolnog poslužitelja.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     pt_PT: |-
-      - v1.2.5 utiliza a versão web do Stremio v5.0.0-beta.27.
-      - O servidor URL aponta para o script do servidor de ambiente de trabalho v4.20.12.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     ru_RU: |-
-      - v1.2.5 использует веб-версию Stremio v5.0.0-beta.27.
-      - Сервер URL указывает на сценарий настольного сервера v4.20.12.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
     tr_TR: |-
-      - v1.2.5, Stremio'nun v5.0.0-beta.27 web sürümünü kullanır.
-      - URL sunucusu, v4.20.12 masaüstü sunucusu komut dosyasına işaret eder.
+      - v1.3.4 refreshes the Stremio Docker image from the upstream release stream.
+      - Uses Stremio Web v5.0.0-beta.37.
+      - Uses the desktop server script URL for server v4.20.16.
   website: "https://www.stremio.com"
   repo: "https://github.com/tsaridas/stremio-docker"
   support: "https://github.com/tsaridas/stremio-docker/issues"

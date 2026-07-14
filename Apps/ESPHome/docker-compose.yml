@@ -6,9 +6,9 @@ services:
       resources:
         reservations:
           memory: 512M
-    image: ghcr.io/esphome/esphome:2025.11.0
+    image: ghcr.io/esphome/esphome:2026.5.1
     labels:
-      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ESPHome/icon.png
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ESPHome/icon.svg
     restart: always
     ports:
       - target: 6052
@@ -27,36 +27,36 @@ services:
       envs:
         - container: ESPHOME_DASHBOARD_USE_PING
           description:
-            en_us: Ping IP addresses instead of mDNS
-            zh_cn: Ping IP 地址而不是 mDNS
+            en_US: Ping IP addresses instead of mDNS
+            zh_CN: Ping IP 地址而不是 mDNS
         - container: TZ
           description:
-            en_us: TimeZone
-            zh_cn: 时区
+            en_US: TimeZone
+            zh_CN: 时区
       volumes:
         - container: /config
           description:
-            en_us: AppData Path Config File
-            zh_cn: AppData路径配置文件
+            en_US: AppData Path Config File
+            zh_CN: AppData路径配置文件
       ports:
         - container: '6052'
           description:
-            en_us: WebUI Port for ESPHome
-            zh_cn: ESPHome 的 WebUI 端口
+            en_US: WebUI Port for ESPHome
+            zh_CN: ESPHome 的 WebUI 端口
 x-casaos:
+  id: org.icewhale.esphome
   architectures:
     - amd64
     - arm64
-    - arm
   author: kd9lsv
-  category: "Home Automation"
+  category: Home
   description:
-    en_us: ESPHome is a system to control your microcontrollers by simple yet powerful configuration files and control them remotely through Home Automation systems.
-    zh_cn: ESPHome 是一个通过简单而强大的配置文件控制微控制器并通过家庭自动化系统远程控制它们的系统。
+    en_US: ESPHome is a system to control your microcontrollers by simple yet powerful configuration files and control them remotely through Home Automation systems.
+    zh_CN: ESPHome 是一个通过简单而强大的配置文件控制微控制器并通过家庭自动化系统远程控制它们的系统。
   tagline:
-    en_us: Home Automation systems
-    zh_cn: 家庭自动化系统
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ESPHome/icon.png
+    en_US: Home Automation systems
+    zh_CN: 家庭自动化系统
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ESPHome/icon.svg
   index: /
   main: esphome
   port_map: "6052"
@@ -66,55 +66,70 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ESPHome/screenshot-2.png
   store_app_id: esphome
   title:
-    en_us: ESPHome
-  version: "2025.11.0"
-  updateAt: "2025-11-19"
-  releaseNotes:
+    en_US: ESPHome
+  version: "2026.5.1"
+  update_at: "2026-05-24"
+  release_notes:
     en_US: |-
-      - 2025.11.0 points to the official ESPHome changelog for this release.
-      - This app tracks the upstream ESPHome 2025.11.0 release.
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
     en_GB: |-
-      - 2025.11.0 points to the official ESPHome changelog for this release.
-      - This app tracks the upstream ESPHome 2025.11.0 release.
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
     it_IT: |-
-      - 2025.11.0 punta al registro delle modifiche ufficiale ESPHome per questa versione.
-      - Questa app tiene traccia della versione upstream ESPHome 2025.11.0.
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
     nb_NO: |-
-      - 2025.11.0 peker til den offisielle ESPHome endringsloggen for denne utgivelsen.
-      - Denne appen sporer oppstrøms ESPHome 2025.11.0 utgivelsen.
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
     zh_CN: |-
-      - 2025.11.0 对应此版本的 ESPHome 官方 changelog。
-      - 该应用跟踪上游 ESPHome 2025.11.0 版本。
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
     ja_JP: |-
-      - 2025.11.0 は、このリリースの ESPHome 公式 changelog を参照します。
-      - このアプリは上流の ESPHome 2025.11.0 リリースを追跡します。
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
     ko_KR: |-
-      - 2025.11.0은 이 릴리스의 공식 ESPHome changelog를 가리킵니다.
-      - 이 앱은 업스트림 ESPHome 2025.11.0 릴리스를 따릅니다.
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
     fr_FR: |-
-      - 2025.11.0 renvoie au changelog officiel d'ESPHome pour cette version.
-      - Cette application suit la version amont ESPHome 2025.11.0.
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
     de_DE: |-
-      - 2025.11.0 verweist auf das offizielle ESPHome-Changelog für dieses Release.
-      - Diese App folgt dem Upstream-Release ESPHome 2025.11.0.
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
     sv_SE: |-
-      - 2025.11.0 pekar på den officiella ESPHome ändringsloggen för denna utgåva.
-      - Den här appen spårar uppströmsversionen av ESPHome 2025.11.0.
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
     el_GR: |-
-      - Ο 2025.11.0 δείχνει το επίσημο αρχείο καταγραφής αλλαγών ESPHome για αυτήν την έκδοση.
-      - Αυτή η εφαρμογή παρακολουθεί την ανοδική κυκλοφορία ESPHome 2025.11.0.
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
     hr_HR: |-
-      - 2025.11.0 ukazuje na službeni dnevnik promjena ESPHome za ovo izdanje.
-      - Ova aplikacija prati uzvodno izdanje ESPHome 2025.11.0.
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
     pt_PT: |-
-      - 2025.11.0 aponta para o changelog oficial do ESPHome para esta versão.
-      - Esta aplicação rastreia a versão upstream ESPHome 2025.11.0.
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
     ru_RU: |-
-      - 2025.11.0 указывает на официальный журнал изменений ESPHome для этого выпуска.
-      - Это приложение отслеживает выпуск ESPHome 2025.11.0 исходной версии.
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
     tr_TR: |-
-      - 2025.11.0 bu sürüm için resmi ESPHome değişiklik günlüğüne işaret ediyor.
-      - Bu uygulama yukarı akış ESPHome 2025.11.0 sürümünü izler.
+      - 2026.5.1 includes fixes from the ESPHome 2026.5 release cycle.
+      - Updates zeroconf dependency versions used by ESPHome.
+      - Includes upstream maintenance and bug fixes for the ESPHome dashboard/runtime.
   website: "https://esphome.io"
   repo: "https://github.com/esphome/esphome"
   support: "https://github.com/esphome/issues/issues"

@@ -20,21 +20,22 @@ services:
       ports:
         - container: "5244"
           description:
-            en_us: WebUI HTTP Port
-            zh_cn: WebUI HTTP端口
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP端口
       volumes:
         - container: /opt/alist/data
           description:
-            en_us: alist config directory.
-            zh_cn: alist 配置目录
+            en_US: alist config directory.
+            zh_CN: alist 配置目录
     container_name: alist
 x-casaos:
+  id: org.icewhale.alist
   architectures:
     - amd64
     - arm
     - arm64
   author: Xhofe
-  category: Cloud
+  category: Productivity
   description:
     en_US: |
       Alist transforms how you manage and access your files at home, whether on your TV, phone, or any other device. Unlike traditional cloud storage, Alist offers a unified experience across multiple platforms, making it a breeze to keep your media and documents at your fingertips.
@@ -127,7 +128,7 @@ x-casaos:
 
       Alist'i Zima gibi özel bulut cihazlarına dağıtmak, çoklu cihaz erişimi ile eşsiz bir kolaylık sunar ve nerede olursanız olun dosyalarınıza her zaman erişilebilir ve güvenli olmasını sağlar.
   developer: Xhofe
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Alist/screenshot-2.png
@@ -172,10 +173,10 @@ x-casaos:
       ru_RU: После установки проверьте начальный пароль в журнале контейнера (Настройки - Вверху справа - Терминал и журналы - Журналы).
       tr_TR: Kurulumdan sonra, başlangıç şifresini konteyner günlüğünde kontrol edin (Ayarlar - Sağ Üst - Terminal ve Günlükler - Günlükler).
   title:
-    en_us: Alist
-  version: "v3.40.0"
-  updateAt: "2024-11-22"
-  releaseNotes:
+    en_US: Alist
+  version: "3.40.0"
+  update_at: "2024-11-22"
+  release_notes:
     en_US: |-
       - v3.40.0 adds cryptographic random string generation for security and OAuth state generation/verification for SSO.
       - Fixes include Baidu Netdisk timestamps, local file owner preservation, closing closed channels, PikPak captcha_sign errors, and OIDC compatibility mode.

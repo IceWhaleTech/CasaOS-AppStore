@@ -1343,6 +1343,7 @@ networks:
   ragflow:
     driver: bridge
 x-casaos:
+  id: org.icewhale.ragflow
   architectures:
     - amd64
   author: RagFlow
@@ -1631,7 +1632,7 @@ x-casaos:
       - [RagFlow官方网站](https://ragflow.io)
       - [RagFlow GitHub仓库](https://github.com/infiniflow/ragflow)
   developer: RagFlow
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RagFlow/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RagFlow/icon.svg
   index: /
   main: ragflow
   port_map: "30080"
@@ -1673,9 +1674,9 @@ x-casaos:
     sv_SE: RagFlow
     tr_TR: RagFlow
     zh_CN: RagFlow
-  version: "v0.21.1"
-  updateAt: "2025-10-30"
-  releaseNotes:
+  version: "0.21.1"
+  update_at: "2025-10-30"
+  release_notes:
     en_US: |-
       - v0.21.1 experimentally adds PDF document parsing with MinerU.
       - Dataset and personal center UI/UX were improved.

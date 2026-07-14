@@ -98,6 +98,7 @@ services:
             ru_RU: Синхронизация часового пояса
             tr_TR: Saat dilimi senkronizasyonu
 x-casaos:
+  id: org.icewhale.komga
   architectures:
     - amd64
     - arm
@@ -513,7 +514,7 @@ x-casaos:
       **Daha fazla bilgi:**
       - [Komga resmi web sitesi](https://komga.org)
       - [Komga GitHub deposu](https://github.com/gotson/komga)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Komga/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Komga/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Komga/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Komga/screenshot-2.png
@@ -526,8 +527,8 @@ x-casaos:
   title:
     en_US: Komga
   version: "1.24.4"
-  updateAt: "2026-04-24"
-  releaseNotes:
+  update_at: "2026-04-24"
+  release_notes:
     en_US: |-
       - v1.24.4 fixes API age-restriction serialization, EPUB TOC parsing, Kobo raw-body proxying, KOReader Accept headers, and OPDS2 navigation/auth-logo behavior.
       - Docker base images were updated to Ubuntu 26.04 for amd64 and arm64.

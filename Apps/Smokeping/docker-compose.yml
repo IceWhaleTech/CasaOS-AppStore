@@ -5,7 +5,7 @@ services:
       PGID: "1000"
       PUID: "1000"
       TZ: Europe/London
-    image: linuxserver/smokeping:2.8.2
+    image: linuxserver/smokeping:2.9.0
     deploy:
       resources:
         reservations:
@@ -27,49 +27,50 @@ services:
       envs:
         - container: PUID
           description:
-            en_us: ""
+            en_US: ""
         - container: PGID
           description:
-            en_us: ""
+            en_US: ""
         - container: TZ
           description:
-            en_us: ""
+            en_US: ""
       ports:
         - container: "80"
           description:
-            en_us: ""
+            en_US: ""
 
       volumes:
         - container: /config
           description:
-            en_us: ""
+            en_US: ""
         - container: /data
           description:
-            en_us: ""
+            en_US: ""
     container_name: smokeping
 x-casaos:
+  id: org.icewhale.smokeping
   architectures:
     - amd64
     - arm64
   main: smokeping
   author: CasaOS Team
-  category: Network
+  category: Networking
   description:
-    en_us: keeps track of your network latency.
-    zh_cn: 用于跟踪您的网络延迟。
-    ar_sa: يبقي تتبع تأخير شبكتك.
-    de_de: hält die Verfolgung Ihrer Netzwerklatenz.
-    es_es: mantiene un registro de su latencia de red.
-    fr_fr: garde une trace de votre latence réseau.
-    hu_hu: nyomon követi a hálózati késleltetését.
-    it_it: tiene traccia della latenza della rete.
-    ru_ru: отслеживает задержку сети.
-    pl_pl: śledzi opóźnienia sieci.
-    pt_br: mantém um registro de sua latência de rede.
-    sv_se: håller reda på din nätverkslatens.
-    uk_ua: відстежує затримку мережі.
+    en_US: keeps track of your network latency.
+    zh_CN: 用于跟踪您的网络延迟。
+    ar_SA: يبقي تتبع تأخير شبكتك.
+    de_DE: hält die Verfolgung Ihrer Netzwerklatenz.
+    es_ES: mantiene un registro de su latencia de red.
+    fr_FR: garde une trace de votre latence réseau.
+    hu_HU: nyomon követi a hálózati késleltetését.
+    it_IT: tiene traccia della latenza della rete.
+    ru_RU: отслеживает задержку сети.
+    pl_PL: śledzi opóźnienia sieci.
+    pt_BR: mantém um registro de sua latência de rede.
+    sv_SE: håller reda på din nätverkslatens.
+    uk_UA: відстежує затримку мережі.
   developer: Lazylibrarian Team
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-2.png
@@ -77,87 +78,87 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-4.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/screenshot-5.png
   tagline:
-    en_us: Free open source network performance monitoring tool
-    zh_cn: 免费开源的网络性能监控工具
-    ar_sa: أداة مراقبة أداء الشبكة مفتوحة المصدر مجانًا
-    de_de: Kostenlose Open-Source-Netzwerkleistungsüberwachungswerkzeug
-    es_es: Herramienta de monitoreo de rendimiento de red de código abierto gratuita
-    fr_fr: Outil de surveillance de la performance réseau open source gratuit
-    hu_hu: Ingyenes nyílt forráskódú hálózati teljesítményfigyelő eszköz
-    it_it: Strumento di monitoraggio delle prestazioni di rete open source gratuito
-    ru_ru: Бесплатный инструмент мониторинга производительности сети с открытым исходным кодом
-    pl_pl: Darmowe narzędzie do monitorowania wydajności sieci otwartego kodu źródłowego
-    pt_br: Ferramenta de monitoramento de desempenho de rede de código aberto gratuita
-    sv_se: Gratis öppen källkodsnätverksprestandamonteringsverktyg
-    uk_ua: Безкоштовний інструмент моніторингу продуктивності мережі з відкритим вихідним кодом
+    en_US: Free open source network performance monitoring tool
+    zh_CN: 免费开源的网络性能监控工具
+    ar_SA: أداة مراقبة أداء الشبكة مفتوحة المصدر مجانًا
+    de_DE: Kostenlose Open-Source-Netzwerkleistungsüberwachungswerkzeug
+    es_ES: Herramienta de monitoreo de rendimiento de red de código abierto gratuita
+    fr_FR: Outil de surveillance de la performance réseau open source gratuit
+    hu_HU: Ingyenes nyílt forráskódú hálózati teljesítményfigyelő eszköz
+    it_IT: Strumento di monitoraggio delle prestazioni di rete open source gratuito
+    ru_RU: Бесплатный инструмент мониторинга производительности сети с открытым исходным кодом
+    pl_PL: Darmowe narzędzie do monitorowania wydajności sieci otwartego kodu źródłowego
+    pt_BR: Ferramenta de monitoramento de desempenho de rede de código aberto gratuita
+    sv_SE: Gratis öppen källkodsnätverksprestandamonteringsverktyg
+    uk_UA: Безкоштовний інструмент моніторингу продуктивності мережі з відкритим вихідним кодом
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Smokeping/thumbnail.png
   tips: {}
   title:
-    en_us: Smokeping
+    en_US: Smokeping
   port_map: "10280"
-  version: "2.8.2"
-  updateAt: "2025-05-27"
-  releaseNotes:
+  version: "2.9.0"
+  update_at: "2026-05-26"
+  release_notes:
     en_US: |-
-      - 2.8.2 is a rollup release with automated build testing and InfluxDB support.
-      - Probe handling, FPing command-line behavior, SSH handling, zoom mode URLs, cropper relative-time entry, config reloads for slaves, templates, loss colors, and graph titles were improved.
-      - Fixes include restoring FindBin, adding the missing README, and correcting spelling in FTPtransfer.pm.
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
     en_GB: |-
-      - 2.8.2 is a rollup release with automated build testing and InfluxDB support.
-      - Probe handling, FPing command-line behavior, SSH handling, zoom mode URLs, cropper relative-time entry, config reloads for slaves, templates, loss colors, and graph titles were improved.
-      - Fixes include restoring FindBin, adding the missing README, and correcting spelling in FTPtransfer.pm.
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
     it_IT: |-
-      - 2.8.2 è una versione cumulativa con test di build automatizzati e supporto InfluxDB.
-      - Sono stati migliorati la gestione della sonda, il comportamento FPing command-line, la gestione di SSH, la modalità zoom URLs, la voce cropper relative-time, i ricaricamenti della configurazione per gli slave, i modelli, i colori delle perdite e i titoli dei grafici.
-      - Le correzioni includono il ripristino di FindBin, l'aggiunta di README mancante e la correzione dell'ortografia in FTPtransfer.pm.
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
     nb_NO: |-
-      - 2.8.2 er en samleutgivelse med automatisert byggetesting og InfluxDB-støtte.
-      - Probehåndtering, FPing command-line oppførsel, SSH håndtering, zoommodus URLs, cropper relative-time oppføring, konfigurasjonsinnlastinger for slaver, maler, tapsfarger og graftitler ble forbedret.
-      - Rettelser inkluderer å gjenopprette FindBin, legge til den manglende README og korrigere stavemåten i FTPtransfer.pm.
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
     zh_CN: |-
-      - 2.8.2 是包含 automated build testing 和 InfluxDB support 的 rollup release。
-      - 改进了 probe handling、FPing command-line behavior、SSH handling、zoom mode URLs、cropper relative-time entry、slaves/templates 的 config reloads、loss colors 和 graph titles。
-      - 修复包括恢复 FindBin、添加缺失的 README，以及修正 FTPtransfer.pm 中的拼写。
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
     ja_JP: |-
-      - 2.8.2 は automated build testing と InfluxDB support を含む rollup release です。
-      - probe handling、FPing command-line behavior、SSH handling、zoom mode URLs、cropper relative-time entry、slaves/templates の config reloads、loss colors、graph titles が改善されました。
-      - FindBin の復元、欠落していた README の追加、FTPtransfer.pm のスペル修正が含まれます。
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
     ko_KR: |-
-      - 2.8.2는 automated build testing과 InfluxDB support를 포함한 rollup release입니다.
-      - probe handling, FPing command-line behavior, SSH handling, zoom mode URLs, cropper relative-time entry, slaves/templates의 config reloads, loss colors, graph titles가 개선되었습니다.
-      - FindBin 복원, 누락된 README 추가, FTPtransfer.pm의 철자 수정이 포함됩니다.
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
     fr_FR: |-
-      - 2.8.2 est une rollup release avec automated build testing et InfluxDB support.
-      - Probe handling, FPing command-line behavior, SSH handling, zoom mode URLs, cropper relative-time entry, config reloads pour slaves/templates, loss colors et graph titles ont ete ameliores.
-      - Les correctifs incluent la restauration de FindBin, l'ajout du README manquant et la correction orthographique dans FTPtransfer.pm.
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
     de_DE: |-
-      - 2.8.2 ist ein Rollup-Release mit automated build testing und InfluxDB support.
-      - Verbessert wurden probe handling, FPing command-line behavior, SSH handling, zoom mode URLs, cropper relative-time entry, config reloads fuer slaves/templates, loss colors und graph titles.
-      - Korrekturen umfassen das Wiederherstellen von FindBin, das Hinzufuegen der fehlenden README und Rechtschreibkorrekturen in FTPtransfer.pm.
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
     sv_SE: |-
-      - 2.8.2 är en samlad version med automatiserad byggtestning och InfluxDB-stöd.
-      - Sondhantering, FPing command-line beteende, SSH hantering, zoomläge URLs, cropper relative-time post, konfigurationsomladdningar för slavar, mallar, förlustfärger och graftitlar förbättrades.
-      - Korrigeringar inkluderar att återställa FindBin, lägga till den saknade README och rätta stavningen i FTPtransfer.pm.
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
     el_GR: |-
-      - Η 2.8.2 είναι μια αθροιστική κυκλοφορία με αυτοματοποιημένη δοκιμή κατασκευής και υποστήριξη InfluxDB.
-      - Βελτιώθηκαν ο χειρισμός ανιχνευτή, η συμπεριφορά FPing command-line, ο χειρισμός SSH, η λειτουργία ζουμ URLs, η είσοδος κοπής relative-time, οι επαναφορτώσεις ρυθμίσεων για σκλάβους, τα πρότυπα, τα χρώματα απώλειας και οι τίτλοι γραφημάτων.
-      - Οι διορθώσεις περιλαμβάνουν την επαναφορά FindBin, την προσθήκη του README που λείπει και τη διόρθωση της ορθογραφίας στο FTPtransfer.pm.
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
     hr_HR: |-
-      - 2.8.2 je zbirno izdanje s automatiziranim testiranjem izrade i podrškom za InfluxDB.
-      - Poboljšano je rukovanje sondom, ponašanje FPing command-line, rukovanje SSH, način zumiranja URLs, unos cropper relative-time, ponovno učitavanje konfiguracije za slave, predlošci, boje gubitka i naslovi grafikona.
-      - Popravci uključuju vraćanje FindBin, dodavanje nedostajućeg README i ispravljanje pravopisa u FTPtransfer.pm.
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
     pt_PT: |-
-      - 2.8.2 é uma versão rollup com testes de compilação automatizados e suporte para InfluxDB.
-      - Manipulação de sonda, comportamento de FPing command-line, manipulação de SSH, modo de zoom URLs, entrada de recorte relative-time, recargas de configuração para escravos, modelos, cores de perda e títulos de gráficos foram melhorados.
-      - As correções incluem restaurar FindBin, adicionar o README em falta e corrigir a ortografia em FTPtransfer.pm.
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
     ru_RU: |-
-      - 2.8.2 — это накопительный выпуск с автоматическим тестированием сборки и поддержкой InfluxDB.
-      - Улучшена обработка зонда, поведение FPing command-line, обработка SSH, режим масштабирования URLs, обрезка relative-time, перезагрузка конфигурации для ведомых устройств, шаблоны, цвета потерь и заголовки графиков.
-      - Исправления включают восстановление FindBin, добавление отсутствующего README и исправление орфографии в FTPtransfer.pm.
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
     tr_TR: |-
-      - 2.8.2, otomatik derleme testi ve InfluxDB desteği içeren bir toplama sürümüdür.
-      - Prob işleme, FPing command-line davranışı, SSH işleme, yakınlaştırma modu URLs, kırpıcı relative-time girişi, yardımcı öğeler için yapılandırma yeniden yüklemeleri, şablonlar, kayıp renkler ve grafik başlıkları iyileştirildi.
-      - Düzeltmeler arasında FindBin'nin geri yüklenmesi, eksik README'nin eklenmesi ve FTPtransfer.pm'daki yazımın düzeltilmesi yer alıyor.
+      - SmokePing 2.9.0 improves SSH probe configuration, OpenSSH and IPv6 handling, autorefresh controls, responsive images, and literal target search.
+      - The release improves InfluxDB compatibility, slave update directory creation, dark template color handling, graph borders, and base page navigation/favicon.
+      - Fixes include curl feature checks, SSH plugin compatibility with OpenSSH 9.8, and autorefresh toggling errors.
   website: "https://oss.oetiker.ch/smokeping/"
   repo: "https://github.com/oetiker/SmokePing"
   support: "https://github.com/oetiker/SmokePing/issues"

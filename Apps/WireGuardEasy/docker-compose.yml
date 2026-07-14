@@ -13,14 +13,14 @@ services:
       volumes:
         - container: /etc/wireguard
           description:
-            en_us: Contains device VPN config files.
+            en_US: Contains device VPN config files.
       ports:
         - container: '51820'
           description:
-            en_us: Wireguard VPN port
+            en_US: Wireguard VPN port
         - container: '51821'
           description:
-            en_us: WEB UI port
+            en_US: WEB UI port
     ports:
       - target: 51820
         published: "51820"
@@ -40,49 +40,50 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
     container_name: wg-easy
 x-casaos:
+  id: org.icewhale.wgeasy
   architectures:
     - amd64
     - arm
     - arm64
   main: wg-easy
   tagline:
-    en_us: WEB UI to manage WireGuard VPN.
-    zh_cn: 管理 WireGuard VPN 的 WEB UI。
-    de_de: WEB UI zur Verwaltung von WireGuard VPN.
-    es_es: WEB UI para gestionar WireGuard VPN.
-    fr_fr: WEB UI pour gérer WireGuard VPN.
-    hu_hu: WEB felhasználói felület a WireGuard VPN kezeléséhez.
-    it_it: Interfaccia WEB per la gestione di WireGuard VPN.
-    ru_ru: WEB-интерфейс для управления WireGuard VPN.
-    pl_pl: WEB UI do zarządzania WireGuard VPN.
-    pt_br: WEB UI para gerenciar o WireGuard VPN.
-    sv_se: WEB UI för att hantera WireGuard VPN.
-    uk_ua: WEB інтерфейс для керування WireGuard VPN.
+    en_US: WEB UI to manage WireGuard VPN.
+    zh_CN: 管理 WireGuard VPN 的 WEB UI。
+    de_DE: WEB UI zur Verwaltung von WireGuard VPN.
+    es_ES: WEB UI para gestionar WireGuard VPN.
+    fr_FR: WEB UI pour gérer WireGuard VPN.
+    hu_HU: WEB felhasználói felület a WireGuard VPN kezeléséhez.
+    it_IT: Interfaccia WEB per la gestione di WireGuard VPN.
+    ru_RU: WEB-интерфейс для управления WireGuard VPN.
+    pl_PL: WEB UI do zarządzania WireGuard VPN.
+    pt_BR: WEB UI para gerenciar o WireGuard VPN.
+    sv_SE: WEB UI för att hantera WireGuard VPN.
+    uk_UA: WEB інтерфейс для керування WireGuard VPN.
   description:
-    en_us: You have found the easiest way to install & manage WireGuard on any Linux host!
-    zh_cn: 您已经找到了在任何 Linux 主机上安装和管理 WireGuard 的最简单方法！
-    de_de: Sie haben den einfachsten Weg gefunden, WireGuard auf jedem Linux-Host zu installieren und zu verwalten!
-    es_es: Ha encontrado la forma más sencilla de instalar y gestionar WireGuard en cualquier host Linux.
-    fr_fr: Vous avez trouvé le moyen le plus simple d'installer et de gérer WireGuard sur n'importe quel hôte Linux !
-    hu_hu: Megtalálta a WireGuard telepítésének és kezelésének legegyszerűbb módját bármely Linux hoszton!
-    it_it: Avete trovato il modo più semplice per installare e gestire WireGuard su qualsiasi host Linux!
-    ru_ru: Вы нашли самый простой способ установки и управления WireGuard на любом Linux-хосте!
-    pl_pl: Znalazłeś najłatwiejszy sposób instalacji i zarządzania WireGuard na dowolnym hoście z systemem Linux!
-    pt_br: Você encontrou a maneira mais fácil de instalar e gerenciar o WireGuard em qualquer host Linux!
-    sv_se: Du har hittat det enklaste sättet att installera och hantera WireGuard på en Linux-värd!
-    uk_ua: Ви знайшли найпростіший спосіб встановити WireGuard та керувати ним на будь-якому комп'ютері з Linux!
+    en_US: You have found the easiest way to install & manage WireGuard on any Linux host!
+    zh_CN: 您已经找到了在任何 Linux 主机上安装和管理 WireGuard 的最简单方法！
+    de_DE: Sie haben den einfachsten Weg gefunden, WireGuard auf jedem Linux-Host zu installieren und zu verwalten!
+    es_ES: Ha encontrado la forma más sencilla de instalar y gestionar WireGuard en cualquier host Linux.
+    fr_FR: Vous avez trouvé le moyen le plus simple d'installer et de gérer WireGuard sur n'importe quel hôte Linux !
+    hu_HU: Megtalálta a WireGuard telepítésének és kezelésének legegyszerűbb módját bármely Linux hoszton!
+    it_IT: Avete trovato il modo più semplice per installare e gestire WireGuard su qualsiasi host Linux!
+    ru_RU: Вы нашли самый простой способ установки и управления WireGuard на любом Linux-хосте!
+    pl_PL: Znalazłeś najłatwiejszy sposób instalacji i zarządzania WireGuard na dowolnym hoście z systemem Linux!
+    pt_BR: Você encontrou a maneira mais fácil de instalar e gerenciar o WireGuard em qualquer host Linux!
+    sv_SE: Du har hittat det enklaste sättet att installera och hantera WireGuard på en Linux-värd!
+    uk_UA: Ви знайшли найпростіший спосіб встановити WireGuard та керувати ним на будь-якому комп'ютері з Linux!
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WireGuardEasy/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WireGuardEasy/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WireGuardEasy/screenshot-3.png
   developer: WeejeWel
   author: Sawy
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WireGuardEasy/icon.png
-  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WireGuardEasy/icon.png
-  category: Network
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WireGuardEasy/icon.svg
+  thumbnail: ""
+  category: Networking
   tips:
     before_install:
-      en_us: |
+      en_US: |
         🔧 Settings
 
         Default password: `casaos`
@@ -93,7 +94,7 @@ x-casaos:
         It's value has to be a domain (or an IP address) that points to this server (accesible from WAN).
 
         Same applies to the `WG_PORT` parameter. Change it to the port accessible from outside your LAN if it differs from the default 51820.
-      zh_cn: |
+      zh_CN: |
         🔧 设置
 
         默认密码： `casaos`
@@ -105,11 +106,11 @@ x-casaos:
 
         同样，`WG_PORT` 参数也是如此。如果与默认的 51820 不同，请将其更改为局域网外可以访问的端口。
   title:
-    en_us: WireGuard Easy
+    en_US: WireGuard Easy
   port_map: '51821'
-  version: "13"
-  updateAt: "2024-07-16"
-  releaseNotes:
+  version: "13.0.0"
+  update_at: "2024-07-16"
+  release_notes:
     en_US: |-
       - v13.0.0 introduces the new h3 framework.
       - It adds UI_CHART_TYPE and includes bug fixes.

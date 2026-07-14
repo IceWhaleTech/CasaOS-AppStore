@@ -27,11 +27,12 @@ services:
     privileged: false
     container_name: open-webui-ollama
 x-casaos:
+  id: org.icewhale.openwebuiollama
   architectures:
     - amd64
   main: open-webui-ollama
   developer: Tim J. Baek
-  category: Chat
+  category: AI
   description:
     en_US: |
       Open WebUI is a feature-rich, user-friendly self-hosted AI platform designed for fully offline operation, supporting multiple large language model runners and API integration. Its intuitive Web interface provides powerful AI deployment capabilities, ideal for developers, researchers, and AI enthusiasts building localized intelligent applications.
@@ -349,7 +350,7 @@ x-casaos:
       - [Open WebUI Belgeleri](https://docs.openwebui.com)
       - [Open WebUI GitHub Deposu](https://github.com/open-webui/open-webui)
 
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenWebUI/screenshot-2.png
@@ -532,9 +533,9 @@ x-casaos:
     ja_JP: Open WebUI
   index: /
   port_map: "3050"
-  version: "ollama"
-  updateAt: "2026-05-10"
-  releaseNotes: ""
+  version: "0.9.6"
+  update_at: "2026-05-10"
+  release_notes: ""
   website: "https://openwebui.com"
   repo: "https://github.com/open-webui/open-webui"
   support: "https://github.com/open-webui/open-webui/discussions"

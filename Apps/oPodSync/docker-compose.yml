@@ -55,6 +55,7 @@ services:
             zh_CN: Web界面端口
 
 x-casaos:
+  id: org.icewhale.opodsync
   title:
     de_DE: oPodSync
     el_GR: oPodSync
@@ -298,11 +299,11 @@ x-casaos:
       **了解更多：**
       - [oPodSync GitHub Repo](https://github.com/kd2org/oPodSync)
   developer: ganeshlab
-  category: Utilities
+  category: Media
   author: ganeshlab
   main: opodsync
   port_map: "8086"
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/oPodSync/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/oPodSync/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/oPodSync/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/oPodSync/screenshot-2.png
@@ -311,9 +312,9 @@ x-casaos:
     - arm64
   index: /
   scheme: http
-  version: "latest"
-  updateAt: "2026-05-01"
-  releaseNotes: ""
+  version: "0.0.1"
+  update_at: "2026-05-01"
+  release_notes: ""
   website: "https://fossil.kd2.org/opodsync/"
   repo: "https://github.com/kd2org/oPodSync"
   support: "https://github.com/kd2org/oPodSync/issues"
