@@ -1,0 +1,104 @@
+name: smart-pick
+services:
+  capture-score:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/smart-pick/capture-score:v1.0.1
+    container_name: capture-score
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/LCFC_APP/data/capture-score
+        target: /app/backend/data
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/LCFC_APP/data/capture-score-mount
+        target: /app/immich
+        bind:
+          create_host_path: true
+    environment:
+      MPLCONFIGDIR: /tmp/matplotlib
+      PYTHONUNBUFFERED: "1"
+      TZ: Asia/Shanghai
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import socket; s=socket.create_connection(('127.0.0.1', 3500), 5); s.close()
+      timeout: 5s
+      interval: 30s
+      retries: 3
+      start_period: 30s
+    command: []
+    cpu_shares: 90
+    deploy:
+      resources:
+        limits:
+          memory: "33115533312"
+        reservations: {}
+    logging:
+      driver: json-file
+      options:
+        max-file: "3"
+        max-size: 10m
+    network_mode: host
+    privileged: true
+
+networks:
+  default:
+    name: smart-pick_default
+
+x-casaos:
+  app_id: com.mycyberwing.smart-pick
+  main: capture-score
+  index: /
+  port_map: "3500"
+  scheme: http
+  icon: https://zimaos-store.oss-cn-beijing.aliyuncs.com/SmartPick/icon.png
+  title:
+    en_US: "Smart Pick"
+    zh_CN: 智能选片
+  tagline:
+    en_US: "A desktop web-based tool designed for professional photo selection workflows"
+    zh_CN: "面向摄影选片场景的电脑端 Web 工具"
+  description:
+    en_US: |
+      Smart Pick is a desktop web-based tool designed for professional photo selection workflows. It helps photographers, retouchers, and photo culling operators batch-import portrait photos with single, front-facing subjects, enabling automated initial filtering, manual review, final selection, and album export.
+      
+      The system provides the following capabilities:
+      - Photo Import: Support importing photos from local storage, folders, or SD cards.
+      - Library Management: View total photo count, recommended selections, burst groups, and selected photos.
+      - Automatic First-Pass Selection: Generate initial picks based on selection score thresholds, weighting templates, and burst-shot fallback rules.
+      - Burst Sequence Optimization: Review burst groups, view recommended frames, and adjust selections within each group.
+      - Focus Analysis: Filter photos for review based on focus status, such as sharp, slightly soft, or out of focus.
+      - Expression Screening: Filter photos by eye status (open, partially closed, closed) and smile detection results.
+      - Large Image Review: View scores and risk tags, zoom in for detailed inspection, and manually add or remove photos from the selection.
+      - Export Results: Confirm the final selections and upload them to the Smart Album platform.
+    zh_CN: |
+      智能摄影筛片助手是一个面向摄影选片场景的电脑端 Web 工具，帮助摄影师、修图助理或选片操作员批量导入单人正脸照片，完成自动粗筛、人工复核、最终挑片和相册导出。
+      
+      系统提供以下能力：
+      - 照片导入：支持本地上传、目录 / SD 卡导入。
+      - 当前库管理：查看照片数量、推荐数量、连拍组数量和已挑选数量。
+      - 自动初选：按入选分数线、权重模板和连拍兜底规则生成初选结果。
+      - 连拍优选：查看连拍组、推荐帧，并调整组内挑选结果。
+      - 对焦分析：按清晰、轻微软焦、失焦等状态筛选复核。
+      - 表情筛查：按睁眼、半闭眼、闭眼、笑容状态筛选复核。
+      - 大图复核：查看评分、风险标签，放大查看并手动加入 / 移出挑选。
+      - 结果导出：确认最终照片，并上传到智能相册。
+  screenshot_link:
+    - "https://zimaos-store.oss-cn-beijing.aliyuncs.com/SmartPick/screenshot-1.png"
+    - "https://zimaos-store.oss-cn-beijing.aliyuncs.com/SmartPick/screenshot-2.png"
+  tips: {}
+  author: LCFC
+  developer: dk
+  category: Media
+  architectures:
+    - amd64
+  version: "v1.0.0"
+  update_at: "2026-07-09"
+  release_notes:
+    en_US: |-
+      - First release
+    zh_CN: |-
+      - 首次上线
