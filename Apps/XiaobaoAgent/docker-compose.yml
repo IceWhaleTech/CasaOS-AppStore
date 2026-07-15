@@ -1,0 +1,148 @@
+name: xiaobao-agent
+services:
+  hermes-agent-image-preload:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/hermes-agent-custom:v1.0.0
+    container_name: xiaobao-agent-image-preload
+    restart: "no"
+    entrypoint:
+      - /bin/sh
+      - -c
+      - "true"
+
+  xiaobao-agent:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/hermes-adapter:v1.0.0
+    container_name: xiaobao-agent
+    restart: unless-stopped
+    depends_on:
+      hermes-agent-image-preload:
+        condition: service_completed_successfully
+        required: true
+    ports:
+      - mode: ingress
+        target: 8787
+        published: "8787"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/LCFC_APP/data/hermes-data
+        target: /DATA/AppData/LCFC_APP/data/hermes-data
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/LCFC_APP/data/hermes-adapter
+        target: /opt/data/hermes-adapter
+        bind:
+          create_host_path: true
+    environment:
+      API_SERVER_CORS_ORIGINS: '*'
+      API_SERVER_ENABLED: "true"
+      API_SERVER_HOST: 0.0.0.0
+      API_SERVER_KEY: change-me-local-dev
+      AI_API_HOST: host.docker.internal
+      HERMES_ADAPTER_CORS_ALLOW_CREDENTIALS: "false"
+      HERMES_ADAPTER_CORS_ORIGINS: '*'
+      HERMES_ADAPTER_HOME: /opt/data/hermes-adapter
+      HERMES_ADAPTER_HOST: 0.0.0.0
+      HERMES_ADAPTER_HOST_PORT: "8787"
+      HERMES_ADAPTER_IMAGE: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/hermes-adapter:v1.0.0
+      HERMES_ADAPTER_LOG_LEVEL: INFO
+      HERMES_ADAPTER_PORT: "8787"
+      HERMES_AGENT_COMMAND: gateway run
+      HERMES_AGENT_CUSTOM_IMAGE: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/hermes-agent-custom:v1.0.0
+      HERMES_AGENT_HEALTH_INTERVAL: "2"
+      HERMES_AGENT_HEALTH_PATH: /health
+      HERMES_AGENT_HEALTH_TIMEOUT: "60"
+      HERMES_AGENT_IMAGE: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/hermes-agent-custom:v1.0.0
+      HERMES_AGENT_PORT: "8642"
+      HERMES_BASE_IMAGE: nousresearch/hermes-agent:latest
+      HERMES_BIN: hermes
+      HERMES_CONFIG_BACKUP_MAX_SNAPSHOTS: 3
+      HERMES_CONTAINER_HOME: /opt/data
+      HERMES_CONTAINER_PREFIX: hermes-agent-
+      HERMES_DOCKER_AUTO_REMOVE: "false"
+      HERMES_DOCKER_NETWORK: hermes-adapter-docker_hermes-net
+      HERMES_EXTRA_VOLUMES: /DATA/AppData/LCFC_APP/data/ragdata:/DATA/AppData/LCFC_APP/data/ragdata:ro
+      HERMES_MAX_USERS: "10"
+      HERMES_PROFILE_CREATE_TIMEOUT: "90"
+      HERMES_PROFILE_PREFIX: hp_
+      HERMES_RUNTIME_MODE: container_per_user
+      HERMES_SHARED_HOME: /opt/data/hermes
+      HERMES_UPSTREAM: http://hermes-agent:8642
+      HERMES_USER_DATA_ROOT: /DATA/AppData/LCFC_APP/data/hermes-data/
+      HERMES_ADAPTER_TLS_AUTO_SELF_SIGNED: "true"
+      HERMES_ADAPTER_TLS_ENABLED: "true"
+      HERMES_ADAPTER_TLS_VALIDITY_DAYS: "3650"
+      HERMES_HOST_RAG_PUBLIC_DIR: /DATA/Share
+      HERMES_USER_SCENARIO: zimaos
+      ZIMAOS_API_BASE_URL: http://host.docker.internal
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      hermes-net: null
+    command: []
+    cpu_shares: 90
+    deploy:
+      resources:
+        limits:
+          memory: "33115533312"
+        reservations: {}
+
+networks:
+  default:
+    name: xiaobao-agent-docker_default
+  hermes-net:
+    name: hermes-adapter-docker_hermes-net
+    driver: bridge
+
+x-casaos:
+  id: com.mycyberwing.xiaobao-agent
+  main: xiaobao-agent
+  index: /users.html
+  port_map: "8787"
+  scheme: https
+  icon: https://zimaos-store.oss-cn-beijing.aliyuncs.com/XiaobaoAgent/icon.png
+  title:
+    en_US: "Xiaobao Agent"
+    zh_CN: "小宝智能体"
+  tagline:
+    en_US: "Xiaobao Agent, Your Personal AI Agent"
+    zh_CN: "小宝智能体，你的专属智能体"
+  description:
+    en_US: |
+      Xiaobao Agent is an AI agent management platform designed for both individuals and enterprises. Through an intuitive web-based management interface, administrators can configure AI models, connect messaging channels, manage user memories, and create dedicated AI assistants for each user.
+
+      **Key Features:**
+      - **Personal AI Assistant**: Create a dedicated AI assistant tailored to each user's needs and preferences.
+      - **Multi-Model Support**: Connect and configure leading large language model (LLM) providers and services.
+      - **Instant Messaging Integration**: Supports WeChat and other popular messaging applications, allowing users to connect their AI assistant with a simple QR code scan.
+      - **Long-Term Memory & User Profiles**: Enables personalized experiences through user profiles and persistent memory management.
+    zh_CN: |
+      小宝智能体是一款面向个人与企业的 AI 智能体管理平台。通过可视化管理界面完成模型配置、消息通道接入、用户记忆管理，为每位用户创建独立的专属 AI 助手。
+
+      **主要功能：**
+      - **专属智能体**：为每位用户打造专属智能助手。
+      - **多模型接入**：支持配置主流大语言模型服务。
+      - **即时通讯连接**：支持微信等多种即时通讯APP，通过扫码即可接入。
+      - **长期记忆与用户画像**：支持用户画像和长期记忆，提供个性化服务。
+  screenshot_link:
+    - "https://zimaos-store.oss-cn-beijing.aliyuncs.com/XiaobaoAgent/screenshot-1.png"
+    - "https://zimaos-store.oss-cn-beijing.aliyuncs.com/XiaobaoAgent/screenshot-2.png"
+    - "https://zimaos-store.oss-cn-beijing.aliyuncs.com/XiaobaoAgent/screenshot-3.png"
+  tips: {}
+  author: LCFC
+  developer: sven
+  category: AI
+  architectures:
+    - amd64
+  version: "v1.0.0"
+  update_at: "2026-07-08"
+  release_notes:
+    en_US: |-
+      - First release
+    zh_CN: |-
+      - 首次上线
