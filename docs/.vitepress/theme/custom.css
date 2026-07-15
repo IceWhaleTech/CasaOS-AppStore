@@ -159,6 +159,10 @@ body {
   --feature-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M9.09 9a3 3 0 1 1 5.83 1c0 2-3 3-3 3'/%3E%3Cpath d='M12 17h.01'/%3E%3C/svg%3E");
 }
 
+.VPHomeFeatures .item:nth-child(6) .VPFeature .title {
+  --feature-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5Z'/%3E%3Cpath d='M8 9h8'/%3E%3Cpath d='M8 12h8'/%3E%3Cpath d='M8 15h5'/%3E%3C/svg%3E");
+}
+
 .VPFeature .details {
   color: var(--vp-c-text-2);
 }
@@ -190,4 +194,159 @@ body {
 
 .vp-doc h2 {
   margin-top: 2.5rem;
+}
+
+.store-source-card {
+  margin: 1.25rem 0;
+  padding: 1.2rem;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, var(--vp-c-bg), var(--vp-c-bg-alt)),
+    radial-gradient(circle at top right, var(--vp-c-brand-soft), transparent 35%);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.05);
+}
+
+.store-source-card__head {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.store-source-card__head h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+}
+
+.store-source-card__head p {
+  margin: 0.4rem 0 0;
+  color: var(--vp-c-text-2);
+}
+
+.store-source-card__status {
+  flex: none;
+  padding: 0.28rem 0.65rem;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 999px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-2);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.store-source-card__meta {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  color: var(--vp-c-text-3);
+  font-size: 0.95rem;
+  flex-wrap: wrap;
+}
+
+.store-source-card__tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.store-source-card__tag {
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-text-2);
+  font-size: 0.85rem;
+}
+
+.store-source-card__url {
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  background: var(--vp-c-bg-soft);
+  overflow-x: auto;
+}
+
+.store-source-card__url code {
+  white-space: nowrap;
+  font-size: 0.92rem;
+}
+
+.store-source-card__actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.store-source-card__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 112px;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.store-source-card__button-icon {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+}
+
+.store-source-card__button:hover {
+  transform: translateY(-1px);
+}
+
+.store-source-card__button--brand {
+  border-color: #18181b;
+  background: #18181b;
+  color: #fafafa;
+}
+
+.store-source-card__button--brand:hover {
+  border-color: #27272a;
+  background: #27272a;
+}
+
+.store-source-card__button--ghost {
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+}
+
+.store-source-card__button--ghost:hover {
+  border-color: var(--vp-c-text-3);
+  background: var(--vp-c-bg-soft);
+}
+
+.dark .store-source-card {
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+}
+
+.dark .store-source-card__button--brand {
+  border-color: #d8d2c8;
+  background: #d8d2c8;
+  color: #17171a;
+}
+
+.dark .store-source-card__button--brand:hover {
+  border-color: #e6e0d7;
+  background: #e6e0d7;
+}
+
+@media (max-width: 640px) {
+  .store-source-card__head {
+    flex-direction: column;
+  }
+
+  .store-source-card__button {
+    width: 100%;
+  }
 }

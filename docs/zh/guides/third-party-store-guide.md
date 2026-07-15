@@ -2,6 +2,8 @@
 
 这一页保留为旧链接的精简兼容入口。当前文档已经改成五个更清晰的分区。
 
+如果你在找公开可访问的社区商店源，可以查看[推荐第三方商店源](../resources/recommended-third-party-stores.md)。
+
 ## 选择你的路径
 
 - 新建商店：[创建应用商店](../quick-start/overview.md)

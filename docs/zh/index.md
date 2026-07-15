@@ -37,9 +37,14 @@ features:
     details: 快速回答 ID 冲突、托管方式、base URL、构建要求和最小商店结构等问题。
     link: /zh/faq/overview
     linkText: 阅读 FAQ
+  - title: 生态资源
+    details: 查看推荐第三方商店源，并按统一检查清单评估是否适合分享给用户。
+    link: /zh/resources/recommended-third-party-stores
+    linkText: 浏览资源
 ---
 
 ## 选择路径
 
 - 如果你要创建新的应用商店，从 [创建应用商店](/zh/quick-start/overview) 开始。
 - 如果你已有 v1 商店，从 [从 v1 迁移](/zh/migration/overview) 开始。
+- 如果你在寻找公开社区商店源，查看 [推荐第三方商店源](/zh/resources/recommended-third-party-stores)。
