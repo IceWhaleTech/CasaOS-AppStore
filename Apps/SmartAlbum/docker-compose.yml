@@ -1,0 +1,440 @@
+name: smart-album
+services:
+  database:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
+    container_name: immich_postgres
+    restart: unless-stopped
+    ports:
+      - mode: ingress
+        target: 5432
+        published: "15432"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/LCFC_APP/data/smart_album/db/postgres
+        target: /var/lib/postgresql/data
+        bind:
+          create_host_path: true
+    environment:
+      DB_DATA_LOCATION: /DATA/AppData/LCFC_APP/data/smart_album/db/postgres
+      DB_DATABASE_NAME: immich
+      DB_PASSWORD: postgres
+      DB_USERNAME: postgres
+      IMMICH_VERSION: v2.7.5
+      POSTGRES_DB: immich
+      POSTGRES_INITDB_ARGS: --data-checksums
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      UPLOAD_LOCATION: /DATA/AppData/LCFC_APP/data/smart_album/library
+    networks:
+      default: null
+    command: []
+    cpu_shares: 90
+    deploy:
+      resources:
+        limits:
+          memory: "33115533312"
+        reservations: {}
+    shm_size: "134217728"
+
+  immich-init:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/smart-album/immich-server:v1.0.0
+    build:
+      context: /DATA
+      dockerfile: server/Dockerfile.dev
+      target: dev
+    container_name: immich_init
+    restart: unless-stopped
+    networks:
+      default: null
+    healthcheck:
+      test:
+        - CMD
+        - test
+        - -f
+        - /tmp/init-complete
+      timeout: 3s
+      interval: 2s
+      retries: 300
+      start_period: 5m0s
+    command:
+      - |
+        touch /tmp/init-complete
+        exec tail -f /dev/null
+    cpu_shares: 90
+    deploy:
+      resources:
+        limits:
+          memory: "33115533312"
+        reservations: {}
+    tmpfs:
+      - /tmp
+
+  immich-machine-learning:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/smart-album/immich-machine-learning:v1.0.0
+    container_name: immich_machine_learning
+    restart: unless-stopped
+    depends_on:
+      database:
+        condition: service_started
+        required: true
+    ports:
+      - mode: ingress
+        target: 3003
+        published: "13003"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/AI_MODELS/immich
+        target: /cache
+        bind:
+          create_host_path: true
+    environment:
+      DB_DATA_LOCATION: /DATA/AppData/LCFC_APP/data/smart_album/db/postgres
+      DB_DATABASE_NAME: immich
+      DB_PASSWORD: postgres
+      DB_USERNAME: postgres
+      IMMICH_VERSION: v2.7.5
+      UPLOAD_LOCATION: /DATA/AppData/LCFC_APP/data/smart_album/library
+    networks:
+      default: null
+    healthcheck: {}
+    command: []
+    cpu_shares: 90
+    deploy:
+      resources:
+        limits:
+          memory: "33115533312"
+        reservations: {}
+
+  immich-server:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/smart-album/immich-server:v1.0.0
+    build:
+      context: /DATA
+      dockerfile: server/Dockerfile.dev
+      target: dev
+    container_name: immich_server
+    restart: unless-stopped
+    depends_on:
+      database:
+        condition: service_started
+        required: true
+      immich-init:
+        condition: service_healthy
+        required: true
+      redis:
+        condition: service_started
+        required: true
+    ports:
+      - mode: ingress
+        target: 9230
+        published: "9230"
+        protocol: tcp
+      - mode: ingress
+        target: 9231
+        published: "9231"
+        protocol: tcp
+      - mode: ingress
+        target: 2283
+        published: "2283"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/LCFC_APP/data/smart_album/library/photos
+        target: /data
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/LCFC_APP/data/smart_album/external
+        target: /external
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+        bind:
+          create_host_path: true
+    environment:
+      DB_DATA_LOCATION: /DATA/AppData/LCFC_APP/data/smart_album/db/postgres
+      DB_DATABASE_NAME: immich
+      DB_PASSWORD: postgres
+      DB_USERNAME: postgres
+      IMMICH_BUILD: "9654404849"
+      IMMICH_BUILD_IMAGE: development
+      IMMICH_BUILD_IMAGE_URL: https://github.com/immich-app/immich/pkgs/container/immich-server
+      IMMICH_BUILD_URL: https://github.com/immich-app/immich/actions/runs/9654404849
+      IMMICH_HELMET_FILE: "true"
+      IMMICH_REPOSITORY: immich-app/immich
+      IMMICH_REPOSITORY_URL: https://github.com/immich-app/immich
+      IMMICH_SOURCE_COMMIT: af2efbdbbddc27cd06142f22253ccbbbbeec1f55
+      IMMICH_SOURCE_REF: local
+      IMMICH_SOURCE_URL: https://github.com/immich-app/immich/commit/af2efbdbbddc27cd06142f22253ccbbbbeec1f55
+      IMMICH_THIRD_PARTY_BUG_FEATURE_URL: https://github.com/immich-app/immich/issues
+      IMMICH_THIRD_PARTY_DOCUMENTATION_URL: https://docs.immich.app
+      IMMICH_THIRD_PARTY_SOURCE_URL: https://github.com/immich-app/immich/
+      IMMICH_THIRD_PARTY_SUPPORT_URL: https://docs.immich.app/community-guides
+      IMMICH_VERSION: v2.7.5
+      UPLOAD_LOCATION: /DATA/AppData/LCFC_APP/data/smart_album/library
+    networks:
+      default: null
+    healthcheck: {}
+    command:
+      - immich-dev
+    cpu_shares: 90
+    deploy:
+      resources:
+        limits:
+          memory: "33115533312"
+        reservations: {}
+    tmpfs:
+      - /tmp
+
+  immich-web:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/smart-album/immich-web:v1.0.0
+    build:
+      context: /DATA
+      dockerfile: server/Dockerfile.dev
+      target: dev
+    container_name: immich_web
+    restart: unless-stopped
+    depends_on:
+      immich-init:
+        condition: service_healthy
+        required: true
+      immich-server:
+        condition: service_started
+        required: true
+    ports:
+      - mode: ingress
+        target: 3000
+        published: "3000"
+        protocol: tcp
+      - mode: ingress
+        target: 24678
+        published: "24678"
+        protocol: tcp
+    environment:
+      DB_DATA_LOCATION: /DATA/AppData/LCFC_APP/data/smart_album/db/postgres
+      DB_DATABASE_NAME: immich
+      DB_PASSWORD: postgres
+      DB_USERNAME: postgres
+      IMMICH_VERSION: v2.7.5
+      UPLOAD_LOCATION: /DATA/AppData/LCFC_APP/data/smart_album/library
+    networks:
+      default: null
+    command:
+      - immich-web
+    cpu_shares: 90
+    deploy:
+      resources:
+        limits:
+          memory: "33115533312"
+        reservations: {}
+    tmpfs:
+      - /tmp
+
+  redis:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/valkey/valkey:9
+    container_name: immich_redis
+    restart: unless-stopped
+    networks:
+      default: null
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - redis-cli ping || exit 1
+    command: []
+    cpu_shares: 90
+    deploy:
+      resources:
+        limits:
+          memory: "33115533312"
+        reservations: {}
+
+  immich-bootstrap:
+    image: docker-cyberwing-registry.cn-hangzhou.cr.aliyuncs.com/cyberwing/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
+    container_name: immich_bootstrap
+    restart: "no"
+    depends_on:
+      database:
+        condition: service_started
+        required: true
+      immich-server:
+        condition: service_started
+        required: true
+    environment:
+      DB_DATA_LOCATION: /DATA/AppData/LCFC_APP/data/smart_album/db/postgres
+      DB_DATABASE_NAME: immich
+      DB_PASSWORD: postgres
+      DB_USERNAME: postgres
+      IMMICH_BOOTSTRAP_ADMIN_EMAIL: admin@lcfc.com
+      IMMICH_BOOTSTRAP_ADMIN_NAME: admin
+      IMMICH_BOOTSTRAP_ADMIN_PASSWORD: admin
+      IMMICH_BOOTSTRAP_API_BASE: http://immich-server:2283/api
+      IMMICH_BOOTSTRAP_API_KEY_HASH: ee178b51124472060e7dd848034f6bc5dbd14e02667ad6609f52420c6328bb4e
+      IMMICH_BOOTSTRAP_API_KEY_NAME: API Key
+      IMMICH_VERSION: v2.7.5
+      UPLOAD_LOCATION: /DATA/AppData/LCFC_APP/data/smart_album/library
+    entrypoint:
+      - /usr/bin/bash
+      - -ec
+      - |
+        set -u
+
+        API_BASE="$${IMMICH_BOOTSTRAP_API_BASE:-http://immich-server:2283/api}"
+        ADMIN_EMAIL="$${IMMICH_BOOTSTRAP_ADMIN_EMAIL:-admin@lcfc.com}"
+        ADMIN_PASSWORD="$${IMMICH_BOOTSTRAP_ADMIN_PASSWORD:-admin}"
+        ADMIN_NAME="$${IMMICH_BOOTSTRAP_ADMIN_NAME:-admin}"
+        API_KEY_NAME="$${IMMICH_BOOTSTRAP_API_KEY_NAME:-API Key}"
+        API_KEY_HASH="$${IMMICH_BOOTSTRAP_API_KEY_HASH:-ee178b51124472060e7dd848034f6bc5dbd14e02667ad6609f52420c6328bb4e}"
+
+        : "$${DB_USERNAME:?DB_USERNAME is required}"
+        : "$${DB_PASSWORD:?DB_PASSWORD is required}"
+        : "$${DB_DATABASE_NAME:?DB_DATABASE_NAME is required}"
+
+        export PGPASSWORD="$$DB_PASSWORD"
+
+        psql_immich() {
+          psql -h database -U "$$DB_USERNAME" -d "$$DB_DATABASE_NAME" "$$@"
+        }
+
+        http_request() {
+          local method="$$1"
+          local url="$$2"
+          local body="$${3:-}"
+          local target="$${url#http://}"
+          local host="$${target%%/*}"
+          local path="/$${target#*/}"
+          local port=80
+
+          if [ "$$host" != "$${host%:*}" ]; then
+            port="$${host##*:}"
+            host="$${host%:*}"
+          fi
+
+          exec 3<>"/dev/tcp/$$host/$$port" || return 1
+          if [ "$$method" = "POST" ]; then
+            printf 'POST %s HTTP/1.1\r\nHost: %s\r\nContent-Type: application/json\r\nContent-Length: %s\r\nConnection: close\r\n\r\n%s' "$$path" "$$host" "$${#body}" "$$body" >&3
+          else
+            printf 'GET %s HTTP/1.1\r\nHost: %s\r\nConnection: close\r\n\r\n' "$$path" "$$host" >&3
+          fi
+          cat <&3 >/dev/null || true
+          exec 3<&-
+          exec 3>&-
+        }
+
+        echo "[immich-bootstrap] waiting for postgres"
+        until pg_isready -h database -U "$$DB_USERNAME" -d "$$DB_DATABASE_NAME" >/dev/null 2>&1; do
+          sleep 2
+        done
+
+        echo "[immich-bootstrap] waiting for immich server"
+        until http_request GET "$$API_BASE/server/ping"; do
+          sleep 2
+        done
+
+        echo "[immich-bootstrap] waiting for migrations"
+        until [ "$$(psql_immich -At <<'SQL'
+        SELECT to_regclass('public."user"') IS NOT NULL
+            AND to_regclass('public.api_key') IS NOT NULL;
+        SQL
+        )" = "t" ]; do
+          sleep 2
+        done
+
+        if [ "$$(psql_immich -v admin_email="$$ADMIN_EMAIL" -At <<'SQL'
+        SELECT EXISTS (SELECT 1 FROM "user" WHERE email = :'admin_email');
+        SQL
+        )" != "t" ]; then
+          echo "[immich-bootstrap] creating admin user $$ADMIN_EMAIL"
+          payload=$$(printf '{"email":"%s","password":"%s","name":"%s"}' "$$ADMIN_EMAIL" "$$ADMIN_PASSWORD" "$$ADMIN_NAME")
+          http_request POST "$$API_BASE/auth/admin-sign-up" "$$payload" || true
+        fi
+
+        echo "[immich-bootstrap] waiting for admin user"
+        attempt=0
+        until [ "$$(psql_immich -v admin_email="$$ADMIN_EMAIL" -At <<'SQL'
+        SELECT EXISTS (SELECT 1 FROM "user" WHERE email = :'admin_email');
+        SQL
+        )" = "t" ]; do
+          attempt=$$((attempt + 1))
+          if [ "$$attempt" -ge 30 ]; then
+            echo "[immich-bootstrap] admin user was not created: $$ADMIN_EMAIL" >&2
+            exit 1
+          fi
+          sleep 2
+        done
+
+        echo "[immich-bootstrap] ensuring fixed api key"
+        psql_immich \
+          -v ON_ERROR_STOP=1 \
+          -v admin_email="$$ADMIN_EMAIL" \
+          -v api_key_name="$$API_KEY_NAME" \
+          -v api_key_hash="$$API_KEY_HASH" <<'SQL'
+        INSERT INTO api_key ("userId", "name", "key", "permissions")
+        SELECT id,
+                :'api_key_name',
+                decode(:'api_key_hash', 'hex'),
+                ARRAY['all']::character varying[]
+        FROM "user"
+        WHERE email = :'admin_email'
+          AND NOT EXISTS (
+            SELECT 1
+            FROM api_key
+            WHERE key = decode(:'api_key_hash', 'hex')
+          );
+        SQL
+
+        echo "[immich-bootstrap] done"
+    command: []
+
+networks:
+  default:
+    name: smart-album_default
+
+x-casaos:
+  id: com.mycyberwing.smart-album
+  main: immich-web
+  index: /
+  port_map: "3000"
+  scheme: http
+  icon: https://zimaos-store.oss-cn-beijing.aliyuncs.com/SmartAlbum/icon.png
+  title:
+    en_US: "Smart Album"
+    zh_CN: "智能相册"
+  tagline:
+    en_US: "Photo & Video Management Platform"
+    zh_CN: "照片与视频管理平台"
+  description:
+    en_US: |
+      Smart Album is a photo and video management platform designed for personal and family use.
+      Store your photos securely on your own home server and access them through a web browser. With Smart Album, you can:
+
+      - Browse all your photos and videos chronologically
+      - Upload and preserve your media for long-term storage
+      - Organize content with albums and quickly find specific photos using search
+      - Share albums with family members or generate public sharing links for others
+    zh_CN: |
+      智能相册是一款照片与视频管理平台。
+      将您的照片保存在自己的家庭服务器上，通过网页，您可以：
+      - 按时间浏览全部照片与视频
+      - 上传到服务器长期保存
+      - 用相册整理、用搜索快速找到某张照片
+      - 与家人共享相册或生成对外分享链接
+  screenshot_link:
+    - "https://zimaos-store.oss-cn-beijing.aliyuncs.com/SmartAlbum/screenshot-1.png"
+    - "https://zimaos-store.oss-cn-beijing.aliyuncs.com/SmartAlbum/screenshot-2.png"
+  tips: {}
+  author: LCFC
+  developer: dk
+  category: Media
+  architectures:
+    - amd64
+  version: "v1.0.0"
+  update_at: "2026-07-08"
+  release_notes:
+    en_US: |-
+      - First release
+    zh_CN: |-
+      - 首次上线
