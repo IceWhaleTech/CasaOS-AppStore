@@ -54,10 +54,9 @@ services:
             en_US: ""
     container_name: bazarr
 x-casaos:
-  app_id: org.icewhale.bazarr
+  id: org.icewhale.bazarr
   architectures:
     - amd64
-    - arm
     - arm64
   main: bazarr
   author: CasaOS Team

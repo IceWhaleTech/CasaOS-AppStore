@@ -46,7 +46,7 @@ services:
             en_US: Jupyter notebook directory
             zh_CN: Jupyter 笔记目录
 x-casaos:
-  app_id: org.icewhale.anaconda3
+  id: org.icewhale.anaconda3
   main: anaconda3
   architectures:
     - amd64
@@ -77,7 +77,7 @@ x-casaos:
       zh_CN: 安装完成后，请在容器日志（应用-设置-右上角-终端与日志-日志）中查看token。
   title:
     en_US: Anaconda3
-  version: "2024.10.0-1"
+  version: "2024.10-1"
   update_at: "2024-10-31"
   release_notes:
     en_US: |-

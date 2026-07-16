@@ -1,98 +1,124 @@
-name: Build And Publish Dist
+name: Build Store Artifacts
 
 on:
   push:
     branches:
-    - main
+      - main
   workflow_dispatch:
     inputs:
       base_url:
-        description: "Base URL used by build_appstore.py"
+        description: "Base URL used by the build action"
         required: false
-        default: "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages"
+        default: "https://cdn.jsdelivr.net/gh/jerrykuku/ZimaOS-AppStore@gh-pages"
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
+    env:
+      BUILD_CACHE_KEY: build-appstore-cache-${{ github.ref_name }}-${{ github.run_id }}
+      BUILD_CACHE_PREFIX: build-appstore-cache-${{ github.ref_name }}-
     steps:
-    - uses: actions/checkout@v6
+      - uses: actions/checkout@v6
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.11"
+      - name: Restore build caches
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            .cache/build_appstore/image-size-cache.json
+            .cache/build_appstore/image-digest-cache.json
+          key: ${{ env.BUILD_CACHE_KEY }}
+          restore-keys: |
+            ${{ env.BUILD_CACHE_PREFIX }}
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update && sudo apt-get install -y librsvg2-bin zip unzip
-        pip install pyyaml Pillow
+      - name: Build static appstore dist
+        id: build_v2
+        continue-on-error: true
+        uses: ./.github/actions/build-store-v2
+        with:
+          source: .
+          output: dist
+          base-url: ${{ inputs.base_url }}
+          cache-file: .cache/build_appstore/image-size-cache.json
+          digest-cache-file: .cache/build_appstore/image-digest-cache.json
+          report-json: out/build-v2-report.json
+          report-title: Build V2 Store Report
 
-    - name: Restore image size cache
-      uses: actions/cache@v4
-      with:
-        path: .cache/build_appstore/image-size-cache.json
-        key: build-appstore-image-size-cache-${{ github.ref_name }}
-        restore-keys: |
-          build-appstore-image-size-cache-
+      - name: Upload build report artifacts
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: build-v2-report
+          path: |
+            out/build-v2-report.json
+          if-no-files-found: warn
 
-    - name: Build static appstore dist
-      env:
-        BASE_URL_INPUT: ${{ inputs.base_url }}
-      run: |
-        BASE_URL="${BASE_URL_INPUT:-https://cdn.jsdelivr.net/gh/${{ github.repository }}@gh-pages}"
-        python3 scripts/build_appstore.py \
-          --source . \
-          --output dist \
-          --cache-file .cache/build_appstore/image-size-cache.json \
-          --base-url "${BASE_URL}"
-        touch dist/.nojekyll
+      - name: Fail workflow if v2 build failed
+        if: always() && steps.build_v2.outcome != 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "V2 store build failed. See build-v2-report artifact."
+          exit 1
 
-    - name: Build legacy v1 appstore zip
-      run: |
-        set -euo pipefail
-        rm -rf /tmp/appstore-v1
-        mkdir -p /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new
-        cp -rv build/* /tmp/appstore-v1/build/
-        cp -rv Apps /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new/
-        cp -v category-list.json /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new/
-        cp -v featured-apps.json /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new/
-        cp -v recommend-list.json /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new/
-        cp -v README.md /tmp/appstore-v1/build/sysroot/var/lib/casaos/appstore/default.new/
-        find /tmp/appstore-v1/build -type f -not \( \
-          -name '*.yaml' -or \
-          -name '*.yml' -or \
-          -name 'category-list.json' -or \
-          -name 'featured-apps.json' -or \
-          -name 'recommend-list.json' -or \
-          -name 'README.md' -or \
-          -name '*.sh' \
-        \) -delete
-        mkdir -p dist/store
-        (cd /tmp/appstore-v1 && zip -r "${GITHUB_WORKSPACE}/dist/store/main.zip" build)
-        unzip -t dist/store/main.zip
+      - name: Disable Jekyll
+        run: |
+          touch dist/.nojekyll
 
-    - name: Upload main.zip to OSS
-      if: github.ref == 'refs/heads/main'
-      uses: tvrcgo/upload-to-oss@master
-      with:
-        key-id: ${{ secrets.OSS_KEY_ID }}
-        key-secret: ${{ secrets.OSS_KEY_SECRET }}
-        region: oss-cn-shanghai
-        bucket: casaos
-        assets: |
-          dist/store/main.zip:/store/main.zip
+      - name: Build legacy v1 appstore zip
+        id: build_v1
+        continue-on-error: true
+        uses: ./.github/actions/build-store-v1
+        with:
+          source: .
+          output-zip: dist/store/main.zip
+          report-json: out/build-v1-report.json
+          report-title: Build V1 Store Report
 
-    - name: Deploy dist to gh-pages
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages
-        publish_dir: ./dist
+      - name: Upload v1 build report artifacts
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: build-v1-report
+          path: |
+            out/build-v1-report.json
+            dist/store/main.zip
+          if-no-files-found: warn
 
-    - name: Refresh jsDelivr cache
-      run: |
-        curl -fsSL "https://purge.jsdelivr.net/gh/${{ github.repository }}@gh-pages/index.json" || true
-        curl -fsSL "https://purge.jsdelivr.net/gh/${{ github.repository }}@gh-pages/store/main.zip" || true
+      - name: Fail workflow if v1 build failed
+        if: always() && steps.build_v1.outcome != 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "V1 store build failed. See build-v1-report artifact."
+          exit 1
+
+      - name: Upload store deliverables
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: store-deliverables
+          path: |
+            dist
+            dist/store/main.zip
+          if-no-files-found: warn
+
+      - name: Save build caches
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            .cache/build_appstore/image-size-cache.json
+            .cache/build_appstore/image-digest-cache.json
+          key: ${{ env.BUILD_CACHE_KEY }}
+
+      - name: Write build job summary
+        if: always()
+        uses: ./.github/actions/write-job-summary
+        with:
+          title: Build Summary
+          report-jsons: |
+            out/build-v2-report.json
+            out/build-v1-report.json

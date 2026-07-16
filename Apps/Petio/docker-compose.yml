@@ -60,10 +60,9 @@ networks:
   petio-network:
     driver: bridge
 x-casaos:
-  app_id: org.icewhale.petio
+  id: org.icewhale.petio
   architectures:
     - amd64
-    - arm
     - arm64
   main: petio
   description:

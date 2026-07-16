@@ -98,11 +98,10 @@ services:
             tr_TR: HomeAssistant yapılandırma dizini.
     container_name: homeassistant
 x-casaos:
-  app_id: org.icewhale.homeassistant
+  id: org.icewhale.homeassistant
   architectures:
     - amd64
     - arm64
-    - arm
   main: homeassistant
   author: CasaOS Team
   category: Home

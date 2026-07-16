@@ -31,10 +31,9 @@ services:
     network_mode: bridge
     privileged: false
 x-casaos:
-  app_id: org.icewhale.rdtclient
+  id: org.icewhale.rdtclient
   architectures:                  # a list of architectures that the app supports
       - amd64
-      - arm
       - arm64
   author: calganaygun
   category: Media
