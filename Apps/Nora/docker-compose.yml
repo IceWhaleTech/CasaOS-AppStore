@@ -14,7 +14,7 @@ x-nora-control-plane-environment: &nora-control-plane-environment
   REDIS_PORT: "6379"
   KEY_STORAGE: database
   OPENCLAW_DOCKER_PACKAGE: openclaw@2026.6.11
-  OPENCLAW_DOCKER_IMAGE: nora-openclaw-agent:casaos-v1.15.0
+  OPENCLAW_DOCKER_IMAGE: nora-openclaw-agent:casaos-v1.16.4
   HERMES_DOCKER_IMAGE: nousresearch/hermes-agent:v2026.6.5@sha256:94da6ebb770200580d37c9f6caca70aa9c19caa252d28ac953b7cb42634728ab
   MAX_VCPU: "16"
   MAX_RAM_MB: "32768"
@@ -22,19 +22,20 @@ x-nora-control-plane-environment: &nora-control-plane-environment
   MAX_AGENTS: "50"
   NORA_BACKUP_STORAGE: local
   NORA_BACKUP_DIR: /var/lib/nora-backups
-  NORA_CURRENT_VERSION: 1.15.0
-  NORA_CURRENT_COMMIT: 45ac4e34790ac8f8add203532f7e416c6e3e6c04
+  NORA_CURRENT_VERSION: 1.16.4
+  NORA_CURRENT_COMMIT: a8add7b391c3b9307c825cf3eaf7b25b160cf8f7
   NORA_GITHUB_REPO: solomon2773/nora
   NORA_INSTALL_METHOD: docker_image
   NORA_AUTO_UPGRADE_ENABLED: "false"
   NORA_OTEL_PROMETHEUS_PORT: "0"
 
-x-nora-control-plane-command: &nora-control-plane-command
+x-nora-control-plane-entrypoint: &nora-control-plane-entrypoint
   - /bin/sh
   - -ec
   - |-
     . /run/nora-secrets/nora.env
-    exec npm start
+    exec /usr/local/bin/nora-container-entrypoint "$$@"
+  - nora-secret-wrapper
 
 services:
   nginx:
@@ -74,7 +75,7 @@ services:
             en_US: Nora Web UI
 
   frontend-marketing:
-    image: ghcr.io/solomon2773/nora-frontend-marketing:v1.15.0@sha256:215612a899f04289b93780c1b2617ab0db6b0e73c41a9643cbdf48e92024e457
+    image: ghcr.io/solomon2773/nora-frontend-marketing:v1.16.4@sha256:837e40d22e3f8f9021977b2dc3bc5417fcd209e9da68cbe5305e14cb1209efd7
     platform: linux/amd64
     restart: unless-stopped
     environment:
@@ -96,7 +97,7 @@ services:
           memory: 192M
 
   frontend-dashboard:
-    image: ghcr.io/solomon2773/nora-frontend-dashboard:v1.15.0@sha256:e499b7237278fe7c238dd30ed994456825fe445393ceda7d556d3a271654526f
+    image: ghcr.io/solomon2773/nora-frontend-dashboard:v1.16.4@sha256:f651185a5a4d6c2b8db8755bb04beaf6b6ee1f5bd19257289f06ca1615430b45
     platform: linux/amd64
     restart: unless-stopped
     environment:
@@ -117,7 +118,7 @@ services:
           memory: 192M
 
   admin-dashboard:
-    image: ghcr.io/solomon2773/nora-admin-dashboard:v1.15.0@sha256:5b5b240805de642cacd74b91a1711ba565588c2bd276b1e72d714fbcf37c9745
+    image: ghcr.io/solomon2773/nora-admin-dashboard:v1.16.4@sha256:82be8b3463cff98a5e69f626b5e33e5e04b4b92482b47a0fbb0bb03b154f73a9
     platform: linux/amd64
     restart: unless-stopped
     environment:
@@ -138,10 +139,15 @@ services:
           memory: 192M
 
   backend-api:
-    image: ghcr.io/solomon2773/nora-backend-api:v1.15.0@sha256:8abfa1c8e4ab13a01f3eea205895eb05c8ba972f01eff3c01084f52ee269b255
+    image: ghcr.io/solomon2773/nora-backend-api:v1.16.4@sha256:1de18c4f92e6c6e47a32914ff05b9a2e8784c23627b58c7b3f344eb041c243dd
     platform: linux/amd64
     restart: unless-stopped
-    command: *nora-control-plane-command
+    entrypoint: *nora-control-plane-entrypoint
+    command: ["npm", "start"]
+    user: "0:0"
+    cap_drop: [ALL]
+    cap_add: [CHOWN, DAC_OVERRIDE, FOWNER, SETGID, SETUID]
+    security_opt: [no-new-privileges:true]
     environment:
       <<: *nora-control-plane-environment
       PORT: "4000"
@@ -195,10 +201,15 @@ services:
             en_US: Upgrade and release state
 
   worker-provisioner:
-    image: ghcr.io/solomon2773/nora-worker-provisioner:v1.15.0@sha256:db42ec8fa9e9509a9f31386255dce304e71b068c2048ea870dbbff8abba18f5f
+    image: ghcr.io/solomon2773/nora-worker-provisioner:v1.16.4@sha256:15cc9afc7103cf0be8371b7cbb03768147527103618ed6dbea51532e4c9d4a5a
     platform: linux/amd64
     restart: unless-stopped
-    command: *nora-control-plane-command
+    entrypoint: *nora-control-plane-entrypoint
+    command: ["npm", "start"]
+    user: "0:0"
+    cap_drop: [ALL]
+    cap_add: [CHOWN, DAC_OVERRIDE, FOWNER, SETGID, SETUID]
+    security_opt: [no-new-privileges:true]
     environment:
       <<: *nora-control-plane-environment
       DEPLOYMENT_WORKER_CONCURRENCY: "6"
@@ -243,10 +254,15 @@ services:
             en_US: Auto-generated Nora secrets shared by the control-plane services
 
   worker-backup:
-    image: ghcr.io/solomon2773/nora-worker-backup:v1.15.0@sha256:d5e836fdf13cfd36f7a7448fd8f76cf6ceda9c801c38a3a588a62466a8a58289
+    image: ghcr.io/solomon2773/nora-worker-backup:v1.16.4@sha256:100de8f5ba0e4d1a2330896ef25b92c6082ad9fb914dba01b27cb954f8f2298a
     platform: linux/amd64
     restart: unless-stopped
-    command: *nora-control-plane-command
+    entrypoint: *nora-control-plane-entrypoint
+    command: ["npm", "start"]
+    user: "0:0"
+    cap_drop: [ALL]
+    cap_add: [CHOWN, DAC_OVERRIDE, FOWNER, SETGID, SETUID]
+    security_opt: [no-new-privileges:true]
     environment:
       <<: *nora-control-plane-environment
       BACKUP_WORKER_CONCURRENCY: "2"
@@ -1356,7 +1372,7 @@ x-casaos:
     en_US: |-
       Nora is an open-source control plane for deploying, monitoring, and operating OpenClaw and Hermes AI agents on infrastructure you control. It combines operator, admin, and public web interfaces with an Express API, PostgreSQL, Redis, and dedicated provisioning and backup workers.
 
-      This package installs the complete nine-service Nora v1.15.0 control plane from immutable amd64 image digests. Cryptographic keys and the database password are generated automatically on first boot and persisted under the app data directory.
+      This package installs the complete nine-service Nora v1.16.4 control plane from immutable amd64 image digests. Cryptographic keys and the database password are generated automatically on first boot and persisted under the app data directory.
   author: Nora
   developer: Nora
   category: AI
@@ -1378,12 +1394,13 @@ x-casaos:
         - First boot generates JWT, encryption, backup-encryption, API-key hashing, and database secrets in `/DATA/AppData/$AppID/secrets/nora.env`. Protect and back up that directory together with `/DATA/AppData/$AppID/postgres`; losing or rotating the keys can invalidate sessions and make encrypted credentials or backups unreadable.
         - The Web UI uses plain HTTP on port 8080 by default. Keep it on a trusted LAN or place it behind an HTTPS reverse proxy before remote exposure.
         - The first account created at `/signup` claims the platform administrator role. Deploying the first OpenClaw agent builds a pinned runtime image locally and can take several minutes.
-  version: "1.15.0"
-  update_at: "2026-07-07"
+  version: "1.16.4"
+  update_at: "2026-07-13"
   release_notes:
     en_US: |-
-      - Pins all six Nora control-plane images to the published v1.15.0 amd64 manifests.
-      - Includes durable OpenClaw channel state and Docker durability hardening from Nora v1.15.0.
+      - Pins all six Nora control-plane images to the published v1.16.4 amd64 manifests.
+      - Enforces current Remote Docker grants across long-running operations and adds a confirmation-gated SSH host-key pin reset.
+      - Hardens agent lifecycle, backup/restore, migration, provider reconciliation, and runtime secret handling against races and stale authorization.
       - Pins the provisioned OpenClaw package to 2026.6.11 and Hermes agent image to v2026.6.5.
       - Generates persistent cryptographic secrets automatically and exposes only the Nginx web entry port.
   website: https://nora.solomontsao.com
