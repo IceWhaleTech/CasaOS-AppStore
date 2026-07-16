@@ -56,11 +56,10 @@ services:
             tr_TR: Node-RED veri dizini
     container_name: node-red
 x-casaos:
-  app_id: org.icewhale.nodered
+  id: org.icewhale.nodered
   architectures:
     - amd64
     - arm64
-    - s390x
     - arm
   main: node-red
   author: CasaOS Team

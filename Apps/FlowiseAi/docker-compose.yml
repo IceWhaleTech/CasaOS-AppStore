@@ -24,7 +24,7 @@ services:
     entrypoint: /bin/sh -c "sleep 3; flowise start"
 
 x-casaos:
-  app_id: org.icewhale.flowise
+  id: org.icewhale.flowise
   architectures:
     - amd64
   main: flowise

@@ -1,11 +1,29 @@
 .idea/
+.venv/
 .DS_Store
 .claude/
+!.github/actions/
+!.github/actions/**
 
 # Build output
 dist/
+site/
 
 # Local caches
 .cache/
 __pycache__/
 scripts/__pycache__/
+
+# env file
+.env
+
+# docs
+docs/.vitepress/.temp/
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+docs/node_modules/
+
+# ai skill assets
+findings.md
+progress.md
+task_plan.md

@@ -38,13 +38,12 @@ services:
             zh_CN: Nextcloud 配置目录。
     container_name: nextcloud
 x-casaos:
-  app_id: org.icewhale.nextcloud
+  id: org.icewhale.nextcloud
   architectures:
     - amd64
     - arm
     - arm64
     - "386"
-    - mips64le
     - ppc64le
     - s390x
   main: nextcloud
