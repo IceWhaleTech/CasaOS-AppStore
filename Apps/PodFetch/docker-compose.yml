@@ -1,0 +1,81 @@
+name: podfetch
+services:
+  podfetch:
+    image: samuel19982/podfetch:v5.2.2
+    environment:
+      DATABASE_URL: sqlite:///app/db/podcast.db
+      POLLING_INTERVAL: "300"
+      BASIC_AUTH: "false"
+      GPODDER_INTEGRATION_ENABLED: "false"
+    network_mode: bridge
+    ports:
+      - target: 8000
+        published: "8000"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/podcasts
+        target: /app/podcasts
+      - type: bind
+        source: /DATA/AppData/$AppID/db
+        target: /app/db
+    x-casaos:
+      envs:
+        - container: DATABASE_URL
+          description:
+            en_US: SQLite database location (or a PostgreSQL connection string)
+        - container: POLLING_INTERVAL
+          description:
+            en_US: Minutes between checks for new episodes
+        - container: BASIC_AUTH
+          description:
+            en_US: Set to true to enable login (required for GPodder sync); also set USERNAME and PASSWORD
+        - container: GPODDER_INTEGRATION_ENABLED
+          description:
+            en_US: Set to true to enable the GPodder-compatible sync API for apps like AntennaPod
+      ports:
+        - container: "8000"
+          description:
+            en_US: Web UI port
+      volumes:
+        - container: /app/podcasts
+          description:
+            en_US: Downloaded podcast episodes
+        - container: /app/db
+          description:
+            en_US: SQLite database
+x-casaos:
+  id: io.github.samtv12345.podfetch
+  architectures:
+    - amd64
+    - arm64
+  main: podfetch
+  author: SamTV12345
+  developer: SamTV12345
+  category: Media
+  description:
+    en_US: |
+      PodFetch is a sleek and efficient self-hosted podcast manager written in Rust. It automatically downloads new episodes of your favorite podcasts on a configurable interval and lets you listen to them from a clean, fast web UI on any device.
+
+      Its standout feature is a GPodder-compatible sync API: keep using mobile podcast apps like AntennaPod while subscriptions, episode actions, and playback positions stay in sync with your server. PodFetch also supports multi-user setups with invites and roles, playlists, favorites, OPML import and export, podcast search via iTunes or Podcast Index, and optional OIDC or basic authentication.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PodFetch/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PodFetch/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PodFetch/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PodFetch/screenshot-3.png
+  tagline:
+    en_US: Sleek podcast downloader with GPodder sync
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PodFetch/thumbnail.png
+  tips: {}
+  title:
+    en_US: PodFetch
+  index: /
+  port_map: "8000"
+  scheme: http
+  version: "5.2.2"
+  update_at: "2026-07-18"
+  website: "https://samtv12345.github.io/PodFetch/"
+  repo: "https://github.com/SamTV12345/PodFetch"
+  support: "https://github.com/SamTV12345/PodFetch/issues"
+  docs: "https://samtv12345.github.io/PodFetch/"
