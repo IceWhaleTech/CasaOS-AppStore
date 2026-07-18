@@ -1,0 +1,88 @@
+name: kaya
+services:
+  kaya:
+    image: ghcr.io/sk3tchedlexi/kaya:1.1.0
+    container_name: kaya
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/host/root:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1:/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1:ro
+    devices:
+      - /dev/nvidiactl:/dev/nvidiactl
+      - /dev/nvidia0:/dev/nvidia0
+      - /dev/nvidia-uvm:/dev/nvidia-uvm
+      - /dev/nvidia-uvm-tools:/dev/nvidia-uvm-tools
+      - /dev/nvidia-modeset:/dev/nvidia-modeset
+    privileged: true
+    pid: host
+    network_mode: host
+    environment:
+      - HOST_PROC=/host/proc
+      - HOST_SYS=/host/sys
+      - LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
+    x-casaos:
+      envs:
+        - container: HOST_PROC
+          description:
+            en_us: Host /proc mount path for reading system metrics
+        - container: HOST_SYS
+          description:
+            en_us: Host /sys mount path for reading system metrics
+        - container: LD_LIBRARY_PATH
+          description:
+            en_us: Library search path for NVIDIA management library
+      volumes:
+        - container: /host/proc
+          description:
+            en_us: Host proc filesystem (read-only)
+        - container: /host/sys
+          description:
+            en_us: Host sys filesystem (read-only)
+        - container: /host/root
+          description:
+            en_us: Host root filesystem for disk usage stats (read-only)
+        - container: /var/run/docker.sock
+          description:
+            en_us: Docker socket for listing containers (read-only)
+        - container: /usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1
+          description:
+            en_us: NVIDIA management library from host (read-only, optional)
+
+x-casaos:
+  architectures:
+    - amd64
+  main: kaya
+  author: Sk3tchedLexi
+  category: Utilities
+  description:
+    en_us: >-
+      Kaya is a minimal, self-hosted system dashboard for monitoring server
+      resources. It displays real-time CPU, GPU, RAM, and disk usage with
+      history charts, temperature monitoring for CPU, GPU, NVMe, and
+      motherboard sensors, a Docker container list, a process viewer sorted
+      by CPU or RAM, and shutdown/restart controls. Features include a
+      configurable refresh interval, light and dark themes, and custom
+      wallpaper support.
+  developer: Sk3tchedLexi
+  icon: https://cdn.jsdelivr.net/gh/sk3tchedlexi/Kaya@main/Frontend/assets/brand/kaya-icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/sk3tchedlexi/Kaya@main/screenshot.png
+  tagline:
+    en_us: A minimal self-hosted system dashboard
+  title:
+    en_us: Kaya
+  tips:
+    before_install:
+      en_us: |
+        **Requirements:**
+        - NVIDIA GPU support is optional. If no NVIDIA GPU is present, the GPU panel will show "N/A".
+        - `kernel.sysrq` must be enabled on the host for shutdown/restart buttons to work:
+          ```
+          echo 1 | sudo tee /proc/sys/kernel/sysrq
+          ```
+        - The container runs in **privileged** mode and uses **host networking** (port 9783).
+  index: /
+  port_map: "9783"
