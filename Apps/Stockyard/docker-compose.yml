@@ -1,0 +1,59 @@
+name: stockyard
+services:
+  stockyard:
+    image: ghcr.io/stockyard-dev/stockyard:latest
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+      - target: 4200
+        published: "4200"
+        protocol: tcp
+    restart: unless-stopped
+    environment:
+      PORT: "4200"
+      DATA_DIR: /data
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: PORT
+          description:
+            en_us: HTTP port for the web UI and API
+        - container: DATA_DIR
+          description:
+            en_us: Data storage directory
+      ports:
+        - container: "4200"
+          description:
+            en_us: WebUI Port
+      volumes:
+        - container: /data
+          description:
+            en_us: Stockyard data directory
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: stockyard
+  author: stockyard-dev
+  category:
+    - Developer
+  description:
+    en_us: 150 self-hosted developer tools in one binary. Bug tracker, CRM, feature flags, uptime monitoring, invoicing, webhook testing, secret management, web analytics, and more. Single Go binary with embedded SQLite. Zero external dependencies.
+  developer: Stockyard
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stockyard/icon.png
+  tagline:
+    en_us: 150 self-hosted developer tools, one binary
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stockyard/thumbnail.png
+  title:
+    en_us: Stockyard
+  index: /ui
+  port_map: "4200"
+  scheme: http
+  store_app_id: stockyard
+  is_uncontrolled: false
