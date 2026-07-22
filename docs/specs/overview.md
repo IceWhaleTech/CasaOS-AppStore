@@ -36,5 +36,5 @@ The build produces static protocol output under `dist/`:
 ## Related task guides
 
 - [Create a Store](../quick-start/overview.md)
-- [Migrate from v1](../migration/overview.md)
 - [CI/CD Overview](../cicd/overview.md)
+- [Migrate from v1](../migration/overview.md)

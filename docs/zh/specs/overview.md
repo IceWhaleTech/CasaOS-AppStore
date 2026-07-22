@@ -36,5 +36,5 @@ v2 源码仓库由这些内容构建：
 ## 相关任务指南
 
 - [创建应用商店](../quick-start/overview.md)
-- [从 v1 迁移](../migration/overview.md)
 - [CI/CD 总览](../cicd/overview.md)
+- [从 v1 迁移](../migration/overview.md)

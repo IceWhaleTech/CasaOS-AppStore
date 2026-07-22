@@ -7,10 +7,10 @@ Looking for public community store sources? See [Awesome Third-party Stores](../
 ## Choose your path
 
 - New store: [Create a Store](../quick-start/overview.md)
-- Existing v1 store: [Migrate from v1](../migration/overview.md)
 - File and field reference: [Protocol Reference](../specs/overview.md)
 - Build and publish automation: [CI/CD Overview](../cicd/overview.md)
 - Short answers: [FAQ](../faq/overview.md)
+- Existing v1 store: [Migrate from v1](../migration/overview.md)
 
 ## Core v2 flow
 

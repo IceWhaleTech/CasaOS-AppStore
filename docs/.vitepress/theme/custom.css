@@ -71,6 +71,18 @@ body {
   color: var(--vp-c-text-2);
 }
 
+@media (min-width: 960px) {
+  .VPHomeHero .main {
+    max-width: 720px;
+  }
+
+  .VPHomeHero .name,
+  .VPHomeHero .text,
+  .VPHomeHero .tagline {
+    max-width: 44rem;
+  }
+}
+
 .VPButton.brand {
   border-color: #18181b;
   background: #18181b;
