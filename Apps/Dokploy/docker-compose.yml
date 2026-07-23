@@ -1,0 +1,184 @@
+name: dokploy
+services:
+  dokploy:
+    image: dokploy/dokploy:0.26.6
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    networks:
+      - dokploy_network
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@dokploy-db:5432/${POSTGRES_DB}
+      TZ: ${TZ:-UTC}
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /etc/dokploy
+    depends_on:
+      - dokploy-db
+    x-casaos:
+      envs:
+        - container: POSTGRES_USER
+          description:
+            en_US: Database Username
+            zh_CN: 数据库用户名
+          value: dokploy
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: Database Password - Generate a secure random password!
+            zh_CN: 数据库密码 - 请生成一个安全的随机密码！
+          value: ${POSTGRES_PASSWORD:-dokploy_secure_password_change_me}
+        - container: POSTGRES_DB
+          description:
+            en_US: Database Name
+            zh_CN: 数据库名称
+          value: dokploy
+        - container: TZ
+          description:
+            en_US: Timezone (e.g. America/New_York, Europe/Berlin)
+            zh_CN: 时区（例如 America/New_York、Europe/Berlin）
+          value: UTC
+      ports:
+        - container: "3000"
+          description:
+            en_US: WebUI Port
+            zh_CN: WebUI 端口
+      volumes:
+        - container: /etc/dokploy
+          description:
+            en_US: Dokploy configuration directory
+            zh_CN: Dokploy 配置目录
+    container_name: dokploy
+  dokploy-db:
+    image: postgres:16
+    container_name: dokploy-db
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    networks:
+      - dokploy_network
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-dokploy}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-dokploy}
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql/data
+    x-casaos:
+      envs:
+        - container: POSTGRES_USER
+          description:
+            en_US: Database Username
+            zh_CN: 数据库用户名
+          value: dokploy
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: Database Password - Generate a secure random password!
+            zh_CN: 数据库密码 - 请生成一个安全的随机密码！
+          value: ${POSTGRES_PASSWORD:-dokploy_secure_password_change_me}
+        - container: POSTGRES_DB
+          description:
+            en_US: Database Name
+            zh_CN: 数据库名称
+          value: dokploy
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_US: PostgreSQL data directory
+            zh_CN: PostgreSQL 数据目录
+networks:
+  dokploy_network:
+    driver: bridge
+x-casaos:
+  id: org.icewhale.dokploy
+  architectures:
+    - amd64
+    - arm64
+  main: dokploy
+  author: CasaOS Team
+  category: Developer
+  developer: Dokploy
+  description:
+    en_US: |
+      Dokploy is a free, self-hosted deployment platform that simplifies managing applications and databases using Docker. Think of it as your own self-hosted alternative to Heroku, Vercel, and Netlify — without vendor lock-in.
+      Deploy any application from a Git repository using Nixpacks, Heroku Buildpacks, or a custom Dockerfile. Full Docker Compose support lets you run complex multi-service stacks with a single click. Dokploy also provides built-in management of PostgreSQL, MySQL, MariaDB, MongoDB, and Redis databases, complete with backup support.
+      A real-time monitoring dashboard gives you visibility into CPU, memory, and network usage across all running services. Advanced user management with roles and permissions keeps deployments secure and organized. Complete API and CLI access enables automation and integration into existing workflows.
+      **Key Features:**
+      - Deploy from Git via Nixpacks, Heroku Buildpacks, or Dockerfile
+      - Native Docker Compose support for multi-service applications
+      - Built-in database management (PostgreSQL, MySQL, MariaDB, MongoDB, Redis)
+      - Real-time monitoring of CPU, memory, and network
+      - Advanced user management with roles and permissions
+      - Full REST API and CLI access
+      - Open-source templates for popular tools (Supabase, Cal.com, PocketBase)
+      - No vendor lock-in — fully self-hosted and open-source
+      **Learn More:**
+      - [Dokploy Official Website](https://dokploy.com)
+      - [Dokploy GitHub Repository](https://github.com/dokploy/dokploy)
+      - [Documentation](https://docs.dokploy.com)
+    zh_CN: |
+      Dokploy 是一个免费的自托管部署平台，利用 Docker 简化应用程序和数据库的管理。它是 Heroku、Vercel 和 Netlify 的自托管替代方案，无厂商锁定。
+      可通过 Nixpacks、Heroku Buildpacks 或自定义 Dockerfile 从 Git 仓库部署任何应用程序。完整的 Docker Compose 支持让您一键运行复杂的多服务堆栈。Dokploy 还内置了 PostgreSQL、MySQL、MariaDB、MongoDB 和 Redis 数据库管理，并支持备份。
+      实时监控仪表板让您了解所有运行服务的 CPU、内存和网络使用情况。具有角色和权限的高级用户管理保持部署安全有序。完整的 REST API 和 CLI 访问支持自动化和与现有工作流程的集成。
+      **主要特点：**
+      - 通过 Nixpacks、Heroku Buildpacks 或 Dockerfile 从 Git 部署
+      - 原生 Docker Compose 支持多服务应用程序
+      - 内置数据库管理（PostgreSQL、MySQL、MariaDB、MongoDB、Redis）
+      - CPU、内存和网络实时监控
+      - 具有角色和权限的高级用户管理
+      - 完整 REST API 和 CLI 访问
+      - 流行工具的开源模板（Supabase、Cal.com、PocketBase）
+      - 无厂商锁定 — 完全自托管和开源
+  icon: https://raw.githubusercontent.com/Dokploy/dokploy/refs/heads/canary/apps/dokploy/public/icon.svg
+  #screenshot_link:
+   # - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dokploy/screenshot-1.png
+    #- https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dokploy/screenshot-2.png
+    #- https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dokploy/screenshot-3.png
+  tagline:
+    en_US: Self-hosted PaaS — deploy apps and databases with Docker
+    zh_CN: 自托管 PaaS — 使用 Docker 部署应用和数据库
+  tips:
+    before_install:
+      en_US: |
+        **Important notes before installing Dokploy:**
+        1. **Docker socket access**: Dokploy mounts `/var/run/docker.sock` to manage Docker on the host. This grants it full control over your Docker environment.
+        2. **Port 3000**: The web interface uses port 3000. Ensure this port is not already in use on your system.
+        3. **First account**: The first user registered after installation becomes the administrator.
+        4. **Swarm/cluster features**: Multi-node Docker Swarm deployments require additional host-level setup (running `docker swarm init` on the host) beyond what this app entry provides. Single-node deployments work out of the box.
+        5. **Traefik proxy**: Dokploy's built-in Traefik reverse proxy (ports 80/443) is not started by this app entry to avoid conflicts with other services (e.g. Nginx Proxy Manager). You can configure it manually from within Dokploy after installation.
+        6. **Database password**: You must change the default `POSTGRES_PASSWORD` before installing. Set a secure password in the CasaOS installation dialog.
+      zh_CN: |
+        **安装 Dokploy 前的重要说明：**
+        1. **Docker 套接字访问**：Dokploy 挂载 `/var/run/docker.sock` 来管理主机上的 Docker，这将授予其对 Docker 环境的完全控制权。
+        2. **端口 3000**：Web 界面使用端口 3000，请确保系统上此端口未被占用。
+        3. **首个账户**：安装后注册的第一个用户将成为管理员。
+        4. **Swarm/集群功能**：多节点 Docker Swarm 部署需要在主机上额外运行 `docker swarm init` 进行设置。单节点部署开箱即用。
+        5. **Traefik 代理**：Dokploy 内置的 Traefik 反向代理（端口 80/443）在此应用条目中未启动，以避免与其他服务（如 Nginx Proxy Manager）冲突，可在安装后在 Dokploy 内手动配置。
+        6. **数据库密码**：安装前必须更改默认的 `POSTGRES_PASSWORD`。在 CasaOS 安装对话框中设置安全密码。
+  title:
+    en_US: Dokploy
+  index: /
+  port_map: "3000"
+  version: "0.26.6"
+  update_at: "2026-07-12"
+  release_notes:
+    en_US: |-
+      - v0.26.6: Bug fixes and stability improvements
+    zh_CN: |-
+      - v0.26.6：问题修复和稳定性改进
+  website: "https://dokploy.com"
+  repo: "https://github.com/dokploy/dokploy"
+  support: "https://github.com/dokploy/dokploy/issues"
+  docs: "https://docs.dokploy.com/docs/core"
