@@ -8,14 +8,13 @@ services:
     ports:
       - "5500:3000"
     volumes:
-      - bladevault-data:/app/data
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
     environment:
       NODE_ENV: production
       PORT: "3000"
       BLADEVAULT_DATA_DIR: /app/data
-
-volumes:
-  bladevault-data:
 
 x-casaos:
   id: io.github.dedkola.bladevault
