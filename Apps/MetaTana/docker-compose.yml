@@ -18,6 +18,7 @@ services:
       - PUID=1000
       - PGID=1000
       - MEDIA_DIRS=/media
+      - METATANA_INSTALL_CHANNEL=casaos
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:3000/api/health >/dev/null || exit 1"]
@@ -36,6 +37,9 @@ services:
         - container: MEDIA_DIRS
           description:
             en_US: Optional. Comma-separated media roots inside the container. Defaults to /media.
+        - container: METATANA_INSTALL_CHANNEL
+          description:
+            en_US: Identifies this install as coming from the CasaOS store. Leave as is.
       ports:
         - container: "3000"
           description:
