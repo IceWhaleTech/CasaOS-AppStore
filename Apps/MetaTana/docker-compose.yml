@@ -1,0 +1,102 @@
+name: metatana
+services:
+  metatana:
+    image: ghcr.io/metatana/metatana-app:1.1.4
+    container_name: metatana
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/metatana/data
+        target: /app/data
+      - type: bind
+        source: /DATA/Media
+        target: /media
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MEDIA_DIRS=/media
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:3000/api/health >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: User ID MetaTana runs as. Must be able to read and write your media.
+        - container: PGID
+          description:
+            en_US: Group ID MetaTana runs as. Must be able to read and write your media.
+        - container: MEDIA_DIRS
+          description:
+            en_US: Optional. Comma-separated media roots inside the container. Defaults to /media.
+      ports:
+        - container: "3000"
+          description:
+            en_US: Web interface port
+      volumes:
+        - container: /app/data
+          description:
+            en_US: Persistent app data — library database, settings, thumbnails, and logs.
+        - container: /media
+          description:
+            en_US: Your media library. Read/write lets MetaTana rename files and write artwork.
+
+x-casaos:
+  id: com.metatana.metatana
+  main: metatana
+  index: /
+  port_map: "3000"
+  scheme: http
+  icon: icon.svg
+  thumbnail: thumbnail.png
+  screenshot_link:
+    - screenshot-1.png
+    - screenshot-2.png
+    - screenshot-3.png
+    - screenshot-4.png
+    - screenshot-5.png
+  title:
+    en_US: MetaTana
+  tagline:
+    en_US: Drop a folder. Everything happens.
+  description:
+    en_US: |
+      MetaTana is an AI-powered media manager for the library you already own.
+
+      Point it at a folder. MetaTana scans your files, identifies each movie, show, and anime title using
+      AI vision and trusted metadata providers, then enriches everything with artwork, subtitles,
+      trailers, cast, and crew. It renames and organizes files into a clean, consistent structure, and
+      writes sidecar metadata your player can read.
+
+      It fixes the things that make a library feel broken: wrong matches, missing posters, duplicate
+      copies, inconsistent naming, and half-identified seasons. A health score tells you what still
+      needs attention.
+
+      MetaTana is metadata-only and downloader-agnostic. It sits between your library and your player,
+      works alongside any media server — Plex, Jellyfin, Kodi, Emby — and never touches how your files
+      got there.
+  tips:
+    en_US: |
+      Map your media share to /media and keep app data on /app/data so your library survives updates.
+      Set PUID and PGID to a user that can read and write your media. Sign in with an email code on
+      first run; a free account is enough for local library features.
+  author: MetaTana
+  developer: Watari Labs Pty Ltd
+  category: Media
+  architectures:
+    - amd64
+    - arm64
+  version: "1.1.4"
+  update_at: "2026-07-25"
+  release_notes:
+    en_US: First CasaOS release. Multi-architecture image, persistent library data, and email-code sign-in.
+  website: https://metatana.com
+  docs: https://metatana.com/docs
+  support: https://github.com/metatana/support/discussions
