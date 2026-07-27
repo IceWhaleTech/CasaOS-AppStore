@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immich Album Creator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0d1117; color: #c9d1d9; min-height: 100vh; display: flex; justify-content: center; padding: 30px; }
+        .container { max-width: 900px; width: 100%; background: #161b22; border-radius: 16px; padding: 32px; border: 1px solid #30363d; }
+        h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; color: #f0f6fc; display: flex; align-items: center; gap: 12px; }
+        .badge { font-size: 12px; background: #238636; color: #fff; padding: 2px 14px; border-radius: 20px; font-weight: 500; }
+        .subtitle { color: #8b949e; font-size: 15px; border-bottom: 1px solid #30363d; padding-bottom: 16px; margin-bottom: 24px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+        .card { background: #0d1117; border-radius: 10px; padding: 20px; border: 1px solid #30363d; }
+        .card h3 { font-size: 14px; color: #8b949e; margin-bottom: 16px; }
+        .field { margin-bottom: 14px; }
+        .field label { display: block; font-size: 13px; color: #8b949e; margin-bottom: 4px; }
+        .field input, .field select { width: 100%; background: #161b22; color: #c9d1d9; border: 1px solid #30363d; border-radius: 6px; padding: 8px 12px; font-size: 14px; }
+        .field input:focus, .field select:focus { outline: none; border-color: #238636; }
+        .btn-group { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0; }
+        .btn { padding: 10px 24px; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .btn-primary { background: #238636; color: #fff; }
+        .btn-primary:hover { background: #2ea043; }
+        .btn-secondary { background: #21262d; color: #c9d1d9; border: 1px solid #30363d; }
+        .btn-secondary:hover { background: #30363d; }
+        .btn-danger { background: #da3633; color: #fff; }
+        .btn-danger:hover { background: #f85149; }
+        .btn-success { background: #1f6feb; color: #fff; }
+        .btn-success:hover { background: #388bfd; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .log-section { background: #0d1117; border-radius: 10px; padding: 16px; border: 1px solid #30363d; max-height: 300px; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 12px; line-height: 1.6; }
+        .log-entry { padding: 2px 0; border-bottom: 1px solid #161b22; }
+        .log-entry .time { color: #8b949e; margin-right: 12px; }
+        .log-entry .msg { color: #c9d1d9; }
+        .log-entry .msg.error { color: #f85149; }
+        .log-entry .msg.success { color: #3fb950; }
+        .log-entry .msg.warning { color: #d29922; }
+        .status-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #0d1117; border-radius: 10px; border: 1px solid #30363d; margin-bottom: 20px; }
+        .status-bar .status { font-weight: 600; }
+        .status-bar .status.running { color: #3fb950; }
+        .status-bar .status.idle { color: #8b949e; }
+        .status-bar .status.error { color: #f85149; }
+        .footer { margin-top: 16px; text-align: center; color: #8b949e; font-size: 12px; }
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .container { padding: 16px; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📸 Immich Album Creator <span class="badge">v1.0</span></h1>
+    <div class="subtitle">Configure your Immich connection and album creation settings</div>
+
+    <div class="status-bar">
+        <span>Status: <span id="statusText" class="status idle">Idle</span></span>
+        <span id="lastRunText" style="color:#8b949e;font-size:13px;">Last run: Never</span>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn btn-primary" id="runBtn">▶ Run Now</button>
+        <button class="btn btn-secondary" id="dryRunBtn">🔍 Dry Run</button>
+        <button class="btn btn-secondary" id="saveBtn">💾 Save Config</button>
+        <button class="btn btn-secondary" id="refreshBtn">🔄 Refresh</button>
+    </div>
+
+    <div class="grid">
+        <!-- Immich Config -->
+        <div class="card">
+            <h3>🔐 Immich Connection</h3>
+            <div class="field">
+                <label>API Key</label>
+                <input type="password" id="apiKey" placeholder="Your Immich API key">
+            </div>
+            <div class="field">
+                <label>Immich Server URL</label>
+                <input type="text" id="immichServer" placeholder="http://192.168.1.7:2283">
+            </div>
+            <div class="field">
+                <label>Owner ID (optional)</label>
+                <input type="text" id="ownerId" placeholder="Leave blank for all libraries">
+            </div>
+        </div>
+
+        <!-- Database Config -->
+        <div class="card">
+            <h3>🗄️ PostgreSQL Database</h3>
+            <div class="field">
+                <label>Container Name</label>
+                <input type="text" id="dbContainer" placeholder="immich-postgres">
+            </div>
+            <div class="field">
+                <label>User</label>
+                <input type="text" id="dbUser" placeholder="casaos">
+            </div>
+            <div class="field">
+                <label>Database Name</label>
+                <input type="text" id="dbName" placeholder="immich">
+            </div>
+            <div class="field">
+                <label>Password</label>
+                <input type="password" id="dbPassword" placeholder="Your database password">
+            </div>
+        </div>
+    </div>
+
+    <!-- Schedule -->
+    <div class="card" style="margin-bottom:20px;">
+        <h3>⏰ Schedule (Cron)</h3>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <input type="text" id="cronSchedule" placeholder="0 */6 * * *" style="flex:1; background:#161b22; color:#c9d1d9; border:1px solid #30363d; border-radius:6px; padding:8px 12px; font-size:14px;">
+            <button class="btn btn-secondary" id="scheduleBtn">Set Schedule</button>
+        </div>
+    </div>
+
+    <!-- Logs -->
+    <div class="log-section" id="logContainer">
+        <div class="log-entry"><span class="time">[System]</span><span class="msg">Ready. Click "Run Now" to start.</span></div>
+    </div>
+
+    <div class="footer">Immich Folder Album Creator • CasaOS</div>
+</div>
+
+<script>
+    let config = {};
+    let status = {};
+
+    // --- Helpers ---
+    function addLog(message, type = 'info') {
+        const container = document.getElementById('logContainer');
+        const entry = document.createElement('div');
+        entry.className = 'log-entry';
+        const time = new Date().toLocaleTimeString();
+        const colorClass = type === 'error' ? 'error' : type === 'success' ? 'success' : type === 'warning' ? 'warning' : '';
+        entry.innerHTML = `<span class="time">[${time}]</span><span class="msg ${colorClass}">${message}</span>`;
+        container.appendChild(entry);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    async function apiCall(endpoint, options = {}) {
+        const response = await fetch(endpoint, {
+            ...options,
+            headers: { 'Content-Type': 'application/json', ...(options.headers || {}) }
+        });
+        return response.json();
+    }
+
+    // --- Load config and status ---
+    async function loadConfig() {
+        try {
+            config = await apiCall('/api/config');
+            document.getElementById('apiKey').value = config.apiKey || '';
+            document.getElementById('immichServer').value = config.immichServer || '';
+            document.getElementById('ownerId').value = config.ownerId || '';
+            document.getElementById('dbContainer').value = config.dbContainer || '';
+            document.getElementById('dbUser').value = config.dbUser || '';
+            document.getElementById('dbName').value = config.dbName || '';
+            document.getElementById('dbPassword').value = config.dbPassword || '';
+            document.getElementById('cronSchedule').value = config.cronSchedule || '';
+        } catch(e) { console.error(e); }
+    }
+
+    async function loadStatus() {
+        try {
+            status = await apiCall('/api/status');
+            const statusEl = document.getElementById('statusText');
+            statusEl.textContent = status.status || 'Idle';
+            statusEl.className = 'status ' + (status.status === 'running' ? 'running' : 'idle');
+            document.getElementById('lastRunText').textContent = status.lastRun ? `Last run: ${new Date(status.lastRun).toLocaleString()}` : 'Last run: Never';
+        } catch(e) { console.error(e); }
+    }
+
+    // --- Save config ---
+    document.getElementById('saveBtn').addEventListener('click', async () => {
+        const newConfig = {
+            apiKey: document.getElementById('apiKey').value,
+            immichServer: document.getElementById('immichServer').value,
+            ownerId: document.getElementById('ownerId').value,
+            dbContainer: document.getElementById('dbContainer').value,
+            dbUser: document.getElementById('dbUser').value,
+            dbName: document.getElementById('dbName').value,
+            dbPassword: document.getElementById('dbPassword').value,
+            cronSchedule: document.getElementById('cronSchedule').value
+        };
+        try {
+            const result = await apiCall('/api/config', {
+                method: 'POST',
+                body: JSON.stringify(newConfig)
+            });
+            if (result.success) {
+                addLog('Configuration saved successfully.', 'success');
+                config = newConfig;
+            } else {
+                addLog('Error saving config.', 'error');
+            }
+        } catch(e) {
+            addLog('Error: ' + e.message, 'error');
+        }
+    });
+
+    // --- Run script ---
+    async function runScript(dryRun = false) {
+        const btn = document.getElementById('runBtn');
+        const dryBtn = document.getElementById('dryRunBtn');
+        btn.disabled = true; dryBtn.disabled = true;
+        document.getElementById('statusText').textContent = 'Running...';
+        document.getElementById('statusText').className = 'status running';
+        addLog(dryRun ? 'Starting dry run...' : 'Starting album creation...', 'info');
+
+        try {
+            const result = await apiCall('/api/run', {
+                method: 'POST',
+                body: JSON.stringify({ dryRun })
+            });
+            if (result.success) {
+                addLog(result.message || 'Completed successfully!', 'success');
+                document.getElementById('statusText').textContent = 'Idle';
+                document.getElementById('statusText').className = 'status idle';
+            } else {
+                addLog('Error: ' + (result.error || 'Unknown error'), 'error');
+                document.getElementById('statusText').textContent = 'Error';
+                document.getElementById('statusText').className = 'status error';
+            }
+        } catch(e) {
+            addLog('Error: ' + e.message, 'error');
+            document.getElementById('statusText').textContent = 'Error';
+            document.getElementById('statusText').className = 'status error';
+        }
+        btn.disabled = false; dryBtn.disabled = false;
+        await loadStatus();
+    }
+
+    document.getElementById('runBtn').addEventListener('click', () => runScript(false));
+    document.getElementById('dryRunBtn').addEventListener('click', () => runScript(true));
+    document.getElementById('refreshBtn').addEventListener('click', () => { loadConfig(); loadStatus(); addLog('Refreshed.', 'success'); });
+    document.getElementById('scheduleBtn').addEventListener('click', async () => {
+        const schedule = document.getElementById('cronSchedule').value;
+        if (!schedule) { addLog('Please enter a cron schedule.', 'warning'); return; }
+        // Save schedule by updating config
+        const newConfig = { ...config, cronSchedule: schedule };
+        try {
+            const result = await apiCall('/api/config', {
+                method: 'POST',
+                body: JSON.stringify(newConfig)
+            });
+            if (result.success) {
+                addLog(`Schedule set to: ${schedule}`, 'success');
+            } else {
+                addLog('Error saving schedule.', 'error');
+            }
+        } catch(e) { addLog('Error: ' + e.message, 'error'); }
+    });
+
+    // Initial load
+    loadConfig();
+    loadStatus();
+    // Refresh status every 30 seconds
+    setInterval(loadStatus, 30000);
+</script>
+</body>
+</html>
