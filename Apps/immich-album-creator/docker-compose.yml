@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  immich-album-creator:
+    build:
+      context: ./files
+      dockerfile: Dockerfile
+    container_name: immich-album-creator
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /DATA/AppData/immich-album-creator/data:/data
+    ports:
+      - "8080:8080"
+    environment:
+      - TZ=UTC
+      # All other settings are stored in /data/config.json and set via UI

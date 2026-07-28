@@ -1,0 +1,19 @@
+{
+  "id": "immich-album-creator",
+  "name": "Immich Album Creator",
+  "version": "1.0.0",
+  "author": "CasaOS Community",
+  "description": "Creates albums from your Immich external library folders. Fully configurable via web UI.",
+  "icon": "https://raw.githubusercontent.com/your-repo/immich-album-creator/main/icon.png",
+  "categories": ["media", "automation"],
+  "compose": "docker-compose.yml",
+  "ports": [8080],
+  "volumes": [
+    "/var/run/docker.sock:/var/run/docker.sock:ro",
+    "/DATA/AppData/immich-album-creator/data:/data"
+  ],
+  "environment": [
+    "TZ=UTC"
+  ],
+  "webui": "http://[IP]:[PORT:8080]"
+}
