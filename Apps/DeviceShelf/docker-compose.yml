@@ -1,0 +1,79 @@
+name: deviceshelf
+services:
+  deviceshelf:
+    image: ghcr.io/wealthwallet/deviceshelf-server:1.7.7
+    container_name: deviceshelf
+    # Layer-2 discovery (ARP, mDNS, passive DHCP) only works inside the host's
+    # network namespace. On a bridge the scanner would inventory Docker's own
+    # subnet and report an almost empty LAN, which looks like a broken app
+    # rather than a packaging choice — hence host, and hence no `ports:`.
+    network_mode: host
+    cap_add:
+      - NET_RAW
+      - NET_BIND_SERVICE
+    environment:
+      # Left empty on purpose: the server mints a random token on first start
+      # and writes it to /DATA/AppData/deviceshelf/data/DeviceShelf/api-token,
+      # which CasaOS users can open in the Files app. Setting a fixed token here
+      # would put a credential in a public app-store manifest.
+      DEVICESHELF_API_TOKEN: ""
+      DEVICESHELF_API_PORT: "8088"
+      DEVICESHELF_INTERVAL: "5m"
+      DEVICESHELF_PORTSCAN: "true"
+      TZ: $TZ
+    restart: unless-stopped
+    # A named volume, not a bind mount under /DATA/AppData. The image runs as
+    # uid 10001 and CasaOS creates AppData directories as root, so a bind mount
+    # leaves the server unable to create /data/DeviceShelf: it logs "permission
+    # denied" and restart-loops. Verified on Ubuntu 24.04 — bind mount crash
+    # loop, named volume healthy, because Docker seeds a fresh named volume from
+    # the image and keeps its ownership.
+    volumes:
+      - deviceshelf-data:/data
+    x-casaos:
+      volumes:
+        - container: /data
+          description:
+            en_US: Device inventory, history, settings and the licence.
+volumes:
+  deviceshelf-data:
+x-casaos:
+  id: app.deviceshelf.server
+  architectures:
+    - amd64
+    - arm64
+  main: deviceshelf
+  author: Christof Müller
+  developer: Christof Müller
+  category: Network
+  description:
+    en_US: |
+      DeviceShelf scans your LAN and keeps an inventory of what is on it: vendor,
+      hostname, operating system, device type, open ports and the services behind
+      them. Everything runs on this machine — no account, and nothing about your
+      network leaves it unless you switch on one of the optional lookups.
+
+      It alerts on new devices, on devices dropping offline and on newly opened
+      ports through ntfy, Gotify, a webhook or any Apprise target, with a digest
+      mode so a rebooting switch does not produce forty notifications. Favourites
+      are published to Home Assistant over MQTT discovery as native entities.
+
+      Paid software: 59 EUR once, no subscription, 7-day trial without a card.
+      The same licence covers the desktop and mobile apps.
+  tagline:
+    en_US: See every device on your network, what it is, and what it has open
+  title:
+    en_US: DeviceShelf
+  icon: https://deviceshelf.app/assets/img/icon.png
+  thumbnail: https://deviceshelf.app/assets/img/icon.png
+  index: /
+  port_map: "8088"
+  scheme: http
+  tips:
+    before_install:
+      en_US: |
+        Host networking is required, so the dashboard answers on port 8088 of this
+        machine. The server mints an access token on first start. Read it from the
+        CasaOS terminal with:
+          docker exec deviceshelf deviceshelf-server -token
+  webui_port: 8088
