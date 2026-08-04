@@ -1,0 +1,109 @@
+name: libredb-studio
+services:
+  libredb-studio:
+    image: ghcr.io/libredb/libredb-studio:0.9.66
+    container_name: libredb-studio
+    restart: unless-stopped
+    ports:
+      - target: 3000
+        published: "3016"
+        protocol: tcp
+    environment:
+      ADMIN_EMAIL: admin@libredb.org
+      ADMIN_PASSWORD: changeme123
+      JWT_SECRET: libredb-studio-change-this-to-a-long-random-secret-value-min-48
+      STORAGE_PROVIDER: sqlite
+      STORAGE_SQLITE_PATH: /app/data/libredb-storage.db
+      AUTH_COOKIE_SECURE: "false"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "require('http').get('http://127.0.0.1:3000/api/db/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    network_mode: bridge
+    privileged: false
+    x-casaos:
+      envs:
+        - container: ADMIN_EMAIL
+          description:
+            en_US: Email address for the initial admin account created on first start.
+            zh_CN: 首次启动时创建的初始管理员账户的电子邮件地址。
+        - container: ADMIN_PASSWORD
+          description:
+            en_US: Password for the initial admin account (minimum 8 characters). Change this before the first login, otherwise anyone on your LAN can sign in.
+            zh_CN: 初始管理员账户的密码（至少 8 个字符）。请在首次登录前修改，否则局域网内任何人都可以登录。
+        - container: JWT_SECRET
+          description:
+            en_US: Secret key used to sign authentication tokens (minimum 32 characters). Set a long random value.
+            zh_CN: 用于签署身份验证令牌的密钥（至少 32 个字符）。请设置一个较长的随机值。
+        - container: STORAGE_PROVIDER
+          description:
+            en_US: Storage backend. Keep as "sqlite" for a self-contained setup.
+            zh_CN: 存储后端。独立部署请保持为 "sqlite"。
+        - container: STORAGE_SQLITE_PATH
+          description:
+            en_US: Path to the SQLite database file inside the persistent data volume.
+            zh_CN: 持久化数据卷内 SQLite 数据库文件的路径。
+        - container: AUTH_COOKIE_SECURE
+          description:
+            en_US: Keep "false" so the auth cookie works over plain HTTP on the LAN, otherwise login fails.
+            zh_CN: 请保持为 "false"，以便身份验证 Cookie 在局域网的普通 HTTP 下正常工作，否则将无法登录。
+      ports:
+        - container: "3000"
+          description:
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP 端口
+          protocol: tcp
+      volumes:
+        - container: /app/data
+          description:
+            en_US: LibreDB Studio data directory (SQLite database).
+            zh_CN: LibreDB Studio 数据目录（SQLite 数据库）。
+x-casaos:
+  id: org.icewhale.libredbstudio
+  architectures:
+    - amd64
+    - arm64
+  main: libredb-studio
+  author: libredb
+  category: Developer
+  description:
+    en_US: LibreDB Studio is an open-source (MIT), self-hosted SQL IDE. It provides a modern web-based interface to connect to your databases, browse schemas, write and run SQL queries, and manage your data from any browser on your LAN. Data is stored locally in a SQLite database, so everything stays under your control.
+    zh_CN: LibreDB Studio 是一款开源（MIT）的自托管 SQL IDE。它提供现代化的基于 Web 的界面，可连接数据库、浏览架构、编写并运行 SQL 查询，并可通过局域网中的任意浏览器管理数据。数据本地存储于 SQLite 数据库中，一切尽在您的掌控之中。
+  developer: libredb
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreDBStudio/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreDBStudio/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreDBStudio/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreDBStudio/screenshot-3.png
+  tagline:
+    en_US: Open-source self-hosted SQL IDE.
+    zh_CN: 开源自托管 SQL IDE。
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreDBStudio/thumbnail.png
+  title:
+    en_US: LibreDB Studio
+    zh_CN: LibreDB Studio
+  index: /
+  scheme: http
+  port_map: "3016"
+  version: "0.9.66"
+  update_at: "2026-08-04"
+  release_notes:
+    en_US: Initial LibreDB Studio template for the app store, based on release 0.9.66.
+  website: https://libredb.org
+  repo: https://github.com/libredb/libredb-studio
+  support: https://github.com/libredb/libredb-studio/issues
+  docs: https://github.com/libredb/libredb-studio/tree/main/docs
