@@ -1,0 +1,72 @@
+name: cinedock
+
+services:
+  cinedock:
+    image: ghcr.io/cinedock/cinedock:4.0.2
+    container_name: cinedock
+    restart: unless-stopped
+    ports:
+      - target: 8945
+        published: "8945"
+        protocol: tcp
+    environment:
+      TMDB_API_KEY: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TMDB_API_KEY
+          description:
+            en_US: Optional TMDB API key for actor biographies, filmographies and trailer fallback. It can also be added later in CineDock Settings.
+      ports:
+        - container: "8945"
+          description:
+            en_US: CineDock web interface
+      volumes:
+        - container: /config
+          description:
+            en_US: CineDock connection settings and small caches
+
+x-casaos:
+  id: uk.cinedock.cinedock
+  main: cinedock
+  index: /
+  port_map: "8945"
+  scheme: http
+  icon: icon.png
+  title:
+    en_US: CineDock
+  tagline:
+    en_US: Your Emby, Jellyfin or Plex library, made for the big screen
+  description:
+    en_US: |-
+      CineDock is a free, television-first interface for an existing Emby, Jellyfin or Plex server.
+
+      It uses the media server's existing users, libraries, playback, transcoding, watched state and resume positions. CineDock does not scan, copy or modify media files. Install CineDock, open its web page and follow the plain-English setup wizard.
+  tips:
+    before_install:
+      en_US: |-
+        ## Before installing CineDock
+
+        CineDock requires a reachable Emby, Jellyfin or Plex server. It does not replace the media server or need access to your media folders.
+
+        After installation, open port 8945 and follow the setup wizard. The TMDB API key is optional and may be added later.
+  author: CineDock
+  developer: CineDock
+  category: Media
+  architectures:
+    - amd64
+    - arm64
+  version: "4.0.2"
+  update_at: "2026-08-07"
+  release_notes:
+    en_US: |-
+      - First CasaOS package.
+      - Supports Emby, Jellyfin and Plex.
+      - Supports linux/amd64 and linux/arm64.
+  website: https://github.com/cinedock/unraid-templates
+  repo: https://github.com/cinedock/unraid-templates
+  support: https://github.com/cinedock/unraid-templates/issues
+  docs: https://github.com/cinedock/unraid-templates#readme
