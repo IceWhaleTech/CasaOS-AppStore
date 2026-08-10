@@ -1,7 +1,7 @@
 name: deviceshelf
 services:
   deviceshelf:
-    image: ghcr.io/wealthwallet/deviceshelf-server:1.9.4
+    image: ghcr.io/wealthwallet/deviceshelf-server:1.9.5
     container_name: deviceshelf
     # Layer-2 discovery (ARP, mDNS, passive DHCP) only works inside the host's
     # network namespace. On a bridge the scanner would inventory Docker's own
