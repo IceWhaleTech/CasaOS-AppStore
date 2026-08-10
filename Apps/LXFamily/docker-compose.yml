@@ -2,7 +2,7 @@ name: lx-family
 
 services:
   lx-family:
-    image: ghcr.io/laxxx-lab/lx-family-planner:1.18.2
+    image: ghcr.io/laxxx-lab/lx-family-planner:1.18.3
     container_name: lx-family
     restart: unless-stopped
     environment:
@@ -103,11 +103,11 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.18.2"
+  version: "1.18.3"
   update_at: "2026-08-10"
   release_notes:
-    en_US: Initial CasaOS package with persistent secure setup for LX Family 1.18.2.
-    de_DE: Erstes CasaOS-Paket mit dauerhaft sicherer Einrichtung für LX Family 1.18.2.
+    en_US: LX Family 1.18.3 keeps verified updates active if legacy backup permissions block cleanup.
+    de_DE: LX Family 1.18.3 behält geprüfte Updates aktiv, falls alte Sicherungsrechte das Aufräumen blockieren.
   website: https://github.com/laxxx-lab/lx-family-planner
   repo: https://github.com/laxxx-lab/lx-family-planner
   support: https://github.com/laxxx-lab/lx-family-planner/issues
