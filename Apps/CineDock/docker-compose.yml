@@ -2,7 +2,7 @@ name: cinedock
 
 services:
   cinedock:
-    image: ghcr.io/cinedock/cinedock:4.0.2
+    image: ghcr.io/cinedock/cinedock:4.1.6
     container_name: cinedock
     restart: unless-stopped
     ports:
@@ -39,33 +39,36 @@ x-casaos:
   title:
     en_US: CineDock
   tagline:
-    en_US: Your Emby, Jellyfin or Plex library, made for the big screen
+    en_US: Rediscover your library.
   description:
     en_US: |-
-      CineDock is a free, television-first interface for an existing Emby, Jellyfin or Plex server.
-
-      It uses the media server's existing users, libraries, playback, transcoding, watched state and resume positions. CineDock does not scan, copy or modify media files. Install CineDock, open its web page and follow the plain-English setup wizard.
+      CineDock gives Plex, Emby or Jellyfin an enhanced browsing experience on the NVIDIA Shield TV, on an Amazon Fire TV Stick, or in a browser on your computer or tablet.
   tips:
     before_install:
       en_US: |-
         ## Before installing CineDock
 
-        CineDock requires a reachable Emby, Jellyfin or Plex server. It does not replace the media server or need access to your media folders.
+        Recommended host requirements:
+        - 64-bit amd64 or arm64 Docker-capable host
+        - 1 CPU core
+        - 1 GB available RAM
+        - 4 GB free appdata/storage
+        - Port 8945 reachable
+        - Existing Plex, Emby or Jellyfin server reachable
 
-        After installation, open port 8945 and follow the setup wizard. The TMDB API key is optional and may be added later.
+        No GPU or media-folder mount is needed because your media server handles streaming and transcoding.
   author: CineDock
   developer: CineDock
   category: Media
   architectures:
     - amd64
     - arm64
-  version: "4.0.2"
-  update_at: "2026-08-07"
+  version: "4.1.6"
+  update_at: "2026-08-11"
   release_notes:
     en_US: |-
-      - First CasaOS package.
-      - Supports Emby, Jellyfin and Plex.
-      - Supports linux/amd64 and linux/arm64.
+      - Updated CineDock to 4.1.6.
+      - Refreshed the public description and documented recommended host requirements.
   website: https://github.com/cinedock/unraid-templates
   repo: https://github.com/cinedock/unraid-templates
   support: https://github.com/cinedock/unraid-templates/issues
