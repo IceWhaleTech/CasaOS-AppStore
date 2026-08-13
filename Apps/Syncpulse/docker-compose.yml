@@ -1,1 +1,63 @@
+name: syncpulse
+
+services:
+  syncpulse:
+    container_name: SyncPulse
+    image: ghcr.io/syncpulsegeral-collab/syncpulse:latest
+    labels:
+      icon: https://github.com/syncpulsegeral-collab/syncpulse/raw/main/logo_splash.png
+    network_mode: bridge
+    ports:
+      - mode: ingress
+        target: 8181
+        published: "8181"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      # Persistent SyncPulse application data - no dependency on disk name
+      - type: bind
+        source: /DATA/AppData/SyncPulse/app
+        target: /app
+
+      - type: bind
+        source: /DATA/AppData/SyncPulse/config
+        target: /config
+
+      - type: bind
+        source: /DATA/AppData/SyncPulse/www
+        target: /www
+
+      # Generic access to all storage mounted by ZimaOS under /media
+      # Example host: /media/WD-4TB -> container: /mnt/storage/WD-4TB
+      - type: bind
+        source: /media
+        target: /mnt/storage
+
+x-casaos:
+  id: com.syncpulse.syncpulse
+  author: SyncPulse
+  developer: SyncPulse
+  category: Productivity
+  icon: https://github.com/syncpulsegeral-collab/syncpulse/raw/main/logo_splash.png
+  index: /
+  is_uncontrolled: false
+  main: syncpulse
+  port_map: "8181"
+  scheme: http
+  store_app_id: syncpulse
+  version: "1.0.0"
+  title:
+    custom: SyncPulse
+    en_US: SyncPulse
+    pt_PT: SyncPulse
+  tagline:
+    en_US: Simple cloud synchronization for ZimaOS.
+    pt_PT: Sincronizacao cloud simples para ZimaOS.
+  description:
+    en_US: >-
+      SyncPulse provides a simple interface for synchronizing folders between
+      ZimaOS storage and supported cloud providers.
+    pt_PT: >-
+      O SyncPulse disponibiliza uma interface simples para sincronizar pastas
+      entre o armazenamento ZimaOS e os servicos cloud suportados.
 
