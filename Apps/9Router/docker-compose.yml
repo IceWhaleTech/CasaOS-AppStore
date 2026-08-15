@@ -1,0 +1,126 @@
+name: 9router
+
+services:
+  9router:
+    image: decolua/9router:0.5.12
+    container_name: 9router
+    restart: unless-stopped
+    ports:
+      - target: 20128
+        published: "20128"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    environment:
+      DATA_DIR: /app/data
+      PORT: "20128"
+      HOSTNAME: 0.0.0.0
+      NODE_ENV: production
+      INITIAL_PASSWORD: "123456"
+      API_KEY_SECRET: endpoint-proxy-api-key-secret
+      MACHINE_ID_SALT: endpoint-proxy-salt
+      ENABLE_REQUEST_LOGS: "false"
+      OBSERVABILITY_ENABLED: "true"
+      AUTH_COOKIE_SECURE: "false"
+      REQUIRE_API_KEY: "false"
+      CLOUD_URL: https://9router.com
+      NEXT_PUBLIC_CLOUD_URL: https://9router.com
+    x-casaos:
+      ports:
+        - container: "20128"
+          description:
+            en_US: 9Router dashboard and OpenAI-compatible API port.
+            zh_CN: 9Router 控制台和 OpenAI 兼容 API 访问端口。
+      envs:
+        - container: INITIAL_PASSWORD
+          description:
+            en_US: Initial dashboard login password. Change it after first login.
+            zh_CN: 控制台初始登录密码。首次登录后请修改。
+        - container: ENABLE_REQUEST_LOGS
+          description:
+            en_US: Enable or disable request logging for routed AI traffic.
+            zh_CN: 是否启用 AI 路由请求日志。
+        - container: OBSERVABILITY_ENABLED
+          description:
+            en_US: Enable usage and observability features in the dashboard.
+            zh_CN: 是否启用控制台中的用量统计和观测功能。
+        - container: CLOUD_URL
+          description:
+            en_US: 9Router cloud service URL used by optional cloud sync features.
+            zh_CN: 可选云同步功能使用的 9Router 云服务地址。
+      volumes:
+        - container: /app/data
+          description:
+            en_US: 9Router SQLite database, provider settings, generated secrets, certificates, logs, and runtime configuration.
+            zh_CN: 9Router 的 SQLite 数据库、服务商配置、生成的密钥、证书、日志和运行配置目录。
+
+x-casaos:
+  id: com.decolua.9router
+  main: 9router
+  index: /
+  port_map: "20128"
+  scheme: http
+  title:
+    en_US: 9Router
+    zh_CN: 9Router
+  icon: https://cdn.jsdelivr.net/gh/runui/zimaos-appstore@selfhost/Apps/9Router/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/runui/zimaos-appstore@selfhost/Apps/9Router/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/runui/zimaos-appstore@selfhost/Apps/9Router/screenshot-1.png
+  tagline:
+    en_US: AI router and token saver for coding tools
+    zh_CN: 面向编程工具的 AI 路由和 Token 节省器
+  description:
+    en_US: |
+      9Router is a self-hosted AI routing dashboard for Claude Code, Codex, Cursor, OpenCode, Cline, OpenClaw, and other OpenAI-compatible clients. It routes requests across supported providers and models, tracks quota and usage, supports fallback strategies, and includes RTK token-saving features for tool-heavy coding workflows.
+
+      This ZimaOS package runs the official Docker image with persistent AppData storage. The dashboard and OpenAI-compatible API are exposed on port 20128. Provider credentials, API keys, SQLite data, generated secrets, certificates, logs, and runtime configuration are stored under `/app/data`.
+
+      **Notes:**
+      - Login with the initial password `123456`, then change it in the dashboard.
+      - Configure AI provider credentials inside the 9Router dashboard before using it from CLI tools.
+      - Point compatible clients to the `/v1` API endpoint on this NAS's LAN IP (port `20128`) and use an API key generated in the dashboard.
+      - The optional Headroom token-saver sidecar from the upstream compose is not included in this initial package.
+    zh_CN: |
+      9Router 是一个自托管 AI 路由控制台，适用于 Claude Code、Codex、Cursor、OpenCode、Cline、OpenClaw 以及其他兼容 OpenAI API 的客户端。它可以在多个服务商和模型之间路由请求，跟踪配额和用量，支持故障切换策略，并为大量工具调用的编程工作流提供 RTK Token 节省能力。
+
+      这个 ZimaOS 应用使用官方 Docker 镜像运行，并将数据持久化到 AppData。控制台和 OpenAI 兼容 API 通过 20128 端口访问。服务商凭据、API Key、SQLite 数据、生成的密钥、证书、日志和运行配置都会保存在 `/app/data`。
+
+      **注意事项：**
+      - 使用初始密码 `123456` 登录，首次登录后请在控制台中修改密码。
+      - 使用 CLI 工具前，需要先在 9Router 控制台中配置 AI 服务商凭据。
+      - 兼容客户端的 endpoint 可设置为本 NAS 局域网 IP 的 `20128` 端口 `/v1` 路径，API Key 请在控制台中生成。
+      - 上游 compose 中可选的 Headroom token-saver sidecar 未包含在本次初始打包中。
+  tips:
+    before_install:
+      en_US: |
+        ## Security and Setup Notes
+
+        - The initial dashboard password is `123456`; change it immediately after first login.
+        - 9Router stores provider tokens and generated API keys. Keep it on a trusted LAN or protect it behind your own HTTPS reverse proxy before exposing it remotely.
+        - The dashboard/API uses port `20128`; clients should use the `/v1` API path.
+        - This package does not include the optional Headroom sidecar. Headroom can be configured separately if needed.
+      zh_CN: |
+        ## 安全和配置提示
+
+        - 控制台初始密码为 `123456`，首次登录后请立即修改。
+        - 9Router 会保存服务商 Token 和生成的 API Key。请仅在可信局域网使用；如需远程暴露，请先配置自己的 HTTPS 反向代理保护。
+        - 控制台/API 使用 `20128` 端口，客户端 API 地址需要使用 `/v1` 路径。
+        - 该应用未包含可选的 Headroom sidecar。如有需要，可自行单独配置 Headroom。
+  author: IceWhaleTech
+  developer: decolua
+  category: AI
+  architectures:
+    - amd64
+    - arm64
+  version: "0.5.12"
+  update_at: "2026-06-26"
+  release_notes:
+    en_US: Initial ZimaOS AppStore packaging for 9Router v0.5.12.
+    zh_CN: 首次将 9Router v0.5.12 打包为 ZimaOS 应用。
+  website: https://9router.com
+  repo: https://github.com/decolua/9router
+  support: https://github.com/decolua/9router/issues
+  docs: https://github.com/decolua/9router#readme
