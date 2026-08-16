@@ -1,0 +1,17 @@
+services:
+  ytmusic-downloader:
+    build: .
+    container_name: ytmusic_monitor
+    environment:
+      - USER: Admin
+      - PASSWORD: 1111
+      - PORT: 4516
+    volumes:
+      - /DATA/AppData/MyMusic/downloads:/downloads
+      - /DATA/AppData/MyMusic/data:/data
+    restart: unless-stopped
+  x-casaos:
+    title: MyMusic
+    icon: https://google.com
+    description: Una app para automatizar la descarga de listas tanto de Spotify como de YTmusic.
+    port_map: 4516
