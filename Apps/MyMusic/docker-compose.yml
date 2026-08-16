@@ -1,18 +1,32 @@
 services:
-  ytmusic-downloader:
-    build: .
-    container_name: ytmusic_monitor
+  MyMusic:
+    image: mymoon02/mymusic:latest
+    container_name: mymusic
     environment:
-      - USER: Admin
-      - PASSWORD: 1111
-      - PORT: 4516
+      - USER=Admin
+      - PASSWORD=1111
+      - PORT=4516
+    ports:
+      - "4516:4516"
     volumes:
       - /DATA/AppData/MyMusic/downloads:/downloads
       - /DATA/AppData/MyMusic/data:/data
+      - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
-  x-casaos:
-    title: MyMusic
-    icon: https://raw.githubusercontent.com/Jarano2022/CasaOS-AppStore/refs/heads/main/Apps/MyMusic/icon.png
-    description: 
-      es-es: Una applicación para automatizar la descarga de listas tanto de Spotify como de YTmusic.
-    port_map: 4516
+    x-casaos:
+      envs:
+        - container: USER
+          description: Usuario de acceso
+        - container: PASSWORD
+          description: Contraseña de acceso
+        - container: PORT
+          description: Puerto del servicio
+      icon: https://raw.githubusercontent.com/Jarano2022/CasaOS-AppStore/refs/heads/main/Apps/MyMusic/icon.png
+      main: ytmusic-downloader
+      port_map: "4516"
+      scheme: http
+      title:
+        custom: MyMusic
+      description:
+        en_us: An app to automate downloading playlists from Spotify and YTmusic.
+        es_es: Una aplicación para automatizar la descarga de listas de Spotify y YTmusic.
