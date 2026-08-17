@@ -2,7 +2,7 @@ name: cinedock
 
 services:
   cinedock:
-    image: ghcr.io/cinedock/cinedock:4.1.6
+    image: ghcr.io/cinedock/cinedock:4.3.2
     container_name: cinedock
     restart: unless-stopped
     ports:
@@ -63,13 +63,13 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "4.1.6"
-  update_at: "2026-08-11"
+  version: "4.3.2"
+  update_at: "2026-08-17"
   release_notes:
     en_US: |-
-      - Updated CineDock to 4.1.6.
-      - Refreshed the public description and documented recommended host requirements.
-  website: https://github.com/cinedock/unraid-templates
+      - Updated CineDock to 4.3.2.
+      - Website, support and documentation links now point at cinedock.tv.
+  website: https://cinedock.tv
   repo: https://github.com/cinedock/unraid-templates
-  support: https://github.com/cinedock/unraid-templates/issues
-  docs: https://github.com/cinedock/unraid-templates#readme
+  support: https://cinedock.tv/support
+  docs: https://cinedock.tv/guide
