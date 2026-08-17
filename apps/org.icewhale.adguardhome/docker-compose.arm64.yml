@@ -8,29 +8,29 @@ services:
           memory: 64M
     network_mode: bridge
     ports:
-    - target: 53
-      published: '531'
-      protocol: tcp
-    - target: 53
-      published: '531'
-      protocol: udp
-    - target: 3000
-      published: '3001'
-      protocol: tcp
-    - target: 853
-      published: '853'
-      protocol: tcp
-    - target: 784
-      published: '784'
-      protocol: udp
+      - target: 53
+        published: "531"
+        protocol: tcp
+      - target: 53
+        published: "531"
+        protocol: udp
+      - target: 3000
+        published: "3001"
+        protocol: tcp
+      - target: 853
+        published: "853"
+        protocol: tcp
+      - target: 784
+        published: "784"
+        protocol: udp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/opt/adguardhome/work
-      target: /opt/adguardhome/work
-    - type: bind
-      source: /DATA/AppData/$AppID/opt/adguardhome/conf
-      target: /opt/adguardhome/conf
+      - type: bind
+        source: /DATA/AppData/$AppID/opt/adguardhome/work
+        target: /opt/adguardhome/work
+      - type: bind
+        source: /DATA/AppData/$AppID/opt/adguardhome/conf
+        target: /opt/adguardhome/conf
     container_name: adguard-home
 x-casaos:
   id: org.icewhale.adguardhome
@@ -39,5 +39,5 @@ x-casaos:
   title:
     en_US: AdGuard Home
   index: /
-  port_map: '3001'
-  version: 0.107.76
+  port_map: "3001"
+  version: "0.107.76"

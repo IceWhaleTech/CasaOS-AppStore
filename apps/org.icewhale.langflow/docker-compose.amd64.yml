@@ -3,33 +3,33 @@ services:
   langflow:
     container_name: langflow
     image: langflowai/langflow:1.9.3@sha256:310e0707248d5077e49880ad1157df095aa71664810d885ab5d006cea8f053f3
-    user: 0:0
+    user: "0:0"
     ports:
-    - target: 7860
-      published: '17860'
-      protocol: tcp
+      - target: 7860
+        published: "17860"
+        protocol: tcp
     depends_on:
-    - langflow-postgres
+      - langflow-postgres
     networks:
-    - langflow-net
+      - langflow-net
     environment:
-    - LANGFLOW_DATABASE_URL=postgresql://langflow:langflow@langflow-postgres:5432/langflow
-    - LANGFLOW_CONFIG_DIR=/app/langflow
+      - LANGFLOW_DATABASE_URL=postgresql://langflow:langflow@langflow-postgres:5432/langflow
+      - LANGFLOW_CONFIG_DIR=/app/langflow
     volumes:
-    - /DATA/AppData/$AppID/backend:/app/langflow
+      - /DATA/AppData/$AppID/backend:/app/langflow
   langflow-postgres:
     container_name: langflow-postgress
-    image: postgres:16@sha256:67d92986b34dce02e7a8fc0c3cbed2f905356d74c8e52b96b898e48b18e20018
+    image: postgres:16@sha256:56f243d2355bad7d2016b1e78b80da8ac9e7967b766be2bfbff84fe85ffa30bc
     environment:
-    - POSTGRES_USER=langflow
-    - POSTGRES_PASSWORD=langflow
-    - POSTGRES_DB=langflow
+      - POSTGRES_USER=langflow
+      - POSTGRES_PASSWORD=langflow
+      - POSTGRES_DB=langflow
     networks:
-    - langflow-net
+      - langflow-net
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/postgres
-      target: /var/lib/postgresql/data
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql/data
 networks:
   langflow-net:
     driver: bridge
@@ -38,7 +38,7 @@ x-casaos:
   main: langflow
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.langflow/assets/icon.svg
   scheme: http
-  port_map: '17860'
+  port_map: "17860"
   index: /
   title:
     en_US: Langflow
@@ -56,4 +56,4 @@ x-casaos:
     pt_PT: Langflow
     ru_RU: Langflow
     tr_TR: Langflow
-  version: 1.9.3
+  version: "1.9.3"

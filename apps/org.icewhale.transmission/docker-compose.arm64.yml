@@ -3,38 +3,38 @@ services:
   transmission:
     environment:
       PASS: casaos
-      PEERPORT: '51413'
-      PGID: '1000'
-      PUID: '1000'
+      PEERPORT: "51413"
+      PGID: "1000"
+      PUID: "1000"
       TZ: Europe/London
       USER: casaos
-    image: linuxserver/transmission:4.1.1@sha256:15bba5d288d53b7eb1fbf2624c011a1cb4feeecf9204185cbce607ead72531dd
+    image: linuxserver/transmission:4.1.1
     deploy:
       resources:
         reservations:
           memory: 64M
     network_mode: bridge
     ports:
-    - target: 9091
-      published: '9091'
-      protocol: tcp
-    - target: 51413
-      published: '51413'
-      protocol: tcp
-    - target: 51413
-      published: '51413'
-      protocol: UDP
+      - target: 9091
+        published: "9091"
+        protocol: tcp
+      - target: 51413
+        published: "51413"
+        protocol: tcp
+      - target: 51413
+        published: "51413"
+        protocol: UDP
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/config
-      target: /config
-    - type: bind
-      source: /DATA/Downloads
-      target: /downloads
-    - type: bind
-      source: /DATA/Downloads/watch
-      target: /watch
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+      - type: bind
+        source: /DATA/Downloads/watch
+        target: /watch
     container_name: transmission
 x-casaos:
   id: org.icewhale.transmission
@@ -43,5 +43,5 @@ x-casaos:
   title:
     en_US: Transmission
   index: /
-  port_map: '9091'
-  version: 4.1.1
+  port_map: "9091"
+  version: "4.1.1"

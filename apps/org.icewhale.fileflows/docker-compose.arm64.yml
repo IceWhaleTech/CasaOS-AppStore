@@ -3,45 +3,45 @@ services:
   fileflows:
     container_name: fileflows
     devices:
-    - /dev/dri:/dev/dri
+      - /dev/dri:/dev/dri
     environment:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
     hostname: fileflows
-    image: revenz/fileflows:stable@sha256:2a0bee6dafc9ff62fb9479595f0ffe82277104e2fb9dce62278b04c0916df374
+    image: revenz/fileflows:stable@sha256:d0f4521eeb1fc19eb579473a7eb6cb30dc3eb0b4bc4af2f4442c584ff162a49e
     restart: unless-stopped
     ports:
-    - target: 5000
-      published: '19200'
-      protocol: tcp
+      - target: 5000
+        published: "19200"
+        protocol: tcp
     network_mode: bridge
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /app/Data
-    - type: bind
-      source: /DATA/AppData/$AppID/logs
-      target: /app/Logs
-    - type: bind
-      source: /DATA/AppData/$AppID/common
-      target: /app/common
-    - type: bind
-      source: /DATA/AppData/$AppID/temp
-      target: /temp
-    - type: bind
-      source: /DATA/Media
-      target: /Media
-    - type: bind
-      source: /var/run/docker.sock
-      target: /var/run/docker.sock
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/Data
+      - type: bind
+        source: /DATA/AppData/$AppID/logs
+        target: /app/Logs
+      - type: bind
+        source: /DATA/AppData/$AppID/common
+        target: /app/common
+      - type: bind
+        source: /DATA/AppData/$AppID/temp
+        target: /temp
+      - type: bind
+        source: /DATA/Media
+        target: /Media
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
 x-casaos:
   id: org.icewhale.fileflows
   main: fileflows
-  port_map: '19200'
+  port_map: "19200"
   scheme: http
   title:
     en_US: FileFlows
   index: /
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.fileflows/assets/icon.svg
-  version: 0.0.1
+  version: "0.0.1"

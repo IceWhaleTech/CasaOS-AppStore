@@ -17,22 +17,22 @@
   "tips": {
     "before_install": "Set `NEXTAUTH_URL` to the address you will use to access Karakeep.\nUse long random strings for `NEXTAUTH_SECRET` and `MEILI_MASTER_KEY`, and keep the `MEILI_MASTER_KEY` identical in both `karakeep` and `meilisearch`.\nThe first user to sign up on your instance becomes the admin.\n"
   },
-  "update_at": "2026-05-08",
+  "update_at": "2026-08-11",
   "website": "https://karakeep.app/",
   "repo": "https://github.com/karakeep-app/karakeep",
   "support": "https://github.com/karakeep-app/karakeep/issues",
   "docs": "https://docs.karakeep.app/",
   "title": "Karakeep",
-  "release_note": "- v0.32.0 updates the default Meilisearch version to 1.41.0 and improves the Docker Compose development environment.\n- It improves self-hosted operation with granular API key scopes, CLI authentication config storage, new MCP/API capabilities, event logging, and rule engine enhancements.\n- It includes server-side security fixes for SSRF, rate limiting, stored XSS, and password reset tokens, plus crawler, import, search, and Meilisearch batching fixes.",
+  "release_note": "- v0.33.2 migrates to the maintained Karakeep Chrome image, upgrading Chrome from 124 to 151 and replacing the abandoned Alpine Chrome image.\n- It fixes metadata extraction for large SingleFile archives, hardens crawler asset conversion, and pins Node.js to avoid a crash-loop regression.\n- It adds direct custom SingleFile archive uploads through the CLI and a favicon that adapts to the browser theme.",
   "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
   "id": "org.icewhale.karakeep",
-  "version": "0.32.0",
+  "version": "0.33.2",
   "categories": [
     "productivity"
   ],
   "min_memory": 1342177280,
   "min_image_size": {
-    "amd64": 943710422,
-    "arm64": 921785098
+    "amd64": 768043971,
+    "arm64": 745085242
   }
 }

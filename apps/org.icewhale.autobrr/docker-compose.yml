@@ -8,18 +8,18 @@ services:
     environment:
       TZ: $TZ
     ports:
-    - target: 7474
-      published: '7474'
-      protocol: tcp
+      - target: 7474
+        published: "7474"
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/config
-      target: /config
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
 x-casaos:
   id: org.icewhale.autobrr
   main: autobrr
-  port_map: '7474'
+  port_map: "7474"
   title:
     en_US: Autobrr
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.autobrr/assets/icon.svg
-  version: 1.79.0
+  version: "1.79.0"

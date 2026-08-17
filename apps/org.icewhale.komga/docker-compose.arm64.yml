@@ -9,30 +9,30 @@ services:
           memory: 128M
     network_mode: bridge
     ports:
-    - target: 25600
-      published: '25600'
-      protocol: tcp
+      - target: 25600
+        published: "25600"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/config
-      target: /config
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /data
-    - type: bind
-      source: /etc/timezone
-      target: /etc/timezone
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /etc/timezone
+        target: /etc/timezone
     environment:
-      PGID: '1000'
-      PUID: '1000'
+      PGID: "1000"
+      PUID: "1000"
 x-casaos:
   id: org.icewhale.komga
   main: komga
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.komga/assets/icon.svg
   scheme: http
-  port_map: '25600'
+  port_map: "25600"
   index: /
   title:
     en_US: Komga
-  version: 1.24.4
+  version: "1.24.4"

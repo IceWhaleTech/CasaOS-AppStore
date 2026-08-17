@@ -2,27 +2,27 @@ name: smokeping
 services:
   smokeping:
     environment:
-      PGID: '1000'
-      PUID: '1000'
+      PGID: "1000"
+      PUID: "1000"
       TZ: Europe/London
-    image: linuxserver/smokeping:2.9.0@sha256:d6428e1b9566bcd972e84eae7b319498e429c2e21a1f4a26089aca17e23e6144
+    image: linuxserver/smokeping:2.9.0
     deploy:
       resources:
         reservations:
           memory: 64M
     network_mode: bridge
     ports:
-    - target: 80
-      published: '10280'
-      protocol: tcp
+      - target: 80
+        published: "10280"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/smokeping/config
-      target: /config
-    - type: bind
-      source: /DATA/AppData/smokeping/data
-      target: /data
+      - type: bind
+        source: /DATA/AppData/smokeping/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/smokeping/data
+        target: /data
     container_name: smokeping
 x-casaos:
   id: org.icewhale.smokeping
@@ -30,5 +30,5 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.smokeping/assets/icon.svg
   title:
     en_US: Smokeping
-  port_map: '10280'
-  version: 2.9.0
+  port_map: "10280"
+  version: "2.9.0"

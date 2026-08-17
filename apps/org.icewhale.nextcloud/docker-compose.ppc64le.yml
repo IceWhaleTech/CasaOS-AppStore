@@ -1,24 +1,24 @@
 name: nextcloud
 services:
   nextcloud:
-    image: nextcloud:33.0.3@sha256:452e34bc89b666db17c32ed8360c26f0f54766be6ffdbaef4c951cd93a3adc2f
+    image: nextcloud:33.0.3
     deploy:
       resources:
         reservations:
-          memory: 512M
+          memory: "512M"
     network_mode: bridge
     ports:
-    - target: 80
-      published: '10081'
-      protocol: tcp
-    - target: 443
-      published: '10443'
-      protocol: tcp
+      - target: 80
+        published: "10081"
+        protocol: tcp
+      - target: 443
+        published: "10443"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/var/www/html
-      target: /var/www/html
+      - type: bind
+        source: /DATA/AppData/$AppID/var/www/html
+        target: /var/www/html
     container_name: nextcloud
 x-casaos:
   id: org.icewhale.nextcloud
@@ -27,5 +27,5 @@ x-casaos:
   title:
     en_US: Nextcloud
   index: /
-  port_map: '10081'
-  version: 33.0.3
+  port_map: "10081"
+  version: "33.0.3"

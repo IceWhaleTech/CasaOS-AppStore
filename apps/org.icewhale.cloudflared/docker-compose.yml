@@ -5,13 +5,13 @@ services:
     restart: unless-stopped
     network_mode: host
     ports:
-    - target: 14333
-      published: '14333'
-      protocol: tcp
+      - target: 14333
+        published: "14333"
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/casaos-cloudflared/config
-      target: /config
+      - type: bind
+        source: /DATA/AppData/casaos-cloudflared/config
+        target: /config
     container_name: cloudflared
 x-casaos:
   id: org.icewhale.cloudflared
@@ -20,4 +20,4 @@ x-casaos:
   title:
     en_US: Cloudflared
   port_map: '14333'
-  version: 2026.5.0
+  version: "2026.5.0"

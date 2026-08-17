@@ -9,36 +9,30 @@ services:
           memory: 128M
     restart: unless-stopped
     networks:
-    - archivebox_network
+      - archivebox_network
     depends_on:
-    - archivebox_sonic
+      - archivebox_sonic
     ports:
-    - target: 8000
-      published: '18010'
-      protocol: tcp
+      - target: 8000
+        published: "18010"
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
     environment:
-    - ADMIN_USERNAME=casaos
-    - ADMIN_PASSWORD=casaos
-    - ALLOWED_HOSTS=*
-    - CSRF_TRUSTED_ORIGINS=*
-    - PUBLIC_INDEX=True
-    - PUBLIC_SNAPSHOTS=True
-    - PUBLIC_ADD_VIEW=False
-    - SEARCH_BACKEND_ENGINE=sonic
-    - SEARCH_BACKEND_HOST_NAME=archivebox_sonic
-    - SEARCH_BACKEND_PASSWORD=SomeSecretPassword
+      - ADMIN_USERNAME=casaos
+      - ADMIN_PASSWORD=casaos
+      - ALLOWED_HOSTS=*
+      - CSRF_TRUSTED_ORIGINS=*
+      - PUBLIC_INDEX=True
+      - PUBLIC_SNAPSHOTS=True
+      - PUBLIC_ADD_VIEW=False
+      - SEARCH_BACKEND_ENGINE=sonic
+      - SEARCH_BACKEND_HOST_NAME=archivebox_sonic
+      - SEARCH_BACKEND_PASSWORD=SomeSecretPassword
     healthcheck:
-      test:
-      - CMD
-      - wget
-      - --no-verbose
-      - --tries=1
-      - --spider
-      - http://localhost:8000
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8000"]
       interval: 1m
       timeout: 3s
   archivebox_scheduler:
@@ -50,23 +44,19 @@ services:
           memory: 128M
     restart: unless-stopped
     networks:
-    - archivebox_network
+      - archivebox_network
     depends_on:
-    - archivebox_sonic
-    command:
-    - schedule
-    - --foreground
-    - --update
-    - --every=day
+      - archivebox_sonic
+    command: ["schedule", "--foreground", "--update", "--every=day"]
     environment:
-    - TIMEOUT=120
-    - SEARCH_BACKEND_ENGINE=sonic
-    - SEARCH_BACKEND_HOST_NAME=archivebox_sonic
-    - SEARCH_BACKEND_PASSWORD=SomeSecretPassword
+      - TIMEOUT=120
+      - SEARCH_BACKEND_ENGINE=sonic
+      - SEARCH_BACKEND_HOST_NAME=archivebox_sonic
+      - SEARCH_BACKEND_PASSWORD=SomeSecretPassword
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
   archivebox_sonic:
     image: archivebox/sonic:1.4.9
     container_name: archivebox_sonic
@@ -76,15 +66,15 @@ services:
           memory: 128M
     restart: unless-stopped
     networks:
-    - archivebox_network
+      - archivebox_network
     expose:
-    - 1491
+      - 1491
     environment:
-    - SEARCH_BACKEND_PASSWORD=SomeSecretPassword
+      - SEARCH_BACKEND_PASSWORD=SomeSecretPassword
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/data/sonic
-      target: /var/lib/sonic/store
+      - type: bind
+        source: /DATA/AppData/$AppID/data/sonic
+        target: /var/lib/sonic/store
   archivebox_novnc:
     image: theasp/novnc:latest
     container_name: archivebox_novnc
@@ -94,24 +84,25 @@ services:
           memory: 128M
     restart: unless-stopped
     networks:
-    - archivebox_network
+      - archivebox_network
     ports:
-    - target: 8080
-      published: '18082'
-      protocol: tcp
+      - target: 8080
+        published: "18082"
+        protocol: tcp
     environment:
-    - DISPLAY_WIDTH=1920
-    - DISPLAY_HEIGHT=1080
-    - RUN_XTERM=no
+      - DISPLAY_WIDTH=1920
+      - DISPLAY_HEIGHT=1080
+      - RUN_XTERM=no
 networks:
   archivebox_network:
     driver: bridge
+
 x-casaos:
   id: org.icewhale.archivebox
   main: archivebox
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.archivebox/assets/icon.svg
   scheme: http
-  port_map: '18010'
+  port_map: "18010"
   index: /
   title:
     en_US: ArchiveBox
@@ -129,4 +120,4 @@ x-casaos:
     pt_PT: ArchiveBox
     ru_RU: ArchiveBox
     tr_TR: ArchiveBox
-  version: 0.7.4
+  version: "0.7.4"

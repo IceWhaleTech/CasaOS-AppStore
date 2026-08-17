@@ -1,17 +1,18 @@
 name: peanut
+
 services:
   peanut:
     image: brandawg93/peanut:6.0.0
     container_name: PeaNUT
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/config
-      target: /config
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
     ports:
-    - target: 8080
-      published: '8084'
-      protocol: tcp
+      - target: 8080
+        published: "8084"
+        protocol: tcp
     environment:
       WEB_PORT: 8080
     deploy:
@@ -38,7 +39,7 @@ x-casaos:
     zh_CN: PeaNUT
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.peanut/assets/icon.svg
   main: peanut
-  port_map: '8084'
+  port_map: "8084"
   index: /
   scheme: http
-  version: 6.0.0
+  version: "6.0.0"

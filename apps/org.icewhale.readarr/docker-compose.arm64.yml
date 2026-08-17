@@ -5,27 +5,28 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/readarr:0.3.10-develop@sha256:a586f53e06ae5f60b838de98b4ce105954b9bc474338d73a86a753fdfd6c6da8
+    image: linuxserver/readarr:0.3.10-develop
     deploy:
       resources:
         reservations:
           memory: 64M
     network_mode: bridge
     ports:
-    - target: 8787
-      published: '8787'
-      protocol: tcp
+      - target: 8787
+        published: "8787"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/config
-      target: /config
-    - type: bind
-      source: /DATA/Media/Books
-      target: /books
-    - type: bind
-      source: /DATA/Downloads
-      target: /downloads
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+
+      - type: bind
+        source: /DATA/Media/Books
+        target: /books
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
     container_name: readarr
 x-casaos:
   id: org.icewhale.readarr
@@ -33,5 +34,5 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.readarr/assets/icon.svg
   title:
     en_US: Readarr
-  port_map: '8787'
-  version: 0.3.10-develop
+  port_map: "8787"
+  version: "0.3.10-develop"

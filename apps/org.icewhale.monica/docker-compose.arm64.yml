@@ -1,7 +1,7 @@
 name: monica
 services:
   monica:
-    image: monica:4.1.2@sha256:5662f3d9860b9b9dfad588d334b18f76d41d58fac4934207886d789759fe0edc
+    image: monica:4.1.2
     container_name: monica
     deploy:
       resources:
@@ -11,33 +11,33 @@ services:
           memory: 256M
     restart: unless-stopped
     ports:
-    - target: 80
-      published: '18930'
-      protocol: tcp
+      - target: 80
+        published: "18930"
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/storage
-      target: /var/www/html/storage
+      - type: bind
+        source: /DATA/AppData/$AppID/storage
+        target: /var/www/html/storage
     environment:
       APP_KEY: ChangeMeBy32KeyLengthOrGenerated
       DB_HOST: monica-db
       DB_USERNAME: monicauser
       DB_PASSWORD: monicasecret
     networks:
-    - monica_network
+      - monica_network
     depends_on:
-    - monica-db
+      - monica-db
   monica-db:
-    image: mariadb:11.8.2@sha256:bb961ca672bcbde3df9e385d4ce84b31bb826792711c777f6ce97e49fcd9d38c
+    image: mariadb:11.8.2
     container_name: monica-db
     deploy:
       resources:
         reservations:
           memory: 256M
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/mysql
-      target: /var/lib/mysql
+      - type: bind
+        source: /DATA/AppData/$AppID/mysql
+        target: /var/lib/mysql
     environment:
       MARIADB_RANDOM_ROOT_PASSWORD: true
       MARIADB_DATABASE: monica
@@ -45,7 +45,7 @@ services:
       MARIADB_PASSWORD: monicasecret
     restart: unless-stopped
     networks:
-    - monica_network
+      - monica_network
 networks:
   monica_network:
     driver: bridge
@@ -53,9 +53,9 @@ x-casaos:
   id: org.icewhale.monica
   main: monica
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.monica/assets/icon.svg
-  scheme: ''
-  port_map: '18930'
+  scheme: ""
+  port_map: "18930"
   index: /
   title:
     en_US: Monica
-  version: 4.1.2
+  version: "4.1.2"

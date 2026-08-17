@@ -8,16 +8,16 @@ services:
       PGID: $PGID
       TZ: $TZ
     ports:
-    - target: 27017
-      published: '27017'
-      protocol: tcp
+      - target: 27017
+        published: "27017"
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/mongodb4/data/configdb
-      target: /data/configdb
-    - type: bind
-      source: /DATA/AppData/mongodb4/data/db
-      target: /data/db
+      - type: bind
+        source: /DATA/AppData/mongodb4/data/configdb
+        target: /data/configdb
+      - type: bind
+        source: /DATA/AppData/mongodb4/data/db
+        target: /data/db
     container_name: mongodb4
 x-casaos:
   id: org.icewhale.mongodb4
@@ -25,4 +25,4 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.mongodb4/assets/icon.svg
   title:
     en_US: MongoDB 4
-  version: 4.4.22
+  version: "4.4.22"

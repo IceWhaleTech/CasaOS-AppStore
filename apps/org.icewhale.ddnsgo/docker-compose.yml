@@ -6,23 +6,23 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 32M
+          memory: "32M"
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/config
-      target: /root
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /root
     ports:
-    - target: 9876
-      published: '9876'
-      protocol: tcp
+      - target: 9876
+        published: "9876"
+        protocol: tcp
     container_name: ddns-go
 x-casaos:
   id: org.icewhale.ddnsgo
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.ddnsgo/assets/icon.svg
   main: ddns-go
-  port_map: '9876'
+  port_map: "9876"
   scheme: http
   title:
     en_US: ddns-go
-  version: 6.17.1
+  version: "6.17.1"

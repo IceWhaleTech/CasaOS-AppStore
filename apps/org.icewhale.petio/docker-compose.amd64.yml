@@ -4,31 +4,31 @@ services:
     image: ghcr.io/petio-team/petio@sha256:1c5a9276a844f4284601cbe332905864950545ebdeaad74bacb9097ea4f4b333
     restart: unless-stopped
     networks:
-    - petio-network
+      - petio-network
     depends_on:
-    - mongo
+      - mongo
     environment:
       PUID: $PUID
       PGID: $PGID
       TZ: $TZ
     ports:
-    - target: 7777
-      published: '7777'
-      protocol: tcp
+      - target: 7777
+        published: "7777"
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/petio/config
-      target: /app/api/config
-    - type: bind
-      source: /DATA/AppData/petio/logs
-      target: /app/logs
+      - type: bind
+        source: /DATA/AppData/petio/config
+        target: /app/api/config
+      - type: bind
+        source: /DATA/AppData/petio/logs
+        target: /app/logs
     container_name: petio-petio
   mongo:
-    image: mongo:4.4.22@sha256:00d5d7e4df9aa132ae50996efe1d7c32746145ef6ff249289c8b6a58bbf68391
+    image: mongo:4.4.22
     restart: unless-stopped
     hostname: mongo
     networks:
-    - petio-network
+      - petio-network
     environment:
       PUID: $PUID
       PGID: $PGID
@@ -44,4 +44,4 @@ x-casaos:
   title:
     en_US: Petio
   port_map: '7777'
-  version: 0.5.5
+  version: "0.5.5"

@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-      UMASK: '002'
+      UMASK: "002"
       WORK_DIR: /data/albyhub
       LOG_EVENTS: true
     command: []
@@ -16,23 +16,23 @@ services:
         reservations:
           memory: 1024M
     ports:
-    - target: 8080
-      published: '58000'
-      protocol: tcp
+      - target: 8080
+        published: "58000"
+        protocol: tcp
     restart: on-failure
     stop_grace_period: 1m
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
     network_mode: bridge
     privileged: false
 x-casaos:
   id: org.icewhale.albyhub
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.albyhub/assets/icon.svg
   index: /
-  port_map: '58000'
+  port_map: "58000"
   scheme: http
   title:
     en_US: Alby Hub ✨
-  version: 1.22.2
+  version: "1.22.2"

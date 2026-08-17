@@ -1,6 +1,6 @@
 services:
   openclaw:
-    image: icewhaletech/openclaw:2026.5.7@sha256:2795433a46e06ef63dd5a3da64dce663450705c32ccfb9c11e5ded1bad4cdb99
+    image: icewhaletech/openclaw:2026.5.7
     environment:
       HOME: /home/node
       TERM: xterm-256color
@@ -11,24 +11,23 @@ services:
         reservations:
           memory: 1G
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID
-      target: /home/node/.openclaw
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /home/node/.openclaw
     ports:
-    - target: 18789
-      published: '24190'
-      protocol: tcp
-    - target: 18790
-      published: '18790'
-      protocol: tcp
+      - target: 18789
+        published: "24190"
+        protocol: tcp
+      - target: 18790
+        published: "18790"
+        protocol: tcp
     init: true
     restart: unless-stopped
     privileged: true
     command:
-    - /bin/bash
-    - -c
-    - /app/start.sh && node dist/index.js gateway --bind lan --allow-unconfigured
-      --port '18789'
+      - /bin/bash
+      - -c
+      - /app/start.sh && node dist/index.js gateway --bind lan --allow-unconfigured --port '18789'
     container_name: openclaw
 name: openclaw
 x-casaos:
@@ -51,7 +50,7 @@ x-casaos:
     zh_CN: OpenClaw
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.openclaw/assets/icon.svg
   main: openclaw
-  port_map: '24190'
+  port_map: "24190"
   index: ?token=casaos
   scheme: https
-  version: 2026.5.7
+  version: "2026.5.7"

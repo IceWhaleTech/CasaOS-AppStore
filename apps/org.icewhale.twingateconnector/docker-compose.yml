@@ -4,22 +4,24 @@ services:
     image: twingate/connector:1
     container_name: twingate-connector
     command:
-    - /connectord
+      - /connectord
     environment:
-      TWINGATE_NETWORK: ''
-      TWINGATE_ACCESS_TOKEN: ''
-      TWINGATE_REFRESH_TOKEN: ''
+      TWINGATE_NETWORK: ""
+      TWINGATE_ACCESS_TOKEN: ""
+      TWINGATE_REFRESH_TOKEN: ""
       TWINGATE_LABEL_HOSTNAME: ${HOSTNAME}
+
     restart: unless-stopped
     sysctls:
-      net.ipv4.ping_group_range: 0 2147483647
+      net.ipv4.ping_group_range: "0 2147483647"
     network_mode: default
     privileged: false
     cpu_shares: 90
     deploy:
       resources:
         reservations:
-          memory: 500M
+          memory: 500M  # Modify as needed since the original command didn't specify memory reservation
+
 x-casaos:
   id: org.icewhale.twingateconnector
   main: twingate-connector
@@ -27,5 +29,5 @@ x-casaos:
   title:
     en_US: Twingate
   index: /
-  port_map: ''
-  version: 1.0.0
+  port_map: ""
+  version: "1.0.0"

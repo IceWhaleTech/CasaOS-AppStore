@@ -6,16 +6,16 @@ services:
       resources:
         limits:
           memory: 256M
-    image: germannewsmaker/myspeed:1.0.9@sha256:3fc9adb4cc53fc2a24dee4dd1ebde1775a7d151031d8b1e34e064a05a77fd758
+    image: germannewsmaker/myspeed:1.0.9
     ports:
-    - target: 5216
-      published: '5216'
-      protocol: tcp
+      - target: 5216
+        published: "5216"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /myspeed/data
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /myspeed/data
     network_mode: bridge
     privileged: false
 x-casaos:
@@ -26,5 +26,5 @@ x-casaos:
     en_US: MySpeed
     pt_BR: MySpeed
   index: /
-  port_map: '5216'
-  version: 1.0.9
+  port_map: "5216"
+  version: "1.0.9"

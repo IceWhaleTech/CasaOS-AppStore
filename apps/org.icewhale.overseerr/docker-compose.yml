@@ -8,13 +8,13 @@ services:
       PGID: $PGID
       TZ: $TZ
     ports:
-    - target: 5055
-      published: 5055
-      protocol: tcp
+      - target: 5055
+        published: 5055
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/overseerr/config
-      target: /config
+      - type: bind
+        source: /DATA/AppData/overseerr/config
+        target: /config
     container_name: overseerr
 x-casaos:
   id: org.icewhale.overseerr
@@ -23,4 +23,4 @@ x-casaos:
   title:
     en_US: Overseerr
   port_map: '5055'
-  version: 1.35.0
+  version: "1.35.0"

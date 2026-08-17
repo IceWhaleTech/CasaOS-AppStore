@@ -11,20 +11,20 @@ services:
           memory: 2G
     restart: unless-stopped
     ports:
-    - target: 11434
-      published: '11434'
-      protocol: tcp
+      - target: 11434
+        published: "11434"
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/
-      target: /root/.ollama
+      - type: bind
+        source: /DATA/AppData/$AppID/
+        target: /root/.ollama
 x-casaos:
   id: org.icewhale.ollama
   main: ollama
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.ollama/assets/icon.svg
   scheme: http
-  port_map: '11434'
+  port_map: "11434"
   index: /
   title:
     en_US: Ollama
-  version: 0.24.0
+  version: "0.24.0"

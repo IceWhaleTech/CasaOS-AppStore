@@ -6,26 +6,26 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 256M
-    image: triliumnext/trilium:v0.103.0@sha256:fad1a486a5836525ee12df8ed3754760675db768ef4667535d2119bc643ec4aa
+          memory: "256M"
+    image: triliumnext/trilium:v0.103.0
     ports:
-    - target: 8080
-      published: '8088'
-      protocol: tcp
+      - target: 8080
+        published: "8088"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID
-      target: /home/node/trilium-data
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /home/node/trilium-data
     network_mode: bridge
     privileged: false
 x-casaos:
   id: org.icewhale.trilium
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.trilium/assets/icon.svg
   index: /
-  port_map: '8088'
+  port_map: "8088"
   scheme: http
   title:
     en_US: Trilium
     zh_CN: Trilium
-  version: 0.103.0
+  version: "0.103.0"

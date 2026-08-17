@@ -5,10 +5,10 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-      UMASK: '002'
-      LOG_LEVEL: info
-      LOG_HTML: 'false'
-      CAPTCHA_SOLVER: none
+      UMASK: "002"
+      LOG_LEVEL: "info"
+      LOG_HTML: "false"
+      CAPTCHA_SOLVER: "none"
     cpu_shares: 50
     command: []
     container_name: flaresolverr
@@ -18,9 +18,9 @@ services:
           memory: 64M
     image: ghcr.io/flaresolverr/flaresolverr:v3.4.6@sha256:33b22a5705029b3c4e6accd6f233da0dd9512c288787a67cc93206eb265f490c
     ports:
-    - target: 8191
-      published: '8191'
-      protocol: tcp
+      - target: 8191
+        published: "8191"
+        protocol: tcp
     restart: unless-stopped
     network_mode: bridge
     privileged: false
@@ -28,8 +28,8 @@ x-casaos:
   id: org.icewhale.flaresolverr
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.flaresolverr/assets/icon.svg
   index: /
-  port_map: '8191'
+  port_map: "8191"
   scheme: http
   title:
     en_US: FlareSolverr
-  version: 3.4.6
+  version: "3.4.6"

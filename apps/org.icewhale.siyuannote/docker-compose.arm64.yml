@@ -3,23 +3,23 @@ services:
   siyuan-note:
     command: --accessAuthCode=casaos --workspace=/siyuan/workspace/
     environment:
-      PUID: '1000'
-      PGID: '1000'
-    image: b3log/siyuan:v3.6.5@sha256:a11c54f34b0d3754741dd32b15c004ab4ec579e96a9fbc584955cf7c179b5b25
+      PUID: "1000"
+      PGID: "1000"
+    image: b3log/siyuan:v3.6.5
     deploy:
       resources:
         reservations:
-          memory: 512M
+          memory: "512M"
     network_mode: bridge
     ports:
-    - target: 6806
-      published: '6806'
-      protocol: tcp
+      - target: 6806
+        published: "6806"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/workspace
-      target: /siyuan/workspace
+      - type: bind
+        source: /DATA/AppData/$AppID/workspace
+        target: /siyuan/workspace
     container_name: siyuan-note
 x-casaos:
   id: org.icewhale.siyuannote
@@ -28,6 +28,6 @@ x-casaos:
   title:
     en_US: SiYuan Note
     zh_CN: 思源笔记
-  index: null
-  port_map: '6806'
-  version: 3.6.5
+  index:
+  port_map: "6806"
+  version: "3.6.5"

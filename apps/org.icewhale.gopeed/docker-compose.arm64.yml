@@ -10,17 +10,17 @@ services:
           memory: 256M
     image: liwei2633/gopeed:v1.9.3@sha256:04c4d44dafe26c9809074888afe1d1c94106b3ccca5d0e7a6d54e605d8152821
     ports:
-    - target: 9999
-      published: '9999'
-      protocol: tcp
+      - target: 9999
+        published: "9999"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /app/storage
-    - type: bind
-      source: /DATA/Downloads
-      target: /app/Downloads
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/storage
+      - type: bind
+        source: /DATA/Downloads
+        target: /app/Downloads
     network_mode: bridge
     privileged: false
 x-casaos:
@@ -31,5 +31,5 @@ x-casaos:
     en_US: Gopeed
     pt_BR: Gopeed
   index: /
-  port_map: '9999'
-  version: 1.9.3
+  port_map: "9999"
+  version: "1.9.3"

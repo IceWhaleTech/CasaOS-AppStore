@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-      UMASK: '002'
+      UMASK: "002"
     cpu_shares: 50
     command: []
     container_name: rdtclient
@@ -13,27 +13,27 @@ services:
       resources:
         reservations:
           memory: 64M
-    image: rogerfar/rdtclient:2.0.136@sha256:1235efc2ab0806c7cf6dfc36689fa4bb52225f7f5c7648eb1817275fe2a6fc51
+    image: rogerfar/rdtclient:2.0.136
     ports:
-    - target: 6500
-      published: '6500'
-      protocol: tcp
+      - target: 6500
+        published: "6500"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/Downloads
-      target: /data/downloads
-    - type: bind
-      source: /DATA/AppData/$AppID/db
-      target: /data/db
+      - type: bind
+        source: /DATA/Downloads
+        target: /data/downloads
+      - type: bind
+        source: /DATA/AppData/$AppID/db
+        target: /data/db
     network_mode: bridge
     privileged: false
 x-casaos:
   id: org.icewhale.rdtclient
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.rdtclient/assets/icon.svg
   index: /
-  port_map: '6500'
+  port_map: "6500"
   scheme: http
   title:
     en_US: Real-Debrid Torrent Client
-  version: 2.0.136
+  version: "2.0.136"

@@ -7,74 +7,73 @@ services:
         condition: service_started
         required: true
     environment:
-    - MONGO_DBNAME=unifi-db
-    - MONGO_HOST=unifi-db
-    - MONGO_PASS=pass
-    - MONGO_PORT=27017
-    - MONGO_USER=unifi
-    - PGID=$PGID
-    - PUID=$PUID
-    - TZ=$TZ
-    image: lscr.io/linuxserver/unifi-network-application:latest@sha256:ae43158ab46378ea576000cfc9375f171c2e335e51235194927c76a08ce5cbda
+      - MONGO_DBNAME=unifi-db
+      - MONGO_HOST=unifi-db
+      - MONGO_PASS=pass
+      - MONGO_PORT=27017
+      - MONGO_USER=unifi
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
+    image: lscr.io/linuxserver/unifi-network-application:latest@sha256:64db17216eb24c16a64152a1cdc38b1bd6a5825fc68454ab54526a656946b26e
     ports:
-    - target: 8443
-      published: '8443'
-      protocol: tcp
-    - target: 3478
-      published: '3478'
-      protocol: udp
-    - target: 10001
-      published: '10001'
-      protocol: udp
-    - target: 8080
-      published: '8080'
-      protocol: tcp
+      - target: 8443
+        published: "8443"
+        protocol: tcp
+      - target: 3478
+        published: "3478"
+        protocol: udp
+      - target: 10001
+        published: "10001"
+        protocol: udp
+      - target: 8080
+        published: "8080"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/unifi-network-application
-      target: /config
+      - type: bind
+        source: /DATA/AppData/unifi-network-application
+        target: /config
     networks:
-    - unifi-bridge
+      - unifi-bridge
     privileged: false
   unifi-db:
     container_name: unifi-db
-    image: docker.io/mongo:3.6@sha256:19c11a8f1064fd2bb713ef1270f79a742a184cd57d9bb922efdd2a8eca514af8
+    image: docker.io/mongo:3.6
     configs:
-    - source: init-mongo.js
-      target: /docker-entrypoint-initdb.d/init-mongo.js
+      - source: init-mongo.js
+        target: /docker-entrypoint-initdb.d/init-mongo.js
     environment:
-    - PGID=$PGID
-    - PUID=$PUID
-    - TZ=$TZ
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
     ports:
-    - target: 27017
-      published: '27017'
-      protocol: tcp
+      - target: 27017
+        published: "27017"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/unifi-db
-      target: /data/db
+      - type: bind
+        source: /DATA/AppData/unifi-db
+        target: /data/db
     networks:
-    - unifi-bridge
+      - unifi-bridge
     privileged: false
 networks:
   unifi-bridge:
     driver: bridge
 configs:
   init-mongo.js:
-    content: "db.getSiblingDB(\"unifi-db\").createUser({user: \"unifi\", pwd: \"pass\"\
-      , roles: [{role: \"dbOwner\", db: \"unifi-db\"}]}); \ndb.getSiblingDB(\"unifi-db_stat\"\
-      ).createUser({user: \"unifi\", pwd: \"pass\", roles: [{role: \"dbOwner\", db:\
-      \ \"unifi-db_stat\"}]});\n"
+    content: |
+      db.getSiblingDB("unifi-db").createUser({user: "unifi", pwd: "pass", roles: [{role: "dbOwner", db: "unifi-db"}]}); 
+      db.getSiblingDB("unifi-db_stat").createUser({user: "unifi", pwd: "pass", roles: [{role: "dbOwner", db: "unifi-db_stat"}]});
 x-casaos:
   id: org.icewhale.unifinetworkapplication
   main: unifi-network-application
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.unifinetworkapplication/assets/icon.svg
   index: /
-  port_map: '8443'
+  port_map: "8443"
   scheme: https
   title:
     en_US: Unifi Network Application
-  version: 10.4.57-ls133
+  version: "10.4.57-ls133"

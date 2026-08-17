@@ -1,20 +1,21 @@
 name: duckdns
 services:
   duckdns:
-    image: lscr.io/linuxserver/duckdns:latest@sha256:f2f40cb51dc00f27a81dc9561fe37bdd12a87fbd84a3d8135196b901f1d170bc
+    image: lscr.io/linuxserver/duckdns:latest@sha256:5b4e07b77d474bdde34b48a0b488ec1511a739bbd79e5a77bfabe6f2bdd6ca5a
     container_name: duckdns
-    network_mode: host
+    network_mode: host #optional
     environment:
-    - PUID=1000
-    - PGID=1000
-    - TZ=Etc/UTC
-    - SUBDOMAINS=subdomain1,subdomain2
-    - TOKEN=token
-    - UPDATE_IP=ipv6
-    - LOG_FILE=false
+      - PUID=1000 #optional
+      - PGID=1000 #optional
+      - TZ=Etc/UTC #optional
+      - SUBDOMAINS=subdomain1,subdomain2
+      - TOKEN=token
+      - UPDATE_IP=ipv6 #optional
+      - LOG_FILE=false #optional
     volumes:
-    - /DATA/AppData/duckdns:/config
+      - /DATA/AppData/duckdns:/config #optional
     restart: unless-stopped
+
 x-casaos:
   id: org.icewhale.duckdns
   main: duckdns
@@ -22,4 +23,4 @@ x-casaos:
   title:
     en_US: duckdns
   index: /
-  version: 0.0.1
+  version: "0.0.1"

@@ -1,28 +1,50 @@
 name: mineos-node
+# Base file from: https://github.com/hexparrot/mineos-node/blob/master/docker-compose.yml
+
 services:
   mineos:
     image: hexparrot/mineos:latest
     container_name: mineos_server
     networks:
-    - mineos
+      - mineos
     restart: unless-stopped
+
+    # Adjust as needed; if this is too short, stopping the container
+    # may corrupt map data
     stop_grace_period: 10m
+
     volumes:
-    - /var/games/mineos/minecraft:/var/games/minecraft
+      # Using a bind mapping is preferrable here due to how docker
+      # stores names volumes by default in /var/lib/docker/volumes
+      # with permissions that prevent normal users from accessing
+      # the folder structure.
+      - /var/games/mineos/minecraft:/var/games/minecraft
+
     environment:
-      USE_HTTPS: 'true'
+      USE_HTTPS: "true"
       SERVER_PORT: 8443
       USER_NAME: mc
       USER_UID: 1000
       USER_PASSWORD: root
+
     ports:
-    - 8444:8443/tcp
-    - 25565-25570:25565-25570/tcp
-    - 25565-25570:25565-25570/udp
+      # HTTPS port for web interface. If you change the SERVER_PORT
+      # variable, also change this mapping.
+      - "8444:8443/tcp"
+
+      # Minecraft server ports. 25565 is the default, but is you plan
+      # on running multiple servers at the same time, each will need
+      # a unique port unless you are using bungiecord.
+      # Expand this range as needed.
+      - "25565-25570:25565-25570/tcp"
+      - "25565-25570:25565-25570/udp"
+
 volumes:
-  mineos_data: null
+  mineos_data:
+
+
 networks:
-  mineos: null
+  mineos:
 x-casaos:
   id: org.icewhale.mineosnode
   main: mineos
@@ -31,5 +53,5 @@ x-casaos:
     en_US: MineOS
   index: /admin/index.html
   scheme: https
-  port_map: '8444'
-  version: 1.2.2
+  port_map: "8444"
+  version: "1.2.2"

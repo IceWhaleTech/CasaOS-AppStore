@@ -3,33 +3,33 @@ services:
   virt-manager:
     restart: always
     devices:
-    - /dev/kvm:/dev/kvm
+      - /dev/kvm:/dev/kvm
     environment:
-      DARK_MODE: 'false'
-      HOSTS: '[''qemu:///system'']'
-    image: mber5/virt-manager:latest@sha256:a7f028877a47ab3b7c017b2da8b6dfa64cadf02ebc6273ff83513318ca2098e0
+      DARK_MODE: "false"
+      HOSTS: "['qemu:///system']"
+    image: mber5/virt-manager:latest
     network_mode: bridge
     ports:
-    - target: 80
-      published: '8185'
-      protocol: tcp
+      - target: 80
+        published: "8185"
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /var/run/libvirt/libvirt-sock
-      target: /var/run/libvirt/libvirt-sock
-    - type: bind
-      source: /var/lib/libvirt
-      target: /var/lib/libvirt
-    - type: bind
-      source: /DATA/Downloads
-      target: /DATA/Downloads
+      - type: bind
+        source: /var/run/libvirt/libvirt-sock
+        target: /var/run/libvirt/libvirt-sock
+      - type: bind
+        source: /var/lib/libvirt
+        target: /var/lib/libvirt
+      - type: bind
+        source: /DATA/Downloads
+        target: /DATA/Downloads
     container_name: virt-manager
 x-casaos:
   id: org.icewhale.virtmanager
   main: virt-manager
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.virtmanager/assets/icon.svg
-  port_map: '8185'
+  port_map: "8185"
   scheme: http
   title:
     en_US: Virtual Machine Manager
-  version: 0.0.1
+  version: "0.0.1"

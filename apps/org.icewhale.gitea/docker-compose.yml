@@ -2,8 +2,8 @@ name: gitea
 services:
   gitea:
     environment:
-      USER_GID: '1000'
-      USER_UID: '1000'
+      USER_GID: "1000"
+      USER_UID: "1000"
     image: gitea/gitea:1.26.2
     deploy:
       resources:
@@ -11,17 +11,17 @@ services:
           memory: 256M
     network_mode: bridge
     ports:
-    - target: 3000
-      published: '3002'
-      protocol: tcp
-    - target: 22
-      published: '222'
-      protocol: tcp
+      - target: 3000
+        published: "3002"
+        protocol: tcp
+      - target: 22
+        published: "222"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
     container_name: gitea
 x-casaos:
   id: org.icewhale.gitea
@@ -30,5 +30,5 @@ x-casaos:
   title:
     en_US: Gitea
   index: /
-  port_map: '3002'
-  version: 1.26.2
+  port_map: "3002"
+  version: "1.26.2"

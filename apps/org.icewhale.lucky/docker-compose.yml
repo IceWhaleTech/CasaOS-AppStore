@@ -8,9 +8,9 @@ services:
     image: gdy666/lucky:2.27.2
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/lucky
-      target: /goodluck
+      - type: bind
+        source: /DATA/AppData/lucky
+        target: /goodluck
     environment:
       TZ: $TZ
     network_mode: host
@@ -22,6 +22,6 @@ x-casaos:
   index: /
   title:
     en_US: Lucky
-  port_map: '16601'
+  port_map: "16601"
   scheme: http
-  version: 2.27.2
+  version: "2.27.2"

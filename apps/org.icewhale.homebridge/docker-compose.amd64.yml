@@ -2,16 +2,16 @@ name: homebridge
 version: '2'
 services:
   homebridge:
-    image: homebridge/homebridge:latest@sha256:a92053b406be49f0a6ea5e0add041863c14ec86ec6d6179d1dd1683c57506f18
+    image: homebridge/homebridge:latest@sha256:03482eb304c8df9e869d817022d4e8cf8e99fb73e998bca38f2f99c2461946df
     restart: always
     network_mode: host
     volumes:
-    - /DATA/AppData/$AppID/config:/homebridge
+      - /DATA/AppData/$AppID/config:/homebridge
     logging:
       driver: json-file
       options:
-        max-size: 10mb
-        max-file: '1'
+        max-size: "10mb"
+        max-file: "1"
 x-casaos:
   id: org.icewhale.homebridge
   main: homebridge
@@ -19,5 +19,5 @@ x-casaos:
   title:
     en_US: Homebridge
   index: /
-  port_map: '8581'
-  version: 2.1.0
+  port_map: "8581"
+  version: "2.1.0"

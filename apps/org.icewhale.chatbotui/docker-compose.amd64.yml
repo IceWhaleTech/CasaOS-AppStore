@@ -8,9 +8,9 @@ services:
     image: ghcr.io/mckaywrigley/chatbot-ui:main@sha256:2e96d7b5e96219a7db00a7d07a24bc1d71f096820f1f16d6d4dc995e9bb7875a
     network_mode: bridge
     ports:
-    - target: 3000
-      published: '3080'
-      protocol: tcp
+      - target: 3000
+        published: "3080"
+        protocol: tcp
     restart: unless-stopped
     container_name: chatbot-ui
 x-casaos:
@@ -20,5 +20,5 @@ x-casaos:
   title:
     en_US: Chatbot UI
   index: /
-  port_map: '3080'
-  version: 0.0.1
+  port_map: "3080"
+  version: "0.0.1"

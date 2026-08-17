@@ -1,7 +1,7 @@
 name: ollama-nvidia
 services:
   ollama:
-    image: ollama/ollama:0.9.5@sha256:6f61daee5eac5dadf5b8c16bda5f4f600306c0ca655c9847dadcf9a16f214ba6
+    image: ollama/ollama:0.9.5
     container_name: ollama
     deploy:
       resources:
@@ -10,26 +10,25 @@ services:
         reservations:
           memory: 2G
           devices:
-          - driver: nvidia
-            count: all
-            capabilities:
-            - gpu
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     restart: unless-stopped
     ports:
-    - target: 11434
-      published: '11434'
-      protocol: tcp
+      - target: 11434
+        published: "11434"
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/
-      target: /root/.ollama
+      - type: bind
+        source: /DATA/AppData/$AppID/
+        target: /root/.ollama
 x-casaos:
   id: org.icewhale.ollamanvidia
   main: ollama
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.ollamanvidia/assets/icon.svg
   scheme: http
-  port_map: '11434'
+  port_map: "11434"
   index: /
   title:
     en_US: Ollama(Nvidia GPU)
-  version: 0.9.5
+  version: "0.9.5"

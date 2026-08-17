@@ -9,19 +9,19 @@ services:
           memory: 64M
     restart: unless-stopped
     volumes:
-    - /DATA/Media/Audiobooks:/audiobooks
-    - /DATA/Media/Podcasts:/podcasts
-    - /DATA/AppData/$AppID/config:/config
-    - /DATA/AppData/$AppID/metadata:/metadata
+      - /DATA/Media/Audiobooks:/audiobooks
+      - /DATA/Media/Podcasts:/podcasts
+      - /DATA/AppData/$AppID/config:/config
+      - /DATA/AppData/$AppID/metadata:/metadata
     ports:
-    - 13378:80
+      - "13378:80"
 x-casaos:
   id: org.icewhale.audiobookshelf
   main: audiobookshelf
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.audiobookshelf/assets/icon.svg
   scheme: http
-  port_map: '13378'
+  port_map: "13378"
   index: /
   title:
     en_US: Audiobookshelf
-  version: 2.35.0
+  version: "2.35.0"

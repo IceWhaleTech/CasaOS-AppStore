@@ -9,29 +9,29 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 256M
+          memory: "256M"
     network_mode: bridge
     ports:
-    - target: 8384
-      published: '8384'
-      protocol: tcp
-    - target: 22000
-      published: '22000'
-      protocol: tcp
-    - target: 22000
-      published: '22000'
-      protocol: udp
-    - target: 21027
-      published: '21027'
-      protocol: udp
+      - target: 8384
+        published: "8384"
+        protocol: tcp
+      - target: 22000
+        published: "22000"
+        protocol: tcp
+      - target: 22000
+        published: "22000"
+        protocol: udp
+      - target: 21027
+        published: "21027"
+        protocol: udp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/config
-      target: /config
-    - type: bind
-      source: /DATA
-      target: /DATA
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA
+        target: /DATA
     container_name: syncthing
 x-casaos:
   id: org.icewhale.syncthing
@@ -40,5 +40,5 @@ x-casaos:
   title:
     en_US: Syncthing
   index: /
-  port_map: '8384'
-  version: 1.29.7
+  port_map: "8384"
+  version: "1.29.7"

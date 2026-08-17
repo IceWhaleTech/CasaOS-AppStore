@@ -7,23 +7,23 @@ services:
         limits:
           memory: 7848M
     environment:
-    - TZ= $TZ
+      - TZ= $TZ
     image: pymedusa/medusa:master@sha256:481cb695f2ad422a4cbf555663d9831041d80e9ee0c052cbecb63c32eb453aab
     ports:
-    - target: 8081
-      published: '8081'
-      protocol: tcp
+      - target: 8081
+        published: "8081"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID
-      target: /config
-    - type: bind
-      source: /DATA/AppData/$AppID/Downloads/Television
-      target: /downloads
-    - type: bind
-      source: /DATA/AppData/$AppID/Media/Television
-      target: /tv
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /config
+      - type: bind
+        source: /DATA/AppData/$AppID/Downloads/Television
+        target: /downloads
+      - type: bind
+        source: /DATA/AppData/$AppID/Media/Television
+        target: /tv
     network_mode: bridge
     privileged: false
 x-casaos:
@@ -31,8 +31,8 @@ x-casaos:
   main: medusa
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.medusa/assets/icon.svg
   index: /
-  port_map: '8081'
+  port_map: "8081"
   scheme: http
   title:
     en_US: Medusa
-  version: 1.0.25
+  version: "1.0.25"

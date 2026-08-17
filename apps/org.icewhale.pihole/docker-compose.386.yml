@@ -5,32 +5,32 @@ services:
       TZ: $TZ
       FTLCONF_webserver_api_password: casaos
       FTLCONF_dns_listeningMode: all
-    image: pihole/pihole:2026.05.0@sha256:6608b76bf708270431a670260f77a6a6ff78aaade0aa4e138b694ec7bb39ba39
+    image: pihole/pihole:2026.05.0
     deploy:
       resources:
         reservations:
           memory: 64M
     network_mode: bridge
     ports:
-    - target: 80
-      published: '8800'
-      protocol: tcp
-    - target: 53
-      published: '53'
-      protocol: tcp
-    - target: 53
-      published: '53'
-      protocol: udp
-    - target: 443
-      published: '8443'
-      protocol: tcp
+      - target: 80
+        published: "8800"
+        protocol: tcp
+      - target: 53
+        published: "53"
+        protocol: tcp
+      - target: 53
+        published: "53"
+        protocol: udp
+      - target: 443
+        published: "8443"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/etc/pihole/
-      target: /etc/pihole
+      - type: bind
+        source: /DATA/AppData/$AppID/etc/pihole/
+        target: /etc/pihole
     cap_add:
-    - NET_ADMIN
+      - NET_ADMIN
     container_name: pihole
 x-casaos:
   id: org.icewhale.pihole
@@ -39,5 +39,5 @@ x-casaos:
   title:
     en_US: Pi-hole
   index: /admin
-  port_map: '8800'
-  version: 2026.5.0
+  port_map: "8800"
+  version: "2026.5.0"

@@ -9,9 +9,9 @@ services:
       linkwarden-meilisearch:
         condition: service_started
     ports:
-    - target: 3000
-      published: '3428'
-      protocol: tcp
+      - target: 3000
+        published: "3428"
+        protocol: tcp
     environment:
       TZ: $TZ
       NEXTAUTH_URL: http://localhost:3000/api/v1/auth
@@ -23,17 +23,17 @@ services:
       NEXT_PUBLIC_DISABLE_REGISTRATION: 'false'
       NEXT_PUBLIC_CREDENTIALS_ENABLED: 'true'
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /data/data
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data/data
     networks:
-    - linkwarden-net
+      - linkwarden-net
     deploy:
       resources:
         reservations:
           memory: 512m
   linkwarden-postgres:
-    image: postgres:16-alpine@sha256:7ae1143a9f249af815f056751a122a86d7e44ddce0926f2b227e3d5c434444f4
+    image: postgres:16-alpine@sha256:738d1359df5aa0b6d50a9071e989c49fdd39152a2a805c6ff131bf5e2243e0b3
     container_name: linkwarden-postgres
     restart: unless-stopped
     environment:
@@ -42,15 +42,15 @@ services:
       POSTGRES_DB: linkwarden
       TZ: $TZ
     networks:
-    - linkwarden-net
+      - linkwarden-net
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/pgdata
-      target: /var/lib/postgresql/data
+      - type: bind
+        source: /DATA/AppData/$AppID/pgdata
+        target: /var/lib/postgresql/data
     healthcheck:
       test:
-      - CMD-SHELL
-      - pg_isready -U postgres -d linkwarden
+        - CMD-SHELL
+        - pg_isready -U postgres -d linkwarden
       interval: 10s
       timeout: 5s
       retries: 10
@@ -66,11 +66,11 @@ services:
       MEILI_MASTER_KEY: kZWvi7wFylRjEnOTnNrNucG3d7c892HlIBtN3Vr8M-0
       MEILI_ENV: production
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/meili_data
-      target: /meili_data
+      - type: bind
+        source: /DATA/AppData/$AppID/meili_data
+        target: /meili_data
     networks:
-    - linkwarden-net
+      - linkwarden-net
     deploy:
       resources:
         reservations:
@@ -99,7 +99,7 @@ x-casaos:
     zh_CN: Linkwarden
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.linkwarden/assets/icon.svg
   main: linkwarden
-  port_map: '3428'
+  port_map: "3428"
   index: /
   scheme: http
-  version: 2.14.1
+  version: "2.14.1"

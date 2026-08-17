@@ -8,10 +8,10 @@ services:
         reservations:
           memory: 40G
           devices:
-          - driver: nvidia
-            count: all
-            capabilities:
-            - gpu
+            - driver: nvidia
+              count: all
+              capabilities:
+                - gpu
     environment:
       MODEL_PATHS: /workspace/TurboDiffusion/checkpoints_host,/workspace/TurboDiffusion/checkpoints
       NVIDIA_VISIBLE_DEVICES: all
@@ -19,20 +19,20 @@ services:
       CUDA_HOME: /usr/local/cuda
       PYTHONPATH: /workspace/TurboDiffusion/turbodiffusion
     ports:
-    - target: 7860
-      published: '27860'
-      protocol: tcp
+      - target: 7860
+        published: "27860"
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/models
-      target: /workspace/TurboDiffusion/checkpoints_host
-    - type: bind
-      source: /DATA/AppData/$AppID/outputs
-      target: /workspace/TurboDiffusion/outputs
+      - type: bind
+        source: /DATA/AppData/$AppID/models
+        target: /workspace/TurboDiffusion/checkpoints_host
+      - type: bind
+        source: /DATA/AppData/$AppID/outputs
+        target: /workspace/TurboDiffusion/outputs
     working_dir: /workspace/TurboDiffusion
     command:
-    - python
-    - turbodiffusion/app_gradio.py
+      - python
+      - turbodiffusion/app_gradio.py
     restart: unless-stopped
 x-casaos:
   id: org.icewhale.turbodiffusionnvidia
@@ -54,7 +54,7 @@ x-casaos:
     zh_CN: TurboDiffusion(Nvidia GPU)
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.turbodiffusionnvidia/assets/icon.png
   main: turbodiffusion
-  port_map: '27860'
+  port_map: "27860"
   index: /
   scheme: http
-  version: 20260312.0.0
+  version: "2026.03.12"

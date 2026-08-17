@@ -9,21 +9,21 @@ services:
         reservations:
           memory: 256M
     environment:
-    - LOG_LEVEL=debug
-    - TZ=$TZ
+      - LOG_LEVEL=debug
+      - TZ=$TZ
     image: fallenbagel/jellyseerr:2.7.3@sha256:499fbe958fa4a0c93172a231c14898986556bb28bd5cd569a0f41dbf887b04d7
     ports:
-    - mode: ingress
-      target: 5055
-      published: '5055'
-      protocol: tcp
+      - mode: ingress
+        target: 5055
+        published: "5055"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID
-      target: /app/config
-      bind:
-        create_host_path: true
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /app/config
+        bind:
+          create_host_path: true
     network_mode: bridge
     privileged: false
 x-casaos:
@@ -33,5 +33,5 @@ x-casaos:
     en_US: Jellyseerr
   main: jellyseerr
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.jellyseerr/assets/icon.svg
-  port_map: '5055'
-  version: 2.7.3
+  port_map: "5055"
+  version: "2.7.3"

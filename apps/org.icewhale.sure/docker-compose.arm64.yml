@@ -4,22 +4,22 @@ services:
     container_name: sure-web
     image: ghcr.io/we-promise/sure:0.6.5-hotfix.1@sha256:6507a353189e6148f03be6be43f76a4a19edf7c7f7d0537b4bd9ff442d94e5e3
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/app/storage
-      target: /rails/storage
+      - type: bind
+        source: /DATA/AppData/$AppID/app/storage
+        target: /rails/storage
     ports:
-    - target: 3000
-      published: '23000'
-      protocol: tcp
+      - target: 3000
+        published: "23000"
+        protocol: tcp
     restart: unless-stopped
     environment:
       POSTGRES_USER: sure_user
       POSTGRES_PASSWORD: sure_password
       POSTGRES_DB: sure_production
       SECRET_KEY_BASE: a7523c3d0ae56415046ad8abae168d71074a79534a7062258f8d1d51ac2f76d3c3bc86d86b6b0b307df30d9a6a90a2066a3fa9e67c5e6f374dbd7dd4e0778e13
-      SELF_HOSTED: 'true'
-      RAILS_FORCE_SSL: 'false'
-      RAILS_ASSUME_SSL: 'false'
+      SELF_HOSTED: "true"
+      RAILS_FORCE_SSL: "false"
+      RAILS_ASSUME_SSL: "false"
       DB_HOST: sure-db
       DB_PORT: 5432
       REDIS_URL: redis://sure-redis:6379/1
@@ -30,7 +30,7 @@ services:
       sure-redis:
         condition: service_healthy
     networks:
-    - sure_net
+      - sure_net
     deploy:
       resources:
         reservations:
@@ -38,15 +38,12 @@ services:
   sure-worker:
     container_name: sure-worker
     image: ghcr.io/we-promise/sure:0.6.5-hotfix.1@sha256:6507a353189e6148f03be6be43f76a4a19edf7c7f7d0537b4bd9ff442d94e5e3
-    command:
-    - bundle
-    - exec
-    - sidekiq
+    command: ['bundle', 'exec', 'sidekiq']
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/app/storage
-      target: /rails/storage
+      - type: bind
+        source: /DATA/AppData/$AppID/app/storage
+        target: /rails/storage
     depends_on:
       sure-redis:
         condition: service_healthy
@@ -55,40 +52,39 @@ services:
       POSTGRES_PASSWORD: sure_password
       POSTGRES_DB: sure_production
       SECRET_KEY_BASE: a7523c3d0ae56415046ad8abae168d71074a79534a7062258f8d1d51ac2f76d3c3bc86d86b6b0b307df30d9a6a90a2066a3fa9e67c5e6f374dbd7dd4e0778e13
-      SELF_HOSTED: 'true'
-      RAILS_FORCE_SSL: 'false'
-      RAILS_ASSUME_SSL: 'false'
+      SELF_HOSTED: "true"
+      RAILS_FORCE_SSL: "false"
+      RAILS_ASSUME_SSL: "false"
       DB_HOST: sure-db
       DB_PORT: 5432
       REDIS_URL: redis://sure-redis:6379/1
       OPENAI_ACCESS_TOKEN: ${OPENAI_ACCESS_TOKEN}
     networks:
-    - sure_net
+      - sure_net
     deploy:
       resources:
         reservations:
           memory: 1024M
+
   sure-db:
     container_name: sure-db
-    image: postgres:16@sha256:4d8b6faf28fe73125ec3853583f4fbbb57de2bb5d92fb663d0c6aa963c287b14
+    image: postgres:16@sha256:b4ffbb18020d17edaf767a80987c618d43fa198ff85f8bcbec17d7ea7a6f6918
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/pgdata
-      target: /var/lib/postgresql/data
+      - type: bind
+        source: /DATA/AppData/$AppID/pgdata
+        target: /var/lib/postgresql/data
     environment:
       POSTGRES_USER: sure_user
       POSTGRES_PASSWORD: sure_password
       POSTGRES_DB: sure_production
     healthcheck:
-      test:
-      - CMD-SHELL
-      - pg_isready -U sure_user -d sure_production
+      test: ["CMD-SHELL", "pg_isready -U sure_user -d sure_production"]
       interval: 5s
       timeout: 5s
       retries: 5
     networks:
-    - sure_net
+      - sure_net
     deploy:
       resources:
         reservations:
@@ -98,19 +94,16 @@ services:
     image: redis:8.2.1-alpine3.22@sha256:48330375193882f20967f5d0817eb6db7b8bbfebce66b7ff9db1c34320690e18
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/redis/data
-      target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/redis/data
+        target: /data
     healthcheck:
-      test:
-      - CMD
-      - redis-cli
-      - ping
+      test: ["CMD", "redis-cli", "ping"]
       interval: 5s
       timeout: 5s
       retries: 5
     networks:
-    - sure_net
+      - sure_net
     deploy:
       resources:
         reservations:
@@ -118,12 +111,13 @@ services:
 networks:
   sure_net:
     driver: bridge
+
 x-casaos:
   id: org.icewhale.sure
   main: sure-web
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.sure/assets/icon.svg
   scheme: http
-  port_map: '23000'
+  port_map: "23000"
   index: /
   title:
     en_US: Sure
@@ -142,4 +136,4 @@ x-casaos:
     pt_PT: Sure
     ru_RU: Sure
     tr_TR: Sure
-  version: 0.6.5-hotfix.1
+  version: "0.6.5-hotfix.1"

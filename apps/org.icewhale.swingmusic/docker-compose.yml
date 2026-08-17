@@ -4,14 +4,14 @@ services:
     image: ghcr.io/swingmx/swingmusic:v2.1.4
     container_name: swingmusic
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/config
-      target: /config
-    - type: bind
-      source: /DATA/Media/Music
-      target: /music
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music
     ports:
-    - 1970:1970
+      - "1970:1970"
     restart: unless-stopped
 x-casaos:
   id: org.icewhale.swingmusic
@@ -21,5 +21,5 @@ x-casaos:
     en_US: Swing Music
     zh_CN: Swing Music
   index: /
-  port_map: '1970'
-  version: 2.1.4
+  port_map: "1970"
+  version: "2.1.4"

@@ -1,12 +1,13 @@
 name: pingvin-share
+
 services:
   pingvin-share:
     image: stonith404/pingvin-share
     restart: unless-stopped
     ports:
-    - target: 3000
-      published: '3410'
-      protocol: tcp
+      - target: 3000
+        published: "3410"
+        protocol: tcp
     environment:
       TRUST_PROXY: false
     deploy:
@@ -14,12 +15,12 @@ services:
         reservations:
           memory: 256M
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /opt/app/backend/data
-    - type: bind
-      source: /DATA/AppData/$AppID/images
-      target: /opt/app/frontend/public/img
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /opt/app/backend/data
+      - type: bind
+        source: /DATA/AppData/$AppID/images
+        target: /opt/app/frontend/public/img
 x-casaos:
   id: org.icewhale.pingvinshare
   title:
@@ -40,7 +41,7 @@ x-casaos:
     zh_CN: Pingvin-Share
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.pingvinshare/assets/icon.svg
   main: pingvin-share
-  port_map: '3410'
+  port_map: "3410"
   index: /
   scheme: http
-  version: 1.13.0
+  version: "1.13.0"

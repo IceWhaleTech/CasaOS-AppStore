@@ -1,60 +1,70 @@
 name: deepseek-ocr-nvidia
+
 services:
   deepseek-ocr-backend:
     image: icewhaletech/deepseek-ocr-backend:v2.2.0
     container_name: deepseek-ocr-backend
     environment:
-      API_HOST: 0.0.0.0
-      API_PORT: '8000'
-      FRONTEND_PORT: '3000'
-      MODEL_NAME: deepseek-ai/DeepSeek-OCR
-      HF_HOME: /models
-      MAX_UPLOAD_SIZE_MB: '100'
-      BASE_SIZE: '1024'
-      IMAGE_SIZE: '640'
-      CROP_MODE: 'true'
+      # API Configuration
+      API_HOST: "0.0.0.0"
+      API_PORT: "8000"
+
+      # Frontend Configuration
+      FRONTEND_PORT: "3000"
+
+      # Model Configuration
+      MODEL_NAME: "deepseek-ai/DeepSeek-OCR"
+      HF_HOME: "/models"
+
+      # Upload Configuration
+      MAX_UPLOAD_SIZE_MB: "100"
+
+      # Processing Configuration
+      BASE_SIZE: "1024"
+      IMAGE_SIZE: "640"
+      CROP_MODE: "true"
     volumes:
-    - /DATA/AppData/$AppID/models:/models
+      - /DATA/AppData/$AppID/models:/models
     deploy:
       resources:
         reservations:
           devices:
-          - driver: nvidia
-            count: all
-            capabilities:
-            - gpu
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
           memory: 8G
-    shm_size: 4g
+    shm_size: "4g"
     ports:
-    - target: 8000
-      published: '22523'
-      protocol: tcp
+      - target: 8000
+        published: "22523"
+        protocol: tcp
     networks:
-    - deepseek-ocr-network
+      - deepseek-ocr-network
   deepseek-ocr-frontend:
     image: icewhaletech/deepseek-ocr-frontend:v2.2.0
     container_name: deepseek-ocr-frontend
     ports:
-    - target: 80
-      published: '23000'
-      protocol: tcp
+      - target: 80
+        published: "23000"
+        protocol: tcp
     deploy:
       resources:
         reservations:
           memory: 512M
     depends_on:
-    - deepseek-ocr-backend
+      - deepseek-ocr-backend
     networks:
-    - deepseek-ocr-network
+      - deepseek-ocr-network
 networks:
   deepseek-ocr-network:
     driver: bridge
+
 x-casaos:
   id: org.icewhale.deepseekocrnvidia
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.deepseekocrnvidia/assets/icon.svg
   index: /
   main: deepseek-ocr-frontend
-  port_map: '23000'
+  port_map: "23000"
   scheme: http
   title:
     de_DE: DeepSeek OCR(Nvidia GPU)
@@ -72,4 +82,4 @@ x-casaos:
     sv_SE: DeepSeek OCR(Nvidia GPU)
     tr_TR: DeepSeek OCR(Nvidia GPU)
     zh_CN: DeepSeek OCR(Nvidia GPU)
-  version: 2.2.0
+  version: "2.2.0"

@@ -9,19 +9,19 @@ services:
     deploy:
       resources:
         reservations:
-          memory: 2048M
+          memory: "2048M"
     ports:
-    - target: 8000
-      published: '8582'
-      protocol: tcp
+      - target: 8000
+        published: "8582"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/Downloads/downtify
-      target: /downloads
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /data
+      - type: bind
+        source: /DATA/Downloads/downtify
+        target: /downloads
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
     container_name: downtify
 x-casaos:
   id: org.icewhale.downtify
@@ -30,5 +30,5 @@ x-casaos:
   title:
     en_US: Downtify
   index: /
-  port_map: '8582'
-  version: 2.7.0
+  port_map: "8582"
+  version: "2.7.0"

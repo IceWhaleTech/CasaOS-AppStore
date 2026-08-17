@@ -5,18 +5,18 @@ services:
     container_name: alist-sync
     restart: unless-stopped
     ports:
-    - 52441:52441
+      - "52441:52441"
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /app/data
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
     environment:
-    - TZ=Asia/Shanghai
+      - TZ=Asia/Shanghai
 x-casaos:
   id: org.icewhale.alistsync
   main: alist-sync
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.alistsync/assets/icon.svg
   title:
     en_US: Alist-Sync
-  port_map: '52441'
-  version: 1.1.5
+  port_map: "52441"
+  version: "1.1.5"

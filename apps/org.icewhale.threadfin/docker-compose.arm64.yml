@@ -1,31 +1,32 @@
 name: threadfin
 services:
   threadfin:
-    image: fyb3roptik/threadfin:1.2.37@sha256:a2105dc3ec2367775fcf140b4260a7cf7bbe54c5e797867792269aa9a5a5ce6c
+    image: fyb3roptik/threadfin:1.2.37
     restart: unless-stopped
     environment:
-    - THREADFIN_BRANCH=main
-    - THREADFIN_DEBUG=0
+      - THREADFIN_BRANCH=main
+      - THREADFIN_DEBUG=0
     ports:
-    - target: 34400
-      published: '34400'
-      protocol: tcp
+      - target: 34400
+        published: "34400"
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/threadfin/config
-      target: /home/threadfin/conf/data
-    - type: bind
-      source: /DATA/AppData/threadfin/backup
-      target: /home/threadfin/conf/backup
+      - type: bind
+        source: /DATA/AppData/threadfin/config
+        target: /home/threadfin/conf/data
+      - type: bind
+        source: /DATA/AppData/threadfin/backup
+        target: /home/threadfin/conf/backup
     container_name: threadfin
+
 x-casaos:
   id: org.icewhale.threadfin
   main: threadfin
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.threadfin/assets/icon.svg
   index: /web/
-  port_map: '34400'
+  port_map: "34400"
   scheme: http
   title:
     en_US: Threadfin
     zh_CN: Threadfin
-  version: 1.2.37
+  version: "1.2.37"

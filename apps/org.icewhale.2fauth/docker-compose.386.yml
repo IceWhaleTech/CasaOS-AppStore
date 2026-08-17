@@ -8,14 +8,14 @@ services:
           memory: 64M
     network_mode: bridge
     ports:
-    - target: 8000
-      published: '8000'
-      protocol: tcp
+      - target: 8000
+        published: "8000"
+        protocol: tcp
     restart: always
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID
-      target: /2fauth
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /2fauth
     environment:
       APP_KEY: SomeRandomStringOf32CharsExactly
     container_name: 2fauth
@@ -26,5 +26,5 @@ x-casaos:
   title:
     en_US: 2FAuth
   index: /
-  port_map: '8000'
-  version: 6.1.3
+  port_map: "8000"
+  version: "6.1.3"

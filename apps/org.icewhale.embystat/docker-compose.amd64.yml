@@ -2,8 +2,8 @@ name: embystat
 services:
   embystat:
     environment:
-      PGID: '1000'
-      PUID: '1000'
+      PGID: "1000"
+      PUID: "1000"
       TZ: Europe/London
     image: linuxserver/embystat:0.2.0@sha256:59008e71ddec817566dc3642bb9cfdb22a9f87cc851bcd8ebc0d905b4caf6bce
     deploy:
@@ -12,14 +12,14 @@ services:
           memory: 64M
     network_mode: bridge
     ports:
-    - target: 6555
-      published: '6555'
-      protocol: tcp
+      - target: 6555
+        published: "6555"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/embystat/config
-      target: /config
+      - type: bind
+        source: /DATA/AppData/embystat/config
+        target: /config
     container_name: embystat
 x-casaos:
   id: org.icewhale.embystat
@@ -27,5 +27,5 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.embystat/assets/icon.svg
   title:
     en_US: Embystat
-  port_map: '6555'
-  version: 0.2.0
+  port_map: "6555"
+  version: "0.2.0"

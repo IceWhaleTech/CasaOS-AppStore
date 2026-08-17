@@ -1,21 +1,21 @@
 name: uptimekuma
 services:
   uptimekuma:
-    image: louislam/uptime-kuma:2.4.0@sha256:213b0ec84db1673f5e77d3bd3f98e1750408b05c264fd7cab30a5bd5760a2655
+    image: louislam/uptime-kuma:2.4.0
     deploy:
       resources:
         reservations:
-          memory: 128M
+          memory: "128M"
     network_mode: bridge
     ports:
-    - target: 3001
-      published: '3001'
-      protocol: tcp
+      - target: 3001
+        published: "3001"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/app/data
-      target: /app/data
+      - type: bind
+        source: /DATA/AppData/$AppID/app/data
+        target: /app/data
     container_name: uptimekuma
 x-casaos:
   id: org.icewhale.uptimekuma
@@ -24,5 +24,5 @@ x-casaos:
   title:
     en_US: Uptime Kuma
   index: /
-  port_map: '3001'
-  version: 2.4.0
+  port_map: "3001"
+  version: "2.4.0"

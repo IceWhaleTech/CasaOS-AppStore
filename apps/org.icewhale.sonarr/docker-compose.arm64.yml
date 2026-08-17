@@ -5,27 +5,27 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/sonarr:4.0.17@sha256:99f9ae8c01529d0c5ec6001ba79bc29182bf1e6e7cd96bb40785ba43938b8275
+    image: linuxserver/sonarr:4.0.17
     deploy:
       resources:
         reservations:
-          memory: 256M
+          memory: "256M"
     network_mode: bridge
     ports:
-    - target: 8989
-      published: '8989'
-      protocol: tcp
+      - target: 8989
+        published: "8989"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/config
-      target: /config
-    - type: bind
-      source: /DATA/Media/TV Shows
-      target: /tv
-    - type: bind
-      source: /DATA/Downloads
-      target: /downloads
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/TV Shows
+        target: /tv
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
     container_name: sonarr
 x-casaos:
   id: org.icewhale.sonarr
@@ -34,5 +34,5 @@ x-casaos:
   title:
     en_US: Sonarr
   index: /
-  port_map: '8989'
-  version: 4.0.17
+  port_map: "8989"
+  version: "4.0.17"

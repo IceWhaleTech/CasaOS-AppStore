@@ -1,40 +1,40 @@
 name: jdownloader2
 services:
   jdownloader2:
-    image: jlesage/jdownloader-2:latest@sha256:de9ed4500cca7ade86307add640d3e229b8812ff75e89d10c9c4041e1c275b74
+    image: jlesage/jdownloader-2:latest@sha256:5df19fd5f36647d365b67e3f2e5180f8cff72d6bdaac2c8943379e414fd6c7b1
     restart: unless-stopped
     environment:
-    - USER_ID=$PUID
-    - GROUP_ID=$PGID
-    - TZ=$TZ
-    - MYJDOWNLOADER_EMAIL=$MYJDOWNLOADER_EMAIL
-    - MYJDOWNLOADER_PASSWORD=$MYJDOWNLOADER_PASSWORD
-    - MYJDOWNLOADER_DEVICE_NAME=$MYJDOWNLOADER_DEVICE_NAME
-    - JDOWNLOADER_HEADLESS=$JDOWNLOADER_HEADLESS
+      - USER_ID=$PUID
+      - GROUP_ID=$PGID
+      - TZ=$TZ
+      - MYJDOWNLOADER_EMAIL=$MYJDOWNLOADER_EMAIL
+      - MYJDOWNLOADER_PASSWORD=$MYJDOWNLOADER_PASSWORD
+      - MYJDOWNLOADER_DEVICE_NAME=$MYJDOWNLOADER_DEVICE_NAME
+      - JDOWNLOADER_HEADLESS=$JDOWNLOADER_HEADLESS
     ports:
-    - target: 5800
-      published: '5800'
-      protocol: tcp
-    - target: 5900
-      published: '5900'
-      protocol: tcp
-    - target: 3129
-      published: '3129'
-      protocol: tcp
+      - target: 5800
+        published: "5800"
+        protocol: tcp
+      - target: 5900
+        published: "5900"
+        protocol: tcp
+      - target: 3129
+        published: "3129"
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/jdownloader2/config
-      target: /config
-    - type: bind
-      source: /DATA/Downloads
-      target: /output
+      - type: bind
+        source: /DATA/AppData/jdownloader2/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /output
     container_name: jdownloader2
 x-casaos:
   id: org.icewhale.jdownloader2
   main: jdownloader2
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.jdownloader2/assets/icon.svg
-  port_map: '5800'
+  port_map: "5800"
   scheme: http
   title:
     en_US: JDownloader2
-  version: 26.3.1
+  version: "26.3.1"

@@ -2,37 +2,37 @@ name: resilio-sync
 services:
   resilio-sync:
     environment:
-    - PGID=$PGID
-    - PUID=$PUID
-    - TZ=$TZ
-    image: linuxserver/resilio-sync:3.1.2@sha256:420789ae7e2c92192af75e6497738c5225f316a5f8c597d59d8045f390dbb3a3
+      - PGID=$PGID
+      - PUID=$PUID
+      - TZ=$TZ
+    image: linuxserver/resilio-sync:3.1.2
     network_mode: bridge
     ports:
-    - target: 55555
-      published: '55555'
-      protocol: tcp
-    - target: 8888
-      published: '8888'
-      protocol: tcp
+      - target: 55555
+        published: "55555"
+        protocol: tcp
+      - target: 8888
+        published: "8888"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /sync
-    - type: bind
-      source: /DATA/AppData/$AppID/config
-      target: /config
-    - type: bind
-      source: /DATA/Downloads
-      target: /downloads
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /sync
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
     privileged: false
     container_name: resilio-sync
 x-casaos:
   id: org.icewhale.resiliosync
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.resiliosync/assets/icon.svg
   index: /
-  port_map: '8888'
+  port_map: "8888"
   scheme: http
   title:
     en_US: resilio-sync
-  version: 3.1.2
+  version: "3.1.2"

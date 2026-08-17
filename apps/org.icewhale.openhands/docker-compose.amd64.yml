@@ -4,16 +4,17 @@ services:
     image: ghcr.io/all-hands-ai/openhands:0.59@sha256:f5ff4fd19711fee82bdc91b4367d1e7986c88be754b82e2a946cc0a85434562a
     container_name: openhands
     environment:
-    - SANDBOX_RUNTIME_CONTAINER_IMAGE=ghcr.io/all-hands-ai/runtime:main-nikolaik
-    - WORKSPACE_MOUNT_PATH=/DATA/AppData/$AppID/workspace
+      - SANDBOX_RUNTIME_CONTAINER_IMAGE=ghcr.io/all-hands-ai/runtime:main-nikolaik
+      #- SANDBOX_USER_ID=${SANDBOX_USER_ID:-1234} # enable this only if you want a specific non-root sandbox user but you will have to manually adjust permissions of ~/.openhands for this user
+      - WORKSPACE_MOUNT_PATH=/DATA/AppData/$AppID/workspace
     ports:
-    - 13333:3000
+      - "13333:3000"
     extra_hosts:
-    - host.docker.internal:host-gateway
+      - "host.docker.internal:host-gateway"
     volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
-    - /DATA/AppData/$AppID/openhands:/.openhands
-    - /DATA/AppData/$AppID/workspace:/opt/workspace_base
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /DATA/AppData/$AppID/openhands:/.openhands
+      - /DATA/AppData/$AppID/workspace:/opt/workspace_base
     stdin_open: true
     tty: true
 x-casaos:
@@ -21,7 +22,7 @@ x-casaos:
   main: openhands
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.openhands/assets/icon.svg
   scheme: http
-  port_map: '13333'
+  port_map: "13333"
   index: /
   title:
     en_US: OpenHands
@@ -39,4 +40,4 @@ x-casaos:
     pt_PT: OpenHands
     ru_RU: OpenHands
     tr_TR: OpenHands
-  version: 0.59.0
+  version: "0.59.0"

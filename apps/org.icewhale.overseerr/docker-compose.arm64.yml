@@ -1,20 +1,20 @@
 name: overseerr
 services:
   overseerr:
-    image: linuxserver/overseerr:1.35.0@sha256:a4744a297c6844f9c4ca8b2f2ddc980316db78cdf4b4c72284bf53eddfe96d44
+    image: linuxserver/overseerr:1.35.0
     restart: unless-stopped
     environment:
       PUID: $PUID
       PGID: $PGID
       TZ: $TZ
     ports:
-    - target: 5055
-      published: 5055
-      protocol: tcp
+      - target: 5055
+        published: 5055
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/overseerr/config
-      target: /config
+      - type: bind
+        source: /DATA/AppData/overseerr/config
+        target: /config
     container_name: overseerr
 x-casaos:
   id: org.icewhale.overseerr
@@ -23,4 +23,4 @@ x-casaos:
   title:
     en_US: Overseerr
   port_map: '5055'
-  version: 1.35.0
+  version: "1.35.0"

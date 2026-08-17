@@ -3,23 +3,24 @@ services:
   n8n:
     environment:
       TZ: $TZ
-      N8N_SECURE_COOKIE: 'false'
-    image: n8nio/n8n:2.22.3@sha256:9991e52f5fbf289d246bece86b7e5f205690b94ce1dc88db5a5c8156566b66d9
+      N8N_SECURE_COOKIE: "false"
+    image: n8nio/n8n:2.22.3
     deploy:
       resources:
         reservations:
           memory: 320M
     network_mode: bridge
     ports:
-    - target: 5678
-      published: '5678'
-      protocol: tcp
+      - target: 5678
+        published: "5678"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID
-      target: /home/node/.n8n
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /home/node/.n8n
     container_name: n8n
+
 x-casaos:
   id: org.icewhale.n8n
   main: n8n
@@ -27,5 +28,5 @@ x-casaos:
   title:
     en_US: n8n
   index: /
-  port_map: '5678'
-  version: 2.22.3
+  port_map: "5678"
+  version: "2.22.3"

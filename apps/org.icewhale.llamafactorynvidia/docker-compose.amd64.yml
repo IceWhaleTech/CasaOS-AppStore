@@ -4,23 +4,20 @@ services:
     image: hiyouga/llamafactory:0.9.4@sha256:f7e0ae22a074f9c9bcdbde827387d952f4b28695bf7cf9e5eb1120f2ae8ceba0
     container_name: llama-factory-nvidia
     ports:
-    - target: 7860
-      published: '18877'
-      protocol: tcp
+      - target: 7860
+        published: "18877"
+        protocol: tcp
     tty: true
     stdin_open: true
-    command:
-    - llamafactory-cli
-    - webui
+    command: ["llamafactory-cli", "webui"]
     deploy:
       resources:
         reservations:
           memory: 6G
           devices:
-          - driver: nvidia
-            count: all
-            capabilities:
-            - gpu
+            - driver: nvidia
+              count: "all"
+              capabilities: [gpu]
     restart: unless-stopped
 x-casaos:
   id: org.icewhale.llamafactorynvidia
@@ -44,5 +41,5 @@ x-casaos:
   index: /
   scheme: http
   main: llama-factory-nvidia
-  port_map: '18877'
-  version: 0.9.4
+  port_map: "18877"
+  version: "0.9.4"

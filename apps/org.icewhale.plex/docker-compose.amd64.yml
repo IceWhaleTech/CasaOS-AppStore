@@ -2,26 +2,26 @@ name: plex
 services:
   plex:
     devices:
-    - /dev/dri:/dev/dri
-    - /dev/dvb:/dev/dvb
+      - /dev/dri:/dev/dri
+      - /dev/dvb:/dev/dvb
     environment:
       PGID: $PGID
       PUID: $PUID
       VERSION: docker
-    image: lscr.io/linuxserver/plex:1.43.2@sha256:6c64f3c17e302d18df07c465ebb1696ea42fbe707f0599777338b233e0d2f94f
+    image: lscr.io/linuxserver/plex:1.43.2@sha256:9742fb8b090d6cfa208fbe3d783156304dc5d0a58b5dc119a7d81e8a7171288b
     deploy:
       resources:
         reservations:
-          memory: 256M
+          memory: "256M"
     network_mode: host
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/config
-      target: /config
-    - type: bind
-      source: /DATA/Media
-      target: /Media
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media
+        target: /Media
     container_name: plex
 x-casaos:
   id: org.icewhale.plex
@@ -30,5 +30,5 @@ x-casaos:
   title:
     en_US: Plex
   index: /web/index.html
-  port_map: '32400'
-  version: 1.43.2
+  port_map: "32400"
+  version: "1.43.2"

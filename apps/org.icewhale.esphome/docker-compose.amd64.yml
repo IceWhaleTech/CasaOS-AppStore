@@ -9,15 +9,15 @@ services:
     image: ghcr.io/esphome/esphome:2026.5.1@sha256:bc59644615b006e4a10905abc3e9902d64228b535c0a56c4734adc23e6710430
     restart: always
     ports:
-    - target: 6052
-      published: '6052'
-      protocol: tcp
+      - target: 6052
+        published: "6052"
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/config
-      target: /config
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
     environment:
-      ESPHOME_DASHBOARD_USE_PING: 'false'
+      ESPHOME_DASHBOARD_USE_PING: "false"
       TZ: $TZ
     network_mode: host
     privileged: false
@@ -26,8 +26,8 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.esphome/assets/icon.svg
   index: /
   main: esphome
-  port_map: '6052'
+  port_map: "6052"
   scheme: http
   title:
     en_US: ESPHome
-  version: 2026.5.1
+  version: "2026.5.1"

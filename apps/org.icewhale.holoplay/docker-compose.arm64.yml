@@ -3,9 +3,9 @@ services:
   holoplay:
     image: spout8301/holoplay:1.12.3@sha256:76ca24ac56b2b188e34f9545f6e08631869f7a14b6a7579569fc3938613eb151
     ports:
-    - target: 3000
-      published: '3000'
-      protocol: tcp
+      - target: 3000
+        published: "3000"
+        protocol: tcp
     privileged: true
     restart: unless-stopped
     container_name: holoplay
@@ -16,5 +16,5 @@ x-casaos:
   title:
     en_US: HoloPlay
   index: /
-  port_map: '3000'
-  version: 1.12.3
+  port_map: "3000"
+  version: "1.12.3"

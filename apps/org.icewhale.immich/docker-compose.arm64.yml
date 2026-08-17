@@ -1,4 +1,5 @@
 name: immich
+
 services:
   immich-server:
     deploy:
@@ -9,22 +10,23 @@ services:
     hostname: immich-server
     image: ghcr.io/immich-app/immich-server:v2.7.2@sha256:60f637900488f931816a6ac3eb852cf7b9c97897ac5013a5d7f99a57c8bbd23c
     volumes:
-    - /DATA/Gallery/immich:/usr/src/app/upload
-    - /etc/localtime:/etc/localtime:ro
+      - /DATA/Gallery/immich:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
     environment:
       DB_DATABASE_NAME: immich
       DB_PASSWORD: postgres
       DB_USERNAME: postgres
     ports:
-    - 2283:2283
+      - '2283:2283'
     depends_on:
-    - redis
-    - database
+      - redis
+      - database
     restart: unless-stopped
     healthcheck:
       disable: false
     networks:
-    - immich
+      - immich
+
   immich-machine-learning:
     container_name: immich-machine-learning
     hostname: immich-machine-learning
@@ -35,11 +37,12 @@ services:
       DB_USERNAME: postgres
     restart: unless-stopped
     volumes:
-    - /DATA/AppData/immich/model-cache:/cache
+      - /DATA/AppData/immich/model-cache:/cache
     healthcheck:
       disable: false
     networks:
-    - immich
+      - immich
+
   redis:
     container_name: immich-redis
     hostname: immich-redis
@@ -48,7 +51,8 @@ services:
       test: redis-cli ping || exit 1
     restart: unless-stopped
     networks:
-    - immich
+      - immich
+
   database:
     container_name: immich-postgres
     hostname: immich-postgres
@@ -57,22 +61,24 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: immich
-      POSTGRES_INITDB_ARGS: --data-checksums
+      POSTGRES_INITDB_ARGS: '--data-checksums'
     volumes:
-    - /DATA/AppData/immich/pgdata:/var/lib/postgresql/data
+      - /DATA/AppData/immich/pgdata:/var/lib/postgresql/data
     restart: unless-stopped
     networks:
-    - immich
+      - immich
+
 networks:
   immich:
     driver: bridge
+
 x-casaos:
   id: org.icewhale.immich
   main: immich-server
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.immich/assets/icon.svg
   title:
     en_US: Immich
-  port_map: '2283'
+  port_map: "2283"
   scheme: http
   index: /
-  version: 2.7.2
+  version: "2.7.2"

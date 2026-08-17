@@ -8,14 +8,14 @@ services:
           memory: 64M
     network_mode: host
     ports:
-    - target: 1880
-      published: '1880'
-      protocol: tcp
+      - target: 1880
+        published: "1880"
+        protocol: tcp
     restart: always
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
     container_name: node-red
 x-casaos:
   id: org.icewhale.nodered
@@ -24,5 +24,5 @@ x-casaos:
   title:
     en_US: Node-RED
   index: /
-  port_map: '1880'
-  version: 4.1.10
+  port_map: "1880"
+  version: "4.1.10"

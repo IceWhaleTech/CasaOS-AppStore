@@ -2,8 +2,8 @@ name: duplicati
 services:
   duplicati:
     environment:
-      PGID: '1000'
-      PUID: '1000'
+      PGID: "1000"
+      PUID: "1000"
       TZ: Europe/London
     image: linuxserver/duplicati:2.1.0@sha256:a54813ac845b1af3b46744e49f59ba3da9e7141334e4d8e66439f7b86bafb056
     deploy:
@@ -12,20 +12,20 @@ services:
           memory: 64M
     network_mode: bridge
     ports:
-    - target: 8200
-      published: '8200'
-      protocol: tcp
+      - target: 8200
+        published: "8200"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/config
-      target: /config
-    - type: bind
-      source: /DATA/Duplicati/backups
-      target: /backups
-    - type: bind
-      source: /DATA/Duplicati/source
-      target: /source
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Duplicati/backups
+        target: /backups
+      - type: bind
+        source: /DATA/Duplicati/source
+        target: /source
     container_name: duplicati
 x-casaos:
   id: org.icewhale.duplicati
@@ -34,5 +34,5 @@ x-casaos:
   title:
     en_US: Duplicati
   index: /
-  port_map: '8200'
-  version: 2.1.0
+  port_map: "8200"
+  version: "2.1.0"

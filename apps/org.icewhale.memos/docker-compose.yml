@@ -12,14 +12,14 @@ services:
           memory: 64M
     network_mode: bridge
     ports:
-    - target: 5230
-      published: '5230'
-      protocol: tcp
+      - target: 5230
+        published: "5230"
+        protocol: tcp
     restart: unless-stopped
     volumes:
-    - type: bind
-      source: /DATA/AppData/memos/memos
-      target: /var/opt/memos
+      - type: bind
+        source: /DATA/AppData/memos/memos
+        target: /var/opt/memos
     container_name: memos
 x-casaos:
   id: org.icewhale.memos
@@ -27,5 +27,5 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.memos/assets/icon.svg
   title:
     en_US: Memos
-  port_map: '5230'
-  version: 0.28.0
+  port_map: "5230"
+  version: "0.28.0"

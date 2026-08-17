@@ -1,85 +1,85 @@
 name: weknora
 services:
   weknora:
-    image: wechatopenai/weknora-ui:v0.2.14@sha256:3ec6999f5c38463c15857fe2a893c07034e82117b717d216256fca1318aea433
+    image: wechatopenai/weknora-ui:v0.2.14
     container_name: weknora
     ports:
-    - target: 80
-      published: '1080'
-      protocol: tcp
+      - target: 80
+        published: "1080"
+        protocol: tcp
     environment:
-    - MAX_FILE_SIZE_MB=50
+      - MAX_FILE_SIZE_MB=50
     depends_on:
       app:
         condition: service_healthy
     networks:
-    - weknora-network
+      - weknora-network
     restart: unless-stopped
     deploy:
       resources:
         reservations:
           memory: 128M
   app:
-    image: wechatopenai/weknora-app:v0.2.14@sha256:02cd39cff62a268d6784f671847e0e021627a5ce0f9aa2cd3b69b2ffe7cf42f4
+    image: wechatopenai/weknora-app:v0.2.14
     container_name: weknora-app
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/files
-      target: /data/files
+      - type: bind
+        source: /DATA/AppData/$AppID/files
+        target: /data/files
     deploy:
       resources:
         reservations:
           memory: 512M
     healthcheck:
       test:
-      - CMD
-      - curl
-      - -f
-      - http://localhost:8080/health
+        - CMD
+        - curl
+        - -f
+        - http://localhost:8080/health
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 60s
     environment:
-    - OTEL_EXPORTER_OTLP_ENDPOINT=jaeger:4317
-    - OTEL_SERVICE_NAME=WeKnora
-    - OTEL_TRACES_EXPORTER=otlp
-    - OTEL_METRICS_EXPORTER=none
-    - OTEL_LOGS_EXPORTER=none
-    - OTEL_PROPAGATORS=tracecontext,baggage
-    - QDRANT_HOST=qdrant
-    - QDRANT_PORT=6334
-    - QDRANT_COLLECTION=weknora_embeddings
-    - QDRANT_API_KEY=
-    - QDRANT_USE_TLS=false
-    - MINIO_ENDPOINT=minio:9000
-    - MINIO_ACCESS_KEY_ID=minioadmin
-    - MINIO_SECRET_ACCESS_KEY=minioadmin
-    - MINIO_BUCKET_NAME=weknora
-    - GIN_MODE=release
-    - DISABLE_REGISTRATION=false
-    - DB_DRIVER=postgres
-    - DB_HOST=weknora-postgres
-    - DB_PORT=5432
-    - DB_USER=postgres
-    - DB_PASSWORD=postgres123!@#
-    - DB_NAME=WeKnora
-    - TZ=$TZ
-    - RETRIEVE_DRIVER=postgres
-    - DOCREADER_ADDR=weknora-docreader:50051
-    - STORAGE_TYPE=minio
-    - LOCAL_STORAGE_BASE_DIR=/data/files
-    - AUTO_RECOVER_DIRTY=true
-    - OLLAMA_BASE_URL=http://host.docker.internal:11434
-    - STREAM_MANAGER_TYPE=redis
-    - REDIS_ADDR=weknora-redis:6379
-    - REDIS_PASSWORD=redis123!@#
-    - REDIS_DB=0
-    - REDIS_PREFIX="stream:"
-    - TENANT_AES_KEY=weknorarag-api-key-secret-secret
-    - CONCURRENCY_POOL_SIZE=5
-    - JWT_SECRET=weknora-jwt-secret
-    - MAX_FILE_SIZE_MB=50
+      - OTEL_EXPORTER_OTLP_ENDPOINT=jaeger:4317
+      - OTEL_SERVICE_NAME=WeKnora
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_METRICS_EXPORTER=none
+      - OTEL_LOGS_EXPORTER=none
+      - OTEL_PROPAGATORS=tracecontext,baggage
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6334
+      - QDRANT_COLLECTION=weknora_embeddings
+      - QDRANT_API_KEY=
+      - QDRANT_USE_TLS=false
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY_ID=minioadmin
+      - MINIO_SECRET_ACCESS_KEY=minioadmin
+      - MINIO_BUCKET_NAME=weknora
+      - GIN_MODE=release
+      - DISABLE_REGISTRATION=false
+      - DB_DRIVER=postgres
+      - DB_HOST=weknora-postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres123!@#
+      - DB_NAME=WeKnora
+      - TZ=$TZ
+      - RETRIEVE_DRIVER=postgres
+      - DOCREADER_ADDR=weknora-docreader:50051
+      - STORAGE_TYPE=minio
+      - LOCAL_STORAGE_BASE_DIR=/data/files
+      - AUTO_RECOVER_DIRTY=true
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - STREAM_MANAGER_TYPE=redis
+      - REDIS_ADDR=weknora-redis:6379
+      - REDIS_PASSWORD=redis123!@#
+      - REDIS_DB=0
+      - REDIS_PREFIX="stream:"
+      - TENANT_AES_KEY=weknorarag-api-key-secret-secret
+      - CONCURRENCY_POOL_SIZE=5
+      - JWT_SECRET=weknora-jwt-secret
+      - MAX_FILE_SIZE_MB=50
     depends_on:
       weknora-redis:
         condition: service_started
@@ -88,54 +88,54 @@ services:
       weknora-docreader:
         condition: service_healthy
     networks:
-    - weknora-network
+      - weknora-network
     restart: unless-stopped
     extra_hosts:
-    - host.docker.internal:host-gateway
+      - host.docker.internal:host-gateway
   weknora-docreader:
-    image: wechatopenai/weknora-docreader:v0.2.14@sha256:7a1e4804edb3a945d4af545e83d62c04c0f5d1000f215294b01b7344fe131840
+    image: wechatopenai/weknora-docreader:v0.2.14
     container_name: weknora-docreader
     environment:
-    - MAX_FILE_SIZE_MB=50
-    - MINIO_ENDPOINT=minio:9000
-    - MINIO_ACCESS_KEY_ID=minioadmin
-    - MINIO_SECRET_ACCESS_KEY=minioadmin
-    - MINIO_BUCKET_NAME=weknora
+      - MAX_FILE_SIZE_MB=50
+      - MINIO_ENDPOINT=minio:9000
+      - MINIO_ACCESS_KEY_ID=minioadmin
+      - MINIO_SECRET_ACCESS_KEY=minioadmin
+      - MINIO_BUCKET_NAME=weknora
     deploy:
       resources:
         reservations:
           memory: 256M
     healthcheck:
       test:
-      - CMD
-      - grpc_health_probe
-      - -addr=:50051
+        - CMD
+        - grpc_health_probe
+        - -addr=:50051
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 60s
     networks:
-    - weknora-network
+      - weknora-network
     restart: unless-stopped
     extra_hosts:
-    - host.docker.internal:host-gateway
+      - host.docker.internal:host-gateway
   weknora-postgres:
-    image: paradedb/paradedb:v0.18.9-pg17@sha256:12a8c2e5a00f4cb28428e905ebdde17f77677b6edd807536370e2576911e2f76
+    image: paradedb/paradedb:v0.18.9-pg17
     container_name: weknora-postgres
     environment:
-    - POSTGRES_USER=postgres
-    - POSTGRES_PASSWORD=postgres123!@#
-    - POSTGRES_DB=WeKnora
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123!@#
+      - POSTGRES_DB=WeKnora
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/data
-      target: /var/lib/postgresql/data
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /var/lib/postgresql/data
     networks:
-    - weknora-network
+      - weknora-network
     healthcheck:
       test:
-      - CMD-SHELL
-      - pg_isready -U postgres
+        - CMD-SHELL
+        - pg_isready -U postgres
       interval: 10s
       timeout: 10s
       retries: 3
@@ -147,152 +147,152 @@ services:
     restart: unless-stopped
     stop_grace_period: 1m
   weknora-redis:
-    image: redis:7.0-alpine@sha256:0a34d7c44fe60c6ba273c0cddc26d1571a5ccd69280623a66b70393231a9eed9
+    image: redis:7.0-alpine
     container_name: weknora-redis
     command:
-    - redis-server
-    - --requirepass redis123!@#
-    - --appendonly
-    - true
+      - redis-server
+      - --requirepass redis123!@#
+      - --appendonly
+      - yes
     deploy:
       resources:
         reservations:
           memory: 128M
     restart: unless-stopped
     networks:
-    - weknora-network
+      - weknora-network
   minio:
-    image: minio/minio:RELEASE.2025-09-07T16-13-09Z@sha256:a1a8bd4ac40ad7881a245bab97323e18f971e4d4cba2c2007ec1bedd21cbaba2
+    image: minio/minio:RELEASE.2025-09-07T16-13-09Z
     container_name: weknora-minio
     ports:
-    - target: 9000
-      published: '19000'
-      protocol: tcp
-    - target: 9001
-      published: '19001'
-      protocol: tcp
+      - target: 9000
+        published: "19000"
+        protocol: tcp
+      - target: 9001
+        published: "19001"
+        protocol: tcp
     environment:
-    - MINIO_ROOT_USER=minioadmin
-    - MINIO_ROOT_PASSWORD=minioadmin
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
     deploy:
       resources:
         reservations:
           memory: 512M
     command:
-    - server
-    - /data
-    - --console-address
-    - :9001
+      - server
+      - /data
+      - --console-address
+      - :9001
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/minio-data
-      target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/minio-data
+        target: /data
     healthcheck:
       test:
-      - CMD
-      - curl
-      - -f
-      - http://localhost:9000/minio/health/live
+        - CMD
+        - curl
+        - -f
+        - http://localhost:9000/minio/health/live
       interval: 30s
       timeout: 20s
       retries: 3
     networks:
-    - weknora-network
+      - weknora-network
     restart: unless-stopped
   jaeger:
-    image: jaegertracing/all-in-one:1.76.0@sha256:968b31672178558da8a0c1bfc86336647d756ee6997ca196698796f5262adef1
+    image: jaegertracing/all-in-one:1.76.0
     container_name: weknora-jaeger
     ports:
-    - target: 6831
-      published: '46831'
-      protocol: udp
-    - target: 6832
-      published: '46832'
-      protocol: udp
-    - target: 5778
-      published: '45778'
-      protocol: tcp
-    - target: 16686
-      published: '16686'
-      protocol: tcp
-    - target: 4317
-      published: '44317'
-      protocol: tcp
-    - target: 4318
-      published: '44318'
-      protocol: tcp
-    - target: 14250
-      published: '14250'
-      protocol: tcp
-    - target: 14268
-      published: '14268'
-      protocol: tcp
-    - target: 9411
-      published: '49411'
-      protocol: tcp
+      - target: 6831
+        published: "46831"
+        protocol: udp
+      - target: 6832
+        published: "46832"
+        protocol: udp
+      - target: 5778
+        published: "45778"
+        protocol: tcp
+      - target: 16686
+        published: "16686"
+        protocol: tcp
+      - target: 4317
+        published: "44317"
+        protocol: tcp
+      - target: 4318
+        published: "44318"
+        protocol: tcp
+      - target: 14250
+        published: "14250"
+        protocol: tcp
+      - target: 14268
+        published: "14268"
+        protocol: tcp
+      - target: 9411
+        published: "49411"
+        protocol: tcp
     environment:
-    - COLLECTOR_OTLP_ENABLED=true
-    - COLLECTOR_ZIPKIN_HOST_PORT=:9411
+      - COLLECTOR_OTLP_ENABLED=true
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411
     deploy:
       resources:
         reservations:
           memory: 512M
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/jaeger
-      target: /var/lib/jaeger
+      - type: bind
+        source: /DATA/AppData/$AppID/jaeger
+        target: /var/lib/jaeger
     networks:
-    - weknora-network
+      - weknora-network
     restart: unless-stopped
   neo4j:
-    image: neo4j:2025.10.1@sha256:50f60e043049e3c15c3d3906e13a5b9ca1182488f49cd6038565a3ebf7f079f8
+    image: neo4j:2025.10.1
     container_name: weknora-neo4j
     profiles:
-    - neo4j
-    - full
+      - "neo4j"
+      - "full"
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/neo4j-data
-      target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/neo4j-data
+        target: /data
     environment:
-    - NEO4J_AUTH=neo4j/password
-    - NEO4J_apoc_export_file_enabled=true
-    - NEO4J_apoc_import_file_enabled=true
-    - NEO4J_apoc_import_file_use__neo4j__config=true
-    - NEO4JLABS_PLUGINS=["apoc"]
+      - NEO4J_AUTH=neo4j/password
+      - NEO4J_apoc_export_file_enabled=true
+      - NEO4J_apoc_import_file_enabled=true
+      - NEO4J_apoc_import_file_use__neo4j__config=true
+      - NEO4JLABS_PLUGINS=["apoc"]
     ports:
-    - target: 7474
-      published: '47474'
-      protocol: tcp
-    - target: 7687
-      published: '47687'
-      protocol: tcp
+      - target: 7474
+        published: "47474"
+        protocol: tcp
+      - target: 7687
+        published: "47687"
+        protocol: tcp
     restart: unless-stopped
     deploy:
       resources:
         reservations:
           memory: 256M
     networks:
-    - weknora-network
+      - weknora-network
   qdrant:
-    image: qdrant/qdrant:v1.16.2@sha256:83f1d215bff755ca306657492667c55bbeaaf4a906a29f879b471bc1b509c292
+    image: qdrant/qdrant:v1.16.2
     container_name: weknora-qdrant
     profiles:
-    - qdrant
-    - full
+      - "qdrant"
+      - "full"
     ports:
-    - target: 6333
-      published: '46333'
-      protocol: tcp
-    - target: 6334
-      published: '46334'
-      protocol: tcp
+      - target: 6333
+        published: "46333"
+        protocol: tcp
+      - target: 6334
+        published: "46334"
+        protocol: tcp
     volumes:
-    - type: bind
-      source: /DATA/AppData/$AppID/storage
-      target: /qdrant/storage
+      - type: bind
+        source: /DATA/AppData/$AppID/storage
+        target: /qdrant/storage
     networks:
-    - weknora-network
+      - weknora-network
     restart: unless-stopped
     deploy:
       resources:
@@ -321,7 +321,7 @@ x-casaos:
     zh_CN: WeKnora
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.weknora/assets/icon.svg
   main: weknora
-  port_map: '1080'
+  port_map: "1080"
   index: /
   scheme: http
-  version: 0.2.14
+  version: "0.2.14"
