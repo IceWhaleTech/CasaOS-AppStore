@@ -1,5 +1,29 @@
+name: mymusic
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: mymusic
+  title:
+    custom: MyMusic
+    en_us: MyMusic
+    es_es: MyMusic
+  description:
+    en_us: An app to automate downloading playlists from Spotify and YTmusic.
+    es_es: Una aplicación para automatizar la descarga de listas de Spotify y YTmusic.
+  tagline:
+    en_us: Automate playlist downloads
+    es_es: Automatiza descargas de listas
+  icon: https://raw.githubusercontent.com/Jarano2022/CasaOS-AppStore/refs/heads/main/Apps/MyMusic/icon.png
+  developer: Jarano2022
+  author: Jarano2022
+  category: Music
+  port_map: "4516"
+  scheme: http
+
 services:
-  MyMusic:
+  mymusic:
     image: mymoon02/mymusic:latest
     container_name: mymusic
     environment:
@@ -27,16 +51,3 @@ services:
           description:
             en_us: Service Port
             es_es: Puerto del servicio
-      icon: https://raw.githubusercontent.com/Jarano2022/CasaOS-AppStore/refs/heads/main/Apps/MyMusic/icon.png
-      main: MyMusic
-      port_map: "4516"
-      scheme: http
-      title:
-        custom: MyMusic
-        en_us: MyMusic
-        es_es: MyMusic
-      description:
-        en_us: An app to automate downloading playlists from Spotify and YTmusic.
-        es_es: Una aplicación para automatizar la descarga de listas de Spotify y YTmusic.
-      author: MyMoon02Studios
-      category: Media
