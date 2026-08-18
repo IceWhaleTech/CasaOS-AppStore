@@ -24,14 +24,14 @@ x-casaos:
 
 services:
   mymusic:
-    image: mymoon02/mymusic:latest
+    image: mymoon02/mymusic:v1
     container_name: mymusic
     environment:
       - USER=Admin
       - PASSWORD=1111
-      - PORT=4516
+      - PORT=${PORT:-4516}
     ports:
-      - "4516:4516"
+      - "${PORT:-4516}:${PORT:-4516}"
     volumes:
       - /DATA/AppData/MyMusic/downloads:/downloads
       - /DATA/AppData/MyMusic/data:/data
@@ -49,5 +49,5 @@ services:
             es_es: Contraseña de acceso
         - container: PORT
           description:
-            en_us: Service Port
-            es_es: Puerto del servicio
+            en_us: Web service port
+            es_es: Puerto del servicio web
