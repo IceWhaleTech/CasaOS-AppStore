@@ -16,17 +16,27 @@ services:
     x-casaos:
       envs:
         - container: USER
-          description: Usuario de acceso
+          description:
+            en_us: Access Username
+            es_es: Usuario de acceso
         - container: PASSWORD
-          description: Contraseña de acceso
+          description:
+            en_us: Access Password
+            es_es: Contraseña de acceso
         - container: PORT
-          description: Puerto del servicio
+          description:
+            en_us: Service Port
+            es_es: Puerto del servicio
       icon: https://raw.githubusercontent.com/Jarano2022/CasaOS-AppStore/refs/heads/main/Apps/MyMusic/icon.png
-      main: ytmusic-downloader
+      main: MyMusic
       port_map: "4516"
       scheme: http
       title:
         custom: MyMusic
+        en_us: MyMusic
+        es_es: MyMusic
       description:
         en_us: An app to automate downloading playlists from Spotify and YTmusic.
         es_es: Una aplicación para automatizar la descarga de listas de Spotify y YTmusic.
+      author: MyMoon02Studios
+      category: Media
