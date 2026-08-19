@@ -5,7 +5,7 @@ services:
       PGID: "1000"
       PUID: "1000"
       TZ: Europe/London
-    image: linuxserver/smokeping:2.9.0
+    image: linuxserver/smokeping:2.9.0@sha256:b8af268f4726926a3ae7434ff9a2df2da0a2813e498a90b6fce12c43bb623594
     deploy:
       resources:
         reservations:

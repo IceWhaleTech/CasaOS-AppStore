@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/sonarr:4.0.17
+    image: linuxserver/sonarr:4.0.17@sha256:f899c1a9d7409fd226fdaae7f94302b80a494744fe5c670930a0ccc942641dba
     deploy:
       resources:
         reservations:

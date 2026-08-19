@@ -1,7 +1,7 @@
 name: netbird
 services:
   netbird:
-    image: netbirdio/netbird:0.62.3
+    image: netbirdio/netbird:0.62.3@sha256:fb9b3ab692835a3d2f55e1cb891527f2bf0a3c047fd2d0bd8d5c9a0579fbece6
     container_name: netbird
     network_mode: host
     restart: unless-stopped

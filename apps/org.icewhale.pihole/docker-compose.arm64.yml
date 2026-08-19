@@ -5,7 +5,7 @@ services:
       TZ: $TZ
       FTLCONF_webserver_api_password: casaos
       FTLCONF_dns_listeningMode: all
-    image: pihole/pihole:2026.05.0
+    image: pihole/pihole:2026.05.0@sha256:ce7efe7bbf2fdfa9ba74c34e21b9d4da0bb7dd993b16cc50aca968950a44f84f
     deploy:
       resources:
         reservations:

@@ -5,7 +5,7 @@ services:
       CRYPTO_POLICY: unlimited
       PGID: $PGID
       PUID: $PUID
-    image: openhab/openhab:5.1.4
+    image: openhab/openhab:5.1.4@sha256:e405fde5f4e036e79f01c2a3d37ab34d870c42ea010cca3e6eb9261b611206ab
     deploy:
       resources:
         reservations:
