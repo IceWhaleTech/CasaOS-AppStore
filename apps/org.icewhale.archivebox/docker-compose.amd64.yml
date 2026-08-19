@@ -76,7 +76,7 @@ services:
         source: /DATA/AppData/$AppID/data/sonic
         target: /var/lib/sonic/store
   archivebox_novnc:
-    image: theasp/novnc:latest@sha256:f067630d2b4550060148ca360f393fe2a9573446585d999e6f302460aed6e681
+    image: theasp/novnc:latest@sha256:7550be3cd30e90109e355ee7030839e7e198b2d5d8f6e4a96d4e5d169c8c4430
     container_name: archivebox_novnc
     deploy:
       resources:

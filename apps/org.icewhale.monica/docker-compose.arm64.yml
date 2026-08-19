@@ -1,7 +1,7 @@
 name: monica
 services:
   monica:
-    image: monica:4.1.2
+    image: monica:4.1.2@sha256:37ee0b2fe92a6dbc42a7d4aca4d5d2b6d39276d1102dc047f21dd2dfca4d77c9
     container_name: monica
     deploy:
       resources:
@@ -28,7 +28,7 @@ services:
     depends_on:
       - monica-db
   monica-db:
-    image: mariadb:11.8.2
+    image: mariadb:11.8.2@sha256:bb961ca672bcbde3df9e385d4ce84b31bb826792711c777f6ce97e49fcd9d38c
     container_name: monica-db
     deploy:
       resources:
