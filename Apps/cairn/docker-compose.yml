@@ -1,7 +1,7 @@
 name: cairn
 services:
   cairn:
-    image: morgankryze/cairn:1.18.3
+    image: morgankryze/cairn:1.19.3
     container_name: cairn
     network_mode: bridge
     restart: unless-stopped
@@ -243,8 +243,8 @@ x-casaos:
       sv_SE: |
         cairn startar helt utan konfiguration och visar en kom-igång-sida som förklarar vad du ska göra, så den första starten fungerar. Lägg en services.yaml i den monterade katalogen /config, så laddar cairn om den på några sekunder utan omstart.
         cairn behöver ingen hemlighet för att köra och läser ingen miljövariabel. Den enda uppgift den någonsin kan behöva är valfri och gäller statusmarkeringarna: pekar du den mot ett övervaknings-API som kräver autentisering anger du en sökväg i status.token_file, och cairn läser token ur den filen. Gatus och Uptime Kuma kräver ingen i normalfallet.
-  version: "1.18.3"
-  update_at: "2026-08-05"
+  version: "1.19.3"
+  update_at: "2026-08-19"
   website: "https://cairn.libresoftware.cloud"
   repo: "https://github.com/MorganKryze/cairn"
   support: "https://github.com/MorganKryze/cairn/issues"
