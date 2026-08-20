@@ -1,0 +1,62 @@
+name: spokes
+services:
+  spokes:
+    image: ghcr.io/pcbeeqc/spokes:latest
+    container_name: spokes
+    restart: unless-stopped
+    ports:
+      - "8080:8080/tcp"
+      - "7881:7881/tcp"
+      - "50000-50499:50000-50499/udp"
+    volumes:
+      - /DATA/AppData/$AppID/data:/data
+    environment:
+      - SPOKES_MASTER_PASSWORD=YourSecureMasterPasswordHere
+    x-casaos:
+      envs:
+        - container: SPOKES_MASTER_PASSWORD
+          description:
+            en_US: Your Secure Master Password (Required)
+      ports:
+        - container: "8080"
+          description:
+            en_US: WebUI HTTP Port
+        - container: "7881"
+          description:
+            en_US: LiveKit TCP Fallback Port (Must be mapped 1-to-1)
+        - container: "50000-50499/udp"
+          description:
+            en_US: LiveKit UDP Range (Must be mapped 1-to-1)
+      volumes:
+        - container: /data
+          description:
+            en_US: Spokes Persistent Data
+x-casaos:
+  architectures:
+    - amd64
+  main: spokes
+  author: PCBeeQC
+  category: Chat
+  description:
+    en_US: |
+      Spokes is a self-hosted, secure communication platform designed to give friend groups, families, and small businesses complete control over their data. It features real-time chat, voice, and video channels.
+      
+      Spokes uses a perpetual fallback license model. Visit www.spokes.sh to learn more.
+      
+      To try the software now, simply skip the license upload in the setup wizard. The demo mode gives you a free perpetual license for the current version.
+  developer: PCBeeQC
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/screenshot-4.png
+  tagline:
+    en_US: Secure, self-hosted group chat with voice and video.
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spokes/icon.png
+  title:
+    en_US: Spokes
+  index: /
+  port_map: "8080"
+  version: "latest"
+  website: "https://spokes.sh"
