@@ -1,0 +1,160 @@
+name: cashpilot
+
+services:
+  cashpilot-ui:
+    image: drumsergio/cashpilot:0.2.53
+    container_name: cashpilot-ui
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/fleet
+        target: /fleet
+    environment:
+      TZ: $TZ
+      CASHPILOT_SECRET_KEY: changeme
+    networks:
+      - cashpilot-network
+    depends_on:
+      cashpilot-worker:
+        condition: service_started
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+        - container: CASHPILOT_SECRET_KEY
+          description:
+            en_US: Secret key for session encryption (change this!)
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web UI Port
+      volumes:
+        - container: /data
+          description:
+            en_US: Application data and SQLite database
+        - container: /fleet
+          description:
+            en_US: Shared fleet state between UI and Worker
+
+  cashpilot-worker:
+    image: drumsergio/cashpilot-worker:0.2.53
+    container_name: cashpilot-worker
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /DATA/AppData/$AppID/worker-data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/fleet
+        target: /fleet
+    environment:
+      TZ: $TZ
+      CASHPILOT_UI_URL: http://cashpilot-ui:8080
+      CASHPILOT_WORKER_NAME: local
+    networks:
+      - cashpilot-network
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+        - container: CASHPILOT_UI_URL
+          description:
+            en_US: URL of the CashPilot UI service
+        - container: CASHPILOT_WORKER_NAME
+          description:
+            en_US: Name for this worker instance
+      volumes:
+        - container: /var/run/docker.sock
+          description:
+            en_US: Docker socket (required to deploy and manage service containers)
+        - container: /data
+          description:
+            en_US: Worker data directory
+        - container: /fleet
+          description:
+            en_US: Shared fleet state between UI and Worker
+
+networks:
+  cashpilot-network:
+    name: cashpilot-network
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: cashpilot-ui
+  store_app_id: cashpilot
+  category: Utilities
+  author: GeiserX
+  developer: GeiserX
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CashPilot/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CashPilot/screenshot-1.png
+  thumbnail: ""
+  description:
+    en_US: |
+      CashPilot is a self-hosted platform to deploy, manage, and monitor passive income services from a single web interface. Instead of manually setting up dozens of Docker containers, CashPilot handles everything from one place.
+
+      It supports Docker-based services (deployed and managed automatically) and browser extension / desktop-only services (tracked via the web UI with signup links and balance monitoring). A browser-based setup wizard guides you through account creation and service deployment across 40+ services including bandwidth sharing, DePIN, storage, and GPU compute.
+
+      Note: The worker container requires access to the Docker socket to deploy and manage service containers.
+    zh_CN: |
+      CashPilot 是一个自托管平台，可以从单一 Web 界面部署、管理和监控被动收入服务。无需手动设置数十个 Docker 容器，CashPilot 可以从一个地方处理所有事情。
+
+      它支持 Docker 服务（自动部署和管理）和浏览器扩展/桌面服务（通过 Web UI 跟踪，提供注册链接和余额监控）。内置的浏览器向导引导您完成 40 多项服务的账户创建和服务部署，包括带宽共享、DePIN、存储和 GPU 计算。
+
+      注意：Worker 容器需要访问 Docker socket 以部署和管理服务容器。
+    de_DE: |
+      CashPilot ist eine selbst gehostete Plattform zum Bereitstellen, Verwalten und Ueberwachen von passiven Einkommensdiensten ueber eine einzige Weboberflaeche. Anstatt dutzende Docker-Container manuell einzurichten, erledigt CashPilot alles an einem Ort.
+    fr_FR: |
+      CashPilot est une plateforme auto-hebergee pour deployer, gerer et surveiller des services de revenus passifs depuis une seule interface web. Au lieu de configurer manuellement des dizaines de conteneurs Docker, CashPilot gere tout depuis un seul endroit.
+    es_ES: |
+      CashPilot es una plataforma autoalojada para desplegar, gestionar y monitorizar servicios de ingresos pasivos desde una unica interfaz web. En lugar de configurar manualmente docenas de contenedores Docker, CashPilot lo gestiona todo desde un solo lugar.
+    pt_PT: |
+      CashPilot e uma plataforma auto-hospedada para implantar, gerenciar e monitorar servicos de renda passiva a partir de uma unica interface web.
+    it_IT: |
+      CashPilot e una piattaforma self-hosted per distribuire, gestire e monitorare servizi di reddito passivo da un'unica interfaccia web.
+    ja_JP: |
+      CashPilotは、単一のWebインターフェースからパッシブインカムサービスをデプロイ、管理、監視するためのセルフホスト型プラットフォームです。
+    ko_KR: |
+      CashPilot은 단일 웹 인터페이스에서 수동 소득 서비스를 배포, 관리 및 모니터링하기 위한 셀프 호스팅 플랫폼입니다.
+  tagline:
+    en_US: Self-hosted passive income orchestrator
+    zh_CN: 自托管被动收入编排器
+  title:
+    en_US: CashPilot
+  tips:
+    before_install:
+      en_US: |
+        The worker container requires access to the Docker socket to deploy and manage passive income service containers.
+
+        After installation, open the web UI and follow the setup wizard to configure your first services.
+  index: /
+  port_map: "8080"
+  scheme: http

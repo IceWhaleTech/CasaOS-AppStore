@@ -1,0 +1,178 @@
+name: genieacs
+
+services:
+  genieacs:
+    image: drumsergio/genieacs:1.2.16.0
+    container_name: genieacs
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    restart: unless-stopped
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+      - target: 7547
+        published: "7547"
+        protocol: tcp
+      - target: 7557
+        published: "7557"
+        protocol: tcp
+      - target: 7567
+        published: "7567"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/ext
+        target: /opt/genieacs/ext
+      - type: bind
+        source: /DATA/AppData/$AppID/logs
+        target: /var/log/genieacs
+    environment:
+      GENIEACS_UI_JWT_SECRET: changeme
+      GENIEACS_MONGODB_CONNECTION_URL: mongodb://genieacs-db/genieacs
+      GENIEACS_CWMP_ACCESS_LOG_FILE: /var/log/genieacs/genieacs-cwmp-access.log
+      GENIEACS_NBI_ACCESS_LOG_FILE: /var/log/genieacs/genieacs-nbi-access.log
+      GENIEACS_FS_ACCESS_LOG_FILE: /var/log/genieacs/genieacs-fs-access.log
+      GENIEACS_UI_ACCESS_LOG_FILE: /var/log/genieacs/genieacs-ui-access.log
+      GENIEACS_DEBUG_FILE: /var/log/genieacs/genieacs-debug.yaml
+      GENIEACS_EXT_DIR: /opt/genieacs/ext
+    networks:
+      - genieacs-network
+    depends_on:
+      genieacs-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "--quiet", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    x-casaos:
+      envs:
+        - container: GENIEACS_UI_JWT_SECRET
+          description:
+            en_US: JWT secret for the web UI (change this!)
+        - container: GENIEACS_MONGODB_CONNECTION_URL
+          description:
+            en_US: MongoDB connection URL
+        - container: GENIEACS_EXT_DIR
+          description:
+            en_US: Directory for GenieACS extensions
+      ports:
+        - container: "3000"
+          description:
+            en_US: Web UI Port
+        - container: "7547"
+          description:
+            en_US: CWMP (TR-069) Port
+        - container: "7557"
+          description:
+            en_US: NBI (Northbound Interface) Port
+        - container: "7567"
+          description:
+            en_US: File Server Port
+      volumes:
+        - container: /opt/genieacs/ext
+          description:
+            en_US: GenieACS extensions directory
+        - container: /var/log/genieacs
+          description:
+            en_US: Log files directory
+
+  genieacs-db:
+    image: mongo:8.0
+    container_name: genieacs-db
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/mongodb/db
+        target: /data/db
+      - type: bind
+        source: /DATA/AppData/$AppID/mongodb/configdb
+        target: /data/configdb
+    networks:
+      - genieacs-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    x-casaos:
+      volumes:
+        - container: /data/db
+          description:
+            en_US: MongoDB data directory
+        - container: /data/configdb
+          description:
+            en_US: MongoDB config directory
+
+networks:
+  genieacs-network:
+    name: genieacs-network
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: genieacs
+  store_app_id: genieacs
+  category: Network
+  author: GeiserX
+  developer: GenieACS
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GenieACS/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GenieACS/screenshot-1.png
+  thumbnail: ""
+  description:
+    en_US: |
+      GenieACS is an open-source Auto Configuration Server (ACS) for remote management of customer-premises equipment (CPE) via the TR-069 protocol.
+
+      It allows ISPs and network administrators to remotely configure, monitor, and troubleshoot routers, modems, gateways, and other network devices. Features include device provisioning, firmware management, diagnostics, and a powerful virtual parameters engine.
+
+      This Docker image bundles all four GenieACS services (CWMP, NBI, FS, UI) in a single container alongside a MongoDB database.
+    zh_CN: |
+      GenieACS 是一个开源的自动配置服务器 (ACS)，用于通过 TR-069 协议远程管理客户端设备 (CPE)。
+
+      它允许 ISP 和网络管理员远程配置、监控和排除路由器、调制解调器、网关等网络设备的故障。功能包括设备配置、固件管理、诊断和强大的虚拟参数引擎。
+    de_DE: |
+      GenieACS ist ein Open-Source Auto Configuration Server (ACS) fuer die Fernverwaltung von Kundengeraeten (CPE) ueber das TR-069-Protokoll. Es ermoeglicht ISPs und Netzwerkadministratoren, Router, Modems und Gateways fernzukonfigurieren und zu ueberwachen.
+    fr_FR: |
+      GenieACS est un serveur de configuration automatique (ACS) open source pour la gestion a distance des equipements client (CPE) via le protocole TR-069.
+    es_ES: |
+      GenieACS es un servidor de configuracion automatica (ACS) de codigo abierto para la gestion remota de equipos de cliente (CPE) a traves del protocolo TR-069.
+    pt_PT: |
+      GenieACS e um servidor de configuracao automatica (ACS) de codigo aberto para gerenciamento remoto de equipamentos de cliente (CPE) via protocolo TR-069.
+    it_IT: |
+      GenieACS e un server di configurazione automatica (ACS) open source per la gestione remota delle apparecchiature del cliente (CPE) tramite il protocollo TR-069.
+    ja_JP: |
+      GenieACSは、TR-069プロトコルを介して顧客構内機器（CPE）をリモート管理するためのオープンソース自動構成サーバー（ACS）です。
+    ko_KR: |
+      GenieACS는 TR-069 프로토콜을 통해 고객 구내 장비(CPE)를 원격으로 관리하기 위한 오픈소스 자동 구성 서버(ACS)입니다.
+  tagline:
+    en_US: Open-source TR-069 remote device management
+    zh_CN: 开源 TR-069 远程设备管理
+  title:
+    en_US: GenieACS
+  tips:
+    before_install:
+      en_US: |
+        GenieACS exposes four network services:
+
+        | Port | Service | Description |
+        |------|---------|-------------|
+        | 3000 | Web UI | Administration interface |
+        | 7547 | CWMP | TR-069 endpoint for CPE devices |
+        | 7557 | NBI | Northbound API for integrations |
+        | 7567 | FS | File server for firmware uploads |
+
+        Point your routers/modems ACS URL to `http://<your-casaos-ip>:7547`.
+  index: /
+  port_map: "3000"
+  scheme: http
