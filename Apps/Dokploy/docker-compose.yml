@@ -1,0 +1,447 @@
+name: dokploy
+services:
+  dokploy:
+    image: dokploy/dokploy:0.26.6
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    networks:
+      - dokploy_network
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://dokploy:v8k2mxpq93nw5ztl@dokploy-db:5432/dokploy
+      TZ: UTC
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /etc/dokploy
+    depends_on:
+      - dokploy-db
+    x-casaos:
+      envs:
+        - container: DATABASE_URL
+          description:
+            en_US: PostgreSQL connection URL for Dokploy
+            zh_CN: Dokploy 的 PostgreSQL 连接 URL
+        - container: TZ
+          description:
+            en_US: Timezone (e.g. America/New_York, Europe/Berlin)
+            zh_CN: 时区（例如 America/New_York、Europe/Berlin）
+      ports:
+        - container: "3000"
+          description:
+            en_US: WebUI Port
+            en_GB: WebUI Port
+            it_IT: Porta WebUI
+            nb_NO: WebUI Port
+            zh_CN: WebUI 端口
+            ja_JP: WebUI ポート
+            ko_KR: WebUI 포트
+            fr_FR: Port WebUI
+            de_DE: WebUI Port
+            sv_SE: WebUI Port
+            el_GR: Θύρα WebUI
+            hr_HR: WebUI Port
+            pt_PT: Porta WebUI
+            ru_RU: Порт WebUI
+            tr_TR: WebUI Portu
+      volumes:
+        - container: /etc/dokploy
+          description:
+            en_US: Dokploy configuration directory
+            en_GB: Dokploy configuration directory
+            it_IT: Directory di configurazione Dokploy
+            nb_NO: Dokploy konfigurasjonskatalog
+            zh_CN: Dokploy 配置目录
+            ja_JP: Dokploy 設定ディレクトリ
+            ko_KR: Dokploy 구성 디렉토리
+            fr_FR: Répertoire de configuration Dokploy
+            de_DE: Dokploy Konfigurationsverzeichnis
+            sv_SE: Dokploy konfigurationskatalog
+            el_GR: Κατάλογος διαμόρφωσης Dokploy
+            hr_HR: Direktorij konfiguracije Dokploy
+            pt_PT: Diretório de configuração Dokploy
+            ru_RU: Каталог конфигурации Dokploy
+            tr_TR: Dokploy yapılandırma dizini
+    container_name: dokploy
+  dokploy-db:
+    image: postgres:16
+    container_name: dokploy-db
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    networks:
+      - dokploy_network
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: dokploy
+      POSTGRES_PASSWORD: v8k2mxpq93nw5ztl
+      POSTGRES_DB: dokploy
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql/data
+    x-casaos:
+      envs:
+        - container: POSTGRES_USER
+          description:
+            en_US: Database Username
+            en_GB: Database Username
+            it_IT: Nome utente Database
+            nb_NO: Database Brukernavn
+            zh_CN: 数据库用户名
+            ja_JP: データベースユーザー名
+            ko_KR: 데이터베이스 사용자명
+            fr_FR: Nom d'utilisateur de base de données
+            de_DE: Datenbankbenutzername
+            sv_SE: Databas Användarnamn
+            el_GR: Όνομα Χρήστη Βάσης Δεδομένων
+            hr_HR: Korisničko Ime Baze Podataka
+            pt_PT: Nome de Utilizador da Base de Dados
+            ru_RU: Имя пользователя базы данных
+            tr_TR: Veritabanı Kullanıcı Adı
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: Database Password
+            en_GB: Database Password
+            it_IT: Password Database
+            nb_NO: Database Passord
+            zh_CN: 数据库密码
+            ja_JP: データベースパスワード
+            ko_KR: 데이터베이스 비밀번호
+            fr_FR: Mot de passe de base de données
+            de_DE: Datenbankpasswort
+            sv_SE: Databas Lösenord
+            el_GR: Κωδικός Πρόσβασης Βάσης Δεδομένων
+            hr_HR: Lozinka Baze Podataka
+            pt_PT: Palavra-passe da Base de Dados
+            ru_RU: Пароль базы данных
+            tr_TR: Veritabanı Şifresi
+        - container: POSTGRES_DB
+          description:
+            en_US: Database Name
+            en_GB: Database Name
+            it_IT: Nome Database
+            nb_NO: Database Navn
+            zh_CN: 数据库名称
+            ja_JP: データベース名
+            ko_KR: 데이터베이스 이름
+            fr_FR: Nom de base de données
+            de_DE: Datenbankname
+            sv_SE: Databas Namn
+            el_GR: Όνομα Βάσης Δεδομένων
+            hr_HR: Ime Baze Podataka
+            pt_PT: Nome da Base de Dados
+            ru_RU: Имя базы данных
+            tr_TR: Veritabanı Adı
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_US: PostgreSQL data directory
+            en_GB: PostgreSQL data directory
+            it_IT: Directory dati PostgreSQL
+            nb_NO: PostgreSQL datakatalog
+            zh_CN: PostgreSQL 数据目录
+            ja_JP: PostgreSQL データディレクトリ
+            ko_KR: PostgreSQL 데이터 디렉토리
+            fr_FR: Répertoire de données PostgreSQL
+            de_DE: PostgreSQL Datenverzeichnis
+            sv_SE: PostgreSQL datakatalog
+            el_GR: Κατάλογος δεδομένων PostgreSQL
+            hr_HR: Direktorij podataka PostgreSQL
+            pt_PT: Diretório de dados PostgreSQL
+            ru_RU: Каталог данных PostgreSQL
+            tr_TR: PostgreSQL veri dizini
+
+networks:
+  dokploy_network:
+    driver: bridge
+
+x-casaos:
+  id: org.icewhale.dokploy
+  architectures:
+    - amd64
+    - arm64
+  main: dokploy
+  author: CasaOS Team
+  category: Developer
+  developer: Dokploy
+  description:
+    en_US: |
+      Dokploy is a free, self-hosted deployment platform that simplifies managing applications and databases using Docker. Think of it as your own self-hosted alternative to Heroku, Vercel, and Netlify — without vendor lock-in.
+
+      Deploy any application from a Git repository using Nixpacks, Heroku Buildpacks, or a custom Dockerfile. Full Docker Compose support lets you run complex multi-service stacks with a single click. Dokploy also provides built-in management of PostgreSQL, MySQL, MariaDB, MongoDB, and Redis databases, complete with backup support.
+
+      A real-time monitoring dashboard gives you visibility into CPU, memory, and network usage across all running services. Advanced user management with roles and permissions keeps deployments secure and organized. Complete API and CLI access enables automation and integration into existing workflows.
+
+      **Key Features:**
+      - Deploy from Git via Nixpacks, Heroku Buildpacks, or Dockerfile
+      - Native Docker Compose support for multi-service applications
+      - Built-in database management (PostgreSQL, MySQL, MariaDB, MongoDB, Redis)
+      - Real-time monitoring of CPU, memory, and network
+      - Advanced user management with roles and permissions
+      - Full REST API and CLI access
+      - Open-source templates for popular tools (Supabase, Cal.com, PocketBase)
+      - No vendor lock-in — fully self-hosted and open-source
+
+      **Learn More:**
+      - [Dokploy Official Website](https://dokploy.com)
+      - [Dokploy GitHub Repository](https://github.com/dokploy/dokploy)
+      - [Documentation](https://docs.dokploy.com)
+    en_GB: |
+      Dokploy is a free, self-hosted deployment platform that simplifies managing applications and databases using Docker. Think of it as your own self-hosted alternative to Heroku, Vercel, and Netlify — without vendor lock-in.
+
+      Deploy any application from a Git repository using Nixpacks, Heroku Buildpacks, or a custom Dockerfile. Full Docker Compose support lets you run complex multi-service stacks with a single click. Dokploy also provides built-in management of PostgreSQL, MySQL, MariaDB, MongoDB, and Redis databases, complete with backup support.
+
+      A real-time monitoring dashboard gives you visibility into CPU, memory, and network usage across all running services. Advanced user management with roles and permissions keeps deployments secure and organised. Complete API and CLI access enables automation and integration into existing workflows.
+
+      **Key Features:**
+      - Deploy from Git via Nixpacks, Heroku Buildpacks, or Dockerfile
+      - Native Docker Compose support for multi-service applications
+      - Built-in database management (PostgreSQL, MySQL, MariaDB, MongoDB, Redis)
+      - Real-time monitoring of CPU, memory, and network
+      - Advanced user management with roles and permissions
+      - Full REST API and CLI access
+      - Open-source templates for popular tools (Supabase, Cal.com, PocketBase)
+      - No vendor lock-in — fully self-hosted and open-source
+    zh_CN: |
+      Dokploy 是一个免费的自托管部署平台，利用 Docker 简化应用程序和数据库的管理。它是 Heroku、Vercel 和 Netlify 的自托管替代方案，无厂商锁定。
+
+      可通过 Nixpacks、Heroku Buildpacks 或自定义 Dockerfile 从 Git 仓库部署任何应用程序。完整的 Docker Compose 支持让您一键运行复杂的多服务堆栈。Dokploy 还内置了 PostgreSQL、MySQL、MariaDB、MongoDB 和 Redis 数据库管理，并支持备份。
+
+      实时监控仪表板让您了解所有运行服务的 CPU、内存和网络使用情况。具有角色和权限的高级用户管理保持部署安全有序。完整的 REST API 和 CLI 访问支持自动化和与现有工作流程的集成。
+
+      **主要特点：**
+      - 通过 Nixpacks、Heroku Buildpacks 或 Dockerfile 从 Git 部署
+      - 原生 Docker Compose 支持多服务应用程序
+      - 内置数据库管理（PostgreSQL、MySQL、MariaDB、MongoDB、Redis）
+      - CPU、内存和网络实时监控
+      - 具有角色和权限的高级用户管理
+      - 完整 REST API 和 CLI 访问
+      - 流行工具的开源模板（Supabase、Cal.com、PocketBase）
+      - 无厂商锁定 — 完全自托管和开源
+    de_DE: |
+      Dokploy ist eine kostenlose, selbst gehostete Deployment-Plattform, die die Verwaltung von Anwendungen und Datenbanken mit Docker vereinfacht. Betrachten Sie es als Ihre eigene selbst gehostete Alternative zu Heroku, Vercel und Netlify — ohne Anbieterabhängigkeit.
+
+      Stellen Sie jede Anwendung aus einem Git-Repository mit Nixpacks, Heroku Buildpacks oder einem benutzerdefinierten Dockerfile bereit. Die vollständige Docker Compose-Unterstützung ermöglicht es Ihnen, komplexe Multi-Service-Stacks mit einem Klick auszuführen. Dokploy bietet auch eingebaute Verwaltung von PostgreSQL, MySQL, MariaDB, MongoDB und Redis-Datenbanken, komplett mit Backup-Unterstützung.
+
+      **Hauptmerkmale:**
+      - Deployment aus Git über Nixpacks, Heroku Buildpacks oder Dockerfile
+      - Native Docker Compose-Unterstützung für Multi-Service-Anwendungen
+      - Eingebaute Datenbankverwaltung (PostgreSQL, MySQL, MariaDB, MongoDB, Redis)
+      - Echtzeit-Überwachung von CPU, Arbeitsspeicher und Netzwerk
+      - Erweiterte Benutzerverwaltung mit Rollen und Berechtigungen
+      - Vollständiger REST-API- und CLI-Zugriff
+      - Open-Source-Vorlagen für beliebte Tools
+      - Keine Anbieterabhängigkeit — vollständig selbst gehostet und Open Source
+    fr_FR: |
+      Dokploy est une plateforme de déploiement gratuite et auto-hébergée qui simplifie la gestion des applications et des bases de données avec Docker. Considérez-la comme votre propre alternative auto-hébergée à Heroku, Vercel et Netlify — sans dépendance aux fournisseurs.
+
+      Déployez n'importe quelle application depuis un dépôt Git avec Nixpacks, Heroku Buildpacks ou un Dockerfile personnalisé. La prise en charge complète de Docker Compose vous permet d'exécuter des piles multi-services complexes en un clic. Dokploy fournit également une gestion intégrée des bases de données PostgreSQL, MySQL, MariaDB, MongoDB et Redis, avec support de sauvegarde.
+
+      **Fonctionnalités principales :**
+      - Déploiement depuis Git via Nixpacks, Heroku Buildpacks ou Dockerfile
+      - Support natif Docker Compose pour les applications multi-services
+      - Gestion intégrée des bases de données (PostgreSQL, MySQL, MariaDB, MongoDB, Redis)
+      - Surveillance en temps réel du CPU, de la mémoire et du réseau
+      - Gestion avancée des utilisateurs avec rôles et permissions
+      - Accès complet REST API et CLI
+      - Modèles open source pour les outils populaires
+      - Pas de dépendance aux fournisseurs — entièrement auto-hébergé et open source
+    ja_JP: |
+      Dokployは、Dockerを使用してアプリケーションとデータベースの管理を簡素化する、無料のセルフホスト型デプロイメントプラットフォームです。Heroku、Vercel、Netlifyの代替として、ベンダーロックインなしで利用できます。
+
+      Nixpacks、Heroku Buildpacks、またはカスタムDockerfileを使用して、Gitリポジトリからアプリケーションをデプロイできます。完全なDocker Composeサポートにより、複雑なマルチサービススタックをワンクリックで実行できます。
+
+      **主な機能：**
+      - Nixpacks、Heroku Buildpacks、DockerfileによるGitからのデプロイ
+      - マルチサービスアプリケーションのネイティブDocker Composeサポート
+      - データベース管理の内蔵（PostgreSQL、MySQL、MariaDB、MongoDB、Redis）
+      - CPU、メモリ、ネットワークのリアルタイム監視
+      - ロールと権限による高度なユーザー管理
+      - 完全なREST APIとCLIアクセス
+      - ベンダーロックインなし — 完全セルフホスト型かつオープンソース
+    ko_KR: |
+      Dokploy는 Docker를 사용하여 애플리케이션과 데이터베이스 관리를 단순화하는 무료 자체 호스팅 배포 플랫폼입니다. 벤더 종속 없이 Heroku, Vercel, Netlify의 자체 호스팅 대안으로 사용할 수 있습니다.
+
+      Nixpacks, Heroku Buildpacks 또는 사용자 지정 Dockerfile을 사용하여 Git 저장소에서 모든 애플리케이션을 배포할 수 있습니다. 완전한 Docker Compose 지원으로 복잡한 멀티 서비스 스택을 클릭 한 번으로 실행할 수 있습니다.
+
+      **주요 기능:**
+      - Nixpacks, Heroku Buildpacks 또는 Dockerfile을 통한 Git 배포
+      - 멀티 서비스 애플리케이션을 위한 네이티브 Docker Compose 지원
+      - 내장 데이터베이스 관리 (PostgreSQL, MySQL, MariaDB, MongoDB, Redis)
+      - CPU, 메모리, 네트워크 실시간 모니터링
+      - 역할 및 권한을 갖춘 고급 사용자 관리
+      - 완전한 REST API 및 CLI 액세스
+      - 벤더 종속 없음 — 완전 자체 호스팅 및 오픈 소스
+    pt_PT: |
+      O Dokploy é uma plataforma de implementação gratuita e auto-hospedada que simplifica a gestão de aplicações e bases de dados com Docker. Pense nele como a sua própria alternativa auto-hospedada ao Heroku, Vercel e Netlify — sem dependência de fornecedores.
+
+      Implemente qualquer aplicação a partir de um repositório Git usando Nixpacks, Heroku Buildpacks ou um Dockerfile personalizado. O suporte completo ao Docker Compose permite executar stacks multi-serviço complexas com um clique.
+
+      **Funcionalidades principais:**
+      - Implementação a partir de Git via Nixpacks, Heroku Buildpacks ou Dockerfile
+      - Suporte nativo Docker Compose para aplicações multi-serviço
+      - Gestão integrada de bases de dados (PostgreSQL, MySQL, MariaDB, MongoDB, Redis)
+      - Monitorização em tempo real de CPU, memória e rede
+      - Gestão avançada de utilizadores com funções e permissões
+      - Acesso completo REST API e CLI
+      - Sem dependência de fornecedores — totalmente auto-hospedado e open source
+    ru_RU: |
+      Dokploy — это бесплатная платформа развертывания с самостоятельным хостингом, которая упрощает управление приложениями и базами данных с помощью Docker. Думайте о ней как о собственной альтернативе Heroku, Vercel и Netlify без привязки к поставщику.
+
+      Развертывайте любое приложение из репозитория Git с помощью Nixpacks, Heroku Buildpacks или пользовательского Dockerfile. Полная поддержка Docker Compose позволяет запускать сложные многосервисные стеки одним кликом.
+
+      **Ключевые возможности:**
+      - Развертывание из Git через Nixpacks, Heroku Buildpacks или Dockerfile
+      - Нативная поддержка Docker Compose для многосервисных приложений
+      - Встроенное управление базами данных (PostgreSQL, MySQL, MariaDB, MongoDB, Redis)
+      - Мониторинг CPU, памяти и сети в реальном времени
+      - Расширенное управление пользователями с ролями и разрешениями
+      - Полный доступ через REST API и CLI
+      - Без привязки к поставщику — полностью самостоятельный хостинг и открытый код
+    es_ES: |
+      Dokploy es una plataforma de despliegue gratuita y autoalojada que simplifica la gestión de aplicaciones y bases de datos con Docker. Piense en ella como su propia alternativa autoalojada a Heroku, Vercel y Netlify, sin dependencia de proveedores.
+
+      Despliegue cualquier aplicación desde un repositorio Git utilizando Nixpacks, Heroku Buildpacks o un Dockerfile personalizado. El soporte completo de Docker Compose le permite ejecutar stacks multi-servicio complejos con un solo clic.
+
+      **Características principales:**
+      - Despliegue desde Git mediante Nixpacks, Heroku Buildpacks o Dockerfile
+      - Soporte nativo de Docker Compose para aplicaciones multi-servicio
+      - Gestión integrada de bases de datos (PostgreSQL, MySQL, MariaDB, MongoDB, Redis)
+      - Monitorización en tiempo real de CPU, memoria y red
+      - Gestión avanzada de usuarios con roles y permisos
+      - Acceso completo a REST API y CLI
+      - Sin dependencia de proveedores — completamente autoalojado y de código abierto
+    it_IT: |
+      Dokploy è una piattaforma di distribuzione gratuita e self-hosted che semplifica la gestione di applicazioni e database con Docker. Consideratela come la vostra alternativa self-hosted a Heroku, Vercel e Netlify, senza dipendenza dai fornitori.
+
+      Distribuite qualsiasi applicazione da un repository Git usando Nixpacks, Heroku Buildpacks o un Dockerfile personalizzato. Il supporto completo di Docker Compose vi permette di eseguire stack multi-servizio complessi con un solo clic.
+
+      **Caratteristiche principali:**
+      - Distribuzione da Git tramite Nixpacks, Heroku Buildpacks o Dockerfile
+      - Supporto nativo Docker Compose per applicazioni multi-servizio
+      - Gestione integrata dei database (PostgreSQL, MySQL, MariaDB, MongoDB, Redis)
+      - Monitoraggio in tempo reale di CPU, memoria e rete
+      - Gestione avanzata degli utenti con ruoli e permessi
+      - Accesso completo a REST API e CLI
+      - Senza dipendenza dai fornitori — completamente self-hosted e open source
+    sv_SE: |
+      Dokploy är en gratis, självhostad distributionsplattform som förenklar hantering av applikationer och databaser med Docker. Tänk på det som ditt eget självhostat alternativ till Heroku, Vercel och Netlify — utan leverantörsberoende.
+
+      Distribuera valfri applikation från ett Git-förråd med Nixpacks, Heroku Buildpacks eller en anpassad Dockerfile. Fullständigt Docker Compose-stöd låter dig köra komplexa multi-service-stackar med ett klick.
+
+      **Nyckelfunktioner:**
+      - Distribution från Git via Nixpacks, Heroku Buildpacks eller Dockerfile
+      - Inbyggt Docker Compose-stöd för multi-service-applikationer
+      - Inbyggd databashantering (PostgreSQL, MySQL, MariaDB, MongoDB, Redis)
+      - Realtidsövervakning av CPU, minne och nätverk
+      - Avancerad användarhantering med roller och behörigheter
+      - Fullständig REST API och CLI-åtkomst
+      - Inget leverantörsberoende — helt självhostat och öppen källkod
+    tr_TR: |
+      Dokploy, Docker kullanarak uygulama ve veritabanı yönetimini basitleştiren ücretsiz, kendi kendine barındırılan bir dağıtım platformudur. Onu Heroku, Vercel ve Netlify'ın kendi kendine barındırılan alternatifi olarak düşünün — satıcı kilidi olmadan.
+
+      Nixpacks, Heroku Buildpacks veya özel bir Dockerfile kullanarak Git deposundan herhangi bir uygulamayı dağıtın. Tam Docker Compose desteği, karmaşık çok servisli yığınları tek tıklamayla çalıştırmanıza olanak tanır.
+
+      **Temel Özellikler:**
+      - Nixpacks, Heroku Buildpacks veya Dockerfile aracılığıyla Git'ten dağıtım
+      - Çok servisli uygulamalar için yerel Docker Compose desteği
+      - Yerleşik veritabanı yönetimi (PostgreSQL, MySQL, MariaDB, MongoDB, Redis)
+      - CPU, bellek ve ağın gerçek zamanlı izlenmesi
+      - Roller ve izinlerle gelişmiş kullanıcı yönetimi
+      - Tam REST API ve CLI erişimi
+      - Satıcı kilidi yok — tamamen kendi kendine barındırılan ve açık kaynak
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dokploy/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dokploy/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dokploy/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dokploy/screenshot-3.png
+  tagline:
+    en_US: Self-hosted PaaS — deploy apps and databases with Docker
+    en_GB: Self-hosted PaaS — deploy apps and databases with Docker
+    zh_CN: 自托管 PaaS — 使用 Docker 部署应用和数据库
+    de_DE: Selbst gehostetes PaaS — Apps und Datenbanken mit Docker bereitstellen
+    fr_FR: PaaS auto-hébergé — déployez des applications et des bases de données avec Docker
+    ja_JP: セルフホスト型 PaaS — Docker でアプリとデータベースをデプロイ
+    ko_KR: 자체 호스팅 PaaS — Docker로 앱과 데이터베이스 배포
+    pt_PT: PaaS auto-hospedado — implemente apps e bases de dados com Docker
+    ru_RU: Самостоятельный хостинг PaaS — развертывание приложений и баз данных с Docker
+    es_ES: PaaS autoalojado — despliegue apps y bases de datos con Docker
+    it_IT: PaaS self-hosted — distribuisci app e database con Docker
+    sv_SE: Självhostat PaaS — driftsätt appar och databaser med Docker
+    tr_TR: Kendi kendine barındırılan PaaS — Docker ile uygulama ve veritabanı dağıtımı
+    nb_NO: Selvhostet PaaS — distribuer apper og databaser med Docker
+    el_GR: Self-hosted PaaS — ανάπτυξη εφαρμογών και βάσεων δεδομένων με Docker
+    hr_HR: Self-hosted PaaS — postavljanje aplikacija i baza podataka s Dockerom
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dokploy/thumbnail.png
+  tips:
+    before_install:
+      en_US: |
+        **Important notes before installing Dokploy:**
+
+        1. **Docker socket access**: Dokploy mounts `/var/run/docker.sock` to manage Docker on the host. This grants it full control over your Docker environment.
+
+        2. **Port 3000**: The web interface uses port 3000. Ensure this port is not already in use on your system.
+
+        3. **First account**: The first user registered after installation becomes the administrator.
+
+        4. **Swarm/cluster features**: Multi-node Docker Swarm deployments require additional host-level setup (running `docker swarm init` on the host) beyond what this app entry provides. Single-node deployments work out of the box.
+
+        5. **Traefik proxy**: Dokploy's built-in Traefik reverse proxy (ports 80/443) is not started by this app entry to avoid conflicts with other services (e.g. Nginx Proxy Manager). You can configure it manually from within Dokploy after installation.
+      zh_CN: |
+        **安装 Dokploy 前的重要说明：**
+
+        1. **Docker 套接字访问**：Dokploy 挂载 `/var/run/docker.sock` 来管理主机上的 Docker，这将授予其对 Docker 环境的完全控制权。
+
+        2. **端口 3000**：Web 界面使用端口 3000，请确保系统上此端口未被占用。
+
+        3. **首个账户**：安装后注册的第一个用户将成为管理员。
+
+        4. **Swarm/集群功能**：多节点 Docker Swarm 部署需要在主机上额外运行 `docker swarm init` 进行设置。单节点部署开箱即用。
+
+        5. **Traefik 代理**：Dokploy 内置的 Traefik 反向代理（端口 80/443）在此应用条目中未启动，以避免与其他服务（如 Nginx Proxy Manager）冲突，可在安装后在 Dokploy 内手动配置。
+  title:
+    en_US: Dokploy
+  index: /
+  port_map: "3000"
+  version: "0.26.6"
+  update_at: "2026-07-12"
+  release_notes:
+    en_US: |-
+      - v0.26.6: Bug fixes and stability improvements
+    zh_CN: |-
+      - v0.26.6：问题修复和稳定性改进
+    de_DE: |-
+      - v0.26.6: Fehlerbehebungen und Stabilitätsverbesserungen
+    fr_FR: |-
+      - v0.26.6 : Corrections de bugs et améliorations de la stabilité
+    ja_JP: |-
+      - v0.26.6: バグ修正と安定性の改善
+    ko_KR: |-
+      - v0.26.6: 버그 수정 및 안정성 개선
+    pt_PT: |-
+      - v0.26.6: Correções de erros e melhorias de estabilidade
+    ru_RU: |-
+      - v0.26.6: Исправления ошибок и улучшения стабильности
+    es_ES: |-
+      - v0.26.6: Correcciones de errores y mejoras de estabilidad
+    it_IT: |-
+      - v0.26.6: Correzioni di bug e miglioramenti della stabilità
+    sv_SE: |-
+      - v0.26.6: Felrättningar och stabilitetsförbättringar
+    tr_TR: |-
+      - v0.26.6: Hata düzeltmeleri ve kararlılık iyileştirmeleri
+  website: "https://dokploy.com"
+  repo: "https://github.com/dokploy/dokploy"
+  support: "https://github.com/dokploy/dokploy/issues"
+  docs: "https://docs.dokploy.com/docs/core"
