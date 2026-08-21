@@ -31,7 +31,7 @@ services:
       - kinetirx_net
 
   backend:
-    image: ghcr.io/raktim94/kinetirx-backend:1.0.0
+    image: ghcr.io/raktim94/kinetirx-backend:1.1.0
     container_name: kinetirx-backend
     hostname: kinetirx-backend
     restart: unless-stopped
@@ -41,7 +41,9 @@ services:
     environment:
       DATABASE_URL: "postgres://kinetirx:please-change-this-password@postgres:5432/kinetirx?sslmode=disable"
       JWT_SECRET: "please-change-this-jwt-secret-before-going-live"
-      KINETIRX_ADMIN_PASSWORD: "please-change-this-password"
+      # Left blank on purpose — create the admin account from the app's own
+      # first-run screen on first visit instead of a shared default password.
+      KINETIRX_ADMIN_PASSWORD: ""
       GEMINI_API_KEY: ""
       PORT: "8080"
       GIN_MODE: release
@@ -64,13 +66,13 @@ services:
             en_US: Signs login sessions. Change this to a long random value (32+ random bytes) before exposing the instance beyond your own LAN — changing it later logs everyone out.
         - container: KINETIRX_ADMIN_PASSWORD
           description:
-            en_US: Password for the seeded Master Admin account (id EMP-ADMIN-1), used only on first boot. Change it immediately after first login from Employee Control — there is no password-reset flow.
+            en_US: Optional. Leave blank to create the admin account from the app's own first-run screen instead. If set, it seeds the Master Admin account (id EMP-ADMIN-1) on first boot — change it immediately after first login from Employee Control, there is no password-reset flow.
         - container: GEMINI_API_KEY
           description:
             en_US: Optional — enables AI-powered OCR bill scanning and the clinical AI assistant. Leave blank to run those features in offline/fallback mode.
 
   frontend:
-    image: ghcr.io/raktim94/kinetirx-frontend:1.0.0
+    image: ghcr.io/raktim94/kinetirx-frontend:1.1.0
     container_name: kinetirx-frontend
     hostname: kinetirx-frontend
     restart: unless-stopped
@@ -131,20 +133,26 @@ x-casaos:
   tips:
     before_install:
       en_US: >-
-        On first boot the app seeds one administrator account (ID
-        EMP-ADMIN-1) using the default admin password shipped in this
-        manifest. **Change the Postgres password, JWT secret, and admin
-        password below before using this for anything beyond a local
-        trial** — none of them are auto-generated. Change the admin
-        password immediately after first login from Employee Control; there
-        is no password-reset flow if you lose it.
+        On first visit, create your admin account right in the app — no
+        manual configuration needed. **Change the Postgres password and JWT
+        secret below before using this for anything beyond a local trial**
+        — neither is auto-generated.
   index: /
   port_map: "3080"
   scheme: http
-  version: "1.0.0"
+  version: "1.1.0"
   update_at: "2026-08-21"
   release_notes:
-    en_US: "Initial CasaOS/ZimaOS release: POS billing, medicine inventory, patient records, OPD scheduling, due-khata credit ledger, daily sales/cash-drawer reconciliation, expenses, and role-based employee accounts."
+    en_US: |-
+      1.1.0: On first launch, create the admin account from a proper
+      sign-up screen in the app instead of pre-setting a password via
+      environment variable — KINETIRX_ADMIN_PASSWORD is now optional and
+      left blank in this manifest.
+
+      1.0.0: Initial CasaOS/ZimaOS release: POS billing, medicine
+      inventory, patient records, OPD scheduling, due-khata credit ledger,
+      daily sales/cash-drawer reconciliation, expenses, and role-based
+      employee accounts.
   website: "https://kinetirx.nodedr.com"
   repo: "https://github.com/Raktim94/KinetiRx"
   support: "https://github.com/Raktim94/KinetiRx/issues"
