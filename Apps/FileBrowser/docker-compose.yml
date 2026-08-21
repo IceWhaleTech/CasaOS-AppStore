@@ -1,0 +1,87 @@
+name: filebrowser
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:v2.63.3-s6
+    container_name: filebrowser
+    restart: unless-stopped
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+    ports:
+      - target: 80
+        published: ${WEBUI_PORT:-8035}
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA
+        target: /srv
+      - type: bind
+        source: /DATA/AppData/$AppID/database
+        target: /database
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_us: Run File Browser as the specified user ID.
+        - container: PGID
+          description:
+            en_us: Run File Browser as the specified group ID.
+        - container: TZ
+          description:
+            en_us: Container timezone.
+      ports:
+        - container: "80"
+          description:
+            en_us: WebUI HTTP port.
+      volumes:
+        - container: /srv
+          description:
+            en_us: Files exposed for browsing and editing. Bound to /DATA so every file on the NAS is reachable.
+        - container: /database
+          description:
+            en_us: SQLite database with users, settings and shares.
+        - container: /config
+          description:
+            en_us: Optional settings.json overrides.
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  main: filebrowser
+  author: Holger Kuehn
+  developer: filebrowser contributors (https://github.com/filebrowser/filebrowser)
+  category: Documents
+  description:
+    en_us: |
+      File Browser is a lightweight web file manager with a built-in editor for plain-text files, Markdown, JSON, YAML and source code. It fills the gap in the ZimaOS Files UI, where text files can only be viewed but not edited. With its single binary and tiny footprint it pairs well with NAS workloads: browse /DATA, edit configuration files in place, share folders or single files via short links, and use the integrated Markdown preview while writing notes.
+    zh_cn: |
+      File Browser 是一款轻量级的网页文件管理器，内置文本、Markdown、JSON、YAML 与源代码的编辑器。它弥补了 ZimaOS 文件界面只能预览文本却无法编辑的不足。它体积小巧，非常适合 NAS 场景：浏览 /DATA，直接编辑配置文件，通过短链接分享目录或单个文件，并在书写 Markdown 笔记时使用实时预览。
+  tagline:
+    en_us: Web file manager with built-in editor for txt, Markdown, JSON, YAML and code.
+    zh_cn: 内置文本/Markdown 编辑器的网页文件管理器。
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/screenshot-1.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FileBrowser/icon.png
+  title:
+    en_us: File Browser
+  index: /
+  port_map: ${WEBUI_PORT:-8035}
+  tips:
+    before_install:
+      en_us: |
+        On first start the File Browser s6 image generates a random initial password for the `admin` user. Read it once from the container log:
+
+        ```
+        docker logs filebrowser | grep "randomly generated"
+        ```
+
+        Sign in with username `admin` and the printed password, then change it under Settings -> Profile Settings -> Change Password. The web UI is exposed on the host port shown above.
+
+        File Browser mounts `/DATA` as `/srv`, so every file under `/DATA` is reachable for the signed-in user. Treat the admin account accordingly.
