@@ -1,7 +1,7 @@
 name: cantinarr
 services:
   cantinarr:
-    image: ghcr.io/windoze95/cantinarr:0.2.0
+    image: ghcr.io/windoze95/cantinarr:latest
     container_name: cantinarr
     restart: unless-stopped
     network_mode: bridge
@@ -11,7 +11,7 @@ services:
         protocol: tcp
     environment:
       CANTINARR_PUSH_GATEWAY_URL: https://push.julian.codes
-      CANTINARR_PUBLIC_URL: ""
+      CANTINARR_ARR_CALLBACK_URL: ""
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/config
@@ -21,9 +21,9 @@ services:
         - container: CANTINARR_PUSH_GATEWAY_URL
           description:
             en_US: Push gateway for the companion iOS and Android apps. The server enrolls itself on first start with no signup; clear the value to disable push, or point it at your own gateway.
-        - container: CANTINARR_PUBLIC_URL
+        - container: CANTINARR_ARR_CALLBACK_URL
           description:
-            en_US: Origin your Radarr, Sonarr, and Chaptarr containers POST webhooks back to, for example http://192.168.1.10:8585. Leave blank to use whatever address you browse to.
+            en_US: Origin your Radarr, Sonarr, and Chaptarr containers POST webhooks back to, for example http://192.168.1.10:8585. Leave blank to use whatever address you browse to. This is not the address people reach Cantinarr at; set that in the app under Settings, External Address. Formerly named CANTINARR_PUBLIC_URL, which existing containers can keep using.
       ports:
         - container: "8585"
           description:
@@ -54,13 +54,13 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Cantinarr/thumbnail.jpg
   tips:
     before_install:
-      en_US: Radarr, Sonarr, Chaptarr, download clients, Tautulli, and Plex are all optional and are added from the admin UI after first run. Push notifications to the companion iPhone and Android apps work out of the box through the preset push gateway; clear CANTINARR_PUSH_GATEWAY_URL to turn them off. If your arr containers cannot reach the address you browse Cantinarr on, set CANTINARR_PUBLIC_URL to an origin they can dial so instant updates work.
+      en_US: Radarr, Sonarr, Chaptarr, download clients, Tautulli, and Plex are all optional and are added from the admin UI after first run. Push notifications to the companion iPhone and Android apps work out of the box through the preset push gateway; clear CANTINARR_PUSH_GATEWAY_URL to turn them off. If your arr containers cannot reach the address you browse Cantinarr on, set CANTINARR_ARR_CALLBACK_URL to an origin they can dial so instant updates work.
   title:
     en_US: Cantinarr
   index: /
   port_map: "8585"
-  version: "0.2.0"
-  update_at: "2026-08-17"
+  version: "0.3.0"
+  update_at: "2026-08-21"
   website: "https://cantinarr.com"
   repo: "https://github.com/windoze95/cantinarr"
   support: "https://github.com/windoze95/cantinarr/issues"
