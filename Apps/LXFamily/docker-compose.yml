@@ -1,0 +1,114 @@
+name: lx-family
+
+services:
+  lx-family:
+    image: ghcr.io/laxxx-lab/lx-family-planner:1.18.3
+    container_name: lx-family
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: "3001"
+      TZ: Europe/Berlin
+      APP_LANGUAGE: de
+      PUID: "1000"
+      PGID: "1000"
+      SESSION_COOKIE_SECURE: auto
+      REGISTRATION_MODE: first-family
+      DATABASE_FILE: /app/data/family_planner.sqlite
+      LEGACY_DATABASE_FILE: /app/data/family_db.json
+    ports:
+      - target: 3001
+        published: "3001"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+      - type: bind
+        source: /DATA/AppData/$AppID/backups
+        target: /app/backups
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 15s
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          node -e "fetch('http://127.0.0.1:3001/api/health').then(response =>
+          process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+    x-casaos:
+      ports:
+        - container: "3001"
+          description:
+            en_US: LX Family web interface
+            de_DE: LX Family Weboberfläche
+      volumes:
+        - container: /app/data
+          description:
+            en_US: Family data, database and private installation secret
+            de_DE: Familiendaten, Datenbank und privates Installationsgeheimnis
+        - container: /app/backups
+          description:
+            en_US: Automatic LX Family backups
+            de_DE: Automatische LX-Family-Sicherungen
+
+x-casaos:
+  id: io.github.laxxx-lab.lx-family
+  main: lx-family
+  index: /
+  port_map: "3001"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LXFamily/icon.png
+  title:
+    en_US: LX Family
+    de_DE: LX Family
+  tagline:
+    en_US: Private Family OS for every generation
+    de_DE: Privates Familien-OS für alle Generationen
+  description:
+    en_US: |
+      LX Family brings calendars, tasks, shopping, meals, chat, reminders and family files together on your own server. Parents get calm planning tools, children get playful missions and rewards, and pet profiles stay focused on care.
+
+      Your data remains on your own CasaOS device. The first family is created in the guided onboarding; further registrations are protected by default.
+    de_DE: |
+      LX Family vereint Kalender, Aufgaben, Einkauf, Speiseplan, Chat, Erinnerungen und Familien-Dateien auf eurem eigenen Server. Eltern erhalten ruhige Planungswerkzeuge, Kinder spielerische Missionen und Belohnungen; Haustierprofile bleiben auf Versorgung fokussiert.
+
+      Eure Daten bleiben auf eurem CasaOS-Gerät. Die erste Familie wird im geführten Onboarding angelegt, weitere Registrierungen sind standardmäßig geschützt.
+  tips:
+    before_install:
+      en_US: The app creates a private encryption secret in its persistent data folder on first start. Keep the data folder when moving or restoring LX Family.
+      de_DE: Die App erzeugt beim ersten Start ein privates Verschlüsselungsgeheimnis im dauerhaften Datenordner. Diesen Ordner beim Umzug oder Wiederherstellen von LX Family mit sichern.
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LXFamily/screenshot-dashboard.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LXFamily/screenshot-dashboard.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LXFamily/screenshot-profiles.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LXFamily/screenshot-child-profile.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LXFamily/screenshot-family-cloud.png
+  category: Home
+  author: LaxXx Lab
+  developer: LX Family contributors
+  architectures:
+    - amd64
+    - arm64
+  version: "1.18.3"
+  update_at: "2026-08-10"
+  release_notes:
+    en_US: LX Family 1.18.3 keeps verified updates active if legacy backup permissions block cleanup.
+    de_DE: LX Family 1.18.3 behält geprüfte Updates aktiv, falls alte Sicherungsrechte das Aufräumen blockieren.
+  website: https://github.com/laxxx-lab/lx-family-planner
+  repo: https://github.com/laxxx-lab/lx-family-planner
+  support: https://github.com/laxxx-lab/lx-family-planner/issues
+  docs: https://github.com/laxxx-lab/lx-family-planner#readme
