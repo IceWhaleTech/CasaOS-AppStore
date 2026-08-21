@@ -2,7 +2,7 @@ name: nodedr-pos
 
 services:
   backend:
-    image: ghcr.io/raktim94/nodedr-pos-backend:1.0.0
+    image: ghcr.io/raktim94/nodedr-pos-backend:1.1.0
     container_name: nodedr-pos-backend
     hostname: nodedr-pos-backend
     restart: unless-stopped
@@ -44,7 +44,7 @@ services:
             en_US: USB passthrough for optional direct-USB thermal receipt printing. Safe to leave as-is with no printer attached.
 
   frontend:
-    image: ghcr.io/raktim94/nodedr-pos-frontend:1.0.0
+    image: ghcr.io/raktim94/nodedr-pos-frontend:1.1.0
     container_name: nodedr-pos-frontend
     hostname: nodedr-pos-frontend
     restart: unless-stopped
@@ -120,10 +120,27 @@ x-casaos:
   index: /
   scheme: http
   port_map: "1994"
-  version: "1.0.0"
-  update_at: "2026-08-05"
+  version: "1.1.0"
+  update_at: "2026-08-21"
   release_notes:
     en_US: |-
+      1.1.0 (2026-08-21):
+      - Dashboard: new "Total Due" stat and a customers-with-due section for
+        quick collections follow-up.
+      - Auth: fixed a stale-onboarding-state bug and added long-lived
+        sessions with step-up re-authentication for sensitive actions.
+      - Fixed an accidental-close bug where dragging a text selection that
+        ended outside a dialog would close it.
+      - API responses now sent with Cache-Control: no-store, so the browser
+        or a proxy in front of it never serves stale POS data.
+      - Redesigned homepage with a real "get started" account-creation path
+        (previously a bare redirect).
+      - Fixed camera barcode/QR scanning reliability: removed an overly
+        strict format restriction and improved focus/decode behavior.
+      - Fixed the Settings tab getting stuck on "Loading settings…" forever.
+      - Patched npm-audit-flagged dependency vulnerabilities.
+
+      1.0.0 (2026-08-03):
       Initial CasaOS/ZimaOS release: offline-first POS and inventory
       management, barcode/QR scanning (USB scanner or phone/tablet camera),
       GST-inclusive billing, loyalty points, customer dues, and returns with
