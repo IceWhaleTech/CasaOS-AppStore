@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/radarr:6.1.1
+    image: linuxserver/radarr:6.3.0
     deploy:
       resources:
         reservations:
@@ -109,84 +109,69 @@ x-casaos:
     en_US: Radarr
   index: /
   port_map: "7878"
-  version: "6.1.1"
-  update_at: "2026-05-17"
+  version: "6.3.0"
+  update_at: "2026-08-20"
   release_notes:
     en_US: |-
-      - Radarr 6.1.1.10360 fixes Inno Setup download handling and URL parsing on some systems.
-      - Updates MailKit, ImageSharp, translations, HTTP file mapper behavior, and SonarCloud versioning.
-      - Adds GiLG group parsing and fixes a collection API error around Movie CollectionThe.
-      - Docker users should update the container image rather than update inside the container.
+      - Radarr 6.3.0.10514 fixes imports from Simkl lists and Custom Formats that use the year.
+      - Updates FFprobe to 5.1.10 and includes qBittorrent authentication fixes.
+      - Docker users should update the container image rather than use the in-app updater.
     en_GB: |-
-      - Radarr 6.1.1.10360 fixes Inno Setup download handling and URL parsing on some systems.
-      - Updates MailKit, ImageSharp, translations, HTTP file mapper behavior, and SonarCloud versioning.
-      - Adds GiLG group parsing and fixes a collection API error around Movie CollectionThe.
-      - Docker users should update the container image rather than update inside the container.
+      - Radarr 6.3.0.10514 fixes imports from Simkl lists and Custom Formats that use the year.
+      - Updates FFprobe to 5.1.10 and includes qBittorrent authentication fixes.
+      - Docker users should update the container image rather than use the in-app updater.
     it_IT: |-
-      - Radarr 6.1.1.10360 risolve la gestione dei download di Inno Setup e l'analisi di URL su alcuni sistemi.
-      - Aggiornamenti MailKit, ImageSharp, traduzioni, comportamento del file mapper HTTP e controllo delle versioni SonarCloud.
-      - Aggiunge l'analisi del gruppo GiLG e corregge un errore di raccolta API relativo al film CollectionThe.
-      - Gli utenti Docker dovrebbero aggiornare l'immagine del contenitore anziché aggiornarla all'interno del contenitore.
+      - Radarr 6.3.0.10514 corregge le importazioni dagli elenchi Simkl e i Formati personalizzati che usano l'anno.
+      - Aggiorna FFprobe alla versione 5.1.10 e include correzioni per l'autenticazione di qBittorrent.
+      - Gli utenti Docker devono aggiornare l'immagine del contenitore anziché usare l'aggiornamento interno.
     nb_NO: |-
-      - Radarr 6.1.1.10360 fikser Inno Setup-nedlastingshåndtering og URL-parsing på enkelte systemer.
-      - Oppdateringer MailKit, ImageSharp, oversettelser, HTTP filtilordningsadferd og SonarCloud versjonering.
-      - Legger til GiLG gruppeparsing og fikser en samling API feil rundt film CollectionThe.
-      - Docker-brukere bør oppdatere beholderbildet i stedet for å oppdatere inne i beholderen.
+      - Radarr 6.3.0.10514 retter import fra Simkl-lister og egendefinerte formater som bruker årstall.
+      - Oppdaterer FFprobe til 5.1.10 og inkluderer rettelser for qBittorrent-autentisering.
+      - Docker-brukere bør oppdatere beholderbildet i stedet for å bruke oppdateringen i appen.
     zh_CN: |-
-      - Radarr 6.1.1.10360 修复了某些系统上的 Inno Setup 下载处理和 URL 解析。
-      - 更新了 MailKit、ImageSharp、翻译、HTTP file mapper 行为，以及 SonarCloud versioning。
-      - 增加了 GiLG group parsing，并修复了 Movie CollectionThe 相关的 collection API 错误。
-      - Docker 用户应更新容器镜像，而不是在容器内更新。
+      - Radarr 6.3.0.10514 修复了 Simkl 列表导入以及使用年份的自定义格式。
+      - 将 FFprobe 更新至 5.1.10，并包含 qBittorrent 认证修复。
+      - Docker 用户应更新容器镜像，而不是使用应用内更新器。
     ja_JP: |-
-      - Radarr 6.1.1.10360 は一部システムでの Inno Setup ダウンロード処理と URL 解析を修正します。
-      - MailKit、ImageSharp、翻訳、HTTP file mapper の動作、SonarCloud versioning を更新します。
-      - GiLG group parsing を追加し、Movie CollectionThe に関する collection API エラーを修正します。
-      - Docker ユーザーはコンテナ内で更新するのではなく、コンテナイメージを更新してください。
+      - Radarr 6.3.0.10514 は Simkl リストからのインポートと、年を使用するカスタムフォーマットを修正します。
+      - FFprobe を 5.1.10 に更新し、qBittorrent の認証修正を含みます。
+      - Docker ユーザーはアプリ内更新ではなくコンテナイメージを更新してください。
     ko_KR: |-
-      - Radarr 6.1.1.10360은 일부 시스템의 Inno Setup 다운로드 처리와 URL 파싱을 수정합니다.
-      - MailKit, ImageSharp, 번역, HTTP file mapper 동작, SonarCloud versioning을 업데이트합니다.
-      - GiLG group parsing을 추가하고 Movie CollectionThe 관련 collection API 오류를 수정합니다.
-      - Docker 사용자는 컨테이너 내부에서 업데이트하지 말고 컨테이너 이미지를 업데이트해야 합니다.
+      - Radarr 6.3.0.10514는 Simkl 목록 가져오기와 연도를 사용하는 사용자 지정 형식을 수정합니다.
+      - FFprobe를 5.1.10으로 업데이트하고 qBittorrent 인증 수정 사항을 포함합니다.
+      - Docker 사용자는 앱 내 업데이트 대신 컨테이너 이미지를 업데이트해야 합니다.
     fr_FR: |-
-      - Radarr 6.1.1.10360 corrige la gestion des téléchargements Inno Setup et l'analyse d'URL sur certains systèmes.
-      - Met à jour MailKit, ImageSharp, les traductions, le comportement HTTP file mapper et le versioning SonarCloud.
-      - Ajoute GiLG group parsing et corrige une erreur d'API de collection autour de Movie CollectionThe.
-      - Les utilisateurs Docker doivent mettre à jour l'image du conteneur plutôt que de faire une mise à jour dans le conteneur.
+      - Radarr 6.3.0.10514 corrige l'importation depuis les listes Simkl et les formats personnalisés qui utilisent l'année.
+      - Met FFprobe à jour vers la version 5.1.10 et inclut des corrections d'authentification pour qBittorrent.
+      - Les utilisateurs Docker doivent mettre à jour l'image du conteneur plutôt que l'application elle-même.
     de_DE: |-
-      - Radarr 6.1.1.10360 behebt Inno-Setup-Download-Verarbeitung und URL-Parsing auf einigen Systemen.
-      - Aktualisiert MailKit, ImageSharp, Übersetzungen, HTTP-file-mapper-Verhalten und SonarCloud-Versioning.
-      - Fügt GiLG group parsing hinzu und behebt einen collection API-Fehler rund um Movie CollectionThe.
-      - Docker-Nutzer sollten das Container-Image aktualisieren, statt innerhalb des Containers zu aktualisieren.
+      - Radarr 6.3.0.10514 behebt Importe aus Simkl-Listen und benutzerdefinierte Formate mit Jahresangabe.
+      - Aktualisiert FFprobe auf 5.1.10 und enthält Korrekturen für die qBittorrent-Authentifizierung.
+      - Docker-Nutzer sollten das Container-Image statt des In-App-Updaters aktualisieren.
     sv_SE: |-
-      - Radarr 6.1.1.10360 fixar Inno Setup-nedladdningshantering och URL-analys på vissa system.
-      - Uppdateringar MailKit, ImageSharp, översättningar, HTTP filmappningsbeteende och SonarCloud versionshantering.
-      - Lägger till GiLG gruppanalys och fixar ett samlings API fel kring film CollectionThe.
-      - Docker-användare bör uppdatera behållarbilden istället för att uppdatera inuti behållaren.
+      - Radarr 6.3.0.10514 åtgärdar import från Simkl-listor och anpassade format som använder årtal.
+      - Uppdaterar FFprobe till 5.1.10 och innehåller korrigeringar för qBittorrent-autentisering.
+      - Docker-användare bör uppdatera containeravbildningen i stället för att använda uppdateraren i appen.
     el_GR: |-
-      - Το Radarr 6.1.1.10360 διορθώνει το χειρισμό λήψης του Inno Setup και την ανάλυση URL σε ορισμένα συστήματα.
-      - Ενημερώνει τα MailKit, ImageSharp, τις μεταφράσεις, τη συμπεριφορά αντιστοίχισης αρχείων HTTP και την έκδοση SonarCloud.
-      - Προσθέτει GiLG ανάλυση ομάδας και διορθώνει ένα σφάλμα συλλογής API γύρω από την Ταινία CollectionThe.
-      - Οι χρήστες Docker θα πρέπει να ενημερώνουν την εικόνα του κοντέινερ αντί να ενημερώνουν μέσα στο κοντέινερ.
+      - Το Radarr 6.3.0.10514 διορθώνει τις εισαγωγές από λίστες Simkl και τις προσαρμοσμένες μορφές που χρησιμοποιούν το έτος.
+      - Ενημερώνει το FFprobe στην έκδοση 5.1.10 και περιλαμβάνει διορθώσεις ελέγχου ταυτότητας για το qBittorrent.
+      - Οι χρήστες Docker πρέπει να ενημερώσουν την εικόνα του κοντέινερ αντί να χρησιμοποιήσουν την ενημέρωση μέσα από την εφαρμογή.
     hr_HR: |-
-      - Radarr 6.1.1.10360 popravlja upravljanje preuzimanjem Inno Setup-a i raščlanjivanje URL na nekim sustavima.
-      - Ažuriranja MailKit, ImageSharp, prijevodi, HTTP ponašanje mapera datoteka i SonarCloud određivanje verzija.
-      - Dodaje raščlanjivanje grupe GiLG i popravlja pogrešku zbirke API oko filma CollectionThe.
-      - Korisnici Docker trebali bi ažurirati sliku spremnika umjesto ažuriranja unutar spremnika.
+      - Radarr 6.3.0.10514 ispravlja uvoz sa Simkl popisa i prilagođene formate koji koriste godinu.
+      - Ažurira FFprobe na 5.1.10 i uključuje ispravke autentifikacije za qBittorrent.
+      - Korisnici Dockera trebaju ažurirati sliku spremnika umjesto ažuriranja unutar aplikacije.
     pt_PT: |-
-      - O Radarr 6.1.1.10360 corrige o tratamento de download do Inno Setup e a análise de URL em alguns sistemas.
-      - Atualizações MailKit, ImageSharp, traduções, comportamento do mapeador de ficheiros HTTP e controlo de versões SonarCloud.
-      - Adiciona a análise de grupo GiLG e corrige um erro de recolha API em torno do filme CollectionThe.
-      - Os utilizadores Docker devem atualizar a imagem do contentor em vez de atualizar dentro do contentor.
+      - O Radarr 6.3.0.10514 corrige importações de listas Simkl e formatos personalizados que usam o ano.
+      - Atualiza o FFprobe para a versão 5.1.10 e inclui correções de autenticação do qBittorrent.
+      - Os utilizadores de Docker devem atualizar a imagem do contentor em vez de usar o atualizador interno.
     ru_RU: |-
-      - Radarr 6.1.1.10360 исправляет обработку загрузки Inno Setup и анализ URL в некоторых системах.
-      - Обновлены MailKit, ImageSharp, переводы, поведение сопоставителя файлов HTTP и управление версиями SonarCloud.
-      - Добавляет синтаксический анализ группы GiLG и исправляет ошибку коллекции API вокруг фильма CollectionThe.
-      - Пользователи Docker должны обновлять образ контейнера, а не обновлять его внутри.
+      - Radarr 6.3.0.10514 исправляет импорт из списков Simkl и пользовательские форматы, использующие год.
+      - Обновляет FFprobe до версии 5.1.10 и включает исправления аутентификации qBittorrent.
+      - Пользователям Docker следует обновлять образ контейнера, а не использовать встроенное обновление.
     tr_TR: |-
-      - Radarr 6.1.1.10360, bazı sistemlerde Inno Kurulum indirme işlemlerini ve URL ayrıştırmayı düzeltir.
-      - MailKit, ImageSharp, çeviriler, HTTP dosya eşleyici davranışı ve SonarCloud sürüm oluşturma güncellemeleri.
-      - GiLG grup ayrıştırmasını ekler ve Film CollectionThe ile ilgili bir API koleksiyon hatasını düzeltir.
-      - Docker kullanıcıları konteynerin içinde güncelleme yapmak yerine konteyner görüntüsünü güncellemelidir.
+      - Radarr 6.3.0.10514, Simkl listelerinden içe aktarmayı ve yılı kullanan Özel Biçimleri düzeltir.
+      - FFprobe'u 5.1.10 sürümüne günceller ve qBittorrent kimlik doğrulama düzeltmelerini içerir.
+      - Docker kullanıcıları uygulama içi güncelleyici yerine konteyner görüntüsünü güncellemelidir.
   website: "https://radarr.video"
   repo: "https://github.com/Radarr/Radarr"
   support: "https://radarr.video/support"
