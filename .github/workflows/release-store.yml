@@ -14,12 +14,18 @@ on:
         description: "Base URL used by the build action"
         required: false
         default: "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages"
+      purge_only:
+        description: "Refresh jsDelivr paths from the latest gh-pages deployment without rebuilding"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
 
 jobs:
   release:
+    if: github.event_name != 'workflow_dispatch' || inputs.purge_only != true
     runs-on: ubuntu-latest
     env:
       RELEASE_TAG: ${{ inputs.tag_name != '' && inputs.tag_name || github.ref_name }}
@@ -140,6 +146,13 @@ jobs:
             out/build-v2-report.json
             out/build-v1-report.json
 
+      - name: Capture previous gh-pages revision
+        id: gh_pages_before
+        run: |
+          set -euo pipefail
+          previous="$(git ls-remote origin refs/heads/gh-pages | awk '{print $1}')"
+          echo "sha=$previous" >> "$GITHUB_OUTPUT"
+
       - name: Deploy dist to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -147,10 +160,40 @@ jobs:
           publish_branch: gh-pages
           publish_dir: ./dist
 
+      - name: Collect changed gh-pages paths
+        env:
+          PREVIOUS_GH_PAGES_SHA: ${{ steps.gh_pages_before.outputs.sha }}
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin gh-pages --depth=2
+          current="$(git rev-parse origin/gh-pages)"
+          mkdir -p out
+          paths_file="out/jsdelivr-purge-paths.txt"
+          : > "$paths_file"
+
+          if [[ -n "$PREVIOUS_GH_PAGES_SHA" ]] && git cat-file -e "$PREVIOUS_GH_PAGES_SHA^{commit}" 2>/dev/null; then
+            git diff --name-only "$PREVIOUS_GH_PAGES_SHA" "$current" -- > "$paths_file"
+          else
+            git diff-tree --root --no-commit-id --name-only -r "$current" > "$paths_file"
+          fi
+
+          printf '%s\n' store.json index.json store/main.zip >> "$paths_file"
+          sort -u -o "$paths_file" "$paths_file"
+          echo "Collected $(wc -l < "$paths_file" | tr -d ' ') path(s) for jsDelivr purge"
+
       - name: Refresh jsDelivr cache
         run: |
-          curl -fsSL "https://purge.jsdelivr.net/gh/${{ github.repository }}@gh-pages/index.json" || true
-          curl -fsSL "https://purge.jsdelivr.net/gh/${{ github.repository }}@gh-pages/store/main.zip" || true
+          bash .github/scripts/purge-jsdelivr-cache.sh \
+            --repository "${{ github.repository }}" \
+            --ref gh-pages \
+            --paths-file out/jsdelivr-purge-paths.txt
+
+      - name: Verify jsDelivr cache contents
+        run: |
+          bash .github/scripts/verify-jsdelivr-cache.sh \
+            --repository "${{ github.repository }}" \
+            --ref gh-pages \
+            --paths-file out/jsdelivr-purge-paths.txt
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -162,3 +205,41 @@ jobs:
             release-assets/main.zip
             release-assets/build-v2-report.json
             release-assets/build-v1-report.json
+
+  purge-only:
+    if: github.event_name == 'workflow_dispatch' && inputs.purge_only == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Collect latest gh-pages deployment paths
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin gh-pages --depth=20
+          latest="$(git log -1 --format='%H' --grep='^deploy:' origin/gh-pages || true)"
+          latest="${latest:-$(git rev-parse origin/gh-pages)}"
+          mkdir -p out
+          paths_file="out/jsdelivr-purge-paths.txt"
+          git diff-tree --root --no-commit-id --name-only -r "$latest" > "$paths_file"
+          printf '%s\n' store.json index.json store/main.zip >> "$paths_file"
+          sort -u -o "$paths_file" "$paths_file"
+          echo "Using gh-pages deployment $latest"
+          echo "Collected $(wc -l < "$paths_file" | tr -d ' ') path(s) for jsDelivr purge"
+
+      - name: Refresh jsDelivr cache
+        run: |
+          bash .github/scripts/purge-jsdelivr-cache.sh \
+            --repository "${{ github.repository }}" \
+            --ref gh-pages \
+            --paths-file out/jsdelivr-purge-paths.txt
+
+      - name: Verify jsDelivr cache contents
+        run: |
+          bash .github/scripts/verify-jsdelivr-cache.sh \
+            --repository "${{ github.repository }}" \
+            --ref gh-pages \
+            --paths-file out/jsdelivr-purge-paths.txt

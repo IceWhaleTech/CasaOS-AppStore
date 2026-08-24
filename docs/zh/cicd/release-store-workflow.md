@@ -11,6 +11,9 @@
 - 匹配 `v*` 的 tag push
 - 手动 `workflow_dispatch`
 
+手动运行时可以将 `purge_only` 设为 `true`，只刷新最近一次
+`gh-pages` 发布变更的文件，不重新构建或部署商店。
+
 ## 主要阶段
 
 1. 拉取仓库源码。
@@ -22,8 +25,14 @@
 7. 保存构建缓存。
 8. 写入 release summary。
 9. 将 `dist/` 部署到 `gh-pages`。
-10. 刷新 CDN 缓存。
+10. 收集本次部署变更的文件并刷新其 jsDelivr 缓存。
 11. 创建带附件的 GitHub Release。
+
+缓存刷新发生在 `gh-pages` 部署完成之后。工作流会比较部署前后的
+`gh-pages` revision，始终包含商店入口文件，并将路径分批提交给
+jsDelivr。刷新脚本会轮询 purge 结果、重试临时 HTTP 错误；如果 jsDelivr
+报告限流或刷新失败，工作流会明确失败而不会静默忽略。随后还会比较
+源文件和 CDN 响应的哈希，避免把“请求已接受”误判为缓存已刷新。
 
 ## 发布产物
 
