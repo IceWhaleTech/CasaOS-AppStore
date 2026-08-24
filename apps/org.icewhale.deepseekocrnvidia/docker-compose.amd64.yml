@@ -5,6 +5,7 @@ services:
     image: icewhaletech/deepseek-ocr-backend:v2.2.0@sha256:37f3d2d92ddb05e2936ed0757bd5b27628ff2327f8f77b2ce95e32a52a2f339d
     container_name: deepseek-ocr-backend
     environment:
+      # API Configuration
       API_HOST: "0.0.0.0"
       API_PORT: "8000"
 

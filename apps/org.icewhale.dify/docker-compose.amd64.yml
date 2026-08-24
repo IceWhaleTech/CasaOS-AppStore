@@ -144,7 +144,7 @@ services:
       - dify
 
   redis:
-    image: redis:6-alpine@sha256:7c57092302a4dfe716f40ab8026df21879870b5d3748a2f392e9482ae2b474cc
+    image: redis:6-alpine@sha256:c099203974f7936abe76009d8fb4c984b31a6b3b21bf942b40ba658aac757d5d
     container_name: dify-redis
     restart: unless-stopped
     environment:
@@ -216,7 +216,7 @@ services:
       - config
 
   nginx:
-    image: nginx:latest@sha256:c2e305ef468149bdc3297621cea453b47b095816fec4fc7be6ff837bce8deb7d
+    image: nginx:latest@sha256:963cfe6e75d1c292f66589d7e190b137cf89310414c0c1c5b476dfc61a4fcd0d
     container_name: dify-nginx
     restart: unless-stopped
     volumes:

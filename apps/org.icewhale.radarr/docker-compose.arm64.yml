@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/radarr:6.3.0
+    image: linuxserver/radarr:6.3.0@sha256:999a4ce9ef22927460161468a9c15c365dabe8d79eb380a2165f02e90dda4e79
     deploy:
       resources:
         reservations:

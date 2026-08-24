@@ -42,7 +42,7 @@ services:
       - docmost-network
   docmost-redis:
     container_name: docmost-redis
-    image: redis:7.2-alpine@sha256:efd8e95c7f61fcb75251940a3d47b3eb3c8e6fdc43c982bf041dc377a729e1d2
+    image: redis:7.2-alpine@sha256:c1259a79f35d6e9023c46c53daa36b896ce8f6b6f8b28ff7eda4f4723dadb676
     restart: unless-stopped
     volumes:
       - type: bind

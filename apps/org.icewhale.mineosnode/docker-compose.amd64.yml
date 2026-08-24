@@ -13,8 +13,12 @@ services:
     # may corrupt map data
     stop_grace_period: 10m
 
-    volumes:   -
-        /var/games/mineos/minecraft:/var/games/minecraft
+    volumes:
+      # Using a bind mapping is preferrable here due to how docker
+      # stores names volumes by default in /var/lib/docker/volumes
+      # with permissions that prevent normal users from accessing
+      # the folder structure.
+      - /var/games/mineos/minecraft:/var/games/minecraft
 
     environment:
       USE_HTTPS: "true"
@@ -23,8 +27,10 @@ services:
       USER_UID: 1000
       USER_PASSWORD: root
 
-    ports:   -
-        "8444:8443/tcp"
+    ports:
+      # HTTPS port for web interface. If you change the SERVER_PORT
+      # variable, also change this mapping.
+      - "8444:8443/tcp"
 
       # Minecraft server ports. 25565 is the default, but is you plan
       # on running multiple servers at the same time, each will need

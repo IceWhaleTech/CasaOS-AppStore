@@ -14,8 +14,10 @@ services:
       - NET_ADMIN
       - SYS_MODULE
     restart: unless-stopped
-    environment:   -
-        FIREFLY_PASSWORD=firefly
+    environment:
+      #- TZ=Asia/Shanghai
+      #- FIREFLY_DEVICE=eth0
+      - FIREFLY_PASSWORD=firefly
       #- FIREFLY_AUTO_SSL=false
       #- FIREFLY_PORT=50121
     deploy:
