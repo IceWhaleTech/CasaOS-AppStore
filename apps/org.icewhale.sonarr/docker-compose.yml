@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/sonarr:4.0.17
+    image: linuxserver/sonarr:4.0.19
     deploy:
       resources:
         reservations:
@@ -35,4 +35,4 @@ x-casaos:
     en_US: Sonarr
   index: /
   port_map: "8989"
-  version: "4.0.17"
+  version: "4.0.19"

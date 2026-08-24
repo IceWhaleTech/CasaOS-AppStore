@@ -5,7 +5,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/radarr:6.1.1
+    image: linuxserver/radarr:6.3.0
     deploy:
       resources:
         reservations:
@@ -35,4 +35,4 @@ x-casaos:
     en_US: Radarr
   index: /
   port_map: "7878"
-  version: "6.1.1"
+  version: "6.3.0"

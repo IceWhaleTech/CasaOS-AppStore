@@ -1,8 +1,8 @@
 {
   "id": "org.icewhale.hermes",
+  "tagline": "메모리, 스킬, 메시징, 웹 대시보드를 갖춘 자기개선형 AI 에이전트입니다.",
   "release_note": "## 기능 업데이트\n\n- 웹 대시보드는 이제 메시징 채널, MCP 카탈로그 항목, 자격 증명, 웹훅, 메모리, 게이트웨이 설정을 브라우저에서 직접 구성할 수 있는 훨씬 더 완성도 높은 관리 패널이 되었습니다.\n- 초기 설정은 Nous Portal의 Quick Setup 으로 더 단순해졌고, Quick Setup 과 Full Setup 의 구분도 더 명확해져 신규 사용자가 첫 메시지까지 더 빠르게 도달할 수 있습니다.\n- 모델 선택기는 이제 웹 대시보드, TUI, CLI 전반에서 퍼지 검색을 지원하고, 다중 엔드포인트 provider 를 더 깔끔하게 묶어 주며, 모델 카탈로그도 더 자주 갱신됩니다.\n- `/undo [N]` 은 최근 N개 턴을 되돌리고, 마지막 메시지를 편집용으로 다시 채워 넣어 CLI, TUI, 메시징 흐름 전반에서 더 쉽게 다시 보낼 수 있게 해줍니다.\n- 이제 `hermes chat` 이 기본적으로 CLI 와 TUI 중 무엇을 열지 선택할 수 있고, TUI 에는 통합 `/model` 명령과 Sessions 오버레이도 추가되었습니다.\n- 기본 스킬 세트는 노이즈를 줄이기 위해 정리되었고, `NVIDIA/skills` 는 검증된 스킬을 더 쉽게 찾고 설치할 수 있는 내장 trusted tap 으로 추가되었습니다.\n\n[https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)",
   "description": "Hermes Agent는 Nous Research가 만든 자기개선형 AI 에이전트로, 일회성 챗봇이 아니라 오래 함께 일하는 협업 도우미를 지향합니다.\n내장된 학습 루프는 지속 메모리, 세션 간 검색, 재사용 가능한 스킬을 결합해 문맥을 기억하고 반복되는 워크플로를 시간이 지날수록 더 잘 처리하게 만듭니다.\n통합 게이트웨이, 풍부한 도구 세트, 브라우저 기반 대시보드를 바탕으로 리서치, 자동화, 다중 플랫폼 커뮤니케이션, 지속적인 운영 업무에 잘 맞습니다。\n\n**주요 기능:**\n- 지속 메모리, 세션 검색, 재사용 가능한 스킬을 결합한 내장 학습 루프\n- CLI, Telegram, Discord, Slack, WhatsApp, Signal 등을 연결하는 단일 게이트웨이\n- 터미널, 웹 검색, 브라우저 자동화, 파일 편집, MCP 연동을 포함한 도구 기반 작업\n- 크론 작업, 서브에이전트, 웹 대시보드, OpenAI 호환 API를 통한 자동화와 조정\n\n**더 알아보기:**\n- [Hermes Agent 공식 웹사이트](https://hermes-agent.nousresearch.com/)\n- [Hermes Agent GitHub](https://github.com/NousResearch/hermes-agent)\n- [Hermes Agent 문서](https://hermes-agent.nousresearch.com/docs/)\n",
-  "tagline": "메모리, 스킬, 메시징, 웹 대시보드를 갖춘 자기개선형 AI 에이전트입니다.",
   "tips": {
     "before_install": "대부분의 경우 Hermes WebUI에서 모델과 메시징을 직접 설정할 수 있습니다.\n해당 옵션이 보이지 않으면 [이 가이드](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) 를 참고해 컨테이너 터미널에서 설정을 완료하세요.\n"
   }

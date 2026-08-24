@@ -1,7 +1,7 @@
 name: taskingai
 services:
   frontend:
-    image: taskingai/taskingai-console:v0.3.0@sha256:70f410012482481f42b4a482466986526f547f0669d4412b7f16583d13c06f2f
+    image: taskingai/taskingai-console:v0.3.0
     depends_on:
       - backend-web
       - backend-api
@@ -10,7 +10,7 @@ services:
 
 
   backend-inference:
-    image: taskingai/taskingai-inference:v0.2.14@sha256:2c9f7b5a50c5e7d96da46a7eb2a9488576a1620edf22bbbfc3159de4c7f33c22
+    image: taskingai/taskingai-inference:v0.2.14
     environment:
       AES_ENCRYPTION_KEY: b90e4648ad699c3bdf62c0860e09eb9efc098ee75f215bf750847ae19d41e4b0
       ICON_URL_PREFIX: http://nginx:3080
@@ -24,7 +24,7 @@ services:
       - taskingai_network
 
   backend-plugin:
-    image: taskingai/taskingai-plugin:v0.2.10@sha256:e62139e232180414fa270504fce9b638f7391989bb85ccff2ee5eb279206fe16
+    image: taskingai/taskingai-plugin:v0.2.10
     environment:
       AES_ENCRYPTION_KEY: b90e4648ad699c3bdf62c0860e09eb9efc098ee75f215bf750847ae19d41e4b0
       ICON_URL_PREFIX: http://nginx:3080
@@ -43,7 +43,7 @@ services:
       - taskingai_network
 
   backend-api:
-    image: taskingai/taskingai-server:v0.3.0@sha256:e534a4c966df930972e7fe23599fcbf2116fb633f3f51b436d55fcef98279a95
+    image: taskingai/taskingai-server:v0.3.0
     environment:
       POSTGRES_URL: postgres://postgres:TaskingAI321@db:5432/taskingai
       REDIS_URL: redis://:TaskingAI321@cache:6379/0
@@ -70,7 +70,7 @@ services:
       - taskingai_network
 
   backend-web:
-    image: taskingai/taskingai-server:v0.3.0@sha256:e534a4c966df930972e7fe23599fcbf2116fb633f3f51b436d55fcef98279a95
+    image: taskingai/taskingai-server:v0.3.0
     environment:
       POSTGRES_URL: postgres://postgres:TaskingAI321@db:5432/taskingai
       REDIS_URL: redis://:TaskingAI321@cache:6379/0
@@ -119,7 +119,7 @@ services:
       - taskingai_network
 
   cache:
-    image: redis:7-alpine@sha256:102aa93d02c163a634662ec18a1a1db51bf5b8b6a2f28547ce24626218a40d54
+    image: redis:7-alpine
     command: ["redis-server", "--requirepass", "TaskingAI321"]
     volumes:
       - /DATA/AppData/$AppID/data/redis:/data
@@ -133,7 +133,7 @@ services:
       - taskingai_network
 
   nginx:
-    image: nginx:1.24@sha256:e8fdcd6356fb4914274d329bdb38c9fb7bd1be31ff50da71a8ffedaab04cf929
+    image: nginx:1.24
     ports:
       - "3080:80"
       # edit this to change the port, for example to "8080:80" to use port 8080
