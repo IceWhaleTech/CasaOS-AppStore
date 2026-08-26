@@ -1,0 +1,55 @@
+name: roonserver
+services:
+  roonserver:
+    image: ghcr.io/roonlabs/roonserver:1.0.8
+    container_name: roonserver
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      ROON_INSTALL_BRANCH: production
+      TZ: $TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/Roon
+        target: /Roon
+      - type: bind
+        source: /DATA/Media/Music
+        target: /Music
+      - type: bind
+        source: /DATA/AppData/$AppID/RoonBackups
+        target: /RoonBackups
+      - type: bind
+        source: /run/udev
+        target: /run/udev
+        read_only: true
+    cap_add:
+      - SYS_ADMIN
+      - DAC_READ_SEARCH
+    security_opt:
+      - apparmor:unconfined
+      - label:disable
+    devices:
+      - /dev/snd:/dev/snd
+      - /dev/bus/usb:/dev/bus/usb
+      - /dev/dri:/dev/dri
+    group_add:
+      - audio
+    logging:
+      driver: local
+x-casaos:
+  id: org.icewhale.roonserver
+  main: roonserver
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.roonserver/assets/icon.svg
+  index: /
+  port_map: ""
+  title:
+    en_US: Roon Server
+    en_GB: Roon Server
+    de_DE: Roon Server
+    es_ES: Roon Server
+    fr_FR: Roon Server
+    ja_JP: Roon Server
+    ko_KR: Roon Server
+    zh_CN: Roon Server
+    zh_TW: Roon Server
+  version: "1.0.8"

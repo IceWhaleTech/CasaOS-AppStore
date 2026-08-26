@@ -1,0 +1,35 @@
+{
+  "architectures": [
+    "amd64"
+  ],
+  "category": "Media",
+  "developer": "Roon Labs",
+  "author": "ZimaOS Team",
+  "tagline": "Music software that transforms your listening experience",
+  "description": "Roon music software transforms your listening experience with rich metadata, discovery features, and audiophile sound. It works with streaming services and local files.\n\nRoon brings all your music together and adds bios, reviews, photos, lyrics, tour dates, and cross-linked credits for performers, songwriters, producers, engineers, and composers. Everything about music - browsing, discovery, collecting, and listening - is more engaging with Roon.\n\nRoonServer is the central server component. It runs on a Linux amd64/x86_64 host, stores the Roon database and settings, and serves your library to Roon Remote clients and audio endpoints on your local network. It is controlled from the Roon app and does not provide a browser-based WebUI.\n",
+  "screenshot_link": [
+    "/apps/org.icewhale.roonserver/assets/screenshot-1.webp",
+    "/apps/org.icewhale.roonserver/assets/screenshot-2.webp",
+    "/apps/org.icewhale.roonserver/assets/screenshot-3.webp",
+    "/apps/org.icewhale.roonserver/assets/screenshot-4.webp"
+  ],
+  "thumbnail": "/apps/org.icewhale.roonserver/assets/thumbnail.webp",
+  "tips": {
+    "before_install": "RoonServer has no WebUI. After installation, use the Roon app on a device on the same LAN to discover and configure this server.\n"
+  },
+  "update_at": "2026-08-26",
+  "website": "https://roon.app",
+  "docs": "https://help.roonlabs.com/portal/en/kb/articles/installing-the-roon-server-via-docker",
+  "title": "Roon Server",
+  "release_note": "- Uses the latest RoonServer Production release.\n- RoonServer is downloaded on first start and stored in `/Roon`.\n- RoonServer updates automatically within the Production release channel.",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "org.icewhale.roonserver",
+  "version": "1.0.8",
+  "categories": [
+    "media"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 96221415
+  }
+}
