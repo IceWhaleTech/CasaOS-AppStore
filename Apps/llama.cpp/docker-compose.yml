@@ -1,0 +1,89 @@
+# llama.cpp — 由 casaos-pr-tool 生成
+# 商店规范: https://github.com/IceWhaleTech/CasaOS-AppStore/blob/main/docs/specs/compose-and-x-casaos.md
+name: llamacpp
+services:
+  llamacpp:
+    image: ghcr.io/ggml-org/llama.cpp:server
+    container_name: llamacpp
+    ports:
+      - target: 8080
+        published: '18080'
+        protocol: tcp
+    environment:
+      - LLAMA_ARG_N_GPU_LAYERS=999
+      - LLAMA_ARG_CONTEXT_SIZE=8192
+    devices:
+      - /dev/dri:/dev/dri
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/models
+        target: /models
+        bind:
+          create_host_path: true
+    restart: unless-stopped
+    x-casaos:
+      ports:
+        - container: '8080'
+          description:
+            en_US: llama.cpp Server Web UI and API Port
+            zh_CN: llama.cpp 服务端 Web 界面与 API 端口
+      volumes:
+        - container: /models
+          description:
+            en_US: GGUF Model Files Directory
+            zh_CN: GGUF 模型文件目录
+x-casaos:
+  id: org.icewhale.llamacpp
+  main: llamacpp
+  index: /
+  port_map: '18080'
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/llama-cpp.png
+  title:
+    en_US: llama.cpp
+    zh_CN: llama.cpp
+  tagline:
+    en_US: Run GGUF LLMs locally with GPU acceleration
+    zh_CN: 本地运行 GGUF 大模型，支持 GPU 加速
+  description:
+    en_US: |-
+      llama.cpp is a pure C/C++ inference engine for GGUF large language models, with the official OpenAI-compatible server and built-in Web UI.
+
+      **Key Features:**
+      - Run GGUF models (Llama, Qwen, DeepSeek, Gemma, Mistral and more) on CPU or GPU
+      - Vulkan backend works on AMD / Intel / NVIDIA GPUs out of the box
+      - Great fit for unified-memory machines (e.g. Ryzen AI Max 395) — large models run in system RAM with GPU offload
+      - OpenAI-compatible API (chat/completions) for integration with Open WebUI, ChatGPT-Next-Web etc.
+      - Built-in chat Web UI with model management
+
+      **Usage tips:**
+      - Put GGUF model files under the models volume (`/models`)
+      - Load a model from the Web UI or via `POST /api/model/load`
+      - Hardware acceleration: ensure `/dev/dri` is available (Vulkan); remove the device mapping for CPU-only mode
+    zh_CN: |-
+      llama.cpp 是一个纯 C/C++ 编写的大语言模型推理引擎，专为 GGUF 格式模型优化，自带 OpenAI 兼容 API 服务器和内置 Web 界面。
+
+      **主要特点：**
+      - 支持在 CPU 或 GPU 上运行 GGUF 模型（Llama、Qwen、DeepSeek、Gemma、Mistral 等）
+      - Vulkan 后端开箱即用，兼容 AMD / Intel / NVIDIA 显卡
+      - 非常适合统一内存架构机型（如 Ryzen AI Max 395）：大模型跑在内存里，同时用核显加速
+      - 提供 OpenAI 兼容 API（chat/completions），可对接 Open WebUI、ChatGPT-Next-Web 等
+      - 内置聊天 Web 界面，支持模型管理
+
+      **使用提示：**
+      - 将 GGUF 模型文件放入模型目录（/models）
+      - 可在 Web 界面或通过 POST /api/model/load 加载模型
+      - 硬件加速：确保 /dev/dri 存在（Vulkan）；纯 CPU 模式请移除设备映射
+  author: LinkLeong
+  category: AI
+  architectures:
+    - amd64
+    - arm64
+  version: 1.0.0
+  update_at: '2026-08-26'
+  release_notes:
+    en_US: '- Initial release: llama.cpp server with Vulkan GPU acceleration.'
+    zh_CN: '- 首次发布：llama.cpp 服务端，支持 Vulkan GPU 加速。'
+  website: https://github.com/ggml-org/llama.cpp
+  repo: https://github.com/ggml-org/llama.cpp
+  support: https://github.com/ggml-org/llama.cpp/issues
+  docs: https://github.com/ggml-org/llama.cpp/blob/master/docs/server.md
