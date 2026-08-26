@@ -1,0 +1,194 @@
+name: sonozz
+services:
+  app:
+    container_name: sonozz
+    image: ghcr.io/bobdivx/sonozz:latest
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    environment:
+      - HOST=0.0.0.0
+      - PORT=4321
+      - NODE_ENV=production
+      - TURSO_DATABASE_URL=
+      - TURSO_AUTH_TOKEN=
+      - AUTH_EMAIL=admin@example.com
+      - AUTH_PASSWORD=changeme
+      - AUTH_SECRET=change-this-to-a-long-random-string
+      - AUTH_SECURE=0
+      - TZ=$TZ
+    ports:
+      - target: 4321
+        published: "4321"
+        protocol: tcp
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:4321/"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    x-casaos:
+      envs:
+        - container: TURSO_DATABASE_URL
+          description:
+            en_US: Turso database URL (required). Create a Turso database at https://turso.tech and paste the libsql:// URL here.
+            fr_FR: URL de la base Turso (requis). Créez une base Turso sur https://turso.tech et collez l'URL libsql:// ici.
+            zh_CN: Turso 数据库 URL（必需）。在 https://turso.tech 创建数据库并粘贴 libsql:// URL。
+        - container: TURSO_AUTH_TOKEN
+          description:
+            en_US: Turso authentication token (required). Generate from your Turso dashboard and paste here.
+            fr_FR: Jeton d'authentification Turso (requis). Générez depuis votre tableau de bord Turso.
+            zh_CN: Turso 身份验证令牌（必需）。从 Turso 仪表板生成并粘贴。
+        - container: AUTH_EMAIL
+          description:
+            en_US: Admin email for initial login. Change before first install.
+            fr_FR: Email admin pour la connexion initiale. Changez avant l'installation.
+            zh_CN: 管理员邮箱用于初始登录。安装前请更改。
+        - container: AUTH_PASSWORD
+          description:
+            en_US: Admin password for initial login. Change before first install.
+            fr_FR: Mot de passe admin pour la connexion initiale. Changez avant l'installation.
+            zh_CN: 管理员密码用于初始登录。安装前请更改。
+        - container: AUTH_SECRET
+          description:
+            en_US: Secret key for session encryption. Generate a long random string (32+ characters).
+            fr_FR: Clé secrète pour le chiffrement de session. Générez une chaîne aléatoire longue (32+ caractères).
+            zh_CN: 会话加密密钥。生成一个长随机字符串（32+ 字符）。
+        - container: AUTH_SECURE
+          description:
+            en_US: Set to 1 for HTTPS, 0 for HTTP (LAN use). Use 0 if accessing via local HTTP only.
+            fr_FR: 1 pour HTTPS, 0 pour HTTP (LAN). Utilisez 0 si accès HTTP local uniquement.
+            zh_CN: HTTPS 设为 1，HTTP（局域网）设为 0。仅本地 HTTP 访问时使用 0。
+      ports:
+        - container: "4321"
+          description:
+            en_US: WebUI HTTP port
+            fr_FR: Port HTTP de l'interface
+            zh_CN: Web 界面 HTTP 端口
+    privileged: false
+
+x-casaos:
+  id: io.github.bobdivx.sonozz
+  architectures:
+    - amd64
+  main: app
+  author: bobdivx
+  developer: bobdivx
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SONOZZ/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SONOZZ/thumbnail.png
+  title:
+    en_US: SONOZZ
+    fr_FR: SONOZZ
+    zh_CN: SONOZZ
+  tagline:
+    en_US: Modern music streaming and management platform
+    fr_FR: Plateforme moderne de streaming et gestion musicale
+    zh_CN: 现代音乐流媒体和管理平台
+  description:
+    en_US: |
+      SONOZZ is a modern music streaming and management platform built with Astro and Preact.
+      Stream your music collection with a beautiful, responsive interface optimized for self-hosting.
+
+      **Key features**
+      - Modern web interface built with Astro and Preact
+      - Turso database for efficient data management
+      - User authentication and session management
+      - Optimized for self-hosted deployments on ZimaOS
+
+      **Requirements**
+      - Turso database account (free tier available at https://turso.tech)
+      - Recommended 512 MB RAM minimum
+      - HTTP access on port 4321
+
+      After install, configure Turso credentials and change the default admin credentials before first login.
+    fr_FR: |
+      SONOZZ est une plateforme moderne de streaming et gestion musicale construite avec Astro et Preact.
+      Écoutez votre collection musicale avec une interface magnifique et responsive optimisée pour l'auto-hébergement.
+
+      **Fonctionnalités**
+      - Interface web moderne avec Astro et Preact
+      - Base de données Turso pour une gestion efficace
+      - Authentification utilisateur et gestion de session
+      - Optimisé pour déploiements auto-hébergés sur ZimaOS
+
+      **Prérequis**
+      - Compte base de données Turso (niveau gratuit disponible sur https://turso.tech)
+      - 512 Mo de RAM minimum recommandés
+      - Accès HTTP sur le port 4321
+
+      Après installation, configurez les identifiants Turso et changez les identifiants admin par défaut avant la première connexion.
+    zh_CN: |
+      SONOZZ 是使用 Astro 和 Preact 构建的现代音乐流媒体和管理平台。
+      通过优化的自托管界面播放您的音乐收藏，界面美观且响应迅速。
+
+      **主要功能**
+      - 使用 Astro 和 Preact 构建的现代 Web 界面
+      - Turso 数据库实现高效数据管理
+      - 用户身份验证和会话管理
+      - 针对 ZimaOS 自托管部署优化
+
+      **要求**
+      - Turso 数据库账号（https://turso.tech 提供免费套餐）
+      - 建议最少 512 MB 内存
+      - 端口 4321 的 HTTP 访问
+
+      安装后，请配置 Turso 凭据并在首次登录前更改默认管理员凭据。
+  tips:
+    before_install:
+      en_US: |
+        **Before you click Install**
+
+        1. **Turso database required**: Create a free Turso database at https://turso.tech and get your database URL (libsql://...) and auth token.
+        2. **Change AUTH_EMAIL and AUTH_PASSWORD**: These are your admin credentials. Do NOT leave them as default values.
+        3. **Generate AUTH_SECRET**: Use a long random string (32+ characters) for session encryption.
+        4. **AUTH_SECURE**: Set to 0 for HTTP on LAN. Set to 1 only if you have HTTPS configured.
+        5. **Gemini API key**: After installation and login, configure your Gemini API key in the application settings for AI features.
+        6. Port 4321 will be used for the web interface.
+        7. Images are **amd64 only** for now. ARM64 support is coming soon.
+      fr_FR: |
+        **Avant d'installer**
+
+        1. **Base Turso requise** : Créez une base gratuite sur https://turso.tech et récupérez l'URL (libsql://...) et le jeton d'auth.
+        2. **Changez AUTH_EMAIL et AUTH_PASSWORD** : Ce sont vos identifiants admin. Ne les laissez PAS par défaut.
+        3. **Générez AUTH_SECRET** : Utilisez une chaîne aléatoire longue (32+ caractères) pour le chiffrement de session.
+        4. **AUTH_SECURE** : 0 pour HTTP sur LAN. 1 uniquement si HTTPS configuré.
+        5. **Clé API Gemini** : Après installation et connexion, configurez votre clé API Gemini dans les paramètres pour les fonctionnalités IA.
+        6. Le port 4321 sera utilisé pour l'interface web.
+        7. Images **amd64 uniquement** pour le moment. Support ARM64 bientôt disponible.
+      zh_CN: |
+        **安装前请阅读**
+
+        1. **需要 Turso 数据库**：在 https://turso.tech 创建免费数据库并获取 URL (libsql://...) 和身份验证令牌。
+        2. **更改 AUTH_EMAIL 和 AUTH_PASSWORD**：这些是管理员凭据。请勿保持默认值。
+        3. **生成 AUTH_SECRET**：使用长随机字符串（32+ 字符）进行会话加密。
+        4. **AUTH_SECURE**：局域网 HTTP 设为 0。仅在配置了 HTTPS 时设为 1。
+        5. **Gemini API 密钥**：安装并登录后，在应用程序设置中配置 Gemini API 密钥以启用 AI 功能。
+        6. 端口 4321 将用于 Web 界面。
+        7. 镜像目前仅支持 **amd64**。ARM64 支持即将推出。
+  index: /
+  port_map: "4321"
+  scheme: http
+  version: "latest"
+  update_at: "2026-08-26"
+  release_notes:
+    en_US: |-
+      - First ZimaOS App Store package of SONOZZ.
+      - Modern music streaming platform built with Astro and Preact.
+      - Turso database integration for efficient data management.
+      - Image from GitHub Container Registry (ghcr.io/bobdivx/sonozz).
+    fr_FR: |-
+      - Premier paquet App Store ZimaOS de SONOZZ.
+      - Plateforme de streaming musical moderne avec Astro et Preact.
+      - Intégration base de données Turso pour gestion efficace.
+      - Image depuis GitHub Container Registry (ghcr.io/bobdivx/sonozz).
+    zh_CN: |-
+      - SONOZZ 的首个 ZimaOS App Store 软件包。
+      - 使用 Astro 和 Preact 构建的现代音乐流媒体平台。
+      - Turso 数据库集成实现高效数据管理。
+      - 镜像来自 GitHub Container Registry（ghcr.io/bobdivx/sonozz）。
+  website: "https://github.com/bobdivx/sonozz"
+  repo: "https://github.com/bobdivx/sonozz"
+  support: "https://github.com/bobdivx/sonozz/issues"
+  docs: "https://github.com/bobdivx/sonozz"
