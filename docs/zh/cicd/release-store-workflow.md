@@ -31,9 +31,8 @@
 缓存刷新发生在 `gh-pages` 部署完成之后。工作流会比较部署前后的
 `gh-pages` revision，始终包含商店入口文件，并将路径分批提交给
 jsDelivr。刷新脚本会轮询 purge 结果并重试临时 HTTP 错误；如果 jsDelivr
-限流或刷新失败，会在工作流日志中记录。随后还会比较源文件和 CDN 响应
-的哈希。缓存刷新和校验步骤不会阻塞后续发布，因此 jsDelivr 故障不会
-阻止 GitHub Release 创建。
+限流或刷新失败，会在工作流日志中记录。缓存刷新步骤不会阻塞后续发布，
+因此 jsDelivr 故障不会阻止 GitHub Release 创建。
 
 ## 发布产物
 
