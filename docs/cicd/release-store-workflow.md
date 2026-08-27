@@ -31,10 +31,11 @@ Manual runs can set `purge_only` to refresh the files changed by the latest
 The cache refresh runs after the `gh-pages` deployment. It compares the
 previous and current `gh-pages` revisions, always includes the store entry
 points, and submits paths to jsDelivr in batches. The refresh script polls the
-purge result, retries transient HTTP failures, and fails visibly when jsDelivr
-reports throttling or an unsuccessful purge. A follow-up content check compares
-the source and CDN response hashes so an accepted purge request cannot be
-mistaken for a refreshed cache.
+purge result, retries transient HTTP failures, and reports throttling or an
+unsuccessful purge in the job log. A follow-up content check compares the
+source and CDN response hashes. Cache refresh and verification are
+non-blocking, so a jsDelivr outage cannot prevent the GitHub Release from being
+created.
 
 ## Publish outputs
 

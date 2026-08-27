@@ -182,6 +182,7 @@ jobs:
           echo "Collected $(wc -l < "$paths_file" | tr -d ' ') path(s) for jsDelivr purge"
 
       - name: Refresh jsDelivr cache
+        continue-on-error: true
         run: |
           bash .github/scripts/purge-jsdelivr-cache.sh \
             --repository "${{ github.repository }}" \
@@ -189,6 +190,7 @@ jobs:
             --paths-file out/jsdelivr-purge-paths.txt
 
       - name: Verify jsDelivr cache contents
+        continue-on-error: true
         run: |
           bash .github/scripts/verify-jsdelivr-cache.sh \
             --repository "${{ github.repository }}" \
@@ -231,6 +233,7 @@ jobs:
           echo "Collected $(wc -l < "$paths_file" | tr -d ' ') path(s) for jsDelivr purge"
 
       - name: Refresh jsDelivr cache
+        continue-on-error: true
         run: |
           bash .github/scripts/purge-jsdelivr-cache.sh \
             --repository "${{ github.repository }}" \
@@ -238,6 +241,7 @@ jobs:
             --paths-file out/jsdelivr-purge-paths.txt
 
       - name: Verify jsDelivr cache contents
+        continue-on-error: true
         run: |
           bash .github/scripts/verify-jsdelivr-cache.sh \
             --repository "${{ github.repository }}" \
