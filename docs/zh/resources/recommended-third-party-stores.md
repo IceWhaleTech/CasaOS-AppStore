@@ -28,6 +28,18 @@
   repo-url="https://github.com/bigbeartechworld/big-bear-casaos/"
 />
 
+<StoreSourceCard
+  title="Service Dash"
+  summary="Uptime Kuma 家庭实验室仪表板：每个服务的本地与公网地址同卡显示，并附主机实时指标。"
+  url="https://cdn.jsdelivr.net/gh/cvaghela/service-dash@gh-pages/store.json"
+  maintainer="cvaghela"
+  copy-label="复制链接"
+  copied-label="已复制"
+  open-label="打开链接"
+  repo-label="GitHub 仓库"
+  repo-url="https://github.com/cvaghela/service-dash"
+/>
+
 ## 页面说明
 
 - 这是一个社区发现页，不是正式背书列表。

@@ -20,6 +20,14 @@ Community store sources for ZimaOS. Copy a source link, then import it in ZimaOS
   repo-url="https://github.com/bigbeartechworld/big-bear-casaos/"
 />
 
+<StoreSourceCard
+  title="Service Dash"
+  summary="Homelab dashboard for Uptime Kuma: every service's local and public URL on one card, plus live host metrics."
+  url="https://cdn.jsdelivr.net/gh/cvaghela/service-dash@gh-pages/store.json"
+  maintainer="cvaghela"
+  repo-url="https://github.com/cvaghela/service-dash"
+/>
+
 ## About this list
 
 - This is a community discovery page, not a formal endorsement list.
