@@ -23,7 +23,7 @@ services:
       - zulivio
 
   backend:
-    image: ghcr.io/raktim94/zulivio-backend:1.6.1
+    image: ghcr.io/raktim94/zulivio-backend:1.7.0
     container_name: zulivio-backend
     hostname: zulivio-backend
     restart: unless-stopped
@@ -126,7 +126,7 @@ services:
               (you'd just need to re-enter them from Settings).
 
   web:
-    image: ghcr.io/raktim94/zulivio-web:1.6.1
+    image: ghcr.io/raktim94/zulivio-web:1.7.0
     container_name: zulivio-web
     hostname: zulivio-web
     restart: unless-stopped
@@ -204,10 +204,19 @@ x-casaos:
   index: /
   scheme: http
   port_map: "2996"
-  version: "1.6.1"
-  update_at: "2026-08-25"
+  version: "1.7.0"
+  update_at: "2026-08-28"
   release_notes:
     en_US: |-
+      1.7.0: separated employees can now be permanently deleted (once they
+      have no lead/assignment/attendance history to lose — otherwise you're
+      told exactly what's blocking it), fixing a gap where a SUSPENDED/
+      ON_LEAVE employee also couldn't even be separated in the first place.
+      Adds a one-tap "Quick access" shortcut row to the master dashboard,
+      a quick "Note" button right on lead board cards so a caller can log
+      a note without opening the lead, and a copy-to-clipboard button for
+      the phone number on the lead workspace page.
+
       1.6.1: fixes a Helpdesk page crash ("x.find is not a function") that
       could happen if a workflow query ever resolved to something other
       than an array — now degrades to "no workflows" instead of crashing
