@@ -23,7 +23,7 @@ services:
       - zulivio
 
   backend:
-    image: ghcr.io/raktim94/zulivio-backend:1.7.0
+    image: ghcr.io/raktim94/zulivio-backend:1.8.0
     container_name: zulivio-backend
     hostname: zulivio-backend
     restart: unless-stopped
@@ -71,11 +71,14 @@ services:
         - container: CORS_ORIGIN
           description:
             en_US: >-
-              Origin the browser uses to reach the web app. Leave as the default for local/LAN use. If you put
-              this instance behind a reverse proxy, Cloudflare Tunnel, or custom domain, this MUST be the full
-              public URL including the scheme (e.g. https://your-domain.example) — a bare hostname with no
-              http:// or https:// will not match the browser's Origin header and silently breaks login/setup
-              with a "Cross-Origin Request Blocked" error.
+              Origin(s) the browser uses to reach the web app, comma-separated. The default only covers browsing
+              from the server itself — if you (or your team) will open this from another device on the network,
+              add that device-visible origin too, e.g. "http://localhost:2996,http://192.168.1.50:2996" using
+              your server's actual LAN IP, or every login/CSV-import/save request from that device will silently
+              fail with "Cross-origin request blocked" even though the page itself loads fine. If you put this
+              instance behind a reverse proxy, Cloudflare Tunnel, or custom domain, this MUST also include the
+              full public URL with its scheme (e.g. https://your-domain.example) — a bare hostname with no
+              http:// or https:// will not match the browser's Origin header.
         - container: BOOTSTRAP_DISABLED
           description:
             en_US: Set to true after you've created your organization, to close self-service signup on this instance.
@@ -126,7 +129,7 @@ services:
               (you'd just need to re-enter them from Settings).
 
   web:
-    image: ghcr.io/raktim94/zulivio-web:1.7.0
+    image: ghcr.io/raktim94/zulivio-web:1.8.0
     container_name: zulivio-web
     hostname: zulivio-web
     restart: unless-stopped
@@ -158,12 +161,12 @@ x-casaos:
   author: NodeDR Infotech Private Limited
   developer: Raktim94
   category: Productivity
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Zulivio/icon.png
-  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Zulivio/thumbnail.png
+  icon: https://cdn.jsdelivr.net/gh/Raktim94/zulivio@master/casaos/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/Raktim94/zulivio@master/casaos/thumbnail.png
   screenshot_link:
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Zulivio/screenshot-1.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Zulivio/screenshot-2.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Zulivio/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/Raktim94/zulivio@master/casaos/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/Raktim94/zulivio@master/casaos/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/Raktim94/zulivio@master/casaos/screenshot-3.png
   title:
     en_US: Zulivio
   tagline:
@@ -204,10 +207,29 @@ x-casaos:
   index: /
   scheme: http
   port_map: "2996"
-  version: "1.7.0"
-  update_at: "2026-08-28"
+  version: "1.8.0"
+  update_at: "2026-08-29"
   release_notes:
     en_US: |-
+      1.8.0: leads can now be deleted (lead page and board cards). Fixed a
+      Tasks page crash ("Cannot read properties of undefined") that could
+      happen if the tasks endpoint ever resolved with a missing list.
+      Pipeline cards for a lead-converted opportunity now link back to that
+      lead's page instead of being a dead end. The per-employee report now
+      also shows a login count. Assignments can now optionally link to a
+      specific Lead or Opportunity, so a work item stays connected to the
+      CRM record it's actually about — the link shows on both the
+      Assignments list and the linked record's own page.
+
+      1.7.1: account creation and password-change now have a show/hide
+      toggle and a confirm-password field so a mistyped password is caught
+      before submit. Opportunities CSV import now validates
+      expectedCloseDate instead of surfacing a raw database error on a bad
+      date. Leads CSV import now accepts a company-only row (no full_name)
+      — common in scraped/B2B lead exports — falling back to the company
+      name as the lead's identity, and the leads importer is now also
+      available on the Data Hub page.
+
       1.7.0: separated employees can now be permanently deleted (once they
       have no lead/assignment/attendance history to lose — otherwise you're
       told exactly what's blocking it), fixing a gap where a SUSPENDED/
