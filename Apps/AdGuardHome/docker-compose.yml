@@ -9,10 +9,10 @@ services:
     network_mode: bridge
     ports:
       - target: 53
-        published: "531"
+        published: "53"
         protocol: tcp
       - target: 53
-        published: "531"
+        published: "53"
         protocol: udp
       - target: 3000
         published: "3001"
@@ -66,7 +66,7 @@ x-casaos:
     - arm64
     - ppc64le
   main: adguard-home
-  author: CasaOS Team
+  author: ZimaOS Team
   category: Networking
   description:
     en_US: |
