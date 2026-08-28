@@ -47,7 +47,7 @@ services:
       - submify
 
   api:
-    image: ghcr.io/raktim94/submify-api:0.1.0
+    image: ghcr.io/raktim94/submify-api:0.3.0
     container_name: submify-api
     hostname: submify-api
     restart: unless-stopped
@@ -144,7 +144,7 @@ services:
             en_US: Locally-stored file uploads (used whenever a project has no S3-compatible credentials configured) — back this up.
 
   web:
-    image: ghcr.io/raktim94/submify-web:0.1.0
+    image: ghcr.io/raktim94/submify-web:0.3.0
     container_name: submify-web
     hostname: submify-web
     restart: unless-stopped
@@ -160,7 +160,7 @@ services:
       - submify
 
   nginx:
-    image: ghcr.io/raktim94/submify-nginx:0.1.0
+    image: ghcr.io/raktim94/submify-nginx:0.3.0
     container_name: submify-nginx
     hostname: submify-nginx
     restart: unless-stopped
@@ -238,14 +238,25 @@ x-casaos:
   index: /
   scheme: http
   port_map: "2512"
-  version: "0.1.0"
-  update_at: "2026-08-19"
+  version: "0.3.0"
+  update_at: "2026-08-28"
   release_notes:
     en_US: |-
       0.1.0: initial CasaOS/ZimaOS store listing — project dashboard,
       spam-resistant public submit keys, file uploads (S3-compatible with
       local-disk fallback), calendar/booking, Telegram notifications,
       per-project SMTP email, and optional Zulivio CRM lead sync.
+      0.2.0: full calendar/booking UI (month/week/day grid views, event
+      type management, public booking pages with reschedule/cancel, .ics
+      export, Telegram booking reminders), and read-only calendar
+      visibility in the client portal (view-only bookings, no manage
+      rights, for portal-shared clients).
+      0.3.0: every project now has its own separate calendar — event
+      types, bookings, and personal agenda items are scoped per project.
+      A new dropdown on the dashboard's Calendar tab picks which project's
+      calendar you're viewing or adding events to, and each project's
+      client portal now shows only that project's own bookings instead of
+      the whole account's.
   website: "https://submify.nodedr.com/"
   repo: "https://github.com/Raktim94/Submify"
   support: "https://github.com/Raktim94/Submify/issues"
