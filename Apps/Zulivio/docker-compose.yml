@@ -23,7 +23,7 @@ services:
       - zulivio
 
   backend:
-    image: ghcr.io/raktim94/zulivio-backend:1.8.0
+    image: ghcr.io/raktim94/zulivio-backend:1.8.1
     container_name: zulivio-backend
     hostname: zulivio-backend
     restart: unless-stopped
@@ -129,7 +129,7 @@ services:
               (you'd just need to re-enter them from Settings).
 
   web:
-    image: ghcr.io/raktim94/zulivio-web:1.8.0
+    image: ghcr.io/raktim94/zulivio-web:1.8.1
     container_name: zulivio-web
     hostname: zulivio-web
     restart: unless-stopped
@@ -207,10 +207,17 @@ x-casaos:
   index: /
   scheme: http
   port_map: "2996"
-  version: "1.8.0"
+  version: "1.8.1"
   update_at: "2026-08-29"
   release_notes:
     en_US: |-
+      1.8.1: fixed phone numbers getting mangled into scientific notation
+      (e.g. "9.18605E+11") when exporting/importing leads as CSV and opening
+      the file in Excel — exported phone numbers now stay plain text, and a
+      phone number that already arrived in that mangled form gets
+      reconstructed on import. Agent Assist's caller-ID lookup now matches a
+      lead by phone number regardless of country-code formatting.
+
       1.8.0: leads can now be deleted (lead page and board cards). Fixed a
       Tasks page crash ("Cannot read properties of undefined") that could
       happen if the tasks endpoint ever resolved with a missing list.
