@@ -2,7 +2,7 @@ name: service-dash
 
 services:
   service-dash:
-    image: ghcr.io/cvaghela/service-dash:1.3.2
+    image: ghcr.io/cvaghela/service-dash:1.5.1
     container_name: service-dash
     ports:
       - target: 80
@@ -25,6 +25,12 @@ services:
       - type: bind
         source: /DATA/AppData/service-dash/network-info
         target: /var/run/network-info
+        read_only: true
+      # Written by the optional claude-usage reporter. Absent unless that
+      # profile is running, which nginx handles by 404ing the route.
+      - type: bind
+        source: /DATA/AppData/service-dash/ai-usage
+        target: /var/run/ai-usage
         read_only: true
       # Holds shared card settings. Only written when SHARED_SETTINGS is "on".
       - type: bind
@@ -53,7 +59,7 @@ services:
   # Answers one question for nginx: is this browser really signed in to Uptime
   # Kuma? Without it, saving settings would have to trust the browser's word.
   kuma-auth:
-    image: ghcr.io/cvaghela/service-dash-kuma-auth:1.3.2
+    image: ghcr.io/cvaghela/service-dash-kuma-auth:1.5.1
     container_name: service-dash-kuma-auth
     environment:
       # Must point at the same Uptime Kuma as KUMA_PORT above.
@@ -77,7 +83,7 @@ services:
     restart: unless-stopped
 
   network-info:
-    image: ghcr.io/cvaghela/service-dash-network-info:1.3.2
+    image: ghcr.io/cvaghela/service-dash-network-info:1.5.1
     container_name: service-dash-network-info
     network_mode: host
     read_only: true
@@ -161,6 +167,67 @@ services:
           - netdata
     restart: unless-stopped
 
+  # Reports your Claude plan usage to the dashboard panel.
+  #
+  # Runs always, and does nothing until you sign in: with no credential it
+  # writes an honest "nobody has signed in yet" document, the panel stays
+  # hidden, and it costs about 6MB of RAM and no measurable CPU.
+  #
+  # It used to sit behind a Compose profile so it started for nobody. That was
+  # the wrong mechanism: a CasaOS app update rewrites image tags but does NOT
+  # add services a release introduced, so profile-gated services never reached
+  # anyone upgrading -- and the enable command the settings page printed found
+  # nothing to start. Shipping it present-but-idle makes "enable" a sign-in.
+  #
+  # The trade is the image size, which is large because it carries Claude Code.
+  # `docker compose stop claude-usage` if you never want it.
+  #
+  #   docker exec -it service-dash-claude-usage claude auth login
+  claude-usage:
+    image: ghcr.io/cvaghela/service-dash-claude-usage:1.5.1
+    container_name: service-dash-claude-usage
+    environment:
+      # Plan windows move slowly; polling harder gains nothing.
+      CLAUDE_USAGE_REFRESH_SECONDS: "300"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/service-dash/ai-usage
+        target: /status
+      # The login. Without this a container rebuild signs you out.
+      - type: bind
+        source: /DATA/AppData/service-dash/claude-auth
+        target: /root/.claude
+    networks:
+      service-dash-network:
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+  # Reports your Codex plan usage to the dashboard panel. Same deal as
+  # claude-usage above: always present, idle until you sign in.
+  #
+  # One-time sign-in, after starting it. --device-auth is not optional in a
+  # container: the default flow opens a browser at the container's own
+  # localhost and hangs.
+  #   docker exec -it service-dash-codex-usage codex login --device-auth
+  codex-usage:
+    image: ghcr.io/cvaghela/service-dash-codex-usage:1.5.1
+    container_name: service-dash-codex-usage
+    environment:
+      CODEX_USAGE_REFRESH_SECONDS: "300"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/service-dash/ai-usage
+        target: /status
+      - type: bind
+        source: /DATA/AppData/service-dash/codex-auth
+        target: /root/.codex
+    networks:
+      service-dash-network:
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
 networks:
   service-dash-network:
     name: service-dash-network
@@ -175,8 +242,9 @@ x-casaos:
   category: Networking
   architectures:
     - amd64
-  version: "1.3.2"
-  update_at: "2026-08-26"
+    - arm64
+  version: "1.5.1"
+  update_at: "2026-08-29"
   author: Chintan Vaghela
   developer: Chintan Vaghela
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ServiceDash/icon.png
@@ -192,15 +260,30 @@ x-casaos:
   title:
     en_US: Service Dash
   tagline:
-    en_US: Every service's local and public URL on one card, beside the live health of the box running them.
+    en_US: 'Every service''s local and public URL on one card, beside the live health of the box running them.'
+    en_GB: 'Every service''s local and public URL on one card, beside the live health of the box running them.'
+    de_DE: 'Die lokale und die öffentliche URL jedes Dienstes auf einer Karte, daneben der Live-Zustand des Rechners, auf dem sie laufen.'
+    el_GR: 'Η τοπική και η δημόσια διεύθυνση κάθε υπηρεσίας σε μία κάρτα, δίπλα στη ζωντανή κατάσταση του μηχανήματος που τις εκτελεί.'
+    fr_FR: 'L''URL locale et l''URL publique de chaque service sur une seule carte, à côté de l''état en direct de la machine qui les héberge.'
+    hr_HR: 'Lokalni i javni URL svake usluge na jednoj kartici, uz stanje uređaja na kojem rade u stvarnom vremenu.'
+    it_IT: 'L''URL locale e quello pubblico di ogni servizio su un''unica scheda, accanto allo stato in tempo reale della macchina che li esegue.'
+    ja_JP: '各サービスのローカル URL と公開 URL を 1 枚のカードにまとめ、それらを動かしているマシンの状態をリアルタイムで隣に表示します。'
+    ko_KR: '각 서비스의 로컬 URL과 공개 URL을 한 카드에, 그 옆에는 이를 구동하는 장비의 실시간 상태를 함께.'
+    nb_NO: 'Hver tjenestes lokale og offentlige URL på ett kort, ved siden av sanntidstilstanden til maskinen som kjører dem.'
+    pt_PT: 'O URL local e o público de cada serviço num único cartão, ao lado do estado em tempo real da máquina que os executa.'
+    ru_RU: 'Локальный и публичный URL каждого сервиса на одной карточке, рядом — состояние машины, на которой они работают, в реальном времени.'
+    sv_SE: 'Varje tjänsts lokala och publika URL på ett kort, bredvid realtidsstatusen för maskinen som kör dem.'
+    tr_TR: 'Her servisin yerel ve genel URL''si tek bir kartta, yanında bunları çalıştıran makinenin anlık durumu.'
+    zh_CN: '每个服务的局域网地址和公网地址集中在一张卡片上，旁边是运行它们的主机的实时状态。'
   description:
     en_US: |
       Service Dash turns an existing Uptime Kuma status page into a homelab
       dashboard. Each service gets one card carrying both of its addresses --
       the internal (local) URL you use at home and the external (public) URL you
       use away from it -- so you open either one without keeping a second
-      bookmark list. A switch in the top bar moves every card between the two at
-      once.
+      bookmark list. Each card opens whichever address the browser you are
+      holding can actually reach -- LAN at home, public when you are out --
+      decided per card, with a manual switch still there if you want it.
 
       The pairing comes from Uptime Kuma itself: two monitors named `Plex` and
       `Plex local` become one card with two addresses. Nothing to configure --
@@ -212,19 +295,485 @@ x-casaos:
 
       **What it does**
 
-      - Local and public URLs side by side on one card, switched together
+      - Local and public URLs on one card, opening whichever one you can reach
       - Live up/down state pulled straight from your Uptime Kuma status page
       - Host CPU, RAM, storage and network throughput from a bundled Netdata Agent
       - Around 2,900 service icons, searchable, or paste an image link
       - Per-card icon and Docker container mapping, shared across every browser
       - A shared notes panel, gated behind your Uptime Kuma sign-in
       - Addresses stay locked signed out, and unreadable until pointed at signed in
+      - Optional: how much of your Claude or ChatGPT plan is left, on the wall
       - No build step, no account, no telemetry -- static files behind nginx
 
       **Requires an Uptime Kuma instance already running on this host.** See the
       installation tips before installing.
 
       **Learn more:** [Service Dash on GitHub](https://github.com/cvaghela/service-dash)
+    en_GB: |
+      Service Dash turns an existing Uptime Kuma status page into a homelab
+      dashboard. Each service gets one card carrying both of its addresses --
+      the internal (local) URL you use at home and the external (public) URL you
+      use away from it -- so you open either one without keeping a second
+      bookmark list. Each card opens whichever address the browser you are
+      holding can actually reach -- LAN at home, public when you are out --
+      decided per card, with a manual switch still there if you want it.
+
+      The pairing comes from Uptime Kuma itself: two monitors named `Plex` and
+      `Plex local` become one card with two addresses. Nothing to configure --
+      name the monitors that way and the card builds itself.
+
+      Alongside the cards, an embedded Netdata Agent reports the health of the
+      host itself: CPU, RAM, storage and live network throughput, plus the
+      LAN and WAN addresses of the machine, detected automatically.
+
+      **What it does**
+
+      - Local and public URLs on one card, opening whichever one you can reach
+      - Live up/down state pulled straight from your Uptime Kuma status page
+      - Host CPU, RAM, storage and network throughput from a bundled Netdata Agent
+      - Around 2,900 service icons, searchable, or paste an image link
+      - Per-card icon and Docker container mapping, shared across every browser
+      - A shared notes panel, gated behind your Uptime Kuma sign-in
+      - Addresses stay locked signed out, and unreadable until pointed at signed in
+      - Optional: how much of your Claude or ChatGPT plan is left, on the wall
+      - No build step, no account, no telemetry -- static files behind nginx
+
+      **Requires an Uptime Kuma instance already running on this host.** See the
+      installation tips before installing.
+
+      **Learn more:** [Service Dash on GitHub](https://github.com/cvaghela/service-dash)
+    de_DE: |
+      Service Dash macht aus einer vorhandenen Uptime-Kuma-Statusseite ein
+      Homelab-Dashboard. Jeder Dienst bekommt eine Karte mit beiden Adressen --
+      der internen (lokalen) URL für zu Hause und der externen (öffentlichen) URL
+      für unterwegs -- sodass Sie beide öffnen können, ohne eine zweite
+      Lesezeichenliste zu pflegen. Jede Karte öffnet die Adresse, die der Browser
+      in Ihrer Hand tatsächlich erreichen kann -- im LAN die lokale, unterwegs die
+      öffentliche -- pro Karte entschieden, mit einem manuellen Schalter, falls
+      Sie ihn möchten.
+
+      Die Zuordnung kommt aus Uptime Kuma selbst: Zwei Monitore mit den Namen
+      `Plex` und `Plex local` werden zu einer Karte mit zwei Adressen. Nichts zu
+      konfigurieren -- benennen Sie die Monitore so, und die Karte entsteht von
+      allein.
+
+      Neben den Karten meldet ein eingebetteter Netdata Agent den Zustand des
+      Hosts selbst: CPU, RAM, Speicher und den aktuellen Netzwerkdurchsatz, dazu
+      die automatisch erkannten LAN- und WAN-Adressen der Maschine.
+
+      **Was es kann**
+
+      - Lokale und öffentliche URL auf einer Karte, geöffnet wird die erreichbare
+      - Live-Status direkt von Ihrer Uptime-Kuma-Statusseite
+      - CPU, RAM, Speicher und Netzwerkdurchsatz des Hosts über einen mitgelieferten Netdata Agent
+      - Rund 2.900 durchsuchbare Dienst-Symbole, oder ein eigener Bildlink
+      - Symbol und Docker-Container je Karte, für alle Browser gemeinsam
+      - Ein gemeinsames Notizfeld, geschützt durch Ihre Uptime-Kuma-Anmeldung
+      - Adressen bleiben abgemeldet gesperrt und angemeldet unlesbar, bis Sie darauf zeigen
+      - Optional: wie viel von Ihrem Claude- oder ChatGPT-Kontingent übrig ist, an der Wand
+      - Kein Build-Schritt, kein Konto, keine Telemetrie -- statische Dateien hinter nginx
+
+      **Setzt eine bereits laufende Uptime-Kuma-Instanz auf diesem Host voraus.**
+      Lesen Sie vor der Installation die Installationshinweise.
+
+      **Mehr erfahren:** [Service Dash auf GitHub](https://github.com/cvaghela/service-dash)
+    el_GR: |
+      Το Service Dash μετατρέπει μια υπάρχουσα σελίδα κατάστασης του Uptime Kuma
+      σε πίνακα ελέγχου για το homelab σας. Κάθε υπηρεσία αποκτά μία κάρτα με
+      αμφότερες τις διευθύνσεις της -- την εσωτερική (τοπική) URL που
+      χρησιμοποιείτε στο σπίτι και την εξωτερική (δημόσια) URL που χρησιμοποιείτε
+      εκτός -- ώστε να ανοίγετε όποια θέλετε χωρίς δεύτερη λίστα σελιδοδεικτών.
+      Κάθε κάρτα ανοίγει τη διεύθυνση στην οποία μπορεί πράγματι να φτάσει ο
+      browser που κρατάτε -- την τοπική στο LAN, τη δημόσια όταν λείπετε --
+      με απόφαση ανά κάρτα και χειροκίνητο διακόπτη αν τον προτιμάτε.
+
+      Η αντιστοίχιση προκύπτει από το ίδιο το Uptime Kuma: δύο monitors με ονόματα
+      `Plex` και `Plex local` γίνονται μία κάρτα με δύο διευθύνσεις. Δεν
+      ρυθμίζετε τίποτα -- ονομάστε έτσι τα monitors και η κάρτα φτιάχνεται μόνη
+      της.
+
+      Δίπλα στις κάρτες, ένας ενσωματωμένος Netdata Agent αναφέρει την κατάσταση
+      του ίδιου του host: CPU, RAM, αποθηκευτικό χώρο και ζωντανή ροή δικτύου,
+      καθώς και τις διευθύνσεις LAN και WAN του μηχανήματος, εντοπισμένες
+      αυτόματα.
+
+      **Τι κάνει**
+
+      - Τοπική και δημόσια URL σε μία κάρτα, ανοίγει όποια είναι προσβάσιμη
+      - Ζωντανή κατάσταση απευθείας από τη σελίδα κατάστασης του Uptime Kuma
+      - CPU, RAM, αποθήκευση και ροή δικτύου του host από ενσωματωμένο Netdata Agent
+      - Περίπου 2.900 εικονίδια υπηρεσιών με αναζήτηση, ή δικός σας σύνδεσμος εικόνας
+      - Εικονίδιο και αντιστοίχιση Docker container ανά κάρτα, κοινά για κάθε browser
+      - Κοινός πίνακας σημειώσεων, πίσω από τη σύνδεσή σας στο Uptime Kuma
+      - Οι διευθύνσεις μένουν κλειδωμένες εκτός σύνδεσης και δυσανάγνωστες μέχρι να τις στοχεύσετε
+      - Προαιρετικά: πόσο απομένει από το πλάνο σας σε Claude ή ChatGPT, στον τοίχο
+      - Χωρίς βήμα build, χωρίς λογαριασμό, χωρίς τηλεμετρία -- στατικά αρχεία πίσω από nginx
+
+      **Απαιτεί μια ήδη ενεργή εγκατάσταση Uptime Kuma σε αυτόν τον host.**
+      Δείτε τις οδηγίες εγκατάστασης πριν προχωρήσετε.
+
+      **Μάθετε περισσότερα:** [Service Dash στο GitHub](https://github.com/cvaghela/service-dash)
+    fr_FR: |
+      Service Dash transforme une page de statut Uptime Kuma existante en tableau
+      de bord pour votre homelab. Chaque service reçoit une carte portant ses deux
+      adresses -- l'URL interne (locale) que vous utilisez chez vous et l'URL
+      externe (publique) que vous utilisez ailleurs -- pour ouvrir l'une ou
+      l'autre sans tenir une seconde liste de favoris. Chaque carte ouvre
+      l'adresse que le navigateur entre vos mains peut réellement atteindre --
+      locale sur le LAN, publique à l'extérieur -- décidé carte par carte, avec un
+      sélecteur manuel si vous le préférez.
+
+      L'appairage vient d'Uptime Kuma lui-même : deux moniteurs nommés `Plex` et
+      `Plex local` deviennent une seule carte à deux adresses. Rien à configurer
+      -- nommez les moniteurs ainsi et la carte se construit toute seule.
+
+      À côté des cartes, un agent Netdata intégré rapporte l'état de l'hôte
+      lui-même : CPU, RAM, stockage et débit réseau en direct, ainsi que les
+      adresses LAN et WAN de la machine, détectées automatiquement.
+
+      **Ce qu'il fait**
+
+      - URL locale et publique sur une carte, ouvrant celle que vous pouvez atteindre
+      - État en direct, lu directement sur votre page de statut Uptime Kuma
+      - CPU, RAM, stockage et débit réseau de l'hôte via un agent Netdata intégré
+      - Environ 2 900 icônes de services, avec recherche, ou votre propre lien d'image
+      - Icône et conteneur Docker par carte, partagés entre tous les navigateurs
+      - Un bloc-notes partagé, protégé par votre connexion Uptime Kuma
+      - Les adresses restent verrouillées hors connexion, et illisibles tant qu'on ne les vise pas
+      - En option : ce qu'il reste de votre forfait Claude ou ChatGPT, affiché au mur
+      - Aucune étape de build, aucun compte, aucune télémétrie -- des fichiers statiques derrière nginx
+
+      **Nécessite une instance Uptime Kuma déjà en service sur cet hôte.**
+      Consultez les conseils d'installation avant d'installer.
+
+      **En savoir plus :** [Service Dash sur GitHub](https://github.com/cvaghela/service-dash)
+    hr_HR: |
+      Service Dash pretvara postojeću Uptime Kuma stranicu stanja u nadzornu ploču
+      vašeg homelaba. Svaka usluga dobiva jednu karticu s obje svoje adrese --
+      internim (lokalnim) URL-om koji koristite kod kuće i vanjskim (javnim)
+      URL-om koji koristite izvan kuće -- pa otvarate bilo koju bez druge liste
+      knjižnih oznaka. Svaka kartica otvara onu adresu do koje preglednik u vašoj
+      ruci doista može doći -- lokalnu na LAN-u, javnu kad ste vani -- odlučeno po
+      kartici, uz ručni prekidač ako ga želite.
+
+      Uparivanje dolazi iz samog Uptime Kume: dva monitora nazvana `Plex` i
+      `Plex local` postaju jedna kartica s dvije adrese. Ništa se ne podešava --
+      nazovite monitore tako i kartica se izgradi sama.
+
+      Uz kartice, ugrađeni Netdata Agent javlja stanje samog poslužitelja: CPU,
+      RAM, prostor za pohranu i propusnost mreže uživo, te LAN i WAN adrese
+      uređaja, otkrivene automatski.
+
+      **Što radi**
+
+      - Lokalni i javni URL na jednoj kartici, otvara se onaj koji možete dohvatiti
+      - Stanje uživo, izravno s vaše Uptime Kuma stranice stanja
+      - CPU, RAM, pohrana i mrežna propusnost poslužitelja preko ugrađenog Netdata Agenta
+      - Oko 2.900 ikona usluga s pretraživanjem, ili zalijepite poveznicu na sliku
+      - Ikona i pridruženi Docker kontejner po kartici, dijeljeni na svim preglednicima
+      - Zajednička ploča s bilješkama, iza vaše Uptime Kuma prijave
+      - Adrese ostaju zaključane dok ste odjavljeni i nečitljive dok ih ne pokažete
+      - Neobavezno: koliko vam je ostalo od Claude ili ChatGPT plana, na zidu
+      - Bez build koraka, bez računa, bez telemetrije -- statične datoteke iza nginxa
+
+      **Zahtijeva Uptime Kuma instancu koja već radi na ovom poslužitelju.**
+      Pogledajte savjete za instalaciju prije instaliranja.
+
+      **Saznajte više:** [Service Dash na GitHubu](https://github.com/cvaghela/service-dash)
+    it_IT: |
+      Service Dash trasforma una pagina di stato Uptime Kuma esistente in una
+      dashboard per il vostro homelab. Ogni servizio riceve una scheda con
+      entrambi i suoi indirizzi -- l'URL interno (locale) che usate a casa e
+      quello esterno (pubblico) che usate fuori -- così da aprire l'uno o l'altro
+      senza tenere una seconda lista di segnalibri. Ogni scheda apre l'indirizzo
+      che il browser che avete in mano può davvero raggiungere -- quello locale
+      sulla LAN, quello pubblico quando siete fuori -- deciso scheda per scheda,
+      con un selettore manuale se lo preferite.
+
+      L'abbinamento arriva da Uptime Kuma stesso: due monitor chiamati `Plex` e
+      `Plex local` diventano una sola scheda con due indirizzi. Niente da
+      configurare -- chiamate così i monitor e la scheda si costruisce da sola.
+
+      Accanto alle schede, un Netdata Agent integrato riporta lo stato dell'host
+      stesso: CPU, RAM, spazio di archiviazione e traffico di rete in tempo reale,
+      oltre agli indirizzi LAN e WAN della macchina, rilevati automaticamente.
+
+      **Cosa fa**
+
+      - URL locale e pubblico su un'unica scheda, si apre quello raggiungibile
+      - Stato in tempo reale, letto direttamente dalla vostra pagina di stato Uptime Kuma
+      - CPU, RAM, archiviazione e traffico di rete dell'host tramite un Netdata Agent integrato
+      - Circa 2.900 icone di servizi, ricercabili, oppure incollate un link a un'immagine
+      - Icona e container Docker per scheda, condivisi fra tutti i browser
+      - Un pannello note condiviso, protetto dal vostro accesso a Uptime Kuma
+      - Gli indirizzi restano bloccati da disconnessi e illeggibili finché non li puntate
+      - Opzionale: quanto resta del vostro piano Claude o ChatGPT, appeso al muro
+      - Nessuno step di build, nessun account, nessuna telemetria -- file statici dietro nginx
+
+      **Richiede un'istanza Uptime Kuma già in funzione su questo host.**
+      Leggete i suggerimenti di installazione prima di procedere.
+
+      **Per saperne di più:** [Service Dash su GitHub](https://github.com/cvaghela/service-dash)
+    ja_JP: |
+      Service Dash は、既存の Uptime Kuma ステータスページをホームラボ用の
+      ダッシュボードに変えます。各サービスは 1 枚のカードに 2 つのアドレスを
+      まとめて持ちます。自宅で使う内部 (ローカル) URL と、外出先で使う外部
+      (公開) URL です。ブックマークを 2 つ管理する必要はありません。カードは、
+      手元のブラウザーが実際に到達できるほうのアドレスを開きます。LAN 内なら
+      ローカル、外出先なら公開アドレスを、カードごとに判断します。手動で切り替える
+      スイッチも残してあります。
+
+      ペアリングは Uptime Kuma 自身から来ます。`Plex` と `Plex local` という
+      名前の 2 つのモニターが、2 つのアドレスを持つ 1 枚のカードになります。設定は
+      不要です。そう名付けるだけで、カードはひとりでに組み上がります。
+
+      カードの隣では、内蔵の Netdata Agent がホスト自身の状態を報告します。CPU、
+      メモリー、ストレージ、リアルタイムのネットワーク流量に加えて、自動検出された
+      マシンの LAN アドレスと WAN アドレスも表示します。
+
+      **主な機能**
+
+      - ローカル URL と公開 URL を 1 枚のカードに、到達できるほうを開く
+      - Uptime Kuma のステータスページから直接読み取る稼働状態
+      - 内蔵 Netdata Agent によるホストの CPU、メモリー、ストレージ、ネットワーク流量
+      - 約 2,900 種類の検索可能なサービスアイコン、または画像リンクの貼り付け
+      - カードごとのアイコンと Docker コンテナーの対応づけを、すべてのブラウザーで共有
+      - Uptime Kuma のサインインで保護された共有メモ欄
+      - サインアウト中はアドレスをロックし、サインイン後もポインターを合わせるまで判読不能
+      - 任意: Claude や ChatGPT のプラン残量を壁に表示
+      - ビルド手順なし、アカウントなし、テレメトリーなし -- nginx が配信する静的ファイル
+
+      **このホスト上で Uptime Kuma がすでに稼働している必要があります。**
+      インストール前に、インストール時の注意をお読みください。
+
+      **詳しくは:** [GitHub の Service Dash](https://github.com/cvaghela/service-dash)
+    ko_KR: |
+      Service Dash는 이미 쓰고 있는 Uptime Kuma 상태 페이지를 홈랩 대시보드로
+      바꿔 줍니다. 각 서비스는 두 개의 주소를 함께 담은 카드 하나를 갖습니다.
+      집에서 쓰는 내부(로컬) URL과 밖에서 쓰는 외부(공개) URL입니다. 덕분에
+      북마크 목록을 두 벌 관리할 필요가 없습니다. 카드는 지금 손에 든 브라우저가
+      실제로 닿을 수 있는 주소를 엽니다. LAN 안에서는 로컬, 밖에서는 공개 주소를
+      카드마다 판단하며, 원한다면 수동 전환 스위치도 그대로 있습니다.
+
+      짝짓기는 Uptime Kuma 자체에서 옵니다. `Plex`와 `Plex local`이라는 이름의
+      모니터 두 개가 주소 두 개를 가진 카드 하나가 됩니다. 설정할 것은 없습니다.
+      그렇게 이름만 지으면 카드가 알아서 만들어집니다.
+
+      카드 옆에서는 내장된 Netdata Agent가 호스트 자체의 상태를 보고합니다. CPU,
+      RAM, 저장 공간, 실시간 네트워크 처리량에 더해 자동으로 감지한 장비의 LAN 및
+      WAN 주소까지 보여 줍니다.
+
+      **주요 기능**
+
+      - 로컬 URL과 공개 URL을 한 카드에, 닿을 수 있는 쪽을 열기
+      - Uptime Kuma 상태 페이지에서 바로 가져오는 실시간 가동 상태
+      - 내장 Netdata Agent가 전하는 호스트 CPU, RAM, 저장 공간, 네트워크 처리량
+      - 검색 가능한 약 2,900개의 서비스 아이콘, 또는 이미지 링크 붙여넣기
+      - 카드별 아이콘과 Docker 컨테이너 연결을 모든 브라우저에서 공유
+      - Uptime Kuma 로그인으로 보호되는 공유 메모 패널
+      - 로그아웃 상태에서는 주소가 잠기고, 로그인 후에도 가리키기 전까지 읽을 수 없음
+      - 선택 사항: Claude나 ChatGPT 요금제가 얼마나 남았는지 벽에 표시
+      - 빌드 단계 없음, 계정 없음, 텔레메트리 없음 -- nginx 뒤의 정적 파일
+
+      **이 호스트에서 Uptime Kuma가 이미 실행 중이어야 합니다.**
+      설치하기 전에 설치 안내를 읽어 보세요.
+
+      **더 알아보기:** [GitHub의 Service Dash](https://github.com/cvaghela/service-dash)
+    nb_NO: |
+      Service Dash gjør en eksisterende Uptime Kuma-statusside om til et
+      dashbord for hjemmelaben. Hver tjeneste får ett kort med begge adressene
+      sine -- den interne (lokale) URL-en du bruker hjemme og den eksterne
+      (offentlige) URL-en du bruker ute -- slik at du åpner hvilken som helst av
+      dem uten å holde en bokmerkeliste nummer to. Hvert kort åpner den adressen
+      nettleseren du holder faktisk når fram til -- lokal på LAN, offentlig når du
+      er ute -- avgjort per kort, med en manuell bryter om du vil ha den.
+
+      Sammenkoblingen kommer fra Uptime Kuma selv: to overvåkere som heter `Plex`
+      og `Plex local` blir ett kort med to adresser. Ingenting å konfigurere --
+      gi overvåkerne de navnene, så bygger kortet seg selv.
+
+      Ved siden av kortene rapporterer en innebygd Netdata Agent tilstanden til
+      verten selv: CPU, RAM, lagring og nettverkstrafikk i sanntid, pluss maskinens
+      LAN- og WAN-adresser, funnet automatisk.
+
+      **Hva det gjør**
+
+      - Lokal og offentlig URL på ett kort, åpner den du faktisk når
+      - Live oppe/nede-status hentet rett fra Uptime Kuma-statussiden din
+      - Vertens CPU, RAM, lagring og nettverkstrafikk fra en medfølgende Netdata Agent
+      - Rundt 2 900 søkbare tjenesteikoner, eller lim inn en bildelenke
+      - Ikon og Docker-container per kort, delt på tvers av alle nettlesere
+      - Et delt notatfelt, beskyttet av Uptime Kuma-innloggingen din
+      - Adresser forblir låst når du er logget ut, og uleselige til du peker på dem
+      - Valgfritt: hvor mye som er igjen av Claude- eller ChatGPT-abonnementet, på veggen
+      - Ingen byggesteg, ingen konto, ingen telemetri -- statiske filer bak nginx
+
+      **Krever en Uptime Kuma-instans som allerede kjører på denne verten.**
+      Les installasjonstipsene før du installerer.
+
+      **Les mer:** [Service Dash på GitHub](https://github.com/cvaghela/service-dash)
+    pt_PT: |
+      O Service Dash transforma uma página de estado do Uptime Kuma já existente
+      num painel para o seu homelab. Cada serviço recebe um cartão com os seus
+      dois endereços -- o URL interno (local) que usa em casa e o URL externo
+      (público) que usa fora -- para abrir qualquer um deles sem manter uma
+      segunda lista de marcadores. Cada cartão abre o endereço que o navegador que
+      tem na mão consegue realmente alcançar -- o local na LAN, o público quando
+      está fora -- decidido cartão a cartão, com um seletor manual se preferir.
+
+      O emparelhamento vem do próprio Uptime Kuma: dois monitores chamados `Plex`
+      e `Plex local` tornam-se um único cartão com dois endereços. Nada a
+      configurar -- dê esses nomes aos monitores e o cartão constrói-se sozinho.
+
+      Ao lado dos cartões, um Netdata Agent integrado comunica o estado do próprio
+      anfitrião: CPU, RAM, armazenamento e débito de rede em tempo real, além dos
+      endereços LAN e WAN da máquina, detetados automaticamente.
+
+      **O que faz**
+
+      - URL local e público num só cartão, abrindo aquele que consegue alcançar
+      - Estado em tempo real, lido diretamente da sua página de estado do Uptime Kuma
+      - CPU, RAM, armazenamento e débito de rede do anfitrião via Netdata Agent integrado
+      - Cerca de 2900 ícones de serviços, pesquisáveis, ou cole uma ligação de imagem
+      - Ícone e contentor Docker por cartão, partilhados por todos os navegadores
+      - Um painel de notas partilhado, protegido pela sua sessão do Uptime Kuma
+      - Os endereços ficam bloqueados com sessão terminada e ilegíveis até os apontar
+      - Opcional: quanto resta do seu plano Claude ou ChatGPT, na parede
+      - Sem passo de compilação, sem conta, sem telemetria -- ficheiros estáticos atrás do nginx
+
+      **Requer uma instância do Uptime Kuma já em execução neste anfitrião.**
+      Leia as sugestões de instalação antes de instalar.
+
+      **Saber mais:** [Service Dash no GitHub](https://github.com/cvaghela/service-dash)
+    ru_RU: |
+      Service Dash превращает уже работающую страницу состояния Uptime Kuma в
+      панель управления домашней лабораторией. Каждый сервис получает одну
+      карточку с двумя адресами -- внутренним (локальным) URL для дома и внешним
+      (публичным) URL для поездок, -- так что открыть можно любой из них, не ведя
+      второй список закладок. Карточка открывает тот адрес, до которого браузер в
+      ваших руках действительно дотянется: локальный в домашней сети, публичный за
+      её пределами. Решение принимается для каждой карточки отдельно, а ручной
+      переключатель остаётся на месте, если он вам нужен.
+
+      Связывание берётся из самого Uptime Kuma: два монитора с именами `Plex` и
+      `Plex local` становятся одной карточкой с двумя адресами. Настраивать нечего
+      -- назовите мониторы так, и карточка соберётся сама.
+
+      Рядом с карточками встроенный Netdata Agent сообщает о состоянии самого
+      хоста: загрузка процессора, память, накопители и текущий сетевой трафик, а
+      также автоматически определённые адреса машины в локальной сети и во внешней.
+
+      **Что он умеет**
+
+      - Локальный и публичный URL на одной карточке, открывается доступный
+      - Состояние в реальном времени прямо со страницы состояния Uptime Kuma
+      - Процессор, память, накопители и сетевой трафик хоста от встроенного Netdata Agent
+      - Около 2900 значков сервисов с поиском либо ссылка на своё изображение
+      - Значок и привязка к контейнеру Docker для каждой карточки, общие для всех браузеров
+      - Общая панель заметок, закрытая вашим входом в Uptime Kuma
+      - Без входа адреса заблокированы, а после входа нечитаемы, пока на них не наведёшь
+      - По желанию: сколько осталось от тарифа Claude или ChatGPT, прямо на стене
+      - Без сборки, без аккаунта, без телеметрии -- статические файлы за nginx
+
+      **Требуется уже запущенный на этом хосте экземпляр Uptime Kuma.**
+      Перед установкой прочитайте советы по установке.
+
+      **Подробнее:** [Service Dash на GitHub](https://github.com/cvaghela/service-dash)
+    sv_SE: |
+      Service Dash gör en befintlig statussida i Uptime Kuma till en instrumentpanel
+      för ditt homelab. Varje tjänst får ett kort med båda sina adresser -- den
+      interna (lokala) URL:en du använder hemma och den externa (publika) URL:en du
+      använder borta -- så att du öppnar vilken som helst av dem utan att hålla en
+      andra bokmärkeslista. Varje kort öppnar den adress som webbläsaren du håller i
+      faktiskt når -- den lokala på LAN, den publika när du är ute -- avgjort per
+      kort, med en manuell växel kvar om du vill ha den.
+
+      Parningen kommer från Uptime Kuma självt: två övervakare som heter `Plex` och
+      `Plex local` blir ett kort med två adresser. Inget att konfigurera -- döp
+      övervakarna så, så bygger kortet sig självt.
+
+      Bredvid korten rapporterar en inbyggd Netdata Agent värdens eget tillstånd:
+      processor, minne, lagring och nätverksgenomströmning i realtid, plus maskinens
+      LAN- och WAN-adresser, upptäckta automatiskt.
+
+      **Vad den gör**
+
+      - Lokal och publik URL på ett kort, öppnar den du faktiskt når
+      - Live-status hämtad direkt från din statussida i Uptime Kuma
+      - Värdens processor, minne, lagring och nätverksgenomströmning från en medföljande Netdata Agent
+      - Omkring 2 900 sökbara tjänsteikoner, eller klistra in en bildlänk
+      - Ikon och Docker-container per kort, delade mellan alla webbläsare
+      - En delad anteckningspanel, skyddad av din inloggning i Uptime Kuma
+      - Adresser förblir låsta när du är utloggad, och oläsliga tills du pekar på dem
+      - Valfritt: hur mycket som är kvar av ditt Claude- eller ChatGPT-abonnemang, på väggen
+      - Inget byggsteg, inget konto, ingen telemetri -- statiska filer bakom nginx
+
+      **Kräver en Uptime Kuma-instans som redan körs på den här värden.**
+      Läs installationstipsen innan du installerar.
+
+      **Läs mer:** [Service Dash på GitHub](https://github.com/cvaghela/service-dash)
+    tr_TR: |
+      Service Dash, halihazırda kullandığınız bir Uptime Kuma durum sayfasını ev
+      laboratuvarınız için bir panele dönüştürür. Her servis, iki adresini birden
+      taşıyan tek bir kart alır: evde kullandığınız dahili (yerel) URL ve dışarıda
+      kullandığınız harici (genel) URL. Böylece ikinci bir yer imi listesi tutmadan
+      hangisini isterseniz açarsınız. Her kart, elinizdeki tarayıcının gerçekten
+      ulaşabildiği adresi açar -- yerel ağdayken yereli, dışarıdayken geneli --
+      karar kart bazında verilir ve isterseniz elle geçiş anahtarı da yerinde durur.
+
+      Eşleştirme Uptime Kuma'nın kendisinden gelir: `Plex` ve `Plex local` adlı iki
+      izleyici, iki adresli tek bir karta dönüşür. Yapılandıracak bir şey yok --
+      izleyicileri böyle adlandırın, kart kendi kendini kurar.
+
+      Kartların yanında, gömülü bir Netdata Agent ana makinenin kendi durumunu
+      bildirir: işlemci, bellek, depolama ve anlık ağ trafiği; ayrıca makinenin
+      otomatik olarak saptanan yerel ağ ve genel ağ adresleri.
+
+      **Neler yapar**
+
+      - Yerel ve genel URL tek kartta, ulaşabildiğiniz hangisiyse o açılır
+      - Doğrudan Uptime Kuma durum sayfanızdan okunan anlık çalışma durumu
+      - Gömülü Netdata Agent ile ana makinenin işlemci, bellek, depolama ve ağ trafiği
+      - Aranabilir yaklaşık 2.900 servis simgesi ya da yapıştıracağınız bir görsel bağlantısı
+      - Kart başına simge ve Docker konteyneri eşlemesi, tüm tarayıcılarda ortak
+      - Uptime Kuma oturumunuzun ardına alınmış ortak bir not panosu
+      - Adresler oturum kapalıyken kilitli, açıkken de siz üzerine gelene dek okunaksız kalır
+      - İsteğe bağlı: Claude veya ChatGPT planınızdan ne kaldığı, duvarda
+      - Derleme adımı yok, hesap yok, telemetri yok -- nginx arkasında statik dosyalar
+
+      **Bu ana makinede halihazırda çalışan bir Uptime Kuma örneği gerektirir.**
+      Kurmadan önce kurulum ipuçlarını okuyun.
+
+      **Daha fazlası:** [GitHub'da Service Dash](https://github.com/cvaghela/service-dash)
+    zh_CN: |
+      Service Dash 把你已有的 Uptime Kuma 状态页变成一块家庭实验室仪表盘。每个服务
+      对应一张卡片，卡片上同时放着它的两个地址：在家里用的内网（局域网）地址，和
+      在外面用的外网（公网）地址。这样你不必再维护第二份书签。卡片会打开你手上这台
+      浏览器真正能访问到的那个地址——在家用内网，在外用公网——逐张卡片判断，同时保留
+      手动切换开关，随时可以自己选。
+
+      配对关系来自 Uptime Kuma 本身：两个分别叫 `Plex` 和 `Plex local` 的监控项，
+      会合成一张带两个地址的卡片。无需任何配置——按这个规则命名监控项，卡片就会自己
+      生成。
+
+      在卡片旁边，内置的 Netdata Agent 会报告主机自身的状态：CPU、内存、存储和实时
+      网络吞吐，以及自动探测到的本机局域网地址和公网地址。
+
+      **主要功能**
+
+      - 内网与公网地址同在一张卡片上，自动打开你能访问的那个
+      - 直接读取 Uptime Kuma 状态页的实时在线状态
+      - 内置 Netdata Agent 提供主机的 CPU、内存、存储与网络吞吐
+      - 约 2900 个可搜索的服务图标，也可以粘贴自己的图片链接
+      - 每张卡片的图标与 Docker 容器映射，在所有浏览器之间共享
+      - 一块共享便签板，由你的 Uptime Kuma 登录状态保护
+      - 未登录时地址保持锁定，登录后也要指向才能看清
+      - 可选：把 Claude 或 ChatGPT 套餐还剩多少显示在墙上
+      - 无需构建、无需账号、无遥测——nginx 背后的一组静态文件
+
+      **需要本主机上已经运行着 Uptime Kuma 实例。** 安装前请先阅读安装提示。
+
+      **了解更多：** [GitHub 上的 Service Dash](https://github.com/cvaghela/service-dash)
   tips:
     before_install:
       en_US: |
@@ -257,15 +806,839 @@ x-casaos:
         way. A service with only one monitor simply shows one address.
 
         Each address is the monitor's own URL in Kuma, so it is set in Kuma, not
-        here. The **Local / External** switch in the top bar decides which one a
-        click opens, across every card at once.
+        here. The dashboard opens whichever address your browser can actually
+        reach -- the local one when you are on the LAN, the public one when you
+        are not -- deciding per card and without testing anything. The switch in
+        the top bar pins it to **Local** or **External** if you would rather
+        choose yourself.
 
         Both addresses read **URL Locked** until you sign in to Uptime Kuma from
         the dashboard -- signed out, they are never sent to the browser at all.
 
         Then open Service Dash on port **8888**.
+      en_GB: |
+        ### Before you install
+
+        Service Dash reads your monitors from **Uptime Kuma**. It does not
+        install Kuma for you, so set that up first:
+
+        1. Install **Uptime Kuma** from this store, and leave it on its default
+           port `3001`. If you run it on another
+           port, change `KUMA_PORT` below and `KUMA_URL` on the `kuma-auth`
+           service to match. Kuma must be on this same host.
+        2. In Uptime Kuma, create a **status page** and add the monitors you
+           want on the dashboard.
+        3. Note the status page's **slug** -- the last part of its URL. If it is
+           not `homelab`, change `STATUS_SLUG` below to match.
+
+        ### Getting local and public URLs on one card
+
+        Both addresses come from Uptime Kuma, from **how you name the
+        monitors**. Give a service two monitors:
+
+        | Monitor name | Points at | Shows on the card as |
+        | --- | --- | --- |
+        | `Plex` | your public URL | **External** |
+        | `Plex local` | your LAN URL | **Local** |
+
+        Service Dash pairs them by name into a single card carrying both.
+        `Plex (local)`, `Plex - local` and `Plex.local` are recognised the same
+        way. A service with only one monitor simply shows one address.
+
+        Each address is the monitor's own URL in Kuma, so it is set in Kuma, not
+        here. The dashboard opens whichever address your browser can actually
+        reach -- the local one when you are on the LAN, the public one when you
+        are not -- deciding per card and without testing anything. The switch in
+        the top bar pins it to **Local** or **External** if you would rather
+        choose yourself.
+
+        Both addresses read **URL Locked** until you sign in to Uptime Kuma from
+        the dashboard -- signed out, they are never sent to the browser at all.
+
+        Then open Service Dash on port **8888**.
+      de_DE: |
+        ### Vor der Installation
+
+        Service Dash liest Ihre Monitore aus **Uptime Kuma**. Es installiert Kuma
+        nicht für Sie, richten Sie das also zuerst ein:
+
+        1. Installieren Sie **Uptime Kuma** aus diesem Store und belassen Sie es auf
+           dem Standardport `3001`. Wenn Sie einen anderen Port
+           verwenden, passen Sie unten `KUMA_PORT` und `KUMA_URL` am Dienst
+           `kuma-auth` entsprechend an. Kuma muss auf demselben Host laufen.
+        2. Legen Sie in Uptime Kuma eine **Statusseite** an und fügen Sie die
+           Monitore hinzu, die auf dem Dashboard erscheinen sollen.
+        3. Notieren Sie den **Slug** der Statusseite -- den letzten Teil ihrer URL.
+           Lautet er nicht `homelab`, passen Sie unten `STATUS_SLUG` an.
+
+        ### Lokale und öffentliche URL auf einer Karte
+
+        Beide Adressen kommen aus Uptime Kuma, und zwar daraus, **wie Sie die
+        Monitore benennen**. Geben Sie einem Dienst zwei Monitore:
+
+        | Monitorname | Zeigt auf | Erscheint auf der Karte als |
+        | --- | --- | --- |
+        | `Plex` | Ihre öffentliche URL | **External** |
+        | `Plex local` | Ihre LAN-URL | **Local** |
+
+        Service Dash fasst sie anhand des Namens zu einer Karte mit beiden
+        Adressen zusammen. `Plex (local)`, `Plex - local` und `Plex.local` werden
+        genauso erkannt. Ein Dienst mit nur einem Monitor zeigt einfach eine
+        Adresse.
+
+        Jede Adresse ist die URL des Monitors in Kuma, sie wird also in Kuma
+        gesetzt, nicht hier. Das Dashboard öffnet die Adresse, die Ihr Browser
+        tatsächlich erreichen kann -- die lokale im LAN, die öffentliche
+        außerhalb -- pro Karte entschieden und ohne irgendetwas zu testen. Der
+        Schalter in der oberen Leiste legt sie auf **Local** oder **External**
+        fest, wenn Sie lieber selbst wählen.
+
+        Beide Adressen zeigen **URL Locked**, bis Sie sich vom Dashboard aus bei
+        Uptime Kuma anmelden -- abgemeldet werden sie überhaupt nicht an den
+        Browser gesendet.
+
+        Öffnen Sie Service Dash dann auf Port **8888**.
+      el_GR: |
+        ### Πριν την εγκατάσταση
+
+        Το Service Dash διαβάζει τα monitors σας από το **Uptime Kuma**. Δεν
+        εγκαθιστά το Kuma για εσάς, οπότε ρυθμίστε το πρώτα:
+
+        1. Εγκαταστήστε το **Uptime Kuma** από αυτό το store και αφήστε το στην
+           προεπιλεγμένη θύρα `3001`. Αν το τρέχετε σε άλλη θύρα,
+           αλλάξτε παρακάτω το `KUMA_PORT` και το `KUMA_URL` στην υπηρεσία
+           `kuma-auth` ώστε να ταιριάζουν. Το Kuma πρέπει να βρίσκεται στον ίδιο
+           host.
+        2. Στο Uptime Kuma, δημιουργήστε μια **σελίδα κατάστασης** και προσθέστε τα
+           monitors που θέλετε στον πίνακα.
+        3. Σημειώστε το **slug** της σελίδας κατάστασης -- το τελευταίο τμήμα της
+           URL της. Αν δεν είναι `homelab`, αλλάξτε παρακάτω το `STATUS_SLUG`.
+
+        ### Τοπική και δημόσια διεύθυνση σε μία κάρτα
+
+        Και οι δύο διευθύνσεις προέρχονται από το Uptime Kuma, από **τον τρόπο που
+        ονομάζετε τα monitors**. Δώστε σε μια υπηρεσία δύο monitors:
+
+        | Όνομα monitor | Δείχνει σε | Εμφανίζεται στην κάρτα ως |
+        | --- | --- | --- |
+        | `Plex` | τη δημόσια URL σας | **External** |
+        | `Plex local` | την URL του LAN σας | **Local** |
+
+        Το Service Dash τα ζευγαρώνει με βάση το όνομα σε μία κάρτα που τις έχει
+        και τις δύο. Τα `Plex (local)`, `Plex - local` και `Plex.local`
+        αναγνωρίζονται με τον ίδιο τρόπο. Μια υπηρεσία με ένα μόνο monitor απλώς
+        δείχνει μία διεύθυνση.
+
+        Κάθε διεύθυνση είναι η URL του ίδιου του monitor στο Kuma, άρα ορίζεται
+        εκεί, όχι εδώ. Ο πίνακας ανοίγει όποια διεύθυνση μπορεί πράγματι να
+        προσεγγίσει ο browser σας -- την τοπική όταν είστε στο LAN, τη δημόσια
+        όταν δεν είστε -- αποφασίζοντας ανά κάρτα και χωρίς να δοκιμάζει τίποτα.
+        Ο διακόπτης στην επάνω μπάρα τον καρφιτσώνει σε **Local** ή **External**
+        αν προτιμάτε να επιλέγετε εσείς.
+
+        Και οι δύο διευθύνσεις δείχνουν **URL Locked** μέχρι να συνδεθείτε στο
+        Uptime Kuma από τον πίνακα -- αποσυνδεδεμένες, δεν στέλνονται καθόλου
+        στον browser.
+
+        Στη συνέχεια ανοίξτε το Service Dash στη θύρα **8888**.
+      fr_FR: |
+        ### Avant d'installer
+
+        Service Dash lit vos moniteurs depuis **Uptime Kuma**. Il n'installe pas
+        Kuma pour vous, commencez donc par le mettre en place :
+
+        1. Installez **Uptime Kuma** depuis cette boutique et laissez-le sur son port
+           par défaut `3001`. Si vous l'exécutez sur un autre
+           port, modifiez `KUMA_PORT` ci-dessous et `KUMA_URL` sur le service
+           `kuma-auth` en conséquence. Kuma doit être sur ce même hôte.
+        2. Dans Uptime Kuma, créez une **page de statut** et ajoutez-y les
+           moniteurs que vous voulez sur le tableau de bord.
+        3. Notez le **slug** de la page de statut -- la dernière partie de son URL.
+           S'il n'est pas `homelab`, modifiez `STATUS_SLUG` ci-dessous.
+
+        ### Obtenir l'URL locale et publique sur une seule carte
+
+        Les deux adresses viennent d'Uptime Kuma, et précisément de **la façon
+        dont vous nommez les moniteurs**. Donnez deux moniteurs à un service :
+
+        | Nom du moniteur | Pointe vers | Apparaît sur la carte comme |
+        | --- | --- | --- |
+        | `Plex` | votre URL publique | **External** |
+        | `Plex local` | votre URL LAN | **Local** |
+
+        Service Dash les apparie par leur nom en une seule carte portant les deux.
+        `Plex (local)`, `Plex - local` et `Plex.local` sont reconnus de la même
+        manière. Un service n'ayant qu'un seul moniteur affiche simplement une
+        adresse.
+
+        Chaque adresse est l'URL du moniteur dans Kuma : elle se règle donc dans
+        Kuma, pas ici. Le tableau de bord ouvre l'adresse que votre navigateur
+        peut réellement atteindre -- la locale sur le LAN, la publique ailleurs --
+        en décidant carte par carte et sans rien tester. Le sélecteur de la barre
+        supérieure la fixe sur **Local** ou **External** si vous préférez choisir
+        vous-même.
+
+        Les deux adresses affichent **URL Locked** tant que vous ne vous êtes pas
+        connecté à Uptime Kuma depuis le tableau de bord -- déconnecté, elles ne
+        sont jamais envoyées au navigateur.
+
+        Ouvrez ensuite Service Dash sur le port **8888**.
+      hr_HR: |
+        ### Prije instalacije
+
+        Service Dash čita vaše monitore iz **Uptime Kume**. Ne instalira Kumu
+        umjesto vas, pa to postavite prvo:
+
+        1. Instalirajte **Uptime Kuma** iz ove trgovine i ostavite ga na zadanom
+           portu `3001`. Ako ga pokrećete na drugom
+           portu, promijenite `KUMA_PORT` niže i `KUMA_URL` na usluzi `kuma-auth`
+           da odgovaraju. Kuma mora biti na istom poslužitelju.
+        2. U Uptime Kumi izradite **stranicu stanja** i dodajte monitore koje
+           želite na nadzornoj ploči.
+        3. Zabilježite **slug** stranice stanja -- posljednji dio njezina URL-a.
+           Ako nije `homelab`, promijenite `STATUS_SLUG` niže.
+
+        ### Lokalni i javni URL na jednoj kartici
+
+        Obje adrese dolaze iz Uptime Kume, i to iz **načina na koji imenujete
+        monitore**. Dajte usluzi dva monitora:
+
+        | Naziv monitora | Pokazuje na | Na kartici se prikazuje kao |
+        | --- | --- | --- |
+        | `Plex` | vaš javni URL | **External** |
+        | `Plex local` | vaš LAN URL | **Local** |
+
+        Service Dash ih po nazivu spaja u jednu karticu koja nosi obje. `Plex
+        (local)`, `Plex - local` i `Plex.local` prepoznaju se jednako. Usluga sa
+        samo jednim monitorom jednostavno prikazuje jednu adresu.
+
+        Svaka je adresa vlastiti URL monitora u Kumi, pa se postavlja u Kumi, a ne
+        ovdje. Nadzorna ploča otvara onu adresu do koje vaš preglednik doista može
+        doći -- lokalnu kad ste na LAN-u, javnu kad niste -- odlučujući po kartici
+        i bez ikakvog testiranja. Prekidač u gornjoj traci fiksira je na **Local**
+        ili **External** ako radije birate sami.
+
+        Obje adrese prikazuju **URL Locked** dok se s nadzorne ploče ne prijavite
+        u Uptime Kumu -- dok ste odjavljeni, uopće se ne šalju pregledniku.
+
+        Zatim otvorite Service Dash na portu **8888**.
+      it_IT: |
+        ### Prima di installare
+
+        Service Dash legge i vostri monitor da **Uptime Kuma**. Non installa Kuma
+        al posto vostro, quindi predisponetelo prima:
+
+        1. Installate **Uptime Kuma** da questo store e lasciatelo sulla porta
+           predefinita `3001`. Se lo eseguite su un'altra
+           porta, modificate `KUMA_PORT` qui sotto e `KUMA_URL` sul servizio
+           `kuma-auth` di conseguenza. Kuma deve stare su questo stesso host.
+        2. In Uptime Kuma create una **pagina di stato** e aggiungete i monitor che
+           volete sulla dashboard.
+        3. Annotate lo **slug** della pagina di stato -- l'ultima parte del suo URL.
+           Se non è `homelab`, modificate `STATUS_SLUG` qui sotto.
+
+        ### Ottenere URL locale e pubblico su un'unica scheda
+
+        Entrambi gli indirizzi vengono da Uptime Kuma, e precisamente da **come
+        nominate i monitor**. Date a un servizio due monitor:
+
+        | Nome del monitor | Punta a | Sulla scheda appare come |
+        | --- | --- | --- |
+        | `Plex` | il vostro URL pubblico | **External** |
+        | `Plex local` | il vostro URL LAN | **Local** |
+
+        Service Dash li abbina per nome in un'unica scheda che li porta entrambi.
+        `Plex (local)`, `Plex - local` e `Plex.local` sono riconosciuti allo
+        stesso modo. Un servizio con un solo monitor mostra semplicemente un
+        indirizzo.
+
+        Ogni indirizzo è l'URL del monitor stesso in Kuma, quindi si imposta in
+        Kuma, non qui. La dashboard apre l'indirizzo che il vostro browser può
+        davvero raggiungere -- quello locale quando siete sulla LAN, quello
+        pubblico quando non lo siete -- decidendo scheda per scheda e senza
+        provare nulla. Il selettore nella barra in alto lo fissa su **Local** o
+        **External** se preferite scegliere voi.
+
+        Entrambi gli indirizzi mostrano **URL Locked** finché non accedete a
+        Uptime Kuma dalla dashboard -- da disconnessi non vengono mai inviati al
+        browser.
+
+        Aprite poi Service Dash sulla porta **8888**.
+      ja_JP: |
+        ### インストールの前に
+
+        Service Dash は監視項目を **Uptime Kuma** から読み取ります。Kuma を代わりに
+        インストールすることはないので、先に用意してください。
+
+        1. このストアから **Uptime Kuma** をインストールし、ポートは既定の `3001` の
+           ままにしてください。 別のポートで動かす場合は、下の
+           `KUMA_PORT` と `kuma-auth` サービスの `KUMA_URL` を合わせて変更して
+           ください。Kuma は同じホスト上にある必要があります。
+        2. Uptime Kuma で**ステータスページ**を作成し、ダッシュボードに出したい
+           監視項目を追加します。
+        3. ステータスページの **slug** (URL の末尾) を控えます。`homelab` でない
+           場合は、下の `STATUS_SLUG` を合わせて変更してください。
+
+        ### ローカル URL と公開 URL を 1 枚のカードにまとめる
+
+        どちらのアドレスも Uptime Kuma から来ます。決め手は**監視項目の名前の
+        付け方**です。1 つのサービスに監視項目を 2 つ用意してください。
+
+        | 監視項目の名前 | 指す先 | カードでの表示 |
+        | --- | --- | --- |
+        | `Plex` | 公開 URL | **External** |
+        | `Plex local` | LAN の URL | **Local** |
+
+        Service Dash は名前で 2 つを組にして、両方を持つ 1 枚のカードにします。
+        `Plex (local)`、`Plex - local`、`Plex.local` も同じように認識されます。
+        監視項目が 1 つだけのサービスは、アドレスを 1 つだけ表示します。
+
+        各アドレスは Kuma 上の監視項目そのものの URL なので、設定するのは Kuma
+        側であり、ここではありません。ダッシュボードは、ブラウザーが実際に到達
+        できるほうのアドレスを開きます。LAN 内ならローカル、そうでなければ公開
+        アドレスを、カードごとに判断し、通信テストは一切行いません。上部バーの
+        スイッチを使えば、**Local** または **External** に固定できます。
+
+        ダッシュボードから Uptime Kuma にサインインするまで、どちらのアドレスも
+        **URL Locked** と表示されます。サインアウト中は、そもそもブラウザーに
+        送られません。
+
+        準備ができたら、ポート **8888** で Service Dash を開いてください。
+      ko_KR: |
+        ### 설치하기 전에
+
+        Service Dash는 모니터 목록을 **Uptime Kuma**에서 읽어 옵니다. Kuma를 대신
+        설치해 주지는 않으니 먼저 준비하세요.
+
+        1. 이 스토어에서 **Uptime Kuma**를 설치하고, 포트는 기본값 `3001` 그대로
+           두세요. 다른 포트로 실행한다면 아래의
+           `KUMA_PORT`와 `kuma-auth` 서비스의 `KUMA_URL`을 맞춰 변경하세요. Kuma는
+           같은 호스트에 있어야 합니다.
+        2. Uptime Kuma에서 **상태 페이지**를 만들고 대시보드에 띄우고 싶은 모니터를
+           추가하세요.
+        3. 상태 페이지의 **slug**(URL의 마지막 부분)를 확인하세요. `homelab`이
+           아니라면 아래 `STATUS_SLUG`를 맞춰 바꾸세요.
+
+        ### 로컬 URL과 공개 URL을 한 카드에 담기
+
+        두 주소 모두 Uptime Kuma에서 오며, 기준은 **모니터 이름을 짓는 방식**입니다.
+        한 서비스에 모니터를 두 개 만드세요.
+
+        | 모니터 이름 | 가리키는 곳 | 카드에서 표시되는 이름 |
+        | --- | --- | --- |
+        | `Plex` | 공개 URL | **External** |
+        | `Plex local` | LAN URL | **Local** |
+
+        Service Dash는 이름을 기준으로 둘을 묶어 두 주소를 모두 담은 카드 하나로
+        만듭니다. `Plex (local)`, `Plex - local`, `Plex.local`도 똑같이 인식합니다.
+        모니터가 하나뿐인 서비스는 주소도 하나만 보여 줍니다.
+
+        각 주소는 Kuma에 있는 모니터 자체의 URL이므로, 여기가 아니라 Kuma에서
+        설정합니다. 대시보드는 브라우저가 실제로 닿을 수 있는 주소를 엽니다. LAN
+        안에서는 로컬, 밖에서는 공개 주소를 카드마다 판단하며, 아무것도 시험 삼아
+        접속해 보지 않습니다. 직접 고르고 싶다면 상단 바의 스위치로 **Local** 또는
+        **External**에 고정할 수 있습니다.
+
+        대시보드에서 Uptime Kuma에 로그인하기 전까지 두 주소는 모두 **URL Locked**로
+        표시됩니다. 로그아웃 상태에서는 브라우저로 아예 전송되지 않습니다.
+
+        그런 다음 포트 **8888**에서 Service Dash를 여세요.
+      nb_NO: |
+        ### Før du installerer
+
+        Service Dash leser overvåkerne dine fra **Uptime Kuma**. Det installerer
+        ikke Kuma for deg, så sett opp det først:
+
+        1. Installer **Uptime Kuma** fra denne butikken, og la det stå på
+           standardporten `3001`. Kjører du det på en annen port,
+           endrer du `KUMA_PORT` nedenfor og `KUMA_URL` på tjenesten `kuma-auth`
+           tilsvarende. Kuma må ligge på samme vert.
+        2. Opprett en **statusside** i Uptime Kuma og legg til overvåkerne du vil ha
+           på dashbordet.
+        3. Noter statussidens **slug** -- den siste delen av URL-en. Er den ikke
+           `homelab`, endrer du `STATUS_SLUG` nedenfor.
+
+        ### Lokal og offentlig URL på ett kort
+
+        Begge adressene kommer fra Uptime Kuma, nærmere bestemt fra **hvordan du
+        navngir overvåkerne**. Gi en tjeneste to overvåkere:
+
+        | Overvåkernavn | Peker på | Vises på kortet som |
+        | --- | --- | --- |
+        | `Plex` | din offentlige URL | **External** |
+        | `Plex local` | din LAN-URL | **Local** |
+
+        Service Dash parer dem etter navn til ett kort som bærer begge. `Plex
+        (local)`, `Plex - local` og `Plex.local` gjenkjennes på samme måte. En
+        tjeneste med bare én overvåker viser rett og slett én adresse.
+
+        Hver adresse er overvåkerens egen URL i Kuma, så den settes i Kuma, ikke
+        her. Dashbordet åpner den adressen nettleseren din faktisk når fram til --
+        den lokale når du er på LAN, den offentlige når du ikke er det -- avgjort
+        per kort og uten å teste noe som helst. Bryteren i topplinjen låser den til
+        **Local** eller **External** om du heller vil velge selv.
+
+        Begge adressene viser **URL Locked** til du logger inn på Uptime Kuma fra
+        dashbordet -- utlogget sendes de aldri til nettleseren i det hele tatt.
+
+        Åpne så Service Dash på port **8888**.
+      pt_PT: |
+        ### Antes de instalar
+
+        O Service Dash lê os seus monitores a partir do **Uptime Kuma**. Não
+        instala o Kuma por si, portanto trate disso primeiro:
+
+        1. Instale o **Uptime Kuma** a partir desta loja e deixe-o na porta
+           predefinida `3001`. Se o executar noutra porta,
+           altere `KUMA_PORT` abaixo e `KUMA_URL` no serviço `kuma-auth` em
+           conformidade. O Kuma tem de estar neste mesmo anfitrião.
+        2. No Uptime Kuma, crie uma **página de estado** e adicione os monitores que
+           quer ver no painel.
+        3. Anote o **slug** da página de estado -- a última parte do seu URL. Se não
+           for `homelab`, altere `STATUS_SLUG` abaixo.
+
+        ### Obter o URL local e o público num só cartão
+
+        Ambos os endereços vêm do Uptime Kuma, mais concretamente de **como nomeia
+        os monitores**. Dê dois monitores a um serviço:
+
+        | Nome do monitor | Aponta para | Aparece no cartão como |
+        | --- | --- | --- |
+        | `Plex` | o seu URL público | **External** |
+        | `Plex local` | o seu URL da LAN | **Local** |
+
+        O Service Dash emparelha-os pelo nome num único cartão com ambos. `Plex
+        (local)`, `Plex - local` e `Plex.local` são reconhecidos da mesma forma. Um
+        serviço com apenas um monitor mostra simplesmente um endereço.
+
+        Cada endereço é o URL do próprio monitor no Kuma, por isso define-se no
+        Kuma e não aqui. O painel abre o endereço que o seu navegador consegue
+        realmente alcançar -- o local quando está na LAN, o público quando não está
+        -- decidindo cartão a cartão e sem testar nada. O seletor da barra superior
+        fixa-o em **Local** ou **External** se preferir escolher.
+
+        Ambos os endereços mostram **URL Locked** até iniciar sessão no Uptime Kuma
+        a partir do painel -- com a sessão terminada, nunca chegam a ser enviados
+        para o navegador.
+
+        Depois abra o Service Dash na porta **8888**.
+      ru_RU: |
+        ### Перед установкой
+
+        Service Dash читает ваши мониторы из **Uptime Kuma**. Сам Kuma он не
+        устанавливает, поэтому сначала настройте его:
+
+        1. Установите **Uptime Kuma** из этого магазина и оставьте порт по умолчанию
+           `3001`. Если вы запускаете его на другом
+           порту, измените `KUMA_PORT` ниже и `KUMA_URL` у сервиса `kuma-auth`
+           соответственно. Kuma должен быть на том же хосте.
+        2. В Uptime Kuma создайте **страницу состояния** и добавьте мониторы,
+           которые хотите видеть на панели.
+        3. Запомните **slug** страницы состояния -- последнюю часть её адреса. Если
+           это не `homelab`, измените `STATUS_SLUG` ниже.
+
+        ### Локальный и публичный адрес на одной карточке
+
+        Оба адреса берутся из Uptime Kuma, а именно из того, **как вы называете
+        мониторы**. Заведите для сервиса два монитора:
+
+        | Имя монитора | Указывает на | На карточке отображается как |
+        | --- | --- | --- |
+        | `Plex` | ваш публичный URL | **External** |
+        | `Plex local` | ваш URL в локальной сети | **Local** |
+
+        Service Dash связывает их по имени в одну карточку с двумя адресами.
+        `Plex (local)`, `Plex - local` и `Plex.local` распознаются так же. Сервис
+        с единственным монитором просто показывает один адрес.
+
+        Каждый адрес -- это собственный URL монитора в Kuma, то есть задаётся он в
+        Kuma, а не здесь. Панель открывает тот адрес, до которого ваш браузер
+        действительно дотянется: локальный в домашней сети, публичный за её
+        пределами. Решение принимается для каждой карточки и без каких-либо
+        проверок соединения. Переключатель в верхней панели закрепляет выбор на
+        **Local** или **External**, если вы предпочитаете решать сами.
+
+        Оба адреса показывают **URL Locked**, пока вы не войдёте в Uptime Kuma из
+        панели: без входа они вообще не отправляются в браузер.
+
+        После этого откройте Service Dash на порту **8888**.
+      sv_SE: |
+        ### Innan du installerar
+
+        Service Dash läser dina övervakare från **Uptime Kuma**. Det installerar
+        inte Kuma åt dig, så sätt upp det först:
+
+        1. Installera **Uptime Kuma** från den här butiken och låt det ligga kvar på
+           standardporten `3001`. Kör du det på en annan port
+           ändrar du `KUMA_PORT` nedan och `KUMA_URL` på tjänsten `kuma-auth` så att
+           de stämmer. Kuma måste ligga på samma värd.
+        2. Skapa en **statussida** i Uptime Kuma och lägg till de övervakare du vill
+           ha på instrumentpanelen.
+        3. Notera statussidans **slug** -- sista delen av dess URL. Är den inte
+           `homelab` ändrar du `STATUS_SLUG` nedan.
+
+        ### Lokal och publik URL på ett kort
+
+        Båda adresserna kommer från Uptime Kuma, närmare bestämt från **hur du
+        namnger övervakarna**. Ge en tjänst två övervakare:
+
+        | Övervakarens namn | Pekar på | Visas på kortet som |
+        | --- | --- | --- |
+        | `Plex` | din publika URL | **External** |
+        | `Plex local` | din LAN-URL | **Local** |
+
+        Service Dash parar ihop dem efter namn till ett kort som bär båda. `Plex
+        (local)`, `Plex - local` och `Plex.local` känns igen på samma sätt. En
+        tjänst med bara en övervakare visar helt enkelt en adress.
+
+        Varje adress är övervakarens egen URL i Kuma, så den ställs in i Kuma och
+        inte här. Instrumentpanelen öppnar den adress din webbläsare faktiskt når
+        -- den lokala när du är på LAN, den publika när du inte är det -- avgjort
+        per kort och utan att testa någonting. Växeln i toppraden låser den till
+        **Local** eller **External** om du hellre väljer själv.
+
+        Båda adresserna visar **URL Locked** tills du loggar in på Uptime Kuma från
+        instrumentpanelen -- utloggad skickas de aldrig till webbläsaren alls.
+
+        Öppna sedan Service Dash på port **8888**.
+      tr_TR: |
+        ### Kurmadan önce
+
+        Service Dash, izleyicilerinizi **Uptime Kuma**'dan okur. Kuma'yı sizin
+        yerinize kurmaz, bu yüzden önce onu hazırlayın:
+
+        1. **Uptime Kuma**'yı bu mağazadan kurun ve varsayılan `3001` portunda
+           bırakın. Başka bir portta çalıştırıyorsanız
+           aşağıdaki `KUMA_PORT` değerini ve `kuma-auth` servisindeki `KUMA_URL`
+           değerini buna göre değiştirin. Kuma bu aynı ana makinede olmalıdır.
+        2. Uptime Kuma'da bir **durum sayfası** oluşturun ve panoda görmek
+           istediğiniz izleyicileri ekleyin.
+        3. Durum sayfasının **slug** değerini -- URL'sinin son bölümünü -- not edin.
+           `homelab` değilse aşağıdaki `STATUS_SLUG` değerini buna göre değiştirin.
+
+        ### Yerel ve genel URL'yi tek kartta toplamak
+
+        Her iki adres de Uptime Kuma'dan gelir; belirleyici olan **izleyicileri
+        nasıl adlandırdığınızdır**. Bir servise iki izleyici tanımlayın:
+
+        | İzleyici adı | Şuna işaret eder | Kartta şöyle görünür |
+        | --- | --- | --- |
+        | `Plex` | genel URL'niz | **External** |
+        | `Plex local` | yerel ağ URL'niz | **Local** |
+
+        Service Dash bunları ada göre eşleştirip ikisini birden taşıyan tek bir
+        kart yapar. `Plex (local)`, `Plex - local` ve `Plex.local` da aynı şekilde
+        tanınır. Yalnızca tek izleyicisi olan bir servis basitçe tek adres gösterir.
+
+        Her adres, izleyicinin Kuma'daki kendi URL'sidir; yani burada değil,
+        Kuma'da ayarlanır. Pano, tarayıcınızın gerçekten ulaşabildiği adresi açar
+        -- yerel ağdayken yereli, dışarıdayken geneli -- kararı kart bazında verir
+        ve hiçbir bağlantı denemesi yapmaz. Kendiniz seçmeyi tercih ederseniz üst
+        çubuktaki anahtar bunu **Local** ya da **External** olarak sabitler.
+
+        Panodan Uptime Kuma'ya giriş yapana dek her iki adres de **URL Locked**
+        görünür; oturum kapalıyken tarayıcıya hiç gönderilmezler.
+
+        Ardından Service Dash'i **8888** portundan açın.
+      zh_CN: |
+        ### 安装之前
+
+        Service Dash 从 **Uptime Kuma** 读取你的监控项。它不会替你安装 Kuma，所以
+        请先把 Kuma 准备好：
+
+        1. 从本商店安装 **Uptime Kuma**，并保持它的默认端口 `3001` 不变。 如果你把它跑在别的端口上，请把下面的
+           `KUMA_PORT` 和 `kuma-auth` 服务上的 `KUMA_URL` 一并改成对应的值。Kuma
+           必须和本应用在同一台主机上。
+        2. 在 Uptime Kuma 中创建一个**状态页**，把你想显示在仪表盘上的监控项加进去。
+        3. 记下状态页的 **slug**，也就是它网址的最后一段。如果不是 `homelab`，请把
+           下面的 `STATUS_SLUG` 改成一致。
+
+        ### 让内网地址和公网地址出现在同一张卡片上
+
+        两个地址都来自 Uptime Kuma，取决于**你如何给监控项命名**。给一个服务建两个
+        监控项：
+
+        | 监控项名称 | 指向 | 在卡片上显示为 |
+        | --- | --- | --- |
+        | `Plex` | 你的公网地址 | **External** |
+        | `Plex local` | 你的局域网地址 | **Local** |
+
+        Service Dash 会按名称把它们配成一对，合成一张同时带两个地址的卡片。
+        `Plex (local)`、`Plex - local` 和 `Plex.local` 同样能被识别。只有一个监控项
+        的服务，就只显示一个地址。
+
+        每个地址就是该监控项在 Kuma 里自己的 URL，所以要在 Kuma 里设置，而不是在这里。
+        仪表盘会打开你的浏览器真正能访问到的那个地址——在局域网内用内网地址，不在时用
+        公网地址——逐张卡片判断，并且不做任何探测。如果你更想自己选，顶栏的开关可以把
+        它固定为 **Local** 或 **External**。
+
+        在你从仪表盘登录 Uptime Kuma 之前，两个地址都显示为 **URL Locked**；未登录
+        时，它们根本不会被发送到浏览器。
+
+        然后在 **8888** 端口打开 Service Dash。
   release_notes:
     en_US: |
-      1.3.2 fixes the storage picker on ZimaOS, which previously offered a
-      single "/" instead of the host's real mounts, and adds a social preview
-      and a rewritten README.
+      1.5.1 makes the AI usage panel actually reachable on ZimaOS. 1.5.0
+      shipped its two reporters behind a Compose profile, and CasaOS silently
+      drops any service that declares one -- so the panel could not be turned
+      on at all, by update or by fresh install. They are now ordinary services
+      that sit idle until you sign in, so enabling the feature is just:
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      Idle they cost about 12MB of RAM and no measurable CPU. The trade is
+      disk: both images carry a vendor CLI and are pulled whether or not you
+      use them.
+
+      Also in this cycle, from 1.5.0: the AI usage panel itself -- how much of
+      your Claude and ChatGPT plan is left, as dials above the grid -- plus a
+      fix for iPhone Safari killing the tab after a few minutes of scrolling,
+      and dialogs no longer running under the notch.
+    en_GB: |
+      1.5.1 makes the AI usage panel actually reachable on ZimaOS. 1.5.0
+      shipped its two reporters behind a Compose profile, and CasaOS silently
+      drops any service that declares one -- so the panel could not be turned
+      on at all, by update or by fresh install. They are now ordinary services
+      that sit idle until you sign in, so enabling the feature is just:
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      Idle they cost about 12MB of RAM and no measurable CPU. The trade is
+      disk: both images carry a vendor CLI and are pulled whether or not you
+      use them.
+
+      Also in this cycle, from 1.5.0: the AI usage panel itself -- how much of
+      your Claude and ChatGPT plan is left, as dials above the grid -- plus a
+      fix for iPhone Safari killing the tab after a few minutes of scrolling,
+      and dialogues no longer running under the notch.
+    de_DE: |
+      1.5.1 macht das KI-Nutzungspanel auf ZimaOS endlich erreichbar. 1.5.0
+      lieferte seine beiden Reporter hinter einem Compose-Profil aus, und CasaOS
+      verwirft stillschweigend jeden Dienst, der eines deklariert -- das Panel
+      ließ sich also überhaupt nicht einschalten, weder per Update noch per
+      Neuinstallation. Sie sind jetzt gewöhnliche Dienste, die untätig bleiben,
+      bis Sie sich anmelden. Zum Aktivieren genügt:
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      Im Leerlauf kosten sie rund 12 MB RAM und keine messbare CPU. Der Preis ist
+      Speicherplatz: Beide Images enthalten ein Hersteller-CLI und werden
+      geladen, ob Sie sie nutzen oder nicht.
+
+      Ebenfalls in diesem Zyklus, aus 1.5.0: das KI-Nutzungspanel selbst -- wie
+      viel von Ihrem Claude- und ChatGPT-Kontingent übrig ist, als Anzeigen über
+      dem Raster -- dazu ein Fix dafür, dass iPhone-Safari den Tab nach ein paar
+      Minuten Scrollen beendete, und Dialoge laufen nicht mehr unter den Notch.
+    el_GR: |
+      Η έκδοση 1.5.1 κάνει το πάνελ χρήσης AI πράγματι προσβάσιμο στο ZimaOS. Η
+      1.5.0 έστελνε τους δύο reporters πίσω από ένα Compose profile, και το
+      CasaOS απορρίπτει σιωπηλά κάθε υπηρεσία που δηλώνει ένα -- έτσι το πάνελ
+      δεν μπορούσε να ενεργοποιηθεί καθόλου, ούτε με ενημέρωση ούτε με καθαρή
+      εγκατάσταση. Τώρα είναι απλές υπηρεσίες που μένουν αδρανείς μέχρι να
+      συνδεθείτε, οπότε η ενεργοποίηση είναι απλώς:
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      Αδρανείς κοστίζουν περίπου 12MB RAM και μηδενική μετρήσιμη CPU. Το τίμημα
+      είναι ο χώρος στον δίσκο: και τα δύο images περιέχουν ένα CLI του
+      κατασκευαστή και κατεβαίνουν είτε τα χρησιμοποιείτε είτε όχι.
+
+      Επίσης σε αυτόν τον κύκλο, από την 1.5.0: το ίδιο το πάνελ χρήσης AI --
+      πόσο απομένει από το πλάνο σας σε Claude και ChatGPT, ως δείκτες πάνω από
+      το πλέγμα -- μαζί με μια διόρθωση για τον Safari του iPhone που τερμάτιζε
+      την καρτέλα μετά από λίγα λεπτά κύλισης, και διαλόγους που δεν περνούν
+      πλέον κάτω από το notch.
+    fr_FR: |
+      La version 1.5.1 rend enfin le panneau d'utilisation IA accessible sur
+      ZimaOS. La 1.5.0 livrait ses deux rapporteurs derrière un profil Compose,
+      et CasaOS écarte silencieusement tout service qui en déclare un -- le
+      panneau ne pouvait donc pas être activé du tout, ni par mise à jour ni par
+      installation neuve. Ce sont désormais des services ordinaires qui restent
+      inactifs jusqu'à votre connexion ; activer la fonction se résume à :
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      Au repos, ils coûtent environ 12 Mo de RAM et aucun CPU mesurable. La
+      contrepartie est le disque : les deux images embarquent un CLI éditeur et
+      sont téléchargées que vous vous en serviez ou non.
+
+      Également dans ce cycle, depuis la 1.5.0 : le panneau d'utilisation IA
+      lui-même -- ce qu'il reste de vos forfaits Claude et ChatGPT, sous forme de
+      cadrans au-dessus de la grille -- ainsi qu'un correctif pour Safari sur
+      iPhone qui tuait l'onglet après quelques minutes de défilement, et des
+      boîtes de dialogue qui ne passent plus sous l'encoche.
+    hr_HR: |
+      Verzija 1.5.1 čini ploču s AI potrošnjom doista dostupnom na ZimaOS-u.
+      1.5.0 je isporučila svoja dva reportera iza Compose profila, a CasaOS
+      tiho odbacuje svaku uslugu koja ga deklarira -- pa se ploča uopće nije
+      mogla uključiti, ni nadogradnjom ni čistom instalacijom. Sada su to obične
+      usluge koje miruju dok se ne prijavite, pa je uključivanje samo:
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      Dok miruju troše oko 12MB RAM-a i nemjerljivo malo procesora. Cijena je
+      prostor na disku: obje slike nose proizvođačev CLI i preuzimaju se bez
+      obzira koristite li ih.
+
+      Također u ovom ciklusu, iz 1.5.0: sama ploča s AI potrošnjom -- koliko vam
+      je ostalo od Claude i ChatGPT plana, kao brojčanici iznad mreže -- uz
+      ispravak za Safari na iPhoneu koji je nakon nekoliko minuta pomicanja
+      gasio karticu, te dijaloge koji više ne završavaju ispod ureza.
+    it_IT: |
+      La 1.5.1 rende il pannello di utilizzo AI davvero raggiungibile su ZimaOS.
+      La 1.5.0 spediva i suoi due reporter dietro un profilo Compose, e CasaOS
+      scarta silenziosamente qualsiasi servizio che ne dichiari uno -- quindi il
+      pannello non si poteva attivare affatto, né per aggiornamento né per
+      installazione pulita. Ora sono servizi ordinari che restano inattivi finché
+      non accedete, perciò abilitare la funzione è solo:
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      Da inattivi costano circa 12MB di RAM e nessuna CPU misurabile. Il prezzo è
+      lo spazio su disco: entrambe le immagini portano una CLI del fornitore e
+      vengono scaricate che le usiate o no.
+
+      Sempre in questo ciclo, dalla 1.5.0: il pannello di utilizzo AI stesso --
+      quanto resta dei vostri piani Claude e ChatGPT, come quadranti sopra la
+      griglia -- più una correzione per Safari su iPhone che chiudeva la scheda
+      dopo qualche minuto di scorrimento, e le finestre di dialogo che non
+      finiscono più sotto il notch.
+    ja_JP: |
+      1.5.1 では、AI 使用状況パネルに ZimaOS からきちんとたどり着けるようになり
+      ました。1.5.0 では 2 つのレポーターを Compose のプロファイルの後ろに置いて
+      いましたが、CasaOS はプロファイルを宣言したサービスを黙って取り除きます。
+      そのため、更新でも新規インストールでもパネルをまったく有効化できませんでした。
+      現在は通常のサービスとして常駐し、サインインするまで待機します。有効化は
+      次の 1 行だけです。
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      待機中の消費はメモリー約 12MB、CPU は計測できない程度です。代償はディスクで、
+      どちらのイメージもベンダーの CLI を含み、使うかどうかに関わらず取得されます。
+
+      同じ流れで 1.5.0 から入ったもの: AI 使用状況パネル本体 (Claude と ChatGPT の
+      プラン残量をグリッド上部のダイヤルで表示)、数分スクロールすると iPhone の
+      Safari がタブを終了してしまう問題の修正、そしてダイアログがノッチの下に
+      入り込まなくなった点です。
+    ko_KR: |
+      1.5.1은 AI 사용량 패널에 ZimaOS에서 실제로 도달할 수 있게 만듭니다. 1.5.0은
+      두 리포터를 Compose 프로필 뒤에 두고 배포했는데, CasaOS는 프로필을 선언한
+      서비스를 조용히 버립니다. 그래서 업데이트로든 새로 설치하든 패널을 아예 켤 수
+      없었습니다. 이제는 로그인할 때까지 대기하는 평범한 서비스이므로, 기능을
+      켜는 일은 다음 한 줄이 전부입니다.
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      대기 중에는 RAM 약 12MB를 쓰고 CPU는 측정되지 않는 수준입니다. 대신 치르는
+      비용은 디스크입니다. 두 이미지 모두 공급사 CLI를 담고 있어 쓰든 안 쓰든
+      내려받습니다.
+
+      같은 흐름으로 1.5.0에서 들어온 것들: AI 사용량 패널 자체(Claude와 ChatGPT
+      요금제가 얼마나 남았는지 그리드 위 다이얼로 표시), 몇 분 스크롤하면 iPhone
+      Safari가 탭을 종료해 버리던 문제의 수정, 그리고 대화 상자가 더 이상 노치
+      아래로 들어가지 않는 점입니다.
+    nb_NO: |
+      1.5.1 gjør KI-brukspanelet faktisk tilgjengelig på ZimaOS. 1.5.0 leverte
+      de to rapportørene bak en Compose-profil, og CasaOS forkaster stille enhver
+      tjeneste som erklærer en -- panelet kunne altså ikke slås på i det hele
+      tatt, verken ved oppdatering eller ved ny installasjon. Nå er de vanlige
+      tjenester som står i ro til du logger inn, så det å slå på funksjonen er
+      bare:
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      I ro koster de rundt 12 MB RAM og ingen målbar CPU. Prisen er diskplass:
+      begge bildene bærer en leverandør-CLI og lastes ned enten du bruker dem
+      eller ikke.
+
+      Også i denne runden, fra 1.5.0: selve KI-brukspanelet -- hvor mye som er
+      igjen av Claude- og ChatGPT-abonnementene dine, som målere over rutenettet
+      -- pluss en rettelse for at Safari på iPhone drepte fanen etter noen
+      minutters rulling, og dialoger som ikke lenger havner under utsparingen.
+    pt_PT: |
+      A 1.5.1 torna o painel de utilização de IA realmente acessível no ZimaOS. A
+      1.5.0 entregava os seus dois repórteres atrás de um perfil do Compose, e o
+      CasaOS descarta silenciosamente qualquer serviço que declare um -- por isso
+      o painel não podia ser ativado de todo, nem por atualização nem por
+      instalação de raiz. Agora são serviços normais que ficam inativos até
+      iniciar sessão, pelo que ativar a funcionalidade é apenas:
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      Inativos custam cerca de 12MB de RAM e nenhum CPU mensurável. A troca é o
+      disco: ambas as imagens transportam uma CLI do fornecedor e são
+      descarregadas quer as use quer não.
+
+      Também neste ciclo, vindo da 1.5.0: o próprio painel de utilização de IA --
+      quanto resta dos seus planos Claude e ChatGPT, em mostradores por cima da
+      grelha -- mais uma correção para o Safari do iPhone que fechava o separador
+      ao fim de alguns minutos a deslizar, e caixas de diálogo que já não passam
+      por baixo do entalhe.
+    ru_RU: |
+      Версия 1.5.1 делает панель расхода ИИ действительно доступной в ZimaOS. В
+      1.5.0 два её репортёра поставлялись за Compose-профилем, а CasaOS молча
+      отбрасывает любой сервис, который объявляет профиль, — поэтому включить
+      панель было нельзя вовсе, ни обновлением, ни чистой установкой. Теперь это
+      обычные сервисы, которые простаивают до вашего входа, так что включение
+      сводится к одной строке:
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      В простое они занимают около 12 МБ ОЗУ и не дают измеримой нагрузки на
+      процессор. Плата — место на диске: оба образа несут в себе CLI поставщика и
+      загружаются независимо от того, пользуетесь вы ими или нет.
+
+      Также в этом цикле, из 1.5.0: сама панель расхода ИИ — сколько осталось от
+      тарифов Claude и ChatGPT, в виде шкал над сеткой, — плюс исправление того,
+      что Safari на iPhone закрывал вкладку после нескольких минут прокрутки, и
+      диалоги больше не уходят под вырез экрана.
+    sv_SE: |
+      1.5.1 gör AI-användningspanelen faktiskt nåbar på ZimaOS. 1.5.0 levererade
+      sina två rapportörer bakom en Compose-profil, och CasaOS förkastar tyst
+      varje tjänst som deklarerar en -- panelen gick alltså inte att slå på alls,
+      varken via uppdatering eller ny installation. Nu är de vanliga tjänster som
+      ligger overksamma tills du loggar in, så att aktivera funktionen är bara:
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      Overksamma kostar de omkring 12 MB RAM och ingen mätbar processortid.
+      Priset är diskutrymme: båda avbildningarna bär med sig en leverantörs-CLI
+      och hämtas vare sig du använder dem eller inte.
+
+      Även i den här omgången, från 1.5.0: själva AI-användningspanelen -- hur
+      mycket som är kvar av dina Claude- och ChatGPT-abonnemang, som mätare ovanför
+      rutnätet -- plus en rättning för att Safari på iPhone dödade fliken efter
+      några minuters rullning, och dialoger som inte längre hamnar under urklippet.
+    tr_TR: |
+      1.5.1, yapay zekâ kullanım panosuna ZimaOS üzerinde gerçekten
+      erişilebilmesini sağlıyor. 1.5.0, iki raporlayıcısını bir Compose profilinin
+      arkasında dağıtıyordu; CasaOS ise profil tanımlayan her servisi sessizce
+      düşürüyor. Dolayısıyla pano ne güncellemeyle ne de temiz kurulumla hiçbir
+      şekilde açılamıyordu. Artık siz giriş yapana dek boşta bekleyen sıradan
+      servisler; özelliği açmak yalnızca şu satırdan ibaret:
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      Boştayken yaklaşık 12MB bellek harcarlar ve ölçülebilir bir işlemci yükleri
+      yoktur. Bedeli disk: her iki imaj da üreticinin komut satırı aracını taşır
+      ve siz kullanın ya da kullanmayın indirilir.
+
+      Yine bu turda, 1.5.0'dan gelenler: yapay zekâ kullanım panosunun kendisi --
+      Claude ve ChatGPT planlarınızdan ne kaldığı, ızgaranın üzerinde kadranlar
+      hâlinde -- ayrıca iPhone Safari'nin birkaç dakika kaydırdıktan sonra sekmeyi
+      kapatmasına yönelik bir düzeltme ve artık çentiğin altında kalmayan iletişim
+      kutuları.
+    zh_CN: |
+      1.5.1 让 AI 用量面板在 ZimaOS 上真正可用。1.5.0 把两个上报服务放在了 Compose
+      profile 后面，而 CasaOS 会静默丢弃任何声明了 profile 的服务——于是无论是更新
+      还是全新安装，这个面板都根本没法开启。现在它们是普通服务，在你登录之前一直
+      空转，所以启用这项功能只需要一条命令：
+
+        sudo docker exec -it service-dash-claude-usage claude auth login
+
+      空转时它们大约占用 12MB 内存，CPU 占用低到测不出来。代价是磁盘：两个镜像都
+      自带厂商的命令行工具，无论你用不用都会被拉取。
+
+      同一轮里还有来自 1.5.0 的内容：AI 用量面板本身——把 Claude 和 ChatGPT 套餐
+      还剩多少显示为网格上方的刻度盘——以及修复了 iPhone Safari 滚动几分钟后会杀掉
+      标签页的问题，还有对话框不再跑到刘海底下。
