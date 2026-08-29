@@ -31,7 +31,7 @@ services:
       - kinetirx_net
 
   backend:
-    image: ghcr.io/raktim94/kinetirx-backend:1.2.1
+    image: ghcr.io/raktim94/kinetirx-backend:1.3.0
     container_name: kinetirx-backend
     hostname: kinetirx-backend
     restart: unless-stopped
@@ -72,7 +72,7 @@ services:
             en_US: Optional — enables AI-powered OCR bill scanning and the clinical AI assistant. Leave blank to run those features in offline/fallback mode.
 
   frontend:
-    image: ghcr.io/raktim94/kinetirx-frontend:1.2.1
+    image: ghcr.io/raktim94/kinetirx-frontend:1.3.0
     container_name: kinetirx-frontend
     hostname: kinetirx-frontend
     restart: unless-stopped
@@ -140,10 +140,19 @@ x-casaos:
   index: /
   port_map: "3080"
   scheme: http
-  version: "1.2.1"
-  update_at: "2026-08-25"
+  version: "1.3.0"
+  update_at: "2026-08-29"
   release_notes:
     en_US: |-
+      1.3.0: Fixed thermal receipt printing (80mm/58mm and A4 now render
+      correctly instead of losing all layout in the print window) with a
+      per-bill format picker. Added live sync so a second cashier/pharmacist/
+      director counter sees new sales, stock, due-khata, and register
+      changes without a manual refresh; an admin-configurable Master
+      Security PIN as a second factor for System Reset; and Purchase Order
+      generation (print/download/WhatsApp) from the Medicine Orders
+      shortage book, grouped by distributor.
+
       1.2.1: Fixed text/badge contrast across the app that made stock
       levels, expiry warnings, and the Daily Sales Register hard to read,
       and fixed a bug where completing a POS sale with the patient's age
