@@ -23,7 +23,7 @@ services:
       - zulivio
 
   backend:
-    image: ghcr.io/raktim94/zulivio-backend:1.8.1
+    image: ghcr.io/raktim94/zulivio-backend:1.9.0
     container_name: zulivio-backend
     hostname: zulivio-backend
     restart: unless-stopped
@@ -129,7 +129,7 @@ services:
               (you'd just need to re-enter them from Settings).
 
   web:
-    image: ghcr.io/raktim94/zulivio-web:1.8.1
+    image: ghcr.io/raktim94/zulivio-web:1.9.0
     container_name: zulivio-web
     hostname: zulivio-web
     restart: unless-stopped
@@ -207,10 +207,21 @@ x-casaos:
   index: /
   scheme: http
   port_map: "2996"
-  version: "1.8.1"
-  update_at: "2026-08-29"
+  version: "1.9.0"
+  update_at: "2026-08-30"
   release_notes:
     en_US: |-
+      1.9.0: added an Attendance calendar showing your own present/absent
+      days and worked/break time for a month, plus a manager+ "Team
+      attendance" table (days present, worked/break time, calls) for
+      everyone in your team over a date range. Fixed a bug where a lead
+      assigned to someone (as opposed to an Assignment) never showed up on
+      their Overview/Start Work page. Fixed lead CSV import picking an
+      Excel-mangled phone column over a clean fallback column (like
+      phone_local_10d) already present in the same row. Removed the "Call
+      next lead" button from My Day; its overdue-follow-ups count now
+      links straight to the Follow-ups tab.
+
       1.8.1: fixed phone numbers getting mangled into scientific notation
       (e.g. "9.18605E+11") when exporting/importing leads as CSV and opening
       the file in Excel — exported phone numbers now stay plain text, and a
