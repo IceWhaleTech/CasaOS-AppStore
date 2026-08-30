@@ -270,14 +270,25 @@ x-casaos:
       quick actions right on lead board cards.
 
       1.5.0: security and zero-config hardening, plus a large batch of CRM
-      feature work. Fixes an insecure Helmet configuration flagged by
+      feature work. Closes the Critical/High findings from a full security
+      audit: the auth guard is now global (deny-by-default — a new
+      controller that forgets to guard itself is protected automatically
+      instead of silently open), every duplicated role-hierarchy check was
+      consolidated into one source of truth, a real race condition in
+      assignment/employee number generation (two requests landing at the
+      same instant could collide) is fixed with a bounded retry instead of
+      a plain count-and-increment, an Origin/Referer allowlist now backs
+      the existing CSRF defense, Helmet security headers were added, and
+      bootstrap/password-change are now rate-limited (previously only
+      login was). Fixes an insecure Helmet configuration flagged by
       CodeQL — the Content-Security-Policy is now on by default instead of
       opt-in. FIELD_ENCRYPTION_KEY (protects saved S3 backup / Google
       Sheets credentials) is now auto-generated and persisted on first run
       instead of requiring manual setup — matches this store's zero-config
       install philosophy. The S3 backup secret access key is now encrypted
       at rest. Employee email uniqueness is now enforced globally, not
-      just per-organization, closing a real data-integrity gap. Also adds
+      just per-organization (closing the same race at the database level,
+      not just the app layer), closing a real data-integrity gap. Also adds
       local backup download/upload restore and in-app self-update, a
       redesigned retractable sidebar, a linked user manual and public docs
       page, an MCP server with personal API keys, a Google Sheets Settings
