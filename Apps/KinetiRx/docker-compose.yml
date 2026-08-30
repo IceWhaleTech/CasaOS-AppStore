@@ -31,7 +31,7 @@ services:
       - kinetirx_net
 
   backend:
-    image: ghcr.io/raktim94/kinetirx-backend:1.4.1
+    image: ghcr.io/raktim94/kinetirx-backend:1.4.2
     container_name: kinetirx-backend
     hostname: kinetirx-backend
     restart: unless-stopped
@@ -79,7 +79,7 @@ services:
             en_US: "Optional — required to use Settings -> S3 Offsite Backup (your own S3-compatible bucket, e.g. R2/MinIO/Backblaze). Generate one with: openssl rand -hex 32. Leave blank if you don't need automatic offsite backups."
 
   frontend:
-    image: ghcr.io/raktim94/kinetirx-frontend:1.4.1
+    image: ghcr.io/raktim94/kinetirx-frontend:1.4.2
     container_name: kinetirx-frontend
     hostname: kinetirx-frontend
     restart: unless-stopped
@@ -151,10 +151,27 @@ x-casaos:
   index: /
   port_map: "3080"
   scheme: http
-  version: "1.4.1"
+  version: "1.4.2"
   update_at: "2026-08-31"
   release_notes:
     en_US: |-
+      1.4.2: Fixed Add Stock's "Type New Custom Distributor" option doing
+      nothing on a fresh install with no distributors yet. Removed
+      pre-filled placeholder-looking data across the app so new entries
+      start genuinely blank instead of needing to be noticed and
+      overwritten: Add Stock and Add Lab Stock fields, four separate
+      hardcoded demo doctor lists (now one real, empty-by-default list
+      shared across OPD/POS/Patients), 6 fake lab tests that used to
+      appear in every install's POS, and two demo doctor names a prior
+      version had seeded into the database. Every new employee account
+      now gets a random temporary password instead of the same static
+      default. Fixed a bug where OPD patient registration could silently
+      record a fabricated age/gender when left blank, or fail outright
+      with a save error. Fixed the OPD-to-patient link not actually being
+      saved. Fixed a deeper bug that could occasionally create duplicate
+      records (or fail with a "already exists" error) when adding stock,
+      distributors, or other list-backed data.
+
       1.4.1: Removed the Bengali subtitles from the OPD and Special Need
       Medicine Order forms and the POS stock badge — labels are English-only
       now. No functional changes.
