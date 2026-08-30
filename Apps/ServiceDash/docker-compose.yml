@@ -2,7 +2,7 @@ name: service-dash
 
 services:
   service-dash:
-    image: ghcr.io/cvaghela/service-dash:1.5.1
+    image: ghcr.io/cvaghela/service-dash:1.5.2
     container_name: service-dash
     ports:
       - target: 80
@@ -59,7 +59,7 @@ services:
   # Answers one question for nginx: is this browser really signed in to Uptime
   # Kuma? Without it, saving settings would have to trust the browser's word.
   kuma-auth:
-    image: ghcr.io/cvaghela/service-dash-kuma-auth:1.5.1
+    image: ghcr.io/cvaghela/service-dash-kuma-auth:1.5.2
     container_name: service-dash-kuma-auth
     environment:
       # Must point at the same Uptime Kuma as KUMA_PORT above.
@@ -83,7 +83,7 @@ services:
     restart: unless-stopped
 
   network-info:
-    image: ghcr.io/cvaghela/service-dash-network-info:1.5.1
+    image: ghcr.io/cvaghela/service-dash-network-info:1.5.2
     container_name: service-dash-network-info
     network_mode: host
     read_only: true
@@ -184,7 +184,7 @@ services:
   #
   #   docker exec -it service-dash-claude-usage claude auth login
   claude-usage:
-    image: ghcr.io/cvaghela/service-dash-claude-usage:1.5.1
+    image: ghcr.io/cvaghela/service-dash-claude-usage:1.5.2
     container_name: service-dash-claude-usage
     environment:
       # Plan windows move slowly; polling harder gains nothing.
@@ -211,7 +211,7 @@ services:
   # localhost and hangs.
   #   docker exec -it service-dash-codex-usage codex login --device-auth
   codex-usage:
-    image: ghcr.io/cvaghela/service-dash-codex-usage:1.5.1
+    image: ghcr.io/cvaghela/service-dash-codex-usage:1.5.2
     container_name: service-dash-codex-usage
     environment:
       CODEX_USAGE_REFRESH_SECONDS: "300"
@@ -243,8 +243,8 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.5.1"
-  update_at: "2026-08-29"
+  version: "1.5.2"
+  update_at: "2026-08-30"
   author: Chintan Vaghela
   developer: Chintan Vaghela
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ServiceDash/icon.png
@@ -1378,267 +1378,298 @@ x-casaos:
         然后在 **8888** 端口打开 Service Dash。
   release_notes:
     en_US: |
-      1.5.1 makes the AI usage panel actually reachable on ZimaOS. 1.5.0
-      shipped its two reporters behind a Compose profile, and CasaOS silently
-      drops any service that declares one -- so the panel could not be turned
-      on at all, by update or by fresh install. They are now ordinary services
-      that sit idle until you sign in, so enabling the feature is just:
+      1.5.2 makes an empty dashboard explain itself. A blank grid used to say
+      almost nothing: a small OFFLINE in the top bar, and a toast that cleared
+      itself after five seconds. Installing for the first time, you could not
+      tell "Uptime Kuma is not set up yet" from "this app is broken".
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      A blank grid now names which of three things happened, and what to do
+      about it:
 
-      Idle they cost about 12MB of RAM and no measurable CPU. The trade is
-      disk: both images carry a vendor CLI and are pulled whether or not you
-      use them.
+        * Uptime Kuma is not answering. It is a separate application, and
+          Service Dash does not bundle or install it -- so the panel says that
+          plainly, then walks through installing it, publishing a status page,
+          and matching KUMA_PORT and STATUS_SLUG.
+        * It answered, but that status page has no monitors on it. Steps for
+          the Uptime Kuma editor, including adding a group first, which is
+          where most empty pages get stuck.
+        * Your cards are loaded, and the search and filters are hiding them.
 
-      Also in this cycle, from 1.5.0: the AI usage panel itself -- how much of
-      your Claude and ChatGPT plan is left, as dials above the grid -- plus a
-      fix for iPhone Safari killing the tab after a few minutes of scrolling,
-      and dialogs no longer running under the notch.
+      Nothing else changed. If your dashboard already shows cards, this release
+      is invisible to you.
     en_GB: |
-      1.5.1 makes the AI usage panel actually reachable on ZimaOS. 1.5.0
-      shipped its two reporters behind a Compose profile, and CasaOS silently
-      drops any service that declares one -- so the panel could not be turned
-      on at all, by update or by fresh install. They are now ordinary services
-      that sit idle until you sign in, so enabling the feature is just:
+      1.5.2 makes an empty dashboard explain itself. A blank grid used to say
+      almost nothing: a small OFFLINE in the top bar, and a toast that cleared
+      itself after five seconds. Installing for the first time, you could not
+      tell "Uptime Kuma is not set up yet" from "this app is broken".
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      A blank grid now names which of three things happened, and what to do
+      about it:
 
-      Idle they cost about 12MB of RAM and no measurable CPU. The trade is
-      disk: both images carry a vendor CLI and are pulled whether or not you
-      use them.
+        * Uptime Kuma is not answering. It is a separate application, and
+          Service Dash does not bundle or install it -- so the panel says that
+          plainly, then walks through installing it, publishing a status page,
+          and matching KUMA_PORT and STATUS_SLUG.
+        * It answered, but that status page has no monitors on it. Steps for
+          the Uptime Kuma editor, including adding a group first, which is
+          where most empty pages get stuck.
+        * Your cards are loaded, and the search and filters are hiding them.
 
-      Also in this cycle, from 1.5.0: the AI usage panel itself -- how much of
-      your Claude and ChatGPT plan is left, as dials above the grid -- plus a
-      fix for iPhone Safari killing the tab after a few minutes of scrolling,
-      and dialogues no longer running under the notch.
+      Nothing else changed. If your dashboard already shows cards, this release
+      is invisible to you.
     de_DE: |
-      1.5.1 macht das KI-Nutzungspanel auf ZimaOS endlich erreichbar. 1.5.0
-      lieferte seine beiden Reporter hinter einem Compose-Profil aus, und CasaOS
-      verwirft stillschweigend jeden Dienst, der eines deklariert -- das Panel
-      ließ sich also überhaupt nicht einschalten, weder per Update noch per
-      Neuinstallation. Sie sind jetzt gewöhnliche Dienste, die untätig bleiben,
-      bis Sie sich anmelden. Zum Aktivieren genügt:
+      1.5.2 lässt ein leeres Dashboard sich selbst erklären. Bisher sagte ein
+      leeres Raster fast nichts: ein kleines OFFLINE in der oberen Leiste und
+      eine Meldung, die nach fünf Sekunden verschwand. Bei der ersten
+      Installation war "Uptime Kuma ist noch nicht eingerichtet" nicht von
+      "diese App ist kaputt" zu unterscheiden.
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      Ein leeres Raster nennt jetzt, welcher der drei Fälle vorliegt, und was
+      zu tun ist:
 
-      Im Leerlauf kosten sie rund 12 MB RAM und keine messbare CPU. Der Preis ist
-      Speicherplatz: Beide Images enthalten ein Hersteller-CLI und werden
-      geladen, ob Sie sie nutzen oder nicht.
+        * Uptime Kuma antwortet nicht. Es ist eine eigenständige Anwendung, die
+          Service Dash weder mitliefert noch installiert -- das sagt das Panel
+          jetzt deutlich und führt dann durch Installation, Statusseite und die
+          passenden Werte für KUMA_PORT und STATUS_SLUG.
+        * Es hat geantwortet, aber auf der Statusseite liegen keine Monitore.
+          Schritte für den Editor von Uptime Kuma, einschließlich: zuerst eine
+          Gruppe anlegen -- daran scheitern die meisten leeren Seiten.
+        * Ihre Karten sind geladen, und Suche und Filter blenden sie aus.
 
-      Ebenfalls in diesem Zyklus, aus 1.5.0: das KI-Nutzungspanel selbst -- wie
-      viel von Ihrem Claude- und ChatGPT-Kontingent übrig ist, als Anzeigen über
-      dem Raster -- dazu ein Fix dafür, dass iPhone-Safari den Tab nach ein paar
-      Minuten Scrollen beendete, und Dialoge laufen nicht mehr unter den Notch.
+      Sonst hat sich nichts geändert. Zeigt Ihr Dashboard bereits Karten, ist
+      dieses Update für Sie unsichtbar.
     el_GR: |
-      Η έκδοση 1.5.1 κάνει το πάνελ χρήσης AI πράγματι προσβάσιμο στο ZimaOS. Η
-      1.5.0 έστελνε τους δύο reporters πίσω από ένα Compose profile, και το
-      CasaOS απορρίπτει σιωπηλά κάθε υπηρεσία που δηλώνει ένα -- έτσι το πάνελ
-      δεν μπορούσε να ενεργοποιηθεί καθόλου, ούτε με ενημέρωση ούτε με καθαρή
-      εγκατάσταση. Τώρα είναι απλές υπηρεσίες που μένουν αδρανείς μέχρι να
-      συνδεθείτε, οπότε η ενεργοποίηση είναι απλώς:
+      Η έκδοση 1.5.2 κάνει έναν άδειο πίνακα να εξηγεί τον εαυτό του. Μέχρι
+      τώρα ένα άδειο πλέγμα δεν έλεγε σχεδόν τίποτα: ένα μικρό OFFLINE στην
+      επάνω μπάρα και ένα μήνυμα που έσβηνε μετά από πέντε δευτερόλεπτα. Στην
+      πρώτη εγκατάσταση, το "το Uptime Kuma δεν έχει ρυθμιστεί ακόμη" δεν
+      ξεχώριζε από το "η εφαρμογή χάλασε".
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      Τώρα το άδειο πλέγμα ονομάζει ποιο από τα τρία συνέβη, και τι να κάνετε:
 
-      Αδρανείς κοστίζουν περίπου 12MB RAM και μηδενική μετρήσιμη CPU. Το τίμημα
-      είναι ο χώρος στον δίσκο: και τα δύο images περιέχουν ένα CLI του
-      κατασκευαστή και κατεβαίνουν είτε τα χρησιμοποιείτε είτε όχι.
+        * Το Uptime Kuma δεν απαντά. Είναι ξεχωριστή εφαρμογή, την οποία το
+          Service Dash δεν περιλαμβάνει ούτε εγκαθιστά -- ο πίνακας το λέει
+          πλέον καθαρά και μετά σας οδηγεί στην εγκατάσταση, στη δημοσίευση
+          σελίδας κατάστασης και στην αντιστοίχιση KUMA_PORT και STATUS_SLUG.
+        * Απάντησε, αλλά η σελίδα κατάστασης δεν έχει monitors. Βήματα για τον
+          επεξεργαστή του Uptime Kuma, μαζί με το "πρώτα προσθέστε ομάδα", εκεί
+          όπου κολλάνε οι περισσότερες άδειες σελίδες.
+        * Οι κάρτες σας έχουν φορτώσει και τις κρύβουν η αναζήτηση και τα
+          φίλτρα.
 
-      Επίσης σε αυτόν τον κύκλο, από την 1.5.0: το ίδιο το πάνελ χρήσης AI --
-      πόσο απομένει από το πλάνο σας σε Claude και ChatGPT, ως δείκτες πάνω από
-      το πλέγμα -- μαζί με μια διόρθωση για τον Safari του iPhone που τερμάτιζε
-      την καρτέλα μετά από λίγα λεπτά κύλισης, και διαλόγους που δεν περνούν
-      πλέον κάτω από το notch.
+      Τίποτε άλλο δεν άλλαξε. Αν ο πίνακάς σας δείχνει ήδη κάρτες, αυτή η
+      έκδοση είναι αόρατη για εσάς.
     fr_FR: |
-      La version 1.5.1 rend enfin le panneau d'utilisation IA accessible sur
-      ZimaOS. La 1.5.0 livrait ses deux rapporteurs derrière un profil Compose,
-      et CasaOS écarte silencieusement tout service qui en déclare un -- le
-      panneau ne pouvait donc pas être activé du tout, ni par mise à jour ni par
-      installation neuve. Ce sont désormais des services ordinaires qui restent
-      inactifs jusqu'à votre connexion ; activer la fonction se résume à :
+      La version 1.5.2 fait en sorte qu'un tableau de bord vide s'explique
+      lui-même. Jusqu'ici une grille vide ne disait presque rien : un petit
+      OFFLINE dans la barre du haut et une notification qui disparaissait au
+      bout de cinq secondes. À la première installation, impossible de
+      distinguer « Uptime Kuma n'est pas encore configuré » de « cette
+      application est cassée ».
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      Une grille vide indique désormais lequel des trois cas s'applique, et
+      quoi faire :
 
-      Au repos, ils coûtent environ 12 Mo de RAM et aucun CPU mesurable. La
-      contrepartie est le disque : les deux images embarquent un CLI éditeur et
-      sont téléchargées que vous vous en serviez ou non.
+        * Uptime Kuma ne répond pas. C'est une application distincte, que
+          Service Dash n'embarque ni n'installe -- le panneau le dit clairement,
+          puis détaille l'installation, la publication d'une page de statut et
+          la correspondance de KUMA_PORT et STATUS_SLUG.
+        * Il a répondu, mais cette page de statut ne contient aucun moniteur.
+          Les étapes dans l'éditeur d'Uptime Kuma, dont « créer d'abord un
+          groupe », là où bloquent la plupart des pages vides.
+        * Vos cartes sont chargées, et la recherche et les filtres les masquent.
 
-      Également dans ce cycle, depuis la 1.5.0 : le panneau d'utilisation IA
-      lui-même -- ce qu'il reste de vos forfaits Claude et ChatGPT, sous forme de
-      cadrans au-dessus de la grille -- ainsi qu'un correctif pour Safari sur
-      iPhone qui tuait l'onglet après quelques minutes de défilement, et des
-      boîtes de dialogue qui ne passent plus sous l'encoche.
+      Rien d'autre n'a changé. Si votre tableau de bord affiche déjà des cartes,
+      cette version vous est invisible.
     hr_HR: |
-      Verzija 1.5.1 čini ploču s AI potrošnjom doista dostupnom na ZimaOS-u.
-      1.5.0 je isporučila svoja dva reportera iza Compose profila, a CasaOS
-      tiho odbacuje svaku uslugu koja ga deklarira -- pa se ploča uopće nije
-      mogla uključiti, ni nadogradnjom ni čistom instalacijom. Sada su to obične
-      usluge koje miruju dok se ne prijavite, pa je uključivanje samo:
+      Verzija 1.5.2 čini da se prazna nadzorna ploča sama objasni. Dosad prazna
+      mreža nije govorila gotovo ništa: malen natpis OFFLINE u gornjoj traci i
+      poruka koja bi nestala nakon pet sekundi. Pri prvoj instalaciji niste
+      mogli razlikovati "Uptime Kuma još nije postavljen" od "aplikacija je
+      pokvarena".
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      Prazna mreža sada imenuje koje se od tri stvari dogodilo i što učiniti:
 
-      Dok miruju troše oko 12MB RAM-a i nemjerljivo malo procesora. Cijena je
-      prostor na disku: obje slike nose proizvođačev CLI i preuzimaju se bez
-      obzira koristite li ih.
+        * Uptime Kuma ne odgovara. To je zasebna aplikacija koju Service Dash ne
+          isporučuje niti instalira -- ploča to sada jasno kaže, a zatim vodi
+          kroz instalaciju, objavu stranice stanja i usklađivanje KUMA_PORT i
+          STATUS_SLUG.
+        * Odgovorio je, ali na toj stranici stanja nema monitora. Koraci za
+          uređivač Uptime Kume, uključujući "prvo dodajte grupu", na čemu zapne
+          većina praznih stranica.
+        * Vaše su kartice učitane, a pretraga i filtri ih skrivaju.
 
-      Također u ovom ciklusu, iz 1.5.0: sama ploča s AI potrošnjom -- koliko vam
-      je ostalo od Claude i ChatGPT plana, kao brojčanici iznad mreže -- uz
-      ispravak za Safari na iPhoneu koji je nakon nekoliko minuta pomicanja
-      gasio karticu, te dijaloge koji više ne završavaju ispod ureza.
+      Ništa se drugo nije promijenilo. Ako vaša ploča već prikazuje kartice, ovo
+      je izdanje za vas nevidljivo.
     it_IT: |
-      La 1.5.1 rende il pannello di utilizzo AI davvero raggiungibile su ZimaOS.
-      La 1.5.0 spediva i suoi due reporter dietro un profilo Compose, e CasaOS
-      scarta silenziosamente qualsiasi servizio che ne dichiari uno -- quindi il
-      pannello non si poteva attivare affatto, né per aggiornamento né per
-      installazione pulita. Ora sono servizi ordinari che restano inattivi finché
-      non accedete, perciò abilitare la funzione è solo:
+      La 1.5.2 fa in modo che una dashboard vuota si spieghi da sola. Finora una
+      griglia vuota non diceva quasi nulla: un piccolo OFFLINE nella barra in
+      alto e un avviso che spariva dopo cinque secondi. Alla prima
+      installazione, "Uptime Kuma non è ancora configurato" era
+      indistinguibile da "questa app è rotta".
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      Ora una griglia vuota dice quale dei tre casi è il vostro, e cosa fare:
 
-      Da inattivi costano circa 12MB di RAM e nessuna CPU misurabile. Il prezzo è
-      lo spazio su disco: entrambe le immagini portano una CLI del fornitore e
-      vengono scaricate che le usiate o no.
+        * Uptime Kuma non risponde. È un'applicazione separata, che Service Dash
+          non include né installa -- il pannello lo dice chiaramente e poi guida
+          all'installazione, alla pubblicazione di una pagina di stato e
+          all'allineamento di KUMA_PORT e STATUS_SLUG.
+        * Ha risposto, ma quella pagina di stato non ha monitor. I passaggi
+          nell'editor di Uptime Kuma, incluso "prima aggiungete un gruppo", dove
+          si bloccano quasi tutte le pagine vuote.
+        * Le vostre schede sono caricate, e ricerca e filtri le stanno
+          nascondendo.
 
-      Sempre in questo ciclo, dalla 1.5.0: il pannello di utilizzo AI stesso --
-      quanto resta dei vostri piani Claude e ChatGPT, come quadranti sopra la
-      griglia -- più una correzione per Safari su iPhone che chiudeva la scheda
-      dopo qualche minuto di scorrimento, e le finestre di dialogo che non
-      finiscono più sotto il notch.
+      Nient'altro è cambiato. Se la vostra dashboard mostra già le schede,
+      questa versione è invisibile.
     ja_JP: |
-      1.5.1 では、AI 使用状況パネルに ZimaOS からきちんとたどり着けるようになり
-      ました。1.5.0 では 2 つのレポーターを Compose のプロファイルの後ろに置いて
-      いましたが、CasaOS はプロファイルを宣言したサービスを黙って取り除きます。
-      そのため、更新でも新規インストールでもパネルをまったく有効化できませんでした。
-      現在は通常のサービスとして常駐し、サインインするまで待機します。有効化は
-      次の 1 行だけです。
+      1.5.2 では、空のダッシュボードが自分で理由を説明するようになりました。これまで
+      空のグリッドが伝えていたのは、上部バーの小さな OFFLINE と、5 秒で消えてしまう
+      通知だけでした。初めて導入した人には、「Uptime Kuma をまだ設定していない」のか
+      「このアプリが壊れている」のか見分けがつきませんでした。
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      空のグリッドは、次の 3 つのどれに当たるかと、その対処を示します。
 
-      待機中の消費はメモリー約 12MB、CPU は計測できない程度です。代償はディスクで、
-      どちらのイメージもベンダーの CLI を含み、使うかどうかに関わらず取得されます。
+        * Uptime Kuma が応答していない。これは別のアプリケーションで、Service Dash
+          は同梱もインストールもしません。パネルはそれをはっきり伝えたうえで、
+          インストール、ステータスページの公開、KUMA_PORT と STATUS_SLUG の
+          合わせ方まで案内します。
+        * 応答はあったが、そのステータスページに監視項目がない。Uptime Kuma の
+          エディターでの手順を示します。最初にグループを追加すること、が
+          空のページで最もつまずく点です。
+        * カードは読み込まれていて、検索とフィルターが隠している。
 
-      同じ流れで 1.5.0 から入ったもの: AI 使用状況パネル本体 (Claude と ChatGPT の
-      プラン残量をグリッド上部のダイヤルで表示)、数分スクロールすると iPhone の
-      Safari がタブを終了してしまう問題の修正、そしてダイアログがノッチの下に
-      入り込まなくなった点です。
+      ほかに変更はありません。すでにカードが表示されているなら、この更新は
+      目に見えないはずです。
     ko_KR: |
-      1.5.1은 AI 사용량 패널에 ZimaOS에서 실제로 도달할 수 있게 만듭니다. 1.5.0은
-      두 리포터를 Compose 프로필 뒤에 두고 배포했는데, CasaOS는 프로필을 선언한
-      서비스를 조용히 버립니다. 그래서 업데이트로든 새로 설치하든 패널을 아예 켤 수
-      없었습니다. 이제는 로그인할 때까지 대기하는 평범한 서비스이므로, 기능을
-      켜는 일은 다음 한 줄이 전부입니다.
+      1.5.2는 비어 있는 대시보드가 스스로 이유를 설명하게 합니다. 지금까지 빈 그리드가
+      알려 주는 것은 상단 바의 작은 OFFLINE과 5초 만에 사라지는 알림뿐이었습니다. 처음
+      설치한 사람은 "Uptime Kuma를 아직 설정하지 않았다"와 "이 앱이 고장 났다"를 구분할
+      수 없었습니다.
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      이제 빈 그리드는 셋 중 어떤 상황인지와 무엇을 해야 하는지 알려 줍니다.
 
-      대기 중에는 RAM 약 12MB를 쓰고 CPU는 측정되지 않는 수준입니다. 대신 치르는
-      비용은 디스크입니다. 두 이미지 모두 공급사 CLI를 담고 있어 쓰든 안 쓰든
-      내려받습니다.
+        * Uptime Kuma가 응답하지 않음. 이것은 별도의 애플리케이션이며 Service Dash가
+          함께 담거나 설치해 주지 않습니다. 패널이 그 점을 분명히 밝힌 뒤 설치, 상태
+          페이지 게시, KUMA_PORT와 STATUS_SLUG 맞추기까지 안내합니다.
+        * 응답은 왔지만 그 상태 페이지에 모니터가 없음. Uptime Kuma 편집기에서의
+          단계를 안내하며, 그중 "그룹을 먼저 추가"가 빈 페이지가 가장 많이 막히는
+          지점입니다.
+        * 카드는 불러왔고, 검색과 필터가 가리고 있음.
 
-      같은 흐름으로 1.5.0에서 들어온 것들: AI 사용량 패널 자체(Claude와 ChatGPT
-      요금제가 얼마나 남았는지 그리드 위 다이얼로 표시), 몇 분 스크롤하면 iPhone
-      Safari가 탭을 종료해 버리던 문제의 수정, 그리고 대화 상자가 더 이상 노치
-      아래로 들어가지 않는 점입니다.
+      그 밖에 달라진 것은 없습니다. 이미 카드가 보이고 있다면 이번 업데이트는 눈에
+      띄지 않을 것입니다.
     nb_NO: |
-      1.5.1 gjør KI-brukspanelet faktisk tilgjengelig på ZimaOS. 1.5.0 leverte
-      de to rapportørene bak en Compose-profil, og CasaOS forkaster stille enhver
-      tjeneste som erklærer en -- panelet kunne altså ikke slås på i det hele
-      tatt, verken ved oppdatering eller ved ny installasjon. Nå er de vanlige
-      tjenester som står i ro til du logger inn, så det å slå på funksjonen er
-      bare:
+      1.5.2 får et tomt dashbord til å forklare seg selv. Til nå sa et tomt
+      rutenett nesten ingenting: et lite OFFLINE i topplinjen og en melding som
+      forsvant etter fem sekunder. Ved første installasjon kunne du ikke skille
+      "Uptime Kuma er ikke satt opp ennå" fra "denne appen er ødelagt".
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      Et tomt rutenett sier nå hvilken av tre ting som skjedde, og hva du gjør:
 
-      I ro koster de rundt 12 MB RAM og ingen målbar CPU. Prisen er diskplass:
-      begge bildene bærer en leverandør-CLI og lastes ned enten du bruker dem
-      eller ikke.
+        * Uptime Kuma svarer ikke. Det er en egen applikasjon, og Service Dash
+          hverken leverer eller installerer den -- panelet sier det rett ut, og
+          går deretter gjennom installasjon, publisering av en statusside og
+          hvordan KUMA_PORT og STATUS_SLUG skal stemme.
+        * Det svarte, men statussiden har ingen overvåkere. Stegene i Uptime
+          Kumas redigering, inkludert "legg til en gruppe først", der de fleste
+          tomme sider står fast.
+        * Kortene dine er lastet, og søket og filtrene skjuler dem.
 
-      Også i denne runden, fra 1.5.0: selve KI-brukspanelet -- hvor mye som er
-      igjen av Claude- og ChatGPT-abonnementene dine, som målere over rutenettet
-      -- pluss en rettelse for at Safari på iPhone drepte fanen etter noen
-      minutters rulling, og dialoger som ikke lenger havner under utsparingen.
+      Ingenting annet er endret. Viser dashbordet ditt allerede kort, er denne
+      utgivelsen usynlig for deg.
     pt_PT: |
-      A 1.5.1 torna o painel de utilização de IA realmente acessível no ZimaOS. A
-      1.5.0 entregava os seus dois repórteres atrás de um perfil do Compose, e o
-      CasaOS descarta silenciosamente qualquer serviço que declare um -- por isso
-      o painel não podia ser ativado de todo, nem por atualização nem por
-      instalação de raiz. Agora são serviços normais que ficam inativos até
-      iniciar sessão, pelo que ativar a funcionalidade é apenas:
+      A 1.5.2 faz com que um painel vazio se explique a si próprio. Até agora
+      uma grelha vazia não dizia quase nada: um pequeno OFFLINE na barra
+      superior e um aviso que desaparecia ao fim de cinco segundos. Numa
+      primeira instalação, não era possível distinguir "o Uptime Kuma ainda não
+      está configurado" de "esta aplicação está avariada".
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      Uma grelha vazia indica agora qual dos três casos se aplica, e o que
+      fazer:
 
-      Inativos custam cerca de 12MB de RAM e nenhum CPU mensurável. A troca é o
-      disco: ambas as imagens transportam uma CLI do fornecedor e são
-      descarregadas quer as use quer não.
+        * O Uptime Kuma não responde. É uma aplicação separada, que o Service
+          Dash não inclui nem instala -- o painel di-lo claramente e depois
+          orienta a instalação, a publicação de uma página de estado e a
+          correspondência de KUMA_PORT e STATUS_SLUG.
+        * Respondeu, mas essa página de estado não tem monitores. Os passos no
+          editor do Uptime Kuma, incluindo "adicione primeiro um grupo", onde
+          encalham quase todas as páginas vazias.
+        * Os seus cartões estão carregados e a pesquisa e os filtros escondem-nos.
 
-      Também neste ciclo, vindo da 1.5.0: o próprio painel de utilização de IA --
-      quanto resta dos seus planos Claude e ChatGPT, em mostradores por cima da
-      grelha -- mais uma correção para o Safari do iPhone que fechava o separador
-      ao fim de alguns minutos a deslizar, e caixas de diálogo que já não passam
-      por baixo do entalhe.
+      Mais nada mudou. Se o seu painel já mostra cartões, esta versão é
+      invisível para si.
     ru_RU: |
-      Версия 1.5.1 делает панель расхода ИИ действительно доступной в ZimaOS. В
-      1.5.0 два её репортёра поставлялись за Compose-профилем, а CasaOS молча
-      отбрасывает любой сервис, который объявляет профиль, — поэтому включить
-      панель было нельзя вовсе, ни обновлением, ни чистой установкой. Теперь это
-      обычные сервисы, которые простаивают до вашего входа, так что включение
-      сводится к одной строке:
+      Версия 1.5.2 учит пустую панель объяснять саму себя. Раньше пустая сетка
+      сообщала почти ничего: маленькое OFFLINE в верхней строке и уведомление,
+      исчезавшее через пять секунд. При первой установке нельзя было отличить
+      «Uptime Kuma ещё не настроен» от «приложение сломано».
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      Теперь пустая сетка называет, что именно из трёх произошло, и что делать:
 
-      В простое они занимают около 12 МБ ОЗУ и не дают измеримой нагрузки на
-      процессор. Плата — место на диске: оба образа несут в себе CLI поставщика и
-      загружаются независимо от того, пользуетесь вы ими или нет.
+        * Uptime Kuma не отвечает. Это отдельное приложение, которое Service
+          Dash не поставляет и не устанавливает, — панель прямо об этом
+          говорит, а затем проводит через установку, публикацию страницы
+          состояния и согласование KUMA_PORT и STATUS_SLUG.
+        * Ответ получен, но на этой странице состояния нет мониторов. Шаги в
+          редакторе Uptime Kuma, в том числе «сначала добавьте группу» — именно
+          здесь застревает большинство пустых страниц.
+        * Карточки загружены, а поиск и фильтры их скрывают.
 
-      Также в этом цикле, из 1.5.0: сама панель расхода ИИ — сколько осталось от
-      тарифов Claude и ChatGPT, в виде шкал над сеткой, — плюс исправление того,
-      что Safari на iPhone закрывал вкладку после нескольких минут прокрутки, и
-      диалоги больше не уходят под вырез экрана.
+      Больше ничего не изменилось. Если ваша панель уже показывает карточки,
+      этот выпуск для вас незаметен.
     sv_SE: |
-      1.5.1 gör AI-användningspanelen faktiskt nåbar på ZimaOS. 1.5.0 levererade
-      sina två rapportörer bakom en Compose-profil, och CasaOS förkastar tyst
-      varje tjänst som deklarerar en -- panelen gick alltså inte att slå på alls,
-      varken via uppdatering eller ny installation. Nu är de vanliga tjänster som
-      ligger overksamma tills du loggar in, så att aktivera funktionen är bara:
+      1.5.2 får en tom instrumentpanel att förklara sig själv. Hittills sa ett
+      tomt rutnät nästan ingenting: ett litet OFFLINE i topplisten och en
+      avisering som försvann efter fem sekunder. Vid en första installation gick
+      det inte att skilja "Uptime Kuma är inte uppsatt än" från "den här appen
+      är trasig".
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      Ett tomt rutnät säger nu vilket av tre fall det rör sig om, och vad du gör:
 
-      Overksamma kostar de omkring 12 MB RAM och ingen mätbar processortid.
-      Priset är diskutrymme: båda avbildningarna bär med sig en leverantörs-CLI
-      och hämtas vare sig du använder dem eller inte.
+        * Uptime Kuma svarar inte. Det är en separat applikation som Service
+          Dash varken levererar eller installerar -- panelen säger det rakt ut
+          och går sedan igenom installation, publicering av en statussida och
+          hur KUMA_PORT och STATUS_SLUG ska stämma.
+        * Det svarade, men statussidan har inga övervakare. Stegen i Uptime
+          Kumas redigerare, inklusive "lägg till en grupp först", där de flesta
+          tomma sidor kör fast.
+        * Dina kort är laddade, och sökningen och filtren döljer dem.
 
-      Även i den här omgången, från 1.5.0: själva AI-användningspanelen -- hur
-      mycket som är kvar av dina Claude- och ChatGPT-abonnemang, som mätare ovanför
-      rutnätet -- plus en rättning för att Safari på iPhone dödade fliken efter
-      några minuters rullning, och dialoger som inte längre hamnar under urklippet.
+      Inget annat har ändrats. Visar din panel redan kort är den här versionen
+      osynlig för dig.
     tr_TR: |
-      1.5.1, yapay zekâ kullanım panosuna ZimaOS üzerinde gerçekten
-      erişilebilmesini sağlıyor. 1.5.0, iki raporlayıcısını bir Compose profilinin
-      arkasında dağıtıyordu; CasaOS ise profil tanımlayan her servisi sessizce
-      düşürüyor. Dolayısıyla pano ne güncellemeyle ne de temiz kurulumla hiçbir
-      şekilde açılamıyordu. Artık siz giriş yapana dek boşta bekleyen sıradan
-      servisler; özelliği açmak yalnızca şu satırdan ibaret:
+      1.5.2, boş bir panonun kendini açıklamasını sağlıyor. Şimdiye kadar boş
+      bir ızgara neredeyse hiçbir şey söylemiyordu: üst çubukta küçük bir
+      OFFLINE ve beş saniyede kaybolan bir bildirim. İlk kurulumda "Uptime Kuma
+      henüz kurulmadı" ile "bu uygulama bozuk" birbirinden ayırt edilemiyordu.
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      Boş ızgara artık üç durumdan hangisinin geçerli olduğunu ve ne yapılacağını
+      söylüyor:
 
-      Boştayken yaklaşık 12MB bellek harcarlar ve ölçülebilir bir işlemci yükleri
-      yoktur. Bedeli disk: her iki imaj da üreticinin komut satırı aracını taşır
-      ve siz kullanın ya da kullanmayın indirilir.
+        * Uptime Kuma yanıt vermiyor. Ayrı bir uygulamadır ve Service Dash onu ne
+          içerir ne de kurar -- pano bunu açıkça söylüyor, ardından kurulumu,
+          bir durum sayfası yayımlamayı ve KUMA_PORT ile STATUS_SLUG değerlerini
+          eşleştirmeyi anlatıyor.
+        * Yanıt verdi, ama o durum sayfasında hiç izleyici yok. Uptime Kuma
+          düzenleyicisindeki adımlar, "önce bir grup ekleyin" dahil; boş
+          sayfaların çoğu tam burada takılıyor.
+        * Kartlarınız yüklendi, arama ve filtreler onları gizliyor.
 
-      Yine bu turda, 1.5.0'dan gelenler: yapay zekâ kullanım panosunun kendisi --
-      Claude ve ChatGPT planlarınızdan ne kaldığı, ızgaranın üzerinde kadranlar
-      hâlinde -- ayrıca iPhone Safari'nin birkaç dakika kaydırdıktan sonra sekmeyi
-      kapatmasına yönelik bir düzeltme ve artık çentiğin altında kalmayan iletişim
-      kutuları.
+      Başka bir şey değişmedi. Panonuz zaten kart gösteriyorsa bu sürüm sizin
+      için görünmezdir.
     zh_CN: |
-      1.5.1 让 AI 用量面板在 ZimaOS 上真正可用。1.5.0 把两个上报服务放在了 Compose
-      profile 后面，而 CasaOS 会静默丢弃任何声明了 profile 的服务——于是无论是更新
-      还是全新安装，这个面板都根本没法开启。现在它们是普通服务，在你登录之前一直
-      空转，所以启用这项功能只需要一条命令：
+      1.5.2 让空白的仪表盘自己说明原因。过去空白的网格几乎什么都不说：顶栏里一个很小的
+      OFFLINE，加上一条五秒后就消失的提示。第一次安装的人根本分不清是「Uptime Kuma
+      还没配置好」还是「这个应用坏了」。
 
-        sudo docker exec -it service-dash-claude-usage claude auth login
+      现在空白的网格会指出是以下三种情况中的哪一种，以及该怎么做：
 
-      空转时它们大约占用 12MB 内存，CPU 占用低到测不出来。代价是磁盘：两个镜像都
-      自带厂商的命令行工具，无论你用不用都会被拉取。
+        * Uptime Kuma 没有响应。它是一个独立的应用，Service Dash 既不打包也不安装
+          它——面板会把这一点讲清楚，然后一步步说明如何安装、如何发布状态页，以及如何
+          让 KUMA_PORT 和 STATUS_SLUG 对得上。
+        * 有响应，但那个状态页上没有监控项。给出 Uptime Kuma 编辑器里的步骤，其中
+          「先添加一个分组」正是大多数空状态页卡住的地方。
+        * 卡片已经加载，是搜索和筛选把它们藏起来了。
 
-      同一轮里还有来自 1.5.0 的内容：AI 用量面板本身——把 Claude 和 ChatGPT 套餐
-      还剩多少显示为网格上方的刻度盘——以及修复了 iPhone Safari 滚动几分钟后会杀掉
-      标签页的问题，还有对话框不再跑到刘海底下。
+      其他没有变化。如果你的仪表盘已经能看到卡片，这次更新对你来说是无感的。
