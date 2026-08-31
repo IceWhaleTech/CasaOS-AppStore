@@ -1,0 +1,44 @@
+name: vertio-comprimir
+services:
+  vertio-comprimir:
+    image: kyouz2148/vertio-comprimir:latest
+    container_name: vertio-comprimir
+    restart: unless-stopped
+    ports:
+      - "8088:8088"
+    environment:
+      - PYTHONUNBUFFERED=1
+    x-casaos:
+      ports:
+        - container: "8088"
+          description:
+            en_us: Web UI Port
+            pt_br: Porta da Interface Web
+      envs:
+        - container: PYTHONUNBUFFERED
+          description:
+            en_us: Python stdout buffering
+            pt_br: Bufferização de saída Python
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  main: vertio-comprimir
+  author: Vertio
+  category: Utilities
+  description:
+    en_us: Fast and minimalist image (JPEG, PNG, WebP, GIF) and PDF compressor. Set target sizes in KB/MB or quality percentage with light and dark themes.
+    pt_br: Otimizador e compressor rápido de imagens (JPEG, PNG, WebP, GIF) e PDFs. Defina o tamanho alvo em KB/MB ou por qualidade, com temas claro e escuro.
+  developer: Vertio
+  icon: https://raw.githubusercontent.com/IceWhaleTech/CasaOS-AppStore/main/Apps/vertio-comprimir/icon.svg
+  tagline:
+    en_us: Fast and private image and file compressor
+    pt_br: Comprima e reduza seus arquivos localmente
+  title:
+    en_us: Vertio Comprimir
+    pt_br: Vertio Comprimir
+  port_map: "8088"
+  index: /
+  scheme: http
