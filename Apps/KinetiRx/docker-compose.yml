@@ -31,7 +31,7 @@ services:
       - kinetirx_net
 
   backend:
-    image: ghcr.io/raktim94/kinetirx-backend:1.4.2
+    image: ghcr.io/raktim94/kinetirx-backend:1.5.0
     container_name: kinetirx-backend
     hostname: kinetirx-backend
     restart: unless-stopped
@@ -79,7 +79,7 @@ services:
             en_US: "Optional — required to use Settings -> S3 Offsite Backup (your own S3-compatible bucket, e.g. R2/MinIO/Backblaze). Generate one with: openssl rand -hex 32. Leave blank if you don't need automatic offsite backups."
 
   frontend:
-    image: ghcr.io/raktim94/kinetirx-frontend:1.4.2
+    image: ghcr.io/raktim94/kinetirx-frontend:1.5.0
     container_name: kinetirx-frontend
     hostname: kinetirx-frontend
     restart: unless-stopped
@@ -151,10 +151,24 @@ x-casaos:
   index: /
   port_map: "3080"
   scheme: http
-  version: "1.4.2"
+  version: "1.5.0"
   update_at: "2026-08-31"
   release_notes:
     en_US: |-
+      1.5.0: Added bulk stock import from a CSV or Excel file (Medicine
+      Stock -> Import CSV / Excel), with a downloadable template and a
+      preview of what will be added before you confirm. Add Stock now lets
+      you pick a Pack Type (Strip/Bottle/Tube/Vial/Ampoule/Sachet/Box/Jar)
+      instead of assuming everything is a tablet strip, with a live
+      loose-dispensing price preview — so syrups, ointments and injectables
+      can have a correct per-ml/per-gm loose price, calculated the same
+      GST-inclusive way as strips. Fixed a real bug where "Generate
+      Barcode" (Inventory or POS) silently failed to save — the barcode
+      column never existed in the database, so it reappeared as unassigned
+      after every refresh; barcodes generated from now on persist properly
+      and the barcode dialog updates immediately instead of needing to be
+      reopened. Added a barcode/print action directly to POS item rows.
+
       1.4.2: Fixed Add Stock's "Type New Custom Distributor" option doing
       nothing on a fresh install with no distributors yet. Removed
       pre-filled placeholder-looking data across the app so new entries
