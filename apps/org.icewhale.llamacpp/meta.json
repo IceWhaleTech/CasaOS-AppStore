@@ -1,0 +1,33 @@
+{
+  "thumbnail": "/apps/org.icewhale.llamacpp/assets/thumbnail.webp",
+  "screenshot_link": [
+    "/apps/org.icewhale.llamacpp/assets/screenshot-1.webp",
+    "/apps/org.icewhale.llamacpp/assets/screenshot-2.webp",
+    "/apps/org.icewhale.llamacpp/assets/screenshot-3.webp"
+  ],
+  "tagline": "Run GGUF LLMs locally with GPU acceleration",
+  "description": "llama.cpp is a pure C/C++ inference engine for GGUF large language models, with the official OpenAI-compatible server and a built-in Web UI.\n\n**Key Features:**\n- Run GGUF models (Llama, Qwen, DeepSeek, Gemma, Mistral and more) on CPU or GPU\n- Vulkan backend works on AMD / Intel / NVIDIA GPUs out of the box\n- Great fit for unified-memory machines (e.g. AMD Ryzen AI Max 395)\n- OpenAI-compatible API for integration with Open WebUI, ChatGPT-Next-Web and more\n- Built-in chat Web UI with runtime model loading\n\n**Getting started:**\n1. Put GGUF model files into the models volume (`/models`)\n2. Open the Web UI at `http://<zima-ip>:18080` and load a model\n3. Keep `/dev/dri` mapped for Vulkan acceleration; remove it for CPU-only mode",
+  "category": "AI",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "update_at": "2026-08-26",
+  "website": "https://github.com/ggml-org/llama.cpp",
+  "repo": "https://github.com/ggml-org/llama.cpp",
+  "support": "https://github.com/ggml-org/llama.cpp/issues",
+  "docs": "https://github.com/ggml-org/llama.cpp/blob/master/docs/server.md",
+  "title": "llama.cpp",
+  "release_note": "Initial release: llama.cpp server with Vulkan GPU acceleration (ghcr.io/ggml-org/llama.cpp:server).",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "org.icewhale.llamacpp",
+  "version": "1.0.0",
+  "categories": [
+    "ai"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 309679769,
+    "arm64": 296928788
+  }
+}

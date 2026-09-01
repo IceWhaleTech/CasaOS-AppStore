@@ -1,9 +1,29 @@
 {
   "version": 2,
-  "updated_at": "2026-08-27T10:22:44Z",
-  "app_count": 168,
+  "updated_at": "2026-09-01T16:04:25Z",
+  "app_count": 170,
   "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
   "apps": [
+    {
+      "id": "org.clumoove.app",
+      "title": "Clumoove",
+      "tagline": "Self-hosted cloud data migration & sync manager",
+      "category": "Cloud",
+      "categories": [
+        "cloud"
+      ],
+      "author": "Marcel Meyer",
+      "developer": "Marcel Meyer",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/org.clumoove.app/assets/icon.svg",
+      "thumbnail": "/apps/org.clumoove.app/assets/thumbnail.webp",
+      "compose_url": "/apps/org.clumoove.app/docker-compose.yml",
+      "meta_url": "/apps/org.clumoove.app/meta.json",
+      "content_hash": "9e02991e"
+    },
     {
       "id": "org.icewhale.2fauth",
       "title": "2FAuth",
@@ -51,7 +71,7 @@
     {
       "id": "org.icewhale.adguardhome",
       "title": "AdGuard Home",
-      "tagline": "Blocking ads & tracking Network-widly",
+      "tagline": "Network-wide ad and tracker blocking",
       "category": "Networking",
       "categories": [
         "networking"
@@ -69,8 +89,8 @@
       "thumbnail": "/apps/org.icewhale.adguardhome/assets/thumbnail.webp",
       "compose_url": "/apps/org.icewhale.adguardhome/docker-compose.yml",
       "meta_url": "/apps/org.icewhale.adguardhome/meta.json",
-      "content_hash": "c17843c2",
-      "version": "0.107.76"
+      "content_hash": "2b7bf16c",
+      "version": "0.107.79"
     },
     {
       "id": "org.icewhale.adminer",
@@ -1626,6 +1646,27 @@
       "meta_url": "/apps/org.icewhale.linkwarden/meta.json",
       "content_hash": "b48ce070",
       "version": "2.14.1"
+    },
+    {
+      "id": "org.icewhale.llamacpp",
+      "title": "llama.cpp",
+      "tagline": "Run GGUF LLMs locally with GPU acceleration",
+      "category": "AI",
+      "categories": [
+        "ai"
+      ],
+      "author": "",
+      "developer": "",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/org.icewhale.llamacpp/assets/icon.svg",
+      "thumbnail": "/apps/org.icewhale.llamacpp/assets/thumbnail.webp",
+      "compose_url": "/apps/org.icewhale.llamacpp/docker-compose.yml",
+      "meta_url": "/apps/org.icewhale.llamacpp/meta.json",
+      "content_hash": "0265d194",
+      "version": "1.0.0"
     },
     {
       "id": "org.icewhale.llamafactorynvidia",

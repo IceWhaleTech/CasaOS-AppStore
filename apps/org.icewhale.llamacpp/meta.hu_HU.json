@@ -1,0 +1,7 @@
+{
+  "id": "org.icewhale.llamacpp",
+  "title": "llama.cpp",
+  "tagline": "GGUF LLM-ek futtatása helyben, GPU-gyorsítással",
+  "release_note": "Első kiadás: llama.cpp szerver Vulkan GPU-gyorsítással (ghcr.io/ggml-org/llama.cpp:server).",
+  "description": "A llama.cpp egy tiszta C/C++ következtető motor GGUF nagy nyelvi modellekhez, a hivatalos OpenAI-kompatibilis szerverrel és beépített webes felülettel.\n\n**Főbb jellemzők:**\n- GGUF modellek (Llama, Qwen, DeepSeek, Gemma, Mistral és mások) futtatása CPU-n vagy GPU-n\n- A Vulkan háttér azonnal működik AMD / Intel / NVIDIA GPU-kon\n- Kiválóan alkalmas egységes memóriájú gépekhez (pl. AMD Ryzen AI Max 395)\n- OpenAI-kompatibilis API az Open WebUI, ChatGPT-Next-Web és mások számára\n- Beépített csevegő webes felület futás közbeni modellbetöltéssel\n\n**Első lépések:**\n1. Helyezze a GGUF modellfájlokat a modellkötetbe (`/models`)\n2. Nyissa meg a webes felületet itt: `http://<zima-ip>:18080`, és töltsön be egy modellt\n3. Tartsa meg a `/dev/dri` leképezést a Vulkan-gyorsításhoz; távolítsa el csak CPU-s módhoz"
+}

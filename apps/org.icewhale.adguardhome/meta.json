@@ -15,28 +15,28 @@
     "/apps/org.icewhale.adguardhome/assets/screenshot-2.webp",
     "/apps/org.icewhale.adguardhome/assets/screenshot-3.webp"
   ],
-  "tagline": "Blocking ads & tracking Network-widly",
+  "tagline": "Network-wide ad and tracker blocking",
   "thumbnail": "/apps/org.icewhale.adguardhome/assets/thumbnail.webp",
   "tips": {},
-  "update_at": "2026-05-21",
+  "update_at": "2026-09-01",
   "website": "https://adguard.com/en/adguard-home/overview.html",
   "repo": "https://github.com/AdguardTeam/AdGuardHome",
   "support": "https://github.com/AdguardTeam/AdGuardHome/issues",
   "docs": "https://github.com/AdguardTeam/AdGuardHome/wiki",
   "title": "AdGuard Home",
-  "release_note": "- v0.107.76 fixes DNS caching when DNSSEC is disabled.\n- YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.",
+  "release_note": "- DNS64 treating unresolved CNAME/DNAME answers as the end of resolution chain\n- Blocked requests without an EDNS(0) OPT record",
   "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
   "id": "org.icewhale.adguardhome",
-  "version": "0.107.76",
+  "version": "0.107.79",
   "categories": [
     "networking"
   ],
   "min_memory": 67108864,
   "min_image_size": {
-    "386": 27515246,
-    "amd64": 28507910,
-    "arm": 27125259,
-    "arm64": 26895182,
-    "ppc64le": 26692433
+    "386": 28486010,
+    "amd64": 29493557,
+    "arm": 28257692,
+    "arm64": 27840214,
+    "ppc64le": 27619864
   }
 }

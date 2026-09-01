@@ -1,0 +1,7 @@
+{
+  "id": "org.icewhale.llamacpp",
+  "title": "llama.cpp",
+  "tagline": "GGUF形式のLLMをGPUアクセラレーションでローカル実行",
+  "release_note": "初回リリース: Vulkan GPU アクセラレーション対応の llama.cpp サーバー (ghcr.io/ggml-org/llama.cpp:server)。",
+  "description": "llama.cpp は GGUF 形式の大規模言語モデル向けの純粋な C/C++ 推論エンジンで、公式の OpenAI 互換サーバーと内蔵 Web UI を備えています。\n\n**主な機能：**\n- GGUF モデル（Llama、Qwen、DeepSeek、Gemma、Mistral など）を CPU または GPU で実行\n- Vulkan バックエンドは AMD / Intel / NVIDIA の GPU ですぐに動作\n- ユニファイドメモリ搭載機（例: AMD Ryzen AI Max 395）に最適\n- Open WebUI、ChatGPT-Next-Web などと連携できる OpenAI 互換 API\n- モデルを実行時に読み込める内蔵チャット Web UI\n\n**使い始める：**\n1. GGUF モデルファイルをモデル用ボリューム（`/models`）に配置\n2. `http://<zima-ip>:18080` で Web UI を開き、モデルを読み込む\n3. Vulkan 加速には `/dev/dri` のマッピングを維持。CPU のみの場合は削除"
+}

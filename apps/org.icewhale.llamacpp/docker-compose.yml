@@ -1,0 +1,59 @@
+# llama.cpp — 由 casaos-pr-tool 生成
+# 商店规范: https://github.com/IceWhaleTech/CasaOS-AppStore/blob/main/docs/specs/compose-and-x-casaos.md
+name: llamacpp
+services:
+  llamacpp:
+    image: ghcr.io/ggml-org/llama.cpp:server
+    container_name: llamacpp
+    ports:
+      - target: 8080
+        published: '18080'
+        protocol: tcp
+    environment:
+      - LLAMA_ARG_N_GPU_LAYERS=999
+      - LLAMA_ARG_CONTEXT_SIZE=8192
+    devices:
+      - /dev/dri:/dev/dri
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/models
+        target: /models
+        bind:
+          create_host_path: true
+    restart: unless-stopped
+x-casaos:
+  id: org.icewhale.llamacpp
+  main: llamacpp
+  index: /
+  port_map: '18080'
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.llamacpp/assets/icon.svg
+  title:
+    ca_ES: llama.cpp
+    cs_CZ: llama.cpp
+    da_DK: llama.cpp
+    de_DE: llama.cpp
+    el_GR: llama.cpp
+    en_GB: llama.cpp
+    en_US: llama.cpp
+    es_ES: llama.cpp
+    fr_FR: llama.cpp
+    ga_IE: llama.cpp
+    hr_HR: llama.cpp
+    hu_HU: llama.cpp
+    it_IT: llama.cpp
+    ja_JP: llama.cpp
+    ko_KR: llama.cpp
+    ml_IN: llama.cpp
+    nb_NO: llama.cpp
+    nl_NL: llama.cpp
+    pl_PL: llama.cpp
+    pt_BR: llama.cpp
+    pt_PT: llama.cpp
+    ro_RO: llama.cpp
+    ru_RU: llama.cpp
+    sk_SK: llama.cpp
+    sv_SE: llama.cpp
+    tr_TR: llama.cpp
+    zh_CN: llama.cpp
+    zh_TW: llama.cpp
+  version: 1.0.0

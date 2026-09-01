@@ -1,0 +1,7 @@
+{
+  "id": "org.icewhale.llamacpp",
+  "title": "llama.cpp",
+  "tagline": "本機執行 GGUF 大型語言模型，支援 GPU 加速",
+  "release_note": "首次發布：llama.cpp 伺服器，支援 Vulkan GPU 加速（ghcr.io/ggml-org/llama.cpp:server）。",
+  "description": "llama.cpp 是一個純 C/C++ 撰寫的大型語言模型推論引擎，專為 GGUF 格式模型最佳化，內建 OpenAI 相容 API 伺服器與網頁介面。\n\n**主要特色：**\n- 支援在 CPU 或 GPU 上執行 GGUF 模型（Llama、Qwen、DeepSeek、Gemma、Mistral 等）\n- Vulkan 後端開箱即用，相容 AMD / Intel / NVIDIA 顯示卡\n- 非常適合統一記憶體架構機型（如 AMD Ryzen AI Max 395）\n- 提供 OpenAI 相容 API，可介接 Open WebUI、ChatGPT-Next-Web 等\n- 內建聊天網頁介面，支援執行階段載入模型\n\n**快速上手：**\n1. 將 GGUF 模型檔案放入模型目錄（`/models`）\n2. 以瀏覽器開啟 `http://<Zima 的 IP>:18080`，在介面中載入模型\n3. 保留 `/dev/dri` 映射以啟用 Vulkan 加速；純 CPU 模式請移除該映射"
+}

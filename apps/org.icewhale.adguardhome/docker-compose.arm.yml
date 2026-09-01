@@ -1,7 +1,7 @@
 name: adguard-home
 services:
   adguard-home:
-    image: adguard/adguardhome:v0.107.76@sha256:40da11f6d46e3b5f1003d55b927fe889934027a86e40969993e0102caa515fd1
+    image: adguard/adguardhome:v0.107.79@sha256:034ca68030cfba872f355eb65328af3f01763c62e643f462b288c55ae5c7b4ba
     deploy:
       resources:
         reservations:
@@ -40,4 +40,4 @@ x-casaos:
     en_US: AdGuard Home
   index: /
   port_map: "3001"
-  version: "0.107.76"
+  version: "0.107.79"
