@@ -1,0 +1,148 @@
+name: coworkee
+services:
+  coworkee:
+    image: ghcr.io/fgilde/coworkeenextjs:latest
+    container_name: coworkee
+    restart: unless-stopped
+    ports:
+      - target: 3000
+        published: "3020"
+        protocol: tcp
+    environment:
+      TZ: $TZ
+      DATABASE_URL: postgresql://coworkee:coworkee@coworkee-db:5432/coworkee?schema=public
+      AUTH_SECRET: change-this-secret
+      AUTH_TRUST_HOST: "true"
+      DEMO: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/storage
+        target: /app/storage
+    networks:
+      - coworkee-network
+    depends_on:
+      - coworkee-db
+    deploy:
+      resources:
+        reservations:
+          memory: "1G"
+    x-casaos:
+      envs:
+        - container: DATABASE_URL
+          description:
+            en_US: "Connection to the PostgreSQL container that comes with this app."
+        - container: AUTH_SECRET
+          description:
+            en_US: "Signs the sessions. Replace it: openssl rand -base64 32."
+        - container: AUTH_TRUST_HOST
+          description:
+            en_US: "Leave at true behind a reverse proxy or on a local network."
+        - container: DEMO
+          description:
+            en_US: "1 seeds demo data and shows demo logins. Leave empty for the setup wizard."
+        - container: TZ
+          description:
+            en_US: "Time zone."
+      ports:
+        - container: "3000"
+          description:
+            en_US: Web UI
+      volumes:
+        - container: /app/storage
+          description:
+            en_US: "Uploaded documents. The one path worth backing up beside the database."
+  coworkee-db:
+    image: postgres:16-alpine
+    container_name: coworkee-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: coworkee
+      POSTGRES_PASSWORD: coworkee
+      POSTGRES_DB: coworkee
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/db
+        target: /var/lib/postgresql/data
+    networks:
+      - coworkee-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U coworkee"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+networks:
+  coworkee-network:
+    driver: bridge
+
+x-casaos:
+  id: org.gilde.coworkee
+  architectures:
+    - amd64
+  main: coworkee
+  author: Coworkee
+  developer: Coworkee
+  category: Productivity
+  title:
+    en_US: Coworkee
+  tagline:
+    en_US: "Self-hosted HR software for your company"
+    de_DE: "Selbst gehostete HR-Software fuer das eigene Unternehmen"
+  description:
+    en_US: |
+      A self-hosted HR platform for one company, in the spirit of Personio or HR-Works,
+      with its own PostgreSQL in the same app.
+
+      Employees with a searchable directory, detail profiles and an org chart; absence with
+      leave balances, a request-and-approval workflow and a team overview; time tracking with
+      clock in/out, weekly hours and manual entries; documents in access-controlled private
+      storage; onboarding with checklist templates and a process per employee; performance with
+      goals and reviews; an analytics dashboard with the usual HR figures; recruiting with jobs
+      and a Kanban application pipeline; and a news feed with in-app notifications.
+
+      Role-based access (ADMIN, HR, MANAGER, EMPLOYEE), light and dark mode, an audit log for
+      every HR write action, and the whole interface in English and German.
+
+      The first visit opens a setup wizard that creates the administrator - no demo data, no
+      default login. Replace AUTH_SECRET before that: it signs the sessions, and the value in
+      this package is public.
+    de_DE: |
+      Eine selbst gehostete HR-Plattform fuer ein Unternehmen, im Geiste von Personio oder
+      HR-Works, mit eigener PostgreSQL in derselben App.
+
+      Mitarbeitende mit durchsuchbarem Verzeichnis, Detailprofilen und Organigramm; Abwesenheit
+      mit Urlaubskonten, Antrags- und Genehmigungsablauf und Teamuebersicht; Zeiterfassung mit
+      Kommen/Gehen, Wochenstunden und manuellen Eintraegen; Dokumente in zugriffsgeschuetztem
+      Speicher; Onboarding mit Checklisten-Vorlagen und einem Prozess je Person; Performance mit
+      Zielen und Beurteilungen; ein Analytics-Dashboard mit den ueblichen HR-Kennzahlen;
+      Recruiting mit Stellen und Kanban-Bewerbungspipeline; dazu ein Newsfeed mit
+      Benachrichtigungen in der App.
+
+      Rollenbasierte Rechte (ADMIN, HR, MANAGER, EMPLOYEE), heller und dunkler Modus, ein
+      Audit-Log fuer jede schreibende HR-Aktion, und die gesamte Oberflaeche auf Deutsch und
+      Englisch.
+
+      Beim ersten Aufruf legt ein Assistent das Administrator-Konto an - keine Demodaten, kein
+      Standard-Login. Vorher AUTH_SECRET ersetzen: es signiert die Sitzungen, und der Wert in
+      diesem Paket ist oeffentlich.
+  tips:
+    before_install:
+      en_US: |
+        Replace AUTH_SECRET below with a value of your own (openssl rand -base64 32): it signs
+        the sessions and the value in this package is readable by everyone. The first visit opens
+        a setup wizard for the administrator account. The storage directory holds uploaded
+        documents, the db directory holds the database.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Coworkee/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Coworkee/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Coworkee/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Coworkee/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Coworkee/screenshot-3.png
+  index: /
+  port_map: "3020"
+  scheme: http
+  version: "1.1.2"
+  website: https://coworkee.de
+  repo: https://github.com/fgilde/CoworkeeNextJs
+  support: https://github.com/fgilde/CoworkeeNextJs/issues
+  docs: https://fgilde.github.io/CoworkeeNextJs/
