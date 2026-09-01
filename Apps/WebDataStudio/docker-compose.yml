@@ -12,7 +12,7 @@ services:
     environment:
       TZ: $TZ
       WDS_USER: admin
-      WDS_PASSWORD: casaos
+      WDS_PASSWORD: 90g37hghc8cxzpvxbsmq
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/data
@@ -92,10 +92,10 @@ x-casaos:
   tips:
     before_install:
       en_US: |
-        Change WDS_PASSWORD in the fields below - it is set to "casaos" so that the app has a login
-        screen at all, and everybody knows that one. WDS_USER is "admin". With neither of the two set,
-        the studio serves with no login screen. The data directory keeps saved connections, query
-        history and layouts.
+        The login is WDS_USER / WDS_PASSWORD in the fields below. The password there ships with the
+        package, so it is public: replace it before anyone else can reach this. With neither of the
+        two set the studio serves with no login screen at all. The data directory keeps saved
+        connections, query history and layouts.
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WebDataStudio/icon.svg
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WebDataStudio/thumbnail.png
   screenshot_link:
