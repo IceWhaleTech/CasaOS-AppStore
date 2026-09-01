@@ -10,8 +10,8 @@ services:
         protocol: tcp
     environment:
       TZ: $TZ
-      DATABASE_URL: postgresql://havewa:havewa@havewa-db:5432/havewa?schema=public
-      AUTH_SECRET: change-this-secret
+      DATABASE_URL: postgresql://havewa:eqbsn6sscj4dmx256dcr@havewa-db:5432/havewa?schema=public
+      AUTH_SECRET: ezn9ife4ho05wehv7ljwwbd3pg59tx4p
       AUTH_TRUST_HOST: "true"
       SEED_DEMO: ""
       ADMIN_EMAIL: ""
@@ -69,7 +69,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: havewa
-      POSTGRES_PASSWORD: havewa
+      POSTGRES_PASSWORD: eqbsn6sscj4dmx256dcr
       POSTGRES_DB: havewa
     volumes:
       - type: bind
