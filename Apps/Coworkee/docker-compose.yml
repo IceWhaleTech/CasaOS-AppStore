@@ -10,8 +10,8 @@ services:
         protocol: tcp
     environment:
       TZ: $TZ
-      DATABASE_URL: postgresql://coworkee:coworkee@coworkee-db:5432/coworkee?schema=public
-      AUTH_SECRET: change-this-secret
+      DATABASE_URL: postgresql://coworkee:h60b0ge0fnx6xq15r5bh@coworkee-db:5432/coworkee?schema=public
+      AUTH_SECRET: rgigzydsod3iwts9b1y9751a4d5fwv4y
       AUTH_TRUST_HOST: "true"
       DEMO: ""
     volumes:
@@ -57,7 +57,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: coworkee
-      POSTGRES_PASSWORD: coworkee
+      POSTGRES_PASSWORD: h60b0ge0fnx6xq15r5bh
       POSTGRES_DB: coworkee
     volumes:
       - type: bind
