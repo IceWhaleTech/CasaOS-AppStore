@@ -1,0 +1,162 @@
+name: havewa
+services:
+  havewa:
+    image: ghcr.io/fgilde/hausverwaltung:latest
+    container_name: havewa
+    restart: unless-stopped
+    ports:
+      - target: 3000
+        published: "3010"
+        protocol: tcp
+    environment:
+      TZ: $TZ
+      DATABASE_URL: postgresql://havewa:havewa@havewa-db:5432/havewa?schema=public
+      AUTH_SECRET: change-this-secret
+      AUTH_TRUST_HOST: "true"
+      SEED_DEMO: ""
+      ADMIN_EMAIL: ""
+      ADMIN_PASSWORD: ""
+      TENANT_NAME: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/storage
+        target: /app/storage
+    networks:
+      - havewa-network
+    depends_on:
+      - havewa-db
+    deploy:
+      resources:
+        reservations:
+          memory: "1G"
+    x-casaos:
+      envs:
+        - container: DATABASE_URL
+          description:
+            en_US: "Connection to the PostgreSQL container that comes with this app."
+        - container: AUTH_SECRET
+          description:
+            en_US: "Signs the sessions. Replace it: openssl rand -base64 32."
+        - container: AUTH_TRUST_HOST
+          description:
+            en_US: "Leave at true behind a reverse proxy or on a local network."
+        - container: SEED_DEMO
+          description:
+            en_US: "true installs the demo data set with the admin account admin@havewa.app / admin. Leave empty for the setup wizard."
+        - container: ADMIN_EMAIL
+          description:
+            en_US: "Optional: create the administrator directly instead of going through the wizard."
+        - container: ADMIN_PASSWORD
+          description:
+            en_US: "Optional: that administrator's password."
+        - container: TENANT_NAME
+          description:
+            en_US: "Optional: the name of the management company."
+        - container: TZ
+          description:
+            en_US: "Time zone."
+      ports:
+        - container: "3000"
+          description:
+            en_US: Web UI
+      volumes:
+        - container: /app/storage
+          description:
+            en_US: "Documents, generated statements and the logo."
+  havewa-db:
+    image: postgres:16-alpine
+    container_name: havewa-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: havewa
+      POSTGRES_PASSWORD: havewa
+      POSTGRES_DB: havewa
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/db
+        target: /var/lib/postgresql/data
+    networks:
+      - havewa-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U havewa"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+networks:
+  havewa-network:
+    driver: bridge
+
+x-casaos:
+  id: org.gilde.havewa
+  architectures:
+    - amd64
+  main: havewa
+  author: Florian Gilde
+  developer: Florian Gilde
+  category: Productivity
+  title:
+    en_US: HaVeWa
+  tagline:
+    en_US: "Property management for rentals and HOAs"
+    de_DE: "Hausverwaltung fuer Miete und WEG"
+  description:
+    en_US: |
+      Property-management software for rental and HOA (WEG) administration, in one
+      container with its own PostgreSQL: properties, units, people and meters; leases with
+      stepped and index rent and deposits; charges, payments, open items, SEPA mandates and
+      dunning; service-charge statements with a BetrKV allocation engine; co-ownership shares,
+      economic plan, HOA fees, annual statement and reserves; owners meetings with agenda,
+      voting and resolution collection; documents; maintenance tickets with workflow and time
+      tracking; tenant and owner portals; camt.053 import and DATEV/SEPA export.
+
+      Multi-tenant, role-based and bilingual (German and English). There is a REST API and an
+      MCP server with per-user tokens, so an AI agent can read and manage the portfolio under
+      the same permissions a person has.
+
+      The first start opens a setup wizard that creates the administrator and the management
+      company. Set AUTH_SECRET to a value of your own before that: it signs the sessions, and
+      the one in this package is public. Set SEED_DEMO to true instead if you want the demo
+      data set with its known admin account, which is worth having on a machine nobody else can
+      reach and nowhere else.
+    de_DE: |
+      Hausverwaltungs-Software fuer Miet- und WEG-Verwaltung, in einem Container samt eigener
+      PostgreSQL: Objekte, Einheiten, Personen und Zähler; Mietverträge mit Staffel- und
+      Indexmiete und Kautionen; Sollstellungen, Zahlungen, offene Posten, SEPA-Mandate und
+      Mahnwesen; Betriebskostenabrechnung mit BetrKV-Umlageschlüsseln; Miteigentumsanteile,
+      Wirtschaftsplan, Hausgeld, Jahresabrechnung und Rücklagen; Eigentümerversammlungen mit
+      Tagesordnung, Abstimmung und Beschlusssammlung; Dokumente; Instandhaltungstickets mit
+      Workflow und Zeiterfassung; Mieter- und Eigentümerportale; camt.053-Import sowie
+      DATEV/SEPA-Export.
+
+      Mandantenfähig, rollenbasiert, zweisprachig (Deutsch und Englisch). Dazu eine REST-API und
+      ein MCP-Server mit Token pro Benutzer, damit ein KI-Agent den Bestand mit denselben Rechten
+      lesen und verwalten kann wie ein Mensch.
+
+      Beim ersten Start fuehrt ein Assistent durch das Anlegen von Administrator und Verwaltung.
+      Vorher AUTH_SECRET auf einen eigenen Wert setzen: es signiert die Sitzungen, und der Wert
+      in diesem Paket ist oeffentlich. Wer stattdessen den Demo-Datensatz mit seinem bekannten
+      Admin-Konto will, setzt SEED_DEMO auf true - auf einer Maschine, an die sonst niemand
+      herankommt, und sonst nirgends.
+  tips:
+    before_install:
+      en_US: |
+        Replace AUTH_SECRET below with a value of your own (openssl rand -base64 32): it signs
+        the sessions, and the value in this package is readable by everyone. The first start opens
+        a setup wizard for the administrator account; SEED_DEMO=true installs the demo data set
+        with a known admin login instead. The storage directory holds documents and the logo, the
+        db directory holds the database.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HaVeWa/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HaVeWa/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HaVeWa/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HaVeWa/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/HaVeWa/screenshot-3.png
+  index: /
+  port_map: "3010"
+  scheme: http
+  version: "0.3.0"
+  website: https://fgilde.github.io/hausverwaltung/
+  repo: https://github.com/fgilde/hausverwaltung
+  support: https://github.com/fgilde/hausverwaltung/issues
+  docs: https://fgilde.github.io/hausverwaltung/docs/
