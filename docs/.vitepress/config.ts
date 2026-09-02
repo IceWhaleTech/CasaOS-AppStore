@@ -4,21 +4,21 @@ import llmstxt from "vitepress-plugin-llms";
 const enNav = [
   { text: "Home", link: "/" },
   { text: "Create a Store", link: "/quick-start/overview" },
-  { text: "Migrate from v1", link: "/migration/overview" },
   { text: "Protocol Reference", link: "/specs/overview" },
   { text: "CI/CD", link: "/cicd/overview" },
   { text: "Resources", link: "/resources/recommended-third-party-stores" },
-  { text: "FAQ", link: "/faq/overview" }
+  { text: "FAQ", link: "/faq/overview" },
+  { text: "Migrate from v1", link: "/migration/overview" }
 ];
 
 const zhNav = [
   { text: "首页", link: "/zh/" },
   { text: "创建应用商店", link: "/zh/quick-start/overview" },
-  { text: "从 v1 迁移", link: "/zh/migration/overview" },
   { text: "协议规范", link: "/zh/specs/overview" },
   { text: "CI/CD", link: "/zh/cicd/overview" },
   { text: "生态资源", link: "/zh/resources/recommended-third-party-stores" },
-  { text: "FAQ", link: "/zh/faq/overview" }
+  { text: "FAQ", link: "/zh/faq/overview" },
+  { text: "从 v1 迁移", link: "/zh/migration/overview" }
 ];
 
 const enSidebar = {
