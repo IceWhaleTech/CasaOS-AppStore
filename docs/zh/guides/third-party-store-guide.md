@@ -7,10 +7,10 @@
 ## 选择你的路径
 
 - 新建商店：[创建应用商店](../quick-start/overview.md)
-- 已有 v1 商店：[从 v1 迁移](../migration/overview.md)
 - 文件与字段参考：[协议规范](../specs/overview.md)
 - 构建与发布自动化：[CI/CD 总览](../cicd/overview.md)
 - 短答案：[FAQ](../faq/overview.md)
+- 已有 v1 商店：[从 v1 迁移](../migration/overview.md)
 
 ## v2 核心流程
 

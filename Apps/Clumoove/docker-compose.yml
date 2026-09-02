@@ -1,0 +1,150 @@
+name: clumoove
+
+services:
+  frontend:
+    image: ghcr.io/xxroxxerxx/clumoove-frontend:v0.16.0@sha256:16ea89b67068b49d5413d5eb354520da717418da823d13553756ab176c549f70
+    container_name: clumoove-frontend
+    restart: unless-stopped
+    ports:
+      - target: 3000
+        published: "8380"
+        protocol: tcp
+    environment:
+      - CLUMOOVE_API_URL=
+    depends_on:
+      - api-backend
+    networks:
+      - clumoove-network
+    x-casaos:
+      ports:
+        - container: "3000"
+          description:
+            en_US: WebUI HTTP Port
+            de_DE: WebUI HTTP Port
+
+  api-backend:
+    image: ghcr.io/xxroxxerxx/clumoove-api:v0.16.0@sha256:e089bb8ef0268bfc6b53337ad3e0f5ca3d2d22bcc56fc2940242be99005a2fc1
+    container_name: clumoove-api
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgres://clumoove:clumoove_secure_password_default@postgres-db:5432/cloud_migration_db?sslmode=disable
+      - REDIS_URL=redis://:clumoove_secure_redis_pass@redis-queue:6379
+      - PORT=8000
+      - ENCRYPTION_SECRET_KEY=enc_casaos_clumoove_encryption_key_v1_32b
+      - JWT_SECRET_KEY=jwt_casaos_clumoove_jwt_signing_key_32bytes_v1
+      - TRUSTED_PROXY=1
+      - LOCAL_STORAGE_ROOT=/clumoove
+    volumes:
+      - type: bind
+        source: /DATA/AppData/clumoove/storage
+        target: /clumoove
+    depends_on:
+      - postgres-db
+      - redis-queue
+    networks:
+      - clumoove-network
+    x-casaos:
+      volumes:
+        - container: /clumoove
+          description:
+            en_US: Clumoove Internal Storage Directory
+            de_DE: Clumoove Internes Speicherverzeichnis
+
+  migration-worker:
+    image: ghcr.io/xxroxxerxx/clumoove-worker:v0.16.0@sha256:a8d2a17ed3250684a7a6e4514b17f0a949b28dbfd193766c401e90e549e5de85
+    container_name: clumoove-worker
+    restart: unless-stopped
+    command: ["/app/worker"]
+    environment:
+      - DATABASE_URL=postgres://clumoove:clumoove_secure_password_default@postgres-db:5432/cloud_migration_db?sslmode=disable
+      - REDIS_URL=redis://:clumoove_secure_redis_pass@redis-queue:6379
+      - ENCRYPTION_SECRET_KEY=enc_casaos_clumoove_encryption_key_v1_32b
+      - LOCAL_STORAGE_ROOT=/clumoove
+    volumes:
+      - type: bind
+        source: /DATA/AppData/clumoove/storage
+        target: /clumoove
+    depends_on:
+      - postgres-db
+      - redis-queue
+    networks:
+      - clumoove-network
+
+  postgres-db:
+    image: postgres:15-alpine@sha256:fe0737ba566a2c5b2a28f34433c0a423261900ec17b9bf7ad115e1aae7e57f1b
+    container_name: clumoove-postgres
+    restart: unless-stopped
+    command: ["postgres", "-c", "max_connections=300"]
+    environment:
+      POSTGRES_USER: clumoove
+      POSTGRES_PASSWORD: clumoove_secure_password_default
+      POSTGRES_DB: cloud_migration_db
+    volumes:
+      - type: bind
+        source: /DATA/AppData/clumoove/postgres
+        target: /var/lib/postgresql/data
+    networks:
+      - clumoove-network
+
+  redis-queue:
+    image: redis:7-alpine@sha256:ff02b58f971e7d7d156a1267e283fcbbeee91773b6aa36c49dac28ecfe28eadf
+    container_name: clumoove-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass "clumoove_secure_redis_pass" --bind 0.0.0.0
+    volumes:
+      - type: bind
+        source: /DATA/AppData/clumoove/redis
+        target: /data
+    networks:
+      - clumoove-network
+
+networks:
+  clumoove-network:
+    driver: bridge
+
+x-casaos:
+  id: org.clumoove.app
+  architectures:
+    - amd64
+    - arm64
+  main: frontend
+  store_app_id: clumoove
+  category: Cloud
+  author: Marcel Meyer
+  developer: Marcel Meyer
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Clumoove/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Clumoove/thumbnail.png
+  title:
+    en_US: Clumoove
+    de_DE: Clumoove
+  tagline:
+    en_US: Self-hosted cloud data migration & sync manager
+    de_DE: Self-hosted Cloud-Datenmigration & Synchronisation
+  description:
+    en_US: |
+      Clumoove is a modern, self-hosted cloud data migration and synchronization platform for files, calendars, and contacts.
+
+      Easily connect, transfer, and synchronize data between cloud storage providers including Nextcloud, Google Drive, Dropbox, OneDrive, HiDrive, S3, WebDAV, SMB, SFTP, FTP, Immich, Seafile, Koofr, MEGA, and local storage.
+
+      Key Features:
+      - Zero-disk streaming transfers (no local temporary storage retention during migration)
+      - Multi-threaded background migrations and cron-based synchronization schedules
+      - Robust 3-way hash integrity verification & flexible conflict resolution
+      - Integrated cloud file manager with multi-format previews and thumbnails
+      - Multi-channel notification delivery (Gotify, ntfy, Telegram, Discord, Email)
+      - Enterprise-grade security with AES-256-GCM encryption, TOTP 2FA, and audit logging
+    de_DE: |
+      Clumoove ist eine moderne, selbstgehostete Plattform zur Migration und Synchronisation von Cloud-Daten für Dateien, Kalender und Kontakte.
+
+      Verbinden, übertragen und synchronisieren Sie Ihre Daten mühelos zwischen Anbietern wie Nextcloud, Google Drive, Dropbox, OneDrive, HiDrive, S3, WebDAV, SMB, SFTP, FTP, Immich, Seafile, Koofr, MEGA und lokalem Speicher.
+
+      Hauptfunktionen:
+      - Streaming-Übertragungen im RAM ohne Zwischenspeichern auf der Festplatte
+      - Parallele Hintergrund-Migrationen und automatisierte Cron-Synchronisationszeitpläne
+      - 3-Wege-Hash-Integritätsprüfung & anpassbare Konfliktlösungsstrategien
+      - Integrierter Cloud-Dateimanager mit Vorschauen und Thumbnail-Unterstützung
+      - Benachrichtigungen über mehrere Kanäle (Gotify, ntfy, Telegram, Discord, E-Mail)
+      - Höchste Sicherheit durch AES-256-GCM-Verschlüsselung, 2FA (TOTP) und Audit-Logs
+  port_map: "8380"
+  scheme: http
+  index: /

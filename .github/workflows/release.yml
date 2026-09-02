@@ -9,7 +9,7 @@ on:
       base_url:
         description: "Base URL used by the build action"
         required: false
-        default: "https://cdn.jsdelivr.net/gh/jerrykuku/ZimaOS-AppStore@gh-pages"
+        default: "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages"
 
 permissions:
   contents: read
@@ -20,6 +20,7 @@ jobs:
     env:
       BUILD_CACHE_KEY: build-appstore-cache-${{ github.ref_name }}-${{ github.run_id }}
       BUILD_CACHE_PREFIX: build-appstore-cache-${{ github.ref_name }}-
+      BUILD_CACHE_MAIN_PREFIX: build-appstore-cache-main-
     steps:
       - uses: actions/checkout@v6
 
@@ -32,6 +33,7 @@ jobs:
           key: ${{ env.BUILD_CACHE_KEY }}
           restore-keys: |
             ${{ env.BUILD_CACHE_PREFIX }}
+            ${{ env.BUILD_CACHE_MAIN_PREFIX }}
 
       - name: Build static appstore dist
         id: build_v2

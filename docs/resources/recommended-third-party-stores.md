@@ -7,7 +7,7 @@ Community store sources for ZimaOS. Copy a source link, then import it in ZimaOS
 <StoreSourceCard
   title="Play AppStore"
   summary="Play AppStore, play with Docker. Get things done."
-  url="https://play.cuse.eu.org/"
+  url="https://play.cuse.eu.org/store.json"
   maintainer="Cp0204"
   repo-url="https://github.com/Cp0204/CasaOS-AppStore-Play"
 />
@@ -15,7 +15,7 @@ Community store sources for ZimaOS. Copy a source link, then import it in ZimaOS
 <StoreSourceCard
   title="Big Bear ZimaOS App Store"
   summary="Community-maintained apps for CasaOS and ZimaOS by BigBearTechWorld."
-  url="https://cdn.jsdelivr.net/gh/bigbeartechworld/big-bear-casaos@gh-pages/"
+  url="https://cdn.jsdelivr.net/gh/bigbeartechworld/big-bear-casaos@gh-pages/store.json"
   maintainer="BigBearTechWorld"
   repo-url="https://github.com/bigbeartechworld/big-bear-casaos/"
 />
