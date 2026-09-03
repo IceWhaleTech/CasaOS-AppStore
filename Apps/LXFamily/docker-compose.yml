@@ -2,7 +2,7 @@ name: lx-family
 
 services:
   lx-family:
-    image: ghcr.io/laxxx-lab/lx-family-planner:1.20.2
+    image: ghcr.io/laxxx-lab/lx-family-planner:1.20.3
     container_name: lx-family
     restart: unless-stopped
     environment:
@@ -103,11 +103,11 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.20.2"
+  version: "1.20.3"
   update_at: "2026-09-03"
   release_notes:
-    en_US: Keeps every Family Journey area visible and easy to use on Android phones.
-    de_DE: Hält alle Bereiche der Familienreise auf Android-Handys sichtbar und leicht bedienbar.
+    en_US: Gives shopping items meaningful product icons, from eggs and butter to fruit and household supplies.
+    de_DE: Gibt Einkaufsartikeln passende Produkt-Symbole – von Eiern und Butter bis Obst und Haushalt.
   website: https://github.com/laxxx-lab/lx-family-planner
   repo: https://github.com/laxxx-lab/lx-family-planner
   support: https://github.com/laxxx-lab/lx-family-planner/issues
