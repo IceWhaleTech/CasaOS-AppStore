@@ -1,0 +1,38 @@
+{
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "CasaOS Team",
+  "developer": "autobrr",
+  "category": "Media",
+  "screenshot_link": [
+    "/apps/org.icewhale.qui/assets/screenshot-1.webp",
+    "/apps/org.icewhale.qui/assets/screenshot-2.webp",
+    "/apps/org.icewhale.qui/assets/screenshot-3.webp"
+  ],
+  "thumbnail": "/apps/org.icewhale.qui/assets/thumbnail.webp",
+  "description": "**One dashboard for all your qBittorrent instances.** Qui is a fast, modern web interface for qBittorrent. Instead of juggling several separate WebUI tabs, you connect every qBittorrent instance to Qui and manage them all from a single, responsive dashboard. It ships as a lightweight single binary, so it stays quick and resource-friendly even when you are watching thousands of torrents.\n\n**Automation and cross-seeding built in.** Built by the team behind autobrr, Qui goes well beyond basic torrent listing. It adds powerful rule-based automation, built-in cross-seeding that automatically finds and adds matching torrents across your trackers, scheduled backups with restore, and a clean multi-language interface. Point it at your Torznab-compatible indexers — such as Prowlarr or Jackett — to put cross-seeding on autopilot, then filter, search, and bulk-manage torrents across every instance at once.\n\n**Made for your private cloud.** Running Qui on a private cloud device like Zima keeps everything in one place on hardware you control. Pair it with your qBittorrent containers for local-network speeds, full ownership of your data, and a single tidy interface for your entire download stack — accessible from any device in your home.\n",
+  "tagline": "Fast, modern web interface for qBittorrent",
+  "tips": {
+    "before_install": "## Getting Started\n\n1. Open the Web UI at `http://<your-zima-ip>:7476`.\n2. On first launch, create your administrator account on the setup screen.\n3. Add one or more qBittorrent instances (host, port, username and password) to start managing them from Qui.\n\n## Cross-seeding & indexers\n\nQui can automatically find and add matching torrents across your trackers. Point it at your Torznab-compatible indexers (for example Prowlarr or Jackett) to enable cross-seeding.\n\n> A PostgreSQL database is deployed automatically alongside Qui — no manual setup required.\n"
+  },
+  "update_at": "2026-09-03",
+  "website": "https://getqui.com",
+  "repo": "https://github.com/autobrr/qui",
+  "support": "https://github.com/autobrr/qui/issues",
+  "docs": "https://getqui.com/docs",
+  "title": "Qui",
+  "release_note": "- v1.28.0 fixes automation tracker conditions so they match against every tracker on a torrent.\n- Cross-seed webhook notifications now reflect the actual apply outcome.\n- Refreshes user documentation and includes dependency and maintenance updates.",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "org.icewhale.qui",
+  "version": "1.28.0",
+  "categories": [
+    "media"
+  ],
+  "min_memory": 268435456,
+  "min_image_size": {
+    "amd64": 144535279,
+    "arm64": 141233086
+  }
+}

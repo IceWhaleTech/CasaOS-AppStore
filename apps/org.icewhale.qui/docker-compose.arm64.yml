@@ -1,0 +1,58 @@
+name: qui
+services:
+  # Qui Application
+  qui:
+    container_name: qui
+    image: ghcr.io/autobrr/qui:v1.28.0@sha256:1ae7420432bdc3389da1a5a740fd87316342c8d8a5c76b1a7a0360c727ecd35c
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    deploy:
+      resources:
+        reservations:
+          memory: "128M"
+    ports:
+      - "7476:7476"
+    volumes:
+      - /DATA/AppData/$AppID/qui:/config
+    environment:
+      QUI__DATABASE_ENGINE: postgres
+      QUI__DATABASE_DSN: postgres://qui:qui@qui-postgres:5432/qui?sslmode=disable
+    networks:
+      - qui_network
+  postgres:
+    container_name: qui-postgres
+    image: postgres:16-alpine@sha256:738d1359df5aa0b6d50a9071e989c49fdd39152a2a805c6ff131bf5e2243e0b3
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: "128M"
+    environment:
+      POSTGRES_USER: qui
+      POSTGRES_PASSWORD: qui
+      POSTGRES_DB: qui
+    volumes:
+      - /DATA/AppData/$AppID/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - qui_network
+networks:
+  qui_network:
+    driver: bridge
+
+x-casaos:
+  id: org.icewhale.qui
+  main: qui
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.qui/assets/icon.svg
+  title:
+    en_US: Qui
+  index: /
+  port_map: "7476"
+  scheme: http
+  version: "1.28.0"

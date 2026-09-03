@@ -1,0 +1,32 @@
+name: podfetch
+services:
+  podfetch:
+    image: samuel19982/podfetch:v5.2.3@sha256:ee33ea2f794448153c6f96977e6dde82a48cf67d376a29244c2660125ac6abd4
+    environment:
+      DATABASE_URL: sqlite:///app/db/podcast.db
+      POLLING_INTERVAL: "300"
+      BASIC_AUTH: "false"
+      GPODDER_INTEGRATION_ENABLED: "false"
+    network_mode: bridge
+    ports:
+      - target: 8000
+        published: "8000"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/podcasts
+        target: /app/podcasts
+      - type: bind
+        source: /DATA/AppData/$AppID/db
+        target: /app/db
+x-casaos:
+  id: io.github.samtv12345.podfetch
+  main: podfetch
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/io.github.samtv12345.podfetch/assets/icon.png
+  title:
+    en_US: PodFetch
+  index: /
+  port_map: "8000"
+  scheme: http
+  version: "5.2.3"

@@ -1,0 +1,44 @@
+name: netronome
+
+services:
+  netronome:
+    image: ghcr.io/autobrr/netronome:v0.13.0@sha256:78610be1253d9abff53b6f25eb891a9827ffd1b2d5799a6dfa84de83c3eb146b
+    container_name: netronome
+    restart: unless-stopped
+    entrypoint:
+      - /sbin/tini
+      - --
+      - /bin/sh
+      - -c
+    command:
+      - |-
+        config=/data/.config/netronome/config.toml
+        if [ ! -f "$$config" ]; then
+          netronome generate-config
+        fi
+        exec netronome serve
+    ports:
+      - target: 7575
+        published: "7575"
+        protocol: tcp
+    environment:
+      TZ: $TZ
+      NETRONOME__HOST: 0.0.0.0
+      NETRONOME__PORT: 7575
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    cap_add:
+      - NET_RAW
+x-casaos:
+  id: org.icewhale.netronome
+  main: netronome
+  index: /
+  port_map: "7575"
+  scheme: http
+  title:
+    en_US: Netronome
+    zh_CN: Netronome
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.netronome/assets/icon.png
+  version: "0.13.0"

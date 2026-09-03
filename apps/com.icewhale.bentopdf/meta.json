@@ -1,0 +1,38 @@
+{
+  "thumbnail": "/apps/com.icewhale.bentopdf/assets/thumbnail.webp",
+  "screenshot_link": [
+    "/apps/com.icewhale.bentopdf/assets/screenshot-1.webp",
+    "/apps/com.icewhale.bentopdf/assets/screenshot-2.webp",
+    "/apps/com.icewhale.bentopdf/assets/screenshot-3.webp"
+  ],
+  "tagline": "Privacy-first, self-hosted PDF toolkit",
+  "description": "**Your PDFs never leave your device.** BentoPDF is a privacy-first PDF toolkit that runs entirely in your browser. Every merge, split, conversion, and edit happens locally on your machine — no file is ever uploaded to a server. More than 50 tools are bundled into one clean, fast, ad-free interface.\n\n**One app for every PDF job.** Organize and edit your documents (merge, split, reorder, rotate, crop, watermark, page numbers, redaction, annotations and forms), convert to and from PDF (images, Word, Excel, PowerPoint, EPUB, Markdown and more), run OCR, and secure your files with compression, encryption, digital signatures, and metadata cleanup.\n\n**Made for your private cloud.** Self-hosting BentoPDF on a private cloud device like Zima gives your whole household or team a single, ad-free PDF workshop on hardware you control — fast over the local network, with your documents staying private by design.\n",
+  "tips": {
+    "before_install": "## Getting Started\n\nOpen the Web UI at `http://<your-zima-ip>:3000`. BentoPDF is ready to use immediately — there is no account or setup, and files are processed entirely in your browser, never uploaded to a server.\n\n## HTTPS for Office conversions\n\nConverting Office files (Word, Excel, PowerPoint) relies on the browser feature `SharedArrayBuffer`, which is only available in a secure context. When you access BentoPDF over a LAN IP or hostname (anything other than `localhost`), serve it behind HTTPS — for example through CasaOS's reverse proxy — to enable these conversions.\n"
+  },
+  "author": "CasaOS Team",
+  "developer": "BentoPDF",
+  "category": "Productivity",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "update_at": "2026-09-03",
+  "website": "https://bentopdf.com",
+  "repo": "https://github.com/alam00000/bentopdf",
+  "support": "https://github.com/alam00000/bentopdf/issues",
+  "docs": "https://www.bentopdf.com/docs",
+  "title": "BentoPDF",
+  "release_note": "- v2.8.8 adds in-place PDF text editing with live reflow, preserved styling, find and replace, and spell-check.\n- Improves the editor with searchable non-Latin text, editable author names, and a new duplex sorting tool.\n- Fixes self-hosted string rendering, asset precaching, PDF-to-TIFF memory errors, commenting, redirects, and WASM initialization.",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "com.icewhale.bentopdf",
+  "version": "2.8.8",
+  "categories": [
+    "productivity"
+  ],
+  "min_memory": 67108864,
+  "min_image_size": {
+    "amd64": 134136073,
+    "arm64": 134495989
+  }
+}

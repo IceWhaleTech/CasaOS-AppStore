@@ -1,0 +1,34 @@
+name: bentopdf
+services:
+  bentopdf:
+    container_name: bentopdf
+    image: ghcr.io/alam00000/bentopdf-simple:2.8.8@sha256:5492f19a5a24294e892c22ab08ca1cd318c17fc283621f0c0d3b5b178a6ef2f6
+    network_mode: bridge
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: "64M"
+    ports:
+      - target: 8080
+        published: "3000"
+        protocol: tcp
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      DISABLE_IPV6: "false"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+x-casaos:
+  id: com.icewhale.bentopdf
+  main: bentopdf
+  index: /
+  port_map: "3000"
+  scheme: http
+  title:
+    en_US: BentoPDF
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/com.icewhale.bentopdf/assets/icon.svg
+  version: "2.8.8"

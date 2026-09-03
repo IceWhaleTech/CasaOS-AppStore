@@ -1,8 +1,8 @@
 {
   "id": "org.icewhale.karakeep",
-  "tagline": "무엇이든 저장하는 북마크 앱",
-  "description": "Karakeep은 링크, 메모, 이미지, PDF, 하이라이트를 한곳에 모아 저장할 수 있도록 만든 오픈 소스 자체 호스팅 북마크 관리자입니다.\n제목, 설명, 미리보기를 자동으로 가져오고, AI 태깅, 전체 텍스트 검색, 리스트, 규칙 기반 자동화로 라이브러리 정리를 도와줍니다.\n브라우저 확장, 모바일 앱, RSS 수집, 페이지 아카이빙을 지원해 나중에 읽기 도구로도 좋고 개인 콘텐츠를 오래 보관하는 아카이브로도 잘 맞습니다.\n\n**주요 기능:**\n- 링크, 메모, 이미지, PDF, 텍스트 하이라이트를 하나의 라이브러리에 저장\n- 제목, 설명, 이미지, 보관된 페이지를 자동으로 가져와 나중에 읽기 쉽게 정리\n- AI 태깅, 요약, OCR, 전체 텍스트 검색으로 필요한 내용을 빠르게 다시 찾기\n- 태그, 협업 리스트, RSS 피드, 규칙 기반 워크플로로 콘텐츠 구성\n- 웹 앱, 모바일 앱, 브라우저 확장, REST API, CLI를 통해 컬렉션에 접근\n\n**더 알아보기:**\n- [Karakeep 공식 웹사이트](https://karakeep.app/)\n- [Karakeep GitHub](https://github.com/karakeep-app/karakeep)\n- [Karakeep 문서](https://docs.karakeep.app/)\n",
   "release_note": "- v0.33.2는 유지 관리가 중단된 Alpine Chrome 이미지를 Karakeep에서 관리하는 Chrome 이미지로 교체하고 Chrome을 124에서 151로 업그레이드합니다.\n- 대용량 SingleFile 아카이브의 메타데이터 추출을 수정하고 크롤러 자산 변환을 강화하며 충돌 반복을 방지하도록 Node.js 버전을 고정합니다.\n- CLI를 통한 사용자 지정 SingleFile 아카이브 직접 업로드와 브라우저 테마에 맞춰지는 파비콘을 추가합니다.",
+  "description": "Karakeep은 링크, 메모, 이미지, PDF, 하이라이트를 한곳에 모아 저장할 수 있도록 만든 오픈 소스 자체 호스팅 북마크 관리자입니다.\n제목, 설명, 미리보기를 자동으로 가져오고, AI 태깅, 전체 텍스트 검색, 리스트, 규칙 기반 자동화로 라이브러리 정리를 도와줍니다.\n브라우저 확장, 모바일 앱, RSS 수집, 페이지 아카이빙을 지원해 나중에 읽기 도구로도 좋고 개인 콘텐츠를 오래 보관하는 아카이브로도 잘 맞습니다.\n\n**주요 기능:**\n- 링크, 메모, 이미지, PDF, 텍스트 하이라이트를 하나의 라이브러리에 저장\n- 제목, 설명, 이미지, 보관된 페이지를 자동으로 가져와 나중에 읽기 쉽게 정리\n- AI 태깅, 요약, OCR, 전체 텍스트 검색으로 필요한 내용을 빠르게 다시 찾기\n- 태그, 협업 리스트, RSS 피드, 규칙 기반 워크플로로 콘텐츠 구성\n- 웹 앱, 모바일 앱, 브라우저 확장, REST API, CLI를 통해 컬렉션에 접근\n\n**더 알아보기:**\n- [Karakeep 공식 웹사이트](https://karakeep.app/)\n- [Karakeep GitHub](https://github.com/karakeep-app/karakeep)\n- [Karakeep 문서](https://docs.karakeep.app/)\n",
+  "tagline": "무엇이든 저장하는 북마크 앱",
   "tips": {
     "before_install": "`NEXTAUTH_URL`은 Karakeep에 실제로 접속할 때 사용할 주소로 설정하세요.\n`NEXTAUTH_SECRET`와 `MEILI_MASTER_KEY`에는 충분히 긴 임의 문자열을 사용하고, `karakeep`과 `meilisearch` 두 서비스의 `MEILI_MASTER_KEY` 값은 같게 유지하세요.\n인스턴스에 처음 가입하는 사용자가 관리자가 됩니다.\n"
   }

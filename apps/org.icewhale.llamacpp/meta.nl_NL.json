@@ -1,7 +1,7 @@
 {
   "id": "org.icewhale.llamacpp",
   "title": "llama.cpp",
-  "tagline": "Draai GGUF LLM's lokaal met GPU-versnelling",
+  "release_note": "Eerste release: llama.cpp-server met Vulkan GPU-versnelling (ghcr.io/ggml-org/llama.cpp:server).",
   "description": "llama.cpp is een pure C/C++-inferentie-engine voor GGUF grote taalmodellen, met de officiële OpenAI-compatibele server en een ingebouwde webinterface.\n\n**Belangrijkste functies:**\n- Draai GGUF-modellen (Llama, Qwen, DeepSeek, Gemma, Mistral en meer) op CPU of GPU\n- Vulkan-backend werkt direct op AMD / Intel / NVIDIA GPU's\n- Uitstekend voor machines met unified memory (bijv. AMD Ryzen AI Max 395)\n- OpenAI-compatibele API voor Open WebUI, ChatGPT-Next-Web en meer\n- Ingebouwde chat-webinterface met het laden van modellen tijdens runtime\n\n**Aan de slag:**\n1. Plaats GGUF-modelbestanden in het modellenvolume (`/models`)\n2. Open de webinterface op `http://<zima-ip>:18080` en laad een model\n3. Houd `/dev/dri` voor Vulkan-versnelling; verwijder dit voor alleen-CPU-modus",
-  "release_note": "Eerste release: llama.cpp-server met Vulkan GPU-versnelling (ghcr.io/ggml-org/llama.cpp:server)."
+  "tagline": "Draai GGUF LLM's lokaal met GPU-versnelling"
 }
