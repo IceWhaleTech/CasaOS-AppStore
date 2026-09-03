@@ -2,7 +2,7 @@ name: clumoove
 
 services:
   frontend:
-    image: ghcr.io/xxroxxerxx/clumoove-frontend:v0.16.0@sha256:16ea89b67068b49d5413d5eb354520da717418da823d13553756ab176c549f70
+    image: ghcr.io/xxroxxerxx/clumoove-frontend:v0.17.0@sha256:b1f2888596ee0709c45136af227380edfc6a906189801213200afe8e0fb6485a
     container_name: clumoove-frontend
     restart: unless-stopped
     ports:
@@ -23,7 +23,7 @@ services:
             de_DE: WebUI HTTP Port
 
   api-backend:
-    image: ghcr.io/xxroxxerxx/clumoove-api:v0.16.0@sha256:e089bb8ef0268bfc6b53337ad3e0f5ca3d2d22bcc56fc2940242be99005a2fc1
+    image: ghcr.io/xxroxxerxx/clumoove-api:v0.17.0@sha256:2714d4fb9b59fbd6042236c5b211e9de6208dbd06c5a3c01a52b0eca2f74c1df
     container_name: clumoove-api
     restart: unless-stopped
     environment:
@@ -51,7 +51,7 @@ services:
             de_DE: Clumoove Internes Speicherverzeichnis
 
   migration-worker:
-    image: ghcr.io/xxroxxerxx/clumoove-worker:v0.16.0@sha256:a8d2a17ed3250684a7a6e4514b17f0a949b28dbfd193766c401e90e549e5de85
+    image: ghcr.io/xxroxxerxx/clumoove-worker:v0.17.0@sha256:7c4e02e9d3051828d451fd7bfe1726e41a14f1cd54c1a483feb5c28c142db46f
     container_name: clumoove-worker
     restart: unless-stopped
     command: ["/app/worker"]
@@ -151,17 +151,13 @@ x-casaos:
   port_map: "8380"
   scheme: http
   index: /
-  version: "0.16.0"
-  update_at: "2026-08-26"
+  version: "0.17.0"
+  update_at: "2026-09-03"
   release_notes:
     en_US: |-
-      - v0.16.0 introduces incremental, block-deduplicated snapshot backups, two-phase restore previews, retention policies, integrity checks, and dedicated backup dashboards.
-      - It improves multi-provider checksum verification, OAuth and SMTP security, queue and sync reliability, and HiDrive and local storage handling.
-      - It fixes WebDAV conflicts, Immich migration behavior, sync browse credentials, UI and modal stability, and Linux build compatibility.
+      - Fixes S3 multipart uploads failing with HTTP 500 InternalError during UploadPart on Railway Storage Buckets (Tigris), MinIO, and other S3-compatible providers.
     de_DE: |-
-      - v0.16.0 führt inkrementelle Snapshot-Backups mit blockbasierter Deduplizierung, zweistufige Wiederherstellungsvorschauen, Aufbewahrungsrichtlinien, Integritätsprüfungen und eigene Backup-Dashboards ein.
-      - Verbessert wurden die Prüfsummenverifikation zwischen Anbietern, die OAuth- und SMTP-Sicherheit, die Queue- und Sync-Zuverlässigkeit sowie HiDrive und lokaler Speicher.
-      - Behoben wurden WebDAV-Konflikte, das Immich-Migrationsverhalten, Anmeldedaten beim Sync-Browsing, die UI- und Modal-Stabilität sowie die Linux-Build-Kompatibilität.
+      - Behebt Fehler bei S3-Multipart-Uploads (HTTP 500 InternalError bei UploadPart) auf Railway Storage Buckets (Tigris), MinIO und weiteren S3-kompatiblen Anbietern.
   website: "https://clumoove.com"
   repo: "https://github.com/xXRoxXeRXx/clumoove"
   support: "https://github.com/xXRoxXeRXx/clumoove/issues"
