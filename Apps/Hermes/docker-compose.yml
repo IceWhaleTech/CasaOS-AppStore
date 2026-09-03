@@ -1,7 +1,7 @@
 name: hermes
 services:
   hermes:
-    image: nousresearch/hermes-agent:v2026.6.5
+    image: nousresearch/hermes-agent:v2026.8.18
     container_name: hermes
     deploy:
       resources:
@@ -24,7 +24,8 @@ services:
         target: /opt/data
     environment:
       HERMES_DASHBOARD: 1
-      HERMES_DASHBOARD_INSECURE: 1
+      HERMES_DASHBOARD_BASIC_AUTH_USERNAME: zimaos
+      HERMES_DASHBOARD_BASIC_AUTH_PASSWORD: hermes
     x-casaos:
       ports:
         - container: "8642"
@@ -97,23 +98,40 @@ services:
             pt_PT: Ativa o painel web do Hermes
             ru_RU: Включает веб-панель Hermes
             tr_TR: Hermes web panelini etkinleştirir
-        - container: HERMES_DASHBOARD_INSECURE
+        - container: HERMES_DASHBOARD_BASIC_AUTH_USERNAME
           description:
-            en_US: Allows dashboard access from non-loopback hosts
-            en_GB: Allows dashboard access from non-loopback hosts
-            it_IT: Consente l'accesso alla dashboard da host non loopback
-            nb_NO: Tillater dashbordtilgang fra ikke-loopback-verter
-            zh_CN: 允许从非 loopback 主机访问仪表盘
-            ja_JP: loopback 以外のホストからのダッシュボードアクセスを許可します
-            ko_KR: non-loopback 호스트에서 대시보드에 접근할 수 있게 합니다
-            fr_FR: Autorise l'acces au tableau de bord depuis des hotes non loopback
-            de_DE: Erlaubt den Dashboard-Zugriff von Nicht-Loopback-Hosts
-            sv_SE: Tillater dashboardatkomst fran vardar som inte ar loopback
-            el_GR: Επιτρέπει πρόσβαση στο dashboard από hosts εκτός loopback
-            hr_HR: Omogucuje pristup nadzornoj ploci s hostova koji nisu loopback
-            pt_PT: Permite o acesso ao painel a partir de hosts nao loopback
-            ru_RU: Разрешает доступ к панели управления с хостов, отличных от loopback
-            tr_TR: Panel erisimine loopback disi ana makinelerden izin verir
+            en_US: "Dashboard login username (default: zimaos)"
+            en_GB: "Dashboard login username (default: zimaos)"
+            it_IT: "Nome utente di accesso alla dashboard (predefinito: zimaos)"
+            nb_NO: "Brukernavn for innlogging pa dashbordet (standard: zimaos)"
+            zh_CN: "仪表盘登录用户名（默认：zimaos）"
+            ja_JP: "ダッシュボードのログインユーザー名（デフォルト：zimaos）"
+            ko_KR: "대시보드 로그인 사용자 이름(기본값: zimaos)"
+            fr_FR: "Nom d'utilisateur de connexion au tableau de bord (par defaut : zimaos)"
+            de_DE: "Benutzername fur die Dashboard-Anmeldung (Standard: zimaos)"
+            sv_SE: "Anvandarnamn for inloggning pa webbpanelen (standard: zimaos)"
+            el_GR: "Ονομα χρηστη συνδεσης στο dashboard (προεπιλογη: zimaos)"
+            hr_HR: "Korisnicko ime za prijavu na nadzornu plocu (zadano: zimaos)"
+            pt_PT: "Nome de utilizador para iniciar sessao no painel (predefinido: zimaos)"
+            ru_RU: "Имя пользователя для входа в панель (по умолчанию: zimaos)"
+            tr_TR: "Panel giris kullanici adi (varsayilan: zimaos)"
+        - container: HERMES_DASHBOARD_BASIC_AUTH_PASSWORD
+          description:
+            en_US: "Dashboard login password (default: hermes; change it in app settings)"
+            en_GB: "Dashboard login password (default: hermes; change it in app settings)"
+            it_IT: "Password di accesso alla dashboard (predefinita: hermes; modificala nelle impostazioni dell'app)"
+            nb_NO: "Passord for innlogging pa dashbordet (standard: hermes; endre det i appinnstillingene)"
+            zh_CN: "仪表盘登录密码（默认：hermes；请在应用设置中修改）"
+            ja_JP: "ダッシュボードのログインパスワード（デフォルト：hermes。アプリ設定で変更してください）"
+            ko_KR: "대시보드 로그인 비밀번호(기본값: hermes, 앱 설정에서 변경하세요)"
+            fr_FR: "Mot de passe de connexion au tableau de bord (par defaut : hermes ; modifiez-le dans les parametres de l'application)"
+            de_DE: "Passwort fur die Dashboard-Anmeldung (Standard: hermes; in den App-Einstellungen andern)"
+            sv_SE: "Losenord for inloggning pa webbpanelen (standard: hermes; andra det i appinstallningarna)"
+            el_GR: "Κωδικος συνδεσης στο dashboard (προεπιλογη: hermes, αλλαξτε τον στις ρυθμισεις εφαρμογης)"
+            hr_HR: "Lozinka za prijavu na nadzornu plocu (zadano: hermes; promijenite je u postavkama aplikacije)"
+            pt_PT: "Palavra-passe para iniciar sessao no painel (predefinida: hermes; altere-a nas definicoes da aplicacao)"
+            ru_RU: "Пароль для входа в панель (по умолчанию: hermes; измените его в настройках приложения)"
+            tr_TR: "Panel giris parolasi (varsayilan: hermes; uygulama ayarlarindan degistirin)"
 x-casaos:
   id: org.icewhale.hermes
   architectures:
@@ -374,48 +392,63 @@ x-casaos:
   tips:
     before_install:
       en_US: |
+        Default dashboard login: `zimaos` / `hermes`. Change these credentials in the app settings after installation.
         In most cases, you can configure models and messaging directly from the Hermes WebUI.
         If you cannot find the relevant option, see [this guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) and complete the configuration in the container terminal.
       en_GB: |
+        Default dashboard login: `zimaos` / `hermes`. Change these credentials in the app settings after installation.
         In most cases, you can configure models and messaging directly from the Hermes WebUI.
         If you cannot find the relevant option, see [this guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) and complete the configuration in the container terminal.
       it_IT: |
+        Accesso predefinito alla dashboard: `zimaos` / `hermes`. Modifica queste credenziali nelle impostazioni dell’app dopo l’installazione.
         Nella maggior parte dei casi, puoi configurare direttamente modelli e messaggistica dalla WebUI di Hermes.
         Se non trovi l'opzione corrispondente, consulta [questa guida](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) e completa la configurazione nel terminale del container.
       nb_NO: |
+        Standard innlogging til dashbordet: `zimaos` / `hermes`. Endre legitimasjonen i appinnstillingene etter installasjonen.
         I de fleste tilfeller kan du konfigurere modeller og meldinger direkte fra Hermes WebUI.
         Hvis du ikke finner det aktuelle alternativet, se [denne veiledningen](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) og fullfor konfigurasjonen i containerterminalen.
       zh_CN: |
+        仪表盘默认登录凭据：`zimaos` / `hermes`。安装后请在应用设置中修改。
         在大多数情况下，你可以直接通过 Hermes WebUI 配置模型和消息。
         如果找不到相应选项，请参考 [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) 在容器终端完成配置。
       ja_JP: |
+        ダッシュボードのデフォルトログインは `zimaos` / `hermes` です。インストール後にアプリ設定で変更してください。
         ほとんどの場合、モデル設定やメッセージ機能は Hermes WebUI から直接設定できます。
         該当する項目が見つからない場合は、[このガイド](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) を参照し、コンテナのターミナルで設定を完了してください。
       ko_KR: |
+        대시보드 기본 로그인은 `zimaos` / `hermes`입니다. 설치 후 앱 설정에서 변경하세요.
         대부분의 경우 Hermes WebUI에서 모델과 메시징을 직접 설정할 수 있습니다.
         해당 옵션이 보이지 않으면 [이 가이드](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) 를 참고해 컨테이너 터미널에서 설정을 완료하세요.
       fr_FR: |
+        Identifiants par defaut du tableau de bord : `zimaos` / `hermes`. Modifiez-les dans les parametres de l’application apres l’installation.
         Dans la plupart des cas, vous pouvez configurer directement les modeles et la messagerie depuis l'interface WebUI de Hermes.
         Si vous ne trouvez pas l'option correspondante, consultez [ce guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) et terminez la configuration dans le terminal du conteneur.
       de_DE: |
+        Standardanmeldung fur das Dashboard: `zimaos` / `hermes`. Andern Sie diese Zugangsdaten nach der Installation in den App-Einstellungen.
         In den meisten Fallen konnen Sie Modelle und Messaging direkt uber die Hermes WebUI konfigurieren.
         Wenn Sie die entsprechende Option nicht finden, lesen Sie [diese Anleitung](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) und schliessen Sie die Konfiguration im Container-Terminal ab.
       sv_SE: |
+        Standardinloggning till webbpanelen: `zimaos` / `hermes`. Andra uppgifterna i appinstallningarna efter installationen.
         I de flesta fall kan du konfigurera modeller och meddelanden direkt i Hermes WebUI.
         Om du inte hittar motsvarande alternativ, se [den här guiden](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) och slutför konfigureringen i containerns terminal.
       el_GR: |
+        Προεπιλεγμενη συνδεση dashboard: `zimaos` / `hermes`. Αλλαξτε τα στοιχεια στις ρυθμισεις εφαρμογης μετα την εγκατασταση.
         Στις περισσότερες περιπτώσεις, μπορείτε να ρυθμίσετε μοντέλα και μηνύματα απευθείας από το Hermes WebUI.
         Αν δεν βρείτε τη σχετική επιλογή, δείτε το [σχετικό οδηγό](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) και ολοκληρώστε τη ρύθμιση στο τερματικό του container.
       hr_HR: |
+        Zadana prijava na nadzornu plocu: `zimaos` / `hermes`. Promijenite podatke u postavkama aplikacije nakon instalacije.
         U vecini slucajeva modele i razmjenu poruka mozete konfigurirati izravno kroz Hermes WebUI.
         Ako ne mozete pronaci odgovarajucu opciju, pogledajte [ovaj vodic](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) i dovrsite konfiguraciju u terminalu kontejnera.
       pt_PT: |
+        Inicio de sessao predefinido no painel: `zimaos` / `hermes`. Altere estas credenciais nas definicoes da aplicacao apos a instalacao.
         Na maioria dos casos, pode configurar modelos e mensagens diretamente na WebUI do Hermes.
         Se nao encontrar a opcao correspondente, consulte [este guia](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) e conclua a configuracao no terminal do contentor.
       ru_RU: |
+        Данные для входа в панель по умолчанию: `zimaos` / `hermes`. После установки измените их в настройках приложения.
         В большинстве случаев вы можете настроить модели и обмен сообщениями прямо через Hermes WebUI.
         Если нужный параметр не находится, откройте [это руководство](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) и завершите настройку в терминале контейнера.
       tr_TR: |
+        Varsayilan panel girisi: `zimaos` / `hermes`. Kurulumdan sonra bu bilgileri uygulama ayarlarindan degistirin.
         Cogu durumda modelleri ve mesajlasmayi dogrudan Hermes WebUI uzerinden yapilandirabilirsiniz.
         Ilgili secenegi bulamazsaniz [bu rehbere](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) bakin ve kurulumu konteyner terminalinde tamamlayin.
   scheme: http
@@ -423,174 +456,114 @@ x-casaos:
   index: /
   title:
     en_US: Hermes
-  version: "0.16.0"
-  update_at: "2026-06-05"
+  version: "0.20.4"
+  update_at: "2026-08-18"
   release_notes:
     en_US: |-
-      ## Functional Updates
+      ## Patch Release
 
-      - The web dashboard is now a much more complete admin panel: you can configure messaging channels, MCP catalog entries, credentials, webhooks, memory, and gateway settings directly from the browser.
-      - First-run setup is simpler with Quick Setup via Nous Portal and a clearer split between Quick Setup and Full Setup, so new users can get to their first message faster.
-      - The model picker now supports fuzzy search across the web dashboard, TUI, and CLI, groups multi-endpoint providers more cleanly, and refreshes the model catalog more frequently.
-      - `/undo [N]` lets you roll back the last N turns, prefill your last message for editing, and resend it more easily across CLI, TUI, and messaging flows.
-      - You can now choose whether `hermes chat` opens the CLI or the TUI by default, and the TUI also gets a unified `/model` command plus a Sessions overlay.
-      - The default skill set was trimmed to reduce noise, while `NVIDIA/skills` was added as a built-in trusted tap for easier discovery and installation of verified skills.
+      - Stable v0.20.4 rolls up about 74 merged pull requests since v0.20.3 for Docker images, hosted deployments, and fresh installs.
+      - Highlights include desktop translucency improvements, the tabbed SESSIONS | BOTS sidebar, Bot Mode group-chat fixes, skill security scans, and reliability hardening for cron media, SessionDB, updates, and notifications.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
     en_GB: |-
-      ## Functional Updates
+      ## Patch Release
 
-      - The web dashboard is now a much more complete admin panel: you can configure messaging channels, MCP catalog entries, credentials, webhooks, memory, and gateway settings directly from the browser.
-      - First-run setup is simpler with Quick Setup via Nous Portal and a clearer split between Quick Setup and Full Setup, so new users can get to their first message faster.
-      - The model picker now supports fuzzy search across the web dashboard, TUI, and CLI, groups multi-endpoint providers more cleanly, and refreshes the model catalog more frequently.
-      - `/undo [N]` lets you roll back the last N turns, prefill your last message for editing, and resend it more easily across CLI, TUI, and messaging flows.
-      - You can now choose whether `hermes chat` opens the CLI or the TUI by default, and the TUI also gets a unified `/model` command plus a Sessions overlay.
-      - The default skill set was trimmed to reduce noise, while `NVIDIA/skills` was added as a built-in trusted tap for easier discovery and installation of verified skills.
+      - Stable v0.20.4 rolls up about 74 merged pull requests since v0.20.3 for Docker images, hosted deployments, and fresh installs.
+      - Highlights include desktop translucency improvements, the tabbed SESSIONS | BOTS sidebar, Bot Mode group-chat fixes, skill security scans, and reliability hardening for cron media, SessionDB, updates, and notifications.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
     it_IT: |-
-      ## Aggiornamenti Funzionali
+      ## Release Correttiva
 
-      - La dashboard web e ora un pannello di amministrazione molto piu completo: puoi configurare canali di messaggistica, voci del catalogo MCP, credenziali, webhook, memoria e impostazioni del gateway direttamente dal browser.
-      - La configurazione iniziale e stata semplificata con Quick Setup via Nous Portal e con una distinzione piu chiara tra Quick Setup e Full Setup, cosi i nuovi utenti arrivano prima al primo messaggio.
-      - Il selettore dei modelli ora supporta la ricerca fuzzy nella dashboard web, nella TUI e nella CLI, raggruppa meglio i provider con piu endpoint e aggiorna il catalogo modelli piu spesso.
-      - `/undo [N]` permette di annullare gli ultimi N turni, precompilare l'ultimo messaggio per modificarlo e reinviarlo piu facilmente in CLI, TUI e flussi di messaggistica.
-      - Ora puoi scegliere se `hermes chat` deve aprire di default la CLI o la TUI, e la TUI riceve anche un comando `/model` unificato piu un overlay Sessions.
-      - Il set di skill predefinito e stato snellito per ridurre il rumore, mentre `NVIDIA/skills` e stato aggiunto come trusted tap integrato per facilitare scoperta e installazione di skill verificate.
+      - La versione stabile v0.20.4 riunisce circa 74 pull request integrate dopo v0.20.3 per immagini Docker, deployment ospitati e nuove installazioni.
+      - Le novita includono trasparenze desktop migliorate, la barra SESSIONS | BOTS a schede, correzioni alle chat di gruppo Bot Mode, scansioni di sicurezza delle skill e maggiore affidabilita di cron, SessionDB, aggiornamenti e notifiche.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
     nb_NO: |-
-      ## Funksjonelle Oppdateringer
+      ## Vedlikeholdsutgivelse
 
-      - Nettdashbordet er nå et langt mer komplett administrasjonspanel: du kan konfigurere meldingskanaler, MCP-katalogoppføringer, legitimasjon, webhooks, minne og gateway-innstillinger direkte fra nettleseren.
-      - Førstegangsoppsettet er enklere med Quick Setup via Nous Portal og et tydeligere skille mellom Quick Setup og Full Setup, slik at nye brukere raskere kommer til sin første melding.
-      - Modellvelgeren støtter nå fuzzy-søk i nettdashbordet, TUI og CLI, grupperer leverandører med flere endepunkter bedre og oppdaterer modellkatalogen oftere.
-      - `/undo [N]` lar deg rulle tilbake de siste N rundene, forhåndsfylle den siste meldingen for redigering og sende den på nytt enklere på tvers av CLI, TUI og meldingsflyter.
-      - Du kan nå velge om `hermes chat` skal åpne CLI eller TUI som standard, og TUI-en får også en samlet `/model`-kommando og et Sessions-overlay.
-      - Standardsettet med ferdigheter er slanket for å redusere støy, mens `NVIDIA/skills` er lagt til som en innebygd trusted tap for enklere oppdagelse og installasjon av verifiserte ferdigheter.
+      - Stabil v0.20.4 samler rundt 74 sammenslatte pull requests siden v0.20.3 for Docker-avbildninger, driftede utrullinger og nye installasjoner.
+      - Hoydepunktene omfatter bedre gjennomsiktighet pa skrivebordet, sidefeltet SESSIONS | BOTS med faner, rettelser for Bot Mode-gruppechat, sikkerhetsskanning av ferdigheter og mer robust cron, SessionDB, oppdatering og varsling.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
     zh_CN: |-
-      ## 功能更新
+      ## 补丁版本
 
-      - Web 仪表盘现在已经成为更完整的管理面板，你可以直接在浏览器里配置消息渠道、MCP 目录项、凭据、Webhook、记忆和网关设置。
-      - 首次配置流程通过 Nous Portal 的 Quick Setup 得到简化，同时 Quick Setup 和 Full Setup 的分工也更清晰，新用户可以更快进入第一次对话。
-      - 模型选择器现在在 Web 仪表盘、TUI 和 CLI 中都支持模糊搜索，对多端点 provider 的分组也更清晰，而且模型目录刷新更频繁。
-      - `/undo [N]` 现在可以回退最近 N 轮对话，自动带回上一条消息供你编辑后重发，在 CLI、TUI 和消息渠道流程里都更好用。
-      - 现在你可以决定 `hermes chat` 默认进入 CLI 还是 TUI，同时 TUI 也新增了统一的 `/model` 命令和 Sessions 浮层。
-      - 默认技能集被进一步精简以减少噪音，同时 `NVIDIA/skills` 被加入为内置信任 tap，方便发现和安装经过验证的技能。
+      - 稳定版 v0.20.4 汇总了自 v0.20.3 以来合并的约 74 个拉取请求，适用于 Docker 镜像、托管部署和全新安装。
+      - 主要更新包括桌面半透明效果、带标签页的 SESSIONS | BOTS 侧栏、Bot Mode 群聊修复、技能安全扫描，以及对定时媒体发送、SessionDB、更新和通知的可靠性增强。
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
     ja_JP: |-
-      ## 機能アップデート
+      ## パッチリリース
 
-      - Webダッシュボードは、ブラウザーからメッセージチャネル、MCPカタログ項目、認証情報、Webhook、メモリ、ゲートウェイ設定を直接管理できる、より完成度の高い管理パネルになりました。
-      - 初回セットアップは Nous Portal の Quick Setup によって簡単になり、Quick Setup と Full Setup の役割もより明確になったため、新規ユーザーが最初のメッセージまでたどり着きやすくなりました。
-      - モデルピッカーは Webダッシュボード、TUI、CLI でファジー検索に対応し、複数エンドポイントを持つプロバイダーの整理も改善され、モデルカタログの更新頻度も上がりました。
-      - `/undo [N]` により直近 N ターンを巻き戻し、直前のメッセージを編集用に再入力して送り直しやすくなり、CLI、TUI、メッセージフロー全体で使いやすくなりました。
-      - `hermes chat` を既定で CLI と TUI のどちらで開くか選べるようになり、TUI には統一された `/model` コマンドと Sessions オーバーレイも追加されました。
-      - デフォルトのスキルセットはノイズ削減のために整理され、`NVIDIA/skills` は検証済みスキルを見つけて導入しやすい組み込み trusted tap として追加されました。
+      - 安定版 v0.20.4 は、v0.20.3 以降にマージされた約74件のプルリクエストを、Dockerイメージ、ホスト型デプロイ、新規インストール向けにまとめたものです。
+      - デスクトップの半透明表現、タブ式 SESSIONS | BOTS サイドバー、Bot Mode グループチャット修正、スキルのセキュリティ検査、cron、SessionDB、更新、通知の信頼性向上が含まれます。
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
     ko_KR: |-
-      ## 기능 업데이트
+      ## 패치 릴리스
 
-      - 웹 대시보드는 이제 메시징 채널, MCP 카탈로그 항목, 자격 증명, 웹훅, 메모리, 게이트웨이 설정을 브라우저에서 직접 구성할 수 있는 훨씬 더 완성도 높은 관리 패널이 되었습니다.
-      - 초기 설정은 Nous Portal의 Quick Setup 으로 더 단순해졌고, Quick Setup 과 Full Setup 의 구분도 더 명확해져 신규 사용자가 첫 메시지까지 더 빠르게 도달할 수 있습니다.
-      - 모델 선택기는 이제 웹 대시보드, TUI, CLI 전반에서 퍼지 검색을 지원하고, 다중 엔드포인트 provider 를 더 깔끔하게 묶어 주며, 모델 카탈로그도 더 자주 갱신됩니다.
-      - `/undo [N]` 은 최근 N개 턴을 되돌리고, 마지막 메시지를 편집용으로 다시 채워 넣어 CLI, TUI, 메시징 흐름 전반에서 더 쉽게 다시 보낼 수 있게 해줍니다.
-      - 이제 `hermes chat` 이 기본적으로 CLI 와 TUI 중 무엇을 열지 선택할 수 있고, TUI 에는 통합 `/model` 명령과 Sessions 오버레이도 추가되었습니다.
-      - 기본 스킬 세트는 노이즈를 줄이기 위해 정리되었고, `NVIDIA/skills` 는 검증된 스킬을 더 쉽게 찾고 설치할 수 있는 내장 trusted tap 으로 추가되었습니다.
+      - 안정 버전 v0.20.4는 Docker 이미지, 호스팅 배포 및 신규 설치를 위해 v0.20.3 이후 병합된 약 74개의 풀 리퀘스트를 통합합니다.
+      - 데스크톱 반투명 효과, 탭형 SESSIONS | BOTS 사이드바, Bot Mode 그룹 채팅 수정, 스킬 보안 검사와 cron, SessionDB, 업데이트 및 알림 안정성 개선이 포함됩니다.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
     fr_FR: |-
-      ## Mises a Jour Fonctionnelles
+      ## Version Corrective
 
-      - Le tableau de bord web est maintenant un panneau d'administration bien plus complet : vous pouvez configurer directement depuis le navigateur les canaux de messagerie, les entrees du catalogue MCP, les identifiants, les webhooks, la memoire et les parametres de la passerelle.
-      - La configuration initiale est plus simple grace a Quick Setup via Nous Portal et a une separation plus claire entre Quick Setup et Full Setup, ce qui permet aux nouveaux utilisateurs d'atteindre plus vite leur premier message.
-      - Le selecteur de modeles prend maintenant en charge la recherche floue dans le tableau de bord web, la TUI et la CLI, regroupe plus proprement les fournisseurs a plusieurs endpoints et actualise plus souvent le catalogue de modeles.
-      - `/undo [N]` permet de revenir sur les N derniers tours, de pre-remplir votre dernier message pour le modifier puis le renvoyer plus facilement dans les flux CLI, TUI et messagerie.
-      - Vous pouvez maintenant choisir si `hermes chat` ouvre par defaut la CLI ou la TUI, et la TUI gagne aussi une commande `/model` unifiee ainsi qu'un overlay Sessions.
-      - Le jeu de skills par defaut a ete allege pour reduire le bruit, tandis que `NVIDIA/skills` a ete ajoute comme trusted tap integre pour faciliter la decouverte et l'installation de skills verifiees.
+      - La version stable v0.20.4 regroupe environ 74 pull requests fusionnees depuis v0.20.3 pour les images Docker, les deploiements heberges et les nouvelles installations.
+      - Elle apporte une meilleure transparence du bureau, la barre SESSIONS | BOTS a onglets, des correctifs de groupe Bot Mode, l'analyse de securite des skills et une fiabilite accrue de cron, SessionDB, des mises a jour et des notifications.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
     de_DE: |-
-      ## Funktionale Updates
+      ## Patch-Release
 
-      - Das Web-Dashboard ist jetzt ein deutlich vollstaendigeres Administrationspanel: Messaging-Kanaele, MCP-Katalogeintraege, Zugangsdaten, Webhooks, Memory und Gateway-Einstellungen lassen sich direkt im Browser konfigurieren.
-      - Die Ersteinrichtung wurde mit Quick Setup ueber Nous Portal vereinfacht, und die Trennung zwischen Quick Setup und Full Setup ist klarer geworden, sodass neue Nutzer schneller zur ersten Nachricht kommen.
-      - Der Modellwaehler unterstuetzt jetzt Fuzzy-Suche im Web-Dashboard, in der TUI und in der CLI, gruppiert Anbieter mit mehreren Endpunkten sauberer und aktualisiert den Modellkatalog haeufiger.
-      - `/undo [N]` erlaubt es, die letzten N Zuege zurueckzunehmen, die letzte Nachricht zum Bearbeiten vorzufuellen und sie ueber CLI, TUI und Messaging-Ablaufe leichter erneut zu senden.
-      - Sie koennen jetzt waehlen, ob `hermes chat` standardmaessig die CLI oder die TUI oeffnet, und die TUI erhaelt zusaetzlich einen vereinheitlichten `/model`-Befehl sowie ein Sessions-Overlay.
-      - Das Standard-Skill-Set wurde verschlankt, um Rauschen zu reduzieren, waehrend `NVIDIA/skills` als integrierter trusted tap fuer die einfachere Entdeckung und Installation verifizierter Skills hinzugefuegt wurde.
+      - Die stabile Version v0.20.4 bundelt rund 74 seit v0.20.3 zusammengefuhrte Pull Requests fur Docker-Images, gehostete Deployments und Neuinstallationen.
+      - Enthalten sind bessere Desktop-Transparenz, die SESSIONS | BOTS-Seitenleiste mit Tabs, Bot-Mode-Gruppenchat-Korrekturen, Sicherheitsprufungen fur Skills sowie robustere cron-, SessionDB-, Update- und Benachrichtigungsablaufe.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
     sv_SE: |-
-      ## Funktionella Uppdateringar
+      ## Korrigeringsversion
 
-      - Webbpanelen ar nu ett mycket mer komplett administrationsverktyg: du kan konfigurera meddelandekanaler, MCP-katalogposter, autentiseringsuppgifter, webbkopplingar, minne och gateway-inställningar direkt i webblasaren.
-      - Forstagangsinstallationen ar enklare med Quick Setup via Nous Portal och en tydligare uppdelning mellan Quick Setup och Full Setup, sa att nya anvandare snabbare kan komma till sitt forsta meddelande.
-      - Modellvaljaren har nu fuzzy-sok i webbpanelen, TUI och CLI, grupperar leverantorer med flera endpunkter renare och uppdaterar modellkatalogen oftare.
-      - `/undo [N]` later dig rulla tillbaka de senaste N turerna, forifylla ditt senaste meddelande for redigering och skicka om det enklare over CLI, TUI och meddelandefloden.
-      - Du kan nu valja om `hermes chat` som standard ska oppna CLI eller TUI, och TUI far dessutom ett enhetligt `/model`-kommando och ett Sessions-overlay.
-      - Standarduppsattningen av skills har bantats ned for att minska brus, medan `NVIDIA/skills` har lagts till som en inbyggd trusted tap for enklare upptackt och installation av verifierade skills.
+      - Stabil v0.20.4 samlar omkring 74 sammanslagna pull requests sedan v0.20.3 for Docker-avbildningar, vardbaserade driftsattningar och nya installationer.
+      - Den innehaller battre skrivbordstransparens, sidofaltet SESSIONS | BOTS med flikar, rattningar for Bot Mode-gruppchatt, sakerhetsskanning av skills och robustare cron-, SessionDB-, uppdaterings- och aviseringsfloden.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
     el_GR: |-
-      ## Λειτουργικες Ενημερωσεις
+      ## Διορθωτικη Εκδοση
 
-      - Το web dashboard ειναι τωρα ενα πολυ πιο ολοκληρωμενο admin panel: μπορειτε να ρυθμισετε messaging channels, καταχωρησεις MCP catalog, credentials, webhooks, memory και gateway settings απευθειας απο τον browser.
-      - Η αρχικη ρυθμιση ειναι πλεον πιο απλη με Quick Setup μεσω Nous Portal και με πιο καθαρο διαχωρισμο αναμεσα σε Quick Setup και Full Setup, ωστε οι νεοι χρηστες να φτανουν γρηγοροτερα στο πρωτο τους μηνυμα.
-      - Ο επιλογεας μοντελων υποστηριζει πλεον fuzzy search στο web dashboard, στο TUI και στο CLI, ομαδοποιει καλυτερα τους providers με πολλα endpoints και ανανεωνει συχνοτερα τον καταλογο μοντελων.
-      - Το `/undo [N]` σας επιτρεπει να αναιρεσετε τα τελευταια N turns, να επαναφερετε το τελευταιο μηνυμα για επεξεργασια και να το ξαναστειλετε πιο ευκολα σε CLI, TUI και messaging flows.
-      - Μπορειτε πλεον να επιλεξετε αν το `hermes chat` θα ανοιγει απο προεπιλογη το CLI ή το TUI, και το TUI αποκτα επισης ενοποιημενη εντολη `/model` και overlay Sessions.
-      - Το προεπιλεγμενο skill set μειωθηκε για λιγοτερο θορυβο, ενω το `NVIDIA/skills` προστεθηκε ως ενσωματωμενο trusted tap για ευκολοτερη ανακαλυψη και εγκατασταση verified skills.
+      - Η σταθερη εκδοση v0.20.4 συγκεντρωνει περιπου 74 συγχωνευμενα pull requests μετα την v0.20.3 για Docker images, hosted deployments και νεες εγκαταστασεις.
+      - Περιλαμβανει καλυτερη διαφανεια desktop, την πλευρικη στηλη SESSIONS | BOTS με καρτελες, διορθωσεις ομαδικης συνομιλιας Bot Mode, ελεγχους ασφαλειας skills και ενισχυση cron, SessionDB, ενημερωσεων και ειδοποιησεων.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
     hr_HR: |-
-      ## Funkcionalna Azuriranja
+      ## Zakrpno Izdanje
 
-      - Web nadzorna ploca sada je znatno potpuniji administracijski panel: izravno u pregledniku mozete konfigurirati kanale za poruke, MCP katalog stavke, vjerodajnice, webhookove, memoriju i gateway postavke.
-      - Pocetno postavljanje sada je jednostavnije uz Quick Setup preko Nous Portala i jasniju podjelu izmedu Quick Setup i Full Setup, tako da novi korisnici brze dolaze do prve poruke.
-      - Odabir modela sada podrzava fuzzy pretragu u web nadzornoj ploci, TUI-u i CLI-u, urednije grupira providere s vise endpointa i cesce osvjezava katalog modela.
-      - `/undo [N]` omogucuje vracanje posljednjih N poteza, ponovno popunjavanje zadnje poruke za uredjivanje i jednostavnije ponovno slanje kroz CLI, TUI i tokove poruka.
-      - Sada mozete odabrati hoce li `hermes chat` zadano otvarati CLI ili TUI, a TUI dobiva i objedinjenu `/model` naredbu te Sessions overlay.
-      - Zadani skup skillova je smanjen kako bi bilo manje suma, dok je `NVIDIA/skills` dodan kao ugradeni trusted tap za lakse otkrivanje i instalaciju provjerenih skillova.
+      - Stabilna verzija v0.20.4 objedinjuje oko 74 spojena pull requesta nakon v0.20.3 za Docker slike, hostane implementacije i nove instalacije.
+      - Ukljucuje bolju prozirnost radne povrsine, karticnu bocnu traku SESSIONS | BOTS, ispravke grupnog razgovora Bot Mode, sigurnosne provjere skillova i pouzdaniji cron, SessionDB, azuriranja i obavijesti.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
     pt_PT: |-
-      ## Atualizacoes Funcionais
+      ## Versao Corretiva
 
-      - O dashboard web e agora um painel de administracao muito mais completo: pode configurar canais de mensagens, entradas do catalogo MCP, credenciais, webhooks, memoria e definicoes do gateway diretamente no browser.
-      - A configuracao inicial ficou mais simples com o Quick Setup via Nous Portal e com uma separacao mais clara entre Quick Setup e Full Setup, para que novos utilizadores cheguem mais rapidamente a primeira mensagem.
-      - O seletor de modelos passa agora a suportar pesquisa difusa no dashboard web, na TUI e na CLI, agrupa melhor providers com varios endpoints e atualiza o catalogo de modelos com mais frequencia.
-      - `/undo [N]` permite recuar os ultimos N turnos, preencher novamente a ultima mensagem para edicao e reenviá-la com mais facilidade em fluxos de CLI, TUI e mensagens.
-      - Agora pode escolher se `hermes chat` abre por defeito a CLI ou a TUI, e a TUI tambem recebe um comando `/model` unificado e um overlay Sessions.
-      - O conjunto de skills por defeito foi reduzido para diminuir o ruido, enquanto `NVIDIA/skills` foi adicionado como um trusted tap integrado para facilitar a descoberta e instalacao de skills verificadas.
+      - A versao estavel v0.20.4 reune cerca de 74 pull requests integrados desde a v0.20.3 para imagens Docker, implementacoes alojadas e novas instalacoes.
+      - Inclui melhor transparencia no ambiente de trabalho, a barra SESSIONS | BOTS com separadores, correcoes de grupo do Bot Mode, analises de seguranca de skills e maior fiabilidade de cron, SessionDB, atualizacoes e notificacoes.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
     ru_RU: |-
-      ## Функциональные Обновления
+      ## Исправляющий Релиз
 
-      - Веб-панель теперь стала гораздо более полноценной административной панелью: прямо из браузера можно настраивать каналы сообщений, записи каталога MCP, учетные данные, вебхуки, память и параметры gateway.
-      - Первичная настройка стала проще благодаря Quick Setup через Nous Portal и более понятному разделению между Quick Setup и Full Setup, поэтому новым пользователям легче быстрее дойти до первого сообщения.
-      - Выбор модели теперь поддерживает нечеткий поиск в веб-панели, TUI и CLI, аккуратнее группирует providers с несколькими endpoints и чаще обновляет каталог моделей.
-      - `/undo [N]` позволяет откатить последние N ходов, вернуть последнюю реплику для редактирования и проще отправить ее заново в CLI, TUI и потоках сообщений.
-      - Теперь можно выбрать, будет ли `hermes chat` по умолчанию открывать CLI или TUI, а TUI также получила унифицированную команду `/model` и overlay Sessions.
-      - Набор навыков по умолчанию был сокращен, чтобы уменьшить шум, а `NVIDIA/skills` добавлен как встроенный trusted tap для более простого поиска и установки проверенных навыков.
+      - Стабильная версия v0.20.4 объединяет около 74 запросов на слияние после v0.20.3 для Docker-образов, размещенных развертываний и новых установок.
+      - В нее входят улучшенная прозрачность рабочего стола, вкладки SESSIONS | BOTS, исправления групповых чатов Bot Mode, проверка безопасности навыков и повышение надежности cron, SessionDB, обновлений и уведомлений.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
     tr_TR: |-
-      ## Islevsel Guncellemeler
+      ## Yama Surumu
 
-      - Web panosu artik cok daha tamamlanmis bir yonetim paneli: mesajlasma kanallari, MCP katalog girdileri, kimlik bilgileri, webhook'lar, bellek ve gateway ayarlari dogrudan tarayicidan yapilandirilabiliyor.
-      - Ilk kurulum, Nous Portal uzerinden Quick Setup ve Quick Setup ile Full Setup arasindaki daha net ayrim sayesinde sadeleşti; boylece yeni kullanicilar ilk mesajlarina daha hizli ulasabiliyor.
-      - Model secici artik web panosu, TUI ve CLI genelinde bulanik aramayi destekliyor, coklu endpoint'e sahip provider'lari daha duzenli grupluyor ve model katalogunu daha sik yeniliyor.
-      - `/undo [N]`, son N turu geri almanizi, son mesaji duzenleme icin yeniden doldurmanizi ve CLI, TUI ve mesajlasma akislarinda daha kolay yeniden gondermenizi saglar.
-      - Artik `hermes chat` komutunun varsayilan olarak CLI mi yoksa TUI mi acacagini secebiliyorsunuz; TUI'ye ayrica birlesik `/model` komutu ve Sessions overlay de eklendi.
-      - Varsayilan skill set'i gurultuyu azaltmak icin sadeleştirildi; `NVIDIA/skills` ise dogrulanmis skill'leri daha kolay kesfetmek ve kurmak icin yerlesik bir trusted tap olarak eklendi.
+      - Kararli v0.20.4 surumu, Docker imajlari, barindirilan dagitimlar ve yeni kurulumlar icin v0.20.3 sonrasinda birlestirilen yaklasik 74 pull requesti toplar.
+      - Masaustu seffafligi, sekmeli SESSIONS | BOTS kenar cubugu, Bot Mode grup sohbeti duzeltmeleri, skill guvenlik taramalari ile cron, SessionDB, guncelleme ve bildirim guvenilirligi iyilestirmeleri bulunur.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5)
+      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
   store_app_id: hermes
   website: "https://hermes-agent.nousresearch.com/"
   repo: "https://github.com/NousResearch/hermes-agent"
