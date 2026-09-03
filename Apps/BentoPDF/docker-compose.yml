@@ -2,7 +2,7 @@ name: bentopdf
 services:
   bentopdf:
     container_name: bentopdf
-    image: ghcr.io/alam00000/bentopdf-simple:1.15.4
+    image: ghcr.io/alam00000/bentopdf-simple:2.8.8
     network_mode: bridge
     restart: unless-stopped
     deploy:
@@ -44,7 +44,6 @@ services:
 
 x-casaos:
   id: com.icewhale.bentopdf
-  app_id: org.icewhale.bentopdf
   main: bentopdf
   index: /
   port_map: "3000"
@@ -97,17 +96,17 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.15.4"
-  update_at: "2026-06-27"
+  version: "2.8.8"
+  update_at: "2026-09-03"
   release_notes:
     en_US: |-
-      - Self-hosted BentoPDF build (bentopdf-simple) with the full set of 50+ PDF tools.
-      - Runs fully client-side — files are processed in the browser and never uploaded.
-      - Multi-architecture image (amd64 and arm64), served by unprivileged nginx.
+      - v2.8.8 adds in-place PDF text editing with live reflow, preserved styling, find and replace, and spell-check.
+      - Improves the editor with searchable non-Latin text, editable author names, and a new duplex sorting tool.
+      - Fixes self-hosted string rendering, asset precaching, PDF-to-TIFF memory errors, commenting, redirects, and WASM initialization.
     zh_CN: |-
-      - 自托管 BentoPDF 构建（bentopdf-simple），包含完整的 50 多种 PDF 工具。
-      - 完全在客户端运行——文件在浏览器中处理，绝不上传。
-      - 多架构镜像（amd64 与 arm64），由非特权 nginx 提供服务。
+      - v2.8.8 新增原位 PDF 文本编辑，支持实时重排、保留样式、查找替换和拼写检查。
+      - 改进 PDF 编辑器，支持可搜索的非拉丁文字、修改作者名称，并新增双面扫描排序工具。
+      - 修复自托管版本文本显示、资源预缓存、PDF 转 TIFF 内存溢出、批注、重定向和 WASM 初始化问题。
   website: "https://bentopdf.com"
   repo: "https://github.com/alam00000/bentopdf"
   support: "https://github.com/alam00000/bentopdf/issues"
