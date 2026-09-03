@@ -1,9 +1,51 @@
 {
   "version": 2,
-  "updated_at": "2026-09-02T07:44:37Z",
-  "app_count": 170,
+  "updated_at": "2026-09-03T06:12:33Z",
+  "app_count": 173,
   "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
   "apps": [
+    {
+      "id": "com.nzbfast.nzbfast",
+      "title": "nzbfast",
+      "tagline": "Fast Usenet downloader with a SABnzbd-compatible API",
+      "category": "Media",
+      "categories": [
+        "media"
+      ],
+      "author": "nzbfast",
+      "developer": "nzbfast",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/com.nzbfast.nzbfast/assets/icon.svg",
+      "thumbnail": "",
+      "compose_url": "/apps/com.nzbfast.nzbfast/docker-compose.yml",
+      "meta_url": "/apps/com.nzbfast.nzbfast/meta.json",
+      "content_hash": "a513078b",
+      "version": "1.3.1"
+    },
+    {
+      "id": "com.snapotter.snapotter",
+      "title": "SnapOtter",
+      "tagline": "Self-hosted file toolkit for images, video, audio, PDFs, and files",
+      "category": "Productivity",
+      "categories": [
+        "productivity"
+      ],
+      "author": "SnapOtter",
+      "developer": "SnapOtter",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/com.snapotter.snapotter/assets/icon.png",
+      "thumbnail": "/apps/com.snapotter.snapotter/assets/thumbnail.webp",
+      "compose_url": "/apps/com.snapotter.snapotter/docker-compose.yml",
+      "meta_url": "/apps/com.snapotter.snapotter/meta.json",
+      "content_hash": "72fa8d96",
+      "version": "2.2.0"
+    },
     {
       "id": "org.clumoove.app",
       "title": "Clumoove",
@@ -1016,6 +1058,27 @@
       "meta_url": "/apps/org.icewhale.freshrss/meta.json",
       "content_hash": "7ad5c54b",
       "version": "1.29.1"
+    },
+    {
+      "id": "org.icewhale.frigate",
+      "title": "Frigate",
+      "tagline": "Monitor your security cameras with locally processed AI",
+      "category": "Security",
+      "categories": [
+        "security"
+      ],
+      "author": "ZimaOS Team",
+      "developer": "Frigate",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/org.icewhale.frigate/assets/icon.png",
+      "thumbnail": "",
+      "compose_url": "/apps/org.icewhale.frigate/docker-compose.yml",
+      "meta_url": "/apps/org.icewhale.frigate/meta.json",
+      "content_hash": "32d1dd1e",
+      "version": "0.17.2"
     },
     {
       "id": "org.icewhale.gatewaygo",

@@ -1,0 +1,38 @@
+{
+  "screenshot_link": [
+    "/apps/com.nzbfast.nzbfast/assets/screenshot-1.webp",
+    "/apps/com.nzbfast.nzbfast/assets/screenshot-2.webp",
+    "/apps/com.nzbfast.nzbfast/assets/screenshot-3.webp",
+    "/apps/com.nzbfast.nzbfast/assets/screenshot-4.webp"
+  ],
+  "tagline": "Fast Usenet downloader with a SABnzbd-compatible API",
+  "description": "nzbfast is a speed-focused Usenet (NZB) downloader written in Rust. It is one small binary with a low memory footprint, and it saturates a fast line with a handful of connections.\n\nArticles are verified while they arrive, so most jobs finish with no separate verify pass. Repair and unpack run only when they are actually needed, and extraction starts before the last article lands.\n\nThe web dashboard on port 6790 also serves a SABnzbd-compatible API, so Sonarr, Radarr, Prowlarr and friends work with no extra glue. Add an .nzb from the dashboard, or drop one into the watch folder.\n\nFirst run: open the dashboard, add your Usenet provider under Settings, and copy the API key it shows you into your *arr apps. If you would rather pin the key yourself so it survives a reinstall, set NZBFAST_APIKEY before the first start. Leave it empty and nzbfast generates one for you.",
+  "tips": {
+    "before_install": "Your settings, API key and queue live in the config folder. Keep that mapping pointed at the same host folder when you update or reinstall, or nzbfast comes back looking like a fresh install."
+  },
+  "author": "nzbfast",
+  "developer": "nzbfast",
+  "category": "Media",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "update_at": "2026-09-01",
+  "website": "https://nzbfast.github.io/nzbfast/",
+  "repo": "https://github.com/nzbfast/nzbfast",
+  "support": "https://github.com/nzbfast/nzbfast/issues",
+  "docs": "https://nzbfast.github.io/nzbfast/MANUAL.html",
+  "title": "nzbfast",
+  "release_note": "- Posts that hide their real names now land under them, with folder structure intact.\n- Three ways a download could stall for hours are closed.\n- SABnzbd-compatible API answers corrected for nzb360, Sonarr, Radarr and other remotes.",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "com.nzbfast.nzbfast",
+  "version": "1.3.1",
+  "categories": [
+    "media"
+  ],
+  "min_memory": 134217728,
+  "min_image_size": {
+    "amd64": 56735628,
+    "arm64": 55451229
+  }
+}

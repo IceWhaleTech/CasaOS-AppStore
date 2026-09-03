@@ -1,0 +1,34 @@
+{
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "ZimaOS Team",
+  "category": "Security",
+  "description": "Frigate is an open-source network video recorder (NVR) with real-time AI object detection. It provides local, private camera recording, event review, snapshots, and live viewing through a web interface.",
+  "developer": "Frigate",
+  "screenshot_link": [
+    "/apps/org.icewhale.frigate/assets/screenshot-1.webp",
+    "/apps/org.icewhale.frigate/assets/screenshot-2.webp",
+    "/apps/org.icewhale.frigate/assets/screenshot-3.webp"
+  ],
+  "tagline": "Monitor your security cameras with locally processed AI",
+  "update_at": "2026-06-28",
+  "website": "https://frigate.video/",
+  "repo": "https://github.com/blakeblackshear/frigate",
+  "support": "https://github.com/blakeblackshear/frigate/discussions",
+  "docs": "https://docs.frigate.video/",
+  "title": "Frigate",
+  "release_note": "- Frigate 0.17.2 is a maintenance release with security and stability fixes.\n- Fixes a go2rtc command-prefix bypass that could lead to remote code execution and container escape (CVE-2026-25643).\n- Fixes an admin response cache leak and incorrect cache-control headers for current-hour preview MP4 files.",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "org.icewhale.frigate",
+  "version": "0.17.2",
+  "categories": [
+    "security"
+  ],
+  "min_memory": 268435456,
+  "min_image_size": {
+    "amd64": 1798610115,
+    "arm64": 1446808737
+  }
+}

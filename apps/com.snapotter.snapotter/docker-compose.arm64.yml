@@ -1,0 +1,46 @@
+name: snapotter
+services:
+  snapotter:
+    image: snapotter/snapotter:2.2.0@sha256:a193312e4a77594eb1ec2cde4afe0d3de5920d8713113fd72dce6dfb5f5b58a8
+    deploy:
+      resources:
+        reservations:
+          memory: "1024M"
+    network_mode: bridge
+    ports:
+      - target: 1349
+        published: "1349"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/workspace
+        target: /tmp/workspace
+    environment:
+      - AUTH_ENABLED=true
+      - DEFAULT_USERNAME=admin
+      - DEFAULT_PASSWORD=admin
+      - MAX_UPLOAD_SIZE_MB=0
+      - MAX_BATCH_SIZE=0
+      - CONCURRENT_JOBS=0
+      - REDIS_MAXMEMORY=512mb
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:1349/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 90s
+    container_name: snapotter
+x-casaos:
+  id: com.snapotter.snapotter
+  main: snapotter
+  index: /
+  port_map: "1349"
+  scheme: http
+  title:
+    en_US: SnapOtter
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/com.snapotter.snapotter/assets/icon.png
+  version: "2.2.0"

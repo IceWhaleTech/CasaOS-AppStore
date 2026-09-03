@@ -1,0 +1,65 @@
+name: frigate
+services:
+  frigate:
+    container_name: frigate
+    image: ghcr.io/blakeblackshear/frigate:0.17.2@sha256:c707dfa94a2efc9e994165cc7968517ebc02edd5b391789e20f6ace006bf29e3
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+      - /dev/apex_0:/dev/apex_0
+      - /dev/video11:/dev/video11
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    network_mode: bridge
+    privileged: true
+    ports:
+      - target: 8971
+        published: "8971"
+        protocol: tcp
+      - target: 8554
+        published: "8554"
+        protocol: tcp
+      - target: 8555
+        published: "8555"
+        protocol: tcp
+      - target: 8555
+        published: "8555"
+        protocol: udp
+    restart: unless-stopped
+    stop_grace_period: 30s
+    shm_size: "512mb"
+    tmpfs:
+      - /tmp/cache:size=1000000000
+    volumes:
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media
+        target: /media/frigate
+x-casaos:
+  id: org.icewhale.frigate
+  main: frigate
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.frigate/assets/icon.png
+  title:
+    en_US: Frigate
+    zh_CN: Frigate
+    de_DE: Frigate
+    es_ES: Frigate
+    fr_FR: Frigate
+    it_IT: Frigate
+    ja_JP: Frigate
+    ko_KR: Frigate
+    pt_BR: Frigate
+    ru_RU: Frigate
+    ar_SA: Frigate
+  index: /
+  scheme: https
+  port_map: "8971"
+  version: "0.17.2"

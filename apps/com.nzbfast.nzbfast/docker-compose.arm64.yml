@@ -1,0 +1,40 @@
+name: nzbfast
+services:
+  nzbfast:
+    image: nzbfast/nzbfast:1.3.1@sha256:723aaeb46778e21947cc09e9f14061aeea8d693fb558ef796759a73f7e376fda
+    container_name: nzbfast
+    network_mode: bridge
+    restart: unless-stopped
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      NZBFAST_APIKEY: ""
+    ports:
+      - target: 6789
+        published: "6790"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/$AppID/watch
+        target: /watch
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+x-casaos:
+  id: com.nzbfast.nzbfast
+  main: nzbfast
+  index: /
+  port_map: "6790"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/com.nzbfast.nzbfast/assets/icon.svg
+  title:
+    en_US: nzbfast
+  version: "1.3.1"
