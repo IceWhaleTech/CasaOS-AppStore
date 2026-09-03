@@ -1,8 +1,8 @@
 {
   "id": "org.icewhale.karakeep",
   "tagline": "何でも保存できるブックマークアプリ",
-  "release_note": "- v0.33.2では、保守が終了したAlpine ChromeイメージをKarakeep管理のChromeイメージに移行し、Chromeを124から151へ更新しました。\n- 大容量SingleFileアーカイブのメタデータ抽出を修正し、クローラーのアセット変換を強化するとともに、クラッシュループを避けるためNode.jsのバージョンを固定しました。\n- CLIからカスタムSingleFileアーカイブを直接アップロードできるようになり、faviconがブラウザテーマに対応しました。",
   "description": "Karakeepは、リンク、メモ、画像、PDF、ハイライトを一か所に保存できるように作られた、オープンソースでセルフホスト可能なブックマーク管理アプリです。\nタイトル、説明、プレビューを自動取得し、AIタグ付け、全文検索、リスト、ルールベースの自動化でライブラリ整理を支援します。\nブラウザー拡張、モバイルアプリ、RSS取り込み、ページアーカイブに対応しており、あとで読むためのツールとしても、個人コンテンツを長く保管するアーカイブとしても使いやすい構成です。\n\n**主な機能：**\n- リンク、メモ、画像、PDF、テキストハイライトをひとつのライブラリに保存\n- タイトル、説明、画像、アーカイブ済みページを自動取得して後で読みやすく整理\n- AIタグ付け、要約、OCR、全文検索で必要な内容をすばやく再発見\n- タグ、共同リスト、RSSフィード、ルールベースのワークフローでコンテンツを整理\n- Webアプリ、モバイルアプリ、ブラウザー拡張、REST API、CLIからコレクションにアクセス可能\n\n**詳細情報：**\n- [Karakeep 公式サイト](https://karakeep.app/)\n- [Karakeep GitHub](https://github.com/karakeep-app/karakeep)\n- [Karakeep ドキュメント](https://docs.karakeep.app/)\n",
+  "release_note": "- v0.33.2では、保守が終了したAlpine ChromeイメージをKarakeep管理のChromeイメージに移行し、Chromeを124から151へ更新しました。\n- 大容量SingleFileアーカイブのメタデータ抽出を修正し、クローラーのアセット変換を強化するとともに、クラッシュループを避けるためNode.jsのバージョンを固定しました。\n- CLIからカスタムSingleFileアーカイブを直接アップロードできるようになり、faviconがブラウザテーマに対応しました。",
   "tips": {
     "before_install": "`NEXTAUTH_URL` は、Karakeep にアクセスするときに実際に使うアドレスへ設定してください。\n`NEXTAUTH_SECRET` と `MEILI_MASTER_KEY` には十分に長いランダム文字列を使用し、`karakeep` と `meilisearch` の `MEILI_MASTER_KEY` は同じ値に保ってください。\nこのインスタンスで最初に登録したユーザーが管理者になります。\n"
   }

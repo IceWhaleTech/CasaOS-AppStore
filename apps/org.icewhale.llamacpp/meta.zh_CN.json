@@ -2,6 +2,6 @@
   "id": "org.icewhale.llamacpp",
   "title": "llama.cpp",
   "tagline": "本地运行 GGUF 大模型，支持 GPU 加速",
-  "release_note": "首次发布：llama.cpp 服务端，支持 Vulkan GPU 加速（ghcr.io/ggml-org/llama.cpp:server）。",
-  "description": "llama.cpp 是一个纯 C/C++ 编写的大语言模型推理引擎，专为 GGUF 格式模型优化，自带 OpenAI 兼容 API 服务器和内置 Web 界面。\n\n**主要特点：**\n- 支持在 CPU 或 GPU 上运行 GGUF 模型（Llama、Qwen、DeepSeek、Gemma、Mistral 等）\n- Vulkan 后端开箱即用，兼容 AMD / Intel / NVIDIA 显卡\n- 非常适合统一内存架构机型（如 AMD Ryzen AI Max 395）\n- 提供 OpenAI 兼容 API，可对接 Open WebUI、ChatGPT-Next-Web 等\n- 内置聊天 Web 界面，支持运行时加载模型\n\n**快速上手：**\n1. 将 GGUF 模型文件放入模型目录（`/models`）\n2. 浏览器打开 `http://<Zima 的 IP>:18080`，在界面中加载模型\n3. 保留 `/dev/dri` 映射以启用 Vulkan 加速；纯 CPU 模式请移除该映射"
+  "description": "llama.cpp 是一个纯 C/C++ 编写的大语言模型推理引擎，专为 GGUF 格式模型优化，自带 OpenAI 兼容 API 服务器和内置 Web 界面。\n\n**主要特点：**\n- 支持在 CPU 或 GPU 上运行 GGUF 模型（Llama、Qwen、DeepSeek、Gemma、Mistral 等）\n- Vulkan 后端开箱即用，兼容 AMD / Intel / NVIDIA 显卡\n- 非常适合统一内存架构机型（如 AMD Ryzen AI Max 395）\n- 提供 OpenAI 兼容 API，可对接 Open WebUI、ChatGPT-Next-Web 等\n- 内置聊天 Web 界面，支持运行时加载模型\n\n**快速上手：**\n1. 将 GGUF 模型文件放入模型目录（`/models`）\n2. 浏览器打开 `http://<Zima 的 IP>:18080`，在界面中加载模型\n3. 保留 `/dev/dri` 映射以启用 Vulkan 加速；纯 CPU 模式请移除该映射",
+  "release_note": "首次发布：llama.cpp 服务端，支持 Vulkan GPU 加速（ghcr.io/ggml-org/llama.cpp:server）。"
 }
