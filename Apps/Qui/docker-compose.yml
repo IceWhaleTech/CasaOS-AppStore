@@ -3,7 +3,7 @@ services:
   # Qui Application
   qui:
     container_name: qui
-    image: ghcr.io/autobrr/qui:v1.21.0
+    image: ghcr.io/autobrr/qui:v1.28.0
     restart: unless-stopped
     depends_on:
       postgres:
@@ -151,17 +151,17 @@ x-casaos:
   index: /
   port_map: "7476"
   scheme: http
-  version: "1.21.0"
-  update_at: "2026-06-27"
+  version: "1.28.0"
+  update_at: "2026-09-03"
   release_notes:
     en_US: |-
-      - v1.21.0 adds API version reporting and new automation conditions.
-      - Adds Italian, Korean and Ukrainian translations.
-      - Includes first-class PostgreSQL backend support alongside various bug fixes and improvements.
+      - v1.28.0 fixes automation tracker conditions so they match against every tracker on a torrent.
+      - Cross-seed webhook notifications now reflect the actual apply outcome.
+      - Refreshes user documentation and includes dependency and maintenance updates.
     zh_CN: |-
-      - v1.21.0 新增 API 版本上报与新的自动化条件。
-      - 新增意大利语、韩语和乌克兰语翻译。
-      - 提供一流的 PostgreSQL 后端支持，并包含多项错误修复与改进。
+      - v1.28.0 修复了自动化 tracker 条件，使其能够匹配种子关联的每个 tracker。
+      - 交叉做种 Webhook 通知现在会准确反映实际应用结果。
+      - 更新了用户文档，并包含依赖项与维护更新。
   website: "https://getqui.com"
   repo: "https://github.com/autobrr/qui"
   support: "https://github.com/autobrr/qui/issues"
