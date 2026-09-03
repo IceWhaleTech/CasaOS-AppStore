@@ -1,0 +1,149 @@
+name: frigate
+services:
+  frigate:
+    container_name: frigate
+    image: ghcr.io/blakeblackshear/frigate:0.17.2
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+      - /dev/apex_0:/dev/apex_0
+      - /dev/video11:/dev/video11
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    network_mode: bridge
+    privileged: true
+    ports:
+      - target: 8971
+        published: "8971"
+        protocol: tcp
+      - target: 8554
+        published: "8554"
+        protocol: tcp
+      - target: 8555
+        published: "8555"
+        protocol: tcp
+      - target: 8555
+        published: "8555"
+        protocol: udp
+    restart: unless-stopped
+    stop_grace_period: 30s
+    shm_size: "512mb"
+    tmpfs:
+      - /tmp/cache:size=1000000000
+    volumes:
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media
+        target: /media/frigate
+x-casaos:
+  id: org.icewhale.frigate
+  architectures:
+    - amd64
+    - arm64
+  main: frigate
+  author: ZimaOS Team
+  category: Security
+  description:
+    en_US: Frigate is an open-source network video recorder (NVR) with real-time AI object detection. It provides local, private camera recording, event review, snapshots, and live viewing through a web interface.
+    zh_CN: Frigate 是一款开源网络录像机（NVR），支持实时 AI 目标检测。它提供本地私有的摄像头录像、事件查看、快照和网页实时预览功能。
+    de_DE: Frigate ist ein quelloffener Netzwerk-Videorekorder (NVR) mit Echtzeit-KI-Objekterkennung für lokale, private Kameraaufnahmen und Live-Ansichten.
+    es_ES: Frigate es un grabador de vídeo en red (NVR) de código abierto con detección de objetos mediante IA en tiempo real, grabación local y visualización en directo.
+    fr_FR: Frigate est un enregistreur vidéo réseau (NVR) open source avec détection d’objets par IA en temps réel, enregistrement local et visionnage en direct.
+    it_IT: Frigate è un videoregistratore di rete (NVR) open source con rilevamento degli oggetti tramite IA in tempo reale, registrazione locale e visualizzazione live.
+    ja_JP: Frigate はリアルタイム AI 物体検出に対応したオープンソースのネットワークビデオレコーダー（NVR）です。ローカル録画とライブ表示を提供します。
+    ko_KR: Frigate는 실시간 AI 객체 감지를 지원하는 오픈 소스 네트워크 비디오 레코더(NVR)로, 로컬 녹화와 라이브 보기를 제공합니다.
+    pt_BR: Frigate é um gravador de vídeo em rede (NVR) de código aberto com detecção de objetos por IA em tempo real, gravação local e visualização ao vivo.
+    ru_RU: Frigate — это сетевой видеорегистратор (NVR) с открытым исходным кодом и обнаружением объектов с помощью ИИ в реальном времени, локальной записью и просмотром вживую.
+    ar_SA: Frigate هو مسجل فيديو شبكي (NVR) مفتوح المصدر مع اكتشاف الكائنات بالذكاء الاصطناعي في الوقت الفعلي وتسجيل محلي وعرض مباشر.
+  developer: Frigate
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Frigate/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Frigate/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Frigate/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Frigate/screenshot-3.png
+  tagline:
+    en_US: Monitor your security cameras with locally processed AI
+    zh_CN: 使用本地处理的 AI 监控您的安防摄像头
+    de_DE: Überwachen Sie Ihre Sicherheitskameras mit lokal verarbeiteter KI
+    es_ES: Supervisa tus cámaras de seguridad con IA procesada localmente
+    fr_FR: Surveillez vos caméras de sécurité avec une IA traitée localement
+    it_IT: Monitora le tue telecamere di sicurezza con IA elaborata localmente
+    ja_JP: ローカル処理 AI でセキュリティカメラを監視
+    ko_KR: 로컬에서 처리되는 AI로 보안 카메라를 모니터링하세요
+    pt_BR: Monitore suas câmeras de segurança com IA processada localmente
+    ru_RU: Наблюдайте за камерами безопасности с помощью ИИ, обрабатываемого локально
+    ar_SA: راقب كاميرات الأمان باستخدام ذكاء اصطناعي تتم معالجته محليًا
+  title:
+    en_US: Frigate
+    zh_CN: Frigate
+    de_DE: Frigate
+    es_ES: Frigate
+    fr_FR: Frigate
+    it_IT: Frigate
+    ja_JP: Frigate
+    ko_KR: Frigate
+    pt_BR: Frigate
+    ru_RU: Frigate
+    ar_SA: Frigate
+  index: /
+  scheme: https
+  port_map: "8971"
+  version: "0.17.2"
+  update_at: "2026-06-28"
+  release_notes:
+    en_US: |-
+      - Frigate 0.17.2 is a maintenance release with security and stability fixes.
+      - Fixes a go2rtc command-prefix bypass that could lead to remote code execution and container escape (CVE-2026-25643).
+      - Fixes an admin response cache leak and incorrect cache-control headers for current-hour preview MP4 files.
+    zh_CN: |-
+      - Frigate 0.17.2 是一个包含安全性和稳定性修复的维护版本。
+      - 修复 go2rtc 命令前缀绕过漏洞，该漏洞可能导致远程代码执行和容器逃逸（CVE-2026-25643）。
+      - 修复管理员响应缓存泄漏，以及当前小时预览 MP4 文件的缓存控制标头问题。
+    de_DE: |-
+      - Frigate 0.17.2 ist eine Wartungsversion mit Sicherheits- und Stabilitätskorrekturen.
+      - Behebt eine Umgehung der go2rtc-Befehlspräfixprüfung, die Remote-Codeausführung und Container-Flucht ermöglichen konnte (CVE-2026-25643).
+      - Behebt ein Cache-Leck bei Admin-Antworten und fehlerhafte Cache-Control-Header für Vorschau-MP4-Dateien der aktuellen Stunde.
+    es_ES: |-
+      - Frigate 0.17.2 es una versión de mantenimiento con correcciones de seguridad y estabilidad.
+      - Corrige un bypass del prefijo de comandos de go2rtc que podía permitir ejecución remota de código y escape del contenedor (CVE-2026-25643).
+      - Corrige una fuga de caché de respuestas de administrador y encabezados Cache-Control incorrectos para MP4 de vista previa de la hora actual.
+    fr_FR: |-
+      - Frigate 0.17.2 est une version de maintenance avec des correctifs de sécurité et de stabilité.
+      - Corrige un contournement du préfixe de commande go2rtc pouvant permettre l’exécution de code à distance et une sortie du conteneur (CVE-2026-25643).
+      - Corrige une fuite du cache des réponses administrateur et les en-têtes Cache-Control incorrects des MP4 d’aperçu de l’heure courante.
+    it_IT: |-
+      - Frigate 0.17.2 è una versione di manutenzione con correzioni di sicurezza e stabilità.
+      - Risolve un bypass del prefisso dei comandi go2rtc che poteva consentire l’esecuzione di codice remoto e l’evasione dal container (CVE-2026-25643).
+      - Risolve una perdita della cache delle risposte degli amministratori e intestazioni Cache-Control errate per i file MP4 di anteprima dell’ora corrente.
+    ja_JP: |-
+      - Frigate 0.17.2 はセキュリティと安定性の修正を含むメンテナンスリリースです。
+      - リモートコード実行やコンテナ脱出につながる可能性がある go2rtc コマンドプレフィックス回避を修正しました（CVE-2026-25643）。
+      - 管理者レスポンスのキャッシュ漏洩と、現在時刻のプレビュー MP4 に対する誤った Cache-Control ヘッダーを修正しました。
+    ko_KR: |-
+      - Frigate 0.17.2는 보안 및 안정성 수정이 포함된 유지보수 릴리스입니다.
+      - 원격 코드 실행과 컨테이너 탈출로 이어질 수 있는 go2rtc 명령 접두사 우회를 수정했습니다(CVE-2026-25643).
+      - 관리자 응답 캐시 누수와 현재 시간 미리보기 MP4의 잘못된 Cache-Control 헤더를 수정했습니다.
+    pt_BR: |-
+      - O Frigate 0.17.2 é uma versão de manutenção com correções de segurança e estabilidade.
+      - Corrige um bypass do prefixo de comandos do go2rtc que poderia permitir execução remota de código e escape do contêiner (CVE-2026-25643).
+      - Corrige um vazamento de cache de respostas de administradores e cabeçalhos Cache-Control incorretos para MP4 de pré-visualização da hora atual.
+    ru_RU: |-
+      - Frigate 0.17.2 — это технический выпуск с исправлениями безопасности и стабильности.
+      - Исправлен обход префикса команд go2rtc, который мог привести к удалённому выполнению кода и выходу из контейнера (CVE-2026-25643).
+      - Исправлена утечка кэша ответов администратора и неверные заголовки Cache-Control для MP4-превью текущего часа.
+    ar_SA: |-
+      - Frigate 0.17.2 هو إصدار صيانة يتضمن إصلاحات للأمان والاستقرار.
+      - تم إصلاح تجاوز بادئة أوامر go2rtc الذي قد يؤدي إلى تنفيذ تعليمات برمجية عن بُعد والهروب من الحاوية (CVE-2026-25643).
+      - تم إصلاح تسريب ذاكرة التخزين المؤقت لاستجابات المسؤول وعناوين Cache-Control غير الصحيحة لملفات MP4 للمعاينة الحالية.
+  website: https://frigate.video/
+  repo: https://github.com/blakeblackshear/frigate
+  support: https://github.com/blakeblackshear/frigate/discussions
+  docs: https://docs.frigate.video/
