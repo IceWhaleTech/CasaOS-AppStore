@@ -1,7 +1,7 @@
 name: podfetch
 services:
   podfetch:
-    image: samuel19982/podfetch:v5.2.2
+    image: samuel19982/podfetch:v5.2.3
     environment:
       DATABASE_URL: sqlite:///app/db/podcast.db
       POLLING_INTERVAL: "300"
@@ -73,8 +73,13 @@ x-casaos:
   index: /
   port_map: "8000"
   scheme: http
-  version: "5.2.2"
-  update_at: "2026-07-18"
+  version: "5.2.3"
+  update_at: "2026-09-03"
+  release_notes:
+    en_US: |-
+      - Adds Podcasting 2.0 transcript support and episode range downloads.
+      - Improves aggregated RSS items with real links and source-podcast tags.
+      - Fixes IME text input, English localization, and configured cover filenames during downloads and rescans.
   website: "https://samtv12345.github.io/PodFetch/"
   repo: "https://github.com/SamTV12345/PodFetch"
   support: "https://github.com/SamTV12345/PodFetch/issues"
