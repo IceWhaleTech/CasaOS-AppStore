@@ -6,13 +6,23 @@
   "category": "Productivity",
   "author": "Marcel Meyer",
   "developer": "Marcel Meyer",
+  "screenshot_link": [
+    "/apps/org.clumoove.app/assets/screenshot-1.webp",
+    "/apps/org.clumoove.app/assets/screenshot-2.webp"
+  ],
   "thumbnail": "/apps/org.clumoove.app/assets/thumbnail.webp",
   "tagline": "Self-hosted cloud data migration & sync manager",
   "description": "Clumoove is a modern, self-hosted cloud data migration and synchronization platform for files, calendars, and contacts.\n\nEasily connect, transfer, and synchronize data between cloud storage providers including Nextcloud, Google Drive, Dropbox, OneDrive, HiDrive, S3, WebDAV, SMB, SFTP, FTP, Immich, Seafile, Koofr, MEGA, and local storage.\n\nKey Features:\n- Zero-disk streaming transfers (no local temporary storage retention during migration)\n- Multi-threaded background migrations and cron-based synchronization schedules\n- Robust 3-way hash integrity verification & flexible conflict resolution\n- Integrated cloud file manager with multi-format previews and thumbnails\n- Multi-channel notification delivery (Gotify, ntfy, Telegram, Discord, Email)\n- Enterprise-grade security with AES-256-GCM encryption, TOTP 2FA, and audit logging\n",
+  "update_at": "2026-08-26",
+  "website": "https://clumoove.com",
+  "repo": "https://github.com/xXRoxXeRXx/clumoove",
+  "support": "https://github.com/xXRoxXeRXx/clumoove/issues",
+  "docs": "https://docs.clumoove.com",
   "title": "Clumoove",
+  "release_note": "- v0.16.0 introduces incremental, block-deduplicated snapshot backups, two-phase restore previews, retention policies, integrity checks, and dedicated backup dashboards.\n- It improves multi-provider checksum verification, OAuth and SMTP security, queue and sync reliability, and HiDrive and local storage handling.\n- It fixes WebDAV conflicts, Immich migration behavior, sync browse credentials, UI and modal stability, and Linux build compatibility.",
   "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
   "id": "org.clumoove.app",
-  "version": "",
+  "version": "0.16.0",
   "categories": [
     "productivity"
   ],

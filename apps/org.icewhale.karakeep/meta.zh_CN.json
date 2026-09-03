@@ -1,8 +1,8 @@
 {
   "id": "org.icewhale.karakeep",
   "release_note": "- v0.33.2 迁移到由 Karakeep 维护的 Chrome 镜像，将 Chrome 从 124 升级到 151，并替换已停止维护的 Alpine Chrome 镜像。\n- 修复大型 SingleFile 归档的元数据提取问题，增强抓取器资源转换的可靠性，并固定 Node.js 版本以避免循环崩溃。\n- 新增通过 CLI 直接上传自定义 SingleFile 归档的功能，并使网站图标自动适配浏览器主题。",
-  "description": "Karakeep 是一款开源、自托管的收藏管理应用，可以把链接、笔记、图片、PDF 和网页高亮集中保存到同一个资料库中。\n它会自动抓取标题、描述和预览内容，并结合 AI 标签、全文搜索、列表和规则引擎，帮助你更快整理与找回收藏。\n借助浏览器扩展、移动端应用、RSS 导入和整页归档能力，Karakeep 既适合作为稍后读工具，也适合作为长期保存个人内容的归档库。\n\n**主要功能：**\n- 在同一个资料库中保存链接、笔记、图片、PDF 和文本高亮\n- 自动抓取标题、描述、图片和归档页面，方便后续阅读\n- 借助 AI 标签、摘要、OCR 和全文搜索，更快找回需要的内容\n- 通过标签、协作列表、RSS 订阅和规则工作流整理收藏\n- 可通过 Web 应用、移动端应用、浏览器扩展、REST API 和 CLI 访问内容\n\n**了解更多：**\n- [Karakeep 官网](https://karakeep.app/)\n- [Karakeep GitHub](https://github.com/karakeep-app/karakeep)\n- [Karakeep 文档](https://docs.karakeep.app/)\n",
   "tagline": "什么都能收藏的应用",
+  "description": "Karakeep 是一款开源、自托管的收藏管理应用，可以把链接、笔记、图片、PDF 和网页高亮集中保存到同一个资料库中。\n它会自动抓取标题、描述和预览内容，并结合 AI 标签、全文搜索、列表和规则引擎，帮助你更快整理与找回收藏。\n借助浏览器扩展、移动端应用、RSS 导入和整页归档能力，Karakeep 既适合作为稍后读工具，也适合作为长期保存个人内容的归档库。\n\n**主要功能：**\n- 在同一个资料库中保存链接、笔记、图片、PDF 和文本高亮\n- 自动抓取标题、描述、图片和归档页面，方便后续阅读\n- 借助 AI 标签、摘要、OCR 和全文搜索，更快找回需要的内容\n- 通过标签、协作列表、RSS 订阅和规则工作流整理收藏\n- 可通过 Web 应用、移动端应用、浏览器扩展、REST API 和 CLI 访问内容\n\n**了解更多：**\n- [Karakeep 官网](https://karakeep.app/)\n- [Karakeep GitHub](https://github.com/karakeep-app/karakeep)\n- [Karakeep 文档](https://docs.karakeep.app/)\n",
   "tips": {
     "before_install": "请将 `NEXTAUTH_URL` 设置为你实际访问 Karakeep 时使用的地址。\n请为 `NEXTAUTH_SECRET` 和 `MEILI_MASTER_KEY` 使用足够长的随机字符串，并确保 `karakeep` 与 `meilisearch` 两个服务中的 `MEILI_MASTER_KEY` 保持一致。\n你的实例中第一个注册的用户会成为管理员。\n"
   }
