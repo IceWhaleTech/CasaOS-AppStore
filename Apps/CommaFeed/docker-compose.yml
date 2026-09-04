@@ -1,0 +1,49 @@
+name: commafeed
+services:
+  commafeed:
+    image: athou/commafeed:7.3.2-h2
+    environment:
+      COMMAFEED_HTTP_CLIENT_BLOCK_LOCAL_ADDRESSES: "true"
+    ports:
+      - target: 8082
+        published: "8082"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /commafeed/data
+    x-casaos:
+      ports:
+        - container: "8082"
+          description:
+            en_US: Web UI port
+      volumes:
+        - container: /commafeed/data
+          description:
+            en_US: CommaFeed data directory
+x-casaos:
+  id: org.icewhale.commafeed
+  architectures:
+    - amd64
+    - arm64
+  main: commafeed
+  index: /
+  port_map: "8082"
+  scheme: http
+  icon: https://raw.githubusercontent.com/Athou/commafeed/7.3.2/commafeed-client/public/favicon.svg
+  tagline:
+    en_US: Google Reader-inspired self-hosted RSS reader
+  description:
+    en_US: CommaFeed is a self-hosted RSS reader with OPML import/export, mobile-friendly layouts, and native mobile app APIs.
+  author: CasaOS Team
+  developer: CommaFeed
+  category: Productivity
+  version: "7.3.2"
+  update_at: "2026-09-04"
+  release_notes:
+    en_US: Prevents users from accessing other users' starred or tagged entries.
+  website: "https://www.commafeed.com/"
+  repo: "https://github.com/Athou/commafeed"
+  support: "https://github.com/Athou/commafeed/issues"
+  docs: "https://github.com/Athou/commafeed#readme"
