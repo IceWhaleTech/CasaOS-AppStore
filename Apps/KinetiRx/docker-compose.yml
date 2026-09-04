@@ -31,7 +31,7 @@ services:
       - kinetirx_net
 
   backend:
-    image: ghcr.io/raktim94/kinetirx-backend:1.5.1
+    image: ghcr.io/raktim94/kinetirx-backend:1.6.0
     container_name: kinetirx-backend
     hostname: kinetirx-backend
     restart: unless-stopped
@@ -79,7 +79,7 @@ services:
             en_US: "Optional — required to use Settings -> S3 Offsite Backup (your own S3-compatible bucket, e.g. R2/MinIO/Backblaze). Generate one with: openssl rand -hex 32. Leave blank if you don't need automatic offsite backups."
 
   frontend:
-    image: ghcr.io/raktim94/kinetirx-frontend:1.5.1
+    image: ghcr.io/raktim94/kinetirx-frontend:1.6.0
     container_name: kinetirx-frontend
     hostname: kinetirx-frontend
     restart: unless-stopped
@@ -151,10 +151,31 @@ x-casaos:
   index: /
   port_map: "3080"
   scheme: http
-  version: "1.5.1"
-  update_at: "2026-09-04"
+  version: "1.6.0"
+  update_at: "2026-09-05"
   release_notes:
     en_US: |-
+      1.6.0: Patient IDs across OPD, POS, Add Patient and Special Need
+      Order were sometimes stored as a bare number ("147") and sometimes
+      as "P/146" depending on which screen created them, and the
+      suggested next ID could be lower than one already issued. Every
+      patient ID is now stored as a plain number and shown everywhere as
+      "P-<n>"; existing patients are renumbered to a clean 1, 2, 3...
+      (by registration date) on upgrade, and you can search/type an ID
+      with or without the "P-" and it still matches. Fixed a bug in the
+      Inward OCR review table where correcting a misread item's name
+      failed to update the stock record it was supposed to fix, silently
+      leaving the original (wrong) entry in stock. Added an Edit action
+      to every Medicine Stock row (name, price, quantity, batch, expiry,
+      everything). Adding stock for an item that already exists now adds
+      to its quantity instead of creating a duplicate row, matching how
+      the OCR auto-scan already worked. The barcode dialog can now assign
+      an item's real manufacturer barcode (USB scan or type it in)
+      instead of only generating a new one, and scanning a barcode while
+      Medicine Stock is open jumps straight to that item's Edit form for
+      a fast restock. Renamed "Smart Pharmacy POS" to plain "POS" in the
+      sidebar and page header.
+
       1.5.1: Fixed purchase-bill OCR scanning (Inward Stock) failing
       outright with "Could not detect medicine items" on any photo/camera
       scan whenever GEMINI_API_KEY isn't configured — image scans now fall
