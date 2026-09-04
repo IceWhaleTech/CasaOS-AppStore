@@ -1,0 +1,52 @@
+name: bladevault
+
+services:
+  bladevault:
+    image: ghcr.io/dedkola/bladevault:latest
+    container_name: bladevault
+    restart: unless-stopped
+    ports:
+      - "5500:3000"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      BLADEVAULT_DATA_DIR: /app/data
+
+x-casaos:
+  id: io.github.dedkola.bladevault
+  architectures:
+    - amd64
+    - arm64
+  main: bladevault
+  index: /
+  port_map: "5500"
+  scheme: http
+  author: Kola Sokol
+  developer: BladeVault
+  category: Productivity
+  description:
+    en_US: A sharp, local-first knife collection manager. Organize and compare your collection, keep images and SQLite data on your own server, and export knife records to PDF.
+  icon: https://cdn.jsdelivr.net/gh/dedkola/CasaOS-AppStore-Baladevault@main/Apps/Bladevault/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/dedkola/CasaOS-AppStore-Baladevault@main/Apps/Bladevault/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/dedkola/CasaOS-AppStore-Baladevault@main/Apps/Bladevault/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/dedkola/CasaOS-AppStore-Baladevault@main/Apps/Bladevault/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/dedkola/CasaOS-AppStore-Baladevault@main/Apps/Bladevault/screenshot-4.png
+  tagline:
+    en_US: Your local-first knife collection manager
+  thumbnail: https://cdn.jsdelivr.net/gh/dedkola/CasaOS-AppStore-Baladevault@main/Apps/Bladevault/thumbnail.png
+  title:
+    en_US: BladeVault
+  version: "0.2.39"
+  update_at: "2026-07-24"
+  release_notes:
+    en_US: |-
+      - v0.2.39 improves the gallery by hiding controls when an item has only one image.
+  website: https://www.bladevault.pro
+  repo: https://github.com/dedkola/bladevault
+  support: https://github.com/dedkola/bladevault/issues
+  docs: https://github.com/dedkola/bladevault#readme
