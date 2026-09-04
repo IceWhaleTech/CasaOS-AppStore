@@ -1,5 +1,15 @@
 name: dokploy
 services:
+  dokploy-init:
+    image: alpine:3.22
+    command: >
+      sh -c 'test -s /etc/dokploy/postgres_password ||
+      (umask 077 && head -c 32 /dev/urandom | base64 > /etc/dokploy/postgres_password)'
+    restart: "no"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /etc/dokploy
   dokploy:
     image: dokploy/dokploy:0.26.6
     deploy:
@@ -14,7 +24,11 @@ services:
         protocol: tcp
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://dokploy:v8k2mxpq93nw5ztl@dokploy-db:5432/dokploy
+      POSTGRES_PASSWORD_FILE: /etc/dokploy/postgres_password
+      POSTGRES_USER: dokploy
+      POSTGRES_DB: dokploy
+      POSTGRES_HOST: dokploy-db
+      POSTGRES_PORT: "5432"
       TZ: UTC
     volumes:
       - type: bind
@@ -24,13 +38,12 @@ services:
         source: /DATA/AppData/$AppID/config
         target: /etc/dokploy
     depends_on:
-      - dokploy-db
+      dokploy-init:
+        condition: service_completed_successfully
+      dokploy-db:
+        condition: service_healthy
     x-casaos:
       envs:
-        - container: DATABASE_URL
-          description:
-            en_US: PostgreSQL connection URL for Dokploy
-            zh_CN: Dokploy 的 PostgreSQL 连接 URL
         - container: TZ
           description:
             en_US: Timezone (e.g. America/New_York, Europe/Berlin)
@@ -84,12 +97,26 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: dokploy
-      POSTGRES_PASSWORD: v8k2mxpq93nw5ztl
+      POSTGRES_PASSWORD_FILE: /etc/dokploy/postgres_password
       POSTGRES_DB: dokploy
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/postgres
         target: /var/lib/postgresql/data
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /etc/dokploy
+        read_only: true
+    depends_on:
+      dokploy-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U dokploy -d dokploy
+      interval: 5s
+      timeout: 5s
+      retries: 10
     x-casaos:
       envs:
         - container: POSTGRES_USER
@@ -109,23 +136,6 @@ services:
             pt_PT: Nome de Utilizador da Base de Dados
             ru_RU: Имя пользователя базы данных
             tr_TR: Veritabanı Kullanıcı Adı
-        - container: POSTGRES_PASSWORD
-          description:
-            en_US: Database Password
-            en_GB: Database Password
-            it_IT: Password Database
-            nb_NO: Database Passord
-            zh_CN: 数据库密码
-            ja_JP: データベースパスワード
-            ko_KR: 데이터베이스 비밀번호
-            fr_FR: Mot de passe de base de données
-            de_DE: Datenbankpasswort
-            sv_SE: Databas Lösenord
-            el_GR: Κωδικός Πρόσβασης Βάσης Δεδομένων
-            hr_HR: Lozinka Baze Podataka
-            pt_PT: Palavra-passe da Base de Dados
-            ru_RU: Пароль базы данных
-            tr_TR: Veritabanı Şifresi
         - container: POSTGRES_DB
           description:
             en_US: Database Name
@@ -364,8 +374,6 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dokploy/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dokploy/screenshot-1.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dokploy/screenshot-2.png
-    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dokploy/screenshot-3.png
   tagline:
     en_US: Self-hosted PaaS — deploy apps and databases with Docker
     en_GB: Self-hosted PaaS — deploy apps and databases with Docker
