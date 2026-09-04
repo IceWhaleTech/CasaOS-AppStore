@@ -1,0 +1,84 @@
+name: arcane
+services:
+  arcane:
+    image: ghcr.io/getarcaneapp/manager:v2.3.1
+    container_name: arcane
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      ENCRYPTION_KEY: "replace_me_with_a_random_32_char_value"
+      JWT_SECRET: "replace_me_with_a_random_32_char_value"
+      PROJECTS_DIRECTORY: /projects
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/getarcaneapp/arcane@main/.github/assets/arcane.png
+    ports:
+      - target: 3552
+        published: "3552"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+      - type: bind
+        source: /DATA/AppData/$AppID/projects
+        target: /projects
+    cgroup: host
+    healthcheck:
+      test: ["CMD", "./arcane", "health", "--timeout", "2s"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  id: app.arcane.arcane
+  # 1. Access entry
+  index: /
+  port_map: "3552"
+  scheme: http
+  # 2. Display
+  title:
+    en_US: Arcane
+  icon: https://cdn.jsdelivr.net/gh/getarcaneapp/arcane@main/.github/assets/arcane.png
+  thumbnail: https://raw.githubusercontent.com/getarcaneapp/website/main/static/img/screenshots/dashboard.jpeg
+  screenshot_link:
+    - https://raw.githubusercontent.com/getarcaneapp/website/main/static/img/screenshots/dashboard.jpeg
+    - https://raw.githubusercontent.com/getarcaneapp/website/main/static/img/screenshots/containers-page.jpeg
+    - https://raw.githubusercontent.com/getarcaneapp/website/main/static/img/screenshots/projects-page.jpeg
+    - https://raw.githubusercontent.com/getarcaneapp/website/main/static/img/screenshots/images-page.png
+  tagline:
+    en_US: Modern Docker management, designed for everyone.
+  description:
+    en_US: |
+      Arcane is a modern, self-hosted Docker management platform designed for everyone.
+      It provides a clean web UI to manage containers, images, volumes, networks, and
+      Docker Compose projects — all from one place.
+
+      Key features include real-time container stats, log streaming, environment variable
+      management, cron-scheduled tasks, and built-in support for Compose project deployment
+      and lifecycle management.
+
+      **USEFUL LINKS**
+      - [Source Repository](https://github.com/getarcaneapp/arcane)
+      - [Documentation](https://getarcane.app)
+      - [Changelog](https://github.com/getarcaneapp/arcane/blob/main/CHANGELOG.md)
+  # 3. Metadata
+  author: FelixSauer
+  developer: kmendell
+  category: Developer
+  architectures:
+    - amd64
+    - arm64
+  # 4. Version
+  version: "2.3.1"
+  update_at: "2026-07-02"
+  # 5. Links
+  website: "https://getarcane.app"
+  repo: "https://github.com/getarcaneapp/arcane"
+  store_app_id: arcane
