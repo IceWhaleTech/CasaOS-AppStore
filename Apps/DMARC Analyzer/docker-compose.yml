@@ -1,0 +1,119 @@
+name: dmarc-analyzer
+services:
+  app:
+    image: ghcr.io/dmarc-analyzer-net/dmarc-analyzer:0.2.2
+    container_name: dmarc-analyzer
+    restart: unless-stopped
+    networks:
+      - dmarc-analyzer-network
+    ports:
+      - target: 8080
+        published: "8189"
+        protocol: tcp
+    environment:
+      # Console and report ingestion in one process. Only ever run one of these
+      # against a database — the loop takes a Postgres advisory lock and a second
+      # instance exits rather than duplicating every sync.
+      APP_MODE: all
+      ConnectionStrings__Default: Host=dmarc-analyzer-db;Port=5432;Database=dmarc_analyzer;Username=dmarc;Password=$DB_PASSWORD
+      Database__MigrateOnStartup: "true"
+      # Must be base64 that decodes to exactly 32 bytes; the app refuses to start
+      # otherwise. Generate with: openssl rand -base64 32
+      Security__CredentialEncryptionKey: $ENCRYPTION_KEY
+      TZ: $TZ
+    depends_on:
+      db:
+        # Not just "started": the app migrates as it boots, so without waiting for
+        # Postgres to accept connections it fails once and restarts. A first-boot
+        # restart reads as a broken app.
+        condition: service_healthy
+    deploy:
+      resources:
+        reservations:
+          memory: "256M"
+    x-casaos:
+      envs:
+        - container: ENCRYPTION_KEY
+          description:
+            en_US: "Encrypts stored mailbox passwords. Must be base64 for 32 bytes: openssl rand -base64 32. Back it up — losing it means re-entering every mailbox password."
+        - container: DB_PASSWORD
+          description:
+            en_US: Password for the bundled PostgreSQL database.
+        - container: TZ
+          description:
+            en_US: Time zone.
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web console.
+
+  db:
+    image: postgres:17-alpine
+    container_name: dmarc-analyzer-db
+    restart: unless-stopped
+    networks:
+      - dmarc-analyzer-network
+    environment:
+      POSTGRES_DB: dmarc_analyzer
+      POSTGRES_USER: dmarc
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      PGDATA: /var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dmarc -d dmarc_analyzer"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql/data
+    x-casaos:
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_US: Report database. Back this up together with the encryption key.
+
+networks:
+  dmarc-analyzer-network:
+    driver: bridge
+
+x-casaos:
+  id: net.dmarc-analyzer.dmarc-analyzer
+  version: "0.2.2"
+  architectures:
+    - amd64
+    - arm64
+  main: app
+  author: dmarc-analyzer-net
+  category: Network
+  description:
+    en_US: |
+      DMARC Analyzer reads the aggregate reports that Gmail, Outlook and other receivers send back about mail claiming to be from your domains, and turns them into something you can act on: who is sending as you, how much of it passes SPF and DKIM, and what is still blocking a stricter policy.
+
+      Point it at a mailbox that receives DMARC reports — publish a record like `v=DMARC1; p=none; rua=mailto:dmarc@yourdomain.com` and add that mailbox under Mailbox sources. Reports arrive roughly once a day per receiver, so the first charts appear within about 24 hours.
+
+      Multi-tenant by design: one install monitors many clients' domains, with per-client separation. Nothing leaves your machine — the app connects out to your mailbox over IMAP and keeps every report in its own database. Reports are statistics, not mail: sending IPs and pass/fail counts, never message content.
+
+      Aggregate (RUA) reports only; forensic (RUF) reports are not parsed. The first account you create becomes the administrator, and registration closes after that.
+  developer: dmarc-analyzer-net
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DMARC%20Analyzer/icon.svg
+  tagline:
+    en_US: Collect and chart the DMARC reports for your domains
+  title:
+    en_US: DMARC Analyzer
+  index: /
+  port_map: "8189"
+  scheme: http
+  website: https://dmarc-analyzer.net
+  repo: https://github.com/dmarc-analyzer-net/DmarcAnalyzerApp
+  docs: https://dmarc-analyzer.net/docs
+  support: https://github.com/dmarc-analyzer-net/DmarcAnalyzerApp/issues
+  store_app_id: dmarc-analyzer
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DMARC%20Analyzer/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DMARC%20Analyzer/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DMARC%20Analyzer/screenshot-2.png
+  tips:
+    before_install:
+      en_US: |
+        Generate an encryption key before installing: `openssl rand -base64 32`. It protects your stored mailbox passwords — keep a copy, because losing it means re-entering every mailbox credential.
