@@ -1,0 +1,112 @@
+name: webdatastudio
+services:
+  webdatastudio:
+    image: ghcr.io/fgilde/webdatastudio:latest
+    container_name: webdatastudio
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 8080
+        published: "8095"
+        protocol: tcp
+    environment:
+      TZ: $TZ
+      WDS_USER: admin
+      WDS_PASSWORD: 90g37hghc8cxzpvxbsmq
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    deploy:
+      resources:
+        reservations:
+          memory: "256M"
+    x-casaos:
+      envs:
+        - container: WDS_USER
+          description:
+            en_US: Admin user name. Together with WDS_PASSWORD this turns on the login screen.
+        - container: WDS_PASSWORD
+          description:
+            en_US: Admin password. Without it there is no login screen at all.
+        - container: WDS_TITLE
+          description:
+            en_US: Optional name shown in the header and the browser tab.
+        - container: WDS_READONLY
+          description:
+            en_US: Set to true to make every connection read-only, enforced in the driver.
+        - container: TZ
+          description:
+            en_US: Time zone.
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web UI
+      volumes:
+        - container: /data
+          description:
+            en_US: Saved connections, query history, layouts and the studio's own SQLite database.
+
+x-casaos:
+  id: org.gilde.webdatastudio
+  architectures:
+    - amd64
+    - arm64
+  main: webdatastudio
+  author: Florian Gilde
+  developer: Florian Gilde
+  category: Developer
+  title:
+    en_US: WebDataStudio
+  tagline:
+    en_US: A database studio that runs in your browser
+    de_DE: Ein Datenbank-Studio im Browser
+  description:
+    en_US: |
+      WebDataStudio is a database client that lives on your server instead of on one laptop:
+      PostgreSQL, MySQL/MariaDB, SQL Server, SQLite, Oracle, DuckDB, ClickHouse, MongoDB and Redis,
+      all from a browser tab.
+
+      Explore a schema, write SQL with completion and history, or build a query visually without
+      writing any. Results become charts, ER diagrams draw themselves from the foreign keys, two
+      connections can be compared column by column, and schema edits are made in the UI rather than
+      in DDL you type from memory. Queries can be saved, scheduled and exported, and an MCP endpoint
+      lets an AI agent query the same connections under the same rules.
+
+      Connections are added in the studio or handed to it as WDS_CONN_<NAME> environment variables.
+      Set the admin account below: with no user and password there is no login screen at all, so never
+      publish it without one. Read-only connections are enforced in the driver, not just in the UI.
+    de_DE: |
+      WebDataStudio ist ein Datenbank-Client, der auf dem Server läuft statt auf einem Laptop:
+      PostgreSQL, MySQL/MariaDB, SQL Server, SQLite, Oracle, DuckDB, ClickHouse, MongoDB und Redis,
+      alles im Browser.
+
+      Schema erkunden, SQL mit Vervollständigung und Historie schreiben oder Abfragen visuell bauen.
+      Ergebnisse werden zu Diagrammen, ER-Diagramme entstehen aus den Fremdschlüsseln, zwei
+      Verbindungen lassen sich Spalte für Spalte vergleichen, und Schema-Änderungen macht man in der
+      Oberfläche statt in auswendig getipptem DDL. Abfragen lassen sich speichern, planen und
+      exportieren; ein MCP-Endpunkt gibt KI-Agenten denselben Zugriff unter denselben Regeln.
+
+      Verbindungen werden im Studio angelegt oder als WDS_CONN_<NAME> übergeben. Ohne Benutzer und
+      Passwort unten gibt es keinen Login-Screen — also nie ohne veröffentlichen.
+  tips:
+    before_install:
+      en_US: |
+        The login is WDS_USER / WDS_PASSWORD in the fields below. The password there ships with the
+        package, so it is public: replace it before anyone else can reach this. With neither of the
+        two set the studio serves with no login screen at all. The data directory keeps saved
+        connections, query history and layouts.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WebDataStudio/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WebDataStudio/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WebDataStudio/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WebDataStudio/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WebDataStudio/screenshot-3.png
+  index: /
+  port_map: "8095"
+  scheme: http
+  version: "1.3.0"
+  website: https://fgilde.github.io/WebDataStudio/
+  repo: https://github.com/fgilde/WebDataStudio
+  support: https://github.com/fgilde/WebDataStudio/issues
+  docs: https://fgilde.github.io/WebDataStudio/guide/
