@@ -1,0 +1,174 @@
+name: rechvix
+
+services:
+  postgres:
+    image: postgres:18
+    container_name: rechvix-postgres
+    hostname: rechvix-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: billing
+      POSTGRES_USER: billing_migrator
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      BILLING_APP_PASSWORD: "${BILLING_APP_PASSWORD}"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres-init
+        target: /docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U billing_migrator -d billing"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - rechvix
+    x-casaos:
+      envs:
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: Database password for the schema-owning role (migrations only — the app never connects as this role). Set a strong random value.
+        - container: BILLING_APP_PASSWORD
+          description:
+            en_US: Database password for the application's runtime role. Set a strong random value, different from POSTGRES_PASSWORD.
+      volumes:
+        - container: /var/lib/postgresql
+          description:
+            en_US: All business data — invoices, inventory, accounting, everything. Back this up.
+        - container: /docker-entrypoint-initdb.d
+          description:
+            en_US: One-time database setup script — do not modify.
+
+  migrate:
+    image: ghcr.io/raktim94/rechvix-server:0.1.0
+    container_name: rechvix-migrate
+    command: ["-migrate"]
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_DSN: "postgres://billing_migrator:${POSTGRES_PASSWORD}@rechvix-postgres:5432/billing?sslmode=disable"
+    networks:
+      - rechvix
+    x-casaos:
+      envs: []
+
+  app:
+    image: ghcr.io/raktim94/rechvix-server:0.1.0
+    container_name: rechvix-app
+    hostname: rechvix-app
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      HTTP_PORT: "8080"
+      DATABASE_DSN: "postgres://billing_app:${BILLING_APP_PASSWORD}@rechvix-postgres:5432/billing?sslmode=disable"
+      DATABASE_AUTO_MIGRATE: "false"
+      SESSION_COOKIE_SECURE: "false"
+      AEAD_ENCRYPTION_KEY: "${AEAD_ENCRYPTION_KEY}"
+      ENABLE_BOOTSTRAP: "true"
+    ports:
+      - target: 8080
+        published: "8090"
+        protocol: tcp
+    networks:
+      - rechvix
+    x-casaos:
+      envs:
+        - container: AEAD_ENCRYPTION_KEY
+          description:
+            en_US: Encrypts stored integration credentials. Generate with `openssl rand -base64 32` and keep it safe — losing it makes those values unrecoverable.
+      ports:
+        - container: "8080"
+          description:
+            en_US: rechvix API
+          protocol: tcp
+
+  worker:
+    image: ghcr.io/raktim94/rechvix-worker:0.1.0
+    container_name: rechvix-worker
+    hostname: rechvix-worker
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_DSN: "postgres://billing_app:${BILLING_APP_PASSWORD}@rechvix-postgres:5432/billing?sslmode=disable"
+      AEAD_ENCRYPTION_KEY: "${AEAD_ENCRYPTION_KEY}"
+      EINVOICE_PROVIDER: "mock"
+    networks:
+      - rechvix
+    x-casaos:
+      envs: []
+
+networks:
+  rechvix:
+    driver: bridge
+
+x-casaos:
+  id: com.nodedr.rechvix
+  architectures:
+    - amd64
+    - arm64
+  main: app
+  author: NodeDR Infotech Private Limited
+  developer: Raktim94
+  category: Finance
+  icon: "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/rechvix/icon.png"
+  thumbnail: "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/rechvix/thumbnail.png"
+  screenshot_link:
+    - "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/rechvix/screenshot-1.png"
+    - "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/rechvix/screenshot-2.png"
+    - "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/rechvix/screenshot-3.png"
+  title:
+    en_US: rechvix
+  tagline:
+    en_US: Self-hosted billing, inventory, accounting, and India GST — no subscription, no external connection required
+  description:
+    en_US: |
+      A production-grade, multi-company, multi-branch, multi-warehouse
+      billing, inventory, accounting, and tax-management platform.
+      India GST / e-Invoice / e-Way Bill capable, self-hosted on your own
+      hardware — no subscription, no mandatory cloud dependency, no data
+      leaving your server for core operation.
+
+      Double-entry accounting, perpetual multi-warehouse inventory, GST
+      invoicing with CGST/SGST/IGST breakdown, and a free e-Way Bill
+      workflow that never requires a paid government API. AGPL-3.0
+      licensed, same as this project's sibling, nodedr-pos.
+
+      Ships with a full web UI (dashboard, sales, purchases, inventory,
+      contacts, accounting, GST/tax, reports, settings) — apps/server
+      serves it directly, no separate frontend container needed.
+  tips:
+    before_install:
+      en_US: |
+        Set POSTGRES_PASSWORD, BILLING_APP_PASSWORD (two different strong
+        passwords), and AEAD_ENCRYPTION_KEY (`openssl rand -base64 32`)
+        before installing.
+
+        Your data persists at `/DATA/AppData/rechvix/postgres`,
+        following CasaOS/ZimaOS's standard backup/restore convention.
+
+        First run: open the app and go to /setup to create your business
+        (organisation, first branch/warehouse, and owner login).
+  index: /
+  scheme: http
+  port_map: "8090"
+  version: "0.1.0"
+  update_at: "2026-09-04"
+  release_notes:
+    en_US: |-
+      0.1.0 (2026-09-04):
+      Initial CasaOS/ZimaOS release: self-hosted billing, inventory,
+      accounting, and India GST/e-Invoice/e-Way Bill platform. Double-entry
+      accounting, multi-company/branch/warehouse support, and a full web UI
+      served directly by the app container — no separate frontend needed.
+  website: "https://www.nodedr.com"
+  repo: "https://github.com/Raktim94/rechvix"
+  support: "https://github.com/Raktim94/rechvix/issues"
+  docs: "https://github.com/Raktim94/rechvix#readme"
