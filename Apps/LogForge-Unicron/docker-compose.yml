@@ -1,0 +1,120 @@
+name: logforge-unicron
+
+services:
+  logforge-unicron:
+    container_name: logforge-unicron
+    image: logforge/unicron:3.0.0
+    restart: unless-stopped
+    read_only: true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - KILL
+      - SETGID
+      - SETUID
+      - NET_BIND_SERVICE
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      TMPDIR: /run/pyinstaller
+      UNICRON_APPLIANCE_CONTAINER_NAME: logforge-unicron
+      UNICRON_CENTRAL_FQDN: localhost
+      UNICRON_CENTRAL_PORT: "443"
+      UNICRON_PUBLIC_CENTRAL_PORT: "8444"
+      UNICRON_CENTRAL_MTLS_PORT: "8443"
+      UNICRON_PUBLIC_CENTRAL_MTLS_PORT: "9443"
+      UNICRON_DATA_DIR: /var/lib/unicron
+      LOCAL_AGENT_CENTRAL_URL: https://unicron.central/unicron
+      LOCAL_AGENT_DOCKER_NETWORK: logforge-unicron-network
+      CENTRAL_ADMIN_USERNAME: admin
+      CENTRAL_ADMIN_PASSWORD: ""
+      CENTRAL_ADMIN_RECOVERY_OVERRIDE: "false"
+    extra_hosts:
+      - unicron-stepca:127.0.0.1
+      - unicron-stepca-ra:127.0.0.1
+      - unicron.central:127.0.0.1
+    ports:
+      - target: 443
+        published: "8444"
+        protocol: tcp
+      - target: 8443
+        published: "9443"
+        protocol: tcp
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,mode=1777,size=256m
+      - /run:rw,nosuid,nodev,mode=755,size=64m
+      - /run/pyinstaller:rw,nosuid,nodev,exec,mode=1777,size=256m
+    volumes:
+      - type: bind
+        source: /DATA/AppData/logforge-unicron
+        target: /var/lib/unicron
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    networks:
+      logforge-unicron-network:
+        aliases:
+          - unicron.central
+
+    x-casaos:
+      envs:
+        - container: CENTRAL_ADMIN_USERNAME
+          description:
+            en_US: Initial administrator username
+        - container: CENTRAL_ADMIN_PASSWORD
+          description:
+            en_US: Initial administrator password. Leave empty to generate one and retrieve it from the container logs.
+        - container: CENTRAL_ADMIN_RECOVERY_OVERRIDE
+          description:
+            en_US: Enable only when intentionally recovering the administrator account.
+      ports:
+        - container: "443"
+          description:
+            en_US: LogForge HTTPS Web UI
+          protocol: tcp
+        - container: "8443"
+          description:
+            en_US: Agent mTLS connection port
+          protocol: tcp
+      volumes:
+        - container: /var/lib/unicron
+          description:
+            en_US: Persistent LogForge application data
+        - container: /var/run/docker.sock
+          description:
+            en_US: Writable Docker socket. Grants LogForge host-level Docker control for terminals, file access, and automations.
+
+networks:
+  logforge-unicron-network:
+    name: logforge-unicron-network
+
+x-casaos:
+  id: dev.logforge.unicron
+  architectures:
+    - amd64
+    - arm64
+  main: logforge-unicron
+  author: LogForge
+  developer: LogForge
+  category: Developer
+  title:
+    en_US: LogForge Unicron
+  tagline:
+    en_US: All-in-one Docker observability and operations UI.
+  description:
+    en_US: All in one UI, for Docker. Real-time logs, Interactive terminals, Custom alerts/notifications/Automations, File system access.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LogForge-Unicron/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LogForge-Unicron/screenshot-1.png
+  index: /unicron
+  port_map: "8444"
+  scheme: https
+  version: "3.0.0"
+  update_at: "2026-08-06"
+  website: https://www.logforge.dev/
+  repo: https://github.com/log-forge/unicron-source
+  support: https://github.com/log-forge/logforge/issues
+  docs: https://github.com/log-forge/logforge
