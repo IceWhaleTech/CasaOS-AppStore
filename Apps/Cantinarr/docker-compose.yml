@@ -1,0 +1,67 @@
+name: cantinarr
+services:
+  cantinarr:
+    image: ghcr.io/windoze95/cantinarr:latest
+    container_name: cantinarr
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 8585
+        published: "8585"
+        protocol: tcp
+    environment:
+      CANTINARR_PUSH_GATEWAY_URL: https://push.cantinarr.com
+      CANTINARR_ARR_CALLBACK_URL: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: CANTINARR_PUSH_GATEWAY_URL
+          description:
+            en_US: Push gateway for the companion iOS and Android apps. The server enrolls itself on first start with no signup; clear the value to disable push, or point it at your own gateway.
+        - container: CANTINARR_ARR_CALLBACK_URL
+          description:
+            en_US: Origin your Radarr, Sonarr, Chaptarr, and Lidarr containers POST webhooks back to, for example http://192.168.1.10:8585. Leave blank to use whatever address you browse to. This is not the address people reach Cantinarr at; set that in the app under Settings, External Address. Formerly named CANTINARR_PUBLIC_URL, which existing containers can keep using.
+      ports:
+        - container: "8585"
+          description:
+            en_US: Web UI and API
+      volumes:
+        - container: /config
+          description:
+            en_US: Cantinarr's database and its generated encryption key
+x-casaos:
+  id: codes.julian.cantinarr
+  architectures:
+    - amd64
+    - arm64
+  main: cantinarr
+  author: windoze95
+  developer: windoze95
+  category: Media
+  description:
+    en_US: >-
+      Cantinarr is one app over your whole media stack. The people in your house browse, request movies, TV, books, and music from the web app or the companion iPhone and Android apps, and get a push notification when something is ready. You get everything behind that: Radarr, Sonarr, Chaptarr, and Lidarr controlled down to the individual episode, live queues for SABnzbd, qBittorrent, NZBGet, and Transmission, Tautulli activity, and Plex invites. It is also an MCP server: connect Claude or any MCP client and manage your library with the same tools that power the built-in AI agents. No one but you sees an API key or a quality profile. When a download gets stuck, Cantinarr reads what your services already know and tells you in plain English what went wrong, then offers to fix it, and the optional agent brings you fixes to approve; nothing destructive happens without your approval. API keys and download client passwords are AES-256-GCM encrypted in its database, and sign-in is passwordless by default, with passwords and passkeys available if you want them.
+  tagline:
+    en_US: Your media server just learned to run itself
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Cantinarr/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Cantinarr/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Cantinarr/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Cantinarr/screenshot-3.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Cantinarr/thumbnail.jpg
+  tips:
+    before_install:
+      en_US: Radarr, Sonarr, Chaptarr, Lidarr, download clients, Tautulli, and Plex are all optional and are added from the admin UI after first run. Push notifications to the companion iPhone and Android apps work out of the box through the preset push gateway; clear CANTINARR_PUSH_GATEWAY_URL to turn them off. If your arr containers cannot reach the address you browse Cantinarr on, set CANTINARR_ARR_CALLBACK_URL to an origin they can dial so instant updates work.
+  title:
+    en_US: Cantinarr
+  index: /
+  port_map: "8585"
+  version: "0.3.0"
+  update_at: "2026-08-21"
+  website: "https://cantinarr.com"
+  repo: "https://github.com/windoze95/cantinarr"
+  support: "https://github.com/windoze95/cantinarr/issues"
+  docs: "https://github.com/windoze95/cantinarr#readme"
