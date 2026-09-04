@@ -31,7 +31,7 @@ services:
       - kinetirx_net
 
   backend:
-    image: ghcr.io/raktim94/kinetirx-backend:1.5.0
+    image: ghcr.io/raktim94/kinetirx-backend:1.5.1
     container_name: kinetirx-backend
     hostname: kinetirx-backend
     restart: unless-stopped
@@ -79,7 +79,7 @@ services:
             en_US: "Optional — required to use Settings -> S3 Offsite Backup (your own S3-compatible bucket, e.g. R2/MinIO/Backblaze). Generate one with: openssl rand -hex 32. Leave blank if you don't need automatic offsite backups."
 
   frontend:
-    image: ghcr.io/raktim94/kinetirx-frontend:1.5.0
+    image: ghcr.io/raktim94/kinetirx-frontend:1.5.1
     container_name: kinetirx-frontend
     hostname: kinetirx-frontend
     restart: unless-stopped
@@ -151,10 +151,25 @@ x-casaos:
   index: /
   port_map: "3080"
   scheme: http
-  version: "1.5.0"
-  update_at: "2026-08-31"
+  version: "1.5.1"
+  update_at: "2026-09-04"
   release_notes:
     en_US: |-
+      1.5.1: Fixed purchase-bill OCR scanning (Inward Stock) failing
+      outright with "Could not detect medicine items" on any photo/camera
+      scan whenever GEMINI_API_KEY isn't configured — image scans now fall
+      back to a fully offline on-device OCR engine (the same one used for
+      patient-ID card scanning), with images auto-downscaled first so it
+      stays fast on modest hardware. Real server AI errors are now shown
+      instead of a generic message. Fixed POS not clearing the cart and
+      patient form after generating a bill, so the counter no longer stays
+      loaded with the previous customer's details until "+ New Bill" is
+      clicked by hand. Fixed the suggested Patient ID (in POS billing, OPD
+      registration, and Add Patient) consuming a real sequence number on
+      every page reload, modal open, or — in OPD — nearly every keystroke
+      of an unmatched phone number, instead of only when a patient is
+      actually saved; it no longer jumps around for no reason.
+
       1.5.0: Added bulk stock import from a CSV or Excel file (Medicine
       Stock -> Import CSV / Excel), with a downloadable template and a
       preview of what will be added before you confirm. Add Stock now lets
