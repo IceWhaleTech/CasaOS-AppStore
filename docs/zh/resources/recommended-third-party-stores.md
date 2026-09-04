@@ -7,7 +7,7 @@
 <StoreSourceCard
   title="Play 应用商店"
   summary="Play 应用商店，用 Docker 玩出生产力。"
-  url="https://play.cuse.eu.org/"
+  url="https://play.cuse.eu.org/store.json"
   maintainer="Cp0204"
   copy-label="复制链接"
   copied-label="已复制"
@@ -19,7 +19,7 @@
 <StoreSourceCard
   title="Big Bear ZimaOS 应用商店"
   summary="由 BigBearTechWorld 维护，提供适用于 CasaOS 和 ZimaOS 的社区应用。"
-  url="https://cdn.jsdelivr.net/gh/bigbeartechworld/big-bear-casaos@gh-pages/"
+  url="https://cdn.jsdelivr.net/gh/bigbeartechworld/big-bear-casaos@gh-pages/store.json"
   maintainer="BigBearTechWorld"
   copy-label="复制链接"
   copied-label="已复制"

@@ -1,7 +1,7 @@
 name: karakeep
 services:
   karakeep:
-    image: ghcr.io/karakeep-app/karakeep:0.32.0
+    image: ghcr.io/karakeep-app/karakeep:0.33.2
     container_name: karakeep
     deploy:
       resources:
@@ -133,22 +133,22 @@ services:
             ru_RU: Необязательный ключ OpenAI API для ИИ-тегов и сводок
             tr_TR: Yapay zeka etiketleme ve özetleme için isteğe bağlı OpenAI API anahtarı
   karakeep-chrome:
-    image: gcr.io/zenika-hub/alpine-chrome:124
+    image: ghcr.io/karakeep-app/karakeep-chrome:release
     container_name: karakeep-chrome
     deploy:
       resources:
         reservations:
           memory: 512M
     restart: unless-stopped
+    init: true
     networks:
       - karakeep
     command:
-      - --no-sandbox
       - --disable-gpu
       - --disable-dev-shm-usage
-      - --remote-debugging-address=0.0.0.0
-      - --remote-debugging-port=9222
       - --hide-scrollbars
+      - --disable-blink-features=AutomationControlled
+      - --window-size=1440,900
   karakeep-meilisearch:
     image: getmeili/meilisearch:v1.41.0
     container_name: karakeep-meilisearch
@@ -527,69 +527,69 @@ x-casaos:
   index: /
   title:
     en_US: Karakeep
-  version: "0.32.0"
-  update_at: "2026-05-08"
+  version: "0.33.2"
+  update_at: "2026-08-11"
   release_notes:
     en_US: |-
-      - v0.32.0 updates the default Meilisearch version to 1.41.0 and improves the Docker Compose development environment.
-      - It improves self-hosted operation with granular API key scopes, CLI authentication config storage, new MCP/API capabilities, event logging, and rule engine enhancements.
-      - It includes server-side security fixes for SSRF, rate limiting, stored XSS, and password reset tokens, plus crawler, import, search, and Meilisearch batching fixes.
+      - v0.33.2 migrates to the maintained Karakeep Chrome image, upgrading Chrome from 124 to 151 and replacing the abandoned Alpine Chrome image.
+      - It fixes metadata extraction for large SingleFile archives, hardens crawler asset conversion, and pins Node.js to avoid a crash-loop regression.
+      - It adds direct custom SingleFile archive uploads through the CLI and a favicon that adapts to the browser theme.
     en_GB: |-
-      - v0.32.0 updates the default Meilisearch version to 1.41.0 and improves the Docker Compose development environment.
-      - It improves self-hosted operation with granular API key scopes, CLI authentication config storage, new MCP/API capabilities, event logging, and rule engine enhancements.
-      - It includes server-side security fixes for SSRF, rate limiting, stored XSS, and password reset tokens, plus crawler, import, search, and Meilisearch batching fixes.
+      - v0.33.2 migrates to the maintained Karakeep Chrome image, upgrading Chrome from 124 to 151 and replacing the abandoned Alpine Chrome image.
+      - It fixes metadata extraction for large SingleFile archives, hardens crawler asset conversion, and pins Node.js to avoid a crash-loop regression.
+      - It adds direct custom SingleFile archive uploads through the CLI and a favicon that adapts to the browser theme.
     it_IT: |-
-      - La v0.32.0 aggiorna la versione predefinita di Meilisearch alla 1.41.0 e migliora l'ambiente di sviluppo Docker Compose.
-      - Migliora l'uso self-hosted con scope granulari per le chiavi API, salvataggio della configurazione auth della CLI, nuove capacità MCP/API, event logging e miglioramenti al rule engine.
-      - Include fix di sicurezza lato server per SSRF, rate limiting, stored XSS e token di reset password, oltre a correzioni per crawler, import, ricerca e batching Meilisearch.
+      - La v0.33.2 migra all'immagine Chrome mantenuta da Karakeep, aggiornando Chrome dalla versione 124 alla 151 e sostituendo l'immagine Alpine Chrome abbandonata.
+      - Corregge l'estrazione dei metadati per archivi SingleFile di grandi dimensioni, rende più robusta la conversione delle risorse del crawler e blocca Node.js a una versione che evita un ciclo di crash.
+      - Aggiunge il caricamento diretto di archivi SingleFile personalizzati tramite CLI e una favicon che si adatta al tema del browser.
     nb_NO: |-
-      - v0.32.0 oppdaterer standard Meilisearch-versjon til 1.41.0 og forbedrer Docker Compose-utviklingsmiljøet.
-      - Den forbedrer selvhosting med granulære API-nøkkelomfang, lagring av CLI-autentiseringskonfigurasjon, nye MCP/API-funksjoner, hendelseslogging og forbedringer i regelmotoren.
-      - Den inneholder serverside sikkerhetsrettinger for SSRF, rate limiting, lagret XSS og passordtilbakestillingstokener, samt rettinger for crawler, import, søk og Meilisearch-batching.
+      - v0.33.2 migrerer til Karakeeps vedlikeholdte Chrome-image, oppgraderer Chrome fra 124 til 151 og erstatter det forlatte Alpine Chrome-imaget.
+      - Den retter metadatauttrekk for store SingleFile-arkiver, gjør crawlerens ressurskonvertering mer robust og låser Node.js for å unngå en krasjløkke.
+      - Den legger til direkte opplasting av egendefinerte SingleFile-arkiver via CLI og et favicon som tilpasser seg nettlesertemaet.
     zh_CN: |-
-      - v0.32.0 将默认 Meilisearch 版本更新到 1.41.0，并改进了 Docker Compose 开发环境。
-      - 改进自托管使用体验，包含细粒度 API Key 权限、CLI 认证配置保存、新的 MCP/API 能力、事件日志以及规则引擎增强。
-      - 包含 SSRF、限流、存储型 XSS、密码重置令牌等服务端安全修复，并修复了抓取、导入、搜索和 Meilisearch 批处理相关问题。
+      - v0.33.2 迁移到由 Karakeep 维护的 Chrome 镜像，将 Chrome 从 124 升级到 151，并替换已停止维护的 Alpine Chrome 镜像。
+      - 修复大型 SingleFile 归档的元数据提取问题，增强抓取器资源转换的可靠性，并固定 Node.js 版本以避免循环崩溃。
+      - 新增通过 CLI 直接上传自定义 SingleFile 归档的功能，并使网站图标自动适配浏览器主题。
     ja_JP: |-
-      - v0.32.0では既定のMeilisearchバージョンが1.41.0に更新され、Docker Compose開発環境も改善されました。
-      - 細かなAPIキー権限、CLI認証設定の保存、新しいMCP/API機能、イベントログ、ルールエンジン強化により、セルフホスト運用が改善されています。
-      - SSRF、レート制限、保存型XSS、パスワードリセットトークンのサーバー側セキュリティ修正に加え、クローラー、インポート、検索、Meilisearchバッチ処理の修正も含まれます。
+      - v0.33.2では、保守が終了したAlpine ChromeイメージをKarakeep管理のChromeイメージに移行し、Chromeを124から151へ更新しました。
+      - 大容量SingleFileアーカイブのメタデータ抽出を修正し、クローラーのアセット変換を強化するとともに、クラッシュループを避けるためNode.jsのバージョンを固定しました。
+      - CLIからカスタムSingleFileアーカイブを直接アップロードできるようになり、faviconがブラウザテーマに対応しました。
     ko_KR: |-
-      - v0.32.0은 기본 Meilisearch 버전을 1.41.0으로 업데이트하고 Docker Compose 개발 환경을 개선합니다.
-      - 세분화된 API 키 범위, CLI 인증 설정 저장, 새로운 MCP/API 기능, 이벤트 로깅, 규칙 엔진 개선으로 자체 호스팅 운영을 향상합니다.
-      - SSRF, 속도 제한, 저장형 XSS, 비밀번호 재설정 토큰에 대한 서버 측 보안 수정과 크롤러, 가져오기, 검색, Meilisearch 배치 처리 수정이 포함됩니다.
+      - v0.33.2는 유지 관리가 중단된 Alpine Chrome 이미지를 Karakeep에서 관리하는 Chrome 이미지로 교체하고 Chrome을 124에서 151로 업그레이드합니다.
+      - 대용량 SingleFile 아카이브의 메타데이터 추출을 수정하고 크롤러 자산 변환을 강화하며 충돌 반복을 방지하도록 Node.js 버전을 고정합니다.
+      - CLI를 통한 사용자 지정 SingleFile 아카이브 직접 업로드와 브라우저 테마에 맞춰지는 파비콘을 추가합니다.
     fr_FR: |-
-      - La v0.32.0 met à jour la version Meilisearch par défaut vers 1.41.0 et améliore l'environnement de développement Docker Compose.
-      - Elle améliore l'exploitation auto-hébergée avec des scopes granulaires pour les clés API, le stockage de la configuration d'auth CLI, de nouvelles capacités MCP/API, l'event logging et des améliorations du moteur de règles.
-      - Elle inclut des correctifs de sécurité côté serveur pour SSRF, rate limiting, XSS stocké et jetons de réinitialisation de mot de passe, ainsi que des corrections pour crawler, import, recherche et batching Meilisearch.
+      - La v0.33.2 migre vers l'image Chrome maintenue par Karakeep, met Chrome à niveau de la version 124 à 151 et remplace l'image Alpine Chrome abandonnée.
+      - Elle corrige l'extraction des métadonnées des archives SingleFile volumineuses, renforce la conversion des ressources du crawler et épingle Node.js pour éviter une boucle de plantage.
+      - Elle ajoute l'envoi direct d'archives SingleFile personnalisées via la CLI et un favicon qui s'adapte au thème du navigateur.
     de_DE: |-
-      - v0.32.0 aktualisiert die Standardversion von Meilisearch auf 1.41.0 und verbessert die Docker-Compose-Entwicklungsumgebung.
-      - Es verbessert den selbst gehosteten Betrieb mit granularen API-Schlüssel-Scopes, gespeicherter CLI-Authentifizierungskonfiguration, neuen MCP/API-Funktionen, Event-Logging und Verbesserungen der Regel-Engine.
-      - Es enthält serverseitige Sicherheitskorrekturen für SSRF, Rate Limiting, Stored XSS und Passwort-Reset-Tokens sowie Korrekturen für Crawler, Import, Suche und Meilisearch-Batching.
+      - v0.33.2 migriert auf das von Karakeep gepflegte Chrome-Image, aktualisiert Chrome von 124 auf 151 und ersetzt das nicht mehr gepflegte Alpine-Chrome-Image.
+      - Die Version behebt die Metadatenextraktion großer SingleFile-Archive, härtet die Asset-Konvertierung des Crawlers und fixiert die Node.js-Version, um eine Absturzschleife zu vermeiden.
+      - Außerdem ermöglicht sie den direkten Upload eigener SingleFile-Archive per CLI und fügt ein an das Browserdesign angepasstes Favicon hinzu.
     sv_SE: |-
-      - v0.32.0 uppdaterar standardversionen av Meilisearch till 1.41.0 och förbättrar Docker Compose-utvecklingsmiljön.
-      - Den förbättrar självhostad drift med granulära API-nyckelomfång, sparad CLI-autentiseringskonfiguration, nya MCP/API-funktioner, händelseloggning och förbättringar i regelmotorn.
-      - Den innehåller serversidiga säkerhetsfixar för SSRF, rate limiting, lagrad XSS och lösenordsåterställningstokens, samt fixar för crawler, import, sök och Meilisearch-batching.
+      - v0.33.2 migrerar till Karakeeps underhållna Chrome-image, uppgraderar Chrome från 124 till 151 och ersätter det övergivna Alpine Chrome-imaget.
+      - Versionen rättar metadataextraktion för stora SingleFile-arkiv, gör crawlerns resurskonvertering robustare och låser Node.js-versionen för att undvika en kraschloop.
+      - Den lägger till direkt uppladdning av anpassade SingleFile-arkiv via CLI och en favicon som anpassas efter webbläsarens tema.
     el_GR: |-
-      - Η v0.32.0 ενημερώνει την προεπιλεγμένη έκδοση Meilisearch σε 1.41.0 και βελτιώνει το περιβάλλον ανάπτυξης Docker Compose.
-      - Βελτιώνει τη self-hosted λειτουργία με granular API key scopes, αποθήκευση CLI auth config, νέες δυνατότητες MCP/API, event logging και βελτιώσεις στο rule engine.
-      - Περιλαμβάνει server-side διορθώσεις ασφαλείας για SSRF, rate limiting, stored XSS και password reset tokens, καθώς και διορθώσεις για crawler, import, search και Meilisearch batching.
+      - Η v0.33.2 μεταβαίνει στο συντηρούμενο Chrome image του Karakeep, αναβαθμίζοντας το Chrome από 124 σε 151 και αντικαθιστώντας το εγκαταλελειμμένο Alpine Chrome image.
+      - Διορθώνει την εξαγωγή metadata για μεγάλα SingleFile archives, ενισχύει τη μετατροπή assets του crawler και κλειδώνει την έκδοση Node.js για αποφυγή crash loop.
+      - Προσθέτει άμεσο upload προσαρμοσμένων SingleFile archives μέσω CLI και favicon που προσαρμόζεται στο θέμα του browser.
     hr_HR: |-
-      - v0.32.0 ažurira zadanu verziju Meilisearcha na 1.41.0 i poboljšava Docker Compose razvojno okruženje.
-      - Poboljšava samohostirani rad uz granularne opsege API ključeva, spremanje CLI auth konfiguracije, nove MCP/API mogućnosti, event logging i poboljšanja rule enginea.
-      - Uključuje serverske sigurnosne ispravke za SSRF, ograničavanje brzine, stored XSS i tokene za reset lozinke, uz ispravke za crawler, import, pretraživanje i Meilisearch batching.
+      - v0.33.2 prelazi na Karakeepovu održavanu Chrome sliku, nadograđuje Chrome sa 124 na 151 i zamjenjuje napuštenu Alpine Chrome sliku.
+      - Ispravlja izdvajanje metapodataka za velike SingleFile arhive, poboljšava pretvorbu resursa crawlera i zaključava verziju Node.js-a radi izbjegavanja petlje rušenja.
+      - Dodaje izravni prijenos prilagođenih SingleFile arhiva putem CLI-ja i favicon koji se prilagođava temi preglednika.
     pt_PT: |-
-      - A v0.32.0 atualiza a versão predefinida do Meilisearch para 1.41.0 e melhora o ambiente de desenvolvimento Docker Compose.
-      - Melhora a operação auto-hospedada com âmbitos granulares para chaves API, armazenamento da configuração de autenticação CLI, novas capacidades MCP/API, event logging e melhorias no motor de regras.
-      - Inclui correções de segurança do lado do servidor para SSRF, rate limiting, XSS armazenado e tokens de reposição de palavra-passe, além de correções para crawler, importação, pesquisa e batching do Meilisearch.
+      - A v0.33.2 migra para a imagem Chrome mantida pelo Karakeep, atualiza o Chrome da versão 124 para a 151 e substitui a imagem Alpine Chrome abandonada.
+      - Corrige a extração de metadados de arquivos SingleFile grandes, reforça a conversão de recursos do crawler e fixa a versão do Node.js para evitar um ciclo de falhas.
+      - Adiciona o carregamento direto de arquivos SingleFile personalizados através da CLI e um favicon que se adapta ao tema do navegador.
     ru_RU: |-
-      - v0.32.0 обновляет версию Meilisearch по умолчанию до 1.41.0 и улучшает среду разработки Docker Compose.
-      - Улучшена self-hosted эксплуатация: детализированные scopes API-ключей, сохранение CLI auth config, новые возможности MCP/API, event logging и улучшения rule engine.
-      - Включены серверные исправления безопасности для SSRF, rate limiting, stored XSS и токенов сброса пароля, а также исправления для crawler, импорта, поиска и batching в Meilisearch.
+      - v0.33.2 переводит приложение на поддерживаемый Karakeep образ Chrome, обновляет Chrome со 124 до 151 и заменяет заброшенный образ Alpine Chrome.
+      - Выпуск исправляет извлечение метаданных из больших архивов SingleFile, повышает надежность преобразования ресурсов crawler и фиксирует версию Node.js для предотвращения цикла сбоев.
+      - Добавлена прямая загрузка пользовательских архивов SingleFile через CLI и favicon, адаптирующийся к теме браузера.
     tr_TR: |-
-      - v0.32.0 varsayılan Meilisearch sürümünü 1.41.0'a günceller ve Docker Compose geliştirme ortamını iyileştirir.
-      - Ayrıntılı API anahtarı kapsamları, CLI kimlik doğrulama yapılandırmasını saklama, yeni MCP/API özellikleri, event logging ve kural motoru iyileştirmeleriyle kendi kendine barındırılan kullanımı geliştirir.
-      - SSRF, hız sınırlama, stored XSS ve parola sıfırlama tokenları için sunucu tarafı güvenlik düzeltmeleri ile crawler, içe aktarma, arama ve Meilisearch batching düzeltmeleri içerir.
+      - v0.33.2, bakımı bırakılmış Alpine Chrome imajını Karakeep tarafından sürdürülen Chrome imajıyla değiştirir ve Chrome'u 124'ten 151'e yükseltir.
+      - Büyük SingleFile arşivlerinde meta veri çıkarmayı düzeltir, crawler varlık dönüşümünü güçlendirir ve çökme döngüsünü önlemek için Node.js sürümünü sabitler.
+      - CLI üzerinden özel SingleFile arşivlerinin doğrudan yüklenmesini ve tarayıcı temasına uyum sağlayan favicon'u ekler.
   store_app_id: karakeep
   website: "https://karakeep.app/"
   repo: "https://github.com/karakeep-app/karakeep"
