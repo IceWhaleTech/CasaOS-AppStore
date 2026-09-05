@@ -9,6 +9,15 @@ services:
     container_name: rechvix-postgres-init
     restart: "no"
     entrypoint: ["sh", "-c"]
+    # $$$$BILLING_APP_PASSWORD (four dollars) is not a typo: CasaOS's real
+    # install path interpolates this file twice (parse -> re-marshal ->
+    # re-parse inside its own Install()), and each pass collapses one `$$`
+    # escape down to one literal `$`. Two dollars survives only one pass and
+    # gets blanked to empty on the second (reproduced against a real CasaOS
+    # instance — a local `docker compose up` only ever interpolates once, so
+    # this bug is invisible there if BILLING_APP_PASSWORD happens to also be
+    # in your .env). Four dollars -> two after pass 1 -> one literal `$` for
+    # the container's own shell to expand from its real env var.
     command:
       - |
         set -e
@@ -17,7 +26,7 @@ services:
         DO \$\$
         BEGIN
             IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'billing_app') THEN
-                CREATE ROLE billing_app LOGIN PASSWORD '$$BILLING_APP_PASSWORD';
+                CREATE ROLE billing_app LOGIN PASSWORD '$$$$BILLING_APP_PASSWORD';
             END IF;
         END
         \$\$;
