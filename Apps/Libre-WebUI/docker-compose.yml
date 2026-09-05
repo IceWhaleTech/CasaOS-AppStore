@@ -1,7 +1,7 @@
 name: libre-webui
 services:
   libre-webui:
-    image: docker.io/librewebui/libre-webui:0.33.0
+    image: docker.io/librewebui/libre-webui:0.34.0
     container_name: libre-webui
     restart: unless-stopped
     ports:
@@ -134,11 +134,11 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "0.33.0"
+  version: "0.34.0"
   update_at: "2026-08-30"
   release_notes:
-    en_US: "Initial CasaOS packaging of Libre WebUI 0.33.0."
-    en_GB: "Initial CasaOS packaging of Libre WebUI 0.33.0."
+    en_US: "CasaOS packaging of Libre WebUI 0.34.0."
+    en_GB: "CasaOS packaging of Libre WebUI 0.34.0."
   website: https://librewebui.org
   repo: https://github.com/libre-webui/libre-webui
   support: https://github.com/libre-webui/libre-webui/issues
