@@ -17,7 +17,7 @@ services:
         DO \$\$
         BEGIN
             IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'billing_app') THEN
-                CREATE ROLE billing_app LOGIN PASSWORD '$BILLING_APP_PASSWORD';
+                CREATE ROLE billing_app LOGIN PASSWORD '$$BILLING_APP_PASSWORD';
             END IF;
         END
         \$\$;
