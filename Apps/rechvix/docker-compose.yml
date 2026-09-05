@@ -1,11 +1,53 @@
 name: rechvix
 
 services:
+  # CasaOS installs pull pre-built images with no access to this repo, so
+  # there is no file to bind-mount into postgres-init — it starts out
+  # genuinely empty on a fresh install. This one-shot container generates
+  # the runtime-role-creation script onto that same host directory before
+  # postgres starts, so postgres's own first-boot docker-entrypoint-initdb.d
+  # mechanism picks it up. Without this, billing_app (the non-owning
+  # runtime role app/worker connect as) never gets created and both
+  # crash-loop forever on "password authentication failed for user
+  # billing_app" — reproduced and verified fixed against the real
+  # published images.
+  postgres-init:
+    image: postgres:18
+    container_name: rechvix-postgres-init
+    restart: "no"
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        set -e
+        umask 022
+        cat > /init/01-create-runtime-role.sql <<SQL
+        DO \$\$
+        BEGIN
+            IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'billing_app') THEN
+                CREATE ROLE billing_app LOGIN PASSWORD '$BILLING_APP_PASSWORD';
+            END IF;
+        END
+        \$\$;
+        SQL
+    environment:
+      BILLING_APP_PASSWORD: "${BILLING_APP_PASSWORD}"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres-init
+        target: /init
+    networks:
+      - rechvix
+    x-casaos:
+      envs: []
+
   postgres:
     image: postgres:18
     container_name: rechvix-postgres
     hostname: rechvix-postgres
     restart: unless-stopped
+    depends_on:
+      postgres-init:
+        condition: service_completed_successfully
     environment:
       POSTGRES_DB: billing
       POSTGRES_USER: billing_migrator
@@ -39,7 +81,7 @@ services:
             en_US: All business data — invoices, inventory, accounting, everything. Back this up.
         - container: /docker-entrypoint-initdb.d
           description:
-            en_US: One-time database setup script — do not modify.
+            en_US: Auto-generated one-time database setup script (creates the app's runtime role) — do not modify.
 
   migrate:
     image: ghcr.io/raktim94/rechvix-server:0.1.0
@@ -160,10 +202,10 @@ x-casaos:
   scheme: http
   port_map: "8090"
   version: "0.1.0"
-  update_at: "2026-09-04"
+  update_at: "2026-09-05"
   release_notes:
     en_US: |-
-      0.1.0 (2026-09-04):
+      0.1.0 (2026-09-05):
       Initial CasaOS/ZimaOS release: self-hosted billing, inventory,
       accounting, and India GST/e-Invoice/e-Way Bill platform. Double-entry
       accounting, multi-company/branch/warehouse support, and a full web UI
