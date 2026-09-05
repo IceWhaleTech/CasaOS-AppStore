@@ -1,9 +1,3 @@
-# CasaOS/ZimaOS x-casaos v2 manifest. Kept separate from deploy/docker-compose.yml
-# because CasaOS installs from published images (image:), not a source build (build:).
-#
-# $AppID is a real CasaOS-substituted variable (used only in volume paths below).
-# $PORT and $AppID_<VAR> are not — don't reintroduce them, they silently resolve empty.
-
 name: kinetirx
 
 services:
