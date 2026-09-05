@@ -1,16 +1,9 @@
 name: rechvix
 
 services:
-  # CasaOS installs pull pre-built images with no access to this repo, so
-  # there is no file to bind-mount into postgres-init — it starts out
-  # genuinely empty on a fresh install. This one-shot container generates
-  # the runtime-role-creation script onto that same host directory before
-  # postgres starts, so postgres's own first-boot docker-entrypoint-initdb.d
-  # mechanism picks it up. Without this, billing_app (the non-owning
-  # runtime role app/worker connect as) never gets created and both
-  # crash-loop forever on "password authentication failed for user
-  # billing_app" — reproduced and verified fixed against the real
-  # published images.
+  # CasaOS has no repo access to bind-mount a real init script, so this
+  # generates one on first boot instead — without it, billing_app never
+  # gets created and app/worker crash-loop on auth failure.
   postgres-init:
     image: postgres:18
     container_name: rechvix-postgres-init
