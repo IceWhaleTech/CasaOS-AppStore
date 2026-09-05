@@ -86,7 +86,7 @@ services:
             en_US: Auto-generated one-time database setup script (creates the app's runtime role) — do not modify.
 
   migrate:
-    image: ghcr.io/raktim94/rechvix-server:0.1.0
+    image: ghcr.io/raktim94/rechvix-server:0.2.0
     container_name: rechvix-migrate
     command: ["-migrate"]
     restart: "no"
@@ -101,7 +101,7 @@ services:
       envs: []
 
   app:
-    image: ghcr.io/raktim94/rechvix-server:0.1.0
+    image: ghcr.io/raktim94/rechvix-server:0.2.0
     container_name: rechvix-app
     hostname: rechvix-app
     restart: unless-stopped
@@ -133,7 +133,7 @@ services:
           protocol: tcp
 
   worker:
-    image: ghcr.io/raktim94/rechvix-worker:0.1.0
+    image: ghcr.io/raktim94/rechvix-worker:0.2.0
     container_name: rechvix-worker
     hostname: rechvix-worker
     restart: unless-stopped
@@ -203,10 +203,19 @@ x-casaos:
   index: /
   scheme: http
   port_map: "8090"
-  version: "0.1.0"
-  update_at: "2026-09-05"
+  version: "0.2.0"
+  update_at: "2026-09-06"
   release_notes:
     en_US: |-
+      0.2.0 (2026-09-06):
+      Owner/Admin can now add teammates from Settings > Team — Bootstrap
+      previously only ever created the single first-run owner, with no way
+      to give anyone else at the business their own login. Also wires up
+      forgot-password screens for the reset flow the backend already
+      supported, and replaces the placeholder icon with the real Rechvix
+      logo. Full history:
+      https://github.com/Raktim94/rechvix/blob/main/CHANGELOG.md
+
       0.1.0 (2026-09-05):
       Initial CasaOS/ZimaOS release: self-hosted billing, inventory,
       accounting, and India GST/e-Invoice/e-Way Bill platform. Double-entry
