@@ -4,35 +4,33 @@ services:
   # CasaOS has no repo access to bind-mount a real init script, so this
   # generates one on first boot instead — without it, billing_app never
   # gets created and app/worker crash-loop on auth failure.
+  #
+  # This writes the password via plain ${BILLING_APP_PASSWORD} compose
+  # interpolation — the same mechanism already used safely everywhere else
+  # in this file — instead of embedding it in an unquoted heredoc. An
+  # earlier version tried to smuggle the password through the container's
+  # own shell as $$BILLING_APP_PASSWORD, betting on how many times CasaOS's
+  # install path re-interpolates `$$`; that bet was wrong even for a single
+  # pass (`$$` inside an unquoted heredoc is the shell's PID variable, not
+  # an escape), so billing_app was created with a garbage password and
+  # app/worker crash-looped on auth failure. The heredoc here is quoted
+  # (<<'SQL') so the shell performs no expansion at all, and \gexec avoids
+  # needing a $$-delimited DO block, so there is no $ left for either
+  # compose or the shell to mangle.
   postgres-init:
     image: postgres:18
     container_name: rechvix-postgres-init
     restart: "no"
     entrypoint: ["sh", "-c"]
-    # $$$$BILLING_APP_PASSWORD (four dollars) is not a typo: CasaOS's real
-    # install path interpolates this file twice (parse -> re-marshal ->
-    # re-parse inside its own Install()), and each pass collapses one `$$`
-    # escape down to one literal `$`. Two dollars survives only one pass and
-    # gets blanked to empty on the second (reproduced against a real CasaOS
-    # instance — a local `docker compose up` only ever interpolates once, so
-    # this bug is invisible there if BILLING_APP_PASSWORD happens to also be
-    # in your .env). Four dollars -> two after pass 1 -> one literal `$` for
-    # the container's own shell to expand from its real env var.
     command:
       - |
         set -e
         umask 022
-        cat > /init/01-create-runtime-role.sql <<SQL
-        DO \$\$
-        BEGIN
-            IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'billing_app') THEN
-                CREATE ROLE billing_app LOGIN PASSWORD '$$$$BILLING_APP_PASSWORD';
-            END IF;
-        END
-        \$\$;
+        cat > /init/01-create-runtime-role.sql <<'SQL'
+        SELECT 'CREATE ROLE billing_app LOGIN PASSWORD ''${BILLING_APP_PASSWORD}'''
+        WHERE NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'billing_app')
+        \gexec
         SQL
-    environment:
-      BILLING_APP_PASSWORD: "${BILLING_APP_PASSWORD}"
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/postgres-init
@@ -162,12 +160,12 @@ x-casaos:
   author: NodeDR Infotech Private Limited
   developer: Raktim94
   category: Finance
-  icon: "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/rechvix/icon.png"
-  thumbnail: "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/rechvix/thumbnail.png"
+  icon: "https://cdn.jsdelivr.net/gh/Raktim94/CasaOS-AppStore@add-rechvix-app/Apps/rechvix/icon.png"
+  thumbnail: "https://cdn.jsdelivr.net/gh/Raktim94/CasaOS-AppStore@add-rechvix-app/Apps/rechvix/thumbnail.png"
   screenshot_link:
-    - "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/rechvix/screenshot-1.png"
-    - "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/rechvix/screenshot-2.png"
-    - "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/rechvix/screenshot-3.png"
+    - "https://cdn.jsdelivr.net/gh/Raktim94/CasaOS-AppStore@add-rechvix-app/Apps/rechvix/screenshot-1.png"
+    - "https://cdn.jsdelivr.net/gh/Raktim94/CasaOS-AppStore@add-rechvix-app/Apps/rechvix/screenshot-2.png"
+    - "https://cdn.jsdelivr.net/gh/Raktim94/CasaOS-AppStore@add-rechvix-app/Apps/rechvix/screenshot-3.png"
   title:
     en_US: rechvix
   tagline:
