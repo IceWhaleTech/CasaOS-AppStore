@@ -1,7 +1,7 @@
 name: libredb-studio
 services:
   libredb-studio:
-    image: ghcr.io/libredb/libredb-studio:0.9.66
+    image: libredb/libredb-studio:0.13.7
     container_name: libredb-studio
     restart: unless-stopped
     ports:
@@ -81,7 +81,7 @@ x-casaos:
   author: libredb
   category: Developer
   description:
-    en_US: LibreDB Studio is an open-source (MIT), self-hosted SQL IDE. It provides a modern web-based interface to connect to your databases, browse schemas, write and run SQL queries, and manage your data from any browser on your LAN. Data is stored locally in a SQLite database, so everything stays under your control.
+    en_US: LibreDB Studio is an open-source (MIT), self-hosted SQL IDE. It provides a modern web-based interface to connect to 16 database engines (PostgreSQL, MySQL, MongoDB, Redis, ClickHouse and more), browse schemas, write and run SQL queries, and manage your data from any browser on your LAN. Data is stored locally in a SQLite database, so everything stays under your control.
     zh_CN: LibreDB Studio 是一款开源（MIT）的自托管 SQL IDE。它提供现代化的基于 Web 的界面，可连接数据库、浏览架构、编写并运行 SQL 查询，并可通过局域网中的任意浏览器管理数据。数据本地存储于 SQLite 数据库中，一切尽在您的掌控之中。
   developer: libredb
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreDBStudio/icon.svg
@@ -99,10 +99,10 @@ x-casaos:
   index: /
   scheme: http
   port_map: "3016"
-  version: "0.9.66"
-  update_at: "2026-08-04"
+  version: "0.13.7"
+  update_at: "2026-09-06"
   release_notes:
-    en_US: Initial LibreDB Studio template for the app store, based on release 0.9.66.
+    en_US: Updated to LibreDB Studio 0.13.7 and switched to the official Docker Hub image.
   website: https://libredb.org
   repo: https://github.com/libredb/libredb-studio
   support: https://github.com/libredb/libredb-studio/issues
