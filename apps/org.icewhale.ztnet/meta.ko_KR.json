@@ -1,8 +1,8 @@
 {
   "id": "org.icewhale.ztnet",
-  "release_note": "- v0.7.18 updates dependency packages, including defu 6.1.6.\n- The installer dependencies were also updated.\n- The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.",
   "tagline": "중앙 집중식 관리를 위한 웹 UI가 있는 자체 호스팅 ZeroTier 네트워크 컨트롤러입니다.",
   "description": "ZTNET은 직관적인 웹 인터페이스를 통해 네트워크 구성 및 관리를 단순화하는 강력한 ZeroTier 네트워크 관리 도구로, 팀과 개인 사용자에게 이상적입니다. 현대적인 디자인과 풍부한 기능으로 안전하고 확장 가능한 가상 네트워크 구축을 위한 효율적인 솔루션을 제공합니다.\n\n이 도구는 직관적인 웹 인터페이스와 다중 사용자 지원을 통한 조직화를 중심으로 합니다. TypeScript로 개발되어 사용자와 ZeroTier Controller API 간의 중개자 역할을 하며, 조직 내에서 협업 네트워크 관리를 가능하게 하여 팀 작업을 간소화합니다. ZeroTier Central API와의 통합을 통해 사용자 친화적인 인터페이스를 통해 네트워크, 노드 및 멤버를 직접 관리할 수 있어 구성 효율성을 향상시킵니다.\n\n격리된 네트워크 환경을 만들기 위한 사용자 정의 프라이빗 루트 서버를 지원하여 개인정보 보호와 제어를 향상시킵니다. 개인화된 사용자 공간을 통해 사용자가 독립적으로 네트워크를 생성하고 관리할 수 있습니다. 6plane과 rfc4193 IPv6 주소 지정 지원으로 기업 또는 개인 네트워킹 기능을 향상시킵니다. ARM64 및 AMD64 아키텍처와의 호환성으로 광범위한 장치 지원을 보장합니다. 이 도구는 사용자 친화적이고 유연한 설계에 중점을 두어 현대적인 네트워크 관리 경험을 제공합니다.\n\n**주요 기능:**\n- ZeroTier 네트워크 관리를 단순화하는 직관적인 웹 인터페이스\n- 팀 협업을 위한 조직 및 다중 사용자 지원\n- 네트워크와 노드 관리를 위한 ZeroTier Central API 통합\n- 향상된 개인정보 보호와 제어를 위한 사용자 정의 프라이빗 루트 서버\n- 독립적인 네트워크 생성 및 관리를 위한 개인화된 사용자 공간\n- 6plane 및 rfc4193 IPv6 주소 지정 지원\n- 다양한 장치를 위한 ARM64 및 AMD64 아키텍처 호환성\n\n**자세히 알아보기:**\n- [ZTnet 공식 웹사이트](https://ztnet.network/)\n- [ZTnet GitHub](https://github.com/sinamics/ztnet)\n",
+  "release_note": "- v0.7.18 updates dependency packages, including defu 6.1.6.\n- The installer dependencies were also updated.\n- The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.",
   "tips": {
     "before_install": "ZTnet 사용을 위한 전제 조건:\n1. ZTNET이 로컬 ZeroTier 인스턴스를 관리할 수 있도록 허용합니다. [문서의 2단계: ZeroTier 구성](https://ztnet.network/usage/migrate)을 참조하세요\n2. (ZimaOS 사용자는 이 단계를 수행할 필요가 없습니다) 환경 변수 `ZT_ADDR`을 ZeroTier 컨트롤러 주소로 수정합니다\n"
   }

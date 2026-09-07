@@ -1,0 +1,48 @@
+name: libredb-studio
+services:
+  libredb-studio:
+    image: libredb/libredb-studio:0.13.7@sha256:844cd389d30d95762356eac255b2946a38973cc594a3f9056d886098537a792e
+    container_name: libredb-studio
+    restart: unless-stopped
+    ports:
+      - target: 3000
+        published: "3016"
+        protocol: tcp
+    environment:
+      ADMIN_EMAIL: admin@libredb.org
+      ADMIN_PASSWORD: changeme123
+      JWT_SECRET: libredb-studio-change-this-to-a-long-random-secret-value-min-48
+      STORAGE_PROVIDER: sqlite
+      STORAGE_SQLITE_PATH: /app/data/libredb-storage.db
+      AUTH_COOKIE_SECURE: "false"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "require('http').get('http://127.0.0.1:3000/api/db/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    network_mode: bridge
+    privileged: false
+x-casaos:
+  id: org.icewhale.libredbstudio
+  main: libredb-studio
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.libredbstudio/assets/icon.svg
+  title:
+    en_US: LibreDB Studio
+    zh_CN: LibreDB Studio
+  index: /
+  scheme: http
+  port_map: "3016"
+  version: "0.13.7"

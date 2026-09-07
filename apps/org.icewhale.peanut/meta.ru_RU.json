@@ -1,9 +1,9 @@
 {
   "id": "org.icewhale.peanut",
   "title": "PeaNUT",
-  "release_note": "- v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.\n- WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.\n- The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.",
   "tagline": "Система мониторинга ИБП и уведомлений об отключении электроэнергии",
   "description": "PeaNUT - это веб-система мониторинга ИБП, специально разработанная для мониторинга источников бесперебойного питания (ИБП). Она предоставляет удобный интерфейс для мониторинга статуса ИБП, срока службы батареи и уведомлений об отключении электроэнергии, чтобы обеспечить постоянную защиту ваших систем.\n\n**Ключевые Особенности:**\n- Мониторинг и контроль статуса ИБП в реальном времени\n- Мониторинг срока службы батареи и уровня заряда\n- Автоматические уведомления об отключении электроэнергии через email/webhook\n- Запись исторических данных и создание отчетов\n- Поддержка различных производителей и моделей ИБП\n- Адаптивный веб-интерфейс, дружественный к мобильным устройствам, для удаленного доступа\n- Настраиваемые пороги предупреждений и оповещения\n- Развертывание на основе Docker для простой установки\n\n**Узнать Больше:**\n- [Репозиторий GitHub PeaNUT](https://github.com/brandawg93/peanut)\n",
+  "release_note": "- v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.\n- WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.\n- The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.",
   "tips": {
     "before_install": "Параметры службы UPS для ZimaOS приведены ниже:\n| Адрес сервера | Порт | Имя пользователя | Пароль |\n|---------------|------|------------------|--------|\n| ZimaOS IP     | `3493` | `monuser` | `secret` |\n"
   }

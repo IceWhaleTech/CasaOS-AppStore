@@ -1,9 +1,9 @@
 {
   "id": "org.icewhale.peanut",
   "title": "PeaNUT",
-  "release_note": "- v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.\n- WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.\n- The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.",
   "tagline": "UPS overvåking og strømbrudd varslingssystem",
   "description": "PeaNUT er et web-basert UPS overvåkingssystem spesifikt designet for overvåking av Unntatt Strømforsyning (UPS). Det gir et brukervennlig grensesnitt for overvåking av UPS-status, batterilevetid og strømbruddsvarsler for å sikre at systemene dine alltid er beskyttet.\n\n**Nøkkelegenskaper:**\n- Sanntids overvåking og kontroll av UPS-status\n- Overvåking av batterilevetid og ladningsnivå\n- Automatiske strømbruddsvarsler via e-post/webhook\n- Historisk datalogging og rapportering\n- Støtte for ulike UPS-produsenter og modeller\n- Mobilvennlig responsivt web-grensesnitt for fjerntilgang\n- Konfigurerbare varslingsterskler og alarmer\n- Docker-basert distribusjon for enkel installasjon\n\n**Lær Mer:**\n- [PeaNUT GitHub Repository](https://github.com/brandawg93/peanut)\n",
+  "release_note": "- v6.0.0 enables authentication by default and redirects first boot to setup when no credentials are configured.\n- WEB_USERNAME and WEB_PASSWORD are now bootstrap-only, and credentials persist in /config/auth.yaml.\n- The brandawg93/peanut:6.0.0 Docker image tag was published on 2026-05-02.",
   "tips": {
     "before_install": "UPS-tjenesteparametrene for ZimaOS er som følger:\n| Serveradresse | Port | Brukernavn | Passord |\n|---------------|------|------------|---------|\n| ZimaOS IP     | `3493` | `monuser` | `secret` |\n"
   }
