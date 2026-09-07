@@ -1,0 +1,325 @@
+name: popcornn
+services:
+  client:
+    image: bobdivx/popcorn-frontend:1.3.56
+    container_name: client
+    depends_on:
+      server:
+        condition: service_started
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    environment:
+      BACKEND_URL: http://server:3000
+      HOST: 0.0.0.0
+      NODE_ENV: production
+      PORT: 80
+      PUBLIC_BACKEND_URL: ${PUBLIC_BACKEND_URL:-}
+      PUBLIC_CLIENT_URL: ${PUBLIC_CLIENT_URL:-}
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 1m
+    ports:
+      - target: 80
+        published: "4325"
+        protocol: tcp
+    networks:
+      - popcornn
+    privileged: false
+    x-casaos:
+      envs:
+        - container: PUBLIC_BACKEND_URL
+          description:
+            en_US: Backend URL as seen by the browser (example http://YOUR_NAS_IP:3000). Leave empty if you open the UI on the same ZimaOS host.
+            fr_FR: URL du backend vue par le navigateur (exemple http://IP_DU_NAS:3000). Laisser vide si l'interface est ouverte sur le même hôte ZimaOS.
+            zh_CN: 浏览器访问后端的 URL（例如 http://NAS_IP:3000）。若在同一台 ZimaOS 主机上打开界面，可留空。
+        - container: PUBLIC_CLIENT_URL
+          description:
+            en_US: Optional public URL of the Popcornn web UI, used for generated links.
+            fr_FR: URL publique optionnelle de l'interface Popcornn, utilisée pour les liens générés.
+            zh_CN: Popcornn 网页界面的可选公开 URL，用于生成链接。
+        - container: TZ
+          description:
+            en_US: Time zone
+            fr_FR: Fuseau horaire
+            zh_CN: 时区
+        - container: PUID
+          description:
+            en_US: Run as user ID
+            fr_FR: Identifiant utilisateur
+            zh_CN: 运行用户 ID
+        - container: PGID
+          description:
+            en_US: Run as group ID
+            fr_FR: Identifiant de groupe
+            zh_CN: 运行组 ID
+      ports:
+        - container: "80"
+          description:
+            en_US: Web UI HTTP port
+            fr_FR: Port HTTP de l'interface
+            zh_CN: Web 界面 HTTP 端口
+
+  server:
+    image: bobdivx/popcorn-backend:1.2.51
+    container_name: server
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    environment:
+      API_USERNAME: admin
+      API_PASSWORD: popcorn_password_secure
+      DOWNLOAD_DIR: /app/downloads
+      FLARESOLVERR_URL: ${FLARESOLVERR_URL:-http://flaresolverr:8191}
+      LIBRQBIT_LISTEN_PORT: 4240
+      LIBRQBIT_UPNP: "1"
+      LOG_LEVEL: info
+      PGID: $PGID
+      PUID: $PUID
+      RUN_AS_ROOT: ${RUN_AS_ROOT:-1}
+      RUST_LOG: info
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 3000
+      TZ: $TZ
+      TX_ALT: ${TX_ALT:-0}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:3000/api/client/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 2m
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+      - target: 4240
+        published: "4240"
+        protocol: tcp
+      - target: 4240
+        published: "4240"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/.data
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/$AppID/downloads
+        target: /app/downloads
+        bind:
+          create_host_path: true
+    networks:
+      - popcornn
+    privileged: false
+    x-casaos:
+      envs:
+        - container: API_USERNAME
+          description:
+            en_US: Local backend administrator username.
+            fr_FR: Nom d'utilisateur administrateur du backend local.
+            zh_CN: 本地后端管理员用户名。
+        - container: API_PASSWORD
+          description:
+            en_US: Local backend administrator password. Change it after installation.
+            fr_FR: Mot de passe administrateur du backend local. À modifier après l'installation.
+            zh_CN: 本地后端管理员密码。安装后请修改。
+        - container: FLARESOLVERR_URL
+          description:
+            en_US: FlareSolverr URL for Cloudflare-protected indexers. Keep the default to use the bundled service.
+            fr_FR: URL FlareSolverr pour les indexeurs protégés par Cloudflare. Garder la valeur par défaut pour le service inclus.
+            zh_CN: 用于受 Cloudflare 保护索引器的 FlareSolverr URL。保留默认值即可使用内置服务。
+        - container: RUN_AS_ROOT
+          description:
+            en_US: 1 = run the backend as root inside the container (recommended on ZimaOS). 0 = run as PUID:PGID.
+            fr_FR: 1 = lancer le backend en root dans le conteneur (recommandé sur ZimaOS). 0 = lancer avec PUID:PGID.
+            zh_CN: 1 = 在容器内以 root 运行后端（ZimaOS 推荐）。0 = 使用 PUID:PGID 运行。
+        - container: TX_ALT
+          description:
+            en_US: Alternative torrent engine mode. Keep 0 unless instructed by support.
+            fr_FR: Mode moteur torrent alternatif. Laisser à 0 sauf indication du support.
+            zh_CN: 备用 torrent 引擎模式。除非支持人员要求，否则保持 0。
+      ports:
+        - container: "3000"
+          description:
+            en_US: Backend API port
+            fr_FR: Port de l'API backend
+            zh_CN: 后端 API 端口
+        - container: "4240"
+          description:
+            en_US: BitTorrent listen port (TCP and UDP). Forward this port on your router for incoming peers.
+            fr_FR: Port d'écoute BitTorrent (TCP et UDP). Redirigez-le sur le routeur pour les pairs entrants.
+            zh_CN: BitTorrent 监听端口（TCP 和 UDP）。请在路由器上转发此端口以便接收入站连接。
+      volumes:
+        - container: /app/.data
+          description:
+            en_US: Database and configuration directory
+            fr_FR: Répertoire de base de données et de configuration
+            zh_CN: 数据库和配置目录
+        - container: /app/downloads
+          description:
+            en_US: Downloads, media library and transcoding cache
+            fr_FR: Téléchargements, médiathèque et cache de transcodage
+            zh_CN: 下载、媒体库和转码缓存目录
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:v3.4.6
+    container_name: flaresolverr
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    environment:
+      LOG_LEVEL: info
+      TZ: $TZ
+    networks:
+      - popcornn
+    privileged: false
+
+networks:
+  popcornn:
+    driver: bridge
+
+x-casaos:
+  id: io.github.bobdivx.popcornn
+  architectures:
+    - amd64
+  main: client
+  author: bobdivx
+  developer: Popcornn
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Popcornn/screenshot-3.png
+  title:
+    en_US: Popcornn
+    fr_FR: Popcornn
+    zh_CN: Popcornn
+  tagline:
+    en_US: Self-hosted BitTorrent manager with streaming and HLS transcoding
+    fr_FR: Gestionnaire BitTorrent auto-hébergé avec streaming et transcodage HLS
+    zh_CN: 支持在线播放和 HLS 转码的自托管 BitTorrent 管理器
+  description:
+    en_US: |
+      Popcornn is a free, self-hosted BitTorrent manager for ZimaOS. It combines a Rust backend and a modern web UI to search torrents, manage downloads, organise a media library and stream content with built-in HLS transcoding.
+
+      **Key features**
+      - Search and download torrents from configured indexers
+      - Stream media from the browser with HLS transcoding
+      - Manage downloads, media paths, indexers, requests and sync settings
+      - Bundled FlareSolverr for Cloudflare-protected indexers
+      - No paid subscription; Popcornn runs on your own NAS
+
+      **Requirements**
+      - x86_64 / amd64 (current backend image is linux/amd64)
+      - Recommended 2 GB RAM and enough disk for downloads
+
+      **Learn more**
+      - [Popcornn website](https://popcornn.app)
+      - [Backend GitHub](https://github.com/bobdivx/popcorn-server)
+      - [Client GitHub](https://github.com/bobdivx/popcorn-client)
+    fr_FR: |
+      Popcornn est un gestionnaire BitTorrent gratuit et auto-hébergé pour ZimaOS. Il combine un backend Rust et une interface web moderne pour rechercher des torrents, gérer les téléchargements, organiser une médiathèque et streamer avec un transcodage HLS intégré.
+
+      **Fonctionnalités**
+      - Recherche et téléchargement depuis les indexeurs configurés
+      - Lecture dans le navigateur avec transcodage HLS
+      - Gestion des téléchargements, chemins média, indexeurs, demandes et synchronisation
+      - FlareSolverr inclus pour les indexeurs protégés par Cloudflare
+      - Aucun abonnement payant ; Popcornn tourne sur votre NAS
+
+      **Prérequis**
+      - x86_64 / amd64 (l'image backend actuelle est linux/amd64)
+      - 2 Go de RAM recommandés et de l'espace disque pour les téléchargements
+
+      **En savoir plus**
+      - [Site Popcornn](https://popcornn.app)
+      - [Backend GitHub](https://github.com/bobdivx/popcorn-server)
+      - [Client GitHub](https://github.com/bobdivx/popcorn-client)
+    zh_CN: |
+      Popcornn 是面向 ZimaOS 的免费自托管 BitTorrent 管理器。它将 Rust 后端与现代 Web 界面结合，可搜索 torrent、管理下载、整理媒体库，并通过内置 HLS 转码进行在线播放。
+
+      **主要功能**
+      - 从已配置的索引器搜索和下载 torrent
+      - 通过浏览器直接播放媒体，支持 HLS 转码
+      - 管理下载、媒体路径、索引器、请求和同步设置
+      - 内置 FlareSolverr，用于受 Cloudflare 保护的索引器
+      - 不需要付费订阅，运行在您自己的 NAS 上
+
+      **要求**
+      - x86_64 / amd64（当前后端镜像为 linux/amd64）
+      - 建议 2 GB 内存，并预留足够下载空间
+
+      **了解更多**
+      - [Popcornn 官网](https://popcornn.app)
+      - [后端 GitHub](https://github.com/bobdivx/popcorn-server)
+      - [客户端 GitHub](https://github.com/bobdivx/popcorn-client)
+  tips:
+    before_install:
+      en_US: |
+        **Before you click Install**
+
+        1. Open the Web UI on port **4325**.
+        2. If the setup wizard asks for the backend URL, use `http://YOUR_NAS_IP:3000`.
+        3. Default local API login is `admin` / `popcorn_password_secure`. Change it after install if you expose the service outside your LAN.
+        4. Downloads are stored in `/DATA/AppData/$AppID/downloads`.
+        5. Forward TCP/UDP **4240** on your router for incoming BitTorrent peers.
+        6. Current package is **amd64 only**. ARM devices cannot run the backend image yet.
+        7. FlareSolverr is bundled. Leave **FLARESOLVERR_URL** on the default unless you use an external instance.
+      fr_FR: |
+        **Avant d'installer**
+
+        1. Ouvrez l'interface sur le port **4325**.
+        2. Si l'assistant demande l'URL du backend, utilisez `http://IP_DU_NAS:3000`.
+        3. Identifiants API locaux par défaut : `admin` / `popcorn_password_secure`. Changez-les après l'installation si vous exposez le service hors du LAN.
+        4. Les téléchargements sont dans `/DATA/AppData/$AppID/downloads`.
+        5. Redirigez le port TCP/UDP **4240** sur le routeur pour les pairs BitTorrent entrants.
+        6. Paquet **amd64 uniquement**. Les NAS ARM ne sont pas supportés pour le moment.
+        7. FlareSolverr est inclus. Laissez **FLARESOLVERR_URL** par défaut sauf instance externe.
+      zh_CN: |
+        **安装前请阅读**
+
+        1. 在 **4325** 端口打开 Web 界面。
+        2. 如果安装向导要求填写后端 URL，请使用 `http://NAS_IP:3000`。
+        3. 默认本地 API 账号为 `admin` / `popcorn_password_secure`。若暴露到局域网外，请安装后修改。
+        4. 下载文件保存在 `/DATA/AppData/$AppID/downloads`。
+        5. 请在路由器上转发 TCP/UDP **4240** 以便接收 BitTorrent 入站连接。
+        6. 当前软件包仅支持 **amd64**。ARM 设备暂不可用。
+        7. 已内置 FlareSolverr。除非使用外部实例，否则保持 **FLARESOLVERR_URL** 默认值。
+  index: /
+  port_map: "4325"
+  scheme: http
+  version: "1.2.51"
+  update_at: "2026-08-21"
+  release_notes:
+    en_US: |-
+      - First ZimaOS App Store v2 package of Popcornn.
+      - Pins frontend 1.3.56, backend 1.2.51 and FlareSolverr v3.4.6.
+      - Adds required x-casaos.id, version, and store metadata for the v2 catalog.
+    fr_FR: |-
+      - Premier paquet App Store ZimaOS v2 de Popcornn.
+      - Images figées : frontend 1.3.56, backend 1.2.51 et FlareSolverr v3.4.6.
+      - Ajoute x-casaos.id, version et métadonnées requises par le catalogue v2.
+    zh_CN: |-
+      - Popcornn 的首个 ZimaOS App Store v2 软件包。
+      - 固定镜像：frontend 1.3.56、backend 1.2.51、FlareSolverr v3.4.6。
+      - 补充 v2 目录所需的 x-casaos.id、version 与元数据。
+  website: "https://popcornn.app"
+  repo: "https://github.com/bobdivx/popcorn-server"
+  support: "https://github.com/bobdivx/popcorn-server/issues"
+  docs: "https://popcornn.app"
+  store_app_id: popcornn
