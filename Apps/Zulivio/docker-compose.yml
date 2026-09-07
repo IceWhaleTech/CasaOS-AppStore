@@ -23,7 +23,7 @@ services:
       - zulivio
 
   backend:
-    image: ghcr.io/raktim94/zulivio-backend:1.9.0
+    image: ghcr.io/raktim94/zulivio-backend:1.10.0
     container_name: zulivio-backend
     hostname: zulivio-backend
     restart: unless-stopped
@@ -129,7 +129,7 @@ services:
               (you'd just need to re-enter them from Settings).
 
   web:
-    image: ghcr.io/raktim94/zulivio-web:1.9.0
+    image: ghcr.io/raktim94/zulivio-web:1.10.0
     container_name: zulivio-web
     hostname: zulivio-web
     restart: unless-stopped
@@ -207,10 +207,24 @@ x-casaos:
   index: /
   scheme: http
   port_map: "2996"
-  version: "1.9.0"
-  update_at: "2026-08-30"
+  version: "1.10.0"
+  update_at: "2026-09-07"
   release_notes:
     en_US: |-
+      1.10.0: the Leads list can now select every lead matching your current
+      filters, not just what's checked on the current page, and delete them
+      all in one action. Data Hub adds a type-to-confirm "delete all leads"
+      danger zone for clearing test/demo data in one shot.
+
+      1.9.1: fixed lead CSV import not recognizing a "Public Phone" column
+      (common in scraped/lead-gen exports) — those numbers used to land
+      silently in custom fields instead of the lead's phone field. Leads can
+      now be bulk-disqualified with a loss reason (the existing "Move to
+      stage" bulk action), and a new "Delete permanently" bulk action
+      removes selected leads outright for when the rows themselves need to
+      go, e.g. a bad import — bulk-disqualify into a loss stage stays the
+      recommended way to clear a batch, since it's reversible.
+
       1.9.0: added an Attendance calendar showing your own present/absent
       days and worked/break time for a month, plus a manager+ "Team
       attendance" table (days present, worked/break time, calls) for
