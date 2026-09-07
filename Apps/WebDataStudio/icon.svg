@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"
+     role="img" aria-label="WebDataStudio">
+  <defs>
+    <linearGradient id="cyl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2b9bff"/>
+      <stop offset="100%" stop-color="#5b4bff"/>
+    </linearGradient>
+    <linearGradient id="word" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2b8cff"/>
+      <stop offset="50%" stop-color="#22d3c5"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="104" fill="#141a2e"/>
+
+  <!-- database: three stacked discs, the classic cylinder -->
+  <g transform="translate(52,78)">
+    <ellipse cx="82" cy="26" rx="82" ry="26" fill="url(#cyl)"/>
+    <path d="M0 26v52a82 26 0 0 0 164 0V26a82 26 0 0 1-164 0z" fill="url(#cyl)"/>
+    <path d="M0 92v52a82 26 0 0 0 164 0V92a82 26 0 0 1-164 0z" fill="url(#cyl)"/>
+    <path d="M0 158v52a82 26 0 0 0 164 0v-52a82 26 0 0 1-164 0z" fill="url(#cyl)"/>
+  </g>
+
+  <!-- code window with a query and a result grid under it -->
+  <g transform="translate(238,72)">
+    <rect width="222" height="212" rx="14" fill="#1b2340" stroke="#2c3a63" stroke-width="2"/>
+    <rect width="222" height="30" rx="14" fill="#232c4e"/>
+    <rect y="16" width="222" height="14" fill="#232c4e"/>
+    <circle cx="24" cy="15" r="6" fill="#ef4444"/>
+    <circle cx="46" cy="15" r="6" fill="#f5c451"/>
+    <circle cx="68" cy="15" r="6" fill="#3ecf6b"/>
+
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17">
+      <text x="16" y="62" fill="#22d3c5">SELECT <tspan fill="#e6ecff">*</tspan></text>
+      <text x="16" y="88" fill="#22d3c5">FROM <tspan fill="#e6ecff">users</tspan></text>
+      <text x="16" y="114" fill="#22d3c5">WHERE <tspan fill="#e6ecff">active = </tspan><tspan fill="#c084fc">1;</tspan></text>
+    </g>
+
+    <g fill="#2b3559">
+      <rect x="16" y="130" width="44" height="14" rx="3"/>
+      <rect x="66" y="130" width="44" height="14" rx="3"/>
+      <rect x="116" y="130" width="44" height="14" rx="3" fill="#22d3c5"/>
+      <rect x="166" y="130" width="40" height="14" rx="3" fill="#a855f7"/>
+
+      <rect x="16" y="152" width="44" height="10" rx="2"/>
+      <rect x="66" y="152" width="44" height="10" rx="2"/>
+      <rect x="116" y="152" width="44" height="10" rx="2"/>
+      <rect x="166" y="152" width="40" height="10" rx="2"/>
+
+      <rect x="16" y="168" width="44" height="10" rx="2"/>
+      <rect x="66" y="168" width="44" height="10" rx="2"/>
+      <rect x="116" y="168" width="44" height="10" rx="2"/>
+      <rect x="166" y="168" width="40" height="10" rx="2"/>
+
+      <rect x="16" y="184" width="44" height="10" rx="2"/>
+      <rect x="66" y="184" width="44" height="10" rx="2"/>
+      <rect x="116" y="184" width="44" height="10" rx="2"/>
+      <rect x="166" y="184" width="40" height="10" rx="2"/>
+    </g>
+  </g>
+
+  <text x="256" y="440" text-anchor="middle" fill="url(#word)"
+        font-family="Segoe UI, Inter, system-ui, sans-serif" font-size="150" font-weight="800">WDS</text>
+</svg>
