@@ -1,0 +1,393 @@
+name: devforge
+services:
+  proxy:
+    container_name: devforge-proxy
+    image: nginx:1.27.5-alpine
+    depends_on:
+      api:
+        condition: service_started
+      web:
+        condition: service_started
+      realtime:
+        condition: service_started
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - wget -qO /etc/nginx/conf.d/default.conf https://cdn.jsdelivr.net/gh/bobdivx/devforge@main/docker/devforge-proxy/nginx.conf && exec nginx -g 'daemon off;'
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    ports:
+      - target: 80
+        published: "8080"
+        protocol: tcp
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    networks:
+      - devforge
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_US: WebUI HTTP port
+            fr_FR: Port HTTP de l'interface
+            zh_CN: Web 界面 HTTP 端口
+    privileged: false
+
+  web:
+    container_name: devforge-web
+    image: bobdivx/devforge:web-4.1.2
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    networks:
+      - devforge
+    privileged: false
+
+  api:
+    container_name: devforge-api
+    image: bobdivx/devforge:4.1.2
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      realtime:
+        condition: service_started
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    environment:
+      - APP_ENV=production
+      - APP_ID=1
+      - APP_KEY=base64:RGV2Rm9yZ2VaaW1hT1NTdG9yZUFwcEtleTMyYnl0ZSE=
+      - APP_NAME=DevForge
+      - APP_URL=http://localhost:8080
+      - BASE_CONFIG_PATH=/DATA/AppData/$AppID/data
+      - DB_CONNECTION=pgsql
+      - DB_DATABASE=devforge
+      - DB_HOST=db
+      - DB_PASSWORD=devforge
+      - DB_PORT=5432
+      - DB_USERNAME=devforge
+      - DEVFORGE_AGENTS_ENABLED=true
+      - DEVFORGE_ENABLED=true
+      - DEVFORGE_MCP_ENABLED=true
+      - DEVFORGE_DATA_DIR=/DATA/AppData/$AppID/data
+      - HELPER_IMAGE=bobdivx/devforge
+      - PUSHER_APP_ID=devforge
+      - PUSHER_APP_KEY=devforge
+      - PUSHER_APP_SECRET=devforge
+      - PUSHER_BACKEND_HOST=realtime
+      - PUSHER_BACKEND_PORT=6001
+      - PUSHER_PORT=6001
+      - PUSHER_SCHEME=http
+      - REDIS_HOST=redis
+      - SESSION_SECURE_COOKIE=false
+      - TZ=$TZ
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/$AppID/ssh
+        target: /var/www/html/storage/app/ssh
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/$AppID/applications
+        target: /var/www/html/storage/app/applications
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/$AppID/databases
+        target: /var/www/html/storage/app/databases
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/$AppID/services
+        target: /var/www/html/storage/app/services
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/$AppID/backups
+        target: /var/www/html/storage/app/backups
+        bind:
+          create_host_path: true
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/api/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    networks:
+      - devforge
+    x-casaos:
+      envs:
+        - container: APP_URL
+          description:
+            en_US: Public URL used by the browser (set to http://YOUR_NAS_IP:8080 before install).
+            fr_FR: URL publique utilisée par le navigateur (http://IP_DU_NAS:8080 avant l'installation).
+            zh_CN: 浏览器访问地址（安装前改为 http://NAS_IP:8080）。
+        - container: APP_KEY
+          description:
+            en_US: Laravel application key. Generate a unique value for production use.
+            fr_FR: Clé d'application Laravel. Générez une valeur unique en production.
+            zh_CN: Laravel 应用密钥。生产环境请更换为唯一值。
+        - container: DB_PASSWORD
+          description:
+            en_US: PostgreSQL password (must match POSTGRES_PASSWORD on the db service).
+            fr_FR: Mot de passe PostgreSQL (doit correspondre à POSTGRES_PASSWORD du service db).
+            zh_CN: PostgreSQL 密码（需与 db 服务的 POSTGRES_PASSWORD 一致）。
+      volumes:
+        - container: /var/run/docker.sock
+          description:
+            en_US: Docker socket — required so DevForge can deploy apps on this NAS.
+            fr_FR: Socket Docker — requis pour déployer des applications sur ce NAS.
+            zh_CN: Docker socket — DevForge 需要它才能在本机部署应用。
+        - container: /data
+          description:
+            en_US: DevForge data directory.
+            fr_FR: Répertoire de données DevForge.
+            zh_CN: DevForge 数据目录。
+    privileged: false
+
+  db:
+    container_name: devforge-db
+    image: postgres:15.14-alpine
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    environment:
+      - POSTGRES_DB=devforge
+      - POSTGRES_PASSWORD=devforge
+      - POSTGRES_USER=devforge
+      - TZ=$TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql/data
+        bind:
+          create_host_path: true
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U devforge -d devforge"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks:
+      - devforge
+    x-casaos:
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_US: PostgreSQL data directory.
+            fr_FR: Données PostgreSQL.
+            zh_CN: PostgreSQL 数据目录。
+    privileged: false
+
+  realtime:
+    container_name: devforge-realtime
+    image: bobdivx/devforge:realtime-4.1.2
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    environment:
+      - APP_NAME=DevForge
+      - SOKETI_DEBUG=false
+      - SOKETI_DEFAULT_APP_ID=devforge
+      - SOKETI_DEFAULT_APP_KEY=devforge
+      - SOKETI_DEFAULT_APP_SECRET=devforge
+      - SOKETI_HOST=0.0.0.0
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/ssh
+        target: /var/www/html/storage/app/ssh
+        bind:
+          create_host_path: true
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:6001/ready || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    networks:
+      - devforge
+    privileged: false
+
+  redis:
+    container_name: devforge-redis
+    image: redis:7.4.5-alpine
+    command:
+      - redis-server
+      - --save
+      - "20"
+      - "1"
+      - --loglevel
+      - warning
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/redis
+        target: /data
+        bind:
+          create_host_path: true
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks:
+      - devforge
+    privileged: false
+
+networks:
+  devforge:
+    driver: bridge
+
+x-casaos:
+  id: io.github.bobdivx.devforge
+  architectures:
+    - amd64
+  main: proxy
+  author: bobdivx
+  developer: DevForge
+  category: Developer
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DevForge/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DevForge/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DevForge/screenshot-1.png
+  title:
+    en_US: DevForge
+    fr_FR: DevForge
+    zh_CN: DevForge
+  tagline:
+    en_US: Self-hosted PaaS for Docker apps, servers, and AI agents
+    fr_FR: PaaS auto-hébergé pour apps Docker, serveurs et agents IA
+    zh_CN: 自托管 PaaS，用于 Docker 应用、服务器和 AI 代理
+  description:
+    en_US: |
+      DevForge is a self-hosted PaaS (alternative to Heroku / Netlify / Coolify) for ZimaOS.
+      Deploy Git or Docker apps, manage servers over SSH, run databases, and use built-in AI agents.
+
+      **Key features**
+      - One-click style deployments from Git repositories or Docker images
+      - Reverse proxy, HTTPS-ready workflows, and live deployment logs
+      - Built-in AI agents for operations on your own NAS
+      - PostgreSQL, Redis, and realtime (WebSocket) included in this stack
+
+      **Requirements**
+      - x86_64 / amd64 only (current Docker images are linux/amd64)
+      - Docker socket access (this app deploys containers on the NAS)
+      - Recommended 4 GB RAM and 20 GB free disk
+
+      After install, open the Web UI and create the first account — it becomes the administrator.
+    fr_FR: |
+      DevForge est un PaaS auto-hébergé (alternative à Heroku / Netlify / Coolify) pour ZimaOS.
+      Déployez des apps Git ou Docker, gérez des serveurs en SSH, lancez des bases, et utilisez des agents IA.
+
+      **Fonctionnalités**
+      - Déploiements depuis Git ou images Docker
+      - Proxy inverse, journaux de déploiement en direct
+      - Agents IA intégrés pour opérer sur votre NAS
+      - PostgreSQL, Redis et temps réel (WebSocket) inclus
+
+      **Prérequis**
+      - amd64 uniquement (images linux/amd64)
+      - Accès au socket Docker (l'app déploie des conteneurs sur le NAS)
+      - 4 Go de RAM et 20 Go d'espace disque recommandés
+
+      Après l'installation, ouvrez l'interface et créez le premier compte — il devient administrateur.
+    zh_CN: |
+      DevForge 是面向 ZimaOS 的自托管 PaaS（Heroku / Netlify / Coolify 的替代方案）。
+      可从 Git 或 Docker 镜像部署应用，通过 SSH 管理服务器，运行数据库，并使用内置 AI 代理。
+
+      **主要功能**
+      - 从 Git 仓库或 Docker 镜像部署
+      - 反向代理与实时部署日志
+      - 内置 AI 代理，可在 NAS 上执行运维
+      - 本套件包含 PostgreSQL、Redis 和实时 WebSocket
+
+      **要求**
+      - 仅支持 amd64（当前镜像为 linux/amd64）
+      - 需要 Docker socket（用于在 NAS 上部署容器）
+      - 建议 4 GB 内存、20 GB 可用磁盘
+
+      安装后打开 Web 界面并注册第一个账号，该账号将成为管理员。
+  tips:
+    before_install:
+      en_US: |
+        **Before you click Install**
+
+        1. Set `APP_URL` to `http://YOUR_NAS_IP:8080` (or the port you publish). Login redirects break if this stays `localhost`.
+        2. Default database password is `devforge`. Change `DB_PASSWORD` **and** `POSTGRES_PASSWORD` together if you customize it.
+        3. This app mounts `/var/run/docker.sock` so it can deploy containers on this NAS (same model as Portainer).
+        4. Images are **amd64 only**. ARM devices cannot run this package yet.
+        5. Keep at least **20 GB** free: builds and application images live on the Docker disk.
+        6. First registered user is the administrator.
+        7. HTTP is used by default (`SESSION_SECURE_COOKIE=false`). Put a TLS proxy in front if you expose it beyond your LAN.
+      fr_FR: |
+        **Avant d'installer**
+
+        1. Définissez `APP_URL` sur `http://IP_DU_NAS:8080` (ou le port publié). Les redirections de login cassent si la valeur reste `localhost`.
+        2. Mot de passe base par défaut : `devforge`. Si vous le changez, modifiez `DB_PASSWORD` **et** `POSTGRES_PASSWORD`.
+        3. L'app monte `/var/run/docker.sock` pour déployer des conteneurs sur ce NAS (comme Portainer).
+        4. Images **amd64 uniquement**. Les NAS ARM ne sont pas supportés pour le moment.
+        5. Gardez au moins **20 Go** libres : les builds et images d'apps vivent sur le disque Docker.
+        6. Le premier compte créé est administrateur.
+        7. HTTP par défaut (`SESSION_SECURE_COOKIE=false`). Ajoutez un proxy TLS si vous l'exposez hors du LAN.
+      zh_CN: |
+        **安装前请阅读**
+
+        1. 将 `APP_URL` 改为 `http://NAS_IP:8080`（或你映射的端口）。若仍为 `localhost`，登录跳转会失败。
+        2. 默认数据库密码为 `devforge`。如需修改，请同时更改 `DB_PASSWORD` 和 `POSTGRES_PASSWORD`。
+        3. 本应用会挂载 `/var/run/docker.sock`，以便在 NAS 上部署容器（与 Portainer 相同）。
+        4. 镜像仅支持 **amd64**。ARM 设备暂不可用。
+        5. 请保留至少 **20 GB** 可用空间：构建和应用镜像会占用 Docker 磁盘。
+        6. 第一个注册用户将成为管理员。
+        7. 默认使用 HTTP（`SESSION_SECURE_COOKIE=false`）。若暴露到公网，请在前面加 TLS 代理。
+  index: /
+  port_map: "8080"
+  scheme: http
+  version: "4.1.2"
+  update_at: "2026-08-16"
+  release_notes:
+    en_US: |-
+      - First ZimaOS App Store package of DevForge 4.1.2.
+      - Stack: API, web SPA, realtime, PostgreSQL 15, Redis 7, nginx gateway.
+      - amd64 images from Docker Hub (`bobdivx/devforge`).
+    fr_FR: |-
+      - Premier paquet App Store ZimaOS de DevForge 4.1.2.
+      - Pile : API, SPA web, realtime, PostgreSQL 15, Redis 7, passerelle nginx.
+      - Images amd64 depuis Docker Hub (`bobdivx/devforge`).
+    zh_CN: |-
+      - DevForge 4.1.2 的首个 ZimaOS App Store 软件包。
+      - 包含 API、Web SPA、realtime、PostgreSQL 15、Redis 7 与 nginx 网关。
+      - amd64 镜像来自 Docker Hub（`bobdivx/devforge`）。
+  website: "https://github.com/bobdivx/devforge"
+  repo: "https://github.com/bobdivx/devforge"
+  support: "https://github.com/bobdivx/devforge/issues"
+  docs: "https://github.com/bobdivx/devforge"
