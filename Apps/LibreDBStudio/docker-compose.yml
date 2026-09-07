@@ -1,7 +1,7 @@
 name: libredb-studio
 services:
   libredb-studio:
-    image: libredb/libredb-studio:0.13.7
+    image: libredb/libredb-studio:0.14.1
     container_name: libredb-studio
     restart: unless-stopped
     ports:
@@ -99,10 +99,10 @@ x-casaos:
   index: /
   scheme: http
   port_map: "3016"
-  version: "0.13.7"
+  version: "0.14.1"
   update_at: "2026-09-06"
   release_notes:
-    en_US: Updated to LibreDB Studio 0.13.7 and switched to the official Docker Hub image.
+    en_US: Updated to LibreDB Studio 0.14.1.
   website: https://libredb.org
   repo: https://github.com/libredb/libredb-studio
   support: https://github.com/libredb/libredb-studio/issues
