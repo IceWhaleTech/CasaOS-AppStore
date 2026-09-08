@@ -25,7 +25,7 @@ services:
       - kinetirx_net
 
   backend:
-    image: ghcr.io/raktim94/kinetirx-backend:1.6.8
+    image: ghcr.io/raktim94/kinetirx-backend:1.6.9
     container_name: kinetirx-backend
     hostname: kinetirx-backend
     restart: unless-stopped
@@ -67,13 +67,13 @@ services:
             en_US: Optional. Leave blank to create the admin account from the app's own first-run screen instead. If set, it seeds the Master Admin account (id EMP-ADMIN-1) on first boot — change it immediately after first login from Employee Control, there is no password-reset flow.
         - container: GEMINI_API_KEY
           description:
-            en_US: Optional — enables AI-powered OCR bill scanning and the clinical AI assistant. Leave blank to run those features in offline/fallback mode.
+            en_US: Optional, zero-config path to AI-powered OCR bill scanning and the clinical AI assistant. Leave blank to run those features in offline/fallback mode, or set BACKUP_ENCRYPTION_KEY below and configure any OpenAI-compatible provider from Settings instead (takes priority over this).
         - container: BACKUP_ENCRYPTION_KEY
           description:
-            en_US: "Optional — required to use Settings -> S3 Offsite Backup (your own S3-compatible bucket, e.g. R2/MinIO/Backblaze). Generate one with: openssl rand -hex 32. Leave blank if you don't need automatic offsite backups."
+            en_US: "Optional — required to save any secret from the app's own Settings screen: S3 Offsite Backup credentials, or an AI provider API key (Settings -> AI OCR / Vision Model) as an alternative to GEMINI_API_KEY above. Generate one with: openssl rand -hex 32. Leave blank if you don't need either."
 
   frontend:
-    image: ghcr.io/raktim94/kinetirx-frontend:1.6.8
+    image: ghcr.io/raktim94/kinetirx-frontend:1.6.9
     container_name: kinetirx-frontend
     hostname: kinetirx-frontend
     restart: unless-stopped
@@ -145,17 +145,16 @@ x-casaos:
   index: /
   port_map: "3080"
   scheme: http
-  version: "1.6.8"
+  version: "1.6.9"
   update_at: "2026-09-09"
   release_notes:
     en_US: >-
-      1.6.8: More offline-OCR fallback fixes after wider re-testing —
-      rejects a line when no HSN/Batch/ExpDt anchor is found at all
-      (was turning the whole garbled line, or GST-summary footer rows,
-      into fake medicine entries) and recovers a dropped decimal point
-      on MRP/Rate instead of always discarding the row. For consistently
-      accurate results on dense bills, set GEMINI_API_KEY in Settings so
-      scanning uses AI vision instead of on-device OCR. Full history:
+      1.6.9: Added a Settings section ("AI OCR / Vision Model") to
+      configure accurate AI-vision bill scanning without touching server
+      env vars — any OpenAI-compatible endpoint (Gemini's OpenAI-compat
+      endpoint, OpenAI, OpenRouter, Groq, local Ollama, etc.), key
+      encrypted at rest, takes priority over the legacy GEMINI_API_KEY env
+      var. Full history:
       https://github.com/Raktim94/KinetiRx/blob/main/CHANGELOG.md
   website: "https://kinetirx.nodedr.com"
   repo: "https://github.com/Raktim94/KinetiRx"
