@@ -1,88 +1,72 @@
 # Contributing to ZimaOS AppStore
 
-This guide is for contributors submitting changes to **this repository**.
+This file is the repository-level contribution entry for **this repository**.
 
-If you are building your own external store, use:
-- [docs/guides/third-party-store-guide.md](docs/guides/third-party-store-guide.md)
+The source tree currently contains both:
 
-## 1. Submission Process
+- v2 app store source and documentation
+- legacy v1 compatibility output used by older clients and workflows
+
+## Where To Read The Rules
+
+For **v2 / new app store** contribution rules, use the docs site content under `docs/`:
+
+- [Quick Start](docs/quick-start/overview.md)
+- [Protocol Reference](docs/specs/overview.md)
+- [CI/CD Overview](docs/cicd/overview.md)
+- [Migration Guide](docs/migration/overview.md)
+
+If you are building your own external store, start here:
+
+- [Third-party Store Guide](docs/guides/third-party-store-guide.md)
+
+## What This File Covers
+
+This file only covers the repository contribution flow:
 
 1. Fork this repository and work in your own branch.
-2. Test the app on a local ZimaOS environment.
-3. Open a Pull Request and include:
-   - new app or update
+2. Make and test your changes locally.
+3. Open a Pull Request that explains:
+   - whether this is a new app, an update, or a docs change
    - what changed
-   - test evidence (install success + WebUI reachable)
+   - how you validated it
 
-## 2. Required App Files
+For app metadata fields, file layout, localization, assets, and generated `dist/`
+output behavior, treat the v2 docs as the source of truth instead of duplicating
+those rules here.
 
-Each app directory under `Apps/` should include at least:
-- `docker-compose.yml` (or `docker-compose.yaml`)
-- `icon.svg` or `icon.png`
-- at least one screenshot (`screenshot-1.png` / `.jpg`)
+## Local Validation
 
-## 3. Compose Rules (Repo Policy)
-
-- Compose file must be valid YAML.
-- Do not use image tag `latest`; pin explicit versions.
-- Top-level `name` is the app ID and must be unique.
-- `services.<service>.container_name` should usually match service name.
-
-Supported runtime variables include `$PUID`, `$PGID`, `$TZ`, `$AppID`.
-
-## 4. Top-level `x-casaos` Rules
-
-Top-level `x-casaos` should follow this field grouping order:
-
-1. Access entry: `main`, `index`, `port_map`, `scheme`
-2. Display: `title`, `icon`, `thumbnail`, `screenshot_link`, `tagline`, `description`, `tips`
-3. Metadata: `author`, `developer`, `category`, `architectures`
-4. Version: `version`, `update_at`, `release_notes`
-5. Links: `website`, `repo`, `support`, `docs`
-
-Field semantics:
-- `author`: appstore-side maintainer/submitter
-- `developer`: upstream project developer
-
-For full field reference and build output behavior, see:
-- [docs/guides/third-party-store-guide.md](docs/guides/third-party-store-guide.md)
-- [docs/internal-dev-guide.md](docs/internal-dev-guide.md)
-
-## 5. i18n Rules
-
-Locale keys must use `ll_CC` format (e.g. `en_US`, `zh_CN`).
-
-At minimum, include `en_US` for i18n blocks.
-
-## 6. Build/Validation Before PR
-
-Run local build validation before submitting:
+Before opening a PR, run the local build validation flow:
 
 ```bash
-python3 scripts/build_appstore.py \
-  --source . \
-  --output dist \
-  --base-url "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages"
+./scripts/build_dist.sh
 ```
 
+If you need to override the generated public path, you can still set `BASE_URL`
+explicitly before running the script.
+
 Expected result:
-- build succeeds without errors
-- `dist/index.json` generated
-- changed app has updated `dist/apps/<app-id>/docker-compose.yml` and `meta.json`
 
-## 7. CI Notes
+- the build completes without errors
+- `dist/index.json` is generated
+- changed apps produce updated files under `dist/apps/<app-id>/`
 
-Repository CI validates compose and build pipeline automatically on PR.
+## CI Notes
+
+Repository CI validates compose files and the build pipeline automatically on PRs.
 
 Please keep changes compatible with:
+
 - `.github/workflows/validator.yml`
 - `.github/workflows/release.yml`
+- `.github/workflows/release-store.yml`
 
-## 8. Asset Recommendations
+## Legacy v1 Note
 
-For apps intended for recommendation/featured placement:
-- `icon`: transparent background, recommended 256x256 SVG/PNG
-- `thumbnail`: recommended 784x442 (publish pipeline converts to WebP)
-- `screenshot`: recommended 1280x800 (16:10, pipeline converts to WebP)
+This repository still builds the legacy v1 artifact at `dist/store/main.zip` for
+compatibility. That legacy output should not be treated as the primary source of
+contribution rules for the new store.
 
-If you have suggestions for this process, please open an Issue or PR.
+If you have suggestions for the process or documentation, please open an Issue
+or PR.

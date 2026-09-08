@@ -1,0 +1,22 @@
+name: Write Job Summary
+description: Render one or more structured report JSON files into GitHub Actions job summary markdown.
+
+inputs:
+  title:
+    description: Summary title.
+    required: false
+    default: AppStore Workflow Summary
+  report-jsons:
+    description: Newline-separated list of report JSON paths.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Write summary
+      shell: bash
+      run: |
+        set -euo pipefail
+        python3 "${{ github.action_path }}/scripts/write_job_summary.py" \
+          --title "${{ inputs.title }}" \
+          --report-jsons "${{ inputs.report-jsons }}"

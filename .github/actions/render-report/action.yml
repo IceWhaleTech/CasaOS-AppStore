@@ -1,0 +1,34 @@
+name: Render AppStore Report
+description: Render a structured report.json file into a standalone HTML report.
+
+inputs:
+  report-json:
+    description: Path to the input report JSON file.
+    required: true
+  report-html:
+    description: Path to the output HTML file.
+    required: false
+    default: report.html
+  title:
+    description: Optional report title override.
+    required: false
+    default: ""
+
+outputs:
+  report-html:
+    description: Path to the generated HTML report.
+    value: ${{ steps.render.outputs.report-html }}
+
+runs:
+  using: composite
+  steps:
+    - name: Render HTML report
+      id: render
+      shell: bash
+      run: |
+        set -euo pipefail
+        python3 "${{ github.action_path }}/scripts/render_report.py" \
+          --input "${{ inputs.report-json }}" \
+          --output "${{ inputs.report-html }}" \
+          --title "${{ inputs.title }}"
+        echo "report-html=${{ inputs.report-html }}" >> "$GITHUB_OUTPUT"

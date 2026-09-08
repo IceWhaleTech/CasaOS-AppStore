@@ -4,11 +4,13 @@
 
 This repository hosts the source definitions for the official ZimaOS app store.
 
+For third-party store maintainers who want to reuse the official build and publish approach, start with [Official Actions and Workflows](./docs/guides/official-actions-and-workflows.md).
+
 ## Documentation
 
 - [Contributing Guide](./CONTRIBUTING.md)
-- [Documentation Index](./docs/README.md)
 - [Third-party Store Guide](./docs/guides/third-party-store-guide.md)
+- [Official Actions and Workflows](./docs/guides/official-actions-and-workflows.md)
 
 ## Third-party Store List
 
