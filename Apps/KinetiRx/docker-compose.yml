@@ -25,7 +25,7 @@ services:
       - kinetirx_net
 
   backend:
-    image: ghcr.io/raktim94/kinetirx-backend:1.6.10
+    image: ghcr.io/raktim94/kinetirx-backend:1.6.11
     container_name: kinetirx-backend
     hostname: kinetirx-backend
     restart: unless-stopped
@@ -73,7 +73,7 @@ services:
             en_US: "Optional — required to save any secret from the app's own Settings screen: S3 Offsite Backup credentials, or an AI provider API key (Settings -> AI OCR / Vision Model) as an alternative to GEMINI_API_KEY above. Generate one with: openssl rand -hex 32. Leave blank if you don't need either."
 
   frontend:
-    image: ghcr.io/raktim94/kinetirx-frontend:1.6.10
+    image: ghcr.io/raktim94/kinetirx-frontend:1.6.11
     container_name: kinetirx-frontend
     hostname: kinetirx-frontend
     restart: unless-stopped
@@ -145,17 +145,15 @@ x-casaos:
   index: /
   port_map: "3080"
   scheme: http
-  version: "1.6.10"
-  update_at: "2026-09-09"
+  version: "1.6.11"
+  update_at: "2026-09-10"
   release_notes:
     en_US: >-
-      1.6.10: Fixed the AI OCR / Vision Model Settings panel showing a
-      docs-page link too easy to mistake for the Base URL field's value
-      (pasting it broke with a cryptic error) — the panel now shows the
-      real endpoint as copyable text. Also fixed Gemini's OpenAI-compat
-      endpoint wrapping error responses in a JSON array, which broke
-      surfacing its real error message (bad key, wrong model, etc) for
-      any failure, not just the docs-link mistake. Full history:
+      1.6.11: Added a "Copy AI Prompt" button to the Inward OCR tab's Paste
+      Text panel — copies a ready-made extraction prompt for any free AI
+      chat (ChatGPT, Gemini, Claude, Copilot, Meta AI — no API key needed),
+      formatted to match the app's parser exactly, so pasting the AI's
+      reply back in imports straight to stock and distributor. Full history:
       https://github.com/Raktim94/KinetiRx/blob/main/CHANGELOG.md
   website: "https://kinetirx.nodedr.com"
   repo: "https://github.com/Raktim94/KinetiRx"
