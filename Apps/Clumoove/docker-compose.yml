@@ -2,7 +2,7 @@ name: clumoove
 
 services:
   frontend:
-    image: ghcr.io/xxroxxerxx/clumoove-frontend:v0.17.0@sha256:b1f2888596ee0709c45136af227380edfc6a906189801213200afe8e0fb6485a
+    image: ghcr.io/xxroxxerxx/clumoove-frontend:v0.18.0@sha256:74e6cce4f2a2f52937b27b48a0137abd4be40d534556785cb579e0f464ba6888
     container_name: clumoove-frontend
     restart: unless-stopped
     ports:
@@ -23,7 +23,7 @@ services:
             de_DE: WebUI HTTP Port
 
   api-backend:
-    image: ghcr.io/xxroxxerxx/clumoove-api:v0.17.0@sha256:2714d4fb9b59fbd6042236c5b211e9de6208dbd06c5a3c01a52b0eca2f74c1df
+    image: ghcr.io/xxroxxerxx/clumoove-api:v0.18.0@sha256:d9c34a1c6db8c7ffbeb942cffae849796a9c4eab267d8af2a7d1eb75c932b9bc
     container_name: clumoove-api
     restart: unless-stopped
     environment:
@@ -51,7 +51,7 @@ services:
             de_DE: Clumoove Internes Speicherverzeichnis
 
   migration-worker:
-    image: ghcr.io/xxroxxerxx/clumoove-worker:v0.17.0@sha256:7c4e02e9d3051828d451fd7bfe1726e41a14f1cd54c1a483feb5c28c142db46f
+    image: ghcr.io/xxroxxerxx/clumoove-worker:v0.18.0@sha256:76ea62f213b117a66083a1414704fdde3f40216231ce2a69f3a396595c85b405
     container_name: clumoove-worker
     restart: unless-stopped
     command: ["/app/worker"]
@@ -151,13 +151,19 @@ x-casaos:
   port_map: "8380"
   scheme: http
   index: /
-  version: "0.17.0"
-  update_at: "2026-09-03"
+  version: "0.18.0"
+  update_at: "2026-09-09"
   release_notes:
     en_US: |-
-      - Fixes S3 multipart uploads failing with HTTP 500 InternalError during UploadPart on Railway Storage Buckets (Tigris), MinIO, and other S3-compatible providers.
+      - Introduces Cloud File Manager item mutations (rename, server-side copy/move, recursive deletion) and multi-item batch operations.
+      - Adds unified background Transfer Center with live tracking and cross-profile transfers.
+      - Enhances File Manager UI with interactive multi-column sorting, row selection ergonomics, sticky header, and media preview modals.
+      - Fixes HiDrive rename path handling and invalid destination derivation during file operations.
     de_DE: |-
-      - Behebt Fehler bei S3-Multipart-Uploads (HTTP 500 InternalError bei UploadPart) auf Railway Storage Buckets (Tigris), MinIO und weiteren S3-kompatiblen Anbietern.
+      - Führt Cloud-Dateimanager-Mutationen (Umbenennen, serverseitiges Kopieren/Verschieben, rekursives Löschen) und Batch-Operationen für mehrere Elemente ein.
+      - Neuer einheitlicher Hintergrund-Transfer-Manager mit Live-Tracking und profilübergreifenden Übertragungen.
+      - Verbesserte Dateimanager-Oberfläche mit mehrspaltiger Sortierung, optimierter Zeilenauswahl, fixierter Kopfzeile und Medienvorschau.
+      - Behebt Pfadprobleme beim Umbenennen unter HiDrive sowie Zielpfad-Ermittlungen bei Dateioperationen.
   website: "https://clumoove.com"
   repo: "https://github.com/xXRoxXeRXx/clumoove"
   support: "https://github.com/xXRoxXeRXx/clumoove/issues"
