@@ -25,7 +25,7 @@ services:
       - kinetirx_net
 
   backend:
-    image: ghcr.io/raktim94/kinetirx-backend:1.6.11
+    image: ghcr.io/raktim94/kinetirx-backend:1.6.14
     container_name: kinetirx-backend
     hostname: kinetirx-backend
     restart: unless-stopped
@@ -73,7 +73,7 @@ services:
             en_US: "Optional — required to save any secret from the app's own Settings screen: S3 Offsite Backup credentials, or an AI provider API key (Settings -> AI OCR / Vision Model) as an alternative to GEMINI_API_KEY above. Generate one with: openssl rand -hex 32. Leave blank if you don't need either."
 
   frontend:
-    image: ghcr.io/raktim94/kinetirx-frontend:1.6.11
+    image: ghcr.io/raktim94/kinetirx-frontend:1.6.14
     container_name: kinetirx-frontend
     hostname: kinetirx-frontend
     restart: unless-stopped
@@ -145,16 +145,14 @@ x-casaos:
   index: /
   port_map: "3080"
   scheme: http
-  version: "1.6.11"
-  update_at: "2026-09-10"
+  version: "1.6.14"
+  update_at: "2026-09-11"
   release_notes:
     en_US: >-
-      1.6.11: Added a "Copy AI Prompt" button to the Inward OCR tab's Paste
-      Text panel — copies a ready-made extraction prompt for any free AI
-      chat (ChatGPT, Gemini, Claude, Copilot, Meta AI — no API key needed),
-      formatted to match the app's parser exactly, so pasting the AI's
-      reply back in imports straight to stock and distributor. Full history:
-      https://github.com/Raktim94/KinetiRx/blob/main/CHANGELOG.md
+      1.6.14: Fixed the Due Khata "Collect" action recording a hardcoded
+      stale date (2026-08-17) as the last transaction date on every
+      collected payment instead of the actual date it was collected. Full
+      history: https://github.com/Raktim94/KinetiRx/blob/main/CHANGELOG.md
   website: "https://kinetirx.nodedr.com"
   repo: "https://github.com/Raktim94/KinetiRx"
   support: "https://github.com/Raktim94/KinetiRx/issues"
