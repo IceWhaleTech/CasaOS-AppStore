@@ -8,7 +8,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       VERSION: docker
-    image: lscr.io/linuxserver/plex:1.43.2
+    image: lscr.io/linuxserver/plex:1.43.3
     deploy:
       resources:
         reservations:
@@ -58,7 +58,7 @@ x-casaos:
   description:
     en_US: |
       Transform your home into a cinematic oasis with your very own media server. Unlike streaming platforms that compress and limit the quality of your content, a Plex server in your home allows you to maintain the pristine, high-bitrate glory of Blu-ray and beyond. Imagine pairing this high-fidelity, uninterrupted media access with cutting-edge home theater tech like VR headsets, 75-inch UHD TVs, or 100-inch laser projectors. The result? A breathtaking visual and auditory experience that streams seamlessly across TVs and mobile devices alike, right from the comfort of your couch. 
-      
+
       Deploy Plex on a Zima devices and unlock the ultimate in home entertainment convenience. Enjoy ALMOST limitless storage capacity for your entire media library, lightning-fast local network speeds, and the ability to stream content effortlessly to any device in your home. Experience a world where your favorite shows and movies are always just a click away, stored securely and privately on your own terms.
     zh_CN: |
       将您的家变成一个电影的绿洲，拥有您自己的媒体服务器。与压缩和限制内容质量的流媒体平台不同，家中的 Plex 服务器可以让您保持 Blu-ray 及更高格式的原始高比特率荣耀。想象一下，将这种高保真、无中断的媒体访问与前沿的家庭影院技术相结合，如 VR 头戴显示器、75 英寸 UHD 电视或 100 英寸激光投影仪。结果是什么？在您家中沙发上就能享受的令人惊叹的视觉和听觉体验，流畅地在电视和移动设备上播放。
@@ -75,7 +75,7 @@ x-casaos:
     en_US: Stream Movies & TV Shows
     zh_CN: 流式播放电影和电视剧
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Plex/thumbnail.png
-  tips: 
+  tips:
     before_install:
       en_US: |
         ## Plex
@@ -111,69 +111,200 @@ x-casaos:
     en_US: Plex
   index: /web/index.html
   port_map: "32400"
-  version: "1.43.2"
-  update_at: "2026-05-19"
+  version: "1.43.3"
+  update_at: "2026-09-07"
   release_notes:
     en_US: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - Important security update: version 1.43.3 addresses multiple security
+        issues. Plex recommends all server owners using 1.43.2 or earlier
+        update as soon as possible. CVE identifiers have been requested but
+        are not yet published.
+      - Security fixes address a potential CompanionProxy vulnerability
+        (PM-5763) and prevent TranscoderH264Options and
+        TranscoderH264OptionsOverride from being modified over the network
+        (PM-5766).
+      - Also adds audio-codec filters, IPv6-only network support,
+        DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web
+        4.160.0, with additional library, metadata, transcoding, crash,
+        and DASH fixes.
     en_GB: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - Important security update: version 1.43.3 addresses multiple security
+        issues. Plex recommends all server owners using 1.43.2 or earlier
+        update as soon as possible. CVE identifiers have been requested but
+        are not yet published.
+      - Security fixes address a potential CompanionProxy vulnerability
+        (PM-5763) and prevent TranscoderH264Options and
+        TranscoderH264OptionsOverride from being modified over the network
+        (PM-5766).
+      - Also adds audio-codec filters, IPv6-only network support,
+        DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web
+        4.160.0, with additional library, metadata, transcoding, crash,
+        and DASH fixes.
     it_IT: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - Important security update: version 1.43.3 addresses multiple security
+        issues. Plex recommends all server owners using 1.43.2 or earlier
+        update as soon as possible. CVE identifiers have been requested but
+        are not yet published.
+      - Security fixes address a potential CompanionProxy vulnerability
+        (PM-5763) and prevent TranscoderH264Options and
+        TranscoderH264OptionsOverride from being modified over the network
+        (PM-5766).
+      - Also adds audio-codec filters, IPv6-only network support,
+        DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web
+        4.160.0, with additional library, metadata, transcoding, crash,
+        and DASH fixes.
     nb_NO: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - Important security update: version 1.43.3 addresses multiple security
+        issues. Plex recommends all server owners using 1.43.2 or earlier
+        update as soon as possible. CVE identifiers have been requested but
+        are not yet published.
+      - Security fixes address a potential CompanionProxy vulnerability
+        (PM-5763) and prevent TranscoderH264Options and
+        TranscoderH264OptionsOverride from being modified over the network
+        (PM-5766).
+      - Also adds audio-codec filters, IPv6-only network support,
+        DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web
+        4.160.0, with additional library, metadata, transcoding, crash,
+        and DASH fixes.
     zh_CN: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - 重要安全更新：1.43.3 修复多项安全问题。Plex 建议运行 1.43.2 及更早
+        版本的所有服务器所有者尽快升级；CVE 编号已申请但尚未公布。
+      - 安全修复包括解决 CompanionProxy 潜在漏洞 (PM-5763)，并禁止通过网络
+        修改 TranscoderH264Options 和 TranscoderH264OptionsOverride
+        (PM-5766)。
+      - 同时新增音频编解码器筛选、仅 IPv6 网络、DVB 图文电视字幕和 AV1
+        转码设置支持，并更新至 Plex Web 4.160.0，此外还包含媒体库、元数据、
+        转码、崩溃和 DASH 修复。
     ja_JP: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - Important security update: version 1.43.3 addresses multiple security
+        issues. Plex recommends all server owners using 1.43.2 or earlier
+        update as soon as possible. CVE identifiers have been requested but
+        are not yet published.
+      - Security fixes address a potential CompanionProxy vulnerability
+        (PM-5763) and prevent TranscoderH264Options and
+        TranscoderH264OptionsOverride from being modified over the network
+        (PM-5766).
+      - Also adds audio-codec filters, IPv6-only network support,
+        DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web
+        4.160.0, with additional library, metadata, transcoding, crash,
+        and DASH fixes.
     ko_KR: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - Important security update: version 1.43.3 addresses multiple security
+        issues. Plex recommends all server owners using 1.43.2 or earlier
+        update as soon as possible. CVE identifiers have been requested but
+        are not yet published.
+      - Security fixes address a potential CompanionProxy vulnerability
+        (PM-5763) and prevent TranscoderH264Options and
+        TranscoderH264OptionsOverride from being modified over the network
+        (PM-5766).
+      - Also adds audio-codec filters, IPv6-only network support,
+        DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web
+        4.160.0, with additional library, metadata, transcoding, crash,
+        and DASH fixes.
     fr_FR: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - Important security update: version 1.43.3 addresses multiple security
+        issues. Plex recommends all server owners using 1.43.2 or earlier
+        update as soon as possible. CVE identifiers have been requested but
+        are not yet published.
+      - Security fixes address a potential CompanionProxy vulnerability
+        (PM-5763) and prevent TranscoderH264Options and
+        TranscoderH264OptionsOverride from being modified over the network
+        (PM-5766).
+      - Also adds audio-codec filters, IPv6-only network support,
+        DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web
+        4.160.0, with additional library, metadata, transcoding, crash,
+        and DASH fixes.
     de_DE: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - Important security update: version 1.43.3 addresses multiple security
+        issues. Plex recommends all server owners using 1.43.2 or earlier
+        update as soon as possible. CVE identifiers have been requested but
+        are not yet published.
+      - Security fixes address a potential CompanionProxy vulnerability
+        (PM-5763) and prevent TranscoderH264Options and
+        TranscoderH264OptionsOverride from being modified over the network
+        (PM-5766).
+      - Also adds audio-codec filters, IPv6-only network support,
+        DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web
+        4.160.0, with additional library, metadata, transcoding, crash,
+        and DASH fixes.
     sv_SE: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - Important security update: version 1.43.3 addresses multiple security
+        issues. Plex recommends all server owners using 1.43.2 or earlier
+        update as soon as possible. CVE identifiers have been requested but
+        are not yet published.
+      - Security fixes address a potential CompanionProxy vulnerability
+        (PM-5763) and prevent TranscoderH264Options and
+        TranscoderH264OptionsOverride from being modified over the network
+        (PM-5766).
+      - Also adds audio-codec filters, IPv6-only network support,
+        DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web
+        4.160.0, with additional library, metadata, transcoding, crash,
+        and DASH fixes.
     el_GR: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - Important security update: version 1.43.3 addresses multiple security
+        issues. Plex recommends all server owners using 1.43.2 or earlier
+        update as soon as possible. CVE identifiers have been requested but
+        are not yet published.
+      - Security fixes address a potential CompanionProxy vulnerability
+        (PM-5763) and prevent TranscoderH264Options and
+        TranscoderH264OptionsOverride from being modified over the network
+        (PM-5766).
+      - Also adds audio-codec filters, IPv6-only network support,
+        DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web
+        4.160.0, with additional library, metadata, transcoding, crash,
+        and DASH fixes.
     hr_HR: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - Important security update: version 1.43.3 addresses multiple security
+        issues. Plex recommends all server owners using 1.43.2 or earlier
+        update as soon as possible. CVE identifiers have been requested but
+        are not yet published.
+      - Security fixes address a potential CompanionProxy vulnerability
+        (PM-5763) and prevent TranscoderH264Options and
+        TranscoderH264OptionsOverride from being modified over the network
+        (PM-5766).
+      - Also adds audio-codec filters, IPv6-only network support,
+        DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web
+        4.160.0, with additional library, metadata, transcoding, crash,
+        and DASH fixes.
     pt_PT: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - Important security update: version 1.43.3 addresses multiple security
+        issues. Plex recommends all server owners using 1.43.2 or earlier
+        update as soon as possible. CVE identifiers have been requested but
+        are not yet published.
+      - Security fixes address a potential CompanionProxy vulnerability
+        (PM-5763) and prevent TranscoderH264Options and
+        TranscoderH264OptionsOverride from being modified over the network
+        (PM-5766).
+      - Also adds audio-codec filters, IPv6-only network support,
+        DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web
+        4.160.0, with additional library, metadata, transcoding, crash,
+        and DASH fixes.
     ru_RU: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - Important security update: version 1.43.3 addresses multiple security
+        issues. Plex recommends all server owners using 1.43.2 or earlier
+        update as soon as possible. CVE identifiers have been requested but
+        are not yet published.
+      - Security fixes address a potential CompanionProxy vulnerability
+        (PM-5763) and prevent TranscoderH264Options and
+        TranscoderH264OptionsOverride from being modified over the network
+        (PM-5766).
+      - Also adds audio-codec filters, IPv6-only network support,
+        DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web
+        4.160.0, with additional library, metadata, transcoding, crash,
+        and DASH fixes.
     tr_TR: |-
-      - Updates the LinuxServer Plex image to the 1.43.2 release line.
-      - Includes upstream LinuxServer image refreshes and CI-tested container updates.
-      - Pulls in Plex Media Server fixes from the 1.43.2 release stream.
+      - Important security update: version 1.43.3 addresses multiple security
+        issues. Plex recommends all server owners using 1.43.2 or earlier
+        update as soon as possible. CVE identifiers have been requested but
+        are not yet published.
+      - Security fixes address a potential CompanionProxy vulnerability
+        (PM-5763) and prevent TranscoderH264Options and
+        TranscoderH264OptionsOverride from being modified over the network
+        (PM-5766).
+      - Also adds audio-codec filters, IPv6-only network support,
+        DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web
+        4.160.0, with additional library, metadata, transcoding, crash,
+        and DASH fixes.
   website: "https://www.plex.tv"
   repo: "https://github.com/linuxserver/docker-plex"
   support: "https://support.plex.tv"
