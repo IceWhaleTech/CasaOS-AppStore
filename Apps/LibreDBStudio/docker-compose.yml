@@ -1,7 +1,7 @@
 name: libredb-studio
 services:
   libredb-studio:
-    image: libredb/libredb-studio:0.13.7
+    image: libredb/libredb-studio:0.15.0
     container_name: libredb-studio
     restart: unless-stopped
     ports:
@@ -99,10 +99,19 @@ x-casaos:
   index: /
   scheme: http
   port_map: "3016"
-  version: "0.13.7"
-  update_at: "2026-09-06"
+  version: "0.15.0"
+  update_at: "2026-09-09"
   release_notes:
-    en_US: Updated to LibreDB Studio 0.13.7 and switched to the official Docker Hub image.
+    en_US: |-
+      - Updates LibreDB Studio to 0.15.0.
+      - CREATE TABLE now emits the DDL of the engine it is aimed at instead of PostgreSQL's, so the generated statement runs where it was generated.
+      - A database size the server declines to report is shown as absent instead of 0 bytes on MySQL, PostgreSQL, SQL Server and Oracle.
+      - No environment variable, port or volume changed, so existing installs need no reconfiguration.
+    zh_CN: |-
+      - 将 LibreDB Studio 更新至 0.15.0。
+      - CREATE TABLE 现在会生成目标数据库引擎的 DDL，而不再固定使用 PostgreSQL 语法，生成的语句可以直接在对应引擎上运行。
+      - 在 MySQL、PostgreSQL、SQL Server 和 Oracle 上，服务端无法给出的数据库大小现在显示为不可用，而不是 0 字节。
+      - 环境变量、端口和数据卷均未变化，现有安装无需重新配置。
   website: https://libredb.org
   repo: https://github.com/libredb/libredb-studio
   support: https://github.com/libredb/libredb-studio/issues
