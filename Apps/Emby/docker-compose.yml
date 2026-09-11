@@ -8,14 +8,15 @@ services:
       - /dev/video11:/dev/video11
       - /dev/video12:/dev/video12
     environment:
-      PGID: "1000"
-      PUID: "1000"
+      UID: "1000"
+      GID: "100"
+      GIDLIST: "100"
       TZ: $TZ
-    image: linuxserver/emby:4.9.5
+    image: emby/embyserver:4.9.5.0
     deploy:
       resources:
         reservations:
-          memory: 64M
+          memory: 512M
     network_mode: bridge
     ports:
       - target: 8096
@@ -37,12 +38,15 @@ services:
         target: /data/movies
     x-casaos:
       envs:
-        - container: PUID
+        - container: UID
           description:
-            en_US: ""
-        - container: PGID
+            en_US: "UID used to run Emby."
+        - container: GID
           description:
-            en_US: ""
+            en_US: "Primary GID used to run Emby."
+        - container: GIDLIST
+          description:
+            en_US: "Comma-separated supplementary group IDs. The default includes users (100), video (44), and render (109); adjust these IDs if the host uses different values."
         - container: TZ
           description:
             en_US: ""
@@ -375,7 +379,7 @@ x-casaos:
 
       **Daha Fazla Bilgi:**
       - [Emby Resmi Web Sitesi](https://emby.media/)
-  developer: linuxserver
+  developer: Emby Team
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-1.png
@@ -404,69 +408,69 @@ x-casaos:
   index: /
   port_map: "8096"
   version: "4.9.5"
-  update_at: "2026-05-18"
+  update_at: "2026-05-26"
   release_notes:
     en_US: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
     en_GB: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
     it_IT: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
     nb_NO: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
     zh_CN: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
     ja_JP: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
     ko_KR: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
     fr_FR: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
     de_DE: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
     sv_SE: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
     el_GR: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
     hr_HR: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
     pt_PT: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
     ru_RU: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
     tr_TR: |-
-      - The linuxserver/emby 4.9.5 Docker image tag was published on Docker Hub on 2026-05-18.
-      - This updates the app from the 4.9.1 image line to the 4.9.5 image line.
-      - No per-tag release notes were published in linuxserver/docker-emby; validate the Web UI after upgrading.
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
   website: "https://emby.media/"
-  repo: "https://github.com/linuxserver/docker-emby"
+  repo: "https://hub.docker.com/r/emby/embyserver"
   support: "https://emby.media/community/"
   docs: "https://support.emby.media/support/"
