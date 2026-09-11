@@ -1,0 +1,94 @@
+name: hera
+
+services:
+  downtify:
+    image: henriquesebastiao/downtify:latest
+    container_name: hera-downtify
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/Media/Music
+        target: /downloads
+    networks:
+      - hera-net
+    x-casaos:
+      volumes:
+        - container: /downloads
+          description:
+            en_US: "Music download and storage directory (shared with Hera)"
+
+  hera:
+    image: athuul/hera:latest
+    container_name: hera
+    restart: unless-stopped
+    depends_on:
+      downtify:
+        condition: service_started
+        required: true
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music/downloads
+      - type: bind
+        source: /DATA/AppData/hera/config
+        target: /config
+    environment:
+      DOWNTIFY_API_URL: http://downtify:8000
+      MUSIC_DOWNLOAD_DIR: /music/downloads
+      APP_CONFIG_DIR: /config
+    networks:
+      - hera-net
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_US: "Hera Web UI port"
+      volumes:
+        - container: /music/downloads
+          description:
+            en_US: "Music download directory (must match Downtify)"
+        - container: /config
+          description:
+            en_US: "Hera settings and configuration storage"
+      envs:
+        - container: DOWNTIFY_API_URL
+          description:
+            en_US: "Internal URL for Downtify backend"
+        - container: MUSIC_DOWNLOAD_DIR
+          description:
+            en_US: "Internal container path for music downloads"
+        - container: APP_CONFIG_DIR
+          description:
+            en_US: "Internal container path for configuration files"
+
+networks:
+  hera-net:
+    name: hera_hera-net
+    driver: bridge
+
+x-casaos:
+  id: hera
+  version: "1.0.0"
+  architectures:
+    - amd64
+  main: hera
+  author: athuul
+  developer: athuul
+  category: Media
+  title:
+    en_US: Hera
+  tagline:
+    en_US: Automated music recommendation & downloader
+  description:
+    en_US: "A self-hosted music recommendation and automated downloader service. Hera uses Last.fm to discover music tailored to your taste and downloads tracks via Downtify. Features automated cron downloads, manual library search, format cleanup, and library deduplication."
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hera/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hera/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hera/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hera/screenshot-2.png
+  port_map: "8080"
+  index: /
