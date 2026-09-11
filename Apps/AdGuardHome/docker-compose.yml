@@ -1,7 +1,7 @@
 name: adguard-home
 services:
   adguard-home:
-    image: adguard/adguardhome:v0.107.76
+    image: adguard/adguardhome:v0.107.79
     deploy:
       resources:
         reservations:
@@ -99,7 +99,7 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AdGuardHome/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AdGuardHome/screenshot-3.png
   tagline:
-    en_US: Blocking ads & tracking Network-widly
+    en_US: Network-wide ad and tracker blocking
     zh_CN: 在网络侧阻止广告和跟踪
     ar_SA: خادم DNS لمنع الإعلانات والمتتبعين على نطاق الشبكة
     de_DE: Netzwerkweites Werbe- und Tracker-Blockierungs-DNS-Server
@@ -118,54 +118,54 @@ x-casaos:
     en_US: AdGuard Home
   index: /
   port_map: "3001"
-  version: "0.107.76"
-  update_at: "2026-05-21"
+  version: "0.107.79"
+  update_at: "2026-09-01"
   release_notes:
     en_US: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - DNS64 treating unresolved CNAME/DNAME answers as the end of resolution chain
+      - Blocked requests without an EDNS(0) OPT record
     en_GB: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - DNS64 treating unresolved CNAME/DNAME answers as the end of resolution chain
+      - Blocked requests without an EDNS(0) OPT record
     it_IT: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - DNS64 considera le risposte CNAME/DNAME non risolte come la fine della catena di risoluzione
+      - Richieste bloccate senza un record OPT EDNS(0)
     nb_NO: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - DNS64 behandler uoppløste CNAME/DNAME-svar som slutten på oppløsningskjeden
+      - Blokkerte forespørsler uten en EDNS(0) OPT-post
     zh_CN: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - DNS64 将未解析的 CNAME/DNAME 应答视为解析链的终点
+      - 不含 EDNS(0) OPT 记录的已拦截请求
     ja_JP: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - DNS64 が未解決の CNAME/DNAME 応答を名前解決チェーンの終端として扱う
+      - EDNS(0) OPT レコードのないブロック済みリクエスト
     ko_KR: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - DNS64가 확인되지 않은 CNAME/DNAME 응답을 확인 체인의 끝으로 처리함
+      - EDNS(0) OPT 레코드가 없는 차단된 요청
     fr_FR: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - DNS64 considère les réponses CNAME/DNAME non résolues comme la fin de la chaîne de résolution
+      - Requêtes bloquées sans enregistrement OPT EDNS(0)
     de_DE: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - DNS64 behandelt nicht aufgelöste CNAME/DNAME-Antworten als Ende der Auflösungskette
+      - Blockierte Anfragen ohne einen OPT-Eintrag für EDNS(0)
     sv_SE: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - DNS64 behandlar oupplösta CNAME/DNAME-svar som slutet på upplösningskedjan
+      - Blockerade förfrågningar utan en EDNS(0) OPT-post
     el_GR: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - Το DNS64 αντιμετωπίζει τις αποκρίσεις με μη επιλυμένα CNAME/DNAME ως το τέλος της αλυσίδας επίλυσης
+      - Αποκλεισμένα αιτήματα χωρίς εγγραφή EDNS(0) OPT
     hr_HR: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - DNS64 tretira odgovore s nerazriješenim CNAME/DNAME zapisima kao kraj lanca razrješavanja
+      - Blokirani zahtjevi bez EDNS(0) OPT zapisa
     pt_PT: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - O DNS64 trata as respostas com CNAME/DNAME não resolvidos como o fim da cadeia de resolução
+      - Pedidos bloqueados sem um registo EDNS(0) OPT
     ru_RU: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - DNS64 рассматривает ответы с неразрешёнными CNAME/DNAME как конец цепочки разрешения
+      - Заблокированные запросы без записи EDNS(0) OPT
     tr_TR: |-
-      - v0.107.76 fixes DNS caching when DNSSEC is disabled.
-      - YAML duration values now support days with the d unit; downgrades below v0.107.76 should convert those values back to hours.
+      - DNS64, çözümlenmemiş CNAME/DNAME yanıtlarını çözümleme zincirinin sonu olarak ele alıyor
+      - EDNS(0) OPT kaydı olmayan engellenmiş istekler
   website: "https://adguard.com/en/adguard-home/overview.html"
   repo: "https://github.com/AdguardTeam/AdGuardHome"
   support: "https://github.com/AdguardTeam/AdGuardHome/issues"
