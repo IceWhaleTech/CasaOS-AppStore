@@ -1,0 +1,81 @@
+name: sportarr
+services:
+  sportarr:
+    environment:
+      PGID: $PGID
+      PUID: $PUID
+      TZ: $TZ
+    image: sportarr/sportarr:4.1.0.1110
+    deploy:
+      resources:
+        reservations:
+          memory: "256M"
+    network_mode: bridge
+    ports:
+      - target: 1867
+        published: "1867"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Sports
+        target: /sports
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: TimeZone
+        - container: PUID
+          description:
+            en_US: Run Sportarr as specified uid.
+        - container: PGID
+          description:
+            en_US: Run Sportarr as specified gid.
+      ports:
+        - container: "1867"
+          description:
+            en_US: WebUI HTTP Port
+      volumes:
+        - container: /config
+          description:
+            en_US: Sportarr config directory.
+        - container: /sports
+          description:
+            en_US: Sportarr sports library directory.
+        - container: /downloads
+          description:
+            en_US: Sportarr downloads directory.
+    container_name: sportarr
+x-casaos:
+  id: net.sportarr.sportarr
+  architectures:
+    - amd64
+    - arm64
+  main: sportarr
+  author: Sportarr
+  category: Media
+  description:
+    en_US: Sportarr is an event manager for sports fans. It monitors the leagues and events you follow, grabs broadcasts through your Usenet and BitTorrent download clients, then sorts and renames them into a clean season/episode layout that Plex, Emby, Jellyfin and Kodi understand. Quality profiles, a calendar of upcoming events, automatic upgrades and DVR-style IPTV recording are built in.
+  developer: Sportarr
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sportarr/icon.png
+  screenshot_link: []
+  tagline:
+    en_US: Sports event manager for Usenet and BitTorrent
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sportarr/thumbnail.jpg
+  tips: {}
+  title:
+    en_US: Sportarr
+  index: /
+  port_map: "1867"
+  version: "4.1.0.1110"
+  update_at: "2026-08-04"
+  website: "https://sportarr.net"
+  repo: "https://github.com/Sportarr/Sportarr"
+  support: "https://github.com/Sportarr/Sportarr/issues"
+  docs: "https://github.com/Sportarr/Sportarr/wiki"
