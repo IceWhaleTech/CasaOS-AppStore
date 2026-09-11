@@ -8,7 +8,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       VERSION: docker
-    image: lscr.io/linuxserver/plex:1.43.2@sha256:9742fb8b090d6cfa208fbe3d783156304dc5d0a58b5dc119a7d81e8a7171288b
+    image: lscr.io/linuxserver/plex:1.43.3@sha256:2e0dca4865f3ffd504c057ba90d18ce5976df7493ab7aa51c79135c65ee1aceb
     deploy:
       resources:
         reservations:
@@ -31,4 +31,4 @@ x-casaos:
     en_US: Plex
   index: /web/index.html
   port_map: "32400"
-  version: "1.43.2"
+  version: "1.43.3"

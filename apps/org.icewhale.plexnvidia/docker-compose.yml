@@ -10,7 +10,7 @@ services:
       VERSION: docker
       CPU_FALLBACK: "true"
       NVIDIA_VISIBLE_DEVICES: all
-    image: lscr.io/linuxserver/plex:1.41.3
+    image: lscr.io/linuxserver/plex:1.43.3
     deploy:
       resources:
         reservations:
@@ -37,4 +37,4 @@ x-casaos:
     en_US: Plex(Nvidia GPU)
   index: /web/index.html
   port_map: "32400"
-  version: "1.41.3"
+  version: "1.43.3"

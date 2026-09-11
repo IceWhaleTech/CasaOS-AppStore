@@ -1,4 +1,4 @@
 {
   "id": "org.icewhale.plexnvidia",
-  "release_note": "- Der konfigurierte Image-Tag ist linuxserver/plex:1.41.3.\n- LinuxServer veröffentlicht für diese Plex-Image-Reihe außerdem den Tag version-1.41.3.9314-a0bfb8370.\n- Der GPU-fähige Eintrag folgt demselben LinuxServer-Container-Tag wie der normale Plex-Eintrag."
+  "release_note": "- Important security update: version 1.43.3 addresses multiple security\n  issues. Plex recommends all server owners using 1.43.2 or earlier\n  update as soon as possible. CVE identifiers have been requested but\n  are not yet published.\n- Security fixes address a potential CompanionProxy vulnerability\n  (PM-5763) and prevent TranscoderH264Options and\n  TranscoderH264OptionsOverride from being modified over the network\n  (PM-5766).\n- Also adds audio-codec filters, IPv6-only network support,\n  DVB teletext subtitles, AV1 transcoder-setting support, and Plex Web\n  4.160.0, with additional library, metadata, transcoding, crash,\n  and DASH fixes."
 }

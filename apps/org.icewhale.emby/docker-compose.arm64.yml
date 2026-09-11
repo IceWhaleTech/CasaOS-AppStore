@@ -8,14 +8,15 @@ services:
       - /dev/video11:/dev/video11
       - /dev/video12:/dev/video12
     environment:
-      PGID: "1000"
-      PUID: "1000"
+      UID: "1000"
+      GID: "100"
+      GIDLIST: "100"
       TZ: $TZ
-    image: linuxserver/emby:4.9.5@sha256:80a27be46c1bc8357461314e25d541f8706c237a518971635ad56e787155aaf3
+    image: emby/embyserver:4.9.5.0@sha256:1e76e14a9c99507eb9f54361126f22c4658fc1588b2a710a99ba42f2335ff59a
     deploy:
       resources:
         reservations:
-          memory: 64M
+          memory: 512M
     network_mode: bridge
     ports:
       - target: 8096

@@ -1,6 +1,7 @@
 {
   "id": "org.icewhale.libredbstudio",
   "title": "LibreDB Studio",
-  "tagline": "开源自托管 SQL IDE。",
-  "description": "LibreDB Studio 是一款开源（MIT）的自托管 SQL IDE。它提供现代化的基于 Web 的界面，可连接数据库、浏览架构、编写并运行 SQL 查询，并可通过局域网中的任意浏览器管理数据。数据本地存储于 SQLite 数据库中，一切尽在您的掌控之中。"
+  "description": "LibreDB Studio 是一款开源（MIT）的自托管 SQL IDE。它提供现代化的基于 Web 的界面，可连接数据库、浏览架构、编写并运行 SQL 查询，并可通过局域网中的任意浏览器管理数据。数据本地存储于 SQLite 数据库中，一切尽在您的掌控之中。",
+  "release_note": "- 将 LibreDB Studio 更新至 0.15.0。\n- CREATE TABLE 现在会生成目标数据库引擎的 DDL，而不再固定使用 PostgreSQL 语法，生成的语句可以直接在对应引擎上运行。\n- 在 MySQL、PostgreSQL、SQL Server 和 Oracle 上，服务端无法给出的数据库大小现在显示为不可用，而不是 0 字节。\n- 环境变量、端口和数据卷均未变化，现有安装无需重新配置。",
+  "tagline": "开源自托管 SQL IDE。"
 }

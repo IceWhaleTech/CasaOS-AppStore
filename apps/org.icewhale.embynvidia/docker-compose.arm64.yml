@@ -8,16 +8,17 @@ services:
       - /dev/video11:/dev/video11
       - /dev/video12:/dev/video12
     environment:
-      PGID: "1000"
-      PUID: "1000"
+      UID: "1000"
+      GID: "100"
+      GIDLIST: "100"
       TZ: $TZ
-      CPU_FALLBACK: "true"
       NVIDIA_VISIBLE_DEVICES: all
-    image: linuxserver/emby:4.9.1@sha256:5009e60909a11ec54436be5c53687fc7e9f829274a4e22cb5b3a9cc19237b175
+    image: emby/embyserver:4.9.5.0@sha256:1e76e14a9c99507eb9f54361126f22c4658fc1588b2a710a99ba42f2335ff59a
+    runtime: nvidia
     deploy:
       resources:
         reservations:
-          memory: 256M
+          memory: 512M
           devices:
             - driver: nvidia
               count: all
@@ -50,4 +51,4 @@ x-casaos:
     en_US: Emby(Nvidia GPU)
   index: /
   port_map: "8096"
-  version: "4.9.1"
+  version: "4.9.5"

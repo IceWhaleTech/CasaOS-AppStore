@@ -14,22 +14,22 @@
   ],
   "tagline": "Open-source self-hosted SQL IDE.",
   "thumbnail": "/apps/org.icewhale.libredbstudio/assets/thumbnail.webp",
-  "update_at": "2026-09-06",
+  "update_at": "2026-09-09",
   "website": "https://libredb.org",
   "repo": "https://github.com/libredb/libredb-studio",
   "support": "https://github.com/libredb/libredb-studio/issues",
   "docs": "https://github.com/libredb/libredb-studio/tree/main/docs",
   "title": "LibreDB Studio",
-  "release_note": "Updated to LibreDB Studio 0.13.7 and switched to the official Docker Hub image.",
+  "release_note": "- Updates LibreDB Studio to 0.15.0.\n- CREATE TABLE now emits the DDL of the engine it is aimed at instead of PostgreSQL's, so the generated statement runs where it was generated.\n- A database size the server declines to report is shown as absent instead of 0 bytes on MySQL, PostgreSQL, SQL Server and Oracle.\n- No environment variable, port or volume changed, so existing installs need no reconfiguration.",
   "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
   "id": "org.icewhale.libredbstudio",
-  "version": "0.13.7",
+  "version": "0.15.0",
   "categories": [
     "developer"
   ],
   "min_memory": 268435456,
   "min_image_size": {
-    "amd64": 306375320,
-    "arm64": 299532011
+    "amd64": 312367570,
+    "arm64": 305829300
   }
 }

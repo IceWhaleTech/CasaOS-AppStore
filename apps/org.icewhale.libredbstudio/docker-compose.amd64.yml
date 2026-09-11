@@ -1,7 +1,7 @@
 name: libredb-studio
 services:
   libredb-studio:
-    image: libredb/libredb-studio:0.13.7@sha256:844cd389d30d95762356eac255b2946a38973cc594a3f9056d886098537a792e
+    image: libredb/libredb-studio:0.15.0@sha256:3438d2f646b064ecf1866a1f84b5b189f5ad09a30d103928ce6bae1d832d6263
     container_name: libredb-studio
     restart: unless-stopped
     ports:
@@ -45,4 +45,4 @@ x-casaos:
   index: /
   scheme: http
   port_map: "3016"
-  version: "0.13.7"
+  version: "0.15.0"

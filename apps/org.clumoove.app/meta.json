@@ -13,22 +13,22 @@
   "thumbnail": "/apps/org.clumoove.app/assets/thumbnail.webp",
   "tagline": "Self-hosted cloud data migration & sync manager",
   "description": "Clumoove is a modern, self-hosted cloud data migration and synchronization platform for files, calendars, and contacts.\n\nEasily connect, transfer, and synchronize data between cloud storage providers including Nextcloud, Google Drive, Dropbox, OneDrive, HiDrive, S3, WebDAV, SMB, SFTP, FTP, Immich, Seafile, Koofr, MEGA, and local storage.\n\nKey Features:\n- Zero-disk streaming transfers (no local temporary storage retention during migration)\n- Multi-threaded background migrations and cron-based synchronization schedules\n- Robust 3-way hash integrity verification & flexible conflict resolution\n- Integrated cloud file manager with multi-format previews and thumbnails\n- Multi-channel notification delivery (Gotify, ntfy, Telegram, Discord, Email)\n- Enterprise-grade security with AES-256-GCM encryption, TOTP 2FA, and audit logging\n",
-  "update_at": "2026-09-03",
+  "update_at": "2026-09-09",
   "website": "https://clumoove.com",
   "repo": "https://github.com/xXRoxXeRXx/clumoove",
   "support": "https://github.com/xXRoxXeRXx/clumoove/issues",
   "docs": "https://docs.clumoove.com",
   "title": "Clumoove",
-  "release_note": "- Fixes S3 multipart uploads failing with HTTP 500 InternalError during UploadPart on Railway Storage Buckets (Tigris), MinIO, and other S3-compatible providers.",
+  "release_note": "- Introduces Cloud File Manager item mutations (rename, server-side copy/move, recursive deletion) and multi-item batch operations.\n- Adds unified background Transfer Center with live tracking and cross-profile transfers.\n- Enhances File Manager UI with interactive multi-column sorting, row selection ergonomics, sticky header, and media preview modals.\n- Fixes HiDrive rename path handling and invalid destination derivation during file operations.",
   "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
   "id": "org.clumoove.app",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "categories": [
     "productivity"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 209677862,
-    "arm64": 203928349
+    "amd64": 209968260,
+    "arm64": 204185674
   }
 }
