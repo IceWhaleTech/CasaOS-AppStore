@@ -1,0 +1,176 @@
+{
+    "version": "2.0",
+    "title": "OpenResty Manager",
+    "name": "openrestymanager",
+    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenRestyManager/icon.png",
+    "tagline": "Just what the name says",
+    "overview": "The easiest using, powerful and beautiful OpenResty Manager, open source alternative to OpenResty Edge.",
+    "screenshots": [
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenRestyManager/screenshot-1.png",
+        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenRestyManager/screenshot-2.png"
+    ],
+    "category": [
+        "Network"
+    ],
+    "developer": {
+        "name": "OpenResty Manager",
+        "website": "https://om.uusec.com/",
+        "donate_text": "", 
+        "donate_link": ""
+    },
+    "adaptor": {
+        "name": "UUSEC",
+        "website": "https://www.uusec.com",
+        "donate_text": "", 
+        "donate_link": ""
+    },
+    "support": "https://github.com/Safe3/openresty-manager",
+    "website": "https://www.uusec.com",
+    "container": {
+        "image": "uusec/openresty-manager:1.1.3",
+        "shell": "sh",
+        "privileged": false,
+        "network_model": "host",
+        "web_ui": {
+            "http": "34567",
+            "path": "/"
+        },
+        "health_check": "",
+        "envs": [],
+        "ports": [
+            {
+                "container": "80",
+                "host": "80",
+                "type": "tcp",
+                "allocation": "required",
+                "configurable": "advanced",
+                "description": "Nginx HTTP Port"
+            },
+            {
+                "container": "443",
+                "host": "443",
+                "type": "tcp",
+                "allocation": "required",
+                "configurable": "advanced",
+                "description": "Nginx HTTPS Port"
+            },
+            {
+                "container": "34567",
+                "host": "34567",
+                "type": "tcp",
+                "allocation": "preferred",
+                "configurable": "basic",
+                "description": "WebUI Port"
+            }
+        ],
+        "volumes": [
+            {
+                "container": "/etc/localtime",
+                "host": "/etc/localtime",
+                "mode": "ro",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Ties the time of the container to the host's time, read only so the container cannot change the host's time."
+            },
+            {
+                "container": "/etc/resolv.conf",
+                "host": "/etc/resolv.conf",
+                "mode": "ro",
+                "allocation": "automatic",
+                "configurable": "no",
+                "description": "Ties the resolv.conf of the container to the host's resolv.conf, read only so the container cannot change the host's resolv.conf."
+            },
+            {
+                "container": "/opt/om/acme",
+                "host": "/DATA/AppData/$AppID/acme",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "advanced",
+                "description": "OpenResty Manager ACME directory."
+            },
+            {
+                "container": "/opt/om/data",
+                "host": "/DATA/AppData/$AppID/data",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "advanced",
+                "description": "OpenResty Manager data directory."
+            },
+            {
+                "container": "/opt/om/nginx/conf/sites",
+                "host": "/DATA/AppData/$AppID/sites",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "advanced",
+                "description": "OpenResty Manager sites directory."
+            },
+            {
+                "container": "/opt/om/nginx/conf/upstreams",
+                "host": "/DATA/AppData/$AppID/upstreams",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "advanced",
+                "description": "OpenResty Manager upstreams directory."
+            },
+            {
+                "container": "/opt/om/nginx/conf/certs",
+                "host": "/DATA/AppData/$AppID/certs",
+                "mode": "rw",
+                "allocation": "automatic",
+                "configurable": "advanced",
+                "description": "OpenResty Manager certs directory."
+            }
+        ],
+        "devices": [],
+        "constraints": {
+            "min_memory": 256,
+            "min_storage": 512
+        },
+        "restart_policy": "unless-stopped",
+        "sysctls": [],
+        "cap_add": [],
+        "labels": []
+    },
+    "abilities": {
+        "notification": false,
+        "widgets": false,
+        "authentication": false,
+        "search": false,
+        "upnp": false
+    },
+    "tips": {
+        "before_install": [
+            {
+                "content":"⚠️ Warning!"
+            },
+            {
+                "content":"This is a technical app, please make sure you know what you are doing."
+            },
+            {
+                "content":"OpenResty Manager occupies ports 80 and 443 by default for built-in Nginx use. It occupies port 34567 for the admin page."
+            },
+            {
+                "content":"Please change the CasaOS WebUI port to a port other than 80/443. And pay attention to whether the ports conflict with other apps. Otherwise, it may cause your CasaOS to run abnormally."
+            },
+            {
+                "content": ""
+            },
+            {
+                "content": "Default Administrator User"
+            },
+            {
+                "content": "Username: ",
+                "value": "admin"
+            },
+            {
+                "content": "Password: ",
+                "value": "#Passw0rd"
+            }
+        ]
+    },
+    "changelog": {
+        "latest_updates": "",
+        "url": ""
+    },
+    "latest_update_date": ""
+}
