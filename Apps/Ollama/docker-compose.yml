@@ -1,7 +1,7 @@
 name: ollama
 services:
   ollama:
-    image: ollama/ollama:0.9.5
+    image: ollama/ollama:0.24.0
     container_name: ollama
     deploy:
       resources:
@@ -56,11 +56,12 @@ services:
             ru_RU: Каталог моделей и данных Ollama
             tr_TR: Ollama Modeller ve Veri Dizini
 x-casaos:
+  id: org.icewhale.ollama
   architectures:
     - amd64
     - arm64
   main: ollama
-  category: Chat
+  category: AI
   developer: ollama
   author: ollama
   tagline:
@@ -665,7 +666,7 @@ x-casaos:
       - [Ollama Resmi Web Sitesi](https://ollama.com/)
       - [Ollama GitHub Deposu](https://github.com/ollama/ollama)
       - [Model Kütüphanesi](https://ollama.com/library)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ollama/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ollama/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ollama/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ollama/screenshot-2.png
@@ -676,3 +677,70 @@ x-casaos:
   index: /
   title:
     en_US: Ollama
+  version: "0.24.0"
+  update_at: "2026-05-14"
+  release_notes:
+    en_US: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+    en_GB: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+    it_IT: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+    nb_NO: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+    zh_CN: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+    ja_JP: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+    ko_KR: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+    fr_FR: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+    de_DE: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+    sv_SE: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+    el_GR: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+    hr_HR: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+    pt_PT: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+    ru_RU: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+    tr_TR: |-
+      - Ollama 0.24.0 adds Codex App support through the ollama launch codex-app command.
+      - The release includes built-in browser and review-mode support for the Codex App workflow.
+      - It also reworks the MLX sampler for improved generation quality on Apple Silicon.
+  website: "https://ollama.com/"
+  repo: "https://github.com/ollama/ollama"
+  support: "https://github.com/ollama/ollama/issues"
+  docs: "https://docs.ollama.com"

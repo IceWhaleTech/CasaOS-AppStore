@@ -2,7 +2,7 @@ name: langflow
 services:
   langflow:
     container_name: langflow
-    image: langflowai/langflow:1.5.0
+    image: langflowai/langflow:1.9.3
     user: "0:0"
     ports:
       - target: 7860
@@ -177,6 +177,7 @@ networks:
   langflow-net:
     driver: bridge
 x-casaos:
+  id: org.icewhale.langflow
   architectures:
     - amd64
   main: langflow
@@ -470,7 +471,7 @@ x-casaos:
       - [Langflow Resmi Web Sitesi](https://www.langflow.org)
       - [Langflow GitHub Deposu](https://github.com/langflow-ai/langflow)
       - [Belgeler](https://docs.langflow.org)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LangFlow/screenshot-2.png
@@ -495,3 +496,70 @@ x-casaos:
     pt_PT: Langflow
     ru_RU: Langflow
     tr_TR: Langflow
+  version: "1.9.3"
+  update_at: "2026-05-15"
+  release_notes:
+    en_US: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+    en_GB: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+    it_IT: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+    nb_NO: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+    zh_CN: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+    ja_JP: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+    ko_KR: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+    fr_FR: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+    de_DE: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+    sv_SE: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+    el_GR: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+    hr_HR: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+    pt_PT: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+    ru_RU: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+    tr_TR: |-
+      - v1.9.3 is a critical security release with SSRF protection, DNS rebinding prevention, and CVE-related dependency fixes.
+      - The release adds Python 3.14 support and fixes provider/model UI behavior including model toggle stability and Agent dropdown refresh.
+      - The langflowai/langflow:1.9.3 Docker image tag was published on 2026-05-15.
+  website: "https://www.langflow.org"
+  repo: "https://github.com/langflow-ai/langflow"
+  support: "https://github.com/langflow-ai/langflow/issues"
+  docs: "https://docs.langflow.org"

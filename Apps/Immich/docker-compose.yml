@@ -8,7 +8,7 @@ services:
           memory: 1024M
     container_name: immich-server
     hostname: immich-server
-    image: altran1502/immich-server:v1.129.0
+    image: ghcr.io/immich-app/immich-server:v2.7.2
     volumes:
       - /DATA/Gallery/immich:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
@@ -30,7 +30,7 @@ services:
   immich-machine-learning:
     container_name: immich-machine-learning
     hostname: immich-machine-learning
-    image: altran1502/immich-machine-learning:v1.129.0
+    image: ghcr.io/immich-app/immich-machine-learning:v2.7.2
     environment:
       DB_DATABASE_NAME: immich
       DB_PASSWORD: postgres
@@ -46,11 +46,9 @@ services:
   redis:
     container_name: immich-redis
     hostname: immich-redis
-    image: docker.io/redis:6.2-alpine@sha256:148bb5411c184abd288d9aaed139c98123eeb8824c5d3fce03cf721db58066d8
+    image: docker.io/valkey/valkey:9@sha256:3eeb09785cd61ec8e3be35f8804c8892080f3ca21934d628abc24ee4ed1698f6
     healthcheck:
       test: redis-cli ping || exit 1
-    volumes:
-      - /DATA/AppData/immich/redis:/data
     restart: unless-stopped
     networks:
       - immich
@@ -58,7 +56,7 @@ services:
   database:
     container_name: immich-postgres
     hostname: immich-postgres
-    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
@@ -66,45 +64,25 @@ services:
       POSTGRES_INITDB_ARGS: '--data-checksums'
     volumes:
       - /DATA/AppData/immich/pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: pg_isready --dbname='immich' --username='postgres' || exit 1; Chksum="$$(psql --dbname='immich' --username='postgres' --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')"; echo "checksum failure count is $$Chksum"; [ "$$Chksum" = '0' ] || exit 1
-      interval: 5m
-      start_interval: 30s
-      start_period: 5m
-    command:
-      [
-        'postgres',
-        '-c',
-        'shared_preload_libraries=vectors.so',
-        '-c',
-        'search_path="$$user", public, vectors',
-        '-c',
-        'logging_collector=on',
-        '-c',
-        'max_wal_size=2GB',
-        '-c',
-        'shared_buffers=512MB',
-        '-c',
-        'wal_compression=on',
-      ]
     restart: unless-stopped
     networks:
       - immich
 
 networks:
   immich:
-    name: immich
+    driver: bridge
 
 x-casaos:
+  id: org.icewhale.immich
   architectures:
     - amd64
     - arm64
   main: immich-server
   store_app_id: immich
-  category: Gallery
+  category: Media
   author: Cp0204
   developer: alextran1502
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Immich/screenshot-2.png
@@ -249,7 +227,7 @@ x-casaos:
     ru_RU: Самоуправляемое решение для управления медиа
     tr_TR: Kendi kendine barındırılan medya yönetimi çözümü
   title:
-    en_us: Immich
+    en_US: Immich
   tips:
     before_install:
       en_US: |
@@ -420,3 +398,70 @@ x-casaos:
   port_map: "2283"
   scheme: http
   index: /
+  version: "2.7.2"
+  update_at: "2026-04-07"
+  release_notes:
+    en_US: |-
+      - v2.7.2 fixes the default helmet.json file handling.
+      - Machine-learning containers were fixed for some older CPUs by downgrading numpy.
+      - External library import batch sizing was corrected.
+    en_GB: |-
+      - v2.7.2 fixes the default helmet.json file handling.
+      - Machine-learning containers were fixed for some older CPUs by downgrading numpy.
+      - External library import batch sizing was corrected.
+    it_IT: |-
+      - v2.7.2 corregge la gestione predefinita dei file helmet.json.
+      - I contenitori Machine-learning sono stati corretti per alcuni CPUs meno recenti da downgrading numpy.
+      - Il dimensionamento del batch di importazione della libreria esterna è stato corretto.
+    nb_NO: |-
+      - v2.7.2 fikser standard helmet.json filhåndtering.
+      - Machine-learning containere ble fikset for noen eldre CPUs av downgrading numpy.
+      - Størrelsen på batchstørrelsen for eksternt bibliotekimport ble korrigert.
+    zh_CN: |-
+      - v2.7.2 修复了默认 helmet.json 文件处理。
+      - 通过降级 numpy 修复了部分旧 CPU 上的 machine-learning containers。
+      - 修正了 external library import batch sizing。
+    ja_JP: |-
+      - v2.7.2 はデフォルトの helmet.json ファイル処理を修正します。
+      - numpy をダウングレードすることで、一部の古い CPU 向け machine-learning containers が修正されました。
+      - external library import batch sizing が修正されました。
+    ko_KR: |-
+      - v2.7.2는 기본 helmet.json 파일 처리를 수정합니다.
+      - numpy를 다운그레이드하여 일부 오래된 CPU의 machine-learning containers 문제가 수정되었습니다.
+      - external library import batch sizing이 수정되었습니다.
+    fr_FR: |-
+      - v2.7.2 corrige la gestion du fichier helmet.json par defaut.
+      - Les machine-learning containers ont ete corriges pour certains anciens CPU en retrogradant numpy.
+      - External library import batch sizing a ete corrige.
+    de_DE: |-
+      - v2.7.2 behebt die Behandlung der Standarddatei helmet.json.
+      - Machine-learning containers wurden fuer einige aeltere CPUs durch Downgrade von numpy korrigiert.
+      - External library import batch sizing wurde korrigiert.
+    sv_SE: |-
+      - v2.7.2 fixar standard helmet.json filhantering.
+      - Machine-learning-behållare fixades för några äldre CPUs av downgrading numpy.
+      - Storleken på batchstorleken för extern biblioteksimport har korrigerats.
+    el_GR: |-
+      - Το v2.7.2 διορθώνει τον προεπιλεγμένο χειρισμό αρχείων helmet.json.
+      - Τα δοχεία Machine-learning επισκευάστηκαν για μερικά παλαιότερα CPUs από downgrading numpy.
+      - Διορθώθηκε το μέγεθος παρτίδας εισαγωγής εξωτερικής βιβλιοθήκης.
+    hr_HR: |-
+      - v2.7.2 popravlja zadano rukovanje datotekama helmet.json.
+      - Machine-learning spremnike je popravio downgrading numpy za neke starije CPUs.
+      - Dimenzioniranje serije uvoza vanjske knjižnice je ispravljeno.
+    pt_PT: |-
+      - v2.7.2 corrige o tratamento padrão do ficheiro helmet.json.
+      - Os contentores Machine-learning foram corrigidos para alguns CPUs mais antigos por downgrading numpy.
+      - O tamanho do lote de importação de bibliotecas externas foi corrigido.
+    ru_RU: |-
+      - v2.7.2 исправляет обработку файла helmet.json по умолчанию.
+      - Контейнеры Machine-learning были исправлены для некоторых старых CPUs с помощью downgrading numpy.
+      - Исправлен размер пакета импорта внешней библиотеки.
+    tr_TR: |-
+      - v2.7.2, varsayılan helmet.json dosya işlemeyi düzeltir.
+      - Machine-learning konteynerleri bazı eski CPUs için downgrading numpy tarafından düzeltildi.
+      - Harici kitaplık içe aktarma toplu boyutu düzeltildi.
+  website: "https://immich.app/"
+  repo: "https://github.com/immich-app/immich"
+  support: "https://github.com/immich-app/immich/issues"
+  docs: "https://immich.app/docs"

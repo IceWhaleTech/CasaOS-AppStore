@@ -8,7 +8,7 @@ services:
           memory: 256M
         reservations:
           memory: 256M
-    image: liwei2633/gopeed:v1.7.1
+    image: liwei2633/gopeed:v1.9.3
     ports:
       - target: 9999
         published: "9999"
@@ -80,13 +80,14 @@ services:
             tr_TR: Gopeed indirme klasörü
 
 x-casaos:
+  id: org.icewhale.gopeed
   architectures:
     - amd64
     - arm64
     - arm
   main: gopeed
   author: joaobosconff
-  category: Utilities
+  category: Media
   description:
     en_US: |
       Gopeed is a modern high-speed download tool supporting HTTP, BitTorrent, and Magnet protocols, offering a beautiful interface and powerful functionality. Its lightweight design and multi-platform support make it ideal for efficient file downloading across various devices.
@@ -344,7 +345,7 @@ x-casaos:
       - [Gopeed Resmi Web Sitesi](https://gopeed.com)
       - [Gopeed GitHub Deposu](https://github.com/gopeedlab/gopeed)
   developer: GopeedLab
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gopeed/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gopeed/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gopeed/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Gopeed/screenshot-2.png
@@ -366,7 +367,74 @@ x-casaos:
     ru_RU: Открытый исходный код, легкий, нативный, поддерживает (HTTP, BitTorrent, Magnet и т.д.) для загрузки.
     tr_TR: Açık kaynak, hafif, yerel, indirme için (HTTP, BitTorrent, Magnet, vb.) destekler.
   title:
-    en_us: Gopeed
-    pt_br: Gopeed
+    en_US: Gopeed
+    pt_BR: Gopeed
   index: /
   port_map: "9999"
+  version: "1.9.3"
+  update_at: "2026-03-18"
+  release_notes:
+    en_US: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+    en_GB: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+    it_IT: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+    nb_NO: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+    zh_CN: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+    ja_JP: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+    ko_KR: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+    fr_FR: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+    de_DE: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+    sv_SE: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+    el_GR: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+    hr_HR: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+    pt_PT: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+    ru_RU: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+    tr_TR: |-
+      - v1.9.3 publishes refreshed desktop builds for Windows, macOS, and Linux.
+      - Linux packaging includes Flathub, Snap, DEB, RPM, AppImage, and Pacman variants.
+      - Android, iOS, and browser extension downloads are listed for the same release.
+  website: "https://gopeed.com"
+  repo: "https://github.com/gopeedlab/gopeed"
+  support: "https://github.com/GopeedLab/gopeed/issues"
+  docs: "https://gopeed.com/docs"

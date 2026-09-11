@@ -1,7 +1,7 @@
 name: hugo
 services:
   hugo:
-    image: ghcr.io/gohugoio/hugo:v0.148.2
+    image: ghcr.io/gohugoio/hugo:v0.161.1
     container_name: hugo
     deploy:
       resources:
@@ -76,13 +76,14 @@ services:
             ru_RU: Каталог кэша Hugo
             tr_TR: Hugo önbellek dizini
 x-casaos:
+  id: org.icewhale.hugo
   architectures:
     - amd64
     - arm64
   main: hugo
   category: Developer
   developer: gohugoio
-  author: CasaOS Team
+  author: ZimaOS Team
   tagline:
     en_US: The world's fastest framework for building websites
     en_GB: The world's fastest framework for building websites
@@ -685,7 +686,7 @@ x-casaos:
       **Daha Fazla Bilgi:**
       - [Hugo Resmi Web Sitesi](https://gohugo.io/)
       - [Hugo GitHub](https://github.com/gohugoio/hugo)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hugo/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hugo/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hugo/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Hugo/screenshot-2.png
@@ -713,3 +714,70 @@ x-casaos:
   index: /
   title:
     en_US: Hugo
+  version: "0.161.1"
+  update_at: "2026-04-29"
+  release_notes:
+    en_US: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+    en_GB: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+    it_IT: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+    nb_NO: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+    zh_CN: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+    ja_JP: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+    ko_KR: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+    fr_FR: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+    de_DE: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+    sv_SE: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+    el_GR: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+    hr_HR: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+    pt_PT: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+    ru_RU: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+    tr_TR: |-
+      - v0.161.1 honors Retry-After headers in resources.GetRemote retries.
+      - It adds AllowChildProcess to security.node.permissions and restricts the default http.urls @ deny rule to userinfo.
+      - The ghcr.io/gohugoio/hugo:v0.161.1 Docker image tag was verified on GHCR.
+  website: "https://gohugo.io/"
+  repo: "https://github.com/gohugoio/hugo"
+  support: "https://github.com/gohugoio/hugo/issues"
+  docs: "https://gohugo.io/documentation/"

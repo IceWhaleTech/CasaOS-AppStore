@@ -1,7 +1,7 @@
 name: pdfding
 services:
   pdfding:
-    image: mrmn/pdfding:v1.3.1
+    image: mrmn/pdfding:v1.7.2
     deploy:
       resources:
         reservations:
@@ -81,11 +81,12 @@ services:
             tr_TR: PdfDing medya dosyaları dizini
     container_name: pdfding
 x-casaos:
+  id: org.icewhale.pdfding
   architectures:
     - amd64
     - arm64
   author: mrmn2
-  category: Documents
+  category: Productivity
   description:
     en_US: |
       PdfDing is a selfhosted PDF manager, viewer and editor offering a seamless user experience on multiple devices. It's designed to be minimal, fast, and easy to set up using Docker.
@@ -178,7 +179,7 @@ x-casaos:
 
       PdfDing'i Zima gibi özel bulut cihazlarında dağıtmak, çok cihazlı erişimle benzersiz kolaylık getirir ve PDF koleksiyonunuzun nerede olursanız olun her zaman elinizin altında ve güvenli olmasını sağlar.
   developer: mrmn2
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PdfDing/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PdfDing/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PdfDing/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PdfDing/screenshot-2.png
@@ -202,7 +203,7 @@ x-casaos:
     pt_PT: Gestor, visualizador e editor PDF auto-hospedado
     ru_RU: Самостоятельно размещаемый менеджер, просмотрщик и редактор PDF
     tr_TR: Kendi kendine barındırılan PDF yöneticisi, görüntüleyicisi ve düzenleyicisi
-  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PdfDing/thumbnail.png
+  thumbnail: ""
   tips:
     before_install:
       en_US: |
@@ -268,3 +269,55 @@ x-casaos:
 
   title:
     en_US: PdfDing
+  version: "1.7.2"
+  update_at: "2026-04-12"
+  release_notes:
+    en_US: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+    en_GB: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+    it_IT: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+    nb_NO: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+    zh_CN: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+    ja_JP: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+    ko_KR: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+    fr_FR: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+    de_DE: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+    sv_SE: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+    el_GR: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+    hr_HR: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+    pt_PT: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+    ru_RU: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+    tr_TR: |-
+      - v1.7.2 updates dependencies for a security update.
+      - The mrmn/pdfding:v1.7.2 Docker image tag was published on 2026-04-12.
+  website: "https://www.pdfding.com"
+  repo: "https://github.com/mrmn2/PdfDing"
+  support: "https://github.com/mrmn2/PdfDing/issues"
+  docs: "https://github.com/mrmn2/PdfDing#readme"

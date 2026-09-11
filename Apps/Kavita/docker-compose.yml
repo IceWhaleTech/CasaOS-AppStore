@@ -1,7 +1,7 @@
 name: kavita
 services:
   kavita:
-    image: jvmilazz0/kavita:0.8.6
+    image: jvmilazz0/kavita:0.9.0.2
     container_name: kavita
     deploy:
       resources:
@@ -95,6 +95,7 @@ services:
             ru_RU: Синхронизация часового пояса
             tr_TR: Saat dilimi senkronizasyonu
 x-casaos:
+  id: org.icewhale.kavita
   architectures:
     - amd64
     - arm
@@ -450,7 +451,7 @@ x-casaos:
       **Daha fazla bilgi:**
       - [Kavita resmi web sitesi](https://www.kavitareader.com)
       - [Kavita GitHub deposu](https://github.com/Kareadita/Kavita)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Kavita/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Kavita/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Kavita/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Kavita/screenshot-2.png
@@ -462,3 +463,70 @@ x-casaos:
   index: /
   title:
     en_US: Kavita
+  version: "0.9.0-2"
+  update_at: "2026-05-14"
+  release_notes:
+    en_US: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+    en_GB: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+    it_IT: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+    nb_NO: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+    zh_CN: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+    ja_JP: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+    ko_KR: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+    fr_FR: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+    de_DE: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+    sv_SE: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+    el_GR: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+    hr_HR: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+    pt_PT: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+    ru_RU: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+    tr_TR: |-
+      - v0.9.0.2 is a security hotfix for CVE-2026-47202, and upstream advises all users to update immediately.
+      - OIDC validation no longer requires super-safe URLs.
+      - Fixes include reading-list tabs, ratings, bookmarks, metadata removal, collections, annotations, external links, and search reliability.
+  website: "https://www.kavitareader.com"
+  repo: "https://github.com/Kareadita/Kavita"
+  support: "https://github.com/Kareadita/Kavita/issues"
+  docs: "https://wiki.kavitareader.com/"

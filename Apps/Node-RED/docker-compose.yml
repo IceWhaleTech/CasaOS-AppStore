@@ -1,7 +1,7 @@
 name: node-red
 services:
   node-red:
-    image: nodered/node-red:4.0.9-22
+    image: nodered/node-red:4.1.10
     deploy:
       resources:
         reservations:
@@ -56,13 +56,13 @@ services:
             tr_TR: Node-RED veri dizini
     container_name: node-red
 x-casaos:
+  id: org.icewhale.nodered
   architectures:
     - amd64
     - arm64
-    - s390x
     - arm
   main: node-red
-  author: CasaOS Team
+  author: ZimaOS Team
   category: Developer
   description:
     en_US: |
@@ -365,7 +365,7 @@ x-casaos:
       - [Node-RED Resmi Web Sitesi](https://nodered.org/)
       - [Node-RED GitHub](https://github.com/node-red/node-red)
   developer: Node-RED
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Node-RED/screenshot-2.png
@@ -392,3 +392,70 @@ x-casaos:
     en_US: Node-RED
   index: /
   port_map: "1880"
+  version: "4.1.10"
+  update_at: "2026-05-08"
+  release_notes:
+    en_US: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+    en_GB: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+    it_IT: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+    nb_NO: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+    zh_CN: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+    ja_JP: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+    ko_KR: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+    fr_FR: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+    de_DE: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+    sv_SE: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+    el_GR: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+    hr_HR: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+    pt_PT: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+    ru_RU: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+    tr_TR: |-
+      - Node-RED 4.1.10 is a maintenance release.
+      - It fixes module name validation for uninstall and tgz install operations.
+      - It also ensures project files stay inside the project root path.
+  website: "https://nodered.org/"
+  repo: "https://github.com/node-red/node-red"
+  support: "https://discourse.nodered.org"
+  docs: "https://nodered.org/docs/"

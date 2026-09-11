@@ -1,0 +1,597 @@
+name: karakeep
+services:
+  karakeep:
+    image: ghcr.io/karakeep-app/karakeep:0.33.2
+    container_name: karakeep
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    restart: unless-stopped
+    ports:
+      - target: 3000
+        published: "14592"
+        protocol: tcp
+    networks:
+      - karakeep
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    environment:
+      MEILI_ADDR: "http://karakeep-meilisearch:7700"
+      BROWSER_WEB_URL: "http://karakeep-chrome:9222"
+      DATA_DIR: /data
+      NEXTAUTH_URL: "http://localhost:14592"
+      NEXTAUTH_SECRET: "change_this_to_a_long_random_string"
+      MEILI_MASTER_KEY: "change_this_to_a_long_random_string"
+      OPENAI_API_KEY: ""
+    x-casaos:
+      ports:
+        - container: "3000"
+          description:
+            en_US: WebUI HTTP Port
+            en_GB: WebUI HTTP Port
+            it_IT: Porta HTTP WebUI
+            nb_NO: WebUI HTTP-port
+            zh_CN: WebUI HTTP端口
+            ja_JP: WebUI HTTPポート
+            ko_KR: WebUI HTTP 포트
+            fr_FR: Port HTTP WebUI
+            de_DE: WebUI-HTTP-Port
+            sv_SE: WebUI HTTP-port
+            el_GR: Θύρα HTTP WebUI
+            hr_HR: WebUI HTTP priključak
+            pt_PT: Porta HTTP da WebUI
+            ru_RU: HTTP-порт WebUI
+            tr_TR: WebUI HTTP Bağlantı Noktası
+      volumes:
+        - container: /data
+          description:
+            en_US: Karakeep Data Directory
+            en_GB: Karakeep Data Directory
+            it_IT: Directory dati di Karakeep
+            nb_NO: Karakeep datakatalog
+            zh_CN: Karakeep 数据目录
+            ja_JP: Karakeep データディレクトリ
+            ko_KR: Karakeep 데이터 디렉터리
+            fr_FR: Répertoire de données Karakeep
+            de_DE: Karakeep-Datenverzeichnis
+            sv_SE: Karakeep datakatalog
+            el_GR: Κατάλογος δεδομένων Karakeep
+            hr_HR: Karakeep direktorij podataka
+            pt_PT: Diretório de dados do Karakeep
+            ru_RU: Каталог данных Karakeep
+            tr_TR: Karakeep veri dizini
+      envs:
+        - container: NEXTAUTH_URL
+          description:
+            en_US: Sets the public URL used for authentication callbacks
+            en_GB: Sets the public URL used for authentication callbacks
+            it_IT: Imposta l'URL pubblico usato per i callback di autenticazione
+            nb_NO: Angir den offentlige URL-en som brukes for autentiserings-tilbakekall
+            zh_CN: 设置认证回调使用的公开访问地址
+            ja_JP: 認証コールバックに使用する公開URLを設定します
+            ko_KR: 인증 콜백에 사용할 공개 URL을 설정합니다
+            fr_FR: Définit l'URL publique utilisée pour les rappels d'authentification
+            de_DE: Legt die öffentliche URL für Authentifizierungs-Callbacks fest
+            sv_SE: Anger den publika URL som används för autentiseringsåteranrop
+            el_GR: Ορίζει το δημόσιο URL που χρησιμοποιείται για τα callbacks πιστοποίησης
+            hr_HR: Postavlja javni URL koji se koristi za povratne pozive autentikacije
+            pt_PT: Define o URL público usado para callbacks de autenticação
+            ru_RU: Задает публичный URL, используемый для обратных вызовов аутентификации
+            tr_TR: Kimlik doğrulama geri çağrıları için kullanılan genel URL'yi ayarlar
+        - container: NEXTAUTH_SECRET
+          description:
+            en_US: Sets the secret used to sign sessions and authentication tokens
+            en_GB: Sets the secret used to sign sessions and authentication tokens
+            it_IT: Imposta il segreto usato per firmare sessioni e token di autenticazione
+            nb_NO: Angir hemmeligheten som brukes til å signere økter og autentiseringstokener
+            zh_CN: 设置用于签名会话和认证令牌的密钥
+            ja_JP: セッションと認証トークンの署名に使う秘密鍵を設定します
+            ko_KR: 세션과 인증 토큰 서명에 사용할 비밀값을 설정합니다
+            fr_FR: Définit le secret utilisé pour signer les sessions et les jetons d'authentification
+            de_DE: Legt das Geheimnis fest, das zum Signieren von Sitzungen und Authentifizierungs-Token verwendet wird
+            sv_SE: Anger hemligheten som används för att signera sessioner och autentiseringstoken
+            el_GR: Ορίζει το μυστικό που χρησιμοποιείται για την υπογραφή συνεδριών και tokens πιστοποίησης
+            hr_HR: Postavlja tajni ključ koji se koristi za potpisivanje sesija i autentifikacijskih tokena
+            pt_PT: Define o segredo usado para assinar sessões e tokens de autenticação
+            ru_RU: Задает секрет, используемый для подписи сессий и токенов аутентификации
+            tr_TR: Oturumları ve kimlik doğrulama belirteçlerini imzalamak için kullanılan gizli anahtarı ayarlar
+        - container: MEILI_MASTER_KEY
+          description:
+            en_US: Sets the Meilisearch master key used by Karakeep
+            en_GB: Sets the Meilisearch master key used by Karakeep
+            it_IT: Imposta la chiave master di Meilisearch usata da Karakeep
+            nb_NO: Angir Meilisearch-hovednøkkelen som brukes av Karakeep
+            zh_CN: 设置 Karakeep 使用的 Meilisearch 主密钥
+            ja_JP: Karakeep が使用する Meilisearch のマスターキーを設定します
+            ko_KR: Karakeep에서 사용할 Meilisearch 마스터 키를 설정합니다
+            fr_FR: Définit la clé maître Meilisearch utilisée par Karakeep
+            de_DE: Legt den von Karakeep verwendeten Meilisearch-Masterschlüssel fest
+            sv_SE: Anger Meilisearch-huvudnyckeln som används av Karakeep
+            el_GR: Ορίζει το κύριο κλειδί Meilisearch που χρησιμοποιεί το Karakeep
+            hr_HR: Postavlja Meilisearch glavni ključ koji koristi Karakeep
+            pt_PT: Define a chave principal do Meilisearch usada pelo Karakeep
+            ru_RU: Задает мастер-ключ Meilisearch, используемый Karakeep
+            tr_TR: Karakeep tarafından kullanılan Meilisearch ana anahtarını ayarlar
+        - container: OPENAI_API_KEY
+          description:
+            en_US: Optional OpenAI API key for AI tagging and summarization
+            en_GB: Optional OpenAI API key for AI tagging and summarisation
+            it_IT: Chiave API OpenAI opzionale per tagging e riepilogo AI
+            nb_NO: Valgfri OpenAI API-nøkkel for AI-merking og oppsummering
+            zh_CN: 用于 AI 标签和摘要功能的可选 OpenAI API 密钥
+            ja_JP: AIタグ付けと要約のための任意の OpenAI API キー
+            ko_KR: AI 태깅과 요약 기능을 위한 선택적 OpenAI API 키
+            fr_FR: Clé API OpenAI facultative pour le marquage et le résumé par IA
+            de_DE: Optionale OpenAI-API-Schlüssel für KI-Tagging und Zusammenfassungen
+            sv_SE: Valfri OpenAI API-nyckel för AI-taggar och sammanfattningar
+            el_GR: Προαιρετικό κλειδί OpenAI API για ετικέτες και περιλήψεις με AI
+            hr_HR: Neobavezni OpenAI API ključ za AI označavanje i sažimanje
+            pt_PT: Chave da API OpenAI opcional para etiquetagem e resumo por IA
+            ru_RU: Необязательный ключ OpenAI API для ИИ-тегов и сводок
+            tr_TR: Yapay zeka etiketleme ve özetleme için isteğe bağlı OpenAI API anahtarı
+  karakeep-chrome:
+    image: ghcr.io/karakeep-app/karakeep-chrome:release
+    container_name: karakeep-chrome
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    restart: unless-stopped
+    init: true
+    networks:
+      - karakeep
+    command:
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --hide-scrollbars
+      - --disable-blink-features=AutomationControlled
+      - --window-size=1440,900
+  karakeep-meilisearch:
+    image: getmeili/meilisearch:v1.41.0
+    container_name: karakeep-meilisearch
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    networks:
+      - karakeep
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/meilisearch
+        target: /meili_data
+    environment:
+      MEILI_MASTER_KEY: "change_this_to_a_long_random_string"
+      MEILI_NO_ANALYTICS: "true"
+    x-casaos:
+      volumes:
+        - container: /meili_data
+          description:
+            en_US: Karakeep Meilisearch Data Directory
+            en_GB: Karakeep Meilisearch Data Directory
+            it_IT: Directory dati Meilisearch di Karakeep
+            nb_NO: Karakeep Meilisearch-datakatalog
+            zh_CN: Karakeep Meilisearch 数据目录
+            ja_JP: Karakeep Meilisearch データディレクトリ
+            ko_KR: Karakeep Meilisearch 데이터 디렉터리
+            fr_FR: Répertoire de données Meilisearch de Karakeep
+            de_DE: Karakeep-Meilisearch-Datenverzeichnis
+            sv_SE: Karakeep Meilisearch-datakatalog
+            el_GR: Κατάλογος δεδομένων Meilisearch του Karakeep
+            hr_HR: Karakeep Meilisearch direktorij podataka
+            pt_PT: Diretório de dados Meilisearch do Karakeep
+            ru_RU: Каталог данных Meilisearch для Karakeep
+            tr_TR: Karakeep Meilisearch veri dizini
+networks:
+  karakeep:
+    driver: bridge
+x-casaos:
+  id: org.icewhale.karakeep
+  architectures:
+    - amd64
+    - arm64
+  main: karakeep
+  category: Productivity
+  developer: karakeep-app
+  author: karakeep
+  tagline:
+    en_US: The Bookmark Everything App
+    en_GB: The Bookmark Everything App
+    it_IT: L'app per salvare tutto
+    nb_NO: Appen for å bokmerke alt
+    zh_CN: 什么都能收藏的应用
+    ja_JP: 何でも保存できるブックマークアプリ
+    ko_KR: 무엇이든 저장하는 북마크 앱
+    fr_FR: L'application pour tout mettre en favoris
+    de_DE: Die App zum Speichern von allem
+    sv_SE: Appen för att bokmärka allt
+    el_GR: Η εφαρμογή για να αποθηκεύετε τα πάντα
+    hr_HR: Aplikacija za spremanje svega
+    pt_PT: A aplicação para guardar tudo
+    ru_RU: Приложение, чтобы сохранять всё
+    tr_TR: Her şeyi kaydetme uygulaması
+  description:
+    en_US: |
+      Karakeep is an open-source, self-hosted bookmark manager for links, notes, images, PDFs, and highlights, built to keep everything you want to save in one place.
+      It automatically fetches titles, descriptions, and previews, then helps you organize your library with AI tagging, full-text search, lists, and rule-based automation.
+      With browser extensions, mobile apps, RSS ingestion, and page archiving, Karakeep works well as both a read-later tool and a durable personal content archive.
+
+      **Main Features:**
+      - Save links, notes, images, PDFs, and text highlights in one library
+      - Auto-fetch titles, descriptions, images, and archived pages for later reading
+      - Use AI tagging, summarization, OCR, and full-text search to rediscover content quickly
+      - Organize content with tags, collaborative lists, RSS feeds, and rule-based workflows
+      - Access your collection through the web app, mobile apps, browser extensions, REST API, and CLI
+
+      **Learn More:**
+      - [Karakeep Official Website](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Karakeep Documentation](https://docs.karakeep.app/)
+    en_GB: |
+      Karakeep is an open-source, self-hosted bookmark manager for links, notes, images, PDFs, and highlights, built to keep everything you want to save in one place.
+      It automatically fetches titles, descriptions, and previews, then helps you organise your library with AI tagging, full-text search, lists, and rule-based automation.
+      With browser extensions, mobile apps, RSS ingestion, and page archiving, Karakeep works well as both a read-later tool and a durable personal content archive.
+
+      **Main Features:**
+      - Save links, notes, images, PDFs, and text highlights in one library
+      - Auto-fetch titles, descriptions, images, and archived pages for later reading
+      - Use AI tagging, summarisation, OCR, and full-text search to rediscover content quickly
+      - Organise content with tags, collaborative lists, RSS feeds, and rule-based workflows
+      - Access your collection through the web app, mobile apps, browser extensions, REST API, and CLI
+
+      **Learn More:**
+      - [Karakeep Official Website](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Karakeep Documentation](https://docs.karakeep.app/)
+    it_IT: |
+      Karakeep è un gestore di segnalibri open-source e self-hosted per link, note, immagini, PDF ed evidenziazioni, pensato per raccogliere in un solo posto tutto ciò che vuoi conservare.
+      Recupera automaticamente titoli, descrizioni e anteprime, poi ti aiuta a organizzare la libreria con tagging AI, ricerca full-text, liste e automazioni basate su regole.
+      Con estensioni browser, app mobili, importazione RSS e archiviazione completa delle pagine, Karakeep funziona bene sia come strumento read-later sia come archivio personale durevole di contenuti.
+
+      **Funzionalità Principali:**
+      - Salva link, note, immagini, PDF ed evidenziazioni di testo in un'unica libreria
+      - Recupera automaticamente titoli, descrizioni, immagini e pagine archiviate per la lettura successiva
+      - Usa tagging AI, riepiloghi, OCR e ricerca full-text per ritrovare rapidamente i contenuti
+      - Organizza i contenuti con tag, liste collaborative, feed RSS e flussi basati su regole
+      - Accedi alla raccolta tramite web app, app mobili, estensioni browser, REST API e CLI
+
+      **Ulteriori Informazioni:**
+      - [Sito Ufficiale Karakeep](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Documentazione di Karakeep](https://docs.karakeep.app/)
+    nb_NO: |
+      Karakeep er en åpen kildekode og selvhostet bokmerkeapp for lenker, notater, bilder, PDF-er og uthevinger, laget for å samle alt du vil lagre på ett sted.
+      Den henter automatisk titler, beskrivelser og forhåndsvisninger, og hjelper deg deretter med å organisere biblioteket med AI-merking, fulltekstsøk, lister og regelbasert automatisering.
+      Med nettleserutvidelser, mobilapper, RSS-import og sidearkivering fungerer Karakeep godt både som et les-senere-verktøy og som et varig personlig innholdsarkiv.
+
+      **Hovedfunksjoner:**
+      - Lagre lenker, notater, bilder, PDF-er og tekstuthevinger i ett bibliotek
+      - Hent automatisk titler, beskrivelser, bilder og arkiverte sider for senere lesing
+      - Bruk AI-merking, oppsummering, OCR og fulltekstsøk for å finne innhold raskt igjen
+      - Organiser innhold med tagger, samarbeidslister, RSS-feeder og regelbaserte arbeidsflyter
+      - Få tilgang til samlingen via webappen, mobilapper, nettleserutvidelser, REST API og CLI
+
+      **Lær Mer:**
+      - [Karakeep Offisielle Nettside](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Karakeep Dokumentasjon](https://docs.karakeep.app/)
+    zh_CN: |
+      Karakeep 是一款开源、自托管的收藏管理应用，可以把链接、笔记、图片、PDF 和网页高亮集中保存到同一个资料库中。
+      它会自动抓取标题、描述和预览内容，并结合 AI 标签、全文搜索、列表和规则引擎，帮助你更快整理与找回收藏。
+      借助浏览器扩展、移动端应用、RSS 导入和整页归档能力，Karakeep 既适合作为稍后读工具，也适合作为长期保存个人内容的归档库。
+
+      **主要功能：**
+      - 在同一个资料库中保存链接、笔记、图片、PDF 和文本高亮
+      - 自动抓取标题、描述、图片和归档页面，方便后续阅读
+      - 借助 AI 标签、摘要、OCR 和全文搜索，更快找回需要的内容
+      - 通过标签、协作列表、RSS 订阅和规则工作流整理收藏
+      - 可通过 Web 应用、移动端应用、浏览器扩展、REST API 和 CLI 访问内容
+
+      **了解更多：**
+      - [Karakeep 官网](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Karakeep 文档](https://docs.karakeep.app/)
+    ja_JP: |
+      Karakeepは、リンク、メモ、画像、PDF、ハイライトを一か所に保存できるように作られた、オープンソースでセルフホスト可能なブックマーク管理アプリです。
+      タイトル、説明、プレビューを自動取得し、AIタグ付け、全文検索、リスト、ルールベースの自動化でライブラリ整理を支援します。
+      ブラウザー拡張、モバイルアプリ、RSS取り込み、ページアーカイブに対応しており、あとで読むためのツールとしても、個人コンテンツを長く保管するアーカイブとしても使いやすい構成です。
+
+      **主な機能：**
+      - リンク、メモ、画像、PDF、テキストハイライトをひとつのライブラリに保存
+      - タイトル、説明、画像、アーカイブ済みページを自動取得して後で読みやすく整理
+      - AIタグ付け、要約、OCR、全文検索で必要な内容をすばやく再発見
+      - タグ、共同リスト、RSSフィード、ルールベースのワークフローでコンテンツを整理
+      - Webアプリ、モバイルアプリ、ブラウザー拡張、REST API、CLIからコレクションにアクセス可能
+
+      **詳細情報：**
+      - [Karakeep 公式サイト](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Karakeep ドキュメント](https://docs.karakeep.app/)
+    ko_KR: |
+      Karakeep은 링크, 메모, 이미지, PDF, 하이라이트를 한곳에 모아 저장할 수 있도록 만든 오픈 소스 자체 호스팅 북마크 관리자입니다.
+      제목, 설명, 미리보기를 자동으로 가져오고, AI 태깅, 전체 텍스트 검색, 리스트, 규칙 기반 자동화로 라이브러리 정리를 도와줍니다.
+      브라우저 확장, 모바일 앱, RSS 수집, 페이지 아카이빙을 지원해 나중에 읽기 도구로도 좋고 개인 콘텐츠를 오래 보관하는 아카이브로도 잘 맞습니다.
+
+      **주요 기능:**
+      - 링크, 메모, 이미지, PDF, 텍스트 하이라이트를 하나의 라이브러리에 저장
+      - 제목, 설명, 이미지, 보관된 페이지를 자동으로 가져와 나중에 읽기 쉽게 정리
+      - AI 태깅, 요약, OCR, 전체 텍스트 검색으로 필요한 내용을 빠르게 다시 찾기
+      - 태그, 협업 리스트, RSS 피드, 규칙 기반 워크플로로 콘텐츠 구성
+      - 웹 앱, 모바일 앱, 브라우저 확장, REST API, CLI를 통해 컬렉션에 접근
+
+      **더 알아보기:**
+      - [Karakeep 공식 웹사이트](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Karakeep 문서](https://docs.karakeep.app/)
+    fr_FR: |
+      Karakeep est un gestionnaire de favoris open-source et auto-hébergé pour les liens, notes, images, PDF et surlignages, conçu pour réunir en un seul endroit tout ce que vous voulez conserver.
+      Il récupère automatiquement les titres, descriptions et aperçus, puis vous aide à organiser votre bibliothèque avec le marquage par IA, la recherche plein texte, les listes et l'automatisation basée sur des règles.
+      Avec des extensions de navigateur, des applications mobiles, l'ingestion RSS et l'archivage complet des pages, Karakeep convient aussi bien comme outil de lecture différée que comme archive personnelle durable de contenus.
+
+      **Fonctionnalités Principales :**
+      - Enregistre liens, notes, images, PDF et surlignages de texte dans une seule bibliothèque
+      - Récupère automatiquement titres, descriptions, images et pages archivées pour une lecture ultérieure
+      - Utilise le marquage IA, les résumés, l'OCR et la recherche plein texte pour retrouver rapidement le contenu
+      - Organise le contenu avec des tags, des listes collaboratives, des flux RSS et des workflows fondés sur des règles
+      - Donne accès à la collection via l'application web, les applications mobiles, les extensions de navigateur, l'API REST et le CLI
+
+      **En Savoir Plus :**
+      - [Site Officiel Karakeep](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Documentation Karakeep](https://docs.karakeep.app/)
+    de_DE: |
+      Karakeep ist ein quelloffener und selbst gehosteter Bookmark-Manager für Links, Notizen, Bilder, PDFs und Highlights, der alles, was Sie aufheben möchten, an einem Ort sammelt.
+      Er ruft automatisch Titel, Beschreibungen und Vorschauen ab und hilft anschließend mit KI-Tagging, Volltextsuche, Listen und regelbasierter Automatisierung bei der Organisation Ihrer Bibliothek.
+      Mit Browser-Erweiterungen, mobilen Apps, RSS-Import und Seitenarchivierung eignet sich Karakeep sowohl als Später-lesen-Werkzeug als auch als dauerhaftes persönliches Inhaltsarchiv.
+
+      **Hauptfunktionen:**
+      - Speichert Links, Notizen, Bilder, PDFs und Text-Highlights in einer einzigen Bibliothek
+      - Holt automatisch Titel, Beschreibungen, Bilder und archivierte Seiten für späteres Lesen
+      - Nutzt KI-Tagging, Zusammenfassungen, OCR und Volltextsuche, um Inhalte schnell wiederzufinden
+      - Organisiert Inhalte mit Tags, gemeinsamen Listen, RSS-Feeds und regelbasierten Workflows
+      - Zugriff über Web-App, mobile Apps, Browser-Erweiterungen, REST-API und CLI
+
+      **Mehr Erfahren:**
+      - [Karakeep Offizielle Website](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Karakeep Dokumentation](https://docs.karakeep.app/)
+    sv_SE: |
+      Karakeep är en öppen källkod och självhostad bokmärkeshanterare för länkar, anteckningar, bilder, PDF-filer och markeringar, byggd för att samla allt du vill spara på ett ställe.
+      Den hämtar automatiskt titlar, beskrivningar och förhandsvisningar och hjälper dig sedan att organisera biblioteket med AI-taggar, fulltextsökning, listor och regelbaserad automatisering.
+      Med webbläsartillägg, mobilappar, RSS-import och sidarkivering fungerar Karakeep bra både som ett läs-senare-verktyg och som ett hållbart personligt innehållsarkiv.
+
+      **Huvudfunktioner:**
+      - Spara länkar, anteckningar, bilder, PDF-filer och textmarkeringar i ett enda bibliotek
+      - Hämta automatiskt titlar, beskrivningar, bilder och arkiverade sidor för senare läsning
+      - Använd AI-taggar, sammanfattningar, OCR och fulltextsökning för att snabbt hitta tillbaka till innehåll
+      - Organisera innehåll med taggar, delade listor, RSS-flöden och regelbaserade arbetsflöden
+      - Få åtkomst till samlingen via webbappen, mobilappar, webbläsartillägg, REST API och CLI
+
+      **Lär Dig Mer:**
+      - [Karakeep Officiella Webbplats](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Karakeep Dokumentation](https://docs.karakeep.app/)
+    el_GR: |
+      Το Karakeep είναι ένας open-source και self-hosted διαχειριστής σελιδοδεικτών για συνδέσμους, σημειώσεις, εικόνες, PDF και επισημάνσεις, φτιαγμένος για να συγκεντρώνει σε ένα μέρος όλα όσα θέλετε να κρατήσετε.
+      Ανακτά αυτόματα τίτλους, περιγραφές και προεπισκοπήσεις και στη συνέχεια σας βοηθά να οργανώσετε τη βιβλιοθήκη σας με ετικέτες AI, πλήρη αναζήτηση κειμένου, λίστες και αυτοματισμούς βασισμένους σε κανόνες.
+      Με επεκτάσεις browser, mobile apps, εισαγωγή RSS και αρχειοθέτηση σελίδων, το Karakeep λειτουργεί καλά τόσο ως εργαλείο read-later όσο και ως ανθεκτικό προσωπικό αρχείο περιεχομένου.
+
+      **Κύριες Λειτουργίες:**
+      - Αποθηκεύει συνδέσμους, σημειώσεις, εικόνες, PDF και επισημάνσεις κειμένου σε μία βιβλιοθήκη
+      - Ανακτά αυτόματα τίτλους, περιγραφές, εικόνες και αρχειοθετημένες σελίδες για ανάγνωση αργότερα
+      - Χρησιμοποιεί ετικέτες AI, περιλήψεις, OCR και πλήρη αναζήτηση κειμένου για γρήγορη επανανακάλυψη περιεχομένου
+      - Οργανώνει περιεχόμενο με ετικέτες, συνεργατικές λίστες, RSS feeds και ροές εργασίας βασισμένες σε κανόνες
+      - Παρέχει πρόσβαση μέσω web app, mobile apps, επεκτάσεων browser, REST API και CLI
+
+      **Μάθετε Περισσότερα:**
+      - [Επίσημος Ιστότοπος Karakeep](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Τεκμηρίωση Karakeep](https://docs.karakeep.app/)
+    hr_HR: |
+      Karakeep je open-source i samohostirani upravitelj oznaka za poveznice, bilješke, slike, PDF-ove i istaknute dijelove teksta, napravljen da na jednom mjestu čuva sve što želite spremiti.
+      Automatski dohvaća naslove, opise i preglede, a zatim pomaže organizirati biblioteku uz AI označavanje, pretraživanje punog teksta, liste i automatizaciju temeljenu na pravilima.
+      Uz proširenja preglednika, mobilne aplikacije, RSS uvoz i arhiviranje stranica, Karakeep dobro služi i kao alat za kasnije čitanje i kao trajna osobna arhiva sadržaja.
+
+      **Glavne Funkcije:**
+      - Sprema poveznice, bilješke, slike, PDF-ove i tekstualna isticanja u jednu biblioteku
+      - Automatski dohvaća naslove, opise, slike i arhivirane stranice za kasnije čitanje
+      - Koristi AI oznake, sažetke, OCR i pretraživanje punog teksta za brzo ponovno pronalaženje sadržaja
+      - Organizira sadržaj pomoću oznaka, suradničkih lista, RSS izvora i radnih tokova temeljenih na pravilima
+      - Omogućuje pristup zbirci kroz web aplikaciju, mobilne aplikacije, proširenja preglednika, REST API i CLI
+
+      **Saznajte Više:**
+      - [Službena Web Stranica Karakeep](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Karakeep Dokumentacija](https://docs.karakeep.app/)
+    pt_PT: |
+      O Karakeep é um gestor de marcadores open-source e auto-hospedado para ligações, notas, imagens, PDFs e destaques, criado para reunir num só lugar tudo o que quer guardar.
+      Obtém automaticamente títulos, descrições e pré-visualizações e depois ajuda a organizar a biblioteca com etiquetagem por IA, pesquisa em texto completo, listas e automação baseada em regras.
+      Com extensões de navegador, aplicações móveis, ingestão RSS e arquivamento de páginas, o Karakeep funciona bem tanto como ferramenta de leitura posterior como arquivo pessoal duradouro de conteúdos.
+
+      **Principais Funcionalidades:**
+      - Guarda ligações, notas, imagens, PDFs e destaques de texto numa única biblioteca
+      - Obtém automaticamente títulos, descrições, imagens e páginas arquivadas para leitura posterior
+      - Usa etiquetagem por IA, resumos, OCR e pesquisa em texto completo para reencontrar conteúdos rapidamente
+      - Organiza conteúdos com etiquetas, listas colaborativas, feeds RSS e fluxos de trabalho baseados em regras
+      - Dá acesso à coleção através da aplicação web, aplicações móveis, extensões de navegador, API REST e CLI
+
+      **Saiba Mais:**
+      - [Site Oficial Karakeep](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Documentação do Karakeep](https://docs.karakeep.app/)
+    ru_RU: |
+      Karakeep — это open-source и self-hosted менеджер закладок для ссылок, заметок, изображений, PDF и выделений, созданный для того, чтобы хранить всё важное в одном месте.
+      Он автоматически получает заголовки, описания и превью, а затем помогает наводить порядок с помощью ИИ-тегов, полнотекстового поиска, списков и автоматизации на основе правил.
+      Благодаря расширениям браузера, мобильным приложениям, RSS-импорту и архивированию страниц Karakeep хорошо подходит и как инструмент для чтения позже, и как долговременный личный архив контента.
+
+      **Основные Функции:**
+      - Сохраняет ссылки, заметки, изображения, PDF и текстовые выделения в одной библиотеке
+      - Автоматически получает заголовки, описания, изображения и архивированные страницы для последующего чтения
+      - Использует ИИ-теги, сводки, OCR и полнотекстовый поиск, чтобы быстрее находить нужный контент
+      - Организует материалы с помощью тегов, совместных списков, RSS-лент и рабочих процессов на основе правил
+      - Дает доступ к коллекции через веб-приложение, мобильные приложения, расширения браузера, REST API и CLI
+
+      **Узнать Больше:**
+      - [Официальный Сайт Karakeep](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Документация Karakeep](https://docs.karakeep.app/)
+    tr_TR: |
+      Karakeep, bağlantılar, notlar, görseller, PDF dosyaları ve vurgular için açık kaynaklı ve kendi kendine barındırılabilen bir yer imi yöneticisidir; saklamak istediğiniz her şeyi tek yerde toplamak için tasarlanmıştır.
+      Başlıkları, açıklamaları ve önizlemeleri otomatik olarak çeker; ardından yapay zeka etiketleme, tam metin arama, listeler ve kural tabanlı otomasyon ile kütüphanenizi düzenlemenize yardımcı olur.
+      Tarayıcı eklentileri, mobil uygulamalar, RSS içe aktarma ve sayfa arşivleme desteğiyle Karakeep hem daha sonra okumak için hem de kalıcı kişisel içerik arşivi olarak iyi çalışır.
+
+      **Başlıca İşlevler:**
+      - Bağlantıları, notları, görselleri, PDF dosyalarını ve metin vurgularını tek bir kütüphanede saklar
+      - Daha sonra okumak için başlıkları, açıklamaları, görselleri ve arşivlenmiş sayfaları otomatik olarak getirir
+      - İçeriği hızla yeniden bulmak için yapay zeka etiketleme, özetleme, OCR ve tam metin aramayı kullanır
+      - İçeriği etiketler, ortak listeler, RSS akışları ve kural tabanlı iş akışlarıyla düzenler
+      - Koleksiyona web uygulaması, mobil uygulamalar, tarayıcı eklentileri, REST API ve CLI üzerinden erişim sağlar
+
+      **Daha Fazla Bilgi:**
+      - [Karakeep Resmi Web Sitesi](https://karakeep.app/)
+      - [Karakeep GitHub](https://github.com/karakeep-app/karakeep)
+      - [Karakeep Dokümantasyonu](https://docs.karakeep.app/)
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Karakeep/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Karakeep/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Karakeep/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Karakeep/screenshot-3.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Karakeep/thumbnail.png
+  tips:
+    before_install:
+      en_US: |
+        Set `NEXTAUTH_URL` to the address you will use to access Karakeep.
+        Use long random strings for `NEXTAUTH_SECRET` and `MEILI_MASTER_KEY`, and keep the `MEILI_MASTER_KEY` identical in both `karakeep` and `meilisearch`.
+        The first user to sign up on your instance becomes the admin.
+      en_GB: |
+        Set `NEXTAUTH_URL` to the address you will use to access Karakeep.
+        Use long random strings for `NEXTAUTH_SECRET` and `MEILI_MASTER_KEY`, and keep the `MEILI_MASTER_KEY` identical in both `karakeep` and `meilisearch`.
+        The first user to sign up on your instance becomes the admin.
+      it_IT: |
+        Imposta `NEXTAUTH_URL` con l'indirizzo che userai per accedere a Karakeep.
+        Usa stringhe casuali lunghe per `NEXTAUTH_SECRET` e `MEILI_MASTER_KEY`, e mantieni `MEILI_MASTER_KEY` identico sia in `karakeep` sia in `meilisearch`.
+        Il primo utente che si registra sulla tua istanza diventa amministratore.
+      nb_NO: |
+        Sett `NEXTAUTH_URL` til adressen du vil bruke for å få tilgang til Karakeep.
+        Bruk lange tilfeldige strenger for `NEXTAUTH_SECRET` og `MEILI_MASTER_KEY`, og behold samme `MEILI_MASTER_KEY` i både `karakeep` og `meilisearch`.
+        Den første brukeren som registrerer seg på instansen din blir administrator.
+      zh_CN: |
+        请将 `NEXTAUTH_URL` 设置为你实际访问 Karakeep 时使用的地址。
+        请为 `NEXTAUTH_SECRET` 和 `MEILI_MASTER_KEY` 使用足够长的随机字符串，并确保 `karakeep` 与 `meilisearch` 两个服务中的 `MEILI_MASTER_KEY` 保持一致。
+        你的实例中第一个注册的用户会成为管理员。
+      ja_JP: |
+        `NEXTAUTH_URL` は、Karakeep にアクセスするときに実際に使うアドレスへ設定してください。
+        `NEXTAUTH_SECRET` と `MEILI_MASTER_KEY` には十分に長いランダム文字列を使用し、`karakeep` と `meilisearch` の `MEILI_MASTER_KEY` は同じ値に保ってください。
+        このインスタンスで最初に登録したユーザーが管理者になります。
+      ko_KR: |
+        `NEXTAUTH_URL`은 Karakeep에 실제로 접속할 때 사용할 주소로 설정하세요.
+        `NEXTAUTH_SECRET`와 `MEILI_MASTER_KEY`에는 충분히 긴 임의 문자열을 사용하고, `karakeep`과 `meilisearch` 두 서비스의 `MEILI_MASTER_KEY` 값은 같게 유지하세요.
+        인스턴스에 처음 가입하는 사용자가 관리자가 됩니다.
+      fr_FR: |
+        Définissez `NEXTAUTH_URL` sur l'adresse que vous utiliserez pour accéder à Karakeep.
+        Utilisez de longues chaînes aléatoires pour `NEXTAUTH_SECRET` et `MEILI_MASTER_KEY`, et gardez le même `MEILI_MASTER_KEY` dans `karakeep` et `meilisearch`.
+        Le premier utilisateur qui s'inscrit sur votre instance devient administrateur.
+      de_DE: |
+        Setzen Sie `NEXTAUTH_URL` auf die Adresse, unter der Sie Karakeep aufrufen werden.
+        Verwenden Sie lange Zufallszeichenfolgen für `NEXTAUTH_SECRET` und `MEILI_MASTER_KEY`, und halten Sie `MEILI_MASTER_KEY` in `karakeep` und `meilisearch` identisch.
+        Der erste Benutzer, der sich auf Ihrer Instanz registriert, wird Administrator.
+      sv_SE: |
+        Sätt `NEXTAUTH_URL` till den adress du kommer att använda för att nå Karakeep.
+        Använd långa slumpmässiga strängar för `NEXTAUTH_SECRET` och `MEILI_MASTER_KEY`, och behåll samma `MEILI_MASTER_KEY` i både `karakeep` och `meilisearch`.
+        Den första användaren som registrerar sig på din instans blir administratör.
+      el_GR: |
+        Ορίστε το `NEXTAUTH_URL` στη διεύθυνση που θα χρησιμοποιείτε για πρόσβαση στο Karakeep.
+        Χρησιμοποιήστε μεγάλες τυχαίες συμβολοσειρές για τα `NEXTAUTH_SECRET` και `MEILI_MASTER_KEY`, και κρατήστε το `MEILI_MASTER_KEY` ίδιο στα `karakeep` και `meilisearch`.
+        Ο πρώτος χρήστης που θα εγγραφεί στο instance σας γίνεται διαχειριστής.
+      hr_HR: |
+        Postavite `NEXTAUTH_URL` na adresu koju ćete koristiti za pristup Karakeepu.
+        Koristite duge nasumične nizove za `NEXTAUTH_SECRET` i `MEILI_MASTER_KEY`, a `MEILI_MASTER_KEY` neka bude isti u servisima `karakeep` i `meilisearch`.
+        Prvi korisnik koji se registrira na vašoj instanci postaje administrator.
+      pt_PT: |
+        Defina `NEXTAUTH_URL` para o endereço que vai usar para aceder ao Karakeep.
+        Use cadeias aleatórias longas para `NEXTAUTH_SECRET` e `MEILI_MASTER_KEY`, e mantenha o mesmo `MEILI_MASTER_KEY` em `karakeep` e `meilisearch`.
+        O primeiro utilizador a registar-se na sua instância torna-se administrador.
+      ru_RU: |
+        Установите `NEXTAUTH_URL` в адрес, который вы будете использовать для доступа к Karakeep.
+        Используйте длинные случайные строки для `NEXTAUTH_SECRET` и `MEILI_MASTER_KEY`, и сохраняйте одинаковое значение `MEILI_MASTER_KEY` в `karakeep` и `meilisearch`.
+        Первый пользователь, зарегистрировавшийся в вашем экземпляре, становится администратором.
+      tr_TR: |
+        `NEXTAUTH_URL` değerini, Karakeep'e erişmek için kullanacağınız adrese ayarlayın.
+        `NEXTAUTH_SECRET` ve `MEILI_MASTER_KEY` için uzun rastgele dizeler kullanın ve `MEILI_MASTER_KEY` değerini hem `karakeep` hem de `meilisearch` hizmetlerinde aynı tutun.
+        Örneğinizde kaydolan ilk kullanıcı yönetici olur.
+  scheme: http
+  port_map: "14592"
+  index: /
+  title:
+    en_US: Karakeep
+  version: "0.33.2"
+  update_at: "2026-08-11"
+  release_notes:
+    en_US: |-
+      - v0.33.2 migrates to the maintained Karakeep Chrome image, upgrading Chrome from 124 to 151 and replacing the abandoned Alpine Chrome image.
+      - It fixes metadata extraction for large SingleFile archives, hardens crawler asset conversion, and pins Node.js to avoid a crash-loop regression.
+      - It adds direct custom SingleFile archive uploads through the CLI and a favicon that adapts to the browser theme.
+    en_GB: |-
+      - v0.33.2 migrates to the maintained Karakeep Chrome image, upgrading Chrome from 124 to 151 and replacing the abandoned Alpine Chrome image.
+      - It fixes metadata extraction for large SingleFile archives, hardens crawler asset conversion, and pins Node.js to avoid a crash-loop regression.
+      - It adds direct custom SingleFile archive uploads through the CLI and a favicon that adapts to the browser theme.
+    it_IT: |-
+      - La v0.33.2 migra all'immagine Chrome mantenuta da Karakeep, aggiornando Chrome dalla versione 124 alla 151 e sostituendo l'immagine Alpine Chrome abbandonata.
+      - Corregge l'estrazione dei metadati per archivi SingleFile di grandi dimensioni, rende più robusta la conversione delle risorse del crawler e blocca Node.js a una versione che evita un ciclo di crash.
+      - Aggiunge il caricamento diretto di archivi SingleFile personalizzati tramite CLI e una favicon che si adatta al tema del browser.
+    nb_NO: |-
+      - v0.33.2 migrerer til Karakeeps vedlikeholdte Chrome-image, oppgraderer Chrome fra 124 til 151 og erstatter det forlatte Alpine Chrome-imaget.
+      - Den retter metadatauttrekk for store SingleFile-arkiver, gjør crawlerens ressurskonvertering mer robust og låser Node.js for å unngå en krasjløkke.
+      - Den legger til direkte opplasting av egendefinerte SingleFile-arkiver via CLI og et favicon som tilpasser seg nettlesertemaet.
+    zh_CN: |-
+      - v0.33.2 迁移到由 Karakeep 维护的 Chrome 镜像，将 Chrome 从 124 升级到 151，并替换已停止维护的 Alpine Chrome 镜像。
+      - 修复大型 SingleFile 归档的元数据提取问题，增强抓取器资源转换的可靠性，并固定 Node.js 版本以避免循环崩溃。
+      - 新增通过 CLI 直接上传自定义 SingleFile 归档的功能，并使网站图标自动适配浏览器主题。
+    ja_JP: |-
+      - v0.33.2では、保守が終了したAlpine ChromeイメージをKarakeep管理のChromeイメージに移行し、Chromeを124から151へ更新しました。
+      - 大容量SingleFileアーカイブのメタデータ抽出を修正し、クローラーのアセット変換を強化するとともに、クラッシュループを避けるためNode.jsのバージョンを固定しました。
+      - CLIからカスタムSingleFileアーカイブを直接アップロードできるようになり、faviconがブラウザテーマに対応しました。
+    ko_KR: |-
+      - v0.33.2는 유지 관리가 중단된 Alpine Chrome 이미지를 Karakeep에서 관리하는 Chrome 이미지로 교체하고 Chrome을 124에서 151로 업그레이드합니다.
+      - 대용량 SingleFile 아카이브의 메타데이터 추출을 수정하고 크롤러 자산 변환을 강화하며 충돌 반복을 방지하도록 Node.js 버전을 고정합니다.
+      - CLI를 통한 사용자 지정 SingleFile 아카이브 직접 업로드와 브라우저 테마에 맞춰지는 파비콘을 추가합니다.
+    fr_FR: |-
+      - La v0.33.2 migre vers l'image Chrome maintenue par Karakeep, met Chrome à niveau de la version 124 à 151 et remplace l'image Alpine Chrome abandonnée.
+      - Elle corrige l'extraction des métadonnées des archives SingleFile volumineuses, renforce la conversion des ressources du crawler et épingle Node.js pour éviter une boucle de plantage.
+      - Elle ajoute l'envoi direct d'archives SingleFile personnalisées via la CLI et un favicon qui s'adapte au thème du navigateur.
+    de_DE: |-
+      - v0.33.2 migriert auf das von Karakeep gepflegte Chrome-Image, aktualisiert Chrome von 124 auf 151 und ersetzt das nicht mehr gepflegte Alpine-Chrome-Image.
+      - Die Version behebt die Metadatenextraktion großer SingleFile-Archive, härtet die Asset-Konvertierung des Crawlers und fixiert die Node.js-Version, um eine Absturzschleife zu vermeiden.
+      - Außerdem ermöglicht sie den direkten Upload eigener SingleFile-Archive per CLI und fügt ein an das Browserdesign angepasstes Favicon hinzu.
+    sv_SE: |-
+      - v0.33.2 migrerar till Karakeeps underhållna Chrome-image, uppgraderar Chrome från 124 till 151 och ersätter det övergivna Alpine Chrome-imaget.
+      - Versionen rättar metadataextraktion för stora SingleFile-arkiv, gör crawlerns resurskonvertering robustare och låser Node.js-versionen för att undvika en kraschloop.
+      - Den lägger till direkt uppladdning av anpassade SingleFile-arkiv via CLI och en favicon som anpassas efter webbläsarens tema.
+    el_GR: |-
+      - Η v0.33.2 μεταβαίνει στο συντηρούμενο Chrome image του Karakeep, αναβαθμίζοντας το Chrome από 124 σε 151 και αντικαθιστώντας το εγκαταλελειμμένο Alpine Chrome image.
+      - Διορθώνει την εξαγωγή metadata για μεγάλα SingleFile archives, ενισχύει τη μετατροπή assets του crawler και κλειδώνει την έκδοση Node.js για αποφυγή crash loop.
+      - Προσθέτει άμεσο upload προσαρμοσμένων SingleFile archives μέσω CLI και favicon που προσαρμόζεται στο θέμα του browser.
+    hr_HR: |-
+      - v0.33.2 prelazi na Karakeepovu održavanu Chrome sliku, nadograđuje Chrome sa 124 na 151 i zamjenjuje napuštenu Alpine Chrome sliku.
+      - Ispravlja izdvajanje metapodataka za velike SingleFile arhive, poboljšava pretvorbu resursa crawlera i zaključava verziju Node.js-a radi izbjegavanja petlje rušenja.
+      - Dodaje izravni prijenos prilagođenih SingleFile arhiva putem CLI-ja i favicon koji se prilagođava temi preglednika.
+    pt_PT: |-
+      - A v0.33.2 migra para a imagem Chrome mantida pelo Karakeep, atualiza o Chrome da versão 124 para a 151 e substitui a imagem Alpine Chrome abandonada.
+      - Corrige a extração de metadados de arquivos SingleFile grandes, reforça a conversão de recursos do crawler e fixa a versão do Node.js para evitar um ciclo de falhas.
+      - Adiciona o carregamento direto de arquivos SingleFile personalizados através da CLI e um favicon que se adapta ao tema do navegador.
+    ru_RU: |-
+      - v0.33.2 переводит приложение на поддерживаемый Karakeep образ Chrome, обновляет Chrome со 124 до 151 и заменяет заброшенный образ Alpine Chrome.
+      - Выпуск исправляет извлечение метаданных из больших архивов SingleFile, повышает надежность преобразования ресурсов crawler и фиксирует версию Node.js для предотвращения цикла сбоев.
+      - Добавлена прямая загрузка пользовательских архивов SingleFile через CLI и favicon, адаптирующийся к теме браузера.
+    tr_TR: |-
+      - v0.33.2, bakımı bırakılmış Alpine Chrome imajını Karakeep tarafından sürdürülen Chrome imajıyla değiştirir ve Chrome'u 124'ten 151'e yükseltir.
+      - Büyük SingleFile arşivlerinde meta veri çıkarmayı düzeltir, crawler varlık dönüşümünü güçlendirir ve çökme döngüsünü önlemek için Node.js sürümünü sabitler.
+      - CLI üzerinden özel SingleFile arşivlerinin doğrudan yüklenmesini ve tarayıcı temasına uyum sağlayan favicon'u ekler.
+  store_app_id: karakeep
+  website: "https://karakeep.app/"
+  repo: "https://github.com/karakeep-app/karakeep"
+  support: "https://github.com/karakeep-app/karakeep/issues"
+  docs: "https://docs.karakeep.app/"

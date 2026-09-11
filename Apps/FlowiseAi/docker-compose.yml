@@ -1,7 +1,7 @@
 name: flowise
 services:
   flowise:
-    image: flowiseai/flowise:3.0.4
+    image: flowiseai/flowise:3.1.2
     container_name: flowise
     restart: unless-stopped
     deploy:
@@ -24,14 +24,15 @@ services:
     entrypoint: /bin/sh -c "sleep 3; flowise start"
 
 x-casaos:
+  id: org.icewhale.flowise
   architectures:
     - amd64
   main: flowise
   store_app_id: flowise
-  category: Developer
+  category: AI
   author: Flowise
   developer: Flowise
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FlowiseAi/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FlowiseAi/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FlowiseAi/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FlowiseAi/screenshot-2.png
@@ -366,3 +367,70 @@ x-casaos:
   port_map: "3025"
   scheme: http
   index: /
+  version: "3.1.2"
+  update_at: "2026-04-14"
+  release_notes:
+    en_US: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+    en_GB: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+    it_IT: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+    nb_NO: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+    zh_CN: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+    ja_JP: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+    ko_KR: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+    fr_FR: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+    de_DE: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+    sv_SE: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+    el_GR: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+    hr_HR: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+    pt_PT: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+    ru_RU: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+    tr_TR: |-
+      - flowise@3.1.2 ships security hardening across TTS CORS, MCP server config, tool and variable endpoints, credentials, chatflow access, and user update APIs.
+      - It fixes MySQL-backed session cleanup and limits Markdown rendering in RichInput.
+      - The flowiseai/flowise:3.1.2 Docker image tag was published on 2026-04-14.
+  website: "https://flowiseai.com/"
+  repo: "https://github.com/flowiseai/flowise"
+  support: "https://github.com/FlowiseAI/Flowise/issues"
+  docs: "https://docs.flowiseai.com/"
