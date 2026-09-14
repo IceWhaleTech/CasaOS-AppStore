@@ -1,0 +1,55 @@
+name: subsimail
+services:
+  web:
+    image: subsimail/subsimail:2.0.0@sha256:aa825794bd2a171a2f663cdcc9ea56943a90b2200c4e94459f5a8dcc7523edc5
+    container_name: subsimail
+    restart: unless-stopped
+    volumes:
+      - /DATA/AppData/$AppID/data:/app/data
+    environment:
+      DATABASE_URL: sqlite:///app/data/subsimail.db
+    ports:
+      - target: 3000
+        published: "3860"
+        protocol: tcp
+x-casaos:
+  id: com.subsimail.app
+  main: web
+  index: /
+  port_map: "3860"
+  scheme: http
+  icon: https://subsimail.com/static/apple-touch-icon.png
+  title:
+    en_US: SubsiMail
+  tagline:
+    en_US: Self-hosted cold email outreach that runs on your own server
+  description:
+    en_US: |-
+      Note: after install, SubsiMail needs a free license token to activate. Sign up at subsimail.com (no credit card) and either paste the token it gives you, or use "Connect your account" to fetch it automatically — both happen from the setup screen in your browser. The first connected mailbox is free forever.
+
+      SubsiMail is a self-hosted cold email sequencing platform. Prospect lists, templates, connected inboxes, and all campaign data live in your own SQLite database on your own server, never in a third party's cloud.
+
+      It's built as a self-hosted alternative to tools like Instantly, Smartlead, lemlist, and Apollo, with flat, per-inbox pricing instead of per-seat fees, full data ownership and export, no content review of what you send, and no third-party access to your contacts or campaigns.
+
+      Key features:
+      - Connect Gmail, Outlook, or any SMTP/IMAP inbox
+      - Multi-step sequences with merge fields and reply detection
+      - Per-user roles (admin/manager/view-only) and a full audit trail
+      - A REST API with personal API keys for your own integrations
+  thumbnail: ""
+  screenshot_link:
+    - https://subsimail.com/static/img/marketing/dashboard-hero.png
+  author: SubsiMail
+  developer: SubsiMail
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+  version: "2.0.0"
+  update_at: "2026-09-04"
+  release_notes:
+    en_US: Initial CasaOS package.
+  website: "https://subsimail.com"
+  repo: "https://subsimail.com"
+  support: "https://subsimail.com/docs"
+  docs: "https://subsimail.com/docs"
