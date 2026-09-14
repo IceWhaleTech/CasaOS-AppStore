@@ -1,0 +1,98 @@
+name: vibenvr
+services:
+  frontend:
+    image: spupuz/vibenvr-frontend:latest
+    container_name: vibenvr-frontend
+    ports:
+      - target: 80
+        published: "8080"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/vibenvr/data
+        target: /data
+    environment:
+      - TZ=$TZ
+    depends_on:
+      - backend
+    restart: unless-stopped
+    privileged: false
+
+  backend:
+    image: spupuz/vibenvr-backend:latest
+    container_name: vibenvr-backend
+    ports:
+      - target: 5000
+        published: "5005"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/vibenvr/data
+        target: /data
+    environment:
+      - POSTGRES_USER=vibenvr
+      - POSTGRES_PASSWORD=vibenvrpass
+      - POSTGRES_DB=vibenvr
+      - DATABASE_URL=postgresql://vibenvr:vibenvrpass@db:5432/vibenvr
+      - TZ=$TZ
+      - SECRET_KEY=casaos_vibe_secure_key_change_in_prod
+      - WEBHOOK_SECRET=casaos_vibe_secure_key_change_in_prod
+      - COOKIE_SECURE=auto
+    depends_on:
+      - db
+      - engine
+    restart: unless-stopped
+    privileged: false
+
+  engine:
+    image: spupuz/vibenvr-engine:latest
+    container_name: vibenvr-engine
+    expose:
+      - "8000"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/vibenvr/data
+        target: /var/lib/vibe/recordings
+    environment:
+      - BACKEND_URL=http://vibenvr-backend:5000
+      - TZ=$TZ
+      - HW_ACCEL=true
+      - HW_ACCEL_TYPE=auto
+      - WEBHOOK_SECRET=casaos_vibe_secure_key_change_in_prod
+    devices:
+      - /dev/dri:/dev/dri
+    restart: unless-stopped
+    privileged: true
+
+  db:
+    image: postgres:15-alpine
+    container_name: vibenvr-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=vibenvr
+      - POSTGRES_PASSWORD=vibenvrpass
+      - POSTGRES_DB=vibenvr
+      - TZ=$TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/vibenvr/db
+        target: /var/lib/postgresql/data
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: frontend
+  title:
+    en_US: VibeNVR
+  description:
+    en_US: "VibeNVR is a lightweight, modern Network Video Recorder (NVR) built with Python (FastAPI) backend and React (Vite) frontend. It leverages Docker for orchestration and FFmpeg for video processing."
+  tagline:
+    en_US: "Modern and lightweight Network Video Recorder"
+  developer: "spupuz"
+  author: "spupuz"
+  icon: "https://raw.githubusercontent.com/spupuz/VibeNVR/main/docs/logo.png"
+  thumbnail: "https://raw.githubusercontent.com/spupuz/VibeNVR/main/docs/screenshots/dashboard.png"
+  category: "Surveillance"
+  port_map: "8080"
+  index: "/"
