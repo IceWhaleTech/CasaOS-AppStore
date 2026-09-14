@@ -1,0 +1,204 @@
+name: thingport
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: thingport-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: thingport
+      POSTGRES_PASSWORD: thingport
+      POSTGRES_DB: thingport
+    volumes:
+      - type: bind
+        source: /DATA/AppData/thingport/postgres
+        target: /var/lib/postgresql/data
+    networks:
+      - thingport-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U thingport"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    x-casaos:
+      envs:
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: Password for the internal Postgres database
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_US: Postgres database files
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: thingport-flaresolverr
+    restart: unless-stopped
+    environment:
+      LOG_LEVEL: info
+      TZ: UTC
+    networks:
+      - thingport-net
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone used by the FlareSolverr helper container
+
+  # Service/container name must stay "backend" -- the frontend's nginx.conf proxies
+  # /api/* to http://backend:8000 by that exact DNS name, not via an env var.
+  backend:
+    image: ghcr.io/tautvydasderzinskas/thingport-backend:latest
+    container_name: backend
+    restart: unless-stopped
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      INITIAL_ADMIN_EMAIL: ""
+      AUTH_SECRET: changeme-generate-a-random-secret
+      AUTH_TOKEN_TTL: "43200"
+      PUBLIC_URL: ""
+      SMTP_HOST: ""
+      SMTP_PORT: "587"
+      SMTP_SECURE: "false"
+      SMTP_USER: ""
+      SMTP_PASS: ""
+      SMTP_FROM: "Thingport <no-reply@localhost>"
+      FILE_STORAGE: /app/storage
+      DATABASE_URL: postgresql://thingport:thingport@db:5432/thingport?schema=public
+      CORS_ORIGINS: ""
+      FLARESOLVERR_URL: http://flaresolverr:8191/v1
+    depends_on:
+      db:
+        condition: service_healthy
+      flaresolverr:
+        condition: service_started
+    volumes:
+      - type: bind
+        source: /DATA/AppData/thingport/storage
+        target: /app/storage
+    networks:
+      - thingport-net
+    x-casaos:
+      envs:
+        - container: AUTH_SECRET
+          description:
+            en_US: Random secret used to sign login tokens, e.g. output of `openssl rand -hex 32`
+        - container: INITIAL_ADMIN_EMAIL
+          description:
+            en_US: Email of the first account to register -- that account becomes admin
+        - container: PUID
+          description:
+            en_US: ""
+        - container: PGID
+          description:
+            en_US: ""
+        - container: PUBLIC_URL
+          description:
+            en_US: Public URL of this instance, e.g. https://thingport.example.com -- used in verification email links
+        - container: SMTP_HOST
+          description:
+            en_US: SMTP server host for outgoing email (optional)
+        - container: SMTP_PORT
+          description:
+            en_US: ""
+        - container: SMTP_SECURE
+          description:
+            en_US: ""
+        - container: SMTP_USER
+          description:
+            en_US: ""
+        - container: SMTP_PASS
+          description:
+            en_US: ""
+        - container: SMTP_FROM
+          description:
+            en_US: ""
+        - container: CORS_ORIGINS
+          description:
+            en_US: Comma-separated list of extra allowed CORS origins (optional)
+      volumes:
+        - container: /app/storage
+          description:
+            en_US: Imported and archived 3D model files
+
+  frontend:
+    image: ghcr.io/tautvydasderzinskas/thingport-frontend:latest
+    container_name: thingport-frontend
+    restart: unless-stopped
+    ports:
+      - target: 80
+        published: "8290"
+        protocol: tcp
+    depends_on:
+      - backend
+    networks:
+      - thingport-net
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_US: Web UI HTTP port
+
+networks:
+  thingport-net:
+    driver: bridge
+
+x-casaos:
+  id: com.tautvydasderzinskas.thingport
+  architectures:
+    - amd64
+    - arm64
+  main: frontend
+  author: Tautvydas Derzinskas
+  developer: Tautvydas Derzinskas
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Thingport/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Thingport/screenshot-1.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Thingport/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Thingport/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Thingport/screenshot-3.png
+  category: Others
+  title:
+    en_US: Thingport
+  tagline:
+    en_US: Your personal, self-hosted 3D model library
+  description:
+    en_US: |
+      Thingport is a self-hosted personal library for 3D printing models. If you discover
+      models across MakerWorld, Printables, Thingiverse, and other platforms, Thingport
+      brings them together in one organized, searchable place instead of scattered
+      bookmarks, downloads, and random folders.
+
+      Key features:
+      - Import models directly from supported model websites
+      - Organize your collection with collections, tags, and search
+      - Preview 3D models directly in the browser
+      - Keep local archived copies of the models you want to keep
+      - Track metadata and retain links back to the original source
+      - Multi-language interface
+
+      This stack runs 4 containers: a Postgres database, a FlareSolverr helper used for
+      some model-site imports, the backend API, and the web frontend. Data is stored under
+      `/DATA/AppData/thingport` (database and imported model storage), CasaOS's
+      conventional appdata location.
+
+      Before first use, set `AUTH_SECRET` to a random value and `INITIAL_ADMIN_EMAIL` to
+      the email you'll register with -- that account becomes the admin account.
+  tips:
+    before_install:
+      en_US: |
+        Set AUTH_SECRET to a random value (e.g. `openssl rand -hex 32`) and
+        INITIAL_ADMIN_EMAIL to the email you'll register with before installing --
+        that first account becomes the admin account.
+  port_map: "8290"
+  scheme: http
+  index: /
+  version: "0.1.0"
+  update_at: "2026-09-14"
+  release_notes:
+    en_US: Initial CasaOS App Store submission.
+  website: "https://github.com/TautvydasDerzinskas/Thingport"
+  repo: "https://github.com/TautvydasDerzinskas/Thingport"
+  support: "https://github.com/TautvydasDerzinskas/Thingport/issues"
+  docs: "https://github.com/TautvydasDerzinskas/Thingport#readme"
