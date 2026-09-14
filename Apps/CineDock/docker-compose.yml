@@ -1,0 +1,75 @@
+name: cinedock
+
+services:
+  cinedock:
+    image: ghcr.io/cinedock/cinedock:4.3.2
+    container_name: cinedock
+    restart: unless-stopped
+    ports:
+      - target: 8945
+        published: "8945"
+        protocol: tcp
+    environment:
+      TMDB_API_KEY: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TMDB_API_KEY
+          description:
+            en_US: Optional TMDB API key for actor biographies, filmographies and trailer fallback. It can also be added later in CineDock Settings.
+      ports:
+        - container: "8945"
+          description:
+            en_US: CineDock web interface
+      volumes:
+        - container: /config
+          description:
+            en_US: CineDock connection settings and small caches
+
+x-casaos:
+  id: uk.cinedock.cinedock
+  main: cinedock
+  index: /
+  port_map: "8945"
+  scheme: http
+  icon: icon.png
+  title:
+    en_US: CineDock
+  tagline:
+    en_US: Rediscover your library.
+  description:
+    en_US: |-
+      CineDock gives Plex, Emby or Jellyfin an enhanced browsing experience on the NVIDIA Shield TV, on an Amazon Fire TV Stick, or in a browser on your computer or tablet.
+  tips:
+    before_install:
+      en_US: |-
+        ## Before installing CineDock
+
+        Recommended host requirements:
+        - 64-bit amd64 or arm64 Docker-capable host
+        - 1 CPU core
+        - 1 GB available RAM
+        - 4 GB free appdata/storage
+        - Port 8945 reachable
+        - Existing Plex, Emby or Jellyfin server reachable
+
+        No GPU or media-folder mount is needed because your media server handles streaming and transcoding.
+  author: CineDock
+  developer: CineDock
+  category: Media
+  architectures:
+    - amd64
+    - arm64
+  version: "4.3.2"
+  update_at: "2026-08-17"
+  release_notes:
+    en_US: |-
+      - Updated CineDock to 4.3.2.
+      - Website, support and documentation links now point at cinedock.tv.
+  website: https://cinedock.tv
+  repo: https://github.com/cinedock/unraid-templates
+  support: https://cinedock.tv/support
+  docs: https://cinedock.tv/guide
