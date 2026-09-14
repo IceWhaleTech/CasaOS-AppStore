@@ -1,0 +1,57 @@
+name: dispatcharr
+services:
+  dispatcharr:
+    image: ghcr.io/dispatcharr/dispatcharr:0.29.0
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    restart: unless-stopped
+    ports:
+      - 9191:9191
+    x-casaos:
+      ports:
+        - container: "9191"
+          description:
+            en_US: Dispatcharr HTTP Port
+            zh_CN: Dispatcharr HTTP 端口
+    volumes:
+      - /DATA/AppData/$AppID/data:/data
+    environment:
+      DISPATCHARR_ENV: aio
+      REDIS_HOST: localhost
+      CELERY_BROKER_URL: redis://localhost:6379/0
+      DISPATCHARR_LOG_LEVEL: info
+    container_name: dispatcharr
+
+x-casaos:
+  id: org.icewhale.dispatcharr
+  architectures:
+    - amd64
+    - arm64
+  main: dispatcharr
+  author: yassinyl
+  category: Media
+  description:
+    en_US: Dispatcharr is an IPTV stream management platform for managing channels, streams, EPG data, VOD, and DVR functionality.
+  developer: Dispatcharr
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dispatcharr/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dispatcharr/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dispatcharr/screenshot-2.png
+  tagline:
+    en_US: IPTV Stream Management and DVR
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Dispatcharr/thumbnail.png
+  title:
+    en_US: Dispatcharr
+  port_map: '9191'
+  scheme: http
+  version: "0.29.0"
+  update_at: "2026-08-29"
+  website: "https://dispatcharr.io"
+  repo: "https://github.com/Dispatcharr/Dispatcharr"
+  support: "https://github.com/Dispatcharr/Dispatcharr/issues"
+  release_notes:
+    en_US: |-
+      - Dispatcharr 0.29.0 is the latest stable release.
+      - IPTV stream management, channel management, EPG, VOD, and DVR functionality.
