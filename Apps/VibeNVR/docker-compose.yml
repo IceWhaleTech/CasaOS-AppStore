@@ -31,9 +31,9 @@ services:
         target: /data
     environment:
       - POSTGRES_USER=vibenvr
-      - POSTGRES_PASSWORD=vibenvr
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-vibenvr}
       - POSTGRES_DB=vibenvr
-      - DATABASE_URL=postgresql://vibenvr:vibenvr@db:5432/vibenvr
+      - DATABASE_URL=postgresql://vibenvr:${POSTGRES_PASSWORD:-vibenvr}@db:5432/vibenvr
       - TZ=$TZ
       - SECRET_KEY=casaos_vibe_secure_key_change_in_prod
       - WEBHOOK_SECRET=casaos_vibe_secure_key_change_in_prod
@@ -70,7 +70,7 @@ services:
     restart: unless-stopped
     environment:
       - POSTGRES_USER=vibenvr
-      - POSTGRES_PASSWORD=vibenvr
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-vibenvr}
       - POSTGRES_DB=vibenvr
       - TZ=$TZ
     volumes:
@@ -79,6 +79,7 @@ services:
         target: /var/lib/postgresql/data
 
 x-casaos:
+  id: org.icewhale.vibenvr
   architectures:
     - amd64
     - arm64
