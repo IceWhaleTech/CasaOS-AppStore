@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: thingport
-      POSTGRES_PASSWORD: thingport
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-thingport}
       POSTGRES_DB: thingport
     volumes:
       - type: bind
@@ -65,7 +65,7 @@ services:
       SMTP_PASS: ""
       SMTP_FROM: "Thingport <no-reply@localhost>"
       FILE_STORAGE: /app/storage
-      DATABASE_URL: postgresql://thingport:thingport@db:5432/thingport?schema=public
+      DATABASE_URL: postgresql://thingport:${POSTGRES_PASSWORD:-thingport}@db:5432/thingport?schema=public
       CORS_ORIGINS: ""
       FLARESOLVERR_URL: http://flaresolverr:8191/v1
     depends_on:
