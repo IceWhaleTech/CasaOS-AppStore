@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: thingport
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-thingport}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: thingport
     volumes:
       - type: bind
@@ -24,7 +24,7 @@ services:
       envs:
         - container: POSTGRES_PASSWORD
           description:
-            en_US: Password for the internal Postgres database
+            en_US: Required -- password for the internal Postgres database. The database container will not start until this is set.
       volumes:
         - container: /var/lib/postgresql/data
           description:
@@ -54,7 +54,6 @@ services:
     environment:
       PUID: "1000"
       PGID: "1000"
-      INITIAL_ADMIN_EMAIL: ""
       AUTH_SECRET: changeme-generate-a-random-secret
       AUTH_TOKEN_TTL: "43200"
       PUBLIC_URL: ""
@@ -65,7 +64,7 @@ services:
       SMTP_PASS: ""
       SMTP_FROM: "Thingport <no-reply@localhost>"
       FILE_STORAGE: /app/storage
-      DATABASE_URL: postgresql://thingport:${POSTGRES_PASSWORD:-thingport}@db:5432/thingport?schema=public
+      DATABASE_URL: postgresql://thingport:${POSTGRES_PASSWORD}@db:5432/thingport?schema=public
       CORS_ORIGINS: ""
       FLARESOLVERR_URL: http://flaresolverr:8191/v1
     depends_on:
@@ -84,9 +83,6 @@ services:
         - container: AUTH_SECRET
           description:
             en_US: Random secret used to sign login tokens, e.g. output of `openssl rand -hex 32`
-        - container: INITIAL_ADMIN_EMAIL
-          description:
-            en_US: Email of the first account to register -- that account becomes admin
         - container: PUID
           description:
             en_US: ""
@@ -183,14 +179,15 @@ x-casaos:
       `/DATA/AppData/thingport` (database and imported model storage), CasaOS's
       conventional appdata location.
 
-      Before first use, set `AUTH_SECRET` to a random value and `INITIAL_ADMIN_EMAIL` to
-      the email you'll register with -- that account becomes the admin account.
+      Before first use, set `POSTGRES_PASSWORD` (the db container refuses to start without
+      it) and `AUTH_SECRET` to a random value. The first account you register becomes the
+      admin account.
   tips:
     before_install:
       en_US: |
-        Set AUTH_SECRET to a random value (e.g. `openssl rand -hex 32`) and
-        INITIAL_ADMIN_EMAIL to the email you'll register with before installing --
-        that first account becomes the admin account.
+        Set POSTGRES_PASSWORD to any password -- the database container will not start
+        without it. Also set AUTH_SECRET to a random value (e.g. `openssl rand -hex 32`).
+        The first account you register after installing becomes the admin account.
   port_map: "8290"
   scheme: http
   index: /
