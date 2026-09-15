@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- nzbfast app icon, LARGE art (128 px and up). Bolt plus slipstream on a
+     saturated tile. Regenerate rasters with make-icon.sh.
+
+     The tile is deliberately saturated, not the old near-black: a dark tile
+     has no silhouette on a dark taskbar, which is the bug this replaced. Its
+     geometry is identical to icon-small.svg's on purpose - the two masters
+     hand over between 32 and 128 px, and a tile that changed size or radius
+     across that boundary would read as the icon jumping.
+
+     The bolt is the same traced silhouette as icon-small.svg, shifted right
+     to open up the space the slipstream runs through. The three bars trail
+     the bolt's upper-left edge at a constant 56-unit gap, so they shorten as
+     that edge rakes left and read as motion rather than as a stack of lines;
+     they fade with distance for the same reason. They are dropped entirely
+     below 128 px - see icon-small.svg. -->
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tileg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5aa8ff"/>
+      <stop offset="1" stop-color="#6d47e6"/>
+    </linearGradient>
+  </defs>
+  <rect x="60" y="60" width="904" height="904" rx="196" fill="url(#tileg)"/>
+  <g fill="#fff">
+    <rect x="132" y="274" width="312" height="52" rx="26" opacity=".46"/>
+    <rect x="132" y="374" width="262" height="52" rx="26" opacity=".36"/>
+    <rect x="132" y="474" width="212" height="52" rx="26" opacity=".28"/>
+  </g>
+  <path d="M 531.3 237.2 Q 546.5 206.8 580.5 206.8 L 775.1 206.8 Q 809.1 206.8 789.6 234.6
+           L 661.7 417.8 Q 642.2 445.7 676.2 445.7 L 798.9 445.7 Q 846.9 445.7 811.2 477.8
+           L 449.6 802.8 Q 393 853.6 427.6 785.9 L 526.9 591 Q 542.3 560.7 508.3 560.7
+           L 413.6 560.7 Q 369.6 560.7 389.3 521.4 Z" fill="#fff"/>
+</svg>

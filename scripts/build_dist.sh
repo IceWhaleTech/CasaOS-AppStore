@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ENV_FILE="${ENV_FILE:-$ROOT_DIR/.env}"
 ACTION_REPO="${ACTION_REPO:-IceWhaleTech/build-appstore-action}"
-ACTION_REF="${ACTION_REF:-v1}"
+ACTION_REF="${ACTION_REF:-v1.1.2}"
 ACTION_RAW_BASE="${ACTION_RAW_BASE:-https://raw.githubusercontent.com/$ACTION_REPO/$ACTION_REF}"
 
 load_env_file() {

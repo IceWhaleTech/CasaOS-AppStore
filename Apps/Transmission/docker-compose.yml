@@ -8,7 +8,7 @@ services:
       PUID: "1000"
       TZ: Europe/London
       USER: casaos
-    image: linuxserver/transmission:4.1.1
+    image: linuxserver/transmission:4.1.3
     deploy:
       resources:
         reservations:
@@ -89,7 +89,7 @@ x-casaos:
     - amd64
     - arm64
   main: transmission
-  author: CasaOS Team
+  author: ZimaOS Team
   category: Media
   description:
     en_US: |
@@ -241,69 +241,84 @@ x-casaos:
     en_US: Transmission
   index: /
   port_map: "9091"
-  version: "4.1.1"
-  update_at: "2026-02-20"
+  version: "4.1.3"
+  update_at: "2026-09-14"
   release_notes:
     en_US: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
     en_GB: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
     it_IT: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
     nb_NO: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
     zh_CN: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
     ja_JP: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
     ko_KR: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
     fr_FR: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
     de_DE: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
     sv_SE: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
     el_GR: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
     hr_HR: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
     pt_PT: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
     ru_RU: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
     tr_TR: |-
-      - 4.1.1 is a bugfix release after the 4.1.0 feature cycle.
-      - Fixes more than 20 issues and includes performance improvements.
-      - Recommended by upstream for all users on the 4.1.x line.
+      - Fixes a CORS bug that exposed the anti-CSRF nonce.
+      - Fixes a use-after-free bug in peer code.
+      - Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.
+      - Upstream recommends that all users upgrade.
   website: "https://transmissionbt.com/"
   repo: "https://github.com/transmission/transmission"
   support: "https://github.com/transmission/transmission/issues"
