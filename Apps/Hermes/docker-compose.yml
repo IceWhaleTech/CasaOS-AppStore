@@ -25,7 +25,7 @@ services:
     environment:
       HERMES_DASHBOARD: 1
       HERMES_DASHBOARD_BASIC_AUTH_USERNAME: zimaos
-      HERMES_DASHBOARD_BASIC_AUTH_PASSWORD: hermes
+      HERMES_DASHBOARD_BASIC_AUTH_PASSWORD: ""
     x-casaos:
       ports:
         - container: "8642"
@@ -117,21 +117,22 @@ services:
             tr_TR: "Panel giris kullanici adi (varsayilan: zimaos)"
         - container: HERMES_DASHBOARD_BASIC_AUTH_PASSWORD
           description:
-            en_US: "Dashboard login password (default: hermes; change it in app settings)"
-            en_GB: "Dashboard login password (default: hermes; change it in app settings)"
-            it_IT: "Password di accesso alla dashboard (predefinita: hermes; modificala nelle impostazioni dell'app)"
-            nb_NO: "Passord for innlogging pa dashbordet (standard: hermes; endre det i appinnstillingene)"
-            zh_CN: "仪表盘登录密码（默认：hermes；请在应用设置中修改）"
-            ja_JP: "ダッシュボードのログインパスワード（デフォルト：hermes。アプリ設定で変更してください）"
-            ko_KR: "대시보드 로그인 비밀번호(기본값: hermes, 앱 설정에서 변경하세요)"
-            fr_FR: "Mot de passe de connexion au tableau de bord (par defaut : hermes ; modifiez-le dans les parametres de l'application)"
-            de_DE: "Passwort fur die Dashboard-Anmeldung (Standard: hermes; in den App-Einstellungen andern)"
-            sv_SE: "Losenord for inloggning pa webbpanelen (standard: hermes; andra det i appinstallningarna)"
-            el_GR: "Κωδικος συνδεσης στο dashboard (προεπιλογη: hermes, αλλαξτε τον στις ρυθμισεις εφαρμογης)"
-            hr_HR: "Lozinka za prijavu na nadzornu plocu (zadano: hermes; promijenite je u postavkama aplikacije)"
-            pt_PT: "Palavra-passe para iniciar sessao no painel (predefinida: hermes; altere-a nas definicoes da aplicacao)"
-            ru_RU: "Пароль для входа в панель (по умолчанию: hermes; измените его в настройках приложения)"
-            tr_TR: "Panel giris parolasi (varsayilan: hermes; uygulama ayarlarindan degistirin)"
+            en_US: "Before starting Hermes, set HERMES_DASHBOARD_BASIC_AUTH_PASSWORD to your own password in app settings. The default username is `zimaos`. The dashboard will not start with an empty password."
+            en_GB: "Before starting Hermes, set HERMES_DASHBOARD_BASIC_AUTH_PASSWORD to your own password in app settings. The default username is `zimaos`. The dashboard will not start with an empty password."
+            it_IT: "Prima di avviare Hermes, imposta una password personale in HERMES_DASHBOARD_BASIC_AUTH_PASSWORD nelle impostazioni dell’app. Il nome utente predefinito è `zimaos`. La dashboard non si avvia con una password vuota."
+            nb_NO: "Før du starter Hermes, sett HERMES_DASHBOARD_BASIC_AUTH_PASSWORD til ditt eget passord i appinnstillingene. Standardbrukernavnet er `zimaos`. Dashbordet starter ikke med et tomt passord."
+            zh_CN: "启动 Hermes 前，请在应用设置中将 HERMES_DASHBOARD_BASIC_AUTH_PASSWORD 设为您自己的密码。默认用户名为 `zimaos`。密码为空时仪表盘无法启动。"
+            ja_JP: "Hermes の起動前に、アプリ設定で HERMES_DASHBOARD_BASIC_AUTH_PASSWORD に自分のパスワードを設定してください。デフォルトのユーザー名は `zimaos` です。パスワードが空の場合、ダッシュボードは起動しません。"
+            ko_KR: "Hermes를 시작하기 전에 앱 설정에서 HERMES_DASHBOARD_BASIC_AUTH_PASSWORD에 개인 비밀번호를 설정하세요. 기본 사용자 이름은 `zimaos`입니다. 비밀번호가 비어 있으면 대시보드가 시작되지 않습니다."
+            fr_FR: "Avant de démarrer Hermes, définissez votre propre mot de passe pour HERMES_DASHBOARD_BASIC_AUTH_PASSWORD dans les paramètres de l’application. Le nom d’utilisateur par défaut est `zimaos`. Le tableau de bord ne démarre pas avec un mot de passe vide."
+            de_DE: "Setzen Sie vor dem Start von Hermes in den App-Einstellungen Ihr eigenes Passwort für HERMES_DASHBOARD_BASIC_AUTH_PASSWORD. Der Standardbenutzername ist `zimaos`. Das Dashboard startet nicht mit einem leeren Passwort."
+            sv_SE: "Innan du startar Hermes, ange ditt eget lösenord för HERMES_DASHBOARD_BASIC_AUTH_PASSWORD i appinställningarna. Standardanvändarnamnet är `zimaos`. Webbpanelen startar inte med ett tomt lösenord."
+            el_GR: "Πριν ξεκινήσετε το Hermes, ορίστε δικό σας κωδικό στο HERMES_DASHBOARD_BASIC_AUTH_PASSWORD στις ρυθμίσεις εφαρμογής. Το προεπιλεγμένο όνομα χρήστη είναι `zimaos`. Ο πίνακας ελέγχου δεν ξεκινά με κενό κωδικό."
+            hr_HR: "Prije pokretanja Hermesa postavite vlastitu lozinku za HERMES_DASHBOARD_BASIC_AUTH_PASSWORD u postavkama aplikacije. Zadano korisničko ime je `zimaos`. Nadzorna ploča ne pokreće se s praznom lozinkom."
+            pt_PT: "Antes de iniciar o Hermes, defina a sua própria palavra-passe para HERMES_DASHBOARD_BASIC_AUTH_PASSWORD nas definições da aplicação. O nome de utilizador predefinido é `zimaos`. O painel não inicia com uma palavra-passe vazia."
+            ru_RU: "Перед запуском Hermes задайте собственный пароль HERMES_DASHBOARD_BASIC_AUTH_PASSWORD в настройках приложения. Имя пользователя по умолчанию — `zimaos`. Панель не запускается с пустым паролем."
+            tr_TR: "Hermes’i başlatmadan önce uygulama ayarlarında HERMES_DASHBOARD_BASIC_AUTH_PASSWORD için kendi parolanızı belirleyin. Varsayılan kullanıcı adı `zimaos`dur. Panel boş parola ile başlamaz."
+
 x-casaos:
   id: org.icewhale.hermes
   architectures:
@@ -392,63 +393,63 @@ x-casaos:
   tips:
     before_install:
       en_US: |
-        Default dashboard login: `zimaos` / `hermes`. Change these credentials in the app settings after installation.
+        Before starting Hermes, set HERMES_DASHBOARD_BASIC_AUTH_PASSWORD to your own password in app settings. The default username is `zimaos`. The dashboard will not start with an empty password.
         In most cases, you can configure models and messaging directly from the Hermes WebUI.
         If you cannot find the relevant option, see [this guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) and complete the configuration in the container terminal.
       en_GB: |
-        Default dashboard login: `zimaos` / `hermes`. Change these credentials in the app settings after installation.
+        Before starting Hermes, set HERMES_DASHBOARD_BASIC_AUTH_PASSWORD to your own password in app settings. The default username is `zimaos`. The dashboard will not start with an empty password.
         In most cases, you can configure models and messaging directly from the Hermes WebUI.
         If you cannot find the relevant option, see [this guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) and complete the configuration in the container terminal.
       it_IT: |
-        Accesso predefinito alla dashboard: `zimaos` / `hermes`. Modifica queste credenziali nelle impostazioni dell’app dopo l’installazione.
+        Prima di avviare Hermes, imposta una password personale in HERMES_DASHBOARD_BASIC_AUTH_PASSWORD nelle impostazioni dell’app. Il nome utente predefinito è `zimaos`. La dashboard non si avvia con una password vuota.
         Nella maggior parte dei casi, puoi configurare direttamente modelli e messaggistica dalla WebUI di Hermes.
         Se non trovi l'opzione corrispondente, consulta [questa guida](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) e completa la configurazione nel terminale del container.
       nb_NO: |
-        Standard innlogging til dashbordet: `zimaos` / `hermes`. Endre legitimasjonen i appinnstillingene etter installasjonen.
+        Før du starter Hermes, sett HERMES_DASHBOARD_BASIC_AUTH_PASSWORD til ditt eget passord i appinnstillingene. Standardbrukernavnet er `zimaos`. Dashbordet starter ikke med et tomt passord.
         I de fleste tilfeller kan du konfigurere modeller og meldinger direkte fra Hermes WebUI.
         Hvis du ikke finner det aktuelle alternativet, se [denne veiledningen](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) og fullfor konfigurasjonen i containerterminalen.
       zh_CN: |
-        仪表盘默认登录凭据：`zimaos` / `hermes`。安装后请在应用设置中修改。
+        启动 Hermes 前，请在应用设置中将 HERMES_DASHBOARD_BASIC_AUTH_PASSWORD 设为您自己的密码。默认用户名为 `zimaos`。密码为空时仪表盘无法启动。
         在大多数情况下，你可以直接通过 Hermes WebUI 配置模型和消息。
         如果找不到相应选项，请参考 [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) 在容器终端完成配置。
       ja_JP: |
-        ダッシュボードのデフォルトログインは `zimaos` / `hermes` です。インストール後にアプリ設定で変更してください。
+        Hermes の起動前に、アプリ設定で HERMES_DASHBOARD_BASIC_AUTH_PASSWORD に自分のパスワードを設定してください。デフォルトのユーザー名は `zimaos` です。パスワードが空の場合、ダッシュボードは起動しません。
         ほとんどの場合、モデル設定やメッセージ機能は Hermes WebUI から直接設定できます。
         該当する項目が見つからない場合は、[このガイド](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) を参照し、コンテナのターミナルで設定を完了してください。
       ko_KR: |
-        대시보드 기본 로그인은 `zimaos` / `hermes`입니다. 설치 후 앱 설정에서 변경하세요.
+        Hermes를 시작하기 전에 앱 설정에서 HERMES_DASHBOARD_BASIC_AUTH_PASSWORD에 개인 비밀번호를 설정하세요. 기본 사용자 이름은 `zimaos`입니다. 비밀번호가 비어 있으면 대시보드가 시작되지 않습니다.
         대부분의 경우 Hermes WebUI에서 모델과 메시징을 직접 설정할 수 있습니다.
         해당 옵션이 보이지 않으면 [이 가이드](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) 를 참고해 컨테이너 터미널에서 설정을 완료하세요.
       fr_FR: |
-        Identifiants par defaut du tableau de bord : `zimaos` / `hermes`. Modifiez-les dans les parametres de l’application apres l’installation.
+        Avant de démarrer Hermes, définissez votre propre mot de passe pour HERMES_DASHBOARD_BASIC_AUTH_PASSWORD dans les paramètres de l’application. Le nom d’utilisateur par défaut est `zimaos`. Le tableau de bord ne démarre pas avec un mot de passe vide.
         Dans la plupart des cas, vous pouvez configurer directement les modeles et la messagerie depuis l'interface WebUI de Hermes.
         Si vous ne trouvez pas l'option correspondante, consultez [ce guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) et terminez la configuration dans le terminal du conteneur.
       de_DE: |
-        Standardanmeldung fur das Dashboard: `zimaos` / `hermes`. Andern Sie diese Zugangsdaten nach der Installation in den App-Einstellungen.
+        Setzen Sie vor dem Start von Hermes in den App-Einstellungen Ihr eigenes Passwort für HERMES_DASHBOARD_BASIC_AUTH_PASSWORD. Der Standardbenutzername ist `zimaos`. Das Dashboard startet nicht mit einem leeren Passwort.
         In den meisten Fallen konnen Sie Modelle und Messaging direkt uber die Hermes WebUI konfigurieren.
         Wenn Sie die entsprechende Option nicht finden, lesen Sie [diese Anleitung](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) und schliessen Sie die Konfiguration im Container-Terminal ab.
       sv_SE: |
-        Standardinloggning till webbpanelen: `zimaos` / `hermes`. Andra uppgifterna i appinstallningarna efter installationen.
+        Innan du startar Hermes, ange ditt eget lösenord för HERMES_DASHBOARD_BASIC_AUTH_PASSWORD i appinställningarna. Standardanvändarnamnet är `zimaos`. Webbpanelen startar inte med ett tomt lösenord.
         I de flesta fall kan du konfigurera modeller och meddelanden direkt i Hermes WebUI.
         Om du inte hittar motsvarande alternativ, se [den här guiden](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) och slutför konfigureringen i containerns terminal.
       el_GR: |
-        Προεπιλεγμενη συνδεση dashboard: `zimaos` / `hermes`. Αλλαξτε τα στοιχεια στις ρυθμισεις εφαρμογης μετα την εγκατασταση.
+        Πριν ξεκινήσετε το Hermes, ορίστε δικό σας κωδικό στο HERMES_DASHBOARD_BASIC_AUTH_PASSWORD στις ρυθμίσεις εφαρμογής. Το προεπιλεγμένο όνομα χρήστη είναι `zimaos`. Ο πίνακας ελέγχου δεν ξεκινά με κενό κωδικό.
         Στις περισσότερες περιπτώσεις, μπορείτε να ρυθμίσετε μοντέλα και μηνύματα απευθείας από το Hermes WebUI.
         Αν δεν βρείτε τη σχετική επιλογή, δείτε το [σχετικό οδηγό](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) και ολοκληρώστε τη ρύθμιση στο τερματικό του container.
       hr_HR: |
-        Zadana prijava na nadzornu plocu: `zimaos` / `hermes`. Promijenite podatke u postavkama aplikacije nakon instalacije.
+        Prije pokretanja Hermesa postavite vlastitu lozinku za HERMES_DASHBOARD_BASIC_AUTH_PASSWORD u postavkama aplikacije. Zadano korisničko ime je `zimaos`. Nadzorna ploča ne pokreće se s praznom lozinkom.
         U vecini slucajeva modele i razmjenu poruka mozete konfigurirati izravno kroz Hermes WebUI.
         Ako ne mozete pronaci odgovarajucu opciju, pogledajte [ovaj vodic](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) i dovrsite konfiguraciju u terminalu kontejnera.
       pt_PT: |
-        Inicio de sessao predefinido no painel: `zimaos` / `hermes`. Altere estas credenciais nas definicoes da aplicacao apos a instalacao.
+        Antes de iniciar o Hermes, defina a sua própria palavra-passe para HERMES_DASHBOARD_BASIC_AUTH_PASSWORD nas definições da aplicação. O nome de utilizador predefinido é `zimaos`. O painel não inicia com uma palavra-passe vazia.
         Na maioria dos casos, pode configurar modelos e mensagens diretamente na WebUI do Hermes.
         Se nao encontrar a opcao correspondente, consulte [este guia](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) e conclua a configuracao no terminal do contentor.
       ru_RU: |
-        Данные для входа в панель по умолчанию: `zimaos` / `hermes`. После установки измените их в настройках приложения.
+        Перед запуском Hermes задайте собственный пароль HERMES_DASHBOARD_BASIC_AUTH_PASSWORD в настройках приложения. Имя пользователя по умолчанию — `zimaos`. Панель не запускается с пустым паролем.
         В большинстве случаев вы можете настроить модели и обмен сообщениями прямо через Hermes WebUI.
         Если нужный параметр не находится, откройте [это руководство](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) и завершите настройку в терминале контейнера.
       tr_TR: |
-        Varsayilan panel girisi: `zimaos` / `hermes`. Kurulumdan sonra bu bilgileri uygulama ayarlarindan degistirin.
+        Hermes’i başlatmadan önce uygulama ayarlarında HERMES_DASHBOARD_BASIC_AUTH_PASSWORD için kendi parolanızı belirleyin. Varsayılan kullanıcı adı `zimaos`dur. Panel boş parola ile başlamaz.
         Cogu durumda modelleri ve mesajlasmayi dogrudan Hermes WebUI uzerinden yapilandirabilirsiniz.
         Ilgili secenegi bulamazsaniz [bu rehbere](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) bakin ve kurulumu konteyner terminalinde tamamlayin.
   scheme: http
