@@ -1,0 +1,54 @@
+name: mymusic
+
+x-casaos:
+  id: com.mymoon02studios.mymusic
+  architectures:
+    - amd64
+    - arm64
+  main: mymusic
+  title:
+    custom: MyMusic
+    en_us: MyMusic
+    es_es: MyMusic
+  description:
+    en_us: An app to automate downloading playlists from Spotify and YTmusic.
+    es_es: Una aplicación para automatizar la descarga de listas de Spotify y YTmusic.
+  tagline:
+    en_us: Automate playlist downloads
+    es_es: Automatiza descargas de listas
+  icon: https://raw.githubusercontent.com/Jarano2022/CasaOS-AppStore/refs/heads/main/Apps/MyMusic/icon.png
+  developer: Jarano2022 
+  author: MyMoon02Studios
+  category: Music
+  port_map: "4516"
+  scheme: http
+
+services:
+  mymusic:
+    image: mymoon02/mymusic:v1
+    container_name: mymusic
+    environment:
+      - USER=Admin
+      - PASSWORD=1111
+      - PORT=${PORT:-4516}
+    ports:
+      - "${PORT:-4516}:${PORT:-4516}"
+    volumes:
+      - /DATA/AppData/MyMusic/downloads:/downloads
+      - /DATA/AppData/MyMusic/data:/data
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    x-casaos:
+      envs:
+        - container: USER
+          description:
+            en_us: Access Username
+            es_es: Usuario de acceso
+        - container: PASSWORD
+          description:
+            en_us: Access Password
+            es_es: Contraseña de acceso
+        - container: PORT
+          description:
+            en_us: Web service port
+            es_es: Puerto del servicio web
