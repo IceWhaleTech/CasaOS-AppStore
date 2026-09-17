@@ -42,8 +42,8 @@ services:
       - POSTGRES_DB=vibenvr
       - DATABASE_URL=postgresql://vibenvr:$AppID@vibenvr-db:5432/vibenvr
       - TZ=$TZ
-      - SECRET_KEY=$AppID
-      - WEBHOOK_SECRET=$AppID
+      - SECRET_KEY=$AppID-$AppID-$AppID-$AppID-$AppID
+      - WEBHOOK_SECRET=$AppID-$AppID-$AppID-$AppID-$AppID
       - ALLOWED_ORIGINS=
       - COOKIE_SECURE=auto
     depends_on:
@@ -77,7 +77,7 @@ services:
       - TZ=$TZ
       - HW_ACCEL=true
       - HW_ACCEL_TYPE=auto
-      - WEBHOOK_SECRET=$AppID
+      - WEBHOOK_SECRET=$AppID-$AppID-$AppID-$AppID-$AppID
     devices:
       - /dev/dri:/dev/dri
     restart: unless-stopped
