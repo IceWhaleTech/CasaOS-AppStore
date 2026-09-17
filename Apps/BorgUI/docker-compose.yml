@@ -1,0 +1,125 @@
+name: borg-ui
+services:
+  borg-ui:
+    image: ainullcode/borg-ui:2.2.6
+    container_name: borg-ui
+    restart: unless-stopped
+    network_mode: bridge
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    ports:
+      - target: 8081
+        published: "8081"
+        protocol: tcp
+    environment:
+      PORT: "8081"
+      PUID: "1000"
+      PGID: "1000"
+      TZ: Etc/UTC
+      LOCAL_MOUNT_POINTS: /local
+      INITIAL_ADMIN_PASSWORD: ""
+      REDIS_HOST: disabled
+      REDIS_URL: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/cache
+        target: /home/borg/.cache/borg
+      - type: bind
+        source: /DATA
+        target: /local
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+    healthcheck:
+      test: ["CMD", "sh", "-c", "curl -f http://localhost:8081/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    x-casaos:
+      envs:
+        - container: PORT
+          description:
+            en_US: Port the app listens on inside the container. Keep equal to the container side of the port mapping.
+        - container: PUID
+          description:
+            en_US: User ID that owns backup files.
+        - container: PGID
+          description:
+            en_US: Group ID that owns backup files.
+        - container: TZ
+          description:
+            en_US: Timezone for schedules, for example Europe/Berlin.
+        - container: LOCAL_MOUNT_POINTS
+          description:
+            en_US: Comma-separated container paths shown in the file browser. Must match your volume targets.
+        - container: INITIAL_ADMIN_PASSWORD
+          description:
+            en_US: Admin password on first start only. Leave empty to use the app default (admin123) and change it in the UI.
+        - container: REDIS_HOST
+          description:
+            en_US: Leave as "disabled" to use the in-memory archive cache. Set a Redis hostname or use REDIS_URL to enable a persistent cache.
+        - container: REDIS_URL
+          description:
+            en_US: Optional full Redis URL, for example redis://192.168.1.10:6379/0. Requires a separate Redis app.
+      ports:
+        - container: "8081"
+          description:
+            en_US: Web UI port
+      volumes:
+        - container: /data
+          description:
+            en_US: Application data (database, logs, SSH keys, secret key)
+        - container: /home/borg/.cache/borg
+          description:
+            en_US: Borg repository cache (safe to delete)
+        - container: /local
+          description:
+            en_US: Data to back up and restore into. Mount only what you need.
+x-casaos:
+  id: com.borgui.borg-ui
+  architectures:
+    - amd64
+    - arm64
+  main: borg-ui
+  author: karanhudia
+  developer: karanhudia
+  category: Productivity
+  title:
+    en_US: Borg UI
+  tagline:
+    en_US: Web interface for BorgBackup. Backups, archives, restores and schedules.
+  description:
+    en_US: |-
+      Borg UI is a web interface for BorgBackup. Run backups, browse and restore archives, manage local, SSH and SFTP repositories, automate schedules with pre/post hooks and receive notifications through 100+ Apprise services. Supports BorgBackup 1.x and Borg 2 beta.
+
+      Redis is optional: the default in-memory cache works out of the box; set REDIS_URL to a separate Redis app for a persistent archive-browsing cache. Archive mounting (borg mount) and SSHFS pull backups need FUSE (SYS_ADMIN and /dev/fuse), which this entry does not enable; see the installation docs.
+  tips:
+    before_install:
+      en_US: |-
+        Login with user "admin" and the password from INITIAL_ADMIN_PASSWORD (default admin123). Change it after first login.
+        /DATA is mounted at /local so you can back up your CasaOS data; narrow this to specific folders if you prefer.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BorgUI/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BorgUI/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BorgUI/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BorgUI/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/BorgUI/screenshot-3.png
+  index: /
+  port_map: "8081"
+  scheme: http
+  version: "2.2.6"
+  update_at: "2026-09-04"
+  release_notes:
+    en_US: |-
+      - Initial CasaOS entry for Borg UI 2.2.6.
+  website: https://borgui.com
+  repo: https://github.com/karanhudia/borg-ui
+  support: https://github.com/karanhudia/borg-ui/issues
+  docs: https://docs.borgui.com
