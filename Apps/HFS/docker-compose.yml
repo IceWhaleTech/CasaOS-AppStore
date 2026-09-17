@@ -1,0 +1,81 @@
+name: hfs
+services:
+  hfs:
+    image: rejetto/hfs:v3.3.1
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 80
+        published: "8082"
+        protocol: tcp
+    environment:
+      HFS_PORT: "80"
+      HFS_INITIAL_ADMIN_PASSWORD: please-change
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/shares
+        target: /shares
+    x-casaos:
+      envs:
+        - container: HFS_INITIAL_ADMIN_PASSWORD
+          description:
+            en_US: Initial admin password, used only when no configuration file exists. After installation, change it in HFS Admin under Accounts.
+      volumes:
+        - container: /data
+          description:
+            en_US: HFS configuration and accounts
+        - container: /shares
+          description:
+            en_US: Files to share. Choose a host folder; keep the container path /shares.
+      ports:
+        - container: "80"
+          description:
+            en_US: HFS web interface
+x-casaos:
+  id: com.rejetto.hfs
+  main: hfs
+  index: /~/admin/
+  port_map: "8082"
+  scheme: http
+  icon: https://raw.githubusercontent.com/rejetto/hfs/main/admin/public/hfs-logo-icon.svg
+  title:
+    en_US: HFS
+  tagline:
+    en_US: Share files through your browser
+  description:
+    en_US: |
+      HFS is an HTTP file server with uploads, downloads, user accounts, permissions,
+      a virtual file system and plugins. Manage it through the Admin panel and share
+      files with users through the web interface.
+      This installation starts with a dedicated empty shared folder. To share an
+      existing folder, change the host path of the /shares volume in app settings.
+  tips:
+    before_install:
+      en_US: |
+        **First login**
+
+        | Username | Password |
+        |----------|----------|
+        | `admin` | `please-change` |
+
+        After logging in, open **Accounts**, select **admin**, and change the password.
+
+        To choose your own password before installation, use Custom Installation
+        instead of Install. Under Environment Variables, replace the value of
+        HFS_INITIAL_ADMIN_PASSWORD with your password (not username:password).
+        This variable is only used when no configuration file exists.
+        After installation, change passwords in HFS Admin, not in app settings.
+  author: rejetto
+  developer: rejetto
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+  version: "3.3.1"
+  website: https://rejetto.com/hfs/
+  repo: https://github.com/rejetto/hfs
+  docs: https://github.com/rejetto/hfs/wiki/Docker
+  support: https://github.com/rejetto/hfs/issues
