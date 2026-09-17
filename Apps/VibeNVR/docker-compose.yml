@@ -1,4 +1,5 @@
 name: vibenvr
+
 services:
   frontend:
     image: spupuz/vibenvr-frontend:latest
@@ -11,16 +12,20 @@ services:
       - type: bind
         source: /DATA/AppData/vibenvr/data
         target: /data
+    networks:
+      - vibe-network
     environment:
       - TZ=$TZ
     depends_on:
       - backend
     restart: unless-stopped
+    init: true
     privileged: false
 
   backend:
     image: spupuz/vibenvr-backend:latest
     container_name: vibenvr-backend
+    privileged: false
     ports:
       - target: 5000
         published: "5005"
@@ -29,20 +34,32 @@ services:
       - type: bind
         source: /DATA/AppData/vibenvr/data
         target: /data
+    networks:
+      - vibe-network
     environment:
       - POSTGRES_USER=vibenvr
       - POSTGRES_PASSWORD=$AppID
       - POSTGRES_DB=vibenvr
-      - DATABASE_URL=postgresql://vibenvr:$AppID@db:5432/vibenvr
+      - DATABASE_URL=postgresql://vibenvr:$AppID@vibenvr-db:5432/vibenvr
       - TZ=$TZ
-      - SECRET_KEY=casaos_vibe_secure_key_change_in_prod
-      - WEBHOOK_SECRET=casaos_vibe_secure_key_change_in_prod
+      - SECRET_KEY=$AppID
+      - WEBHOOK_SECRET=$AppID
+      - ALLOWED_ORIGINS=
       - COOKIE_SECURE=auto
     depends_on:
       - db
       - engine
     restart: unless-stopped
-    privileged: false
+    init: true
+    entrypoint:
+      - /bin/sh
+      - ./entrypoint.sh
+    stop_grace_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   engine:
     image: spupuz/vibenvr-engine:latest
@@ -53,30 +70,67 @@ services:
       - type: bind
         source: /DATA/AppData/vibenvr/data
         target: /var/lib/vibe/recordings
+    networks:
+      - vibe-network
     environment:
       - BACKEND_URL=http://vibenvr-backend:5000
       - TZ=$TZ
       - HW_ACCEL=true
       - HW_ACCEL_TYPE=auto
-      - WEBHOOK_SECRET=casaos_vibe_secure_key_change_in_prod
+      - WEBHOOK_SECRET=$AppID
     devices:
       - /dev/dri:/dev/dri
     restart: unless-stopped
+    init: true
+    shm_size: '512mb'
+    entrypoint:
+      - /bin/sh
+      - ./entrypoint.sh
+    stop_grace_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
     privileged: true
 
   db:
     image: postgres:15-alpine
     container_name: vibenvr-db
+    networks:
+      - vibe-network
     restart: unless-stopped
+    init: true
     environment:
       - POSTGRES_USER=vibenvr
       - POSTGRES_PASSWORD=$AppID
       - POSTGRES_DB=vibenvr
       - TZ=$TZ
+      - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - type: bind
         source: /DATA/AppData/vibenvr/db
         target: /var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U vibenvr
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  vibe-network:
+    driver: bridge
 
 x-casaos:
   id: org.icewhale.vibenvr
@@ -87,7 +141,7 @@ x-casaos:
   title:
     en_US: VibeNVR
   description:
-    en_US: "VibeNVR is a lightweight, modern Network Video Recorder (NVR) built with Python (FastAPI) backend and React (Vite) frontend. It leverages Docker for orchestration and FFmpeg for video processing."
+    en_US: "VibeNVR is a lightweight, modern Network Video Recorder (NVR) built with Python (FastAPI) backend and React (Vite) frontend."
   tagline:
     en_US: "Modern and lightweight Network Video Recorder"
   developer: "spupuz"
