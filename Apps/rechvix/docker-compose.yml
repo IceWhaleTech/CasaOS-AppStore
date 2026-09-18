@@ -70,7 +70,7 @@ services:
   # on install, often before postgres/its secrets file are ready — this
   # keeps retrying until they are, then exits 0 and stays stopped.
   migrate:
-    image: ghcr.io/raktim94/rechvix-server:0.14.22
+    image: ghcr.io/raktim94/rechvix-server:0.14.23
     container_name: rechvix-migrate
     entrypoint: ["sh", "-c"]
     command:
@@ -93,7 +93,7 @@ services:
       envs: []
 
   app:
-    image: ghcr.io/raktim94/rechvix-server:0.14.22
+    image: ghcr.io/raktim94/rechvix-server:0.14.23
     container_name: rechvix-app
     hostname: rechvix-app
     restart: unless-stopped
@@ -137,7 +137,7 @@ services:
           protocol: tcp
 
   worker:
-    image: ghcr.io/raktim94/rechvix-worker:0.14.22
+    image: ghcr.io/raktim94/rechvix-worker:0.14.23
     container_name: rechvix-worker
     hostname: rechvix-worker
     restart: unless-stopped
@@ -217,10 +217,20 @@ x-casaos:
   index: /
   scheme: http
   port_map: "8090"
-  version: "0.14.22"
+  version: "0.14.23"
   update_at: "2026-09-18"
   release_notes:
     en_US: |-
+      0.14.23 (2026-09-18):
+      Fixed a real problem in the generated e-Way Bill file: several
+      fields (PIN code, state code, tax amounts, HSN code, quantity)
+      were being sent in the wrong format and could have been rejected
+      by the government portal. Also added checks that catch a bad
+      GSTIN, PIN code, vehicle number, or HSN code — and a mismatched
+      CGST/SGST vs IGST split — before a file is prepared, instead of
+      only finding out after uploading it.
+
+
       0.14.22 (2026-09-18):
       Important fix: the billing screen always set a new sale's "place of
       supply" to your own business's state, with no way to change it —
