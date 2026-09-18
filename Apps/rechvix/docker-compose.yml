@@ -108,7 +108,7 @@ services:
   # covers waiting on /secrets/env below: `test -s` fails (non-zero exit)
   # until postgres has generated it, and on-failure just retries.
   migrate:
-    image: ghcr.io/raktim94/rechvix-server:0.14.19
+    image: ghcr.io/raktim94/rechvix-server:0.14.20
     container_name: rechvix-migrate
     entrypoint: ["sh", "-c"]
     command:
@@ -131,7 +131,7 @@ services:
       envs: []
 
   app:
-    image: ghcr.io/raktim94/rechvix-server:0.14.19
+    image: ghcr.io/raktim94/rechvix-server:0.14.20
     container_name: rechvix-app
     hostname: rechvix-app
     restart: unless-stopped
@@ -175,7 +175,7 @@ services:
           protocol: tcp
 
   worker:
-    image: ghcr.io/raktim94/rechvix-worker:0.14.19
+    image: ghcr.io/raktim94/rechvix-worker:0.14.20
     container_name: rechvix-worker
     hostname: rechvix-worker
     restart: unless-stopped
@@ -255,10 +255,21 @@ x-casaos:
   index: /
   scheme: http
   port_map: "8090"
-  version: "0.14.19"
+  version: "0.14.20"
   update_at: "2026-09-18"
   release_notes:
     en_US: |-
+      0.14.20 (2026-09-18):
+      Fixed the e-Way Bill "needs information" block that could get stuck
+      on "ship-to state is not resolved" — it now falls back to the
+      invoice's own place of supply when no shipping address/customer GST
+      registration state is on file, and a transport-distance field was
+      added to the same form (the backend already accepted it; the form
+      never asked for it). A failed e-Invoice ("legal entity has no GSTIN
+      configured" and similar) can now be retried once the underlying
+      problem is fixed — previously a FAILED_FINAL record had no way
+      forward at all, even after fixing the actual issue in Settings.
+
       0.14.19 (2026-09-18):
       An uploaded business logo (PNG/JPEG/GIF, any shape or size) is now
       automatically resized and centered onto a consistent square instead
