@@ -70,7 +70,7 @@ services:
   # on install, often before postgres/its secrets file are ready — this
   # keeps retrying until they are, then exits 0 and stays stopped.
   migrate:
-    image: ghcr.io/raktim94/rechvix-server:0.14.21
+    image: ghcr.io/raktim94/rechvix-server:0.14.22
     container_name: rechvix-migrate
     entrypoint: ["sh", "-c"]
     command:
@@ -93,7 +93,7 @@ services:
       envs: []
 
   app:
-    image: ghcr.io/raktim94/rechvix-server:0.14.21
+    image: ghcr.io/raktim94/rechvix-server:0.14.22
     container_name: rechvix-app
     hostname: rechvix-app
     restart: unless-stopped
@@ -137,7 +137,7 @@ services:
           protocol: tcp
 
   worker:
-    image: ghcr.io/raktim94/rechvix-worker:0.14.21
+    image: ghcr.io/raktim94/rechvix-worker:0.14.22
     container_name: rechvix-worker
     hostname: rechvix-worker
     restart: unless-stopped
@@ -217,10 +217,21 @@ x-casaos:
   index: /
   scheme: http
   port_map: "8090"
-  version: "0.14.21"
+  version: "0.14.22"
   update_at: "2026-09-18"
   release_notes:
     en_US: |-
+      0.14.22 (2026-09-18):
+      Important fix: the billing screen always set a new sale's "place of
+      supply" to your own business's state, with no way to change it —
+      this silently taxed every inter-state sale as if it were local
+      (CGST+SGST) instead of the correct IGST. It now defaults to the
+      customer's own registered GST state and can be corrected before
+      Start Sale. Also fixed several fields in the generated e-Way Bill
+      file that could come out empty (to/from GSTIN, state, PIN code) —
+      added a business PIN code field in Settings to close one of the
+      gaps for good.
+
       0.14.21 (2026-09-18):
       "Ship-to state is not resolved" could still get stuck on an already-
       opened e-Way Bill even after 0.14.20's fix, because that record's
