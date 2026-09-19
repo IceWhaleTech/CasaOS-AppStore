@@ -1,0 +1,74 @@
+name: cloudgate
+services:
+  cloudgate:
+    image: ghcr.io/elias02345/cloudgate:v0.5.0@sha256:8eaf8d60c7fe5370b21cd310e667eb536e8029981c88590e56c25462aa8a4118
+    network_mode: bridge
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    environment:
+      # The platform updates the image; CloudGate's own in-app updater must
+      # stay off so the two don't fight over /app.
+      CLOUDGATE_DISABLE_UPDATES: "true"
+      PUID: "1000"
+      PGID: "1000"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    restart: unless-stopped
+x-casaos:
+  id: io.github.elias02345.cloudgate
+  main: cloudgate
+  index: /
+  port_map: "8080"
+  scheme: http
+  # Points at this same file's icon.svg once merged into
+  # IceWhaleTech/CasaOS-AppStore, matching how every other app in that repo
+  # references its own committed icon (see packaging/README.md).
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CloudGate/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CloudGate/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CloudGate/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CloudGate/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CloudGate/screenshot-4.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CloudGate/thumbnail.png
+  title:
+    en_US: CloudGate
+  tagline:
+    en_US: Put your homelab online without port forwarding
+  description:
+    en_US: |
+      CloudGate puts the services in your homelab on the internet, even when
+      your connection has no public IP address or open ports (CGNAT, DS-Lite,
+      mobile internet). It manages Cloudflare Tunnels and playit.gg tunnels
+      from one web interface.
+
+      Add a service by entering its local address and the public hostname you
+      want. CloudGate creates the tunnel, the DNS record and the routing rule,
+      and keeps the tunnel running.
+
+      Features:
+      - Cloudflare Tunnel for websites and web apps, with automatic DNS
+        records
+      - playit.gg tunnels for TCP/UDP services such as game servers and SSH
+      - Optional local reverse proxy with Let's Encrypt certificates
+      - Two-factor authentication, audit log and API keys
+      - No configuration needed: the admin account and all secrets are created
+        on first start
+
+      Not affiliated with Cloudflare or playit.gg.
+  author: Elias02345
+  developer: Elias02345
+  category: Networking
+  architectures:
+    - amd64
+    - arm64
+  version: "0.5.0"
+  update_at: "2026-09-19"
+  release_notes:
+    en_US: ""
+  website: https://github.com/Elias02345/CloudGate
+  repo: https://github.com/Elias02345/CloudGate
+  support: https://github.com/Elias02345/CloudGate/issues
