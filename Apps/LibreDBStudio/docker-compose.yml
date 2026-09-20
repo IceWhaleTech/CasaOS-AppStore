@@ -1,7 +1,7 @@
 name: libredb-studio
 services:
   libredb-studio:
-    image: libredb/libredb-studio:0.16.0
+    image: libredb/libredb-studio:0.16.1
     container_name: libredb-studio
     restart: unless-stopped
     ports:
@@ -10,8 +10,8 @@ services:
         protocol: tcp
     environment:
       ADMIN_EMAIL: admin@libredb.org
-      ADMIN_PASSWORD: changeme123
-      JWT_SECRET: libredb-studio-change-this-to-a-long-random-secret-value-min-48
+      ADMIN_PASSWORD: ""
+      JWT_SECRET: ""
       STORAGE_PROVIDER: sqlite
       STORAGE_SQLITE_PATH: /app/data/libredb-storage.db
       AUTH_COOKIE_SECURE: "false"
@@ -43,12 +43,12 @@ services:
             zh_CN: 首次启动时创建的初始管理员账户的电子邮件地址。
         - container: ADMIN_PASSWORD
           description:
-            en_US: Password for the initial admin account (minimum 8 characters). Change this before the first login, otherwise anyone on your LAN can sign in.
-            zh_CN: 初始管理员账户的密码（至少 8 个字符）。请在首次登录前修改，否则局域网内任何人都可以登录。
+            en_US: Leave empty and the app generates a strong password on first start and prints it once to the container log. Set your own only if you prefer to choose it.
+            zh_CN: 留空时，应用会在首次启动时生成强密码并在容器日志中打印一次。仅在希望自行指定时填写。
         - container: JWT_SECRET
           description:
-            en_US: Secret key used to sign authentication tokens (minimum 32 characters). Set a long random value.
-            zh_CN: 用于签署身份验证令牌的密钥（至少 32 个字符）。请设置一个较长的随机值。
+            en_US: Leave empty and a strong secret is generated on first start. This value also encrypts saved connection passwords, so never reuse a value published anywhere. If you set your own it must be at least 32 characters, or the container exits at boot.
+            zh_CN: 留空时会在首次启动时生成强密钥。该值同时用于加密已保存的连接密码，因此切勿使用任何公开过的值。如自行设置，长度至少为 32 个字符，否则容器将在启动时退出。
         - container: STORAGE_PROVIDER
           description:
             en_US: Storage backend. Keep as "sqlite" for a self-contained setup.
@@ -99,21 +99,23 @@ x-casaos:
   index: /
   scheme: http
   port_map: "3016"
-  version: "0.16.0"
-  update_at: "2026-09-17"
+  version: "0.16.1"
+  update_at: "2026-09-20"
   release_notes:
     en_US: |-
-      - Updates LibreDB Studio to 0.16.0.
-      - The schema sidebar is an object tree: views, materialised views, sequences, routines and triggers are listed per engine, each folder carrying a count.
-      - Opening a deferred connection issues no catalog query, and a large folder mounts only the rows in view.
-      - View, routine and trigger definitions can be read, and edited where the engine allows it.
-      - No environment variable, port or volume changed, so existing installs need no reconfiguration.
+      - Updates LibreDB Studio to 0.16.1.
+      - An inline cell edit is written to the row you edited. The grid used to key a revealed cell to its position, so an edit made after a sort or a refresh could land on a different row. Eight further grid defects were fixed with it.
+      - GET /health and GET /api/health answer beside /api/db/health, so a platform whose probe path is not configurable has one to reach.
+      - A container that cannot serve a login now says so at boot and exits, instead of passing its liveness probe while answering every login with a 503.
+      - ADMIN_PASSWORD and JWT_SECRET are now empty in this template. The app generates both on first start and prints the admin password once to the container log. The old placeholders were published in this catalog, and JWT_SECRET also encrypts saved connection passwords, so a shared value was unsafe.
+      - Existing installs that kept the old placeholders should clear both variables. Saved connection passwords will need to be entered once more, because they were sealed with the old value.
     zh_CN: |-
-      - 将 LibreDB Studio 更新至 0.16.0。
-      - 结构侧边栏现在是对象树：视图、物化视图、序列、例程和触发器按引擎分类列出，每个文件夹都带有计数。
-      - 打开延迟连接时不会发起任何目录查询，大文件夹只加载视图内的行。
-      - 可以查看视图、例程和触发器的定义，并在引擎允许的情况下进行编辑。
-      - 环境变量、端口和数据卷均未变化，现有安装无需重新配置。
+      - 将 LibreDB Studio 更新至 0.16.1。
+      - 单元格的行内编辑现在会写入所编辑的那一行。此前网格以位置而非行来标识单元格，排序或刷新后的编辑可能写到别的行。同时修复了另外八处网格缺陷。
+      - 新增 GET /health 与 GET /api/health，与 /api/db/health 并存，便于探针路径不可配置的平台使用。
+      - 无法提供登录服务的容器现在会在启动时说明原因并退出，而不再是存活探针通过、但每次登录都返回 503。
+      - 本模板中的 ADMIN_PASSWORD 与 JWT_SECRET 现已留空。应用会在首次启动时生成这两个值，并将管理员密码在容器日志中打印一次。旧的占位值已公开在本应用商店中，而 JWT_SECRET 同时用于加密已保存的连接密码，因此共用该值并不安全。
+      - 仍在使用旧占位值的现有安装应清空这两个变量。已保存的连接密码需要重新输入一次，因为它们是用旧值加密的。
   website: https://libredb.org
   repo: https://github.com/libredb/libredb-studio
   support: https://github.com/libredb/libredb-studio/issues
