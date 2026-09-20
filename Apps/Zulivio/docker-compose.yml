@@ -23,7 +23,7 @@ services:
       - zulivio
 
   backend:
-    image: ghcr.io/raktim94/zulivio-backend:1.10.0
+    image: ghcr.io/raktim94/zulivio-backend:1.11.0
     container_name: zulivio-backend
     hostname: zulivio-backend
     restart: unless-stopped
@@ -129,7 +129,7 @@ services:
               (you'd just need to re-enter them from Settings).
 
   web:
-    image: ghcr.io/raktim94/zulivio-web:1.10.0
+    image: ghcr.io/raktim94/zulivio-web:1.11.0
     container_name: zulivio-web
     hostname: zulivio-web
     restart: unless-stopped
@@ -207,10 +207,17 @@ x-casaos:
   index: /
   scheme: http
   port_map: "2996"
-  version: "1.10.0"
-  update_at: "2026-09-07"
+  version: "1.11.0"
+  update_at: "2026-09-20"
   release_notes:
     en_US: |-
+      1.11.0: added a MacroDroid missed-call integration — a MASTER_OWNER
+      can issue a per-device API token (Settings > Integrations) for an
+      employee's phone, then MacroDroid's "Call Missed" trigger posts it to
+      a new webhook that matches the caller against an existing lead or
+      opens a new one, owned by that employee, with a callback follow-up
+      scheduled right away so it surfaces in their queue.
+
       1.10.0: the Leads list can now select every lead matching your current
       filters, not just what's checked on the current page, and delete them
       all in one action. Data Hub adds a type-to-confirm "delete all leads"
