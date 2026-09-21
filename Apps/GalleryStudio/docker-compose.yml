@@ -1,0 +1,138 @@
+name: gallery-studio
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: gallery-studio-db
+    environment:
+      POSTGRES_DB: gallery_studio
+      POSTGRES_USER: gallery_studio
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - gallery_studio_network
+    restart: unless-stopped
+
+  backend:
+    image: ghcr.io/zwroee/gallerystudio-backend:1.0.0
+    container_name: gallery-studio-backend
+    environment:
+      DATABASE_URL: postgresql://gallery_studio:${DB_PASSWORD:-changeme}@postgres:5432/gallery_studio
+      JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-this}
+      STORAGE_PATH: /storage
+      NODE_ENV: production
+    volumes:
+      - gallery_storage:/storage
+    depends_on:
+      - postgres
+    networks:
+      - gallery_studio_network
+    restart: unless-stopped
+
+  frontend:
+    image: ghcr.io/zwroee/gallerystudio-frontend:1.0.0
+    container_name: gallery-studio-frontend
+    networks:
+      - gallery_studio_network
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: gallery-studio-nginx
+    ports:
+      - target: 80
+        published: ${WEBUI_PORT:-8080}
+        protocol: tcp
+    volumes:
+      - gallery_storage:/storage:ro
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - gallery_studio_network
+    restart: unless-stopped
+    command: |
+      sh -c "cat > /etc/nginx/conf.d/default.conf <<'EOF'
+      server {
+          listen 80;
+          server_name _;
+          location / {
+              proxy_pass http://frontend:80;
+              proxy_set_header Host \$host;
+              proxy_set_header X-Real-IP \$remote_addr;
+              proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto \$scheme;
+          }
+          location /api {
+              proxy_pass http://backend:3000;
+              proxy_set_header Host \$host;
+              proxy_set_header X-Real-IP \$remote_addr;
+              proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto \$scheme;
+          }
+          location /storage {
+              alias /storage;
+          }
+      }
+      EOF
+      nginx -g 'daemon off;'"
+    x-casaos:
+      envs:
+        - container: WEBUI_PORT
+          description:
+            en_us: Web UI Port
+
+volumes:
+  postgres_data:
+  gallery_storage:
+
+networks:
+  gallery_studio_network:
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: gallery-studio-nginx
+  category: Media
+  developer: Gallery Studio
+  author: Gallery Studio Team
+  icon: https://cdn.jsdelivr.net/gh/zwroee/GalleryStudio@main/logo.png
+  thumbnail: https://cdn.jsdelivr.net/gh/zwroee/GalleryStudio@main/logo.png
+  title:
+    en_us: Gallery Studio
+  tagline:
+    en_us: Professional self-hosted photography gallery and portfolio platform for photographers.
+  description:
+    en_us: |
+      Gallery Studio is a modern, self-hosted photography gallery and portfolio platform designed for professional photographers.
+
+      - **Client Galleries** – Create beautiful, PIN-protected galleries for client photo delivery
+      - **Portfolio Management** – Showcase your best work with customizable portfolio galleries
+      - **Watermark Protection** – Automatically apply watermarks to protect your images
+      - **Admin Dashboard** – Manage galleries, upload photos, and control access from one place
+      - **Modern UI** – Clean, responsive design that looks great on all devices
+      - **Self-Hosted** – Full control over your data and images
+
+      **Learn More:**
+      - [Gallery Studio GitHub](https://github.com/zwroee/GalleryStudio)
+      - [Documentation](https://github.com/zwroee/GalleryStudio#readme)
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/zwroee/GalleryStudio@main/casaos-appstore/screenshot-1.png
+  tips:
+    before_install:
+      en_us: |
+        ### Getting Started
+
+        1. After installation, access Gallery Studio at `http://your-server-ip:8080`
+        2. Create your admin account on first visit
+        3. Log in to the admin dashboard
+        4. Start creating galleries and uploading photos
+
+        **Default Settings:**
+        - Web UI Port: 8080
+        - Database: PostgreSQL (auto-configured)
+        - Storage: Docker volume (persistent)
+
+        **Security Note:** Change the default JWT_SECRET and DB_PASSWORD in the environment variables for production use.
+  port_map: "8080"
