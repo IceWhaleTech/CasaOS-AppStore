@@ -1,7 +1,7 @@
 name: libredb-studio
 services:
   libredb-studio:
-    image: libredb/libredb-studio:0.16.1
+    image: libredb/libredb-studio:0.16.2
     container_name: libredb-studio
     restart: unless-stopped
     ports:
@@ -99,23 +99,23 @@ x-casaos:
   index: /
   scheme: http
   port_map: "3016"
-  version: "0.16.1"
-  update_at: "2026-09-20"
+  version: "0.16.2"
+  update_at: "2026-09-21"
   release_notes:
     en_US: |-
-      - Updates LibreDB Studio to 0.16.1.
-      - An inline cell edit is written to the row you edited. The grid used to key a revealed cell to its position, so an edit made after a sort or a refresh could land on a different row. Eight further grid defects were fixed with it.
-      - GET /health and GET /api/health answer beside /api/db/health, so a platform whose probe path is not configurable has one to reach.
-      - A container that cannot serve a login now says so at boot and exits, instead of passing its liveness probe while answering every login with a 503.
-      - ADMIN_PASSWORD and JWT_SECRET are now empty in this template. The app generates both on first start and prints the admin password once to the container log. The old placeholders were published in this catalog, and JWT_SECRET also encrypts saved connection passwords, so a shared value was unsafe.
-      - Existing installs that kept the old placeholders should clear both variables. Saved connection passwords will need to be entered once more, because they were sealed with the old value.
+      - Updates LibreDB Studio to 0.16.2. This release closes a security defect, GHSA-3wh2-8x78-jfw4, scored 8.8.
+      - A connection id sent in a request could select another session's database provider, already authenticated as that user. A `user` account could reach a connection restricted to `admin`. The cache key is now derived from the server the connection resolves to and a digest of its credentials, so a forged id buys nothing. Upgrade if more than one account reaches your instance.
+      - Schema diff reads a column default as a value rather than as SQL. A default of `0`, `''` or `false` used to read as absent and was dropped from the generated DDL.
+      - An Elasticsearch connection can authenticate with an API key id and secret, not only a username and password.
+      - Query results page from the stats strip. A `LIMIT` you typed is now a hard bound, while a capped preview stays readable beyond its first page.
+      - The example compose stacks publish their PostgreSQL and Vault containers on the loopback interface only, so a demo on a host with a public address no longer exposes them.
     zh_CN: |-
-      - 将 LibreDB Studio 更新至 0.16.1。
-      - 单元格的行内编辑现在会写入所编辑的那一行。此前网格以位置而非行来标识单元格，排序或刷新后的编辑可能写到别的行。同时修复了另外八处网格缺陷。
-      - 新增 GET /health 与 GET /api/health，与 /api/db/health 并存，便于探针路径不可配置的平台使用。
-      - 无法提供登录服务的容器现在会在启动时说明原因并退出，而不再是存活探针通过、但每次登录都返回 503。
-      - 本模板中的 ADMIN_PASSWORD 与 JWT_SECRET 现已留空。应用会在首次启动时生成这两个值，并将管理员密码在容器日志中打印一次。旧的占位值已公开在本应用商店中，而 JWT_SECRET 同时用于加密已保存的连接密码，因此共用该值并不安全。
-      - 仍在使用旧占位值的现有安装应清空这两个变量。已保存的连接密码需要重新输入一次，因为它们是用旧值加密的。
+      - 将 LibreDB Studio 更新至 0.16.2。本次发布修复了一个安全缺陷 GHSA-3wh2-8x78-jfw4，评分 8.8。
+      - 请求中传入的连接 id 可以选中其他会话的数据库提供者，且该提供者已以对方身份完成认证。`user` 账户因此可以访问仅限 `admin` 的连接。缓存键现在由连接指向的服务器和凭据摘要推导得出，伪造 id 不再有任何作用。若有多个账户访问你的实例，请升级。
+      - 结构差异比对现在把列默认值当作值而非 SQL 读取。此前 `0`、`''` 或 `false` 这类默认值会被视为缺失，并从生成的 DDL 中丢失。
+      - Elasticsearch 连接可以使用 API key 的 id 与 secret 认证，不再只支持用户名和密码。
+      - 查询结果可从统计条分页。你自己写的 `LIMIT` 现在是硬边界，而受限预览可以翻到第一页之后。
+      - 示例 compose 栈的 PostgreSQL 与 Vault 容器只监听回环地址，在有公网地址的主机上做演示不会再把它们暴露出去。
   website: https://libredb.org
   repo: https://github.com/libredb/libredb-studio
   support: https://github.com/libredb/libredb-studio/issues
