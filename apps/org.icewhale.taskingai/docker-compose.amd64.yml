@@ -119,7 +119,7 @@ services:
       - taskingai_network
 
   cache:
-    image: redis:7-alpine@sha256:9702d01c1f10c3ea9f48211b4362e44f154ff02d063e6f7268eba804059f53bf
+    image: redis:7-alpine@sha256:ca0acbb137c1dc3339c8b147a58fd6f42775d4599327b50e7b116c23de501af2
     command: ["redis-server", "--requirepass", "TaskingAI321"]
     volumes:
       - /DATA/AppData/$AppID/data/redis:/data

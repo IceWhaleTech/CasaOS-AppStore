@@ -119,7 +119,7 @@ services:
       - dify
 
   db:
-    image: postgres:15-alpine@sha256:a2c20749c564b4eb73a77bfda626f8a3cde1bbfae020fb97c616a00cdc1a2181
+    image: postgres:15-alpine@sha256:25d430274d8a31184f9435cc5b2f56aff254952065bbbcac0c51acedb5a1d1e7
     container_name: dify-db
     restart: unless-stopped
     environment:
@@ -144,7 +144,7 @@ services:
       - dify
 
   redis:
-    image: redis:6-alpine@sha256:c099203974f7936abe76009d8fb4c984b31a6b3b21bf942b40ba658aac757d5d
+    image: redis:6-alpine@sha256:f144fc965e3a2f3027a6c66bce596c8b780096380dad0b71d6245fa1a32bbe23
     container_name: dify-redis
     restart: unless-stopped
     environment:
@@ -216,7 +216,7 @@ services:
       - config
 
   nginx:
-    image: nginx:latest@sha256:963cfe6e75d1c292f66589d7e190b137cf89310414c0c1c5b476dfc61a4fcd0d
+    image: nginx:latest@sha256:9c0f39aa1c46f5062ba080555a067ebb82d5f63a8cf4d63f6ef2e76fc9ff2d0c
     container_name: dify-nginx
     restart: unless-stopped
     volumes:

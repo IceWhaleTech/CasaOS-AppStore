@@ -15,24 +15,24 @@
     "arm64"
   ],
   "tips": {
-    "before_install": "Before use, please follow the [Configuration Guide](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) to configure the model and related settings."
+    "before_install": "The first launch requires a one-time browser approval:\n1. Open OpenClaw from its ZimaOS app icon and keep the \"Approve this browser\" page open.\n2. Return to the ZimaOS home screen, click `...` at the top-right of the OpenClaw app card, choose `Terminal`, and open the `openclaw` service terminal (not `openclaw-init`).\n3. Copy the complete command shown under \"Run on the Gateway host\" on the approval page and run it in the terminal. It has the form `openclaw devices approve <request-id>`; the request ID is different for every installation.\n4. The page connects automatically after approval. Then choose a model provider in the web setup, sign in or enter its API key, and select the default model.\n\nThe launch link supplies the Gateway secret automatically. There is no need to run `onboard` or restart the container. The same browser needs approval again only if its site data is cleared. See the [Configuration Guide](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) for details."
   },
-  "update_at": "2026-05-13",
+  "update_at": "2026-09-19",
   "website": "https://openclaw.ai",
   "repo": "https://github.com/openclaw/openclaw",
   "support": "https://github.com/openclaw/openclaw/issues",
   "docs": "https://docs.openclaw.ai/",
   "title": "OpenClaw",
-  "release_note": "- OpenClaw 2026.5.7 improves release and plugin publishing recovery around transient ClawHub CLI dependency installation failures.\n- Adds an explicit openai/chat-latest direct API-key model override and exposes computed cron status in JSON output.\n- Hardens native command ownership, memory admin checks, inline skill tool authorization, credential resolution, and plugin lifecycle shell handling.",
+  "release_note": "- OpenClaw 2026.9.5 introduces atomic updates and plugin installation without restarting the Gateway.\n- Adds conversation sharing and archiving, GPT Live, and shared browser pages.\n- Adds guided specialist teams and improves reliability, security, and container support.",
   "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
   "id": "org.icewhale.openclaw",
-  "version": "2026.5.7",
+  "version": "2026.9.5",
   "categories": [
     "ai"
   ],
-  "min_memory": 1073741824,
+  "min_memory": 0,
   "min_image_size": {
-    "amd64": 1279571933,
-    "arm64": 1279571933
+    "amd64": 1007927357,
+    "arm64": 1038569936
   }
 }

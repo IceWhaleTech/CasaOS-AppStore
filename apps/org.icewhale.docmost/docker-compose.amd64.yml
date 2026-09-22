@@ -28,7 +28,7 @@ services:
       - docmost-redis
   docmost-db:
     container_name: docmost-db
-    image: postgres:16-alpine@sha256:075f7ba66bc9b3ce7d6b8b635208ff61cd7cf1a67d71ec530eec5d7ae0cbe571
+    image: postgres:16-alpine@sha256:1a66d744c1b459e13b05a8fca341da84cb63383e99ce262210efee5a319d4551
     environment:
       POSTGRES_DB: docmost
       POSTGRES_USER: docmost
@@ -42,7 +42,7 @@ services:
       - docmost-network
   docmost-redis:
     container_name: docmost-redis
-    image: redis:7.2-alpine@sha256:8d3740a7d506644b6553d6175e7a7e7028b9cda8493a6c9825a251b574426cf9
+    image: redis:7.2-alpine@sha256:84bab713067f5494d94c24e99ae3fa3ae2388c037152edcbcf301f7cfaeb3048
     restart: unless-stopped
     volumes:
       - type: bind

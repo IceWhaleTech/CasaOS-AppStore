@@ -23,7 +23,7 @@ services:
       - qui_network
   postgres:
     container_name: qui-postgres
-    image: postgres:16-alpine@sha256:738d1359df5aa0b6d50a9071e989c49fdd39152a2a805c6ff131bf5e2243e0b3
+    image: postgres:16-alpine@sha256:2c942175a1255a9abe0366e48c1b401d9f50f835b04dfea13f111609b5530df7
     restart: unless-stopped
     deploy:
       resources:

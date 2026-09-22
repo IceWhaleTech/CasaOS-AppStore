@@ -1,7 +1,7 @@
 {
   "id": "org.icewhale.etherpad",
-  "description": "Etherpad 是一款实时协作文档编辑器，多人可以同时编辑同一个 pad，所有修改都会立即同步，并按作者颜色区分。\n它支持自托管、开源且完全由你掌控，非常适合会议记录、头脑风暴、协作写作和轻量知识沉淀。\n它内置管理面板，拥有 250+ 插件生态，原生支持 DOCX/PDF/Markdown 导入导出，并提供 amd64 与 arm64 多架构容器支持。\n\n**主要功能：**\n- 实时协同编辑，修改即时同步\n- 按作者颜色区分内容，便于追踪贡献\n- 内置管理面板，配合 250+ 插件扩展生态\n- 原生支持 DOCX、PDF 和 Markdown 的导入与导出\n- 开源自托管部署，支持 amd64 和 arm64\n\n**了解更多：**\n- [Etherpad 官网](https://etherpad.org/)\n- [Etherpad GitHub](https://github.com/ether/etherpad)\n- [Etherpad 文档](https://docs.etherpad.org/)\n",
   "release_note": "- Etherpad v3.1.0 新增第 4 级自治自更新，支持维护时间窗口、预检检查，以及在失败和回滚时发送邮件通知。\n- 同时加入了更新器邮件的真实 SMTP 发送能力，并包含 API、导出与 HTTP 安全加固以及本地化更新。",
+  "description": "Etherpad 是一款实时协作文档编辑器，多人可以同时编辑同一个 pad，所有修改都会立即同步，并按作者颜色区分。\n它支持自托管、开源且完全由你掌控，非常适合会议记录、头脑风暴、协作写作和轻量知识沉淀。\n它内置管理面板，拥有 250+ 插件生态，原生支持 DOCX/PDF/Markdown 导入导出，并提供 amd64 与 arm64 多架构容器支持。\n\n**主要功能：**\n- 实时协同编辑，修改即时同步\n- 按作者颜色区分内容，便于追踪贡献\n- 内置管理面板，配合 250+ 插件扩展生态\n- 原生支持 DOCX、PDF 和 Markdown 的导入与导出\n- 开源自托管部署，支持 amd64 和 arm64\n\n**了解更多：**\n- [Etherpad 官网](https://etherpad.org/)\n- [Etherpad GitHub](https://github.com/ether/etherpad)\n- [Etherpad 文档](https://docs.etherpad.org/)\n",
   "tagline": "实时协作文档编辑器",
   "tips": {
     "before_install": "默认管理员密码是 \"admin\"。在将 Etherpad 暴露到网络之前，请先修改 ADMIN_PASSWORD。Pad 数据会使用内置的 dirty 数据库存储在 /DATA/AppData/etherpad/var 中，这种方式适合个人或小团队使用。对于高并发的生产场景，请将 DB_TYPE 改为 postgres 或 mysql，并将 DB_HOST、DB_NAME、DB_USER 和 DB_PASS 指向外部数据库。\n"

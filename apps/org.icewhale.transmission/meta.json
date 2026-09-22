@@ -17,22 +17,22 @@
   "tips": {
     "before_install": "| username | password |\n| -------- | -------- |\n| `casaos` | `casaos` |\n"
   },
-  "update_at": "2026-02-20",
+  "update_at": "2026-09-14",
   "website": "https://transmissionbt.com/",
   "repo": "https://github.com/transmission/transmission",
   "support": "https://github.com/transmission/transmission/issues",
   "docs": "https://github.com/transmission/transmission/blob/main/docs/README.md",
   "title": "Transmission",
-  "release_note": "- 4.1.1 is a bugfix release after the 4.1.0 feature cycle.\n- Fixes more than 20 issues and includes performance improvements.\n- Recommended by upstream for all users on the 4.1.x line.",
+  "release_note": "- Fixes a CORS bug that exposed the anti-CSRF nonce.\n- Fixes a use-after-free bug in peer code.\n- Restores builds with fmt 12.2.0 and fixes the 4.1.2 test build error.\n- Upstream recommends that all users upgrade.",
   "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
   "id": "org.icewhale.transmission",
-  "version": "4.1.1",
+  "version": "4.1.3",
   "categories": [
     "media"
   ],
   "min_memory": 67108864,
   "min_image_size": {
-    "amd64": 33712259,
-    "arm64": 34743316
+    "amd64": 34429008,
+    "arm64": 35472583
   }
 }

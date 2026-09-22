@@ -3,7 +3,7 @@ services:
   # Qui Application
   qui:
     container_name: qui
-    image: ghcr.io/autobrr/qui:v1.28.0@sha256:4fb16ab557ff9a3de04d0597033207fc0de065d348eaf1732ec26f5bb1d877d2
+    image: ghcr.io/autobrr/qui:v1.28.0@sha256:589339a81c17e9e28dd579d42a46395eab6576e899ae3b7fca91babb6334c21d
     restart: unless-stopped
     depends_on:
       postgres:
@@ -23,7 +23,7 @@ services:
       - qui_network
   postgres:
     container_name: qui-postgres
-    image: postgres:16-alpine@sha256:075f7ba66bc9b3ce7d6b8b635208ff61cd7cf1a67d71ec530eec5d7ae0cbe571
+    image: postgres:16-alpine@sha256:1a66d744c1b459e13b05a8fca341da84cb63383e99ce262210efee5a319d4551
     restart: unless-stopped
     deploy:
       resources:

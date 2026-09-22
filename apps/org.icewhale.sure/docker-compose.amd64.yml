@@ -68,7 +68,7 @@ services:
 
   sure-db:
     container_name: sure-db
-    image: postgres:16@sha256:56f243d2355bad7d2016b1e78b80da8ac9e7967b766be2bfbff84fe85ffa30bc
+    image: postgres:16@sha256:a85daf0dbd5e79586e850e3fe4b21b796799828ad015ce2166aeb98cc24da61c
     restart: unless-stopped
     volumes:
       - type: bind

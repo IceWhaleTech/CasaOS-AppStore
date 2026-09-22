@@ -1,19 +1,44 @@
+name: openclaw
 services:
-  openclaw:
-    image: icewhaletech/openclaw:2026.5.7
-    environment:
-      HOME: /home/node
-      TERM: xterm-256color
-      OPENCLAW_GATEWAY_TOKEN: casaos
-    network_mode: bridge
-    deploy:
-      resources:
-        reservations:
-          memory: 1G
+  openclaw-init:
+    image: ghcr.io/openclaw/openclaw:2026.9.5
+    user: "0:0"
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID
         target: /home/node/.openclaw
+      - type: bind
+        source: /DATA/AppData/$AppID/auth-profile-secrets
+        target: /home/node/.config/openclaw
+    entrypoint:
+      - /bin/sh
+      - -c
+    command:
+      - chown -R 1000:1000 /home/node/.openclaw /home/node/.config/openclaw
+    restart: "no"
+  openclaw:
+    image: ghcr.io/openclaw/openclaw:2026.9.5
+    environment:
+      HOME: /home/node
+      OPENCLAW_HOME: /home/node
+      OPENCLAW_STATE_DIR: /home/node/.openclaw
+      OPENCLAW_CONFIG_PATH: /home/node/.openclaw/openclaw.json
+      OPENCLAW_CONFIG_DIR: /home/node/.openclaw
+      OPENCLAW_WORKSPACE_DIR: /home/node/.openclaw/workspace
+      OPENCLAW_GATEWAY_PORT: "18789"
+      TERM: xterm-256color
+      OPENCLAW_GATEWAY_TOKEN: casaos
+    depends_on:
+      openclaw-init:
+        condition: service_completed_successfully
+    network_mode: bridge
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /home/node/.openclaw
+      - type: bind
+        source: /DATA/AppData/$AppID/auth-profile-secrets
+        target: /home/node/.config/openclaw
     ports:
       - target: 18789
         published: "24190"
@@ -23,13 +48,22 @@ services:
         protocol: tcp
     init: true
     restart: unless-stopped
-    privileged: true
+    cap_drop:
+      - NET_RAW
+      - NET_ADMIN
+    security_opt:
+      - no-new-privileges:true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     command:
-      - /bin/bash
-      - -c
-      - /app/start.sh && node dist/index.js gateway --bind lan --allow-unconfigured --port '18789'
-    container_name: openclaw
-name: openclaw
+      - node
+      - dist/index.js
+      - gateway
+      - --bind
+      - lan
+      - --allow-unconfigured
+      - --port
+      - "18789"
 x-casaos:
   id: org.icewhale.openclaw
   title:
@@ -51,6 +85,6 @@ x-casaos:
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.openclaw/assets/icon.svg
   main: openclaw
   port_map: "24190"
-  index: ?token=casaos
-  scheme: https
-  version: "2026.5.7"
+  index: /#token=casaos
+  scheme: http
+  version: "2026.9.5"

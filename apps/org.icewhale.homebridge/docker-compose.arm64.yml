@@ -3,7 +3,7 @@ version: '2'
 services:
   homebridge:
     # had to use homebridge/homebridge:latest because there are no versions listed
-    image: homebridge/homebridge:latest@sha256:3413dbed2f24569043d108fc1d6c4bb0eab1f46b1a95db2e5ab1c464cd66f537
+    image: homebridge/homebridge:latest@sha256:fb58d3b832b286b7c8469a12c4cb671e126d186418782a1fc98f9998065de402
     restart: always
     network_mode: host
     volumes:

@@ -64,7 +64,7 @@ services:
 
   maybe-db:
     container_name: maybe-db
-    image: postgres:16@sha256:b4ffbb18020d17edaf767a80987c618d43fa198ff85f8bcbec17d7ea7a6f6918
+    image: postgres:16@sha256:1a43e6bb8872ccce507f8467e549a6166e8ff132ad26b49879f5ec86ee612868
     restart: unless-stopped
     volumes:
       - type: bind

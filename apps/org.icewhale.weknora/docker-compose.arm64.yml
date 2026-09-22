@@ -162,7 +162,7 @@ services:
     networks:
       - weknora-network
   minio:
-    image: minio/minio:RELEASE.2025-09-07T16-13-09Z@sha256:9966a92a734f9411e32f4f41d7d9d826fcdc0f68c4e20b70295bd4e7c11f8a2f
+    image: minio/minio:RELEASE.2025-09-07T16-13-09Z
     container_name: weknora-minio
     ports:
       - target: 9000

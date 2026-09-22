@@ -1,10 +1,10 @@
 {
   "id": "org.icewhale.openclaw",
   "title": "OpenClaw",
+  "release_note": "- OpenClaw 2026.9.5 では、アトミック更新と Gateway を再起動せずにプラグインをインストールする機能が導入されました。\n- 会話の共有とアーカイブ、GPT Live、共有ブラウザページが追加されました。\n- ガイド付きの専門家チームが追加され、信頼性、セキュリティ、コンテナ対応が向上しました。",
   "description": "OpenClawは、大規模言語モデル（LLM）の機能を、タスクを積極的に実行し、複数のプラットフォームで対話し、継続的に動作するインテリジェントエージェントへと拡張するために設計された、オープンソースのパーソナルAIアシスタントです。ユーザー自身のデバイスまたはサーバーで24時間365日稼働をサポートし、一般的なコミュニケーションツールを介してインテリジェントな自動化サービスを提供します。OpenClawは、ローカルで実行される「ゲートウェイ＋エージェント」アーキテクチャを介して、AIを既存のチャットチャネル（WhatsApp、Telegram、Discordなど）に接続し、質問に答えるだけでなく、プロアクティブにアクションを実行し、スケジュールを管理し、メールを処理し、ワークフローを自動化するなど、さまざまなことを可能にします。\n\n**主な機能**:\n\n- マルチチャネル通信統合：WhatsApp、Telegram、Slack、Discord、Signal、iMessage、Microsoft Teamsなどの一般的な通信プラットフォームを介してAIと直接対話できます。追加のアプリケーションは不要です。\n\n- 継続的なオンライン稼働と長期記憶：OpenClawは24時間365日稼働でき、永続的なメモリとコンテキスト保持機能を備えているため、好みや過去の会話を記憶し、パーソナライズされたサービスを提供できます。\n\n- 実際のアクション実行：テキスト応答だけでなく、システムタスク（例：受信トレイのクリア、メール送信、フォーム入力、アポイントメントのスケジュール、ウェブ閲覧、ブラウザ制御など）を実行できます。\n\n- スキル拡張と自動化ワークフロー：コミュニティプラグイン、拡張スキル、カスタム自動化スクリプトをサポートし、AIがさまざまなシナリオで複雑なタスクを実行できるようにします。\n\n**詳細はこちら:**\n\n- [公式サイト](https://openclaw.ai)\n\n- [公式ドキュメント](https://docs.openclaw.ai/)\n\n- [OpenClaw GitHubリポジトリ](https://github.com/openclaw/openclaw)\n\n- [設定ガイド](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)",
-  "release_note": "- OpenClaw 2026.5.7 は transient ClawHub CLI dependency installation failures まわりの release と plugin publishing recovery を改善します。\n- 明示的な openai/chat-latest direct API-key model override を追加し、JSON output に computed cron status を公開します。\n- native command ownership、memory admin checks、inline skill tool authorization、credential resolution、plugin lifecycle shell handling が強化されました。",
   "tagline": "OpenClawは、ご自身のデバイスで実行するパーソナルAIアシスタントです。",
   "tips": {
-    "before_install": "ご使用前に、[設定ガイド](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) に従ってモデルおよび関連設定を構成してください。"
+    "before_install": "初回起動時にブラウザーを一度承認する必要があります：\n1. ZimaOS のアプリアイコンから OpenClaw を開き、\"Approve this browser\" ページを開いたままにします。\n2. ZimaOS のホーム画面に戻り、OpenClaw アプリカード右上の `...` をクリックして `Terminal` を選び、`openclaw` サービスのターミナルを開きます（`openclaw-init` ではありません）。\n3. 承認ページの \"Run on the Gateway host\" に表示されたコマンド全体をコピーし、ターミナルで実行します。形式は `openclaw devices approve <request-id>` で、request ID はインストールごとに異なります。\n4. 承認後、ページは自動的に接続されます。続いて Web セットアップでモデルプロバイダーを選び、サインインまたは API キーを入力し、既定モデルを選択します。\n\n起動リンクから Gateway secret は自動的に渡されます。`onboard` の実行やコンテナの再起動は不要です。同じブラウザーで再承認が必要になるのは、サイトデータを削除した場合だけです。詳細は[設定ガイド](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)を参照してください。"
   }
 }

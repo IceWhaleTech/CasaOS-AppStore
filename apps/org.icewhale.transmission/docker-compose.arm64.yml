@@ -8,7 +8,7 @@ services:
       PUID: "1000"
       TZ: Europe/London
       USER: casaos
-    image: linuxserver/transmission:4.1.1@sha256:15bba5d288d53b7eb1fbf2624c011a1cb4feeecf9204185cbce607ead72531dd
+    image: linuxserver/transmission:4.1.3@sha256:f44a15b5d7cd3b0066e9f6072002f41773db417ecf04f5e66c882cc40da4f079
     deploy:
       resources:
         reservations:
@@ -44,4 +44,4 @@ x-casaos:
     en_US: Transmission
   index: /
   port_map: "9091"
-  version: "4.1.1"
+  version: "4.1.3"
