@@ -1,19 +1,44 @@
+name: openclaw
 services:
-  openclaw:
-    image: icewhaletech/openclaw:2026.5.7
-    environment:
-      HOME: /home/node
-      TERM: xterm-256color
-      OPENCLAW_GATEWAY_TOKEN: casaos
-    network_mode: bridge
-    deploy:
-      resources:
-        reservations:
-          memory: 1G
+  openclaw-init:
+    image: ghcr.io/openclaw/openclaw:2026.9.5
+    user: "0:0"
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID
         target: /home/node/.openclaw
+      - type: bind
+        source: /DATA/AppData/$AppID/auth-profile-secrets
+        target: /home/node/.config/openclaw
+    entrypoint:
+      - /bin/sh
+      - -c
+    command:
+      - chown -R 1000:1000 /home/node/.openclaw /home/node/.config/openclaw
+    restart: "no"
+  openclaw:
+    image: ghcr.io/openclaw/openclaw:2026.9.5
+    environment:
+      HOME: /home/node
+      OPENCLAW_HOME: /home/node
+      OPENCLAW_STATE_DIR: /home/node/.openclaw
+      OPENCLAW_CONFIG_PATH: /home/node/.openclaw/openclaw.json
+      OPENCLAW_CONFIG_DIR: /home/node/.openclaw
+      OPENCLAW_WORKSPACE_DIR: /home/node/.openclaw/workspace
+      OPENCLAW_GATEWAY_PORT: "18789"
+      TERM: xterm-256color
+      OPENCLAW_GATEWAY_TOKEN: casaos
+    depends_on:
+      openclaw-init:
+        condition: service_completed_successfully
+    network_mode: bridge
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /home/node/.openclaw
+      - type: bind
+        source: /DATA/AppData/$AppID/auth-profile-secrets
+        target: /home/node/.config/openclaw
     ports:
       - target: 18789
         published: "24190"
@@ -23,119 +48,22 @@ services:
         protocol: tcp
     init: true
     restart: unless-stopped
-    privileged: true
+    cap_drop:
+      - NET_RAW
+      - NET_ADMIN
+    security_opt:
+      - no-new-privileges:true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     command:
-      - /bin/bash
-      - -c
-      - /app/start.sh && node dist/index.js gateway --bind lan --allow-unconfigured --port '18789'
-    container_name: openclaw
-    x-casaos:
-      envs:
-        - container: HOME
-          description:
-            de_DE: Gibt das Home-Verzeichnis für den Container-Benutzer an.
-            el_GR: Καθορίζει τον αρχικό κατάλογο για τον χρήστη του κοντέινερ.
-            en_GB: Specifies the home directory for the container user.
-            en_US: Specifies the home directory for the container user.
-            fr_FR: Spécifie le répertoire personnel de l'utilisateur du conteneur.
-            hr_HR: Određuje početni direktorij za korisnika spremnika.
-            it_IT: Specifica la directory home per l'utente del container.
-            ja_JP: コンテナユーザーのホームディレクトリを指定します。
-            ko_KR: 컨테이너 사용자의 홈 디렉터리를 지정합니다.
-            nb_NO: Angir hjemmekatalogen for containerbrukeren.
-            pt_PT: Especifica o diretório principal para o utilizador do contentor.
-            ru_RU: Указывает домашний каталог для пользователя контейнера.
-            sv_SE: Anger hemkatalogen för containeranvändaren.
-            tr_TR: Kapsayıcı kullanıcısı için ana dizini belirtir.
-            zh_CN: 指定容器用户的主目录。
-        - container: TERM
-          description:
-            de_DE: Definiert den Terminaltyp, oft für eine korrekte Befehlszeileninteraktion festgelegt.
-            el_GR: Καθορίζει τον τύπο τερματικού, συχνά ρυθμισμένο για σωστή αλληλεπίδραση γραμμής εντολών.
-            en_GB: Defines the terminal type, often set for proper command-line interaction.
-            en_US: Defines the terminal type, often set for proper command-line interaction.
-            fr_FR: Définit le type de terminal, souvent configuré pour une interaction correcte en ligne de commande.
-            hr_HR: Definira vrstu terminala, često postavljenu za pravilnu interakciju s naredbenim retkom.
-            it_IT: Definisce il tipo di terminale, spesso impostato per una corretta interazione da riga di comando.
-            ja_JP: ターミナルタイプを定義します。これは、適切なコマンドライン操作のために設定されることがよくあります。
-            ko_KR: 터미널 유형을 정의하며, 올바른 명령줄 상호 작용을 위해 설정되는 경우가 많습니다.
-            nb_NO: Definerer terminaltypen, ofte satt for riktig kommandolinjeinteraksjon.
-            pt_PT: Define o tipo de terminal, frequentemente configurado para uma interação adequada na linha de comandos.
-            ru_RU: Определяет тип терминала, часто устанавливаемый для корректного взаимодействия с командной строкой.
-            sv_SE: Definierar terminaltypen, ofta inställd för korrekt interaktion med kommandoraden.
-            tr_TR: Terminal türünü tanımlar, genellikle doğru komut satırı etkileşimi için ayarlanır.
-            zh_CN: 定义终端类型，通常设置为实现正确的命令行交互。
-        - container: OPENCLAW_GATEWAY_TOKEN
-          description:
-            de_DE: Authentifizierungs-Token für das OpenClaw-Gateway zur Verbindung mit externen Diensten.
-            el_GR: Διακριτικό ελέγχου ταυτότητας για την πύλη OpenClaw για σύνδεση με εξωτερικές υπηρεσίες.
-            en_GB: Authentication token for the OpenClaw gateway to connect to external services.
-            en_US: Authentication token for the OpenClaw gateway to connect to external services.
-            fr_FR: Jeton d'authentification pour la passerelle OpenClaw afin de se connecter aux services externes.
-            hr_HR: Autentifikacijski token za OpenClaw pristupnik za povezivanje s vanjskim uslugama.
-            it_IT: Token di autenticazione per il gateway OpenClaw per connettersi a servizi esterni.
-            ja_JP: 外部サービスに接続するためのOpenClawゲートウェイの認証トークン。
-            ko_KR: OpenClaw 게이트웨이가 외부 서비스에 연결하기 위한 인증 토큰입니다.
-            nb_NO: Autentiseringstoken for OpenClaw-gatewayen for å koble til eksterne tjenester.
-            pt_PT: Token de autenticação para o gateway OpenClaw se conectar a serviços externos.
-            ru_RU: Токен аутентификации для шлюза OpenClaw для подключения к внешним службам.
-            sv_SE: Autentiseringstoken för OpenClaw-gatewayen för att ansluta till externa tjänster.
-            tr_TR: OpenClaw ağ geçidinin harici hizmetlere bağlanması için kimlik doğrulama belirteci.
-            zh_CN: OpenClaw 网关连接到外部服务的身份验证令牌。
-      ports:
-        - container: "18789"
-          description:
-            de_DE: Haupt-Webinterface-Port für den Zugriff auf OpenClaw.
-            el_GR: Κύρια θύρα διεπαφής ιστού για πρόσβαση στο OpenClaw.
-            en_GB: Main web interface port for accessing OpenClaw.
-            en_US: Main web interface port for accessing OpenClaw.
-            fr_FR: Port principal de l'interface web pour accéder à OpenClaw.
-            hr_HR: Glavni port web sučelja za pristup OpenClawu.
-            it_IT: Porta principale dell'interfaccia web per accedere a OpenClaw.
-            ja_JP: OpenClawにアクセスするためのメインWebインターフェースポート。
-            ko_KR: OpenClaw에 액세스하기 위한 주 웹 인터페이스 포트입니다.
-            nb_NO: Hovedport for webgrensesnitt for tilgang til OpenClaw.
-            pt_PT: Porta principal da interface web para aceder ao OpenClaw.
-            ru_RU: Основной порт веб-интерфейса для доступа к OpenClaw.
-            sv_SE: Huvudport för webbgränssnittet för åtkomst till OpenClaw.
-            tr_TR: OpenClaw'a erişim için ana web arayüzü bağlantı noktası.
-            zh_CN: 访问 OpenClaw 的主 Web 界面端口。
-        - container: "18790"
-          description:
-            de_DE: Interner API-Port für die Kerndienste von OpenClaw.
-            el_GR: Εσωτερική θύρα API για τις βασικές υπηρεσίες του OpenClaw.
-            en_GB: Internal API port for OpenClaw's core services.
-            en_US: Internal API port for OpenClaw's core services.
-            fr_FR: Port API interne pour les services principaux de OpenClaw.
-            hr_HR: Interni API port za OpenClawove temeljne usluge.
-            it_IT: Porta API interna per i servizi principali di OpenClaw.
-            ja_JP: OpenClawのコアサービス用の内部APIポート。
-            ko_KR: OpenClaw의 핵심 서비스를 위한 내부 API 포트입니다.
-            nb_NO: Intern API-port for OpenClaws kjernetjenester.
-            pt_PT: Porta API interna para os serviços principais do OpenClaw.
-            ru_RU: Внутренний порт API для основных служб OpenClaw.
-            sv_SE: Intern API-port för OpenClaws kärntjänster.
-            tr_TR: OpenClaw'un çekirdek uygulama dosyaları ve çalışma zamanı verilerini içerir.
-            zh_CN: OpenClaw 核心服务的内部 API 端口。
-      volumes:
-        - container: /home/node/.openclaw
-          description:
-            de_DE: Speichert die Konfigurationsdateien und persistenten Daten von OpenClaw.
-            el_GR: Αποθηκεύει τα αρχεία διαμόρφωσης και τα μόνιμα δεδομένα του OpenClaw.
-            en_GB: Stores OpenClaw's configuration files and persistent data.
-            en_US: Stores OpenClaw's configuration files and persistent data.
-            fr_FR: Stocke les fichiers de configuration et les données persistantes de OpenClaw.
-            hr_HR: Pohranjuje OpenClawove konfiguracijske datoteke i trajne podatke.
-            it_IT: Archivia i file di configurazione e i dati persistenti di OpenClaw.
-            ja_JP: OpenClawの設定ファイルと永続データを保存します。
-            ko_KR: OpenClaw의 구성 파일과 영구 데이터를 저장합니다.
-            nb_NO: Lagrer OpenClaws konfigurasjonsfiler og vedvarende data.
-            pt_PT: Armazena os ficheiros de configuração e os dados persistentes do OpenClaw.
-            ru_RU: Хранит конфигурационные файлы и постоянные данные OpenClaw.
-            sv_SE: Lagrar OpenClaws konfigurationsfiler och beständiga data.
-            tr_TR: OpenClaw'un yapılandırma dosyalarını ve kalıcı verilerini depolar.
-            zh_CN: 存储 OpenClaw 的配置文件和持久数据。
-name: openclaw
+      - node
+      - dist/index.js
+      - gateway
+      - --bind
+      - lan
+      - --allow-unconfigured
+      - --port
+      - "18789"
 x-casaos:
   id: org.icewhale.openclaw
   title:
@@ -515,88 +443,193 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  index: ?token=casaos
-  scheme: https
+  index: /#token=casaos
+  scheme: http
   tips:
     before_install:
-      de_DE: Bitte konfigurieren Sie vor der Verwendung das Modell und die zugehörigen Einstellungen gemäß der [Konfigurationsanleitung](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw).
-      el_GR: Πριν τη χρήση, παρακαλούμε ακολουθήστε τον [Οδηγό Διαμόρφωσης](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) για να διαμορφώσετε το μοντέλο και τις σχετικές ρυθμίσεις.
-      en_GB: Before use, please follow the [Configuration Guide](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) to configure the model and related settings.
-      en_US: Before use, please follow the [Configuration Guide](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) to configure the model and related settings.
-      fr_FR: Avant utilisation, veuillez suivre le [Guide de configuration](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) pour configurer le modèle et les paramètres associés.
-      hr_HR: Prije uporabe, molimo slijedite [Vodič za konfiguraciju](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) za konfiguriranje modela i povezanih postavki.
-      it_IT: Prima dell'uso, si prega di seguire la [Guida alla configurazione](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) per configurare il modello e le impostazioni correlate.
-      ja_JP: ご使用前に、[設定ガイド](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) に従ってモデルおよび関連設定を構成してください。
-      ko_KR: 사용 전, [구성 가이드](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)에 따라 모델 및 관련 설정을 구성하십시오.
-      nb_NO: Før bruk, vennligst følg [Konfigurasjonsguiden](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) for å konfigurere modellen og relaterte innstillinger.
-      pt_PT: Antes de usar, siga o [Guia de Configuração](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) para configurar o modelo e as definições relacionadas.
-      ru_RU: Перед использованием, пожалуйста, следуйте [Руководству по настройке](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) для настройки модели и связанных параметров.
-      sv_SE: Före användning, vänligen följ [Konfigurationsguiden](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) för att konfigurera modellen och relaterade inställningar.
-      tr_TR: Kullanmadan önce, lütfen [Yapılandırma Kılavuzu](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)nu takip ederek modeli ve ilgili ayarları yapılandırın.
-      zh_CN: 使用前请先按照 [配置指南](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) 配置model 及相关配置
-  version: "2026.5.7"
-  update_at: "2026-05-13"
+      de_DE: |-
+        Beim ersten Start muss der Browser einmalig genehmigt werden:
+        1. Öffnen Sie OpenClaw über das App-Symbol in ZimaOS und lassen Sie die Seite "Diesen Browser genehmigen" geöffnet.
+        2. Kehren Sie zur ZimaOS-Startseite zurück, klicken Sie oben rechts auf der OpenClaw-App-Karte auf `...`, wählen Sie `Terminal` und öffnen Sie das Terminal des Dienstes `openclaw` (nicht `openclaw-init`).
+        3. Kopieren Sie den vollständigen Befehl, der auf der Genehmigungsseite unter "Auf dem Gateway-Host ausführen" angezeigt wird, und führen Sie ihn im Terminal aus. Er hat die Form `openclaw devices approve <request-id>`; die Request-ID ist bei jeder Installation anders.
+        4. Nach der Genehmigung verbindet sich die Seite automatisch. Wählen Sie anschließend im Web-Assistenten den Modellanbieter aus, melden Sie sich an oder geben Sie den API-Schlüssel ein und wählen Sie das Standardmodell.
+
+        Der Startlink übergibt das Gateway-Geheimnis automatisch. `onboard` und ein Container-Neustart sind nicht erforderlich. Derselbe Browser muss nur nach dem Löschen seiner Website-Daten erneut genehmigt werden. Weitere Informationen finden Sie im [Konfigurationsleitfaden](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw).
+      el_GR: |-
+        Κατά την πρώτη εκκίνηση απαιτείται μία έγκριση του browser:
+        1. Ανοίξτε το OpenClaw από το εικονίδιο εφαρμογής στο ZimaOS και αφήστε ανοιχτή τη σελίδα "Approve this browser".
+        2. Επιστρέψτε στην αρχική σελίδα του ZimaOS, πατήστε `...` επάνω δεξιά στην κάρτα της εφαρμογής OpenClaw, επιλέξτε `Terminal` και ανοίξτε το τερματικό της υπηρεσίας `openclaw` (όχι `openclaw-init`).
+        3. Αντιγράψτε ολόκληρη την εντολή που εμφανίζεται στη σελίδα έγκρισης κάτω από το "Run on the Gateway host" και εκτελέστε την στο τερματικό. Έχει τη μορφή `openclaw devices approve <request-id>` και το request ID διαφέρει σε κάθε εγκατάσταση.
+        4. Μετά την έγκριση η σελίδα συνδέεται αυτόματα. Στη συνέχεια επιλέξτε πάροχο μοντέλου στον οδηγό web, συνδεθείτε ή εισαγάγετε το API key και επιλέξτε το προεπιλεγμένο μοντέλο.
+
+        Ο σύνδεσμος εκκίνησης παρέχει αυτόματα το Gateway secret. Δεν χρειάζονται `onboard` ή επανεκκίνηση του κοντέινερ. Ο ίδιος browser χρειάζεται νέα έγκριση μόνο αν διαγραφούν τα δεδομένα ιστοτόπου. Δείτε τον [οδηγό ρύθμισης](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) για λεπτομέρειες.
+      en_GB: |-
+        The first launch requires a one-time browser approval:
+        1. Open OpenClaw from its ZimaOS app icon and keep the "Approve this browser" page open.
+        2. Return to the ZimaOS home screen, click `...` at the top-right of the OpenClaw app card, choose `Terminal`, and open the `openclaw` service terminal (not `openclaw-init`).
+        3. Copy the complete command shown under "Run on the Gateway host" on the approval page and run it in the terminal. It has the form `openclaw devices approve <request-id>`; the request ID is different for every installation.
+        4. The page connects automatically after approval. Then choose a model provider in the web setup, sign in or enter its API key, and select the default model.
+
+        The launch link supplies the Gateway secret automatically. There is no need to run `onboard` or restart the container. The same browser needs approval again only if its site data is cleared. See the [Configuration Guide](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) for details.
+      en_US: |-
+        The first launch requires a one-time browser approval:
+        1. Open OpenClaw from its ZimaOS app icon and keep the "Approve this browser" page open.
+        2. Return to the ZimaOS home screen, click `...` at the top-right of the OpenClaw app card, choose `Terminal`, and open the `openclaw` service terminal (not `openclaw-init`).
+        3. Copy the complete command shown under "Run on the Gateway host" on the approval page and run it in the terminal. It has the form `openclaw devices approve <request-id>`; the request ID is different for every installation.
+        4. The page connects automatically after approval. Then choose a model provider in the web setup, sign in or enter its API key, and select the default model.
+
+        The launch link supplies the Gateway secret automatically. There is no need to run `onboard` or restart the container. The same browser needs approval again only if its site data is cleared. See the [Configuration Guide](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) for details.
+      fr_FR: |-
+        Le premier démarrage nécessite une approbation unique du navigateur :
+        1. Ouvrez OpenClaw depuis son icône dans ZimaOS et laissez ouverte la page "Approve this browser".
+        2. Revenez à l'accueil de ZimaOS, cliquez sur `...` en haut à droite de la carte OpenClaw, choisissez `Terminal`, puis ouvrez le terminal du service `openclaw` (pas `openclaw-init`).
+        3. Copiez la commande complète affichée sous "Run on the Gateway host" sur la page d'approbation et exécutez-la dans le terminal. Elle a la forme `openclaw devices approve <request-id>` ; l'identifiant de demande change à chaque installation.
+        4. La page se connecte automatiquement après l'approbation. Choisissez ensuite un fournisseur dans l'assistant web, connectez-vous ou saisissez sa clé API, puis sélectionnez le modèle par défaut.
+
+        Le lien de lancement transmet automatiquement le secret Gateway. Il n'est pas nécessaire d'exécuter `onboard` ni de redémarrer le conteneur. Le même navigateur ne devra être approuvé à nouveau que si ses données de site sont effacées. Consultez le [guide de configuration](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) pour plus de détails.
+      hr_HR: |-
+        Pri prvom pokretanju potrebno je jednom odobriti preglednik:
+        1. Otvorite OpenClaw preko ikone aplikacije u ZimaOS-u i ostavite otvorenu stranicu "Approve this browser".
+        2. Vratite se na početni zaslon ZimaOS-a, kliknite `...` u gornjem desnom kutu kartice OpenClaw, odaberite `Terminal` i otvorite terminal usluge `openclaw` (ne `openclaw-init`).
+        3. Kopirajte cijelu naredbu prikazanu ispod "Run on the Gateway host" na stranici za odobrenje i pokrenite je u terminalu. Oblika je `openclaw devices approve <request-id>`, a request ID razlikuje se za svaku instalaciju.
+        4. Nakon odobrenja stranica se automatski povezuje. Zatim u web-čarobnjaku odaberite pružatelja modela, prijavite se ili unesite API ključ te odaberite zadani model.
+
+        Poveznica za pokretanje automatski prosljeđuje Gateway secret. Nije potrebno pokretati `onboard` niti ponovno pokretati spremnik. Isti preglednik treba ponovno odobrenje samo ako se obrišu podaci web-mjesta. Pojedinosti su u [vodiču za konfiguraciju](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw).
+      it_IT: |-
+        Il primo avvio richiede un'approvazione una tantum del browser:
+        1. Aprire OpenClaw dalla relativa icona in ZimaOS e lasciare aperta la pagina "Approve this browser".
+        2. Tornare alla schermata iniziale di ZimaOS, fare clic su `...` in alto a destra nella scheda OpenClaw, scegliere `Terminal` e aprire il terminale del servizio `openclaw` (non `openclaw-init`).
+        3. Copiare il comando completo mostrato sotto "Run on the Gateway host" nella pagina di approvazione ed eseguirlo nel terminale. Ha la forma `openclaw devices approve <request-id>`; il request ID è diverso per ogni installazione.
+        4. Dopo l'approvazione la pagina si connette automaticamente. Quindi scegliere il provider nella configurazione web, accedere o inserire la chiave API e selezionare il modello predefinito.
+
+        Il collegamento di avvio fornisce automaticamente il Gateway secret. Non è necessario eseguire `onboard` né riavviare il container. Lo stesso browser richiede una nuova approvazione solo se vengono cancellati i dati del sito. Consultare la [guida alla configurazione](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) per i dettagli.
+      ja_JP: |-
+        初回起動時にブラウザーを一度承認する必要があります：
+        1. ZimaOS のアプリアイコンから OpenClaw を開き、"Approve this browser" ページを開いたままにします。
+        2. ZimaOS のホーム画面に戻り、OpenClaw アプリカード右上の `...` をクリックして `Terminal` を選び、`openclaw` サービスのターミナルを開きます（`openclaw-init` ではありません）。
+        3. 承認ページの "Run on the Gateway host" に表示されたコマンド全体をコピーし、ターミナルで実行します。形式は `openclaw devices approve <request-id>` で、request ID はインストールごとに異なります。
+        4. 承認後、ページは自動的に接続されます。続いて Web セットアップでモデルプロバイダーを選び、サインインまたは API キーを入力し、既定モデルを選択します。
+
+        起動リンクから Gateway secret は自動的に渡されます。`onboard` の実行やコンテナの再起動は不要です。同じブラウザーで再承認が必要になるのは、サイトデータを削除した場合だけです。詳細は[設定ガイド](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)を参照してください。
+      ko_KR: |-
+        처음 실행할 때 브라우저를 한 번 승인해야 합니다:
+        1. ZimaOS의 앱 아이콘에서 OpenClaw을 열고 "Approve this browser" 페이지를 열린 상태로 두십시오.
+        2. ZimaOS 홈 화면으로 돌아가 OpenClaw 앱 카드 오른쪽 위의 `...`를 클릭하고 `Terminal`을 선택한 뒤 `openclaw` 서비스 터미널을 여십시오(`openclaw-init` 아님).
+        3. 승인 페이지의 "Run on the Gateway host" 아래에 표시된 전체 명령을 복사해 터미널에서 실행하십시오. 형식은 `openclaw devices approve <request-id>`이며 request ID는 설치마다 다릅니다.
+        4. 승인되면 페이지가 자동으로 연결됩니다. 이어서 웹 설정에서 모델 제공자를 선택하고 로그인하거나 API 키를 입력한 뒤 기본 모델을 선택하십시오.
+
+        실행 링크가 Gateway secret을 자동으로 전달합니다. `onboard` 실행이나 컨테이너 재시작은 필요하지 않습니다. 같은 브라우저는 사이트 데이터를 삭제한 경우에만 다시 승인이 필요합니다. 자세한 내용은 [구성 가이드](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)를 참조하십시오.
+      nb_NO: |-
+        Første oppstart krever en engangsgodkjenning av nettleseren:
+        1. Åpne OpenClaw fra appikonet i ZimaOS og la siden "Approve this browser" stå åpen.
+        2. Gå tilbake til ZimaOS-startskjermen, klikk `...` øverst til høyre på OpenClaw-appkortet, velg `Terminal`, og åpne terminalen for tjenesten `openclaw` (ikke `openclaw-init`).
+        3. Kopier hele kommandoen som vises under "Run on the Gateway host" på godkjenningssiden, og kjør den i terminalen. Den har formen `openclaw devices approve <request-id>`; request ID er forskjellig for hver installasjon.
+        4. Siden kobler til automatisk etter godkjenning. Velg deretter modellleverandør i nettoppsettet, logg inn eller skriv inn API-nøkkelen, og velg standardmodell.
+
+        Startlenken sender Gateway secret automatisk. Du trenger ikke å kjøre `onboard` eller starte containeren på nytt. Den samme nettleseren trenger bare ny godkjenning hvis nettstedsdataene slettes. Se [konfigurasjonsguiden](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) for detaljer.
+      pt_PT: |-
+        O primeiro arranque requer uma aprovação única do navegador:
+        1. Abra o OpenClaw através do respetivo ícone no ZimaOS e mantenha aberta a página "Approve this browser".
+        2. Volte ao ecrã inicial do ZimaOS, clique em `...` no canto superior direito do cartão OpenClaw, escolha `Terminal` e abra o terminal do serviço `openclaw` (não `openclaw-init`).
+        3. Copie o comando completo mostrado sob "Run on the Gateway host" na página de aprovação e execute-o no terminal. Tem o formato `openclaw devices approve <request-id>`; o request ID é diferente em cada instalação.
+        4. A página liga-se automaticamente após a aprovação. Em seguida, escolha o fornecedor do modelo na configuração web, inicie sessão ou introduza a chave API e selecione o modelo predefinido.
+
+        A ligação de arranque fornece automaticamente o Gateway secret. Não é necessário executar `onboard` nem reiniciar o contentor. O mesmo navegador só precisa de nova aprovação se os respetivos dados do site forem apagados. Consulte o [guia de configuração](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) para mais detalhes.
+      ru_RU: |-
+        При первом запуске браузер необходимо один раз подтвердить:
+        1. Откройте OpenClaw с помощью значка приложения в ZimaOS и оставьте открытой страницу "Approve this browser".
+        2. Вернитесь на главный экран ZimaOS, нажмите `...` в правом верхнем углу карточки OpenClaw, выберите `Terminal` и откройте терминал службы `openclaw` (не `openclaw-init`).
+        3. Скопируйте полную команду, показанную под "Run on the Gateway host" на странице подтверждения, и выполните её в терминале. Она имеет вид `openclaw devices approve <request-id>`; request ID уникален для каждой установки.
+        4. После подтверждения страница подключится автоматически. Затем в веб-мастере выберите поставщика модели, войдите в учётную запись или введите API-ключ и выберите модель по умолчанию.
+
+        Ссылка запуска автоматически передаёт Gateway secret. Запуск `onboard` и перезапуск контейнера не требуются. Повторное подтверждение этого браузера потребуется только после удаления данных сайта. Подробности приведены в [руководстве по настройке](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw).
+      sv_SE: |-
+        Första starten kräver ett engångsgodkännande av webbläsaren:
+        1. Öppna OpenClaw via appikonen i ZimaOS och låt sidan "Approve this browser" vara öppen.
+        2. Gå tillbaka till ZimaOS-startskärmen, klicka på `...` högst upp till höger på OpenClaw-appkortet, välj `Terminal` och öppna terminalen för tjänsten `openclaw` (inte `openclaw-init`).
+        3. Kopiera hela kommandot som visas under "Run on the Gateway host" på godkännandesidan och kör det i terminalen. Det har formen `openclaw devices approve <request-id>`; request ID är unikt för varje installation.
+        4. Sidan ansluter automatiskt efter godkännandet. Välj sedan modellleverantör i webbkonfigurationen, logga in eller ange API-nyckeln och välj standardmodell.
+
+        Startlänken skickar Gateway secret automatiskt. Du behöver inte köra `onboard` eller starta om containern. Samma webbläsare behöver bara godkännas igen om webbplatsdata rensas. Mer information finns i [konfigurationsguiden](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw).
+      tr_TR: |-
+        İlk başlatmada tarayıcının bir kez onaylanması gerekir:
+        1. OpenClaw'u ZimaOS'taki uygulama simgesinden açın ve "Approve this browser" sayfasını açık bırakın.
+        2. ZimaOS ana ekranına dönün, OpenClaw uygulama kartının sağ üstündeki `...` düğmesine tıklayın, `Terminal` seçeneğini seçin ve `openclaw` hizmet terminalini açın (`openclaw-init` değil).
+        3. Onay sayfasında "Run on the Gateway host" altında gösterilen komutun tamamını kopyalayıp terminalde çalıştırın. Komut `openclaw devices approve <request-id>` biçimindedir; request ID her kurulumda farklıdır.
+        4. Onaydan sonra sayfa otomatik olarak bağlanır. Ardından web kurulumunda model sağlayıcısını seçin, oturum açın veya API anahtarını girin ve varsayılan modeli seçin.
+
+        Başlatma bağlantısı Gateway secret değerini otomatik olarak iletir. `onboard` komutunu çalıştırmanız veya konteyneri yeniden başlatmanız gerekmez. Aynı tarayıcının yalnızca site verileri silinirse yeniden onaylanması gerekir. Ayrıntılar için [yapılandırma kılavuzuna](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) bakın.
+      zh_CN: |-
+        第一次启动需要完成一次浏览器批准：
+        1. 从 ZimaOS 的应用图标打开 OpenClaw，并保持“批准此浏览器”页面开启。
+        2. 返回 ZimaOS 首页，在 OpenClaw 应用卡片右上角点击 `...`，选择 `Terminal`，进入 `openclaw` 服务的终端（不要选择 `openclaw-init`）。
+        3. 复制批准页面“在 Gateway 主机上运行”下方显示的完整命令，并在终端中执行。命令格式为 `openclaw devices approve <request-id>`；每次安装显示的 request ID 都不同，请勿直接照抄示例 ID。
+        4. 批准后页面会自动连接。随后在网页设置中选择模型提供商，登录或填写 API Key，再选择默认模型。
+
+        从 ZimaOS 图标启动时会自动传入 Gateway secret，无需运行 `onboard` 命令，也无需重启容器。同一浏览器只有在清除网站数据后才需要重新批准。更多说明请参考[配置指南](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)。
+  version: "2026.9.5"
+  update_at: "2026-09-19"
   release_notes:
     en_US: |-
-      - OpenClaw 2026.5.7 improves release and plugin publishing recovery around transient ClawHub CLI dependency installation failures.
-      - Adds an explicit openai/chat-latest direct API-key model override and exposes computed cron status in JSON output.
-      - Hardens native command ownership, memory admin checks, inline skill tool authorization, credential resolution, and plugin lifecycle shell handling.
+      - OpenClaw 2026.9.5 introduces atomic updates and plugin installation without restarting the Gateway.
+      - Adds conversation sharing and archiving, GPT Live, and shared browser pages.
+      - Adds guided specialist teams and improves reliability, security, and container support.
     en_GB: |-
-      - OpenClaw 2026.5.7 improves release and plugin publishing recovery around transient ClawHub CLI dependency installation failures.
-      - Adds an explicit openai/chat-latest direct API-key model override and exposes computed cron status in JSON output.
-      - Hardens native command ownership, memory admin checks, inline skill tool authorization, credential resolution, and plugin lifecycle shell handling.
+      - OpenClaw 2026.9.5 introduces atomic updates and plugin installation without restarting the Gateway.
+      - Adds conversation sharing and archiving, GPT Live, and shared browser pages.
+      - Adds guided specialist teams and improves reliability, security, and container support.
     it_IT: |-
-      - OpenClaw 2026.5.7 migliora il ripristino della pubblicazione del rilascio e del plug-in in caso di errori di installazione delle dipendenze transitorie ClawHub CLI.
-      - Aggiunge un override esplicito del modello openai/chat-latest diretto API-key ed espone lo stato cron calcolato nell'output JSON.
-      - Rafforza la proprietà dei comandi nativi, i controlli di amministrazione della memoria, l'autorizzazione degli strumenti di abilità in linea, la risoluzione delle credenziali e la gestione della shell del ciclo di vita dei plug-in.
+      - OpenClaw 2026.9.5 introduce aggiornamenti atomici e l'installazione dei plug-in senza riavviare il Gateway.
+      - Aggiunge la condivisione e l'archiviazione delle conversazioni, GPT Live e pagine del browser condivise.
+      - Aggiunge team guidati di specialisti e migliora affidabilita, sicurezza e supporto dei container.
     nb_NO: |-
-      - OpenClaw 2026.5.7 forbedrer utgivelses- og pluginpubliseringsgjenoppretting rundt forbigående ClawHub CLI avhengighetsinstallasjonsfeil.
-      - Legger til en eksplisitt openai/chat-latest direkte API-key modelloverstyring og avslører beregnet cron-status i JSON-utdata.
-      - Hardner innfødt kommandoeierskap, minneadministratorsjekker, innebygd ferdighetsverktøyautorisasjon, legitimasjonsoppløsning og plugin-livssyklus-skallhåndtering.
+      - OpenClaw 2026.9.5 introduserer atomiske oppdateringer og installasjon av programtillegg uten omstart av Gateway.
+      - Legger til deling og arkivering av samtaler, GPT Live og delte nettlesersider.
+      - Legger til veiledede spesialistteam og forbedrer stabilitet, sikkerhet og containerstøtte.
     zh_CN: |-
-      - OpenClaw 2026.5.7 改进了 transient ClawHub CLI dependency installation failures 场景下的 release 和 plugin publishing recovery。
-      - 新增显式 openai/chat-latest direct API-key model override，并在 JSON output 中暴露 computed cron status。
-      - 加固了 native command ownership、memory admin checks、inline skill tool authorization、credential resolution 和 plugin lifecycle shell handling。
+      - OpenClaw 2026.9.5 引入原子更新，并支持无需重启 Gateway 即可安装插件。
+      - 新增对话分享与归档、GPT Live 和共享浏览器页面。
+      - 新增引导式专家团队，并提升可靠性、安全性和容器支持。
     ja_JP: |-
-      - OpenClaw 2026.5.7 は transient ClawHub CLI dependency installation failures まわりの release と plugin publishing recovery を改善します。
-      - 明示的な openai/chat-latest direct API-key model override を追加し、JSON output に computed cron status を公開します。
-      - native command ownership、memory admin checks、inline skill tool authorization、credential resolution、plugin lifecycle shell handling が強化されました。
+      - OpenClaw 2026.9.5 では、アトミック更新と Gateway を再起動せずにプラグインをインストールする機能が導入されました。
+      - 会話の共有とアーカイブ、GPT Live、共有ブラウザページが追加されました。
+      - ガイド付きの専門家チームが追加され、信頼性、セキュリティ、コンテナ対応が向上しました。
     ko_KR: |-
-      - OpenClaw 2026.5.7은 transient ClawHub CLI dependency installation failures 상황에서 release 및 plugin publishing recovery를 개선합니다.
-      - 명시적인 openai/chat-latest direct API-key model override를 추가하고 JSON output에 computed cron status를 노출합니다.
-      - native command ownership, memory admin checks, inline skill tool authorization, credential resolution, plugin lifecycle shell handling을 강화했습니다.
+      - OpenClaw 2026.9.5는 원자적 업데이트와 Gateway를 재시작하지 않는 플러그인 설치를 도입합니다.
+      - 대화 공유 및 보관, GPT Live, 공유 브라우저 페이지를 추가합니다.
+      - 안내형 전문가 팀을 추가하고 안정성, 보안 및 컨테이너 지원을 개선합니다.
     fr_FR: |-
-      - OpenClaw 2026.5.7 ameliore release et plugin publishing recovery en cas de transient ClawHub CLI dependency installation failures.
-      - Un openai/chat-latest direct API-key model override explicite a ete ajoute et computed cron status est expose dans JSON output.
-      - Native command ownership, memory admin checks, inline skill tool authorization, credential resolution et plugin lifecycle shell handling ont ete renforces.
+      - OpenClaw 2026.9.5 introduit les mises a jour atomiques et l'installation de plugins sans redemarrer le Gateway.
+      - Ajoute le partage et l'archivage des conversations, GPT Live et les pages de navigateur partagees.
+      - Ajoute des equipes de specialistes guidees et ameliore la fiabilite, la securite et la prise en charge des conteneurs.
     de_DE: |-
-      - OpenClaw 2026.5.7 verbessert release und plugin publishing recovery bei transient ClawHub CLI dependency installation failures.
-      - Ein expliziter openai/chat-latest direct API-key model override wurde hinzugefuegt, und computed cron status wird in JSON output ausgegeben.
-      - Gehaertet wurden native command ownership, memory admin checks, inline skill tool authorization, credential resolution und plugin lifecycle shell handling.
+      - OpenClaw 2026.9.5 fuehrt atomare Updates und die Plugin-Installation ohne Neustart des Gateways ein.
+      - Fuegt das Teilen und Archivieren von Unterhaltungen, GPT Live und gemeinsam genutzte Browserseiten hinzu.
+      - Fuegt gefuehrte Spezialistenteams hinzu und verbessert Zuverlaessigkeit, Sicherheit und Container-Unterstuetzung.
     sv_SE: |-
-      - OpenClaw 2026.5.7 förbättrar release- och plugin-publiceringsåterställning kring tillfälliga ClawHub CLI-beroendeinstallationsfel.
-      - Lägger till en explicit openai/chat-latest direkt API-key modell åsidosättande och exponerar beräknad cron status i JSON utdata.
-      - Förstärker inbyggt kommandoägande, minnesadministratörskontroller, auktorisering av inline-färdighetsverktyg, autentiseringsupplösning och plugin-livscykelhantering.
+      - OpenClaw 2026.9.5 introducerar atomiska uppdateringar och installation av insticksprogram utan att starta om Gateway.
+      - Lägger till delning och arkivering av konversationer, GPT Live och delade webbläsarsidor.
+      - Lägger till vägledda specialistteam och förbättrar tillförlitlighet, säkerhet och containerstöd.
     el_GR: |-
-      - Το OpenClaw 2026.5.7 βελτιώνει την ανάκτηση έκδοσης και δημοσίευσης προσθηκών σχετικά με παροδικές αποτυχίες εγκατάστασης εξάρτησης ClawHub CLI.
-      - Προσθέτει μια ρητή openai/chat-latest άμεση παράκαμψη μοντέλου API-key και εκθέτει την υπολογισμένη κατάσταση cron στην έξοδο JSON.
-      - Σκληραίνει την ιδιοκτησία εγγενών εντολών, τους ελέγχους διαχειριστή μνήμης, την εξουσιοδότηση εργαλείου ενσωματωμένης ικανότητας, την ανάλυση διαπιστευτηρίων και τον χειρισμό του κελύφους του κύκλου ζωής των προσθηκών.
+      - Το OpenClaw 2026.9.5 εισάγει ατομικές ενημερώσεις και εγκατάσταση προσθηκών χωρίς επανεκκίνηση του Gateway.
+      - Προσθέτει κοινή χρήση και αρχειοθέτηση συνομιλιών, GPT Live και κοινόχρηστες σελίδες προγράμματος περιήγησης.
+      - Προσθέτει καθοδηγούμενες ομάδες ειδικών και βελτιώνει την αξιοπιστία, την ασφάλεια και την υποστήριξη κοντέινερ.
     hr_HR: |-
-      - OpenClaw 2026.5.7 poboljšava izdanje i oporavak objavljivanja dodataka oko prolaznih ClawHub CLI instalacijskih grešaka ovisnosti.
-      - Dodaje eksplicitno nadjačavanje openai/chat-latest izravnog API-key modela i izlaže izračunati cron status u JSON izlazu.
-      - Ojačava izvorno vlasništvo naredbi, provjere administratora memorije, autorizaciju ugrađenog alata za vještine, razlučivanje vjerodajnica i rukovanje ljuskom životnog ciklusa dodatka.
+      - OpenClaw 2026.9.5 uvodi atomska ažuriranja i instalaciju dodataka bez ponovnog pokretanja Gatewaya.
+      - Dodaje dijeljenje i arhiviranje razgovora, GPT Live i dijeljene stranice preglednika.
+      - Dodaje vođene timove stručnjaka i poboljšava pouzdanost, sigurnost i podršku za kontejnere.
     pt_PT: |-
-      - OpenClaw 2026.5.7 melhora a recuperação de lançamento e publicação de plug-ins em torno de falhas transitórias de instalação de dependências ClawHub CLI.
-      - Adiciona uma substituição explícita do modelo openai/chat-latest direto API-key e expõe o estado do cron computado na saída JSON.
-      - Reforça a propriedade de comandos nativos, verificações de administração de memória, autorização de ferramentas de competências em linha, resolução de credenciais e manipulação de shell do ciclo de vida do plug-in.
+      - O OpenClaw 2026.9.5 introduz atualizações atómicas e a instalação de plug-ins sem reiniciar o Gateway.
+      - Adiciona partilha e arquivo de conversas, GPT Live e páginas de navegador partilhadas.
+      - Adiciona equipas guiadas de especialistas e melhora a fiabilidade, a segurança e o suporte de contentores.
     ru_RU: |-
-      - OpenClaw 2026.5.7 улучшает восстановление выпуска и публикации плагинов при временных сбоях установки зависимостей ClawHub CLI.
-      - Добавляет явное прямое переопределение модели API-key openai/chat-latest и отображает вычисленный статус cron в выходных данных JSON.
-      - Усиливает владение собственными командами, проверки администратора памяти, авторизацию встроенных инструментов навыков, разрешение учетных данных и обработку оболочки жизненного цикла плагина.
+      - OpenClaw 2026.9.5 добавляет атомарные обновления и установку плагинов без перезапуска Gateway.
+      - Добавляет общий доступ к диалогам и их архивирование, GPT Live и совместные страницы браузера.
+      - Добавляет управляемые команды специалистов и улучшает надежность, безопасность и поддержку контейнеров.
     tr_TR: |-
-      - OpenClaw 2026.5.7, geçici ClawHub CLI bağımlılık yükleme hataları etrafında sürüm ve eklenti yayınlama kurtarmasını iyileştirir.
-      - Açık bir openai/chat-latest doğrudan API-key modeli geçersiz kılma ekler ve JSON çıktısında hesaplanan cron durumunu gösterir.
-      - Yerel komut sahipliğini, bellek yöneticisi kontrollerini, satır içi beceri aracı yetkilendirmesini, kimlik bilgisi çözümlemesini ve eklenti yaşam döngüsü kabuk işlemeyi güçlendirir.
+      - OpenClaw 2026.9.5 atomik güncellemeler ve Gateway'i yeniden başlatmadan eklenti yükleme özelliği sunar.
+      - Konuşma paylaşımı ve arşivleme, GPT Live ve paylaşılan tarayıcı sayfaları ekler.
+      - Rehberli uzman ekipleri ekler; güvenilirlik, güvenlik ve konteyner desteğini geliştirir.
   website: "https://openclaw.ai"
   repo: "https://github.com/openclaw/openclaw"
   support: "https://github.com/openclaw/openclaw/issues"
