@@ -2,7 +2,7 @@ name: clumoove
 
 services:
   frontend:
-    image: ghcr.io/xxroxxerxx/clumoove-frontend:v0.18.0@sha256:74e6cce4f2a2f52937b27b48a0137abd4be40d534556785cb579e0f464ba6888
+    image: ghcr.io/xxroxxerxx/clumoove-frontend:v0.19.0@sha256:8fbdb27158f4cfaabccf5b7f5f5866686dc3fb5e01bd40997f080b4facd6385a
     container_name: clumoove-frontend
     restart: unless-stopped
     ports:
@@ -23,7 +23,7 @@ services:
             de_DE: WebUI HTTP Port
 
   api-backend:
-    image: ghcr.io/xxroxxerxx/clumoove-api:v0.18.0@sha256:d9c34a1c6db8c7ffbeb942cffae849796a9c4eab267d8af2a7d1eb75c932b9bc
+    image: ghcr.io/xxroxxerxx/clumoove-api:v0.19.0@sha256:d5a30c51c5ac6684e6afc399ca5ab845338bc06ab14cc3873bdbd52e2d3478cf
     container_name: clumoove-api
     restart: unless-stopped
     environment:
@@ -51,7 +51,7 @@ services:
             de_DE: Clumoove Internes Speicherverzeichnis
 
   migration-worker:
-    image: ghcr.io/xxroxxerxx/clumoove-worker:v0.18.0@sha256:76ea62f213b117a66083a1414704fdde3f40216231ce2a69f3a396595c85b405
+    image: ghcr.io/xxroxxerxx/clumoove-worker:v0.19.0@sha256:680ba9935621eb032b6abd5d0d25472eddd2738222f35778fce86914d6a47662
     container_name: clumoove-worker
     restart: unless-stopped
     command: ["/app/worker"]
@@ -151,19 +151,21 @@ x-casaos:
   port_map: "8380"
   scheme: http
   index: /
-  version: "0.18.0"
-  update_at: "2026-09-09"
+  version: "0.19.0"
+  update_at: "2026-09-16"
   release_notes:
     en_US: |-
-      - Introduces Cloud File Manager item mutations (rename, server-side copy/move, recursive deletion) and multi-item batch operations.
-      - Adds unified background Transfer Center with live tracking and cross-profile transfers.
-      - Enhances File Manager UI with interactive multi-column sorting, row selection ergonomics, sticky header, and media preview modals.
-      - Fixes HiDrive rename path handling and invalid destination derivation during file operations.
+      - Adds Immich storage provider support for container and album-based migrations and file browser navigation.
+      - Adds Progressive Web App (PWA) support with web manifest and mobile app meta tags.
+      - Redesigns dashboard navigation hierarchy and refreshes iconography.
+      - Improves directory indexing performance with parallel worker pools and optimizes migration checksum verification and client connection reuse.
+      - Hardens backend and frontend containers to run as unprivileged non-root users.
     de_DE: |-
-      - Führt Cloud-Dateimanager-Mutationen (Umbenennen, serverseitiges Kopieren/Verschieben, rekursives Löschen) und Batch-Operationen für mehrere Elemente ein.
-      - Neuer einheitlicher Hintergrund-Transfer-Manager mit Live-Tracking und profilübergreifenden Übertragungen.
-      - Verbesserte Dateimanager-Oberfläche mit mehrspaltiger Sortierung, optimierter Zeilenauswahl, fixierter Kopfzeile und Medienvorschau.
-      - Behebt Pfadprobleme beim Umbenennen unter HiDrive sowie Zielpfad-Ermittlungen bei Dateioperationen.
+      - Unterstützt Immich-Speicheranbieter für container- und albumbasierte Migrationen sowie Dateibrowser-Navigation.
+      - Führt Progressive Web App (PWA)-Unterstützung mit Web-Manifest und mobilen App-Meta-Tags ein.
+      - Überarbeitete Dashboard-Navigation mit optimierter visueller Hierarchie und neuen Icons.
+      - Schnellere Verzeichnisindizierung durch parallele Worker-Pools sowie optimierte Prüfsummenverifikation und Verbindungs-Wiederverwendung.
+      - Sicherheits-Hardening: Backend- und Frontend-Container laufen nun als unprivilegierte Non-Root-Benutzer.
   website: "https://clumoove.com"
   repo: "https://github.com/xXRoxXeRXx/clumoove"
   support: "https://github.com/xXRoxXeRXx/clumoove/issues"
