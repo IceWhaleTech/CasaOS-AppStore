@@ -1,0 +1,129 @@
+name: aspireui
+services:
+  aspireui:
+    image: ghcr.io/fgilde/aspireui:latest
+    container_name: aspireui
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 8080
+        published: "5158"
+        protocol: tcp
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+      # Hosted apps get host ports, so their links must point at this device.
+      ASPIREUI_SET_PublicHost: $DEFAULT_HOST
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      # AspireUI starts and manages other containers, which is what the socket is for.
+      # It is root-equivalent access to this device.
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    deploy:
+      resources:
+        reservations:
+          memory: "512M"
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Time zone
+            de_DE: Zeitzone
+        - container: ASPIREUI_SET_PublicHost
+          description:
+            en_US: Host name or IP that app links point at (this device).
+            de_DE: Hostname oder IP, auf die App-Links zeigen (dieses Gerät).
+        - container: ASPIREUI_ADMIN_USERNAME
+          description:
+            en_US: Optional. Creates the admin account on first start instead of the setup wizard.
+            de_DE: Optional. Legt beim ersten Start das Admin-Konto an, statt den Assistenten zu zeigen.
+        - container: ASPIREUI_ADMIN_PASSWORD
+          description:
+            en_US: Optional. Password for that admin account.
+            de_DE: Optional. Passwort für dieses Admin-Konto.
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web UI
+            de_DE: Weboberfläche
+      volumes:
+        - container: /data
+          description:
+            en_US: Database, workspaces, backups and app data.
+            de_DE: Datenbank, Workspaces, Backups und App-Daten.
+        - container: /var/run/docker.sock
+          description:
+            en_US: Docker socket — required to run and host container stacks.
+            de_DE: Docker-Socket — nötig, um Container-Stacks zu starten und zu hosten.
+
+x-casaos:
+  id: org.gilde.aspireui
+  architectures:
+    - amd64
+    - arm64
+  main: aspireui
+  author: Florian Gilde
+  developer: Florian Gilde
+  category: Developer
+  title:
+    en_US: AspireUI
+  tagline:
+    en_US: App store, builder and host for container stacks and .NET Aspire
+    de_DE: App-Store, Baukasten und Hosting für Container-Stacks und .NET Aspire
+  description:
+    en_US: |
+      AspireUI turns this device into a self-hosted app platform. Install any of 160+ ready-to-run
+      apps from its built-in store, deploy a docker-compose repository straight from Git, and manage
+      everything that runs: start/stop/update, live CPU and memory, container health, log streaming,
+      an env-var and port editor, a volume file browser, a one-shot repair terminal, scheduled
+      backups with restore, and your own domains with Let's Encrypt HTTPS through Nginx Proxy Manager.
+
+      It is also a visual editor for .NET Aspire AppHost projects: drag resources onto a canvas,
+      generate real C# code, run the stack, or publish it as Docker Compose, a Helm chart or Bicep.
+      Apps can be deployed to this device, to another box over SSH, to a Kubernetes cluster or to a
+      managed container platform, and moved between them with their data.
+
+      AspireUI mounts the host Docker socket, because starting and hosting other containers is what
+      it does. That is root-equivalent access to this device — install it only if you want AspireUI
+      to control Docker here, and keep its port off the public internet.
+    de_DE: |
+      AspireUI macht dieses Gerät zu einer selbstgehosteten App-Plattform: über 160 fertige Apps aus
+      dem eingebauten Store installieren, jedes docker-compose-Repository direkt aus Git deployen und
+      alles Laufende verwalten — Start/Stop/Update, CPU und Speicher, Container-Health, Logs,
+      Env-Variablen und Ports, Volume-Browser, Reparatur-Terminal, geplante Backups mit Restore und
+      eigene Domains mit Let's-Encrypt-HTTPS über den Nginx Proxy Manager.
+
+      Dazu ein visueller Editor für .NET-Aspire-AppHost-Projekte: Ressourcen auf eine Canvas ziehen,
+      echten C#-Code erzeugen, den Stack starten oder als Docker Compose, Helm-Chart oder Bicep
+      veröffentlichen. Apps laufen auf diesem Gerät, auf einer anderen Kiste per SSH, in einem
+      Kubernetes-Cluster oder auf einer Managed-Plattform — und lassen sich samt Daten verschieben.
+
+      AspireUI bindet den Docker-Socket des Hosts ein, weil genau das seine Aufgabe ist: andere
+      Container starten und betreiben. Das entspricht Root-Rechten auf diesem Gerät.
+  tips:
+    before_install:
+      en_US: |
+        The first start opens a setup wizard that creates the admin account. Set
+        ASPIREUI_ADMIN_USERNAME and ASPIREUI_ADMIN_PASSWORD to skip it.
+      de_DE: |
+        Beim ersten Start legt ein Assistent das Admin-Konto an. Mit ASPIREUI_ADMIN_USERNAME und
+        ASPIREUI_ADMIN_PASSWORD wird er übersprungen.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AspireUI/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AspireUI/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AspireUI/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AspireUI/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/AspireUI/screenshot-3.png
+  index: /
+  port_map: "5158"
+  scheme: http
+  version: "0.1.40"
+  website: https://github.com/fgilde/AspireUI
+  repo: https://github.com/fgilde/AspireUI
+  support: https://github.com/fgilde/AspireUI/issues
+  docs: https://fgilde.github.io/AspireUI/
