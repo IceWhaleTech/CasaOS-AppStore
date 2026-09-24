@@ -1,7 +1,7 @@
 name: libredb-studio
 services:
   libredb-studio:
-    image: libredb/libredb-studio:0.15.0
+    image: libredb/libredb-studio:0.16.2
     container_name: libredb-studio
     restart: unless-stopped
     ports:
@@ -10,8 +10,8 @@ services:
         protocol: tcp
     environment:
       ADMIN_EMAIL: admin@libredb.org
-      ADMIN_PASSWORD: changeme123
-      JWT_SECRET: libredb-studio-change-this-to-a-long-random-secret-value-min-48
+      ADMIN_PASSWORD: ""
+      JWT_SECRET: ""
       STORAGE_PROVIDER: sqlite
       STORAGE_SQLITE_PATH: /app/data/libredb-storage.db
       AUTH_COOKIE_SECURE: "false"
@@ -43,12 +43,12 @@ services:
             zh_CN: 首次启动时创建的初始管理员账户的电子邮件地址。
         - container: ADMIN_PASSWORD
           description:
-            en_US: Password for the initial admin account (minimum 8 characters). Change this before the first login, otherwise anyone on your LAN can sign in.
-            zh_CN: 初始管理员账户的密码（至少 8 个字符）。请在首次登录前修改，否则局域网内任何人都可以登录。
+            en_US: Leave empty and the app generates a strong password on first start and prints it once to the container log. Set your own only if you prefer to choose it.
+            zh_CN: 留空时，应用会在首次启动时生成强密码并在容器日志中打印一次。仅在希望自行指定时填写。
         - container: JWT_SECRET
           description:
-            en_US: Secret key used to sign authentication tokens (minimum 32 characters). Set a long random value.
-            zh_CN: 用于签署身份验证令牌的密钥（至少 32 个字符）。请设置一个较长的随机值。
+            en_US: Leave empty and a strong secret is generated on first start. This value also encrypts saved connection passwords, so never reuse a value published anywhere. If you set your own it must be at least 32 characters, or the container exits at boot.
+            zh_CN: 留空时会在首次启动时生成强密钥。该值同时用于加密已保存的连接密码，因此切勿使用任何公开过的值。如自行设置，长度至少为 32 个字符，否则容器将在启动时退出。
         - container: STORAGE_PROVIDER
           description:
             en_US: Storage backend. Keep as "sqlite" for a self-contained setup.
@@ -99,19 +99,23 @@ x-casaos:
   index: /
   scheme: http
   port_map: "3016"
-  version: "0.15.0"
-  update_at: "2026-09-09"
+  version: "0.16.2"
+  update_at: "2026-09-21"
   release_notes:
     en_US: |-
-      - Updates LibreDB Studio to 0.15.0.
-      - CREATE TABLE now emits the DDL of the engine it is aimed at instead of PostgreSQL's, so the generated statement runs where it was generated.
-      - A database size the server declines to report is shown as absent instead of 0 bytes on MySQL, PostgreSQL, SQL Server and Oracle.
-      - No environment variable, port or volume changed, so existing installs need no reconfiguration.
+      - Updates LibreDB Studio to 0.16.2. This release closes a security defect, GHSA-3wh2-8x78-jfw4, scored 8.8.
+      - A connection id sent in a request could select another session's database provider, already authenticated as that user. A `user` account could reach a connection restricted to `admin`. The cache key is now derived from the server the connection resolves to and a digest of its credentials, so a forged id buys nothing. Upgrade if more than one account reaches your instance.
+      - Schema diff reads a column default as a value rather than as SQL. A default of `0`, `''` or `false` used to read as absent and was dropped from the generated DDL.
+      - An Elasticsearch connection can authenticate with an API key id and secret, not only a username and password.
+      - Query results page from the stats strip. A `LIMIT` you typed is now a hard bound, while a capped preview stays readable beyond its first page.
+      - The example compose stacks publish their PostgreSQL and Vault containers on the loopback interface only, so a demo on a host with a public address no longer exposes them.
     zh_CN: |-
-      - 将 LibreDB Studio 更新至 0.15.0。
-      - CREATE TABLE 现在会生成目标数据库引擎的 DDL，而不再固定使用 PostgreSQL 语法，生成的语句可以直接在对应引擎上运行。
-      - 在 MySQL、PostgreSQL、SQL Server 和 Oracle 上，服务端无法给出的数据库大小现在显示为不可用，而不是 0 字节。
-      - 环境变量、端口和数据卷均未变化，现有安装无需重新配置。
+      - 将 LibreDB Studio 更新至 0.16.2。本次发布修复了一个安全缺陷 GHSA-3wh2-8x78-jfw4，评分 8.8。
+      - 请求中传入的连接 id 可以选中其他会话的数据库提供者，且该提供者已以对方身份完成认证。`user` 账户因此可以访问仅限 `admin` 的连接。缓存键现在由连接指向的服务器和凭据摘要推导得出，伪造 id 不再有任何作用。若有多个账户访问你的实例，请升级。
+      - 结构差异比对现在把列默认值当作值而非 SQL 读取。此前 `0`、`''` 或 `false` 这类默认值会被视为缺失，并从生成的 DDL 中丢失。
+      - Elasticsearch 连接可以使用 API key 的 id 与 secret 认证，不再只支持用户名和密码。
+      - 查询结果可从统计条分页。你自己写的 `LIMIT` 现在是硬边界，而受限预览可以翻到第一页之后。
+      - 示例 compose 栈的 PostgreSQL 与 Vault 容器只监听回环地址，在有公网地址的主机上做演示不会再把它们暴露出去。
   website: https://libredb.org
   repo: https://github.com/libredb/libredb-studio
   support: https://github.com/libredb/libredb-studio/issues
