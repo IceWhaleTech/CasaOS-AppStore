@@ -1,0 +1,63 @@
+name: glasshome
+services:
+  glasshome:
+    image: ghcr.io/glasshome/dash:1.2.0@sha256:0ca541fcd07bfaec96687b73ffb0a41eda83c7d7e33c3cf7652097168c948e20
+    container_name: glasshome
+    restart: unless-stopped
+    environment:
+      PORT: "3123"
+      DATA_DIR: /data
+    ports:
+      - target: 3123
+        published: "3123"
+        protocol: tcp
+    volumes:
+      - /DATA/AppData/$AppID/data:/data
+x-casaos:
+  id: app.glasshome.dash
+  main: glasshome
+  index: /
+  port_map: "3123"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GlassHome/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GlassHome/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GlassHome/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GlassHome/screenshot-3.png
+  thumbnail: ""
+  title:
+    en_US: GlassHome
+  tagline:
+    en_US: A beautiful, local-first dashboard for Home Assistant
+  description:
+    en_US: |
+      GlassHome is a local-first dashboard for Home Assistant that you design by dragging and dropping widgets in the UI, with no YAML. It talks to Home Assistant directly on your network over WebSocket; your entity data, Home Assistant address, and auth token never leave your network.
+
+      **Key Features:**
+      - Drag-and-drop dashboard editor
+      - Area-based dashboards that mirror the rooms in your home
+      - Seven theme presets, each with light and dark modes
+      - Community widgets from the GlassHome Hub, gated by a per-widget permission prompt (requires the one-time GlassHome Pro purchase)
+      - All data stays on your device in a local SQLite database
+
+      GlassHome requires a reachable Home Assistant instance. If Home Assistant runs on this machine, enter its LAN address with port 8123, for example `http://192.168.1.50:8123`. For Home Assistant running elsewhere, enter its LAN or HTTPS address. The address must also open in the browser you use to complete setup. GlassHome then guides you through Home Assistant authorization. A demo mode with simulated entities lets you explore before connecting.
+  tips:
+    en_US: |
+      The dashboard is served on port 3123. Open it, then follow the setup wizard to connect Home Assistant.
+  author: GlassHome
+  developer: GlassHome
+  category: Home
+  architectures:
+    - amd64
+    - arm64
+  version: "1.2.0"
+  update_at: "2026-08-27"
+  release_notes:
+    en_US: |
+      Settings has a new Media section: how much room your pictures take, a row of the ones you added most recently, and an Upload button. "Browse library" opens the full collection a page at a time, where you can see any picture full size and delete the ones no widget is using. Household admins can also raise or lower how much can be stored.
+
+      Very large background photos are now turned away instead of being opened, so a huge wallpaper can no longer slow your home down or take the dashboard offline while it loads.
+  website: https://glasshome.app
+  repo: https://github.com/glasshome/homeassistant-addon
+  support: https://discord.gg/FJYdeDmrzv
+  docs: https://glasshome.app/docs/dash/quickstart
