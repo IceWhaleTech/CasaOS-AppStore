@@ -1,0 +1,335 @@
+name: plane
+
+x-db-env: &db-env
+  PGHOST: plane-db
+  PGDATABASE: plane
+  POSTGRES_USER: plane
+  POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+  POSTGRES_DB: plane
+  POSTGRES_PORT: 5432
+  PGDATA: /var/lib/postgresql/data
+
+x-redis-env: &redis-env
+  REDIS_HOST: plane-redis
+  REDIS_PORT: 6379
+  REDIS_URL: redis://plane-redis:6379/
+
+x-minio-env: &minio-env
+  MINIO_ROOT_USER: $AWS_ACCESS_KEY_ID
+  MINIO_ROOT_PASSWORD: $AWS_SECRET_ACCESS_KEY
+
+x-aws-s3-env: &aws-s3-env
+  AWS_REGION: ""
+  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+  AWS_S3_ENDPOINT_URL: http://plane-minio:9000
+  AWS_S3_BUCKET_NAME: uploads
+
+x-proxy-env: &proxy-env
+  APP_DOMAIN: localhost
+  FILE_SIZE_LIMIT: 5242880
+  CERT_EMAIL: ""
+  CERT_ACME_CA: https://acme-v02.api.letsencrypt.org/directory
+  CERT_ACME_DNS: ""
+  LISTEN_HTTP_PORT: 80
+  LISTEN_HTTPS_PORT: 443
+  BUCKET_NAME: uploads
+  SITE_ADDRESS: :80
+
+x-mq-env: &mq-env
+  RABBITMQ_HOST: plane-mq
+  RABBITMQ_PORT: 5672
+  RABBITMQ_DEFAULT_USER: plane
+  RABBITMQ_DEFAULT_PASS: $RABBITMQ_PASSWORD
+  RABBITMQ_DEFAULT_VHOST: plane
+  RABBITMQ_VHOST: plane
+
+x-live-env: &live-env
+  API_BASE_URL: http://api:8000
+  LIVE_SERVER_SECRET_KEY: $LIVE_SERVER_SECRET_KEY
+
+x-app-env: &app-env
+  WEB_URL: $WEB_URL
+  DEBUG: 0
+  CORS_ALLOWED_ORIGINS: $CORS_ALLOWED_ORIGINS
+  GUNICORN_WORKERS: 1
+  USE_MINIO: 1
+  DATABASE_URL: "postgresql://plane:$POSTGRES_PASSWORD@plane-db:5432/plane"
+  SECRET_KEY: $SECRET_KEY
+  AMQP_URL: "amqp://plane:$RABBITMQ_PASSWORD@plane-mq:5672/plane"
+  RABBITMQ_PASSWORD: $RABBITMQ_PASSWORD
+  API_KEY_RATE_LIMIT: 60/minute
+  MINIO_ENDPOINT_SSL: 0
+  LIVE_SERVER_SECRET_KEY: $LIVE_SERVER_SECRET_KEY
+  WEBHOOK_ALLOWED_IPS: ""
+  WEBHOOK_ALLOWED_HOSTS: ""
+
+services:
+  web:
+    image: makeplane/plane-frontend:stable
+    restart: unless-stopped
+    depends_on:
+      - api
+      - worker
+
+  space:
+    image: makeplane/plane-space:stable
+    restart: unless-stopped
+    depends_on:
+      - api
+      - worker
+      - web
+
+  admin:
+    image: makeplane/plane-admin:stable
+    restart: unless-stopped
+    depends_on:
+      - api
+      - web
+
+  live:
+    image: makeplane/plane-live:stable
+    restart: unless-stopped
+    environment:
+      <<: [*live-env, *redis-env]
+    depends_on:
+      - api
+      - web
+
+  api:
+    image: makeplane/plane-backend:stable
+    command: ./bin/docker-entrypoint-api.sh
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/logs-api
+        target: /code/plane/logs
+    environment:
+      <<: [*app-env, *db-env, *redis-env, *minio-env, *aws-s3-env, *proxy-env]
+    depends_on:
+      - plane-db
+      - plane-redis
+      - plane-mq
+    x-casaos:
+      envs:
+        - container: WEB_URL
+          description:
+            en_US: Required public URL, for example http://your-zima-ip:3000.
+        - container: CORS_ALLOWED_ORIGINS
+          description:
+            en_US: Required allowed origin. Set this to the same value as WEB_URL.
+        - container: SECRET_KEY
+          description:
+            en_US: Required application secret. Generate with openssl rand -hex 32.
+        - container: LIVE_SERVER_SECRET_KEY
+          description:
+            en_US: Required realtime secret. Generate with openssl rand -hex 32.
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: Required PostgreSQL password. Use a URL-safe random value.
+        - container: RABBITMQ_PASSWORD
+          description:
+            en_US: Required RabbitMQ password. Use a URL-safe random value.
+        - container: AWS_ACCESS_KEY_ID
+          description:
+            en_US: Required MinIO access key. Use a URL-safe random value.
+        - container: AWS_SECRET_ACCESS_KEY
+          description:
+            en_US: Required MinIO secret key. Use a URL-safe random value.
+
+  worker:
+    image: makeplane/plane-backend:stable
+    command: ./bin/docker-entrypoint-worker.sh
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/logs-worker
+        target: /code/plane/logs
+    environment:
+      <<: [*app-env, *db-env, *redis-env, *minio-env, *aws-s3-env, *proxy-env]
+    depends_on:
+      - api
+      - plane-db
+      - plane-redis
+      - plane-mq
+
+  beat-worker:
+    image: makeplane/plane-backend:stable
+    command: ./bin/docker-entrypoint-beat.sh
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/logs-beat-worker
+        target: /code/plane/logs
+    environment:
+      <<: [*app-env, *db-env, *redis-env, *minio-env, *aws-s3-env, *proxy-env]
+    depends_on:
+      - api
+      - plane-db
+      - plane-redis
+      - plane-mq
+
+  migrator:
+    image: makeplane/plane-backend:stable
+    command: ./bin/docker-entrypoint-migrator.sh
+    restart: on-failure
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/logs-migrator
+        target: /code/plane/logs
+    environment:
+      <<: [*app-env, *db-env, *redis-env, *minio-env, *aws-s3-env, *proxy-env]
+    depends_on:
+      - plane-db
+      - plane-redis
+
+  plane-db:
+    image: postgres:15.7-alpine
+    command: postgres -c 'max_connections=1000'
+    restart: unless-stopped
+    environment:
+      <<: *db-env
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql/data
+
+  plane-redis:
+    image: valkey/valkey:7.2.11-alpine
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/valkey
+        target: /data
+
+  plane-mq:
+    image: rabbitmq:3.13.6-management-alpine
+    restart: unless-stopped
+    environment:
+      <<: *mq-env
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/rabbitmq
+        target: /var/lib/rabbitmq
+
+  plane-minio:
+    image: minio/minio:latest
+    command: server /export --console-address ":9090"
+    restart: unless-stopped
+    environment:
+      <<: *minio-env
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/minio
+        target: /export
+
+  proxy:
+    image: makeplane/plane-proxy:stable
+    restart: unless-stopped
+    environment:
+      <<: *proxy-env
+    ports:
+      - target: 80
+        published: "3000"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/proxy-config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/$AppID/proxy-data
+        target: /data
+    depends_on:
+      - web
+      - api
+      - space
+      - admin
+      - live
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_US: Plane web interface HTTP port.
+
+x-casaos:
+  id: io.plane.plane
+  main: proxy
+  index: /
+  port_map: "3000"
+  scheme: http
+  title:
+    en_US: Plane
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Plane/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Plane/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Plane/screenshot-1.png
+  tagline:
+    en_US: Open-source project management for teams
+    zh_CN: 面向团队的开源项目管理工具
+    de_DE: Open-Source-Projektmanagement fuer Teams
+    es_ES: Gestion de proyectos de codigo abierto para equipos
+    fr_FR: Gestion de projet open source pour les equipes
+    it_IT: Gestione progetti open source per team
+    ja_JP: チーム向けのオープンソースプロジェクト管理
+    ko_KR: 팀을 위한 오픈 소스 프로젝트 관리
+  description:
+    en_US: |
+      Plane is an open-source project management platform for tracking work items, running cycles, organizing modules, and planning product roadmaps.
+
+      Set `WEB_URL` and `CORS_ALLOWED_ORIGINS` to this instance's public address before starting. Generate unique values for every required secret and keep them for future upgrades.
+
+      [Official website](https://plane.so/) | [Self-hosting documentation](https://developers.plane.so/self-hosting/overview)
+    zh_CN: |
+      Plane 是一个开源项目管理平台，可用于跟踪工作事项、运行周期、组织模块和规划产品路线图。
+
+      启动前，请将 `WEB_URL` 和 `CORS_ALLOWED_ORIGINS` 设置为此实例的公开地址。为每个必填密钥生成唯一值，并在后续升级时保留这些值。
+
+      [官方网站](https://plane.so/) | [自托管文档](https://developers.plane.so/self-hosting/overview)
+    de_DE: |
+      Plane ist eine Open-Source-Plattform fuer Projektmanagement zum Verfolgen von Arbeitselementen, Durchfuehren von Zyklen, Organisieren von Modulen und Planen von Produkt-Roadmaps.
+
+      Setze vor dem Start `WEB_URL` und `CORS_ALLOWED_ORIGINS` auf die oeffentliche Adresse dieser Instanz. Erzeuge fuer jedes erforderliche Geheimnis einen eindeutigen Wert und behalte ihn fuer kuenftige Upgrades.
+
+      [Offizielle Website](https://plane.so/) | [Self-Hosting-Dokumentation](https://developers.plane.so/self-hosting/overview)
+    es_ES: |
+      Plane es una plataforma de gestion de proyectos de codigo abierto para seguir elementos de trabajo, ejecutar ciclos, organizar modulos y planificar hojas de ruta de productos.
+
+      Antes de iniciar, configura `WEB_URL` y `CORS_ALLOWED_ORIGINS` con la direccion publica de esta instancia. Genera un valor unico para cada secreto obligatorio y conservalos para futuras actualizaciones.
+
+      [Sitio web oficial](https://plane.so/) | [Documentacion de autoalojamiento](https://developers.plane.so/self-hosting/overview)
+    fr_FR: |
+      Plane est une plateforme open source de gestion de projet permettant de suivre les elements de travail, executer des cycles, organiser des modules et planifier des feuilles de route produit.
+
+      Avant le demarrage, definissez `WEB_URL` et `CORS_ALLOWED_ORIGINS` avec l'adresse publique de cette instance. Generez une valeur unique pour chaque secret obligatoire et conservez-la lors des futures mises a jour.
+
+      [Site officiel](https://plane.so/) | [Documentation d'auto-hebergement](https://developers.plane.so/self-hosting/overview)
+    it_IT: |
+      Plane e una piattaforma open source per la gestione dei progetti, utile per tenere traccia degli elementi di lavoro, gestire cicli, organizzare moduli e pianificare roadmap di prodotto.
+
+      Prima di avviare, imposta `WEB_URL` e `CORS_ALLOWED_ORIGINS` sull'indirizzo pubblico di questa istanza. Genera valori univoci per ogni segreto richiesto e conservali per gli aggiornamenti futuri.
+
+      [Sito ufficiale](https://plane.so/) | [Documentazione per l'hosting autonomo](https://developers.plane.so/self-hosting/overview)
+    ja_JP: |
+      Plane は、作業項目の追跡、サイクルの実行、モジュールの整理、製品ロードマップの計画に利用できるオープンソースのプロジェクト管理プラットフォームです。
+
+      起動前に、`WEB_URL` と `CORS_ALLOWED_ORIGINS` をこのインスタンスの公開アドレスに設定してください。必須の各シークレットには一意の値を生成し、今後のアップグレードでも保持してください。
+
+      [公式サイト](https://plane.so/) | [セルフホスティングドキュメント](https://developers.plane.so/self-hosting/overview)
+    ko_KR: |
+      Plane은 작업 항목 추적, 주기 실행, 모듈 구성 및 제품 로드맵 계획을 위한 오픈 소스 프로젝트 관리 플랫폼입니다.
+
+      시작하기 전에 `WEB_URL`과 `CORS_ALLOWED_ORIGINS`를 이 인스턴스의 공개 주소로 설정하세요. 각 필수 비밀 값에는 고유한 값을 생성하고 이후 업그레이드에도 유지하세요.
+
+      [공식 웹사이트](https://plane.so/) | [셀프 호스팅 문서](https://developers.plane.so/self-hosting/overview)
+  author: Plane
+  developer: Plane
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+  version: stable
+  update_at: "2026-09-04"
+  website: https://plane.so/
+  repo: https://github.com/makeplane/plane
+  support: https://github.com/makeplane/plane/issues
+  docs: https://developers.plane.so/self-hosting/overview
