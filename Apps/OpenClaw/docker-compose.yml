@@ -1,7 +1,7 @@
 name: openclaw
 services:
   openclaw-init:
-    image: ghcr.io/openclaw/openclaw:2026.9.5
+    image: ghcr.io/openclaw/openclaw:2026.9.6
     user: "0:0"
     volumes:
       - type: bind
@@ -17,7 +17,7 @@ services:
       - chown -R 1000:1000 /home/node/.openclaw /home/node/.config/openclaw
     restart: "no"
   openclaw:
-    image: ghcr.io/openclaw/openclaw:2026.9.5
+    image: ghcr.io/openclaw/openclaw:2026.9.6
     environment:
       HOME: /home/node
       OPENCLAW_HOME: /home/node
@@ -430,8 +430,8 @@ x-casaos:
 
       - [配置指南](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)
   category: AI
-  author: openclaw
-  developer: openclaw
+  author: ZimaOS Team
+  developer: OpenClaw
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenClaw/icon.svg
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenClaw/thumbnail.png
   screenshot_link:
@@ -567,69 +567,69 @@ x-casaos:
         4. 批准后页面会自动连接。随后在网页设置中选择模型提供商，登录或填写 API Key，再选择默认模型。
 
         从 ZimaOS 图标启动时会自动传入 Gateway secret，无需运行 `onboard` 命令，也无需重启容器。同一浏览器只有在清除网站数据后才需要重新批准。更多说明请参考[配置指南](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)。
-  version: "2026.9.5"
-  update_at: "2026-09-19"
+  version: "2026.9.6"
+  update_at: "2026-09-24"
   release_notes:
     en_US: |-
-      - OpenClaw 2026.9.5 introduces atomic updates and plugin installation without restarting the Gateway.
-      - Adds conversation sharing and archiving, GPT Live, and shared browser pages.
-      - Adds guided specialist teams and improves reliability, security, and container support.
+      - OpenClaw 2026.9.6 improves managed-update feedback, recovery of unfinished work after restarts, and retained-state migration during supported container upgrades.
+      - Adds complete 30-day Usage reporting, a GitHub reader, and Files, Memory, and Skills for configured remote workspaces.
+      - Adds optional Decision Models and support for Claude Opus 5.5, GPT-6 Sol and Luna, and Grok 4.7.
     en_GB: |-
-      - OpenClaw 2026.9.5 introduces atomic updates and plugin installation without restarting the Gateway.
-      - Adds conversation sharing and archiving, GPT Live, and shared browser pages.
-      - Adds guided specialist teams and improves reliability, security, and container support.
+      - OpenClaw 2026.9.6 improves managed-update feedback, recovery of unfinished work after restarts, and retained-state migration during supported container upgrades.
+      - Adds complete 30-day Usage reporting, a GitHub reader, and Files, Memory, and Skills for configured remote workspaces.
+      - Adds optional Decision Models and support for Claude Opus 5.5, GPT-6 Sol and Luna, and Grok 4.7.
     it_IT: |-
-      - OpenClaw 2026.9.5 introduce aggiornamenti atomici e l'installazione dei plug-in senza riavviare il Gateway.
-      - Aggiunge la condivisione e l'archiviazione delle conversazioni, GPT Live e pagine del browser condivise.
-      - Aggiunge team guidati di specialisti e migliora affidabilita, sicurezza e supporto dei container.
+      - OpenClaw 2026.9.6 migliora i messaggi sugli aggiornamenti gestiti, il recupero delle attivita incompiute dopo il riavvio e la migrazione dei dati persistenti negli aggiornamenti dei container supportati.
+      - Aggiunge report Usage completi di 30 giorni, un lettore GitHub e File, Memoria e Skill per gli spazi di lavoro remoti configurati.
+      - Aggiunge Decision Model opzionali e supporto per Claude Opus 5.5, GPT-6 Sol e Luna e Grok 4.7.
     nb_NO: |-
-      - OpenClaw 2026.9.5 introduserer atomiske oppdateringer og installasjon av programtillegg uten omstart av Gateway.
-      - Legger til deling og arkivering av samtaler, GPT Live og delte nettlesersider.
-      - Legger til veiledede spesialistteam og forbedrer stabilitet, sikkerhet og containerstøtte.
+      - OpenClaw 2026.9.6 gir tydeligere tilbakemelding om administrerte oppdateringer, gjenoppretter uferdig arbeid etter omstart og migrerer lagrede data ved støttede containeroppgraderinger.
+      - Legger til fullstendige Usage-rapporter for 30 dager, en GitHub-leser og filer, minne og ferdigheter i konfigurerte eksterne arbeidsområder.
+      - Legger til valgfrie Decision Models og støtte for Claude Opus 5.5, GPT-6 Sol og Luna og Grok 4.7.
     zh_CN: |-
-      - OpenClaw 2026.9.5 引入原子更新，并支持无需重启 Gateway 即可安装插件。
-      - 新增对话分享与归档、GPT Live 和共享浏览器页面。
-      - 新增引导式专家团队，并提升可靠性、安全性和容器支持。
+      - OpenClaw 2026.9.6 改进托管更新的结果提示、重启后的未完成任务恢复，并在受支持的容器升级中自动迁移持久化数据。
+      - 新增完整的 30 天用量报告、GitHub 阅读器，以及已配置远程工作区的文件、记忆和技能功能。
+      - 新增可选的决策模型，并支持 Claude Opus 5.5、GPT-6 Sol 和 Luna、Grok 4.7。
     ja_JP: |-
-      - OpenClaw 2026.9.5 では、アトミック更新と Gateway を再起動せずにプラグインをインストールする機能が導入されました。
-      - 会話の共有とアーカイブ、GPT Live、共有ブラウザページが追加されました。
-      - ガイド付きの専門家チームが追加され、信頼性、セキュリティ、コンテナ対応が向上しました。
+      - OpenClaw 2026.9.6 では、管理された更新の結果表示、再起動後の未完了作業の復旧、対応するコンテナ更新時の永続データ移行が改善されました。
+      - 30 日間の完全な使用状況レポート、GitHub リーダー、設定済みのリモートワークスペース向けのファイル、メモリ、スキルが追加されました。
+      - オプションの Decision Model と、Claude Opus 5.5、GPT-6 Sol と Luna、Grok 4.7 への対応が追加されました。
     ko_KR: |-
-      - OpenClaw 2026.9.5는 원자적 업데이트와 Gateway를 재시작하지 않는 플러그인 설치를 도입합니다.
-      - 대화 공유 및 보관, GPT Live, 공유 브라우저 페이지를 추가합니다.
-      - 안내형 전문가 팀을 추가하고 안정성, 보안 및 컨테이너 지원을 개선합니다.
+      - OpenClaw 2026.9.6은 관리형 업데이트 결과 안내, 재시작 후 미완료 작업 복구, 지원되는 컨테이너 업그레이드의 영구 데이터 마이그레이션을 개선합니다.
+      - 전체 30일 사용량 보고서, GitHub 리더, 설정된 원격 작업 공간의 파일, 메모리, 스킬을 추가합니다.
+      - 선택형 Decision Model과 Claude Opus 5.5, GPT-6 Sol 및 Luna, Grok 4.7 지원을 추가합니다.
     fr_FR: |-
-      - OpenClaw 2026.9.5 introduit les mises a jour atomiques et l'installation de plugins sans redemarrer le Gateway.
-      - Ajoute le partage et l'archivage des conversations, GPT Live et les pages de navigateur partagees.
-      - Ajoute des equipes de specialistes guidees et ameliore la fiabilite, la securite et la prise en charge des conteneurs.
+      - OpenClaw 2026.9.6 clarifie le resultat des mises a jour gerees, reprend les taches inachevees apres redemarrage et migre les donnees conservees lors des mises a niveau de conteneur prises en charge.
+      - Ajoute des rapports Usage complets sur 30 jours, un lecteur GitHub, ainsi que Fichiers, Memoire et Skills pour les espaces de travail distants configures.
+      - Ajoute des Decision Models facultatifs et la prise en charge de Claude Opus 5.5, GPT-6 Sol et Luna, et Grok 4.7.
     de_DE: |-
-      - OpenClaw 2026.9.5 fuehrt atomare Updates und die Plugin-Installation ohne Neustart des Gateways ein.
-      - Fuegt das Teilen und Archivieren von Unterhaltungen, GPT Live und gemeinsam genutzte Browserseiten hinzu.
-      - Fuegt gefuehrte Spezialistenteams hinzu und verbessert Zuverlaessigkeit, Sicherheit und Container-Unterstuetzung.
+      - OpenClaw 2026.9.6 verbessert Rueckmeldungen zu verwalteten Updates, die Wiederaufnahme unvollendeter Arbeit nach Neustarts und die Migration gespeicherter Daten bei unterstuetzten Container-Upgrades.
+      - Fuegt vollstaendige 30-Tage-Nutzungsberichte, einen GitHub-Reader sowie Dateien, Speicher und Skills fuer konfigurierte Remote-Arbeitsbereiche hinzu.
+      - Fuegt optionale Decision Models und Unterstuetzung fuer Claude Opus 5.5, GPT-6 Sol und Luna sowie Grok 4.7 hinzu.
     sv_SE: |-
-      - OpenClaw 2026.9.5 introducerar atomiska uppdateringar och installation av insticksprogram utan att starta om Gateway.
-      - Lägger till delning och arkivering av konversationer, GPT Live och delade webbläsarsidor.
-      - Lägger till vägledda specialistteam och förbättrar tillförlitlighet, säkerhet och containerstöd.
+      - OpenClaw 2026.9.6 ger tydligare besked om hanterade uppdateringar, återställer oavslutat arbete efter omstart och migrerar sparad data vid stödda containeruppgraderingar.
+      - Lägger till fullständiga användningsrapporter för 30 dagar, en GitHub-läsare samt filer, minne och färdigheter i konfigurerade fjärrarbetsytor.
+      - Lägger till valfria Decision Models och stöd för Claude Opus 5.5, GPT-6 Sol och Luna samt Grok 4.7.
     el_GR: |-
-      - Το OpenClaw 2026.9.5 εισάγει ατομικές ενημερώσεις και εγκατάσταση προσθηκών χωρίς επανεκκίνηση του Gateway.
-      - Προσθέτει κοινή χρήση και αρχειοθέτηση συνομιλιών, GPT Live και κοινόχρηστες σελίδες προγράμματος περιήγησης.
-      - Προσθέτει καθοδηγούμενες ομάδες ειδικών και βελτιώνει την αξιοπιστία, την ασφάλεια και την υποστήριξη κοντέινερ.
+      - Το OpenClaw 2026.9.6 βελτιώνει την ενημέρωση για τις διαχειριζόμενες αναβαθμίσεις, επαναφέρει ημιτελείς εργασίες μετά από επανεκκίνηση και μεταφέρει τα διατηρούμενα δεδομένα σε υποστηριζόμενες αναβαθμίσεις κοντέινερ.
+      - Προσθέτει πλήρεις αναφορές χρήσης 30 ημερών, πρόγραμμα ανάγνωσης GitHub και Αρχεία, Μνήμη και Δεξιότητες για ρυθμισμένους απομακρυσμένους χώρους εργασίας.
+      - Προσθέτει προαιρετικά Decision Models και υποστήριξη για Claude Opus 5.5, GPT-6 Sol και Luna και Grok 4.7.
     hr_HR: |-
-      - OpenClaw 2026.9.5 uvodi atomska ažuriranja i instalaciju dodataka bez ponovnog pokretanja Gatewaya.
-      - Dodaje dijeljenje i arhiviranje razgovora, GPT Live i dijeljene stranice preglednika.
-      - Dodaje vođene timove stručnjaka i poboljšava pouzdanost, sigurnost i podršku za kontejnere.
+      - OpenClaw 2026.9.6 jasnije prikazuje ishode upravljanih ažuriranja, oporavlja nedovršeni rad nakon ponovnog pokretanja i migrira trajne podatke pri podržanim nadogradnjama kontejnera.
+      - Dodaje potpuna izvješća o upotrebi za 30 dana, čitač GitHuba te datoteke, memoriju i vještine za konfigurirane udaljene radne prostore.
+      - Dodaje neobavezne Decision Models i podršku za Claude Opus 5.5, GPT-6 Sol i Luna te Grok 4.7.
     pt_PT: |-
-      - O OpenClaw 2026.9.5 introduz atualizações atómicas e a instalação de plug-ins sem reiniciar o Gateway.
-      - Adiciona partilha e arquivo de conversas, GPT Live e páginas de navegador partilhadas.
-      - Adiciona equipas guiadas de especialistas e melhora a fiabilidade, a segurança e o suporte de contentores.
+      - O OpenClaw 2026.9.6 esclarece os resultados das atualizações geridas, recupera trabalho inacabado após reinícios e migra dados persistentes em atualizações de contentores suportadas.
+      - Adiciona relatórios de utilização completos de 30 dias, um leitor do GitHub e Ficheiros, Memória e Skills para espaços de trabalho remotos configurados.
+      - Adiciona Decision Models opcionais e suporte para Claude Opus 5.5, GPT-6 Sol e Luna e Grok 4.7.
     ru_RU: |-
-      - OpenClaw 2026.9.5 добавляет атомарные обновления и установку плагинов без перезапуска Gateway.
-      - Добавляет общий доступ к диалогам и их архивирование, GPT Live и совместные страницы браузера.
-      - Добавляет управляемые команды специалистов и улучшает надежность, безопасность и поддержку контейнеров.
+      - OpenClaw 2026.9.6 яснее показывает результат управляемых обновлений, восстанавливает незавершённую работу после перезапуска и переносит сохранённые данные при поддерживаемом обновлении контейнера.
+      - Добавляет полные отчёты об использовании за 30 дней, просмотр GitHub, а также файлы, память и навыки для настроенных удалённых рабочих пространств.
+      - Добавляет необязательные Decision Models и поддержку Claude Opus 5.5, GPT-6 Sol и Luna, а также Grok 4.7.
     tr_TR: |-
-      - OpenClaw 2026.9.5 atomik güncellemeler ve Gateway'i yeniden başlatmadan eklenti yükleme özelliği sunar.
-      - Konuşma paylaşımı ve arşivleme, GPT Live ve paylaşılan tarayıcı sayfaları ekler.
-      - Rehberli uzman ekipleri ekler; güvenilirlik, güvenlik ve konteyner desteğini geliştirir.
+      - OpenClaw 2026.9.6 yönetilen güncelleme sonuçlarını daha açık gösterir, yeniden başlatma sonrası tamamlanmamış işleri kurtarır ve desteklenen konteyner yükseltmelerinde kalıcı verileri taşır.
+      - Tam 30 günlük kullanım raporları, GitHub okuyucusu ve yapılandırılmış uzak çalışma alanları için Dosyalar, Bellek ve Beceriler ekler.
+      - İsteğe bağlı Decision Models ile Claude Opus 5.5, GPT-6 Sol ve Luna ve Grok 4.7 desteği ekler.
   website: "https://openclaw.ai"
   repo: "https://github.com/openclaw/openclaw"
   support: "https://github.com/openclaw/openclaw/issues"
