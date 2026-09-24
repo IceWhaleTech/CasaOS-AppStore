@@ -1,0 +1,40 @@
+# Apps/papra/papra.yml
+name: Papra
+tagline: Document & knowledge management system
+description: |
+  Papra is an open-source document and knowledge management system 
+  designed to help you organize your personal and professional data.
+icon: https://raw.githubusercontent.com/souvikroyc/CasaOS-AppStore/main/Apps/papra/papra.png
+category: Productivity
+
+compose:
+  papra:
+    # Uses the official Papra image, which supports arm64 (Raspberry Pi)
+    image: ghcr.io/papra-hq/papra:latest
+    
+    container_name: papra
+    
+    ports:
+      - 1221:1221
+      
+    environment:
+      # CasaOS will replace {app_host} with the server's IP (e.g., 192.168.1.198)
+      - APP_BASE_URL=http://{app_host}:1221
+      
+      # Optional variable: User can set their time zone during installation
+      - name: TZ
+        label: Time Zone (e.g., Europe/London)
+        default: ""
+        
+    volumes:
+      # CasaOS will replace ${APPDATA} with the user's chosen storage location
+      - ${APPDATA}/papra:/app/app-data
+      
+    # Set user IDs for rootless security (standard practice)
+    user: "1000:1000"
+    
+    restart: unless-stopped
+
+# App fields for the CasaOS UI
+port_map: "1221"
+platform: linux/amd64,linux/arm64 # Essential for RPi compatibility
