@@ -1,7 +1,7 @@
 name: openclaw
 services:
   openclaw-init:
-    image: ghcr.io/openclaw/openclaw:2026.9.5
+    image: ghcr.io/openclaw/openclaw:2026.9.6
     user: "0:0"
     volumes:
       - type: bind
@@ -17,7 +17,7 @@ services:
       - chown -R 1000:1000 /home/node/.openclaw /home/node/.config/openclaw
     restart: "no"
   openclaw:
-    image: ghcr.io/openclaw/openclaw:2026.9.5
+    image: ghcr.io/openclaw/openclaw:2026.9.6
     environment:
       HOME: /home/node
       OPENCLAW_HOME: /home/node
@@ -87,4 +87,4 @@ x-casaos:
   port_map: "24190"
   index: /#token=casaos
   scheme: http
-  version: "2026.9.5"
+  version: "2026.9.6"

@@ -2,8 +2,8 @@
   "tagline": "OpenClaw is a personal AI assistant you run on your own devices",
   "description": "OpenClaw is an open-source personal AI assistant designed to extend the capabilities of large language models (LLMs) into intelligent agents that actively execute tasks, interact across multiple platforms, and operate continuously. It supports 24/7 operation on the user's own device or server and provides intelligent automation services through common communication tools. OpenClaw connects AI to existing chat channels (such as WhatsApp, Telegram, Discord, etc.) via a locally running \"gateway + agent\" architecture, enabling it not only to answer questions but also to proactively perform actions, manage schedules, process emails, automate workflows, and more.\n\n**Key Features**:\n\n- Multi-channel Communication Integration: Interact directly with AI through common communication platforms like WhatsApp, Telegram, Slack, Discord, Signal, iMessage, Microsoft Teams, etc., without the need for additional applications.\n\n- Continuous Online & Long-term Memory: OpenClaw can run 24/7, possessing persistent memory and context retention capabilities, allowing it to remember preferences, historical conversations, and provide personalized services.\n\n- Real Action Execution: Beyond text replies, it can perform system tasks (e.g., clear inbox, send emails, fill forms, schedule appointments, browse web, control browser, etc.).\n\n- Skill Expansion & Automated Workflows: Supports community plugins, extended skills, and custom automation scripts, enabling the AI to execute complex tasks in various scenarios.\n\n**Learn More:**\n\n- [Official Website](https://openclaw.ai)\n\n- [Official Documentation](https://docs.openclaw.ai/)\n\n- [OpenClaw GitHub Repository](https://github.com/openclaw/openclaw)\n\n- [Configure Guide](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw)",
   "category": "AI",
-  "author": "openclaw",
-  "developer": "openclaw",
+  "author": "ZimaOS Team",
+  "developer": "OpenClaw",
   "thumbnail": "/apps/org.icewhale.openclaw/assets/thumbnail.webp",
   "screenshot_link": [
     "/apps/org.icewhale.openclaw/assets/screenshot-1.webp",
@@ -17,22 +17,22 @@
   "tips": {
     "before_install": "The first launch requires a one-time browser approval:\n1. Open OpenClaw from its ZimaOS app icon and keep the \"Approve this browser\" page open.\n2. Return to the ZimaOS home screen, click `...` at the top-right of the OpenClaw app card, choose `Terminal`, and open the `openclaw` service terminal (not `openclaw-init`).\n3. Copy the complete command shown under \"Run on the Gateway host\" on the approval page and run it in the terminal. It has the form `openclaw devices approve <request-id>`; the request ID is different for every installation.\n4. The page connects automatically after approval. Then choose a model provider in the web setup, sign in or enter its API key, and select the default model.\n\nThe launch link supplies the Gateway secret automatically. There is no need to run `onboard` or restart the container. The same browser needs approval again only if its site data is cleared. See the [Configuration Guide](https://www.zimaspace.com/docs/zimaos/How-to-Deploy-OpenClaw) for details."
   },
-  "update_at": "2026-09-19",
+  "update_at": "2026-09-24",
   "website": "https://openclaw.ai",
   "repo": "https://github.com/openclaw/openclaw",
   "support": "https://github.com/openclaw/openclaw/issues",
   "docs": "https://docs.openclaw.ai/",
   "title": "OpenClaw",
-  "release_note": "- OpenClaw 2026.9.5 introduces atomic updates and plugin installation without restarting the Gateway.\n- Adds conversation sharing and archiving, GPT Live, and shared browser pages.\n- Adds guided specialist teams and improves reliability, security, and container support.",
+  "release_note": "- OpenClaw 2026.9.6 improves managed-update feedback, recovery of unfinished work after restarts, and retained-state migration during supported container upgrades.\n- Adds complete 30-day Usage reporting, a GitHub reader, and Files, Memory, and Skills for configured remote workspaces.\n- Adds optional Decision Models and support for Claude Opus 5.5, GPT-6 Sol and Luna, and Grok 4.7.",
   "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
   "id": "org.icewhale.openclaw",
-  "version": "2026.9.5",
+  "version": "2026.9.6",
   "categories": [
     "ai"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 1007927357,
-    "arm64": 1038569936
+    "amd64": 1171242640,
+    "arm64": 1201644232
   }
 }
