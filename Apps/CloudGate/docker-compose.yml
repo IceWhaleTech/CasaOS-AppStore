@@ -1,7 +1,7 @@
 name: cloudgate
 services:
   cloudgate:
-    image: ghcr.io/elias02345/cloudgate:v0.5.0@sha256:8eaf8d60c7fe5370b21cd310e667eb536e8029981c88590e56c25462aa8a4118
+    image: ghcr.io/elias02345/cloudgate:v0.6.0@sha256:73b553c173d92a24da433776fc64bcf34d5ab8316bb0dd275fc88bb3ccf96495
     network_mode: bridge
     ports:
       - target: 8080
@@ -65,7 +65,7 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "0.5.0"
+  version: "0.6.0"
   update_at: "2026-09-19"
   release_notes:
     en_US: ""
