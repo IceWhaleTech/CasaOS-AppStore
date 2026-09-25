@@ -1,7 +1,7 @@
 name: borg-ui
 services:
   borg-ui:
-    image: ainullcode/borg-ui:2.2.6
+    image: ainullcode/borg-ui:2.3.0
     container_name: borg-ui
     restart: unless-stopped
     network_mode: bridge
@@ -114,11 +114,11 @@ x-casaos:
   index: /
   port_map: "8081"
   scheme: http
-  version: "2.2.6"
-  update_at: "2026-09-04"
+  version: "2.3.0"
+  update_at: "2026-09-25"
   release_notes:
     en_US: |-
-      - Initial CasaOS entry for Borg UI 2.2.6.
+      - Initial CasaOS entry for Borg UI 2.3.0.
   website: https://borgui.com
   repo: https://github.com/karanhudia/borg-ui
   support: https://github.com/karanhudia/borg-ui/issues
