@@ -1,0 +1,55 @@
+name: seerrng
+services:
+  seerrng:
+    image: docker.io/snapetech/seerrng:v3.27.1
+    container_name: seerrng
+    restart: unless-stopped
+    environment:
+      LOG_LEVEL: info
+      PORT: "5055"
+    ports:
+      - target: 5055
+        published: "5055"
+        protocol: tcp
+      - target: 5056
+        published: "5056"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /app/config
+    x-casaos:
+      ports:
+        - container: "5055"
+          description:
+            en_US: SeerrNG web interface
+        - container: "5056"
+          description:
+            en_US: Optional built-in HTTPS interface
+      volumes:
+        - container: /app/config
+          description:
+            en_US: Persistent SeerrNG configuration and database
+x-casaos:
+  id: org.snapetech.seerrng
+  architectures:
+    - amd64
+    - arm64
+  main: seerrng
+  author: Snapetech
+  category: Media
+  description:
+    en_US: SeerrNG is a self-hosted media request and discovery app for Plex, Jellyfin, and Emby with movie, TV, music, ebook, and audiobook workflows.
+  developer: Snapetech
+  icon: https://raw.githubusercontent.com/snapetech/seerrng/main/public/android-chrome-512x512.png
+  tagline:
+    en_US: Media requests and discovery across movies, TV, music, and books.
+  title:
+    en_US: SeerrNG
+  port_map: "5055"
+  version: "v3.27.1"
+  update_at: "2026-09-25"
+  website: https://github.com/snapetech/seerrng
+  repo: https://github.com/snapetech/seerrng
+  support: https://github.com/snapetech/seerrng/issues
+  docs: https://snapetech.github.io/seerrng/

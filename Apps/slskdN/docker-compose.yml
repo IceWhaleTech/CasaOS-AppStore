@@ -1,0 +1,77 @@
+name: slskdn
+services:
+  slskdn:
+    image: docker.io/snapetech/slskdn:2026092517-slskdn.325
+    container_name: slskdn
+    restart: unless-stopped
+    environment:
+      SLSKD_HTTP_ADDRESS: 0.0.0.0
+      SLSKD_HTTP_PORT: "5030"
+      SLSKD_HTTPS_PORT: "5031"
+      SLSKD_SLSK_LISTEN_PORT: "50300"
+      SLSKD_APP_DIR: /app
+      SLSKD_DOWNLOADS_DIR: /downloads
+      SLSKD_SHARED_DIR: /music
+      SLSKD_UMASK: "0022"
+    ports:
+      - target: 5030
+        published: "5030"
+        protocol: tcp
+      - target: 50300
+        published: "50300"
+        protocol: tcp
+      - target: 50300
+        published: "50300"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/app
+        target: /app
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music
+        read_only: true
+    x-casaos:
+      ports:
+        - container: "5030"
+          description:
+            en_US: slskdN web interface
+        - container: "50300"
+          description:
+            en_US: Soulseek and mesh TCP/UDP port
+      volumes:
+        - container: /app
+          description:
+            en_US: slskdN configuration and databases
+        - container: /downloads
+          description:
+            en_US: Download destination
+        - container: /music
+          description:
+            en_US: Shared music library
+x-casaos:
+  id: org.snapetech.slskdn
+  architectures:
+    - amd64
+    - arm64
+  main: slskdn
+  author: Snapetech
+  category: Media
+  description:
+    en_US: slskdN is an AGPL-3.0 Soulseek client with a web UI, multi-source downloads, discovery, DHT, mesh networking, and library sharing.
+  developer: Snapetech
+  icon: https://raw.githubusercontent.com/snapetech/slskdn/main/src/web/public/logo512.png
+  tagline:
+    en_US: Soulseek client with discovery, downloads, and mesh features.
+  title:
+    en_US: slskdN
+  port_map: "5030"
+  version: "2026092517-slskdn.325"
+  update_at: "2026-09-25"
+  website: https://github.com/snapetech/slskdn
+  repo: https://github.com/snapetech/slskdn
+  support: https://github.com/snapetech/slskdn/issues
+  docs: https://github.com/snapetech/slskdn#readme
