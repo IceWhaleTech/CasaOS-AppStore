@@ -1,7 +1,7 @@
 name: libre-webui
 services:
   libre-webui:
-    image: docker.io/librewebui/libre-webui:0.37.2
+    image: docker.io/librewebui/libre-webui:0.38.0
     container_name: libre-webui
     restart: unless-stopped
     ports:
@@ -134,11 +134,11 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "0.37.2"
-  update_at: "2026-09-22"
+  version: "0.38.0"
+  update_at: "2026-09-26"
   release_notes:
-    en_US: "Libre WebUI 0.37.2 adds GPT-6 Sol and GPT-6 Luna to ChatGPT sign-in and Codex CLI model choices, plus an explicit Claude Opus 5.5 option for Claude Code. Existing defaults and aliases remain unchanged. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.37.2"
-    en_GB: "Libre WebUI 0.37.2 adds GPT-6 Sol and GPT-6 Luna to ChatGPT sign-in and Codex CLI model choices, plus an explicit Claude Opus 5.5 option for Claude Code. Existing defaults and aliases remain unchanged. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.37.2"
+    en_US: "Libre WebUI 0.38.0 replaces Libre Claw and the Cordis bridge with Strands, an embedded agent engine built on the open-source Strands Agents harness. It runs on the models Libre WebUI already serves, in Chat, Work, and its own page, and stays off until an administrator turns it on. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.38.0"
+    en_GB: "Libre WebUI 0.38.0 replaces Libre Claw and the Cordis bridge with Strands, an embedded agent engine built on the open-source Strands Agents harness. It runs on the models Libre WebUI already serves, in Chat, Work, and its own page, and stays off until an administrator turns it on. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.38.0"
   website: https://librewebui.org
   repo: https://github.com/libre-webui/libre-webui
   support: https://github.com/libre-webui/libre-webui/issues
