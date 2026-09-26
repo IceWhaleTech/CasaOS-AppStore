@@ -1,0 +1,145 @@
+name: libre-webui
+services:
+  libre-webui:
+    image: docker.io/librewebui/libre-webui:0.38.0
+    container_name: libre-webui
+    restart: unless-stopped
+    ports:
+      - target: 3001
+        published: "8080"
+        protocol: tcp
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      - NODE_ENV=production
+      - DOCKER_ENV=true
+      - PORT=3001
+      - DATA_DIR=/app/backend/data
+      - PLATFORM_PREFLIGHT_TMP_DIR=/app/backend/temp/preflight
+      - JWT_SECRET="" # Required before first launch. Generate a random value, e.g. `openssl rand -hex 32`
+      - JWT_EXPIRES_IN=7d
+      - ENABLE_SIGNUP=false
+      - CORS_ORIGIN=*
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/backend/data
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/$AppID/temp
+        target: /app/backend/temp
+        bind:
+          create_host_path: true
+    x-casaos:
+      ports:
+        - container: "3001"
+          description:
+            en_US: Libre WebUI web interface, REST API, and WebSocket port
+            en_GB: Libre WebUI web interface, REST API, and WebSocket port
+      volumes:
+        - container: /app/backend/data
+          description:
+            en_US: Persistent application data (SQLite database, uploads, encryption keys)
+            en_GB: Persistent application data (SQLite database, uploads, encryption keys)
+        - container: /app/backend/temp
+          description:
+            en_US: Scratch and preflight temporary files directory
+            en_GB: Scratch and preflight temporary files directory
+      envs:
+        - container: JWT_SECRET
+          description:
+            en_US: "Required authentication signing secret. Generate a random value before first launch, e.g. `openssl rand -hex 32`. There is no auto-generated default; leaving it empty means logins will not work securely."
+            en_GB: "Required authentication signing secret. Generate a random value before first launch, e.g. `openssl rand -hex 32`. There is no auto-generated default; leaving it empty means logins will not work securely."
+        - container: OLLAMA_BASE_URL
+          description:
+            en_US: "Base URL of a reachable Ollama server for local models. Defaults to the host machine's Ollama via host.docker.internal. Optional: cloud model providers can be configured entirely inside the app instead."
+            en_GB: "Base URL of a reachable Ollama server for local models. Defaults to the host machine's Ollama via host.docker.internal. Optional: cloud model providers can be configured entirely inside the app instead."
+        - container: ENABLE_SIGNUP
+          description:
+            en_US: Allow public self-signup after the first (admin) account has been created
+            en_GB: Allow public self-signup after the first (admin) account has been created
+        - container: CORS_ORIGIN
+          description:
+            en_US: "Allowed CORS origin(s). Left permissive by default because store installs are reached via LAN IPs or mDNS names that can't be predicted in advance; authentication uses JWT bearer tokens, not ambient cookies."
+            en_GB: "Allowed CORS origin(s). Left permissive by default because store installs are reached via LAN IPs or mDNS names that can't be predicted in advance; authentication uses JWT bearer tokens, not ambient cookies."
+        - container: JWT_EXPIRES_IN
+          description:
+            en_US: How long issued login sessions stay valid before requiring re-authentication
+            en_GB: How long issued login sessions stay valid before requiring re-authentication
+x-casaos:
+  id: org.librewebui.app
+  main: libre-webui
+  index: /
+  port_map: "8080"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Libre-WebUI/icon.svg
+  title:
+    en_US: Libre WebUI
+    en_GB: Libre WebUI
+  tagline:
+    en_US: Private, self-hosted AI chat with local and cloud models
+    en_GB: Private, self-hosted AI chat with local and cloud models
+  description:
+    en_US: |-
+      Libre WebUI is a privacy-first, self-hosted AI platform for chatting with AI models. It talks to a local Ollama server for fully offline, local-model inference, and can also be connected to cloud model providers when you want them, all from one interface.
+
+      **Key features:**
+      - Chat with local models through Ollama, or connect cloud model providers
+      - Agents that can be given tools and delegated multi-step tasks
+      - Scheduled automations that run chats or agent tasks on a timer
+      - A knowledge base for retrieval-augmented answers over your own documents
+      - Self-hosted: your conversations and data stay on your own server
+
+      **Getting started:**
+      1. Set the `JWT_SECRET` environment variable to a random value before first launch (see the variable's description for how).
+      2. Open the web UI and create the first account — it automatically becomes the administrator.
+      3. For local models, make sure Ollama is running and reachable at the configured `OLLAMA_BASE_URL`; otherwise add a cloud provider from within the app.
+
+      **Note on this packaging:** Work sandboxes (containerized, isolated task execution for agents) are disabled in this CasaOS package because they require direct access to the host Docker socket, which this store does not mount for security reasons. Chat, agents, automations, and knowledge all work normally.
+    en_GB: |-
+      Libre WebUI is a privacy-first, self-hosted AI platform for chatting with AI models. It talks to a local Ollama server for fully offline, local-model inference, and can also be connected to cloud model providers when you want them, all from one interface.
+
+      **Key features:**
+      - Chat with local models through Ollama, or connect cloud model providers
+      - Agents that can be given tools and delegated multi-step tasks
+      - Scheduled automations that run chats or agent tasks on a timer
+      - A knowledge base for retrieval-augmented answers over your own documents
+      - Self-hosted: your conversations and data stay on your own server
+
+      **Getting started:**
+      1. Set the `JWT_SECRET` environment variable to a random value before first launch (see the variable's description for how).
+      2. Open the web UI and create the first account — it automatically becomes the administrator.
+      3. For local models, make sure Ollama is running and reachable at the configured `OLLAMA_BASE_URL`; otherwise add a cloud provider from within the app.
+
+      **Note on this packaging:** Work sandboxes (containerized, isolated task execution for agents) are disabled in this CasaOS package because they require direct access to the host Docker socket, which this store does not mount for security reasons. Chat, agents, automations, and knowledge all work normally.
+  tips:
+    before_install:
+      en_US: |-
+        **Before you start**
+        - Set `JWT_SECRET` to a random value before first launch (e.g. `openssl rand -hex 32`). It is not auto-generated.
+        - Local models require a separately-running Ollama server reachable at `OLLAMA_BASE_URL` (defaults to the host's Ollama). Ollama is optional; cloud providers can be configured entirely inside the app instead.
+        - Work sandboxes (isolated agent task containers) are disabled in this packaging since they need direct host Docker access. Everything else — chat, agents, automations, knowledge — works normally.
+        - After install, open the web UI and create the first account; it becomes the administrator.
+      en_GB: |-
+        **Before you start**
+        - Set `JWT_SECRET` to a random value before first launch (e.g. `openssl rand -hex 32`). It is not auto-generated.
+        - Local models require a separately-running Ollama server reachable at `OLLAMA_BASE_URL` (defaults to the host's Ollama). Ollama is optional; cloud providers can be configured entirely inside the app instead.
+        - Work sandboxes (isolated agent task containers) are disabled in this packaging since they need direct host Docker access. Everything else — chat, agents, automations, knowledge — works normally.
+        - After install, open the web UI and create the first account; it becomes the administrator.
+  category: AI
+  author: Libre WebUI
+  developer: Libre WebUI
+  architectures:
+    - amd64
+    - arm64
+  version: "0.38.0"
+  update_at: "2026-09-26"
+  release_notes:
+    en_US: "Libre WebUI 0.38.0 replaces Libre Claw and the Cordis bridge with Strands, an embedded agent engine built on the open-source Strands Agents harness. It runs on the models Libre WebUI already serves, in Chat, Work, and its own page, and stays off until an administrator turns it on. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.38.0"
+    en_GB: "Libre WebUI 0.38.0 replaces Libre Claw and the Cordis bridge with Strands, an embedded agent engine built on the open-source Strands Agents harness. It runs on the models Libre WebUI already serves, in Chat, Work, and its own page, and stays off until an administrator turns it on. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.38.0"
+  website: https://librewebui.org
+  repo: https://github.com/libre-webui/libre-webui
+  support: https://github.com/libre-webui/libre-webui/issues
+  docs: https://docs.librewebui.org
