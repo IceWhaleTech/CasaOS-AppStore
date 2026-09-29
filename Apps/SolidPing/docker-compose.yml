@@ -40,6 +40,15 @@ services:
           # single self-hosted org's traffic — CasaOS/Docker treat this as a
           # scheduling hint, not a hard limit (no `limits:` is set here).
           memory: "64M"
+    x-casaos:
+      ports:
+        - container: "4000"
+          description:
+            en_US: WebUI port
+      volumes:
+        - container: /data
+          description:
+            en_US: SQLite database and uploaded files.
 
 x-casaos:
   id: io.solidping.solidping
