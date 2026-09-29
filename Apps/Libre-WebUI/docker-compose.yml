@@ -1,7 +1,7 @@
 name: libre-webui
 services:
   libre-webui:
-    image: docker.io/librewebui/libre-webui:0.38.0
+    image: docker.io/librewebui/libre-webui:0.39.0
     container_name: libre-webui
     restart: unless-stopped
     ports:
@@ -134,11 +134,11 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "0.38.0"
+  version: "0.39.0"
   update_at: "2026-09-26"
   release_notes:
-    en_US: "Libre WebUI 0.38.0 replaces Libre Claw and the Cordis bridge with Strands, an embedded agent engine built on the open-source Strands Agents harness. It runs on the models Libre WebUI already serves, in Chat, Work, and its own page, and stays off until an administrator turns it on. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.38.0"
-    en_GB: "Libre WebUI 0.38.0 replaces Libre Claw and the Cordis bridge with Strands, an embedded agent engine built on the open-source Strands Agents harness. It runs on the models Libre WebUI already serves, in Chat, Work, and its own page, and stays off until an administrator turns it on. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.38.0"
+    en_US: "Libre WebUI 0.39.0 adds an Amazon Bedrock provider that lists every model behind one API key, Claude Sonnet 5.5 with adaptive thinking, a model selector grouped by source, and a reasoning level for Work runs. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.39.0"
+    en_GB: "Libre WebUI 0.39.0 adds an Amazon Bedrock provider that lists every model behind one API key, Claude Sonnet 5.5 with adaptive thinking, a model selector grouped by source, and a reasoning level for Work runs. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.39.0"
   website: https://librewebui.org
   repo: https://github.com/libre-webui/libre-webui
   support: https://github.com/libre-webui/libre-webui/issues
