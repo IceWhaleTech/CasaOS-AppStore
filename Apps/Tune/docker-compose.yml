@@ -1,0 +1,75 @@
+name: tune
+services:
+  tune:
+    container_name: tune
+    image: renesenses/tune:latest
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tune/icon.png
+    restart: unless-stopped
+    # Host networking is required for DLNA/UPnP, mDNS and AirPlay discovery.
+    network_mode: host
+    environment:
+      TUNE_MUSIC_DIRS: '["/music"]'
+      TUNE_AUTO_SCAN: "true"
+    volumes:
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music
+        read_only: true
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    privileged: false
+    x-casaos:
+      envs:
+        - container: TUNE_MUSIC_DIRS
+          description:
+            en_US: Music folders inside the container, as a JSON list.
+            fr_FR: Dossiers de musique dans le conteneur, sous forme de liste JSON.
+        - container: TUNE_AUTO_SCAN
+          description:
+            en_US: Scan the music library automatically.
+            fr_FR: Analyser automatiquement la bibliothèque musicale.
+      volumes:
+        - container: /music
+          description:
+            en_US: Your music library (read-only).
+            fr_FR: Votre bibliothèque musicale (lecture seule).
+        - container: /data
+          description:
+            en_US: Tune database, settings and artwork cache.
+            fr_FR: Base de données, réglages et cache des pochettes de Tune.
+
+x-casaos:
+  id: fr.mozaiklabs.tune
+  architectures:
+    - amd64
+    - arm64
+  main: tune
+  index: /
+  port_map: "8888"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tune/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tune/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tune/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tune/screenshot-3.png
+  author: MozAIk Labs
+  developer: MozAIk Labs
+  category: Media
+  title:
+    en_US: Tune
+  tagline:
+    en_US: Self-hosted multi-room music server
+    fr_FR: Serveur de musique multi-room auto-hébergé
+  description:
+    en_US: Tune is a self-hosted multi-room music server. It indexes your local library (FLAC, DSD...), brings in Qobuz, Tidal and Deezer, and plays bit-perfect to DLNA/UPnP renderers, Chromecast, AirPlay and Squeezebox players from one web interface.
+    fr_FR: Tune est un serveur de musique multi-room auto-hébergé. Il indexe votre bibliothèque locale (FLAC, DSD...), intègre Qobuz, Tidal et Deezer, et diffuse en bit-perfect vers les lecteurs DLNA/UPnP, Chromecast, AirPlay et Squeezebox depuis une seule interface web.
+  tips:
+    before_install:
+      en_US: Tune uses host networking so it can discover players on your network (DLNA/UPnP, mDNS, AirPlay). The web interface listens on port 8888. Put your music in /DATA/Media/Music, or change the /music volume before installing.
+      fr_FR: Tune utilise le réseau de l'hôte pour découvrir les lecteurs de votre réseau (DLNA/UPnP, mDNS, AirPlay). L'interface web écoute sur le port 8888. Placez votre musique dans /DATA/Media/Music, ou modifiez le volume /music avant l'installation.
+  version: "1.0.0-rc1"
+  update_at: "2026-09-30"
+  website: https://mozaiklabs.fr
+  support: https://mozaiklabs.fr/forum
