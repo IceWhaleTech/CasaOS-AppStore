@@ -1,7 +1,7 @@
 name: hfs
 services:
   hfs:
-    image: rejetto/hfs:v3.3.1
+    image: rejetto/hfs:v3.3.4
     restart: unless-stopped
     network_mode: bridge
     ports:
@@ -74,7 +74,7 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "3.3.1"
+  version: "3.3.4"
   website: https://rejetto.com/hfs/
   repo: https://github.com/rejetto/hfs
   docs: https://github.com/rejetto/hfs/wiki/Docker
