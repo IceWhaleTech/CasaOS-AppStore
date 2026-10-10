@@ -1,0 +1,47 @@
+name: Validate App Compose Files
+description: Validate AppStore docker-compose files and emit a structured JSON report.
+
+inputs:
+  app-path:
+    description: Optional app folder name under Apps/ (for example 2FAuth). Leave empty to validate all.
+    required: false
+    default: ""
+  report-json:
+    description: Path to the generated validation report JSON file.
+    required: false
+    default: out/validation-report.json
+  skip-compose-config:
+    description: Skip `docker compose config -q` validation.
+    required: false
+    default: "false"
+
+outputs:
+  report-json:
+    description: Path to the generated validation report JSON file.
+    value: ${{ steps.validate.outputs.report-json }}
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.11"
+
+    - name: Install Python dependencies
+      shell: bash
+      run: |
+        set -euo pipefail
+        python -m pip install --upgrade pip
+        pip install PyYAML
+
+    - name: Run validation
+      id: validate
+      shell: bash
+      run: |
+        set -euo pipefail
+        python3 "${{ github.action_path }}/scripts/validate_compose.py" \
+          --app-path "${{ inputs.app-path }}" \
+          --report-json "${{ inputs.report-json }}" \
+          ${{ inputs.skip-compose-config == 'true' && '--skip-compose-config' || '' }}
+        echo "report-json=${{ inputs.report-json }}" >> "$GITHUB_OUTPUT"

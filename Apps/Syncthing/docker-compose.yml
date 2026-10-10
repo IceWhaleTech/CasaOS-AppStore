@@ -36,55 +36,56 @@ services:
       envs:
         - container: TZ
           description:
-            en_us: TimeZone
-            zh_cn: 时区
+            en_US: TimeZone
+            zh_CN: 时区
         - container: PUID
           description:
-            en_us: Run Syncthing as specified uid.
-            zh_cn: 以指定的用户ID运行Syncthing
+            en_US: Run Syncthing as specified uid.
+            zh_CN: 以指定的用户ID运行Syncthing
         - container: PGID
           description:
-            en_us: Run Syncthing as specified gid.
-            zh_cn: 以指定的组ID运行Syncthing
+            en_US: Run Syncthing as specified gid.
+            zh_CN: 以指定的组ID运行Syncthing
       ports:
         - container: "8384"
           description:
-            en_us: WebUI HTTP Port
-            zh_cn: WebUI HTTP端口
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP端口
 
         - container: "22000"
           description:
-            en_us: Syncthing listening Port (TCP)
-            zh_cn: Syncthing监听端口（TCP）
+            en_US: Syncthing listening Port (TCP)
+            zh_CN: Syncthing监听端口（TCP）
 
         - container: "22000"
           description:
-            en_us: Syncthing listening Port (UDP)
-            zh_cn: Syncthing监听端口（UDP）
+            en_US: Syncthing listening Port (UDP)
+            zh_CN: Syncthing监听端口（UDP）
           protocol: udp
         - container: "21027"
           description:
-            en_us: Syncthing protocol discovery Port (TCP)
-            zh_cn: Syncthing协议发现端口（TCP）
+            en_US: Syncthing protocol discovery Port (TCP)
+            zh_CN: Syncthing协议发现端口（TCP）
           protocol: udp
 
       volumes:
         - container: /config
           description:
-            en_us: Syncthing config directory.
-            zh_cn: Syncthing配置目录
+            en_US: Syncthing config directory.
+            zh_CN: Syncthing配置目录
         - container: /DATA
           description:
-            en_us: Syncthing Accessible Directory.
-            zh_cn: Syncthing可访问目录
+            en_US: Syncthing Accessible Directory.
+            zh_CN: Syncthing可访问目录
     container_name: syncthing
 x-casaos:
+  id: org.icewhale.syncthing
   architectures:
     - amd64
     - arm64
   main: syncthing
-  author: CasaOS Team
-  category: Backup
+  author: ZimaOS Team
+  category: Productivity
   description:
     en_US: |
       # Unlocking the True Potential of Data Backup
@@ -267,7 +268,7 @@ x-casaos:
       
       Syncthing’i Zima özel bulut cihazlarında dağıtmak, eşsiz bir kolaylık sağlar: sınırsız depolama kapasitesinin keyfini çıkarın, verilerinizin gizliliğini sağlayın ve ışık hızındaki yerel ağ hızlarından faydalanın. Syncthing’in yetenekleri ile Zima’nın güçlü altyapısının mükemmel kombinasyonuyla veri yönetimi ve senkronizasyonunuzu dönüştürün.
   developer: Syncthing
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Syncthing/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Syncthing/icon.svg
   tagline:
     en_US: Open decentralized file synchronization
     en_GB: Open decentralised file synchronisation
@@ -290,6 +291,43 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Syncthing/screenshot-2.png
   tips: {}
   title:
-    en_us: Syncthing
+    en_US: Syncthing
   index: /
   port_map: "8384"
+  version: "1.29.7"
+  update_at: "2025-06-14"
+  release_notes:
+    en_US: |-
+      Syncthing 1.29.7 is an upstream release; see official release notes for detailed fixes and changes.
+    en_GB: |-
+      Syncthing 1.29.7 is an upstream release; see official release notes for detailed fixes and changes.
+    it_IT: |-
+      Syncthing 1.29.7 è una versione upstream; vedere le note di rilascio ufficiali per correzioni e modifiche dettagliate.
+    nb_NO: |-
+      Syncthing 1.29.7 er en oppstrømsutgivelse; se offisielle versjonsmerknader for detaljerte rettelser og endringer.
+    zh_CN: |-
+      Syncthing 1.29.7 是上游发布版本；详细修复和变更请参考官方 release notes。
+    ja_JP: |-
+      Syncthing 1.29.7 は upstream release です。詳細な修正と変更は公式 release notes を参照してください。
+    ko_KR: |-
+      Syncthing 1.29.7은 upstream release입니다. 자세한 수정 사항과 변경 사항은 공식 release notes를 참조하세요.
+    fr_FR: |-
+      Syncthing 1.29.7 est une release upstream; consultez les release notes officielles pour les correctifs et changements detailles.
+    de_DE: |-
+      Syncthing 1.29.7 ist ein upstream Release; detaillierte Korrekturen und Aenderungen stehen in den offiziellen release notes.
+    sv_SE: |-
+      Syncthing 1.29.7 är en uppströmsversion; se officiella release notes för detaljerade korrigeringar och ändringar.
+    el_GR: |-
+      Το Syncthing 1.29.7 είναι μια upstream κυκλοφορία. δείτε τις επίσημες σημειώσεις έκδοσης για λεπτομερείς διορθώσεις και αλλαγές.
+    hr_HR: |-
+      Syncthing 1.29.7 je uzvodno izdanje; pogledajte službene napomene o izdanju za detaljne popravke i promjene.
+    pt_PT: |-
+      Syncthing 1.29.7 é uma versão upstream; consulte as notas de lançamento oficiais para correções e alterações detalhadas.
+    ru_RU: |-
+      Syncthing 1.29.7 — это вышестоящая версия; подробные исправления и изменения см. в официальных примечаниях к выпуску.
+    tr_TR: |-
+      1.29.7 senkronizasyonu bir yukarı akış sürümüdür; ayrıntılı düzeltmeler ve değişiklikler için resmi sürüm notlarına bakın.
+  website: "https://syncthing.net"
+  repo: "https://github.com/syncthing/syncthing"
+  support: "https://forum.syncthing.net"
+  docs: "https://docs.syncthing.net/"

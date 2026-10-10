@@ -1,7 +1,7 @@
 name: ztnet
 services:
   ztnet:
-    image: sinamics/ztnet:0.7.5
+    image: sinamics/ztnet:0.7.18
     container_name: ztnet
     deploy:
       resources:
@@ -315,11 +315,12 @@ networks:
       config:
         - subnet: 172.31.255.0/29
 x-casaos:
+  id: org.icewhale.ztnet
   architectures:
     - amd64
     - arm64
   main: ztnet
-  category: Network
+  category: Networking
   developer: sinamics
   author: sinamics
   tagline:
@@ -624,7 +625,7 @@ x-casaos:
       **Daha fazla bilgi:**
       - [ZTnet Resmi Web Sitesi](https://ztnet.network/)
       - [ZTnet GitHub](https://github.com/sinamics/ztnet)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ztnet/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ztnet/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ztnet/screenshot-1.jpg
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ztnet/screenshot-2.jpg
@@ -700,3 +701,70 @@ x-casaos:
   index: /
   title:
     en_US: ZTnet
+  version: "0.7.18"
+  update_at: "2026-04-04"
+  release_notes:
+    en_US: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+    en_GB: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+    it_IT: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+    nb_NO: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+    zh_CN: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+    ja_JP: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+    ko_KR: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+    fr_FR: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+    de_DE: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+    sv_SE: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+    el_GR: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+    hr_HR: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+    pt_PT: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+    ru_RU: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+    tr_TR: |-
+      - v0.7.18 updates dependency packages, including defu 6.1.6.
+      - The installer dependencies were also updated.
+      - The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.
+  website: "https://ztnet.network/"
+  repo: "https://github.com/sinamics/ztnet"
+  support: "https://github.com/sinamics/ztnet/issues"
+  docs: "https://ztnet.network/installation/docker-compose"

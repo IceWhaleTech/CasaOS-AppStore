@@ -1,7 +1,7 @@
 name: tailscale
 services:
   tailscale:
-    image: tailscale/tailscale:v1.90.8
+    image: tailscale/tailscale:v1.98.3
     container_name: tailscale
     deploy:
       resources:
@@ -77,15 +77,16 @@ services:
             ru_RU: Путь каталога состояния Tailscale
             tr_TR: Tailscale Durum Dizini Yolu
 x-casaos:
+  id: org.icewhale.tailscale
   architectures:
     - amd64
     - arm
     - arm64
     - "386"
   main: tailscale
-  category: Network
+  category: Networking
   developer: Tailscale Inc.
-  author: CasaOS Team
+  author: ZimaOS Team
   tagline:
     en_US: Connect your devices and users together in your own secure virtual private network.
     en_GB: Connect your devices and users together in your own secure virtual private network.
@@ -418,7 +419,7 @@ x-casaos:
       **Daha fazla bilgi edinin:**
       - [Tailscale Resmi Web Sitesi](https://tailscale.com)
       - [Tailscale GitHub Deposu](https://github.com/tailscale/tailscale)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tailscale/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tailscale/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tailscale/screenshot-1.png
   thumbnail: ""
@@ -427,3 +428,70 @@ x-casaos:
   index: /
   title:
     en_US: Tailscale
+  version: "1.98.3"
+  update_at: "2026-05-21"
+  release_notes:
+    en_US: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+    en_GB: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+    it_IT: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+    nb_NO: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+    zh_CN: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+    ja_JP: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+    ko_KR: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+    fr_FR: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+    de_DE: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+    sv_SE: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+    el_GR: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+    hr_HR: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+    pt_PT: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+    ru_RU: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+    tr_TR: |-
+      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
+      - The v1.98.3 container image refresh contains library updates.
+      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+  website: "https://tailscale.com"
+  repo: "https://github.com/tailscale/tailscale"
+  support: "https://tailscale.com/contact/support"
+  docs: "https://tailscale.com/docs"

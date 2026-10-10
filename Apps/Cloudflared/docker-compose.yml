@@ -1,7 +1,7 @@
 name: cloudflared
 services:
   cloudflared:
-    image: wisdomsky/cloudflared-web:2025.2.1
+    image: wisdomsky/cloudflared-web:2026.5.0
     restart: unless-stopped
     network_mode: host
     x-casaos:
@@ -51,6 +51,7 @@ services:
         target: /config
     container_name: cloudflared
 x-casaos:
+  id: org.icewhale.cloudflared
   architectures:
     - amd64
     - arm
@@ -258,9 +259,76 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Cloudflared/screenshot-3.png
   developer: Cloudflare Inc.
   author: WisdomSky
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Cloudflared/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Cloudflared/icon.svg
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Cloudflared/thumbnail.png
-  category: Developer
+  category: Networking
   title:
-    en_us: Cloudflared
+    en_US: Cloudflared
   port_map: '14333'
+  version: "2026.5.0"
+  update_at: "2026-05-16"
+  release_notes:
+    en_US: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+    en_GB: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+    it_IT: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+    nb_NO: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+    zh_CN: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+    ja_JP: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+    ko_KR: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+    fr_FR: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+    de_DE: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+    sv_SE: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+    el_GR: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+    hr_HR: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+    pt_PT: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+    ru_RU: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+    tr_TR: |-
+      - The 2026.5.0 wrapper image updates the bundled cloudflared release line and was published on Docker Hub on 2026-05-16.
+      - Upstream cloudflared 2026.5.0 publishes checksummed packages for supported platforms, including Linux amd64, arm, and arm64 builds.
+      - Host networking and the token configuration volume stay unchanged.
+  website: "https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/"
+  repo: "https://github.com/WisdomSky/Cloudflared-web"
+  support: "https://github.com/WisdomSky/Cloudflared-web/issues"
+  docs: "https://github.com/WisdomSky/Cloudflared-web#readme"

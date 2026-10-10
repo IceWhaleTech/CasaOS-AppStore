@@ -1,7 +1,7 @@
 name: obsidian
 services:
   obsidian:
-    image: lscr.io/linuxserver/obsidian:1.8.10
+    image: lscr.io/linuxserver/obsidian:1.12.7
     container_name: obsidian
     deploy:
       resources:
@@ -132,13 +132,14 @@ services:
             ru_RU: Порт интерфейса Obsidian Desktop HTTPS
             tr_TR: Obsidian Masaüstü GUI HTTPS Bağlantı Noktası
 x-casaos:
+  id: org.icewhale.obsidian
   architectures:
     - amd64
     - arm64
   main: obsidian
-  category: Notes
+  category: Productivity
   developer: linuxserver
-  author: CasaOS Team
+  author: ZimaOS Team
   tagline:
     en_US: Obsidian is a knowledge management app for creating, linking, and visually organizing Markdown notes.
     en_GB: Obsidian is a knowledge management app for creating, linking, and visually organizing Markdown notes.
@@ -441,7 +442,7 @@ x-casaos:
       **Daha fazla bilgi edinin:**
       - [Obsidian Resmi Web Sitesi](https://obsidian.md)
       - [DockerHub](https://hub.docker.com/r/linuxserver/obsidian)
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Obsidian/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Obsidian/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Obsidian/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Obsidian/screenshot-2.png
@@ -452,3 +453,70 @@ x-casaos:
   index: /
   title:
     en_US: Obsidian
+  version: "1.12.7"
+  update_at: "2026-03-23"
+  release_notes:
+    en_US: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+    en_GB: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+    it_IT: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+    nb_NO: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+    zh_CN: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+    ja_JP: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+    ko_KR: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+    fr_FR: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+    de_DE: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+    sv_SE: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+    el_GR: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+    hr_HR: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+    pt_PT: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+    ru_RU: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+    tr_TR: |-
+      - Obsidian desktop 1.12.7 is the latest upstream release published on 2026-03-23.
+      - The linuxserver/obsidian:1.12.7 Docker image tag was published on 2026-05-24.
+      - This refreshes the container from the 1.8.x image line to the 1.12.x desktop release line.
+  website: "https://obsidian.md"
+  repo: "https://github.com/obsidianmd/obsidian-releases"
+  support: "https://help.obsidian.md/Help+and+support"
+  docs: "https://help.obsidian.md"

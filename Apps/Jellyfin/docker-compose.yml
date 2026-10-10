@@ -12,7 +12,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/jellyfin:10.10.7
+    image: linuxserver/jellyfin:12.2ubu2604-ls53
     deploy:
       resources:
         reservations:
@@ -46,61 +46,62 @@ services:
       envs:
         - container: TZ
           description:
-            en_us: TimeZone
-            zh_cn: 时区
+            en_US: TimeZone
+            zh_CN: 时区
         - container: PUID
           description:
-            en_us: Run Jellyfin as specified uid.
-            zh_cn: Jellyfin运行的用户ID
+            en_US: Run Jellyfin as specified uid.
+            zh_CN: Jellyfin运行的用户ID
         - container: PGID
           description:
-            en_us: Run Jellyfin as specified gid.
-            zh_cn: Jellyfin运行的用户组ID
+            en_US: Run Jellyfin as specified gid.
+            zh_CN: Jellyfin运行的用户组ID
         - container: JELLYFIN_PublishedServerUrl
           description:
-            en_us: The autodiscovery response domain or IP address.
-            zh_cn: 自动发现响应域名或IP地址
+            en_US: The autodiscovery response domain or IP address.
+            zh_CN: 自动发现响应域名或IP地址
       ports:
         - container: "8096"
           description:
-            en_us: WebUI HTTP Port
-            zh_cn: WebUI HTTP端口
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP端口
 
         - container: "8920"
           description:
-            en_us: WebUI HTTPS Port
-            zh_cn: WebUI HTTPS端口
+            en_US: WebUI HTTPS Port
+            zh_CN: WebUI HTTPS端口
 
         - container: "7359"
           description:
-            en_us: Jellyfin auto-discovery Port
-            zh_cn: Jellyfin自动发现端口
+            en_US: Jellyfin auto-discovery Port
+            zh_CN: Jellyfin自动发现端口
 
         - container: "1900"
           description:
-            en_us: Jellyfin DLNA Port
-            zh_cn: Jellyfin DLNA端口
+            en_US: Jellyfin DLNA Port
+            zh_CN: Jellyfin DLNA端口
 
       volumes:
         - container: /config
           description:
-            en_us: Jellyfin config directory.
-            zh_cn: Jellyfin配置目录
+            en_US: Jellyfin config directory.
+            zh_CN: Jellyfin配置目录
         - container: /Media
           description:
-            en_us: Jellyfin Media directory.
-            zh_cn: Jellyfin媒体目录
+            en_US: Jellyfin Media directory.
+            zh_CN: Jellyfin媒体目录
         - container: /opt/vc/lib
           description:
-            en_us: OpenMax libs
-            zh_cn: OpenMax库
+            en_US: OpenMax libs
+            zh_CN: OpenMax库
     container_name: jellyfin
 x-casaos:
+  id: org.icewhale.jellyfin
   architectures:
     - amd64
     - arm64
   main: jellyfin
-  author: CasaOS Team
+  author: ZimaOS Team
   category: Media
   description:
     en_US: |
@@ -194,7 +195,7 @@ x-casaos:
       Jellyfin, yüksek kaliteli akış, otomatik meta veri alma ve kişiselleştirilmiş öneriler sunar, hepsi ücretsizdir. Birden fazla kullanıcıyı destekler, her biri kendi medya kütüphanesine sahip olup, ailelerin veya ekiplerin çeşitli ihtiyaçlarını karşılar.
       Zima gibi özel bulut cihazlarına Jellyfin'i kurmak, neredeyse sınırsız depolama, sorunsuz akış ve güvenli çoklu cihaz erişimi sağlar. NAS meraklıları veya ev medya kurulumlarını geliştirmek isteyen herkes için Jellyfin mükemmel bir çözümdür.
   developer: Jellyfin
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/screenshot-2.png
@@ -218,6 +219,58 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellyfin/thumbnail.png
   tips: {}
   title:
-    en_us: Jellyfin
+    en_US: Jellyfin
   index: /
   port_map: "8097"
+  version: "12.2.0"
+  update_at: "2026-10-09"
+  release_notes:
+    en_US: |-
+      - Jellyfin 12.2 is a stable bugfix release.
+      - Includes a Jellyfin Web security fix and improvements to playback, transcoding, library scanning, and database stability.
+    en_GB: |-
+      - Jellyfin 12.2 is a stable bugfix release.
+      - Includes a Jellyfin Web security fix and improvements to playback, transcoding, library scanning, and database stability.
+    it_IT: |-
+      - Jellyfin 12.2 è una versione stabile con correzioni di bug.
+      - Include una correzione di sicurezza per Jellyfin Web e miglioramenti alla riproduzione, alla transcodifica, alla scansione delle librerie e alla stabilità del database.
+    nb_NO: |-
+      - Jellyfin 12.2 er en stabil versjon med feilrettinger.
+      - Inneholder en sikkerhetsretting for Jellyfin Web og forbedringer i avspilling, transkoding, bibliotekskanning og databasestabilitet.
+    zh_CN: |-
+      - Jellyfin 12.2 是稳定的错误修复版本。
+      - 包含 Jellyfin Web 安全修复，并改进播放、转码、媒体库扫描和数据库稳定性。
+    ja_JP: |-
+      - Jellyfin 12.2 はバグ修正を含む安定版です。
+      - Jellyfin Web のセキュリティ修正に加え、再生、トランスコード、ライブラリのスキャン、データベースの安定性を改善しました。
+    ko_KR: |-
+      - Jellyfin 12.2는 버그 수정이 포함된 안정 버전입니다.
+      - Jellyfin Web 보안 수정과 재생, 트랜스코딩, 라이브러리 스캔 및 데이터베이스 안정성 개선이 포함되어 있습니다.
+    fr_FR: |-
+      - Jellyfin 12.2 est une version stable apportant des corrections de bugs.
+      - Elle comprend un correctif de sécurité pour Jellyfin Web et des améliorations de la lecture, du transcodage, de l'analyse des bibliothèques et de la stabilité de la base de données.
+    de_DE: |-
+      - Jellyfin 12.2 ist eine stabile Version mit Fehlerbehebungen.
+      - Enthält eine Sicherheitskorrektur für Jellyfin Web sowie Verbesserungen bei Wiedergabe, Transkodierung, Bibliotheksscans und Datenbankstabilität.
+    sv_SE: |-
+      - Jellyfin 12.2 är en stabil version med buggfixar.
+      - Innehåller en säkerhetsfix för Jellyfin Web och förbättringar av uppspelning, transkodning, biblioteksskanning och databasstabilitet.
+    el_GR: |-
+      - Το Jellyfin 12.2 είναι μια σταθερή έκδοση με διορθώσεις σφαλμάτων.
+      - Περιλαμβάνει μια διόρθωση ασφαλείας για το Jellyfin Web και βελτιώσεις στην αναπαραγωγή, τη μετακωδικοποίηση, τη σάρωση βιβλιοθηκών και τη σταθερότητα της βάσης δεδομένων.
+    hr_HR: |-
+      - Jellyfin 12.2 stabilna je verzija s ispravcima pogrešaka.
+      - Uključuje sigurnosni ispravak za Jellyfin Web i poboljšanja reprodukcije, transkodiranja, skeniranja biblioteka i stabilnosti baze podataka.
+    pt_PT: |-
+      - Jellyfin 12.2 é uma versão estável com correções de erros.
+      - Inclui uma correção de segurança para o Jellyfin Web e melhorias na reprodução, transcodificação, análise das bibliotecas e estabilidade da base de dados.
+    ru_RU: |-
+      - Jellyfin 12.2 — стабильный выпуск с исправлениями ошибок.
+      - Включает исправление безопасности Jellyfin Web и улучшения воспроизведения, транскодирования, сканирования медиатек и стабильности базы данных.
+    tr_TR: |-
+      - Jellyfin 12.2, hata düzeltmeleri içeren kararlı bir sürümdür.
+      - Jellyfin Web için bir güvenlik düzeltmesi ile oynatma, kod dönüştürme, kitaplık taraması ve veritabanı kararlılığı iyileştirmelerini içerir.
+  website: "https://jellyfin.org/"
+  repo: "https://github.com/jellyfin/jellyfin"
+  support: "https://github.com/jellyfin/jellyfin/issues"
+  docs: "https://jellyfin.org/docs/"

@@ -1,0 +1,49 @@
+name: Build AppStore V1
+description: Build the legacy v1 AppStore zip and emit a structured build report.
+
+inputs:
+  source:
+    description: Source repository root.
+    required: false
+    default: .
+  output-zip:
+    description: Output zip path.
+    required: false
+    default: dist/store/main.zip
+  report-json:
+    description: Path to the generated build report JSON file.
+    required: false
+    default: out/build-v1-report.json
+  report-title:
+    description: Title used in the structured report.
+    required: false
+    default: Build V1 Store Report
+
+outputs:
+  output-zip:
+    description: Generated zip path.
+    value: ${{ steps.build.outputs.output-zip }}
+  report-json:
+    description: Path to the generated build report JSON file.
+    value: ${{ steps.build.outputs.report-json }}
+  status:
+    description: Build status captured in the report.
+    value: ${{ steps.build.outputs.status }}
+
+runs:
+  using: composite
+  steps:
+    - name: Build legacy v1 package
+      id: build
+      shell: bash
+      run: |
+        set -euo pipefail
+        python3 "${{ github.action_path }}/scripts/build_store_v1.py" \
+          --source "${{ inputs.source }}" \
+          --output-zip "${{ inputs.output-zip }}" \
+          --report-json "${{ inputs.report-json }}" \
+          --report-title "${{ inputs.report-title }}"
+        STATUS="$(python3 -c 'import json, sys; from pathlib import Path; report = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8")); print(report.get("status", "unknown"))' "${{ inputs.report-json }}")"
+        echo "output-zip=${{ inputs.output-zip }}" >> "$GITHUB_OUTPUT"
+        echo "report-json=${{ inputs.report-json }}" >> "$GITHUB_OUTPUT"
+        echo "status=${STATUS}" >> "$GITHUB_OUTPUT"

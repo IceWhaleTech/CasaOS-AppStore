@@ -8,14 +8,15 @@ services:
       - /dev/video11:/dev/video11
       - /dev/video12:/dev/video12
     environment:
-      PGID: "1000"
-      PUID: "1000"
+      UID: "1000"
+      GID: "100"
+      GIDLIST: "100"
       TZ: $TZ
-    image: linuxserver/emby:4.9.1
+    image: emby/embyserver:4.9.5.0
     deploy:
       resources:
         reservations:
-          memory: 64M
+          memory: 512M
     network_mode: bridge
     ports:
       - target: 8096
@@ -37,41 +38,45 @@ services:
         target: /data/movies
     x-casaos:
       envs:
-        - container: PUID
+        - container: UID
           description:
-            en_us: ""
-        - container: PGID
+            en_US: "UID used to run Emby."
+        - container: GID
           description:
-            en_us: ""
+            en_US: "Primary GID used to run Emby."
+        - container: GIDLIST
+          description:
+            en_US: "Comma-separated supplementary group IDs. The default includes users (100), video (44), and render (109); adjust these IDs if the host uses different values."
         - container: TZ
           description:
-            en_us: ""
+            en_US: ""
       ports:
         - container: "8096"
           description:
-            en_us: ""
+            en_US: ""
 
         - container: "8920"
           description:
-            en_us: ""
+            en_US: ""
 
       volumes:
         - container: /config
           description:
-            en_us: ""
+            en_US: ""
         - container: /data/tvshows
           description:
-            en_us: ""
+            en_US: ""
         - container: /data/movies
           description:
-            en_us: ""
+            en_US: ""
     container_name: emby
 x-casaos:
+  id: org.icewhale.emby
   architectures:
     - amd64
     - arm64
   main: emby
-  author: CasaOS Team
+  author: ZimaOS Team
   category: Media
   description:
     en_US: |
@@ -374,8 +379,8 @@ x-casaos:
 
       **Daha Fazla Bilgi:**
       - [Emby Resmi Web Sitesi](https://emby.media/)
-  developer: linuxserver
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/icon.png
+  developer: Emby Team
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/icon.svg
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Emby/screenshot-2.png
@@ -402,3 +407,70 @@ x-casaos:
     en_US: Emby
   index: /
   port_map: "8096"
+  version: "4.9.5"
+  update_at: "2026-05-26"
+  release_notes:
+    en_US: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+    en_GB: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+    it_IT: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+    nb_NO: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+    zh_CN: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+    ja_JP: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+    ko_KR: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+    fr_FR: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+    de_DE: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+    sv_SE: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+    el_GR: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+    hr_HR: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+    pt_PT: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+    ru_RU: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+    tr_TR: |-
+      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
+      - The release updates .NET to 8 and SQLite to 3.49.2.
+      - It adds maintenance mode and network request protocol options.
+  website: "https://emby.media/"
+  repo: "https://hub.docker.com/r/emby/embyserver"
+  support: "https://emby.media/community/"
+  docs: "https://support.emby.media/support/"

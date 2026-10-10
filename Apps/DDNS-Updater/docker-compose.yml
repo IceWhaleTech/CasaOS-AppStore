@@ -1,7 +1,7 @@
 name: ddns-updater
 services:
   ddns-updater:
-    image: qmcgaw/ddns-updater:v2.9.0
+    image: qmcgaw/ddns-updater:v2.10.0
     network_mode: bridge
     command:
       - touch /data/config.json
@@ -42,29 +42,97 @@ services:
       ports:
         - container: "8000"
           description:
-            en_us: WebUI HTTP Port
+            en_US: WebUI HTTP Port
       volumes:
         - container: /updater/data
           description:
-            en_us: ddns-updater config directory.
+            en_US: ddns-updater config directory.
 x-casaos:
+  id: org.icewhale.ddnsupdater
   architectures:
     - amd64
     - arm
     - arm64
   author: rstuhlmuller
-  category: Network
+  category: Networking
   description:
-    en_us: Program to keep DNS A and/or AAAA records updated for multiple DNS providers
+    en_US: Program to keep DNS A and/or AAAA records updated for multiple DNS providers
   developer: qmcgaw
   screenshot:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DDNS-Updater/screenshot-1.png
-  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DDNS-Updater/icon.png
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DDNS-Updater/icon.svg
   main: ddns-updater
   port_map: "8000"
   scheme: http
   tagline:
-    en_us: Simple and easy to use DDNS
-    zh_cn: 简单好用的DDNS
+    en_US: Simple and easy to use DDNS
+    zh_CN: 简单好用的DDNS
   title:
-    en_us: ddns-updater
+    en_US: ddns-updater
+  version: "2.10.0"
+  update_at: "2026-05-01"
+  release_notes:
+    en_US: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+    en_GB: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+    it_IT: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+    nb_NO: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+    zh_CN: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+    ja_JP: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+    ko_KR: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+    fr_FR: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+    de_DE: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+    sv_SE: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+    el_GR: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+    hr_HR: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+    pt_PT: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+    ru_RU: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+    tr_TR: |-
+      - v2.10.0 adds provider support for Scaleway, IPv64, Vercel, Hetzner Cloud, and Spaceship.
+      - It fixes DNS resolution hangs, Route53 wildcard updates, Ionos URL paths, DonDominio key naming, deSEC IP-version updates, and Njalla paths.
+      - Documentation and dependency updates are included.
+  website: ""
+  repo: "https://github.com/qdm12/ddns-updater"
+  support: "https://github.com/qdm12/ddns-updater/issues"
+  docs: "https://github.com/qdm12/ddns-updater/tree/master/docs"
