@@ -1,7 +1,7 @@
 name: ai-marketplace-monitor
 services:
   ai-marketplace-monitor:
-    image: ghcr.io/bopeng/ai-marketplace-monitor:0.10.11
+    image: ghcr.io/bopeng/ai-marketplace-monitor:0.10.13
     container_name: ai-marketplace-monitor
     deploy:
       resources:
@@ -13,7 +13,7 @@ services:
       TZ: $TZ
       FACEBOOK_USERNAME: ""
       FACEBOOK_PASSWORD: ""
-      UNITYSVC_API_KEY: ""
+      UNITYSVC_API_KEY: "svcpass_XXXXX"
     network_mode: bridge
     ports:
       - target: 8467
@@ -34,7 +34,7 @@ services:
             en_US: Password of that Facebook account. Also signs you in to the web UI.
         - container: UNITYSVC_API_KEY
           description:
-            en_US: For the default configuration, a UnitySVC API key (https://unitysvc.com) for the AI that rates listings and for email and phone notifications.
+            en_US: For the default configuration, a UnitySVC API key (https://unitysvc.com) for the AI that rates listings and for email and phone notifications. Replace the placeholder with your key; with the placeholder, aimm searches but cannot rate listings or send notifications until you set a key here or other AI and notification services in the web UI.
         - container: PUID
           description:
             en_US: User ID that owns the files in the data folder
@@ -55,7 +55,7 @@ services:
 
 x-casaos:
   id: io.github.bopeng.ai-marketplace-monitor
-  version: "0.10.11"
+  version: "0.10.13"
   architectures:
     - amd64
     - arm64
@@ -79,17 +79,17 @@ x-casaos:
   tips:
     before_install:
       en_US: |
-        Before installing, set FACEBOOK_USERNAME and FACEBOOK_PASSWORD in the installation settings (and UNITYSVC_API_KEY for the default configuration). If they are empty, the web UI will not start; edit the installed app's settings and restart it. The web UI asks for the same Facebook username and password.
+        Before installing, set FACEBOOK_USERNAME and FACEBOOK_PASSWORD in the installation settings (and replace the UNITYSVC_API_KEY placeholder with your key, for the default configuration). If they are empty, the web UI will not start; edit the installed app's settings and restart it. The web UI asks for the same Facebook username and password.
   title:
     en_US: AI Marketplace Monitor
   index: /
   port_map: "8467"
   scheme: http
-  update_at: "2026-10-09"
+  update_at: "2026-10-10"
   release_notes:
     en_US: |-
-      - The daily digest summarizes each item with AI and tracks which notified listings sold, went pending or changed price.
-      - The web UI's Configure chat is redesigned, and its Logs tab follows the log level.
+      - aimm evaluates each seller (account age, listings and sales, rating, reviews), and the AI flags unreliable sellers in its rating and in notifications.
+      - The web UI can have a password of its own (AIMM_WEBUI_AUTH=local), and the UnitySVC key field starts with a placeholder so that the default configuration works on first start.
   website: https://github.com/BoPeng/ai-marketplace-monitor
   repo: https://github.com/BoPeng/ai-marketplace-monitor
   support: https://github.com/BoPeng/ai-marketplace-monitor/issues
