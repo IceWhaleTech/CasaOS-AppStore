@@ -84,6 +84,7 @@ x-casaos:
     en_US: akou
   tagline:
     en_US: Self-hosted transcription server with speaker labels and an OpenAI-compatible API
+    zh_CN: 自托管语音转写服务器，带说话人标注和兼容 OpenAI 的 API
   description:
     en_US: |
       akou turns audio into text on your own server. A program uploads a file, gets a job id back at once, and reads the result with text, language, word and segment times and speaker labels, by long-poll, by an event feed or by a signed webhook. It also answers the OpenAI transcription endpoint (`POST /v1/audio/transcriptions`), so clients that speak it work with no code on their side.
@@ -93,6 +94,14 @@ x-casaos:
       The default `fast` preset runs NVIDIA Parakeet TDT 0.6B v3 on the CPU, with Nemotron speaker labels when a job asks for them. The models download on first use, about 3 GB.
 
       akou is also a call recorder for macOS; this app is its server mode, the same core in Docker.
+    zh_CN: |
+      akou 在你自己的服务器上把音频转成文字。程序上传一个文件，立即拿到任务 ID，然后通过长轮询、事件流或签名 webhook 读取结果：文本、语言、词级和段级时间以及说话人标注。它也提供 OpenAI 转写接口（`POST /v1/audio/transcriptions`），支持该接口的客户端无需改代码即可使用。
+
+      结果可输出为文本、JSON、SRT 或 VTT。每个程序使用自己的 API 密钥，网页显示任务队列、密钥、模型和设置。数据不会离开这台机器：没有 akou 云服务，也没有中转。
+
+      默认的 `fast` 预设在 CPU 上运行 NVIDIA Parakeet TDT 0.6B v3，任务需要时用 Nemotron 标注说话人。模型在首次使用时下载，约 3 GB。
+
+      akou 也是一款 macOS 通话录音应用；本应用是它的服务器模式，即运行在 Docker 中的同一核心。
   tips:
     before_install:
       en_US: |
