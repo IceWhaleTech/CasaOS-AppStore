@@ -2,7 +2,7 @@ name: lynxprompt
 
 services:
   lynxprompt:
-    image: drumsergio/lynxprompt:2.0.75
+    image: drumsergio/lynxprompt:2.1.40
     container_name: lynxprompt
     deploy:
       resources:
@@ -21,19 +21,24 @@ services:
       DB_USERS_HOST: lynxprompt-db
       DB_USERS_USER: lynxprompt
       DB_USERS_PASSWORD: changeme
-      DB_USERS_NAME: lynxprompt
+      DB_USERS_NAME: lynxprompt_users
       DB_BLOG_HOST: lynxprompt-db
       DB_BLOG_USER: lynxprompt
       DB_BLOG_PASSWORD: changeme
-      DB_BLOG_NAME: lynxprompt
+      DB_BLOG_NAME: lynxprompt_blog
       DB_SUPPORT_HOST: lynxprompt-db
       DB_SUPPORT_USER: lynxprompt
       DB_SUPPORT_PASSWORD: changeme
-      DB_SUPPORT_NAME: lynxprompt
-      NEXTAUTH_SECRET: changeme-generate-with-openssl-rand-base64-32
+      DB_SUPPORT_NAME: lynxprompt_support
+      NEXTAUTH_SECRET: changeme-generate-with-openssl-rand-hex-32
       NEXTAUTH_URL: http://localhost:3100
       APP_URL: http://localhost:3100
-      NODE_ENV: production
+      SUPERADMIN_EMAIL: ""
+      SMTP_HOST: ""
+      SMTP_PORT: "587"
+      SMTP_USER: ""
+      SMTP_PASSWORD: ""
+      SMTP_FROM: ""
     networks:
       - lynxprompt-network
     depends_on:
@@ -43,24 +48,43 @@ services:
       envs:
         - container: DB_APP_PASSWORD
           description:
-            en_US: Database password (must match PostgreSQL password below)
+            en_US: Database password. Set the same value in all four DB_*_PASSWORD fields and in POSTGRES_PASSWORD.
         - container: NEXTAUTH_SECRET
           description:
-            en_US: "Authentication secret (generate with: openssl rand -base64 32)"
+            en_US: "Session secret. Replace it with the output of: openssl rand -hex 32"
         - container: NEXTAUTH_URL
           description:
-            en_US: "Full URL of your LynxPrompt instance (e.g. http://your-casaos-ip:3100)"
+            en_US: The address you open LynxPrompt on, such as http://192.168.1.10:3100. Sign-in links point here.
         - container: APP_URL
           description:
-            en_US: "Application URL (same as NEXTAUTH_URL)"
+            en_US: Same value as NEXTAUTH_URL.
+        - container: SUPERADMIN_EMAIL
+          description:
+            en_US: Your email address. It becomes super-admin on its first sign-in.
+        - container: SMTP_HOST
+          description:
+            en_US: SMTP server that sends the sign-in links. Without it nobody can sign in.
+        - container: SMTP_PORT
+          description:
+            en_US: SMTP port. 465 uses TLS.
+        - container: SMTP_USER
+          description:
+            en_US: SMTP user. Leave empty if the server needs no login.
+        - container: SMTP_PASSWORD
+          description:
+            en_US: SMTP password.
+        - container: SMTP_FROM
+          description:
+            en_US: Sender address of the sign-in mails.
       ports:
         - container: "3000"
           description:
-            en_US: Web UI Port
+            en_US: WebUI HTTP Port
+          protocol: tcp
       volumes: []
 
   lynxprompt-db:
-    image: postgres:17-alpine
+    image: postgres:18-alpine
     container_name: lynxprompt-db
     deploy:
       resources:
@@ -68,9 +92,10 @@ services:
           memory: 256M
     restart: unless-stopped
     volumes:
+      # Postgres 18 refuses a mount at /var/lib/postgresql/data.
       - type: bind
-        source: /DATA/AppData/$AppID/pgdata
-        target: /var/lib/postgresql/data
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql
     environment:
       POSTGRES_DB: lynxprompt
       POSTGRES_USER: lynxprompt
@@ -86,15 +111,9 @@ services:
       envs:
         - container: POSTGRES_PASSWORD
           description:
-            en_US: PostgreSQL Password (must match DB_APP_PASSWORD above)
-        - container: POSTGRES_USER
-          description:
-            en_US: PostgreSQL User
-        - container: POSTGRES_DB
-          description:
-            en_US: PostgreSQL Database Name
+            en_US: Database password, the same value as the four DB_*_PASSWORD fields of the lynxprompt service.
       volumes:
-        - container: /var/lib/postgresql/data
+        - container: /var/lib/postgresql
           description:
             en_US: PostgreSQL data directory
 
@@ -103,56 +122,50 @@ networks:
     name: lynxprompt-network
 
 x-casaos:
+  id: org.icewhale.lynxprompt
   architectures:
     - amd64
-    - arm64
   main: lynxprompt
-  store_app_id: lynxprompt
-  category: Developer
   author: GeiserX
   developer: GeiserX
+  category: Developer
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LynxPrompt/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LynxPrompt/screenshot-1.png
-  thumbnail: ""
-  description:
-    en_US: |
-      LynxPrompt is a self-hosted platform for managing AI IDE rules and commands. It provides a universal configuration hub for tools like Cursor, Claude Code, GitHub Copilot, Windsurf, Aider, and 20+ other AI coding assistants.
-
-      Create, share, and discover configuration blueprints through a web interface or CLI. Features include template variables for dynamic configurations, a blueprint marketplace, and instant project bootstrapping.
-
-      Self-host your own instance to keep your AI configurations private and under your control.
-    zh_CN: |
-      LynxPrompt 是一个自托管平台，用于管理 AI IDE 规则和命令。它为 Cursor、Claude Code、GitHub Copilot、Windsurf、Aider 等 20 多种 AI 编码助手提供通用配置中心。
-
-      通过 Web 界面或 CLI 创建、分享和发现配置蓝图。功能包括模板变量、蓝图市场和即时项目引导。
-    de_DE: |
-      LynxPrompt ist eine selbst gehostete Plattform zur Verwaltung von AI-IDE-Regeln und -Befehlen. Es bietet einen universellen Konfigurationshub fuer Cursor, Claude Code, GitHub Copilot und 20+ weitere AI-Codierungsassistenten.
-    fr_FR: |
-      LynxPrompt est une plateforme auto-hebergee pour gerer les regles et commandes des IDE IA. Elle fournit un hub de configuration universel pour Cursor, Claude Code, GitHub Copilot et plus de 20 assistants de codage IA.
-    es_ES: |
-      LynxPrompt es una plataforma autoalojada para gestionar reglas y comandos de IDEs con IA. Proporciona un centro de configuracion universal para Cursor, Claude Code, GitHub Copilot y mas de 20 asistentes de codificacion con IA.
-    pt_PT: |
-      LynxPrompt e uma plataforma auto-hospedada para gerenciar regras e comandos de IDEs com IA, oferecendo um hub de configuracao universal para mais de 20 assistentes de codificacao.
-    it_IT: |
-      LynxPrompt e una piattaforma self-hosted per gestire regole e comandi degli IDE AI, fornendo un hub di configurazione universale per oltre 20 assistenti di codifica AI.
-    ja_JP: |
-      LynxPromptは、AI IDEのルールとコマンドを管理するためのセルフホスト型プラットフォームです。Cursor、Claude Code、GitHub Copilotなど20以上のAIコーディングアシスタントに対応しています。
-    ko_KR: |
-      LynxPrompt는 AI IDE 규칙과 명령을 관리하기 위한 셀프 호스팅 플랫폼입니다. Cursor, Claude Code, GitHub Copilot 등 20개 이상의 AI 코딩 어시스턴트를 지원합니다.
-  tagline:
-    en_US: Self-hosted AI IDE configuration hub
-    zh_CN: 自托管 AI IDE 配置中心
   title:
     en_US: LynxPrompt
+  tagline:
+    en_US: Self-hosted hub for AI coding rules
+    zh_CN: 自托管的 AI 编码规则中心
+  description:
+    en_US: |
+      LynxPrompt turns one set of coding rules into the files each AI coding tool reads: AGENTS.md, CLAUDE.md, Cursor rules, Copilot instructions and the rule files of 30 tools in all.
+
+      Create, store and share these rules as blueprints through the web interface, the lynxp CLI, the VS Code extension or the GitHub Action. Federation lets instances find each other's public blueprints.
+    zh_CN: |
+      LynxPrompt 把一套编码规则转换成各个 AI 编码工具读取的文件：AGENTS.md、CLAUDE.md、Cursor 规则、Copilot 指令等，共支持 30 种工具的规则文件。
+
+      可以通过 Web 界面、lynxp 命令行、VS Code 扩展或 GitHub Action 创建、保存和分享这些规则蓝图。联邦功能让各个实例互相发现公开的蓝图。
   tips:
     before_install:
       en_US: |
-        After installation, you must change the default passwords:
-        1. Set `NEXTAUTH_SECRET` to a secure random value (generate with `openssl rand -base64 32`)
-        2. Change `DB_APP_PASSWORD` and `POSTGRES_PASSWORD` to the same secure value
-
-        Update `NEXTAUTH_URL` and `APP_URL` to match your CasaOS IP (e.g. `http://192.168.1.100:3100`).
+        Before installing, change these fields:
+        1. `NEXTAUTH_SECRET`: the output of `openssl rand -hex 32`.
+        2. The four `DB_*_PASSWORD` fields and `POSTGRES_PASSWORD`: one new value, the same in all five.
+        3. `SMTP_HOST`, `SMTP_FROM` and, if your mail server needs a login, `SMTP_USER` and `SMTP_PASSWORD`. Sign-in is a link sent by mail.
+        4. `NEXTAUTH_URL` and `APP_URL`: the address you open LynxPrompt on, such as `http://192.168.1.10:3100`.
   index: /
   port_map: "3100"
   scheme: http
+  version: "2.1.40"
+  update_at: "2026-10-10"
+  release_notes:
+    en_US: |-
+      - Updates LynxPrompt to 2.1.40 and PostgreSQL to 18. 2.1.40 signs in over plain http, as on http://your-casaos-ip:3100, and makes the super-admin address super-admin on its first sign-in.
+      - Each Prisma schema now has its own database. With one shared database every start dropped the tables of the other schemas, so the user table was missing and nobody could sign in.
+      - Adds the SMTP settings that the sign-in mail needs, and the super-admin address.
+      - The image is built for amd64 only, so the app no longer lists arm64.
+  website: https://lynxprompt.com
+  repo: https://github.com/GeiserX/LynxPrompt
+  support: https://github.com/GeiserX/LynxPrompt/issues
+  docs: https://lynxprompt.com/docs/self-hosting
