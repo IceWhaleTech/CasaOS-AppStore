@@ -4,6 +4,8 @@ services:
     image: ghcr.io/crosstalk-solutions/project-nomad:1.35.1
     container_name: nomad_admin
     restart: unless-stopped
+    networks:
+      - default
     extra_hosts:
       - host.docker.internal:host-gateway
     ports:
@@ -83,6 +85,8 @@ services:
     image: mysql:8.0.45
     container_name: nomad_mysql
     restart: unless-stopped
+    networks:
+      - default
     environment:
       MYSQL_ROOT_PASSWORD: nomad_change_this_root_password
       MYSQL_DATABASE: nomad
@@ -108,6 +112,8 @@ services:
     image: redis:7.4.8-alpine
     container_name: nomad_redis
     restart: unless-stopped
+    networks:
+      - default
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/redis
@@ -126,6 +132,8 @@ services:
     image: amir20/dozzle:v10.0.7
     container_name: nomad_dozzle
     restart: unless-stopped
+    networks:
+      - default
     environment:
       DOZZLE_ENABLE_ACTIONS: "false"
       DOZZLE_ENABLE_SHELL: "false"
@@ -143,6 +151,8 @@ services:
     image: ghcr.io/crosstalk-solutions/project-nomad-disk-collector:latest
     container_name: nomad_disk_collector
     restart: unless-stopped
+    networks:
+      - default
     volumes:
       - type: bind
         source: /
@@ -155,9 +165,11 @@ services:
         target: /storage
 
 # NOMAD attaches the optional tools it creates to this exact network name.
+# Explicit service networks keep ZimaOS Compose imports from using network_mode: bridge.
 networks:
   default:
     name: project-nomad_default
+    driver: bridge
 
 x-casaos:
   id: org.icewhale.project-nomad
