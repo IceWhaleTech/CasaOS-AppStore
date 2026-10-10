@@ -2,13 +2,16 @@ name: pumperly
 
 services:
   pumperly:
-    image: drumsergio/pumperly:1.2.0
+    image: drumsergio/pumperly:1.19.1
     container_name: pumperly
     deploy:
       resources:
         reservations:
           memory: 512M
     restart: unless-stopped
+    # Apply the database migrations of this release, then start the app; the
+    # upstream compose file does the same with a one-shot `migrate` service.
+    command: ["sh", "-c", "node migrate.mjs && exec node server.js"]
     ports:
       - target: 3000
         published: "3000"
@@ -26,10 +29,10 @@ services:
       envs:
         - container: DATABASE_URL
           description:
-            en_US: PostgreSQL connection string
+            en_US: PostGIS connection string. Its password must match POSTGRES_PASSWORD.
         - container: PUMPERLY_DEFAULT_COUNTRY
           description:
-            en_US: "Default country ISO code for initial map view (e.g. ES, FR, DE, IT, GB)"
+            en_US: "Country the map opens on, as an ISO code (e.g. ES, FR, DE, IT, GB)"
         - container: TZ
           description:
             en_US: Timezone
@@ -37,10 +40,11 @@ services:
         - container: "3000"
           description:
             en_US: Web UI Port
+          protocol: tcp
       volumes: []
 
   pumperly-db:
-    image: postgis/postgis:16-3.4-alpine
+    image: postgis/postgis:17-3.4
     container_name: pumperly-db
     deploy:
       resources:
@@ -58,7 +62,7 @@ services:
     networks:
       - pumperly-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U pumperly -d pumperly"]
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U pumperly -d pumperly"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -66,13 +70,13 @@ services:
       envs:
         - container: POSTGRES_USER
           description:
-            en_US: PostgreSQL User
+            en_US: PostgreSQL user
         - container: POSTGRES_PASSWORD
           description:
-            en_US: PostgreSQL Password
+            en_US: PostgreSQL password, the same as the one in DATABASE_URL
         - container: POSTGRES_DB
           description:
-            en_US: PostgreSQL Database Name
+            en_US: PostgreSQL database name
       volumes:
         - container: /var/lib/postgresql/data
           description:
@@ -83,59 +87,56 @@ networks:
     name: pumperly-network
 
 x-casaos:
+  id: org.icewhale.pumperly
   architectures:
     - amd64
-    - arm64
   main: pumperly
-  store_app_id: pumperly
-  category: Utilities
   author: GeiserX
   developer: GeiserX
+  category: Productivity
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pumperly/icon.png
   screenshot_link:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pumperly/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Pumperly/screenshot-2.png
-  thumbnail: ""
-  description:
-    en_US: |
-      Pumperly combines route planning with real-time fuel prices and EV charging station data across 36 countries. No other open-source tool does this.
-
-      Plan a route from A to B, see every fuel station and EV charger along the corridor, and filter by "cheapest within N minutes detour." Covers Europe, Latin America, and Oceania with 16 languages and multi-currency support.
-
-      This CasaOS deployment includes the app and PostGIS database. Route planning (Valhalla) and geocoding (Photon) are optional external services that can be added separately for full functionality.
-    zh_CN: |
-      Pumperly 将路线规划与 36 个国家的实时燃油价格和电动汽车充电站数据相结合。
-
-      规划从 A 到 B 的路线，查看沿途走廊中的每个加油站和充电站，并按"最便宜的 N 分钟绕行"进行筛选。覆盖欧洲、拉丁美洲和大洋洲，支持 16 种语言和多种货币。
-    de_DE: |
-      Pumperly kombiniert Routenplanung mit Echtzeit-Kraftstoffpreisen und Ladestationsdaten fuer Elektrofahrzeuge in 36 Laendern.
-    fr_FR: |
-      Pumperly combine la planification d'itineraires avec les prix des carburants en temps reel et les donnees des bornes de recharge dans 36 pays.
-    es_ES: |
-      Pumperly combina la planificacion de rutas con precios de combustible en tiempo real y datos de estaciones de carga de vehiculos electricos en 36 paises.
-    pt_PT: |
-      Pumperly combina planejamento de rotas com precos de combustivel em tempo real e dados de estacoes de carregamento de veiculos eletricos em 36 paises.
-    it_IT: |
-      Pumperly combina la pianificazione dei percorsi con i prezzi del carburante in tempo reale e i dati delle stazioni di ricarica per veicoli elettrici in 36 paesi.
-    ja_JP: |
-      Pumperlyは、36カ国のリアルタイム燃料価格とEV充電ステーションデータを組み合わせたルートプランニングツールです。
-    ko_KR: |
-      Pumperly는 36개국의 실시간 연료 가격과 EV 충전소 데이터를 결합한 경로 계획 도구입니다.
-  tagline:
-    en_US: Open-source fuel and EV route planner for 36 countries
-    zh_CN: 覆盖 36 个国家的开源燃油和电动汽车路线规划器
   title:
     en_US: Pumperly
+  tagline:
+    en_US: Fuel and EV route planner with live prices from 22 countries
+    zh_CN: 提供 22 个国家实时油价的燃油和电动车路线规划器
+  description:
+    en_US: |
+      Pumperly is a map of fuel prices and EV chargers with a route planner on top. Pick a destination and it draws the route, lists every station along it with its price and the minutes a stop would add, and plans the cheapest places to fill up.
+
+      Prices come from government and community sources in 22 countries with no API key to set, and from two more with a free key. EV chargers come from the official registries of Spain and Germany and from Open Charge Map elsewhere. Prices convert into 37 currencies, the interface speaks 17 languages, and it keeps no accounts, no analytics and no tracking cookies.
+
+      This app runs Pumperly and its PostGIS database, which gives you the price map. Route planning and address search need Valhalla and Photon, which you can run separately.
+    zh_CN: |
+      Pumperly 是一张油价和电动车充电桩地图，上面叠加了路线规划器。选择目的地后，它会画出路线，列出沿途每个加油站的价格和停靠需要多花的分钟数，并规划最便宜的加油地点。
+
+      价格来自 22 个国家的政府和社区数据源，无需设置 API 密钥，另有两个国家使用免费密钥。充电桩数据来自西班牙和德国的官方登记以及其他地区的 Open Charge Map。价格可换算为 37 种货币，界面支持 17 种语言，不需要账户，没有分析统计，也没有跟踪 Cookie。
+
+      本应用运行 Pumperly 及其 PostGIS 数据库，提供价格地图。路线规划和地址搜索需要 Valhalla 和 Photon，可以另行部署。
   tips:
     before_install:
       en_US: |
-        Before starting, change the default password (`changeme`) in both `DATABASE_URL` and `POSTGRES_PASSWORD` to the same secure value.
+        Before installing, replace the password `changeme` in both `DATABASE_URL` and `POSTGRES_PASSWORD` with the same new value.
 
-        Pumperly scrapes fuel prices from government APIs on startup. Station data populates automatically.
+        On first start Pumperly creates its database schema, then fills the map country by country over the next few minutes as its scrapers run.
 
-        For route planning and address autocomplete, you can optionally deploy Valhalla and Photon as separate containers and set the `VALHALLA_URL` and `PHOTON_URL` environment variables. Without them, Pumperly still shows fuel stations on a map with prices.
+        For route planning and address search, run Valhalla and Photon separately and add the `VALHALLA_URL` and `PHOTON_URL` environment variables. Without them, Pumperly still shows the stations and their prices on the map.
 
-        Change `PUMPERLY_DEFAULT_COUNTRY` to your country code (e.g. FR, DE, IT, GB).
+        Set `PUMPERLY_DEFAULT_COUNTRY` to your country code (e.g. FR, DE, IT, GB).
   index: /
   port_map: "3000"
   scheme: http
+  version: "1.19.1"
+  update_at: "2026-10-10"
+  release_notes:
+    en_US: |-
+      - Updates Pumperly to 1.19.1 and PostGIS to 17-3.4, the versions its own compose file runs.
+      - The app applies its database migrations on every start, as the upstream compose file does with its `migrate` service.
+      - Lists amd64 only: the postgis/postgis image is built for amd64 only.
+  website: https://pumperly.com
+  repo: https://github.com/GeiserX/Pumperly
+  support: https://github.com/GeiserX/Pumperly/issues
+  docs: https://geiserx.github.io/Pumperly/
