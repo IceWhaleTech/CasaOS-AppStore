@@ -1,0 +1,213 @@
+name: project-nomad
+services:
+  admin:
+    image: ghcr.io/crosstalk-solutions/project-nomad:1.35.1
+    container_name: nomad_admin
+    restart: unless-stopped
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    environment:
+      NODE_ENV: production
+      PORT: "8080"
+      HOST: 0.0.0.0
+      URL: http://localhost:8080
+      LOG_LEVEL: info
+      APP_KEY: project-nomad-change-this-app-key
+      NOMAD_STORAGE_PATH: /DATA/AppData/$AppID/storage
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_DATABASE: nomad
+      DB_USER: nomad_user
+      DB_PASSWORD: nomad_change_this_password
+      DB_SSL: "false"
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      DISABLE_COMPRESSION: "false"
+      TZ: $TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/storage
+        target: /app/storage
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, curl, -f, http://localhost:8080/api/health]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    x-casaos:
+      envs:
+        - container: URL
+          description:
+            en_US: Public URL used to access NOMAD, including the web port
+            zh_CN: 访问 NOMAD 的完整地址，包含 Web 端口
+        - container: APP_KEY
+          description:
+            en_US: Application key; use a unique value of at least 32 characters
+            zh_CN: 应用密钥；请设置至少 32 个字符的独立密钥
+        - container: NOMAD_STORAGE_PATH
+          description:
+            en_US: Host storage path; must match the /app/storage bind mount
+            zh_CN: 主机存储路径；必须与 /app/storage 的挂载源路径一致
+      ports:
+        - container: "8080"
+          description:
+            en_US: Command Center web interface
+            zh_CN: 控制中心 Web 界面
+      volumes:
+        - container: /app/storage
+          description:
+            en_US: Offline content, models, uploads, and application storage
+            zh_CN: 离线资料、模型、上传文件和应用存储
+        - container: /var/run/docker.sock
+          description:
+            en_US: Docker access for installing and managing optional NOMAD tools
+            zh_CN: 用于安装和管理 NOMAD 可选工具的 Docker 接口
+
+  mysql:
+    image: mysql:8.0.45
+    container_name: nomad_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: nomad_change_this_root_password
+      MYSQL_DATABASE: nomad
+      MYSQL_USER: nomad_user
+      MYSQL_PASSWORD: nomad_change_this_password
+      TZ: $TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/mysql
+        target: /var/lib/mysql
+    healthcheck:
+      test: [CMD, mysqladmin, ping, -h, 127.0.0.1]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 60s
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+
+  redis:
+    image: redis:7.4.8-alpine
+    container_name: nomad_redis
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/redis
+        target: /data
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+
+  dozzle:
+    image: amir20/dozzle:v10.0.7
+    container_name: nomad_dozzle
+    restart: unless-stopped
+    environment:
+      DOZZLE_ENABLE_ACTIONS: "false"
+      DOZZLE_ENABLE_SHELL: "false"
+    ports:
+      - target: 8080
+        published: "9999"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+
+  disk-collector:
+    image: ghcr.io/crosstalk-solutions/project-nomad-disk-collector:latest
+    container_name: nomad_disk_collector
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /
+        target: /host
+        read_only: true
+        bind:
+          propagation: rslave
+      - type: bind
+        source: /DATA/AppData/$AppID/storage
+        target: /storage
+
+# NOMAD attaches the optional tools it creates to this exact network name.
+networks:
+  default:
+    name: project-nomad_default
+
+x-casaos:
+  id: org.icewhale.project-nomad
+  architectures:
+    - amd64
+  main: admin
+  author: IceWhaleTech
+  developer: Crosstalk Solutions
+  category: Productivity
+  title:
+    en_US: Project NOMAD
+    zh_CN: Project NOMAD
+  tagline:
+    en_US: Knowledge that never goes offline
+    zh_CN: 永不离线的知识库
+  description:
+    en_US: |-
+      Project NOMAD is an offline knowledge and education server with a browser-based Command Center. Install and manage offline Wikipedia and ebooks with Kiwix, educational courses with Kolibri, local AI with Ollama and Qdrant, offline maps, CyberChef, and notes from one interface.
+
+      This package includes the Command Center, MySQL, Redis, Dozzle for service logs, and host disk monitoring. Optional tools, AI models, and offline content are installed separately from the NOMAD interface.
+    zh_CN: |-
+      Project NOMAD 是一个离线知识与教育服务器，通过浏览器中的控制中心统一管理资源。你可以按需安装 Kiwix 离线维基百科和电子书、Kolibri 教育课程、Ollama 与 Qdrant 本地 AI、离线地图、CyberChef 和笔记工具。
+
+      本应用包含控制中心、MySQL、Redis、Dozzle 服务日志和主机磁盘监控。可选工具、AI 模型和离线资料需要在 NOMAD 界面中另行安装。
+  tips:
+    before_install:
+      en_US: |-
+        Requires an amd64 device with at least 4 GB RAM and 10 GB free disk space for installation. AI models and offline content require additional resources. Set URL to your device's address, choose a unique APP_KEY of at least 32 characters, and change DB_PASSWORD together with MYSQL_PASSWORD before first start; also change MYSQL_ROOT_PASSWORD. NOMAD has no login and can manage Docker containers: use it only on a trusted local network. Keep the nomad_admin container name and project-nomad_default network name. Update the Command Center through ZimaOS; the upstream self-updater is not included. Optional tools created by NOMAD are separate containers and must be removed in NOMAD before uninstalling this package.
+      zh_CN: |-
+        需要 amd64 设备、至少 4 GB 内存和 10 GB 可用安装空间；AI 模型和离线资料需要额外资源。首次启动前，将 URL 设置为设备地址，设置至少 32 个字符的独立 APP_KEY，同时修改 DB_PASSWORD 和 MYSQL_PASSWORD，并修改 MYSQL_ROOT_PASSWORD。NOMAD 没有登录认证且能管理 Docker 容器，仅适合可信局域网。请保留 nomad_admin 容器名和 project-nomad_default 网络名。控制中心通过 ZimaOS 升级，不包含上游自更新器。NOMAD 创建的可选工具是独立容器，卸载本应用前请先在 NOMAD 中移除这些工具。
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProjectNOMAD/icon.png
+  # Official cover: https://www.projectnomad.us/og-image.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProjectNOMAD/thumbnail.png
+  # Official screenshots from https://www.projectnomad.us/screenshots/:
+  # dashboard.png, content-explorer.png, ai-chat.png, maps.png (in this order).
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProjectNOMAD/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProjectNOMAD/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProjectNOMAD/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProjectNOMAD/screenshot-4.png
+  scheme: http
+  index: /
+  port_map: "8080"
+  version: "1.35.1"
+  update_at: "2026-10-10"
+  release_notes:
+    en_US: Initial ZimaOS package for Project NOMAD 1.35.1, with persistent storage and optional tool management.
+    zh_CN: 首次加入 Project NOMAD 1.35.1，支持持久化存储和可选工具管理。
+  website: https://www.projectnomad.us
+  repo: https://github.com/Crosstalk-Solutions/project-nomad
+  support: https://github.com/Crosstalk-Solutions/project-nomad/issues
+  docs: https://github.com/Crosstalk-Solutions/project-nomad#installation--quickstart
+  store_app_id: project-nomad
