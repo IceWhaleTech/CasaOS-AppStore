@@ -1,7 +1,7 @@
 name: ai-marketplace-monitor
 services:
   ai-marketplace-monitor:
-    image: ghcr.io/bopeng/ai-marketplace-monitor:0.10.13
+    image: ghcr.io/bopeng/ai-marketplace-monitor:0.10.14
     container_name: ai-marketplace-monitor
     deploy:
       resources:
@@ -55,7 +55,7 @@ services:
 
 x-casaos:
   id: io.github.bopeng.ai-marketplace-monitor
-  version: "0.10.13"
+  version: "0.10.14"
   architectures:
     - amd64
     - arm64
@@ -88,8 +88,8 @@ x-casaos:
   update_at: "2026-10-10"
   release_notes:
     en_US: |-
-      - aimm evaluates each seller (account age, listings and sales, rating, reviews), and the AI flags unreliable sellers in its rating and in notifications.
-      - The web UI can have a password of its own (AIMM_WEBUI_AUTH=local), and the UnitySVC key field starts with a placeholder so that the default configuration works on first start.
+      - The search radius now takes effect: aimm sets it in Facebook Marketplace's location settings, since Facebook ignores it in the search URL.
+      - The Configure chat finds the search location from a city or ZIP code, and Settings › About has a Check for updates button.
   website: https://github.com/BoPeng/ai-marketplace-monitor
   repo: https://github.com/BoPeng/ai-marketplace-monitor
   support: https://github.com/BoPeng/ai-marketplace-monitor/issues
