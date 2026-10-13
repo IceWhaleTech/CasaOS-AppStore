@@ -1,0 +1,198 @@
+name: telegram-archive
+
+services:
+  # Both images run as uid 1000. CasaOS creates the bind folder as root, so this
+  # one-shot service hands it to uid 1000 before the backup and the viewer start.
+  telegram-archive-init:
+    image: drumsergio/telegram-archive:9.3.3
+    user: "0:0"
+    entrypoint:
+      - /bin/sh
+      - -c
+    command:
+      - mkdir -p /data/backups /data/session && chown -R 1000:1000 /data
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    restart: "no"
+
+  telegram-backup:
+    image: drumsergio/telegram-archive:9.3.3
+    container_name: telegram-backup
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    stop_grace_period: 90s
+    depends_on:
+      telegram-archive-init:
+        condition: service_completed_successfully
+    command:
+      - python
+      - -m
+      - telegram_archive
+      - schedule
+    environment:
+      TELEGRAM_API_ID: ""
+      TELEGRAM_API_HASH: ""
+      TELEGRAM_PHONE: ""
+      BACKUP_PATH: /data/backups
+      DB_TYPE: sqlite
+      DB_PATH: /data/backups/telegram_backup.db
+      CHAT_TYPES: private,groups,channels
+      DOWNLOAD_MEDIA: "true"
+      MAX_MEDIA_SIZE_MB: "100"
+      ENABLE_LISTENER: "true"
+      VIEWER_HOST: telegram-viewer
+      VIEWER_PORT: "8000"
+      TZ: $TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    x-casaos:
+      envs:
+        - container: TELEGRAM_API_ID
+          description:
+            en_US: The api_id of an application you create at my.telegram.org/apps
+        - container: TELEGRAM_API_HASH
+          description:
+            en_US: The api_hash of that same application
+        - container: TELEGRAM_PHONE
+          description:
+            en_US: The account's phone number with its country code, for example +15551234567
+        - container: CHAT_TYPES
+          description:
+            en_US: Which chats to back up, any of private, groups, channels
+        - container: DOWNLOAD_MEDIA
+          description:
+            en_US: Save photos, videos, voice notes and documents too
+        - container: MAX_MEDIA_SIZE_MB
+          description:
+            en_US: Skip media files larger than this many megabytes
+        - container: TZ
+          description:
+            en_US: Timezone
+      volumes:
+        - container: /data
+          description:
+            en_US: The archive database, the media and the Telegram session
+
+  telegram-viewer:
+    image: drumsergio/telegram-archive-viewer:9.3.3
+    container_name: telegram-viewer
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    restart: unless-stopped
+    stop_grace_period: 90s
+    depends_on:
+      telegram-archive-init:
+        condition: service_completed_successfully
+    ports:
+      - target: 8000
+        published: "8000"
+        protocol: tcp
+    environment:
+      BACKUP_PATH: /data/backups
+      DB_TYPE: sqlite
+      DB_PATH: /data/backups/telegram_backup.db
+      VIEWER_USERNAME: admin
+      VIEWER_PASSWORD: changeme
+      VIEWER_TIMEZONE: $TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    x-casaos:
+      envs:
+        - container: VIEWER_USERNAME
+          description:
+            en_US: Username of the viewer's master login
+        - container: VIEWER_PASSWORD
+          description:
+            en_US: Password of the viewer's master login. Change it before you install
+        - container: VIEWER_TIMEZONE
+          description:
+            en_US: Timezone the viewer shows message times in
+      ports:
+        - container: "8000"
+          description:
+            en_US: Web viewer port
+          protocol: tcp
+      volumes:
+        - container: /data
+          description:
+            en_US: The archive database and the media, shared with the backup
+
+x-casaos:
+  id: org.icewhale.telegramarchive
+  architectures:
+    - amd64
+    - arm64
+  main: telegram-viewer
+  author: GeiserX
+  developer: GeiserX
+  category: Social
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TelegramArchive/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TelegramArchive/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TelegramArchive/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TelegramArchive/screenshot-3.png
+  title:
+    en_US: Telegram Archive
+  tagline:
+    en_US: Back up your Telegram account to your own disk and read it in a web viewer
+    zh_CN: 将 Telegram 账号备份到自己的磁盘，并在网页查看器中阅读
+  description:
+    en_US: |
+      Telegram Archive backs up one or more Telegram accounts to this box. It saves messages, media, edits and deletions to a SQLite database on your own disk, and a web viewer, which never talks to Telegram, lets you read and search what it saved.
+
+      New messages, edits and reactions are saved as they happen, and a daily pass fetches anything the live connection missed. Every edit keeps its earlier text, and deleted messages stay in the archive, marked as deleted.
+
+      The viewer reads like Telegram: chats, forum topics, folders, reactions, pinned messages, polls and shared media, with search across every chat, a What changed feed of deletions and edits, twelve themes and a layout that works on a phone. It can give other people a login to chosen chats, or a share link that opens one chat.
+    zh_CN: |
+      Telegram Archive 将一个或多个 Telegram 账号备份到这台设备上。它把消息、媒体、编辑和删除记录保存到你自己磁盘上的 SQLite 数据库中；网页查看器从不连接 Telegram，只用来阅读和搜索已保存的内容。
+
+      新消息、编辑和表情回应会在发生时立即保存，每天还会补抓实时连接漏掉的内容。每次编辑都会保留之前的文本，被删除的消息仍留在存档中，并标记为已删除。
+
+      查看器的使用方式与 Telegram 相同：会话、论坛话题、文件夹、表情回应、置顶消息、投票和共享媒体，支持跨所有会话搜索，有一个列出删除和编辑的“变更”视图，十二种主题，布局也适合手机。它可以为其他人创建只能访问指定会话的登录账号，或生成打开单个会话的分享链接。
+  tips:
+    before_install:
+      en_US: |
+        Before installing, create an application at https://my.telegram.org/apps and put its `api_id` and `api_hash` in `TELEGRAM_API_ID` and `TELEGRAM_API_HASH`, your phone number with its country code in `TELEGRAM_PHONE`, and a long password of your own in `VIEWER_PASSWORD`.
+
+        The backup needs a one-time login to Telegram, which only a terminal can do. After the install, run this from a shell on this box with the same three values, then restart the app:
+
+        `docker run --rm -it --volumes-from telegram-backup -e TELEGRAM_API_ID=12345678 -e TELEGRAM_API_HASH=0123456789abcdef0123456789abcdef -e TELEGRAM_PHONE=+15551234567 drumsergio/telegram-archive:9.3.3 python -m telegram_archive auth`
+
+        It asks for the code Telegram sends to your app, and for your two-step password if you have one. Until then the backup container restarts and the viewer shows an empty archive.
+  index: /
+  port_map: "8000"
+  scheme: http
+  version: "9.3.3"
+  update_at: "2026-10-12"
+  release_notes:
+    en_US: |-
+      - First release in the store, Telegram Archive 9.3.3.
+  website: https://geiserx.github.io/Telegram-Archive/
+  repo: https://github.com/GeiserX/Telegram-Archive
+  support: https://github.com/GeiserX/Telegram-Archive/issues
+  docs: https://geiserx.github.io/Telegram-Archive/
