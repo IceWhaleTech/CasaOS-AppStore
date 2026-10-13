@@ -1,0 +1,83 @@
+name: declarenta
+
+services:
+  declarenta:
+    image: drumsergio/declarenta:0.61.3
+    container_name: declarenta
+    deploy:
+      resources:
+        reservations:
+          memory: 32M
+    restart: unless-stopped
+    ports:
+      - target: 80
+        published: "8098"
+        protocol: tcp
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    x-casaos:
+      envs: []
+      ports:
+        - container: "80"
+          description:
+            en_US: Web UI Port
+          protocol: tcp
+      volumes: []
+
+x-casaos:
+  id: org.icewhale.declarenta
+  architectures:
+    - amd64
+  main: declarenta
+  author: GeiserX
+  developer: GeiserX
+  category: Finance
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DeclaRenta/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DeclaRenta/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DeclaRenta/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DeclaRenta/screenshot-3.png
+  title:
+    en_US: DeclaRenta
+  tagline:
+    en_US: Spanish tax return figures from your foreign broker reports
+    zh_CN: 根据境外券商报告计算西班牙个人所得税申报数据
+  description:
+    en_US: |
+      DeclaRenta reads the reports of foreign brokers and works out the figures a Spanish tax resident needs for the annual return. Renta Web, the tax agency's own tool, does not import those reports, so without it the sums are done by hand.
+
+      It reads exports from 13 brokers, among them Interactive Brokers, Degiro, Trade Republic, Scalable Capital, eToro, Trading 212, Revolut, Coinbase and Binance. It puts every sale into one FIFO ledger with the European Central Bank rate of each trade's day, and gives the Modelo 100 boxes with their amounts and where to type each one in Renta Web. It also builds the Modelo 720 file for upload, validated against the official specification, and prepares the Modelo 721 (crypto) review and the D-6 guide.
+
+      Everything is calculated in the browser: no account, no analytics, nothing uploaded. The only outside connection is to the ECB for exchange rates. The interface is in Spanish, English, Catalan, Basque and Galician.
+
+      DeclaRenta is a calculation aid, not tax advice: check every amount before you file.
+    zh_CN: |
+      DeclaRenta 读取境外券商的报告，计算西班牙税务居民年度个人所得税申报所需的数据。西班牙税务局自己的 Renta Web 无法导入这些报告，没有它就只能手工计算。
+
+      它支持 13 家券商的导出文件，包括 Interactive Brokers、Degiro、Trade Republic、Scalable Capital、eToro、Trading 212、Revolut、Coinbase 和 Binance。所有卖出交易按 FIFO 统一计算，并使用欧洲央行在每笔交易当日的汇率；它给出 Modelo 100 各栏目的金额以及在 Renta Web 中填写的位置。它还生成可直接上传的 Modelo 720 文件（按官方规范校验），并提供 Modelo 721（加密资产）核对和 D-6 填写指南。
+
+      所有计算都在浏览器中完成：无需账户，没有分析统计，不上传任何数据。唯一的外部连接是向欧洲央行获取汇率。界面支持西班牙语、英语、加泰罗尼亚语、巴斯克语和加利西亚语。
+
+      DeclaRenta 只是计算辅助工具，不构成税务建议：申报前请核对每一个金额。
+  tips:
+    before_install:
+      en_US: |
+        DeclaRenta needs no settings and keeps no data on the server: your broker files are read in the browser and never leave it.
+
+        Open the web UI, press Comenzar and drop in your broker's report (.xml, .csv, .json or .xlsx).
+  index: /
+  port_map: "8098"
+  scheme: http
+  version: "0.61.3"
+  update_at: "2026-10-11"
+  release_notes:
+    en_US: |-
+      - First release in the store, DeclaRenta 0.61.3.
+      - Lists amd64 only: the drumsergio/declarenta image is built for amd64 only.
+  website: https://declarenta.com
+  repo: https://github.com/GeiserX/DeclaRenta
+  support: https://github.com/GeiserX/DeclaRenta/issues
+  docs: https://declarenta.com/docs/

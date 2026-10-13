@@ -1,0 +1,164 @@
+name: cashpilot
+
+services:
+  cashpilot-ui:
+    image: drumsergio/cashpilot:1.41.1
+    container_name: cashpilot-ui
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/fleet
+        target: /fleet
+    environment:
+      TZ: $TZ
+      CASHPILOT_SECRET_KEY: ""
+    networks:
+      - cashpilot-network
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:size=64M
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+        - container: CASHPILOT_SECRET_KEY
+          description:
+            en_US: Signs login sessions. Leave empty and CashPilot generates one on first start and keeps it in /data.
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web UI Port
+          protocol: tcp
+      volumes:
+        - container: /data
+          description:
+            en_US: Database and the key that encrypts stored credentials (/data/.fernet_key). Back it up.
+        - container: /fleet
+          description:
+            en_US: Enrolment key shared between the UI and the worker
+
+  cashpilot-worker:
+    image: drumsergio/cashpilot-worker:1.41.1
+    container_name: cashpilot-worker
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    expose:
+      - "8081"
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      # Kept apart from the UI's /data on purpose: the worker holds the Docker
+      # socket and must not read the credential store.
+      - type: bind
+        source: /DATA/AppData/$AppID/worker-data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/fleet
+        target: /fleet
+    environment:
+      TZ: $TZ
+      CASHPILOT_UI_URL: http://cashpilot-ui:8080
+      CASHPILOT_WORKER_NAME: local
+    networks:
+      - cashpilot-network
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:size=64M
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+        - container: CASHPILOT_UI_URL
+          description:
+            en_US: URL of the CashPilot UI service
+        - container: CASHPILOT_WORKER_NAME
+          description:
+            en_US: Name of this worker in the dashboard
+      volumes:
+        - container: /var/run/docker.sock
+          description:
+            en_US: Docker socket, which the worker needs to start and stop service containers
+        - container: /data
+          description:
+            en_US: Worker identity and key
+        - container: /fleet
+          description:
+            en_US: Enrolment key shared between the UI and the worker
+
+networks:
+  cashpilot-network:
+    name: cashpilot-network
+
+x-casaos:
+  id: org.icewhale.cashpilot
+  architectures:
+    - amd64
+    - arm64
+  main: cashpilot-ui
+  author: GeiserX
+  developer: GeiserX
+  category: Finance
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CashPilot/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CashPilot/screenshot-1.png
+  title:
+    en_US: CashPilot
+  tagline:
+    en_US: Run passive income services and see what they earn
+    zh_CN: 运行被动收入服务并查看收益
+  description:
+    en_US: |
+      CashPilot runs passive income services on your own server and shows what they earn in one web dashboard. Two containers start the services that run in Docker, keep track of those that run as a browser extension, a desktop app or a GPU node, and read the providers' balances into one earnings history.
+
+      Start a service with one click from the catalog, with no compose file to write. Balances are kept as history, a balance drop is offered to you as a probable payout to confirm, and stored credentials are encrypted at rest. One worker per server and one dashboard run a whole fleet.
+
+      Only the worker container touches the Docker socket, which it needs to start and stop the service containers.
+    zh_CN: |
+      CashPilot 在你自己的服务器上运行被动收入服务，并在一个 Web 仪表板中显示它们的收益。两个容器负责启动在 Docker 中运行的服务，跟踪以浏览器扩展、桌面应用或 GPU 节点形式运行的服务，并把各服务商的余额汇总为一份收益历史。
+
+      从目录中一键启动服务，无需编写 compose 文件。余额会保存为历史记录，余额下降会作为可能的提现请你确认，保存的凭据会加密存储。每台服务器一个 worker，一个仪表板即可管理整个集群。
+
+      只有 worker 容器会访问 Docker socket，它需要用它来启动和停止服务容器。
+  tips:
+    before_install:
+      en_US: |
+        The dashboard can command the worker, and the worker holds the Docker socket, so keep port 8080 on your LAN and never forward it to the internet.
+
+        On the first visit CashPilot asks for a setup token. Find it in the logs of the cashpilot-ui container, in the line that says "setup token". It then creates the owner account and opens the setup wizard.
+
+        Back up /DATA/AppData/cashpilot/data/.fernet_key: without it the stored credentials cannot be decrypted.
+  index: /
+  port_map: "8080"
+  scheme: http
+  version: "1.41.1"
+  update_at: "2026-10-10"
+  release_notes:
+    en_US: |-
+      - Updates CashPilot to 1.41.1, from 0.2.53.
+      - The first visit asks for the setup token printed in the cashpilot-ui log, then creates the owner account.
+      - The session key is generated on first start instead of shipping a placeholder.
+  website: https://geiserx.github.io/CashPilot/
+  repo: https://github.com/GeiserX/CashPilot
+  support: https://github.com/GeiserX/CashPilot/issues
+  docs: https://geiserx.github.io/CashPilot/
