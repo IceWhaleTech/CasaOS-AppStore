@@ -1,0 +1,122 @@
+name: videola
+services:
+  videola:
+    image: ghcr.io/fgilde/videola:latest
+    container_name: videola
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 7331
+        published: "7331"
+        protocol: tcp
+    environment:
+      TZ: $TZ
+      VIDEOLA_HOST: 0.0.0.0
+      VIDEOLA_PORT: "7331"
+      VIDEOLA_STORAGE_ROOT: /data
+      VIDEOLA_TOKEN: change-this-token
+      VIDEOLA_LOCALE: en
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    deploy:
+      resources:
+        reservations:
+          memory: "1G"
+    x-casaos:
+      envs:
+        - container: VIDEOLA_TOKEN
+          description:
+            en_US: "Required. Every /api call carries it as `Authorization: Bearer`, and the server will not listen on a reachable address without one."
+        - container: VIDEOLA_HOST
+          description:
+            en_US: "Address the server binds to inside the container. 0.0.0.0, because the browser reaches it from outside the container."
+        - container: VIDEOLA_PORT
+          description:
+            en_US: "Port the editor and the API answer on."
+        - container: VIDEOLA_STORAGE_ROOT
+          description:
+            en_US: "Where projects and imported media are written."
+        - container: VIDEOLA_LOCALE
+          description:
+            en_US: "en or de: the language of generated names and server messages. The editor itself follows the browser."
+        - container: TZ
+          description:
+            en_US: "Time zone."
+      ports:
+        - container: "7331"
+          description:
+            en_US: Web UI
+      volumes:
+        - container: /data
+          description:
+            en_US: "Projects and imported media. The one path worth backing up."
+
+x-casaos:
+  id: org.gilde.videola
+  architectures:
+    - amd64
+  main: videola
+  author: gilde.org
+  developer: gilde.org
+  category: Media
+  title:
+    en_US: Videola
+  tagline:
+    en_US: "Cut, grade, mix and export video in your browser"
+    de_DE: "Video schneiden, farbkorrigieren, mischen und exportieren - im Browser"
+  description:
+    en_US: |
+      A video editor that runs in a browser and keeps its project model, its command bus and
+      its file format in a Rust core compiled to WebAssembly. Import footage, cut it on a
+      timeline, keyframe anything, grade it against real scopes, mix the sound to a loudness
+      target and export an MP4 - on the machine this container runs on, with no upload
+      anywhere.
+
+      What comes with it: thirteen templates that bake into ordinary editable projects, motion
+      blur averaged over eight real instants of a shutter, spectral noise reduction learned
+      from the pauses in a recording, stereo or 5.1 surround with a position per track, scene
+      detection that splits a camera card into its takes, and an HTTP API plus an MCP server so
+      an agent can edit a project and look at what it did.
+
+      Set a token. Every /api call needs it as an Authorization: Bearer header, and the server
+      refuses to listen on anything but loopback without one - an open Videola hands out read
+      and write access to its storage.
+    de_DE: |
+      Ein Video-Editor im Browser, dessen Projektmodell, Kommando-Bus und Dateiformat in einem
+      Rust-Kern stecken, der zu WebAssembly kompiliert ist. Material importieren, auf der
+      Timeline schneiden, alles keyframen, an echten Scopes farbkorrigieren, den Ton auf ein
+      Lautheitsziel mischen und als MP4 exportieren - auf der Maschine, auf der dieser Container
+      läuft, ohne Upload irgendwohin.
+
+      Dabei: dreizehn Vorlagen, die zu ganz normalen Projekten werden, Bewegungsunschärfe aus
+      acht echten Momenten einer Verschlusszeit, spektrale Rauschunterdrückung, die aus den
+      Pausen einer Aufnahme lernt, Stereo oder 5.1 mit einer Position pro Spur, Szenenerkennung,
+      die eine Kamerakarte in ihre Takes zerlegt, dazu eine HTTP-API und ein MCP-Server für
+      Agenten.
+
+      Ein Token ist Pflicht: Jeder /api-Aufruf trägt ihn als Authorization: Bearer, und ohne
+      Token bindet der Server nur an Loopback - ein offenes Videola gibt Lese- und Schreibzugriff
+      auf seinen Speicher heraus.
+  tips:
+    before_install:
+      en_US: |
+        Replace VIDEOLA_TOKEN below with a token of your own - "change-this-token" is in the
+        package so the app starts at all, and everybody can read it here. Generate one with
+        openssl rand -hex 24. Projects and imported media live in the data directory; that is the
+        one path worth backing up.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Videola/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Videola/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Videola/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Videola/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Videola/screenshot-3.png
+  index: /
+  port_map: "7331"
+  scheme: http
+  version: "0.9.1"
+  website: https://videola.app/
+  repo: https://github.com/fgilde/videola
+  support: https://github.com/fgilde/videola/issues
+  docs: https://videola.app/
