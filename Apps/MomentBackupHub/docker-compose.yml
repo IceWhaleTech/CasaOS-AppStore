@@ -1,0 +1,115 @@
+name: momentbackup-hub
+services:
+  momentbackup-hub:
+    image: ghcr.io/momentbackup/momentbackup-hub:1.0.6
+    container_name: momentbackup-hub
+    restart: unless-stopped
+    init: true
+    user: "10001:10001"
+    network_mode: bridge
+    ports:
+      - target: 8675
+        published: "8675"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: momentbackup-hub-data
+        target: /data
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      MBHUB_TLS: self-signed
+      MBHUB_PUBLIC_URL: https://REPLACE-WITH-THIS-SERVER-IP:8675
+      MBHUB_SCAN_PATHS: ""
+      MBHUB_HEARTBEAT: "on"
+      TZ: Etc/UTC
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    x-casaos:
+      envs:
+        - container: MBHUB_PUBLIC_URL
+          description:
+            en_US: >-
+              The exact HTTPS address every computer uses to reach this Hub. Replace the
+              placeholder with this server's IP address before the first start. An IP address is
+              the safest choice, because it needs no name resolution, so it works from every
+              computer and from inside the container, which has no mDNS resolver and cannot
+              resolve a .local name at all. The container health check asks this address for the
+              Hub's readiness, so a name the container cannot resolve makes a working Hub report
+              as unhealthy. Changing this later requires enrolling every computer again.
+        - container: MBHUB_TLS
+          description:
+            en_US: The Hub creates a private certificate that each enrolled MomentBackup app pins.
+        - container: MBHUB_HEARTBEAT
+          description:
+            en_US: Allow enrolled MomentBackup apps to report their status.
+        - container: MBHUB_SCAN_PATHS
+          description:
+            en_US: Empty means heartbeat mode. Add only container paths to read-only backup mounts if you deliberately configure disk scanning.
+        - container: TZ
+          description:
+            en_US: The time zone used for dates shown to the owner.
+      ports:
+        - container: "8675"
+          description:
+            en_US: The private HTTPS dashboard and machine-reporting port.
+      volumes:
+        - container: /data
+          description:
+            en_US: The Hub identity, accounts, machine trust, notification queue, and audit history. Back this volume up.
+volumes:
+  momentbackup-hub-data:
+x-casaos:
+  id: com.momentbackup.hub
+  main: momentbackup-hub
+  index: /
+  port_map: "8675"
+  scheme: https
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/MomentBackupHub/icon.svg
+  title:
+    en_US: MomentBackup Hub
+  tagline:
+    en_US: One page showing whether each computer's backups are current.
+  description:
+    en_US: |-
+      MomentBackup Hub is a free, self-hosted overview of MomentBackup backups. One container on an always-on machine shows whether each computer is protected, when it last backed up and verified, and which computers need attention.
+
+      It is a companion to MomentBackup, the paid personal backup and recovery app for Windows, macOS, and Linux. There is no account with the vendor, no telemetry, no licence check, and no update check. The Hub stores no backup data, and it never holds a backup encryption key, passphrase, or destination credential.
+
+      It starts in heartbeat mode: each MomentBackup app posts its own signed status report to the Hub, so the Hub needs no access to the backup destinations. Set MBHUB_SCAN_PATHS to read-only mounts of the destinations to read the reports off disk instead; backup mounts stay read-only either way.
+
+      The Hub serves HTTPS on port 8675 with a certificate it creates itself, and each enrolled MomentBackup app pins that exact certificate. A browser will warn that the connection is not private the first time you open it; that is expected.
+
+      The Hub keeps its identity, accounts, machine trust, and audit history in /data. Back that volume up: losing it means enrolling every computer again.
+  tips:
+    before_install:
+      en_US: |-
+        Set MBHUB_PUBLIC_URL to this server's own HTTPS address before the first start, for example https://192.168.1.50:8675. Changing it later requires enrolling every computer again.
+
+        Open that address and create the owner account as soon as the container is up. Until that account exists, anyone who can reach the address can create it.
+  author: Watari Labs Pty Ltd
+  developer: Watari Labs Pty Ltd
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+  version: "1.0.6"
+  update_at: "2026-08-17"
+  release_notes:
+    en_US: First MomentBackup Hub entry in this store, packaging the published 1.0.6 image.
+  website: https://momentbackup.com/hub/
+  repo: https://github.com/MomentBackup/momentbackup-hub/pkgs/container/momentbackup-hub
+  support: https://momentbackup.com/support/
+  docs: https://momentbackup.com/hub/
