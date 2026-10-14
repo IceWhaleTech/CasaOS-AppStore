@@ -1,0 +1,251 @@
+name: cairn
+services:
+  cairn:
+    image: morgankryze/cairn:1.19.3
+    container_name: cairn
+    network_mode: bridge
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+        read_only: true
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 128M
+    healthcheck:
+      test: ["CMD", "/cairn", "-healthcheck"]
+      interval: 30s
+      start_period: 5s
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_US: WebUI HTTP Port
+            fr_FR: Port HTTP de l'interface web
+            de_DE: HTTP-Port der Weboberfläche
+            es_ES: Puerto HTTP de la interfaz web
+            it_IT: Porta HTTP dell'interfaccia web
+            nl_NL: HTTP-poort van de webinterface
+            pt_PT: Porta HTTP da interface web
+            sv_SE: HTTP-port för webbgränssnittet
+      volumes:
+        - container: /config
+          description:
+            en_US: YAML configuration directory, mounted read-only because cairn never writes to it
+            fr_FR: Dossier de configuration YAML, monté en lecture seule car cairn n'y écrit jamais
+            de_DE: YAML-Konfigurationsverzeichnis, schreibgeschützt eingebunden, da cairn nie hineinschreibt
+            es_ES: Directorio de configuración YAML, montado en solo lectura porque cairn nunca escribe en él
+            it_IT: Cartella di configurazione YAML, montata in sola lettura perché cairn non ci scrive mai
+            nl_NL: YAML-configuratiemap, alleen-lezen aangekoppeld omdat cairn er nooit naar schrijft
+            pt_PT: Pasta de configuração YAML, montada apenas para leitura porque o cairn nunca lá escreve
+            sv_SE: YAML-konfigurationskatalog, monterad skrivskyddad eftersom cairn aldrig skriver till den
+x-casaos:
+  id: org.icewhale.cairn
+  main: cairn
+  index: /
+  port_map: "8080"
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+  category: Productivity
+  developer: MorganKryze
+  author: MorganKryze
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/cairn/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/cairn/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/cairn/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/cairn/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/cairn/screenshot-3.png
+  title:
+    en_US: cairn
+  tagline:
+    en_US: The directory page for the people you host services for
+    fr_FR: La page d'accueil des personnes à qui vous hébergez des services
+    de_DE: Die Verzeichnisseite für die Menschen, für die Sie Dienste hosten
+    es_ES: La página de directorio para las personas a las que aloja servicios
+    it_IT: La pagina indice per le persone a cui ospiti i servizi
+    nl_NL: De overzichtspagina voor de mensen voor wie u diensten host
+    pt_PT: A página de diretório para as pessoas a quem aloja serviços
+    sv_SE: Katalogsidan för de personer du hostar tjänster åt
+  description:
+    en_US: |
+      cairn is the page you hand to your family, your club or your members. One YAML file in, a static multilingual page out, with no account to create, no database and no outbound requests. It shows your services and nothing else: no widgets, no Docker socket, no metrics.
+      Every service can show a live status pill pulled from Gatus or Uptime Kuma, so visitors see what is up before they click. cairn also serves its own legal and privacy pages, which associations and small hosts need.
+      It ships as a single static Go binary in a FROM scratch image, 4.4 MB to pull on amd64 and 4.0 MB on arm64. It writes nothing at runtime, so it runs read-only with every Linux capability dropped.
+
+      **Main Features:**
+      - A guest-first directory page, no login and no account for your visitors
+      - Configured by one YAML file, reloaded within seconds without a restart
+      - Multilingual output, one page per language you declare
+      - Live status pills from Gatus, Uptime Kuma or a JSON endpoint
+      - Built-in legal and privacy pages
+      - Single static binary, no database, no telemetry, no outbound requests
+
+      **Learn More:**
+      - [Live demo](https://cairn.libresoftware.cloud)
+      - [cairn on GitHub](https://github.com/MorganKryze/cairn)
+      - [Documentation](https://github.com/MorganKryze/cairn/tree/main/docs)
+    fr_FR: |
+      cairn est la page que vous donnez à votre famille, votre association ou vos membres. Un fichier YAML en entrée, une page statique multilingue en sortie, sans compte à créer, sans base de données et sans aucune requête sortante. Il montre vos services et rien d'autre : pas de widgets, pas de socket Docker, pas de métriques.
+      Chaque service peut afficher une pastille d'état alimentée par Gatus ou Uptime Kuma, pour que le visiteur voie ce qui fonctionne avant de cliquer. cairn sert aussi ses propres pages légales et de confidentialité, dont les associations et les petits hébergeurs ont besoin.
+      Il tient dans un binaire Go statique unique, dans une image FROM scratch, 4,4 Mo à télécharger en amd64 et 4,0 Mo en arm64. Il n'écrit rien à l'exécution, donc il tourne en lecture seule avec toutes les capacités Linux retirées.
+
+      **Fonctions principales :**
+      - Une page d'annuaire pensée pour l'invité, sans connexion ni compte
+      - Configuré par un seul fichier YAML, rechargé en quelques secondes sans redémarrage
+      - Sortie multilingue, une page par langue déclarée
+      - Pastilles d'état en direct depuis Gatus, Uptime Kuma ou un point JSON
+      - Pages légales et de confidentialité intégrées
+      - Binaire statique unique, sans base de données, sans télémétrie, sans requête sortante
+
+      **En savoir plus :**
+      - [Démo en ligne](https://cairn.libresoftware.cloud)
+      - [cairn sur GitHub](https://github.com/MorganKryze/cairn)
+      - [Documentation](https://github.com/MorganKryze/cairn/tree/main/docs)
+    de_DE: |
+      cairn ist die Seite, die Sie Ihrer Familie, Ihrem Verein oder Ihren Mitgliedern geben. Eine YAML-Datei hinein, eine statische mehrsprachige Seite heraus, ohne Konto, ohne Datenbank und ohne ausgehende Anfragen. Es zeigt Ihre Dienste und sonst nichts: keine Widgets, kein Docker-Socket, keine Metriken.
+      Jeder Dienst kann eine Live-Statusanzeige aus Gatus oder Uptime Kuma zeigen, damit Besucher vor dem Klick sehen, was läuft. cairn liefert auch eigene Impressums- und Datenschutzseiten, die Vereine und kleine Hoster brauchen.
+      Es kommt als einzelne statische Go-Binärdatei in einem FROM-scratch-Image, 4,4 MB auf amd64 und 4,0 MB auf arm64. Zur Laufzeit schreibt es nichts, läuft also schreibgeschützt und ohne jede Linux-Capability.
+
+      **Hauptfunktionen:**
+      - Eine gastorientierte Verzeichnisseite, ohne Login und ohne Konto für Ihre Besucher
+      - Konfiguriert über eine einzige YAML-Datei, in Sekunden neu geladen, ohne Neustart
+      - Mehrsprachige Ausgabe, eine Seite je deklarierter Sprache
+      - Live-Statusanzeigen aus Gatus, Uptime Kuma oder einem JSON-Endpunkt
+      - Eingebaute Impressums- und Datenschutzseiten
+      - Einzelne statische Binärdatei, keine Datenbank, keine Telemetrie, keine ausgehenden Anfragen
+
+      **Mehr erfahren:**
+      - [Live-Demo](https://cairn.libresoftware.cloud)
+      - [cairn auf GitHub](https://github.com/MorganKryze/cairn)
+      - [Dokumentation](https://github.com/MorganKryze/cairn/tree/main/docs)
+    es_ES: |
+      cairn es la página que entrega a su familia, su club o sus miembros. Un archivo YAML de entrada, una página estática y multilingüe de salida, sin cuenta que crear, sin base de datos y sin ninguna petición saliente. Muestra sus servicios y nada más: sin widgets, sin socket de Docker, sin métricas.
+      Cada servicio puede mostrar un indicador de estado en vivo tomado de Gatus o Uptime Kuma, para que quien visita vea qué funciona antes de hacer clic. cairn también sirve sus propias páginas legales y de privacidad, que las asociaciones y los pequeños alojadores necesitan.
+      Se distribuye como un único binario estático de Go en una imagen FROM scratch, 4,4 MB de descarga en amd64 y 4,0 MB en arm64. No escribe nada en ejecución, así que funciona en solo lectura y sin ninguna capacidad de Linux.
+
+      **Funciones principales:**
+      - Una página de directorio pensada para el invitado, sin inicio de sesión ni cuenta
+      - Configurado con un solo archivo YAML, recargado en segundos y sin reiniciar
+      - Salida multilingüe, una página por cada idioma declarado
+      - Indicadores de estado en vivo desde Gatus, Uptime Kuma o un punto JSON
+      - Páginas legales y de privacidad integradas
+      - Binario estático único, sin base de datos, sin telemetría, sin peticiones salientes
+
+      **Saber más:**
+      - [Demostración en línea](https://cairn.libresoftware.cloud)
+      - [cairn en GitHub](https://github.com/MorganKryze/cairn)
+      - [Documentación](https://github.com/MorganKryze/cairn/tree/main/docs)
+    it_IT: |
+      cairn è la pagina che dai alla tua famiglia, alla tua associazione o ai tuoi membri. Un file YAML in ingresso, una pagina statica e multilingue in uscita, senza account da creare, senza database e senza alcuna richiesta in uscita. Mostra i tuoi servizi e nient'altro: niente widget, niente socket Docker, niente metriche.
+      Ogni servizio può mostrare un indicatore di stato dal vivo preso da Gatus o Uptime Kuma, così chi visita vede cosa funziona prima di cliccare. cairn serve anche le proprie pagine legali e sulla privacy, di cui le associazioni e i piccoli host hanno bisogno.
+      Arriva come un unico binario Go statico in un'immagine FROM scratch, 4,4 MB da scaricare su amd64 e 4,0 MB su arm64. Non scrive nulla durante l'esecuzione, quindi gira in sola lettura e senza alcuna capability Linux.
+
+      **Funzioni principali:**
+      - Una pagina indice pensata per chi è ospite, senza login e senza account
+      - Configurato da un solo file YAML, ricaricato in pochi secondi e senza riavvio
+      - Uscita multilingue, una pagina per ogni lingua dichiarata
+      - Indicatori di stato dal vivo da Gatus, Uptime Kuma o un endpoint JSON
+      - Pagine legali e sulla privacy integrate
+      - Binario statico unico, senza database, senza telemetria, senza richieste in uscita
+
+      **Scopri di più:**
+      - [Demo dal vivo](https://cairn.libresoftware.cloud)
+      - [cairn su GitHub](https://github.com/MorganKryze/cairn)
+      - [Documentazione](https://github.com/MorganKryze/cairn/tree/main/docs)
+    nl_NL: |
+      cairn is de pagina die u aan uw familie, uw vereniging of uw leden geeft. Eén YAML-bestand erin, een statische meertalige pagina eruit, zonder account, zonder database en zonder uitgaande verzoeken. Het toont uw diensten en verder niets: geen widgets, geen Docker-socket, geen metrieken.
+      Elke dienst kan een live statusindicator tonen uit Gatus of Uptime Kuma, zodat bezoekers zien wat werkt voordat ze klikken. cairn levert ook zijn eigen juridische en privacypagina's, die verenigingen en kleine hosters nodig hebben.
+      Het komt als één statisch Go-binair bestand in een FROM scratch-image, 4,4 MB om te downloaden op amd64 en 4,0 MB op arm64. Het schrijft niets tijdens het draaien, dus het draait alleen-lezen en zonder enige Linux-capability.
+
+      **Belangrijkste functies:**
+      - Een overzichtspagina voor de gast, zonder inloggen en zonder account
+      - Ingesteld met één YAML-bestand, binnen seconden herladen zonder herstart
+      - Meertalige uitvoer, één pagina per opgegeven taal
+      - Live statusindicatoren uit Gatus, Uptime Kuma of een JSON-endpoint
+      - Ingebouwde juridische en privacypagina's
+      - Eén statisch binair bestand, geen database, geen telemetrie, geen uitgaande verzoeken
+
+      **Meer informatie:**
+      - [Live demo](https://cairn.libresoftware.cloud)
+      - [cairn op GitHub](https://github.com/MorganKryze/cairn)
+      - [Documentatie](https://github.com/MorganKryze/cairn/tree/main/docs)
+    pt_PT: |
+      O cairn é a página que entrega à sua família, à sua associação ou aos seus membros. Um ficheiro YAML à entrada, uma página estática e multilingue à saída, sem conta para criar, sem base de dados e sem qualquer pedido para o exterior. Mostra os seus serviços e mais nada: sem widgets, sem socket do Docker, sem métricas.
+      Cada serviço pode mostrar um indicador de estado ao vivo vindo do Gatus ou do Uptime Kuma, para que quem visita veja o que está a funcionar antes de clicar. O cairn serve também as suas próprias páginas legais e de privacidade, de que as associações e os pequenos alojadores precisam.
+      Vem como um único binário Go estático numa imagem FROM scratch, 4,4 MB para descarregar em amd64 e 4,0 MB em arm64. Não escreve nada durante a execução, por isso corre apenas em leitura e sem qualquer capacidade do Linux.
+
+      **Funcionalidades principais:**
+      - Uma página de diretório pensada para quem visita, sem sessão iniciada nem conta
+      - Configurado por um único ficheiro YAML, recarregado em segundos e sem reiniciar
+      - Saída multilingue, uma página por cada idioma declarado
+      - Indicadores de estado ao vivo do Gatus, do Uptime Kuma ou de um ponto JSON
+      - Páginas legais e de privacidade integradas
+      - Binário estático único, sem base de dados, sem telemetria, sem pedidos para o exterior
+
+      **Saber mais:**
+      - [Demonstração em linha](https://cairn.libresoftware.cloud)
+      - [cairn no GitHub](https://github.com/MorganKryze/cairn)
+      - [Documentação](https://github.com/MorganKryze/cairn/tree/main/docs)
+    sv_SE: |
+      cairn är sidan du ger till din familj, din förening eller dina medlemmar. En YAML-fil in, en statisk flerspråkig sida ut, utan konto att skapa, utan databas och utan utgående anrop. Den visar dina tjänster och inget annat: inga widgetar, ingen Docker-socket, inga mätvärden.
+      Varje tjänst kan visa en levande statusmarkering hämtad från Gatus eller Uptime Kuma, så att besökare ser vad som fungerar innan de klickar. cairn levererar också egna juridiska sidor och integritetssidor, som föreningar och små värdar behöver.
+      Det levereras som en enda statisk Go-binär i en FROM scratch-avbild, 4,4 MB att hämta på amd64 och 4,0 MB på arm64. Det skriver ingenting under drift, så det körs skrivskyddat och utan en enda Linux-capability.
+
+      **Huvudfunktioner:**
+      - En katalogsida gjord för gästen, utan inloggning och utan konto
+      - Konfigurerad med en enda YAML-fil, omladdad på sekunder utan omstart
+      - Flerspråkig utdata, en sida per angivet språk
+      - Levande statusmarkeringar från Gatus, Uptime Kuma eller en JSON-endpoint
+      - Inbyggda juridiska sidor och integritetssidor
+      - En enda statisk binär, ingen databas, ingen telemetri, inga utgående anrop
+
+      **Läs mer:**
+      - [Live-demo](https://cairn.libresoftware.cloud)
+      - [cairn på GitHub](https://github.com/MorganKryze/cairn)
+      - [Dokumentation](https://github.com/MorganKryze/cairn/tree/main/docs)
+  tips:
+    before_install:
+      en_US: |
+        cairn starts with no configuration at all and serves a getting-started page explaining what to do, so the first run works. Drop a services.yaml into the mounted /config directory and cairn reloads it within seconds, no restart needed.
+        cairn needs no secret to run and reads no environment variable. The only credential it can ever want is optional, for status pills: if you point it at a monitoring API that requires authentication, set status.token_file to a path and cairn reads the token from that file. Gatus and Uptime Kuma need no token in the common case.
+      fr_FR: |
+        cairn démarre sans aucune configuration et sert une page de prise en main qui explique quoi faire, donc le premier démarrage fonctionne. Déposez un services.yaml dans le dossier /config monté et cairn le recharge en quelques secondes, sans redémarrage.
+        cairn n'a besoin d'aucun secret pour tourner et ne lit aucune variable d'environnement. Le seul identifiant qu'il peut demander est optionnel, pour les pastilles d'état : si vous le branchez sur une API de supervision qui exige une authentification, renseignez status.token_file avec un chemin et cairn lit le jeton dans ce fichier. Gatus et Uptime Kuma n'en demandent aucun dans le cas courant.
+      de_DE: |
+        cairn startet ganz ohne Konfiguration und liefert eine Einstiegsseite, die erklärt, was zu tun ist. Der erste Start funktioniert also. Legen Sie eine services.yaml in das eingebundene Verzeichnis /config, und cairn lädt sie binnen Sekunden neu, ohne Neustart.
+        cairn braucht kein Geheimnis zum Laufen und liest keine Umgebungsvariable. Die einzige Anmeldeinformation, die es je verlangen kann, ist optional und gilt den Statusanzeigen: Wenn Sie es auf eine Monitoring-API richten, die Authentifizierung verlangt, setzen Sie status.token_file auf einen Pfad, und cairn liest das Token aus dieser Datei. Gatus und Uptime Kuma brauchen im Normalfall kein Token.
+      es_ES: |
+        cairn arranca sin ninguna configuración y sirve una página de bienvenida que explica qué hacer, así que el primer arranque funciona. Deje un services.yaml en el directorio /config montado y cairn lo recarga en segundos, sin reiniciar.
+        cairn no necesita ningún secreto para funcionar y no lee ninguna variable de entorno. La única credencial que puede llegar a pedir es opcional, para los indicadores de estado: si lo apunta a una API de supervisión que exige autenticación, indique una ruta en status.token_file y cairn leerá el token de ese archivo. Gatus y Uptime Kuma no piden ninguno en el caso habitual.
+      it_IT: |
+        cairn parte senza alcuna configurazione e serve una pagina introduttiva che spiega cosa fare, quindi il primo avvio funziona. Metti un services.yaml nella cartella /config montata e cairn la ricarica in pochi secondi, senza riavvio.
+        cairn non ha bisogno di alcun segreto per funzionare e non legge alcuna variabile d'ambiente. L'unica credenziale che può servirgli è opzionale, per gli indicatori di stato: se lo colleghi a un'API di monitoraggio che richiede autenticazione, indica un percorso in status.token_file e cairn legge il token da quel file. Gatus e Uptime Kuma non ne chiedono nessuno nel caso comune.
+      nl_NL: |
+        cairn start zonder enige configuratie en toont een startpagina die uitlegt wat u moet doen, dus de eerste start werkt. Zet een services.yaml in de aangekoppelde map /config en cairn herlaadt die binnen seconden, zonder herstart.
+        cairn heeft geen enkel geheim nodig om te draaien en leest geen enkele omgevingsvariabele. De enige inloggegevens die het ooit kan vragen zijn optioneel, voor de statusindicatoren: wijst u het aan een monitoring-API die authenticatie vereist, zet dan een pad in status.token_file en cairn leest het token uit dat bestand. Gatus en Uptime Kuma vragen er in het gewone geval geen.
+      pt_PT: |
+        O cairn arranca sem qualquer configuração e serve uma página de introdução que explica o que fazer, por isso o primeiro arranque funciona. Coloque um services.yaml na pasta /config montada e o cairn recarrega-a em segundos, sem reiniciar.
+        O cairn não precisa de qualquer segredo para funcionar e não lê qualquer variável de ambiente. A única credencial que pode vir a pedir é opcional, para os indicadores de estado: se o ligar a uma API de monitorização que exige autenticação, indique um caminho em status.token_file e o cairn lê o token desse ficheiro. O Gatus e o Uptime Kuma não pedem nenhum no caso comum.
+      sv_SE: |
+        cairn startar helt utan konfiguration och visar en kom-igång-sida som förklarar vad du ska göra, så den första starten fungerar. Lägg en services.yaml i den monterade katalogen /config, så laddar cairn om den på några sekunder utan omstart.
+        cairn behöver ingen hemlighet för att köra och läser ingen miljövariabel. Den enda uppgift den någonsin kan behöva är valfri och gäller statusmarkeringarna: pekar du den mot ett övervaknings-API som kräver autentisering anger du en sökväg i status.token_file, och cairn läser token ur den filen. Gatus och Uptime Kuma kräver ingen i normalfallet.
+  version: "1.19.3"
+  update_at: "2026-08-19"
+  website: "https://cairn.libresoftware.cloud"
+  repo: "https://github.com/MorganKryze/cairn"
+  support: "https://github.com/MorganKryze/cairn/issues"
+  docs: "https://github.com/MorganKryze/cairn/tree/main/docs"
