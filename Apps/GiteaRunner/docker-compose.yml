@@ -1,0 +1,110 @@
+name: gitea-runner
+configs:
+  runner-config:
+    content: |
+      container:
+        docker_host: "-"
+services:
+  gitea-runner:
+    image: docker.io/gitea/runner:3.3.2
+    container_name: gitea-runner
+    restart: unless-stopped
+    network_mode: bridge
+    privileged: false
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      CONFIG_FILE: /config.yaml
+      GITEA_INSTANCE_URL: ""
+      GITEA_RUNNER_REGISTRATION_TOKEN: ""
+      GITEA_RUNNER_NAME: gitea-runner
+      GITEA_RUNNER_LABELS: ubuntu-latest:docker://docker.gitea.com/runner-images:ubuntu-latest
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    configs:
+      - source: runner-config
+        target: /config.yaml
+        mode: 0444
+    x-casaos:
+      envs:
+        - container: GITEA_INSTANCE_URL
+          description:
+            en_US: Gitea instance ROOT_URL, not localhost.
+        - container: GITEA_RUNNER_REGISTRATION_TOKEN
+          description:
+            en_US: Runner registration token from the Gitea Actions runners page.
+        - container: GITEA_RUNNER_NAME
+          description:
+            en_US: Optional runner name shown in Gitea.
+        - container: GITEA_RUNNER_LABELS
+          description:
+            en_US: Comma-separated runner labels and job images.
+      volumes:
+        - container: /data
+          description:
+            en_US: Runner registration state.
+x-casaos:
+  id: org.icewhale.gitea-runner
+  architectures:
+    - amd64
+    - arm64
+  main: gitea-runner
+  category: Developer
+  author: ZimaOS Team
+  developer: Gitea
+  tagline:
+    en_US: Run Gitea Actions jobs on your CasaOS server.
+  description:
+    en_US: |
+      Run Gitea Actions jobs on your CasaOS server. Set the Gitea instance ROOT_URL and a runner registration token in the app settings, then restart the app. It has no web interface.
+
+      Jobs run in containers. The runner uses the host Docker daemon but does not expose its socket to jobs, so workflows cannot control the host daemon.
+    zh_CN: |
+      在 CasaOS 服务器上运行 Gitea Actions 任务。在应用设置中填写 Gitea 实例的 ROOT_URL 和运行器注册令牌，然后重启应用。此应用没有 Web 界面。
+
+      任务在容器中运行。运行器使用主机 Docker 守护进程，但不会将其套接字暴露给任务，因此工作流无法控制主机守护进程。
+    de_DE: |
+      Führen Sie Gitea-Actions-Jobs auf Ihrem CasaOS-Server aus. Tragen Sie die ROOT_URL Ihrer Gitea-Instanz und ein Runner-Registrierungstoken in den App-Einstellungen ein und starten Sie die App neu. Sie hat keine Weboberfläche.
+
+      Jobs laufen in Containern. Der Runner verwendet den Docker-Daemon des Hosts, stellt dessen Socket den Jobs aber nicht bereit, sodass Workflows den Host-Daemon nicht steuern können.
+    es_ES: |
+      Ejecute trabajos de Gitea Actions en su servidor CasaOS. Configure la ROOT_URL de la instancia de Gitea y un token de registro del runner en los ajustes de la aplicación y reiníciela. No tiene interfaz web.
+
+      Los trabajos se ejecutan en contenedores. El runner usa el demonio Docker del host, pero no expone su socket a los trabajos, por lo que los flujos de trabajo no pueden controlar el demonio del host.
+    fr_FR: |
+      Exécutez des tâches Gitea Actions sur votre serveur CasaOS. Définissez la ROOT_URL de l'instance Gitea et un jeton d'enregistrement du runner dans les paramètres de l'application, puis redémarrez-la. Elle ne possède pas d'interface web.
+
+      Les tâches s'exécutent dans des conteneurs. Le runner utilise le démon Docker de l'hôte, mais n'expose pas son socket aux tâches ; les workflows ne peuvent donc pas contrôler le démon de l'hôte.
+    it_IT: |
+      Esegui job Gitea Actions sul tuo server CasaOS. Imposta la ROOT_URL dell'istanza Gitea e un token di registrazione del runner nelle impostazioni dell'app, quindi riavviala. Non dispone di un'interfaccia web.
+
+      I job vengono eseguiti in container. Il runner usa il demone Docker dell'host, ma non espone il relativo socket ai job, quindi i workflow non possono controllare il demone dell'host.
+    ja_JP: |
+      CasaOS サーバーで Gitea Actions ジョブを実行します。アプリの設定で Gitea インスタンスの ROOT_URL とランナー登録トークンを設定し、アプリを再起動してください。Web インターフェースはありません。
+
+      ジョブはコンテナー内で実行されます。ランナーはホストの Docker デーモンを使用しますが、そのソケットをジョブには公開しないため、ワークフローからホストのデーモンを制御できません。
+    ko_KR: |
+      CasaOS 서버에서 Gitea Actions 작업을 실행합니다. 앱 설정에서 Gitea 인스턴스 ROOT_URL과 러너 등록 토큰을 설정한 후 앱을 다시 시작하세요. 웹 인터페이스는 제공되지 않습니다.
+
+      작업은 컨테이너에서 실행됩니다. 러너는 호스트 Docker 데몬을 사용하지만 작업에 소켓을 노출하지 않으므로 워크플로에서 호스트 데몬을 제어할 수 없습니다.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GiteaRunner/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GiteaRunner/screenshot-1.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GiteaRunner/thumbnail.png
+  index: /
+  port_map: ""
+  title:
+    en_US: Gitea Runner
+  version: "3.3.2"
+  update_at: "2026-09-04"
+  website: https://about.gitea.com/
+  repo: https://gitea.com/gitea/runner
+  support: https://gitea.com/gitea/runner/issues
+  docs: https://docs.gitea.com/runner/
