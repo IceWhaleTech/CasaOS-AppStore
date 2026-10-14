@@ -1,0 +1,106 @@
+name: homarr
+services:
+  homarr:
+    image: ghcr.io/homarr-labs/homarr:v1.76.2
+    restart: unless-stopped
+    entrypoint:
+    - /bin/sh
+    - -ec
+    - |
+      set -eu
+      umask 077
+
+      # Use literal paths: some app installers interpolate Compose more than once.
+      if [ -L /appdata/.secrets ] || [ -L /appdata/.secrets/encryption-key ]; then
+          echo 'Refusing a symbolic link at the encryption key path.' >&2
+          exit 1
+      fi
+
+      if [ ! -e /appdata/.secrets/encryption-key ]; then
+          if [ -e /appdata/db/db.sqlite ]; then
+              echo 'Existing database has no packaged encryption key. Restore its original key before starting.' >&2
+              exit 1
+          fi
+          mkdir -p /appdata/.secrets
+          chmod 700 /appdata/.secrets
+          (
+              # Exclusive creation protects another startup's temporary file.
+              # A stale temporary file deliberately requires inspection.
+              set -C
+              exec 3> /appdata/.secrets/.encryption-key.tmp
+              trap 'rm -f /appdata/.secrets/.encryption-key.tmp' EXIT
+              trap 'exit 1' HUP INT TERM
+              openssl rand -hex 32 >&3
+              exec 3>&-
+              # Publish without replacing a key created by another startup.
+              ln /appdata/.secrets/.encryption-key.tmp /appdata/.secrets/encryption-key ||
+                  test -f /appdata/.secrets/encryption-key
+          )
+      fi
+
+      if [ ! -f /appdata/.secrets/encryption-key ] || [ -L /appdata/.secrets/encryption-key ]; then
+          echo 'Encryption key must be a regular file.' >&2
+          exit 1
+      fi
+      if ! tr -d '\r\n' < /appdata/.secrets/encryption-key | grep -Eq '^[0-9a-fA-F]{64}$$'; then
+          echo 'Encryption key must contain exactly 64 hexadecimal characters.' >&2
+          exit 1
+      fi
+      chmod 700 /appdata/.secrets
+      chmod 600 /appdata/.secrets/encryption-key
+      export SECRET_ENCRYPTION_KEY_FILE=/appdata/.secrets/encryption-key
+      exec /app/entrypoint.sh sh /app/run.sh
+    ports:
+    - target: 7575
+      published: '7575'
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: /DATA/AppData/$AppID/appdata
+      target: /appdata
+x-casaos:
+  id: org.icewhale.homarr
+  main: homarr
+  index: /
+  port_map: '7575'
+  scheme: http
+  icon: icon.svg
+  title:
+    en_US: Homarr
+    es_ES: Homarr
+  tagline:
+    en_US: A customizable dashboard for your self-hosted applications.
+    es_ES: Un tablero personalizable para tus aplicaciones autoalojadas.
+  description:
+    en_US: |
+      Organize your self-hosted applications in a customizable dashboard with widgets and integrations.
+      This package uses the official Homarr image and stores application data and its per-installation encryption key together in /appdata.
+      Docker management is an optional upstream integration and is not enabled in this package.
+    es_ES: |
+      Organiza tus aplicaciones autoalojadas en un tablero personalizable con widgets e integraciones.
+      Este paquete utiliza la imagen oficial de Homarr y conserva los datos y su clave de cifrado individual dentro de /appdata.
+      La administración de Docker es una integración opcional de Homarr y no viene activada en este paquete.
+  tips:
+    before_install:
+      en_US: |
+        For a new Homarr installation. Use an empty application data directory and an available web port. Complete the initial account setup after installation.
+        Back up the entire appdata directory, including the hidden .secrets directory. Keep the same data directory and encryption key when recreating or updating the container.
+        This package does not migrate legacy Homarr 0.x data or existing installations configured with an external encryption key.
+      es_ES: |
+        Para una instalación nueva de Homarr. Usa una carpeta de datos vacía y un puerto web disponible. Completa la creación de cuenta después de instalar.
+        Respalda toda la carpeta appdata, incluido el directorio oculto .secrets. Conserva la misma carpeta y clave al recrear o actualizar el contenedor.
+        Este paquete no migra datos de Homarr 0.x ni instalaciones existentes configuradas con una clave externa.
+  author: hucu3
+  developer: Homarr Labs
+  category: Productivity
+  architectures:
+  - amd64
+  version: 1.76.2
+  update_at: '2026-09-05'
+  release_notes:
+    en_US: Initial packaging candidate for fresh installations.
+    es_ES: Candidato inicial para instalaciones nuevas.
+  website: https://homarr.dev
+  repo: https://github.com/homarr-labs/homarr
+  support: https://github.com/homarr-labs/homarr/issues
+  docs: https://homarr.dev/docs/getting-started/installation/docker/
