@@ -1,0 +1,92 @@
+name: prunerr
+
+services:
+  prunerr:
+    image: helliott20/prunerr:1.5.8
+    container_name: prunerr
+    restart: unless-stopped
+    network_mode: bridge
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      LOG_LEVEL: info
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_us: Run Prunerr as the specified user ID (file permissions).
+        - container: PGID
+          description:
+            en_us: Run Prunerr as the specified group ID (file permissions).
+        - container: TZ
+          description:
+            en_us: Timezone, e.g. Europe/London. Used for schedules and logs.
+        - container: LOG_LEVEL
+          description:
+            en_us: Log verbosity (error, warn, info, debug).
+      ports:
+        - container: "3000"
+          description:
+            en_us: Web UI port.
+      volumes:
+        - container: /app/data
+          description:
+            en_us: Stores the SQLite database and all configuration.
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: prunerr
+  author: helliott20
+  developer: helliott20
+  category: Media
+  title:
+    en_us: Prunerr
+  tagline:
+    en_us: Reclaim disk space across your Plex / Sonarr / Radarr library.
+  description:
+    en_us: >-
+      Prunerr is a media library cleanup tool for Plex, Sonarr, and Radarr. It
+      helps you reclaim disk space by identifying and removing unwanted content
+      based on customisable rules — watch status, age, file size, resolution and
+      more. Features a smart rules engine, a review-and-approve deletion queue,
+      grace periods, disk-pressure reactive cleanup that keeps free space above a
+      target you set, outbound webhooks (with Home Assistant integration),
+      Discord notifications, and storage trends. All service connections are
+      configured through the web UI — no config files needed.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Prunerr/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Prunerr/screenshot-1.png
+  thumbnail: ""
+  tips:
+    custom: |
+      After install, open the Web UI and connect your Plex, Sonarr, Radarr (and
+      optionally Tautulli) under Settings. No environment variables are required —
+      everything is configured in the app.
+  index: /
+  port_map: "3000"
+  scheme: http
+  version: "1.5.8"
+  updateAt: "2026-05-31"
+  website: https://github.com/helliott20/prunerr
+  repo: https://github.com/helliott20/prunerr
+  support: https://forums.unraid.net/topic/196929-support-prunerr-media-library-cleanup-tool/
