@@ -1,0 +1,166 @@
+name: roonserver
+services:
+  roonserver:
+    image: ghcr.io/roonlabs/roonserver:1.0.8
+    container_name: roonserver
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      ROON_INSTALL_BRANCH: production
+      TZ: $TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/Roon
+        target: /Roon
+      - type: bind
+        source: /DATA/Media/Music
+        target: /Music
+      - type: bind
+        source: /DATA/AppData/$AppID/RoonBackups
+        target: /RoonBackups
+      - type: bind
+        source: /run/udev
+        target: /run/udev
+        read_only: true
+    cap_add:
+      - SYS_ADMIN
+      - DAC_READ_SEARCH
+    security_opt:
+      - apparmor:unconfined
+      - label:disable
+    devices:
+      - /dev/snd:/dev/snd
+      - /dev/bus/usb:/dev/bus/usb
+      - /dev/dri:/dev/dri
+    group_add:
+      - audio
+    logging:
+      driver: local
+x-casaos:
+  id: org.icewhale.roonserver
+  architectures:
+    - amd64
+  main: roonserver
+  category: Media
+  developer: Roon Labs
+  author: ZimaOS Team
+  tagline:
+    en_US: Music software that transforms your listening experience
+    en_GB: Music software that transforms your listening experience
+    de_DE: Musiksoftware, die Ihr Hörerlebnis verändert
+    es_ES: Software musical que transforma tu experiencia auditiva
+    fr_FR: Un logiciel musical qui transforme votre expérience d'écoute
+    ja_JP: 音楽体験を変える音楽ソフトウェア
+    ko_KR: 음악 감상 경험을 바꾸는 음악 소프트웨어
+    zh_CN: 改变音乐聆听体验的音乐软件
+    zh_TW: 改變音樂聆聽體驗的音樂軟體
+  description:
+    en_US: |
+      Roon music software transforms your listening experience with rich metadata, discovery features, and audiophile sound. It works with streaming services and local files.
+
+      Roon brings all your music together and adds bios, reviews, photos, lyrics, tour dates, and cross-linked credits for performers, songwriters, producers, engineers, and composers. Everything about music - browsing, discovery, collecting, and listening - is more engaging with Roon.
+
+      RoonServer is the central server component. It runs on a Linux amd64/x86_64 host, stores the Roon database and settings, and serves your library to Roon Remote clients and audio endpoints on your local network. It is controlled from the Roon app and does not provide a browser-based WebUI.
+
+    zh_CN: |
+      Roon 音乐软件通过丰富的元数据、发现功能和发烧级音质改变您的聆听体验，同时支持流媒体服务和本地文件。
+
+      Roon 将您的所有音乐集中在一起，并补充艺术家简介、评论、照片、歌词、巡演日期，以及演奏者、词曲作者、制作人、工程师和作曲家的交叉关联信息。音乐浏览、发现、收藏和聆听都因此更加精彩。
+
+      RoonServer 是中央服务器组件，运行于 Linux amd64/x86_64 主机，保存 Roon 数据库和设置，并向局域网中的 Roon Remote 客户端和音频终端提供音乐库。它由 Roon 应用管理，不提供基于浏览器的 WebUI。
+
+    en_GB: |
+      Roon music software transforms your listening experience with rich metadata, discovery features, and audiophile sound. It works with streaming services and local files. RoonServer is the central server component for your library and is controlled from the Roon app; it does not provide a browser WebUI.
+    de_DE: |
+      Roon ist Musiksoftware mit umfangreichen Metadaten, Entdeckungsfunktionen und audiophiler Klangqualität. Sie funktioniert mit Streaming-Diensten und lokalen Dateien. RoonServer ist die zentrale Serverkomponente für Ihre Bibliothek und wird über die Roon-App gesteuert; eine browserbasierte WebUI gibt es nicht.
+    es_ES: |
+      Roon es un software musical con metadatos enriquecidos, funciones de descubrimiento y sonido para audiófilos. Funciona con servicios de streaming y archivos locales. RoonServer es el componente central de tu biblioteca y se controla desde la aplicación Roon; no ofrece WebUI.
+    fr_FR: |
+      Roon est un logiciel musical avec des métadonnées riches, des fonctions de découverte et un son audiophile. Il fonctionne avec les services de streaming et les fichiers locaux. RoonServer est le composant central de votre bibliothèque et se contrôle depuis l'application Roon ; il ne fournit pas de WebUI.
+    ja_JP: |
+      Roonは豊富なメタデータ、音楽発見機能、オーディオファイル向けの音質を備え、ストリーミングサービスとローカルファイルに対応します。RoonServerはライブラリの中央サーバーで、Roonアプリから操作し、ブラウザ用WebUIはありません。
+    ko_KR: |
+      Roon은 풍부한 메타데이터, 음악 발견 기능, 오디오파일 수준의 음질을 제공하며 스트리밍 서비스와 로컬 파일을 지원합니다. RoonServer는 라이브러리의 중앙 서버로 Roon 앱에서 제어하며 브라우저 WebUI는 제공하지 않습니다.
+    zh_TW: |
+      Roon 是一套具備豐富中繼資料、探索功能與發燒級音質的音樂軟體，支援串流服務與本機檔案。RoonServer 是音樂庫的中央伺服器，由 Roon 應用程式控制，不提供瀏覽器 WebUI。
+
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RoonServer/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RoonServer/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RoonServer/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RoonServer/screenshot-3.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RoonServer/screenshot-4.jpg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/RoonServer/thumbnail.jpg
+  tips:
+    before_install:
+      en_US: |
+        RoonServer has no WebUI. After installation, use the Roon app on a device on the same LAN to discover and configure this server.
+      en_GB: |
+        RoonServer has no WebUI. After installation, use the Roon app on a device on the same LAN to discover and configure this server.
+      de_DE: |
+        RoonServer verfügt über keine WebUI. Verwenden Sie nach der Installation die Roon-App im selben LAN, um den Server zu finden und zu konfigurieren.
+      es_ES: |
+        RoonServer no tiene WebUI. Después de la instalación, usa la aplicación Roon en un dispositivo de la misma LAN para descubrir y configurar este servidor.
+      fr_FR: |
+        RoonServer ne possède pas de WebUI. Après l'installation, utilisez l'application Roon sur un appareil du même réseau local pour découvrir et configurer ce serveur.
+      ja_JP: |
+        RoonServerにはWebUIがありません。インストール後、同じLAN上の端末でRoonアプリを使用してサーバーを検出・設定してください。
+      ko_KR: |
+        RoonServer에는 WebUI가 없습니다. 설치 후 같은 LAN의 기기에서 Roon 앱으로 서버를 검색하고 설정하세요.
+      zh_CN: |
+        RoonServer 没有 WebUI。安装后，请在同一局域网内的手机、平板、电脑或其他 Roon Remote 设备上使用 Roon 应用发现并配置此服务器。
+      zh_TW: |
+        RoonServer 沒有 WebUI。安裝後，請在同一區域網路的裝置上使用 Roon 應用程式尋找並設定此伺服器。
+  index: /
+  port_map: ""
+  title:
+    en_US: Roon Server
+    en_GB: Roon Server
+    de_DE: Roon Server
+    es_ES: Roon Server
+    fr_FR: Roon Server
+    ja_JP: Roon Server
+    ko_KR: Roon Server
+    zh_CN: Roon Server
+    zh_TW: Roon Server
+  version: "1.0.8"
+  update_at: "2026-08-26"
+  release_notes:
+    en_US: |-
+      - Uses the latest RoonServer Production release.
+      - RoonServer is downloaded on first start and stored in `/Roon`.
+      - RoonServer updates automatically within the Production release channel.
+    en_GB: |-
+      - Uses the latest RoonServer Production release.
+      - RoonServer is downloaded on first start and stored in `/Roon`.
+      - RoonServer updates automatically within the Production release channel.
+    de_DE: |-
+      - Verwendet die neueste RoonServer-Version des Production-Kanals.
+      - RoonServer wird beim ersten Start heruntergeladen und in `/Roon` gespeichert.
+      - RoonServer wird innerhalb des Production-Kanals automatisch aktualisiert.
+    es_ES: |-
+      - Utiliza la versión Production más reciente de RoonServer.
+      - RoonServer se descarga en el primer inicio y se guarda en `/Roon`.
+      - RoonServer se actualiza automáticamente dentro del canal Production.
+    fr_FR: |-
+      - Utilise la dernière version Production de RoonServer.
+      - RoonServer est téléchargé au premier démarrage et stocké dans `/Roon`.
+      - RoonServer se met automatiquement à jour dans le canal Production.
+    ja_JP: |-
+      - RoonServer Productionの最新リリースを使用します。
+      - 初回起動時にRoonServerをダウンロードし、`/Roon`に保存します。
+      - RoonServerはProductionチャンネル内で自動更新されます。
+    ko_KR: |-
+      - 최신 RoonServer Production 릴리스를 사용합니다.
+      - 최초 실행 시 RoonServer를 다운로드하여 `/Roon`에 저장합니다.
+      - RoonServer는 Production 채널에서 자동으로 업데이트됩니다.
+    zh_TW: |-
+      - 使用 RoonServer Production 最新版本。
+      - 首次啟動時下載 RoonServer，並儲存於 `/Roon`。
+      - RoonServer 會在 Production 發布通道中自動更新。
+    zh_CN: |-
+      - 使用 RoonServer Production 最新版。
+      - 首次启动时下载 RoonServer，并将其存储在 `/Roon`。
+      - RoonServer 会在 Production 发布通道中自动更新。
+  website: https://roon.app
+  docs: https://help.roonlabs.com/portal/en/kb/articles/installing-the-roon-server-via-docker
