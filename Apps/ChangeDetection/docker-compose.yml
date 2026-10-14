@@ -1,0 +1,65 @@
+name: changedetection
+services:
+  changedetection:
+    image: ghcr.io/dgtlmoon/changedetection.io:0.60.3
+    restart: unless-stopped
+    ports:
+      - target: 5000
+        published: "5000"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/datastore
+        target: /datastore
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/', timeout=5).read(1)"
+      interval: 30s
+      timeout: 10s
+      start_period: 30s
+      retries: 3
+x-casaos:
+  id: org.icewhale.changedetection
+  main: changedetection
+  index: /
+  port_map: "5000"
+  scheme: http
+  icon: icon.png
+  title:
+    en_US: ChangeDetection.io
+    es_ES: ChangeDetection.io
+  tagline:
+    en_US: Monitor website changes and receive alerts.
+    es_ES: Detecta cambios en páginas web y recibe avisos.
+  description:
+    en_US: |
+      Monitor web pages for content changes, price changes and product availability. Review differences between checks, choose the content that matters with filters, and configure notifications using supported services.
+      This package uses the official ChangeDetection.io image with persistent storage for watches, history and settings. It includes the basic HTTP fetcher. JavaScript rendering, browser steps and visual selection require a separately configured browser service; that service is not included.
+    es_ES: |
+      Supervisa cambios de contenido, precios y disponibilidad de productos en páginas web. Revisa las diferencias entre consultas, selecciona el contenido relevante mediante filtros y configura avisos con los servicios compatibles.
+      Este paquete utiliza la imagen oficial de ChangeDetection.io y conserva seguimientos, historial y ajustes. Incluye la consulta HTTP básica. Las páginas que requieren JavaScript, los pasos de navegador y la selección visual necesitan un servicio de navegador configurado por separado; ese servicio no está incluido.
+  tips:
+    before_install:
+      en_US: |
+        Use an available web port and an empty data directory for a fresh installation. After opening the app, set a password in Settings before storing private watch URLs or notification credentials. The upstream app starts without a web password.
+        Back up the entire datastore directory, including hidden files, and retain it when recreating or updating the container. Notifications require configuration. Website access restrictions and captchas may prevent monitoring some pages.
+      es_ES: |
+        Usa un puerto web disponible y una carpeta de datos vacía para una instalación nueva. Al abrir la app, establece una contraseña en Settings antes de guardar URLs privadas o credenciales de notificación. La aplicación original arranca sin contraseña web.
+        Respalda toda la carpeta datastore, incluidos los archivos ocultos, y consérvala al recrear o actualizar el contenedor. Los avisos requieren configuración. Las restricciones de acceso y los captchas pueden impedir el seguimiento de algunas páginas.
+  author: hucu3
+  developer: dgtlmoon
+  category: Productivity
+  architectures:
+    - amd64
+  version: "0.60.3"
+  update_at: "2026-09-05"
+  release_notes:
+    en_US: Initial package with persistent storage and a web health check.
+    es_ES: Paquete inicial con almacenamiento persistente y comprobación de salud web.
+  website: https://changedetection.io
+  repo: https://github.com/dgtlmoon/changedetection.io
+  support: https://github.com/dgtlmoon/changedetection.io/issues
+  docs: https://github.com/dgtlmoon/changedetection.io/wiki
