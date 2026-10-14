@@ -1,0 +1,596 @@
+name: rechvix
+
+services:
+  # Secrets (POSTGRES_PASSWORD, BILLING_APP_PASSWORD, AEAD_ENCRYPTION_KEY)
+  # are generated here on first boot into /DATA/AppData/$AppID/secrets
+  # instead of asked for at install — CasaOS doesn't reliably deliver typed
+  # install-time env values. Back this up with the database volume; losing
+  # it orphans both.
+  #
+  # Every dynamic value below is read via `$(sed ... /secrets/env)`, never
+  # a bare `$VAR` — CasaOS's compose interpolation runs a different number
+  # of passes for `install` vs `apply`, and `$(...)` is the one form both
+  # leave alone.
+  postgres:
+    image: postgres:18
+    container_name: rechvix-postgres
+    hostname: rechvix-postgres
+    restart: unless-stopped
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        set -e
+        umask 022
+        mkdir -p /secrets
+        if [ ! -s /secrets/env ]; then
+          {
+            echo "POSTGRES_PASSWORD=$$(head -c48 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c24)"
+            echo "BILLING_APP_PASSWORD=$$(head -c48 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c24)"
+            echo "AEAD_ENCRYPTION_KEY=$$(head -c32 /dev/urandom | base64)"
+          } > /secrets/.env.new
+          chmod 644 /secrets/.env.new
+          mv /secrets/.env.new /secrets/env
+        fi
+        mkdir -p /docker-entrypoint-initdb.d
+        cat > /docker-entrypoint-initdb.d/01-create-runtime-role.sql <<SQL
+        SELECT 'CREATE ROLE billing_app LOGIN PASSWORD ''$$(sed -n 's/^BILLING_APP_PASSWORD=//p' /secrets/env)'''
+        WHERE NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'billing_app')
+        \gexec
+        SQL
+        export POSTGRES_PASSWORD="$$(sed -n 's/^POSTGRES_PASSWORD=//p' /secrets/env)"
+        exec docker-entrypoint.sh postgres
+    environment:
+      POSTGRES_DB: billing
+      POSTGRES_USER: billing_migrator
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets
+        target: /secrets
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U billing_migrator -d billing"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - rechvix
+    x-casaos:
+      envs: []
+      volumes:
+        - container: /var/lib/postgresql
+          description:
+            en_US: All business data — invoices, inventory, accounting, everything. Back this up.
+        - container: /secrets
+          description:
+            en_US: Auto-generated database and encryption secrets. Back this up along with the database — losing it orphans the database and makes stored integration credentials unrecoverable.
+
+  # restart: on-failure (not "no"): CasaOS starts every container at once
+  # on install, often before postgres/its secrets file are ready — this
+  # keeps retrying until they are, then exits 0 and stays stopped.
+  migrate:
+    image: ghcr.io/raktim94/rechvix-server:0.14.23
+    container_name: rechvix-migrate
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        set -e
+        test -s /secrets/env
+        export DATABASE_DSN="postgres://billing_migrator:$$(sed -n 's/^POSTGRES_PASSWORD=//p' /secrets/env)@rechvix-postgres:5432/billing?sslmode=disable"
+        exec /app/server -migrate
+    restart: on-failure
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets
+        target: /secrets
+    networks:
+      - rechvix
+    x-casaos:
+      envs: []
+
+  app:
+    image: ghcr.io/raktim94/rechvix-server:0.14.23
+    container_name: rechvix-app
+    hostname: rechvix-app
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        set -e
+        test -s /secrets/env
+        export DATABASE_DSN="postgres://billing_app:$$(sed -n 's/^BILLING_APP_PASSWORD=//p' /secrets/env)@rechvix-postgres:5432/billing?sslmode=disable"
+        # billing_migrator (RLS-bypassing), NOT billing_app — see
+        # deploy/compose/docker-compose.yml's identical line for why
+        # backup/restore needs this and reuses the same role the migrate
+        # service above connects as.
+        export BACKUP_DATABASE_DSN="postgres://billing_migrator:$$(sed -n 's/^POSTGRES_PASSWORD=//p' /secrets/env)@rechvix-postgres:5432/billing?sslmode=disable"
+        export AEAD_ENCRYPTION_KEY="$$(sed -n 's/^AEAD_ENCRYPTION_KEY=//p' /secrets/env)"
+        exec /app/server
+    environment:
+      HTTP_PORT: "8080"
+      DATABASE_AUTO_MIGRATE: "false"
+      SESSION_COOKIE_SECURE: "false"
+      ENABLE_BOOTSTRAP: "true"
+    ports:
+      - target: 8080
+        published: "8090"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets
+        target: /secrets
+    networks:
+      - rechvix
+    x-casaos:
+      envs: []
+      ports:
+        - container: "8080"
+          description:
+            en_US: rechvix API
+          protocol: tcp
+
+  worker:
+    image: ghcr.io/raktim94/rechvix-worker:0.14.23
+    container_name: rechvix-worker
+    hostname: rechvix-worker
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        set -e
+        test -s /secrets/env
+        export DATABASE_DSN="postgres://billing_app:$$(sed -n 's/^BILLING_APP_PASSWORD=//p' /secrets/env)@rechvix-postgres:5432/billing?sslmode=disable"
+        export AEAD_ENCRYPTION_KEY="$$(sed -n 's/^AEAD_ENCRYPTION_KEY=//p' /secrets/env)"
+        exec /app/worker
+    environment:
+      EINVOICE_PROVIDER: "mock"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets
+        target: /secrets
+    networks:
+      - rechvix
+    x-casaos:
+      envs: []
+
+networks:
+  rechvix:
+    driver: bridge
+
+x-casaos:
+  id: com.nodedr.rechvix
+  architectures:
+    - amd64
+    - arm64
+  main: app
+  author: NodeDR Infotech Private Limited
+  developer: Raktim94
+  category: Finance
+  icon: "https://cdn.jsdelivr.net/gh/Raktim94/CasaOS-AppStore@main/Apps/rechvix/icon.png"
+  thumbnail: "https://cdn.jsdelivr.net/gh/Raktim94/CasaOS-AppStore@main/Apps/rechvix/thumbnail.png"
+  screenshot_link:
+    - "https://cdn.jsdelivr.net/gh/Raktim94/CasaOS-AppStore@main/Apps/rechvix/screenshot-1.png"
+    - "https://cdn.jsdelivr.net/gh/Raktim94/CasaOS-AppStore@main/Apps/rechvix/screenshot-2.png"
+    - "https://cdn.jsdelivr.net/gh/Raktim94/CasaOS-AppStore@main/Apps/rechvix/screenshot-3.png"
+  title:
+    en_US: rechvix
+  tagline:
+    en_US: Self-hosted billing, inventory, accounting, and India GST — no subscription, no external connection required
+  description:
+    en_US: |
+      A production-grade, multi-company, multi-branch, multi-warehouse
+      billing, inventory, accounting, and tax-management platform.
+      India GST / e-Invoice / e-Way Bill capable, self-hosted on your own
+      hardware — no subscription, no mandatory cloud dependency, no data
+      leaving your server for core operation.
+
+      Double-entry accounting, perpetual multi-warehouse inventory, GST
+      invoicing with CGST/SGST/IGST breakdown, and a free e-Way Bill
+      workflow that never requires a paid government API. AGPL-3.0
+      licensed, same as this project's sibling, nodedr-pos.
+
+      Ships with a full web UI (dashboard, sales, purchases, inventory,
+      contacts, accounting, GST/tax, reports, settings) — apps/server
+      serves it directly, no separate frontend container needed.
+  tips:
+    before_install:
+      en_US: |
+        No setup needed before installing — database passwords and the
+        encryption key are generated automatically on first start.
+
+        Your data persists at `/DATA/AppData/rechvix/postgres` and
+        `/DATA/AppData/rechvix/secrets`, following CasaOS/ZimaOS's
+        standard backup/restore convention. Back up both together.
+
+        First run: open the app and go to /setup to create your business
+        (organisation, first branch/warehouse, and owner login).
+  index: /
+  scheme: http
+  port_map: "8090"
+  version: "0.14.23"
+  update_at: "2026-09-18"
+  release_notes:
+    en_US: |-
+      0.14.23 (2026-09-18):
+      Fixed a real problem in the generated e-Way Bill file: several
+      fields (PIN code, state code, tax amounts, HSN code, quantity)
+      were being sent in the wrong format and could have been rejected
+      by the government portal. Also added checks that catch a bad
+      GSTIN, PIN code, vehicle number, or HSN code — and a mismatched
+      CGST/SGST vs IGST split — before a file is prepared, instead of
+      only finding out after uploading it.
+
+
+      0.14.22 (2026-09-18):
+      Important fix: the billing screen always set a new sale's "place of
+      supply" to your own business's state, with no way to change it —
+      this silently taxed every inter-state sale as if it were local
+      (CGST+SGST) instead of the correct IGST. It now defaults to the
+      customer's own registered GST state and can be corrected before
+      Start Sale. Also fixed several fields in the generated e-Way Bill
+      file that could come out empty (to/from GSTIN, state, PIN code) —
+      added a business PIN code field in Settings to close one of the
+      gaps for good.
+
+      0.14.21 (2026-09-18):
+      "Ship-to state is not resolved" could still get stuck on an already-
+      opened e-Way Bill even after 0.14.20's fix, because that record's
+      details snapshot is only ever captured once — a Ship-to state
+      dropdown now lets it be fixed directly on that already-captured
+      record. e-Invoice can now use a real GST API provider instead of
+      the built-in test-only mock: Settings > GST / Tax has a new
+      "e-Invoice provider" section to enter NIC e-Invoice API credentials
+      per business, stored encrypted, with no server access needed.
+
+      0.14.20 (2026-09-18):
+      Fixed the e-Way Bill "needs information" block that could get stuck
+      on "ship-to state is not resolved" — it now falls back to the
+      invoice's own place of supply when no shipping address/customer GST
+      registration state is on file, and a transport-distance field was
+      added to the same form (the backend already accepted it; the form
+      never asked for it). A failed e-Invoice ("legal entity has no GSTIN
+      configured" and similar) can now be retried once the underlying
+      problem is fixed — previously a FAILED_FINAL record had no way
+      forward at all, even after fixing the actual issue in Settings.
+
+      0.14.19 (2026-09-18):
+      An uploaded business logo (PNG/JPEG/GIF, any shape or size) is now
+      automatically resized and centered onto a consistent square instead
+      of being stretched into the printed invoice header or rejected
+      outright past 1000x1000px. Recording a payment against an invoice
+      now has Full payment / 25% / 50% / 75% / Custom quick-amount
+      buttons for partial payments, and a malformed amount can no longer
+      slip past validation and fail to save. Printed invoices now show
+      the Place of Supply as a readable state name (e.g. "21 - Odisha")
+      instead of the bare GST state code.
+
+      0.14.18 (2026-09-13):
+      Customer/supplier phone numbers must now be exactly 10 digits and
+      unique per business, and searching for a customer now matches by
+      phone as well as name. Invoices can be shared to WhatsApp as the
+      actual PDF file, not just a link. The Receivables (who owes you)
+      report now shows each customer's name and phone with a one-click
+      WhatsApp reminder button and tracks when the first reminder was
+      sent. Bulk e-Way Bill preparation now shows each invoice's amount.
+      The Tax Rates screen can bulk-import HSN/SAC rates from a CSV file,
+      optionally updating an existing product's HSN code and stock at
+      the same time.
+
+      0.14.17 (2026-09-12):
+      Adding the same product to a sale twice (a repeat tap or the same
+      barcode scanned again) now increases that line's quantity instead
+      of creating a second, separate line at quantity 1. The GST rate
+      field on a product now shows what the single combined rate means —
+      e.g. "18% = 9% CGST + 9% SGST (in-state) or 18% IGST
+      (out-of-state)" — CGST/SGST/IGST are always derived from the one
+      number, never set separately.
+
+      0.14.16 (2026-09-12):
+      Editing a product now scrolls the edit form into view. On a long
+      product list, clicking Edit on a row further down used to open the
+      form off-screen above the current view, which looked like nothing
+      had happened.
+
+      0.14.15 (2026-09-12):
+      The Inventory tab now explains how to add stock before you've
+      searched for a product, instead of showing nothing until you do.
+      Bulk CSV import can now set opening stock directly (opening_qty/
+      opening_cost columns) rather than needing a separate trip to
+      Inventory afterward. Editing a product now lets you adjust its
+      stock right there on the same form. The billing screen shows each
+      item's GST% while you're building a sale, not just after
+      finalizing. The Finalize button no longer promises an e-Way Bill
+      step for every sale — that only becomes relevant once a sale
+      actually crosses the government's threshold.
+
+      0.14.14 (2026-09-11):
+      The New Sale product search now works without typing anything —
+      it shows a scrollable, alphabetical list of your whole active
+      catalogue the moment a sale starts, and narrows as you type. Meant
+      for shops with a large catalogue where staff can't rely on
+      remembering exact product names.
+
+      0.14.13 (2026-09-11):
+      Fixed the New Sale screen: the document type, customer search, and
+      Start Sale controls could overlap each other instead of sitting in
+      their own space. Also darkened the light-theme status badge colors
+      (paid/overdue/low-stock) for better readability on counter tablets,
+      and gave report charts a consistent, colorblind-friendly color set.
+
+      0.14.12 (2026-09-10):
+      Fixed a crash: deleting products where every one landed in the same
+      outcome (all fully removed, or all deactivated because they had
+      sales/purchase history) could white-screen the app. Also added a
+      recovery screen for any future unexpected error, instead of a blank
+      page with no way back except reloading.
+
+      0.14.11 (2026-09-10):
+      Products now have one price, set directly on the product form (the
+      separate Pricing page is gone) — CSV import and manual entry both
+      work with zero setup, fixing prices silently not saving on a fresh
+      install. "Delete" (single or bulk) now actually removes a product
+      completely when it's never been sold or purchased; a product with
+      real history is deactivated instead, and a bulk "Active" button
+      restores it.
+
+      0.14.10 (2026-09-10):
+      Multiple companies, each with its own GST registration, in one
+      install: a company switcher (top bar) to create and pick the
+      active one, with Sales, Purchases, GST/GSTR-1/GSTR-3B, Inventory,
+      and Reports all filtering to whichever company is selected. Team
+      members can now be restricted to specific companies from Settings
+      > Team — a restricted member sees and works only within their
+      granted companies (view, create, finalize sales, edit drafts,
+      adjust and transfer stock), never another company's data.
+
+      0.14.9 (2026-09-10):
+      Bulk product import (CSV/Excel) now covers category, brand, and
+      barcode, not just name/HSN/unit/SKU/price/tax — a category or
+      brand named in the file is created automatically the first time
+      it's seen, and a barcode is checked for uniqueness both against
+      your existing catalogue and other rows in the same file. Opening
+      stock is still set afterward on the Inventory page, same as
+      before.
+
+      0.14.8 (2026-09-10):
+      A real design pass on the app itself: a dark navigation rail (was
+      plain white), Add sale/Add purchase always one tap away instead
+      of buried in a menu, and the billing screen is now a proper
+      invoice grid showing item names (it used to show only the tax
+      code) with the running total always visible while you build a
+      sale. Dark mode also had a rendering bug where the sidebar was
+      nearly invisible against the page — fixed.
+
+      0.14.7 (2026-09-10):
+      Fixed 0.14.6's own fix: the auto-generated-secrets script worked
+      on a genuinely fresh install but broke Postgres on an update of an
+      already-installed copy, because CasaOS runs a different number of
+      variable-substitution passes for "install" than for "update" —
+      the script now avoids relying on that count matching at all.
+      Verified against a real update on the box this was found on.
+
+      0.14.6 (2026-09-10):
+      Billing screen: line-level discounts can now be edited directly in
+      the items table, instead of needing the line deleted and re-added
+      at a lower price. Product search results now show stock and price
+      in aligned columns with a low/out-of-stock warning, and the
+      running total is easier to read at a glance. Contacts list now
+      shows each customer's outstanding balance right in the list.
+
+      0.14.5 (2026-09-09):
+      Fixed the fix: 0.14.4's auto-generated secrets were silently wiped
+      to blank by a CasaOS-specific quirk (it evaluates variable
+      substitution twice during install, not once), reintroducing the
+      exact "Postgres won't start" failure it was meant to solve. Verified
+      against a real install this time — Postgres, migrations, the app,
+      and the background worker all come up healthy with no input needed.
+
+      0.14.4 (2026-09-09):
+      Fixed a real fresh-install bug: a "clean" install was found reusing
+      stale cached values from a previous, unrelated install and leaving
+      the database passwords blank, permanently breaking Postgres. Rather
+      than rely on CasaOS reliably collecting three typed passwords
+      before install, the app now generates all of its own secrets
+      automatically on first start — nothing to type, nothing to get
+      wrong. No change for an existing, already-running install.
+
+      0.14.3 (2026-09-09):
+      Fixed a real fresh-install bug: CasaOS's installer starts every
+      container at once rather than waiting for Postgres to be ready, so
+      the one-time database-setup step could lose that race, fail once,
+      and never run again — leaving the app permanently unable to start
+      on a brand-new install. That step now retries automatically until
+      Postgres is actually ready. No change for an existing, already-
+      running install.
+
+      0.14.2 (2026-09-09):
+      Billing counter: you can now edit a line's quantity or remove it
+      after adding it, instead of the whole sale needing to be
+      abandoned over one mistake. A "Walk-in / Cash sale" button skips
+      picking a customer for a quick retail sale. Scanning a barcode
+      adds the item straight away instead of needing a click. And the
+      running total is now visible while you're still adding items,
+      not just after finalizing.
+
+      0.14.1 (2026-09-09):
+      A fresh organisation now gets common units of measure (pieces,
+      kilogram, litre, box, dozen, and more) automatically instead of
+      needing one added by hand before you can create a product or
+      bulk-import a CSV. Bulk product CSV import also now accepts
+      price and gst_rate columns, so an imported product is actually
+      sellable right away instead of needing a separate visit to
+      Pricing and GST for every row.
+
+      0.14.0 (2026-09-09):
+      Sales: convert a finalized quotation straight into a sales order
+      or invoice (and an order into an invoice) without re-entering
+      every line by hand, plus quick filters to find open quotations/
+      orders on the Sales list.
+      Catalogue: edit and delete products (soft-delete, so history
+      stays intact), multi-select bulk delete, and a downloadable
+      sample CSV for bulk import.
+      GST/Tax: a configurable e-Way Bill value threshold, overriding
+      the national default per business.
+      Invoices: 5 selectable visual designs (Classic/Modern/Minimal/
+      Bold/Elegant) for printed invoices, independent of paper size.
+      Expenses: an "Other" category for anything that doesn't fit a
+      real account, and attach a receipt/bill photo or PDF to any
+      expense entry.
+      Purchases/Inventory: scanning a distributor bill can now create
+      a missing product inline instead of blocking on it, plus a new
+      no-API-key way to use an AI chat tool you already have (ChatGPT,
+      Gemini, ...) to read a messy bill instead of the built-in
+      scanner.
+      Fixed: signing out, or a session timing out, now actually
+      returns you to the sign-in screen immediately instead of
+      silently leaving you on a broken page until your next click.
+
+      0.13.0 (2026-09-08):
+      Fixed a real fresh-install bug: on a brand-new install, Postgres
+      could get stuck and never start at all, leaving the app looking
+      broken/unresponsive. The separate one-time setup container that
+      used to run before Postgres is gone — Postgres now does that one
+      step itself, removing the ordering problem entirely. No change
+      for an existing, already-running install.
+
+      0.12.0 (2026-09-08):
+      Added a GSTR-3B summary on the GST page — outward tax liability
+      and input tax credit, computed from your finalized sales and
+      purchases (a preparation aid, like GSTR-1, not a filing
+      submission).
+
+      0.11.0 (2026-09-08):
+      Purchases now compute real GST — a supplier bill correctly splits
+      into taxable value and input tax credit (CGST/SGST or IGST,
+      depending on the supplier's state) when the supplier has a GST
+      registration on file, instead of the whole amount posting as one
+      lump sum. Groundwork for a full GSTR-3B report, coming next.
+
+      0.10.0 (2026-09-08):
+      Settings now has a Branches & warehouses panel — a business
+      running more than one location or stock point can see and add
+      them directly, instead of the app only ever knowing about one of
+      each.
+
+      0.9.0 (2026-09-08):
+      A tax invoice's e-Invoice status (IRN, ack number, or why it
+      failed) is now visible right on the invoice screen — generation
+      itself has always been automatic, this just makes the result
+      visible instead of only checkable via the database.
+
+      0.8.0 (2026-09-08):
+      Cancel/void now works on the purchases side too, mirroring the
+      invoice-cancellation added in 0.7.0 — a mis-entered goods receipt,
+      bill, return, or debit note can be voided, with stock and the
+      supplier ledger reversed exactly.
+
+      0.7.0 (2026-09-08):
+      A mis-billed finalized invoice can now be cancelled/voided outright
+      — stock is put back and the sale is reversed out of the books with
+      its own ledger entry, rather than the only option being a return
+      or credit note (which imply the customer is actually giving
+      something back). Added month/year-end close (fiscal period lock)
+      so closed periods can't be posted into by accident, and the
+      Reports page now shows trial balance, receivables/payables ageing,
+      and purchase document drilldowns.
+
+      0.6.0 (2026-09-08):
+      Added sales returns and credit notes — a customer returning an
+      item, or a price correction after the fact, now has a real path,
+      with partial-quantity returns handled correctly (only the returned
+      units go back into stock). Receipts and payments can now be tied
+      to a real bank account instead of always silently posting to cash
+      regardless of the payment method picked. A WhatsApp share link can
+      now actually be revoked, not just claimed to be.
+
+      0.5.0 (2026-09-08):
+      Scanning a barcode at the counter now actually finds the product —
+      the billing screen has always said "scan a barcode" but the search
+      behind it only ever matched product names, so a scan silently
+      found nothing; fixed, and a barcode can now be attached right on
+      the product form. A finalized invoice/bill now shows what's
+      actually been paid against it and lets you record a payment there
+      directly, instead of only ever seeing a customer's total on-account
+      balance. New product creation can set opening stock in the same
+      step, instead of failing on the first sale with no clue why. Added
+      a change-password screen. A few pages (Inventory, Accounting) that
+      had no visible way to create anything now do, and the calendar
+      picked up a Google-Calendar-style quick task composer.
+
+      0.4.0 (2026-09-08):
+      Scan a distributor's purchase bill with your camera and let OCR fill
+      in the purchase for you — it matches the distributor against your
+      existing suppliers (by GSTIN or name) so you don't end up with
+      duplicates, matches each line to a catalogue product, and lets you
+      correct every field (including a negotiated price) before anything
+      is saved. Stock received at a new price now opens its own cost
+      batch instead of being blended away, so margins stay honest.
+
+      Also new: day-to-day expense tracking (rent, electricity, wages),
+      staff attendance with a calendar that also holds your dated tasks,
+      a "Today" summary on the dashboard, a choice of five invoice
+      layouts when printing, quick-add for customers and distributors
+      without leaving the billing screen, WhatsApp sharing straight from
+      the sales list, a show/hide toggle on password fields, and a
+      Ctrl+K command palette. The whole interface has been reworked for
+      counter use.
+
+      0.3.1 (2026-09-07):
+      Fixed two real bugs found while testing 0.3.0 live: the Unit
+      dropdown on the new-product form was always empty (frontend/backend
+      field-name mismatch), which made it impossible to ever pick a
+      previously-created unit and forced creating a new throwaway one
+      every time; and the Category/Brand "add new" inputs overlapped
+      illegibly with each other on the same form.
+
+      0.3.0 (2026-09-07):
+      Ships 15 commits of features that had been merged to the source
+      repo but never actually released: a real per-product inventory
+      view (stock, movement history, manual adjustments — not just two
+      report tables), catalogue category/brand selection, a full
+      contact detail page (GSTIN, address, ledger, record payment),
+      CSV/Excel import for products and contacts, global keyboard
+      shortcuts, invoice branding and WhatsApp sharing, encrypted
+      backup/restore, and search/filtering on the sales and purchases
+      lists.
+
+      0.2.2 (2026-09-07):
+      Sign-in page now shows a persistent "New to Rechvix? Set up your
+      business" link when first-run setup is still open, instead of
+      silently redirecting a fresh install away from the login form.
+
+      0.2.1 (2026-09-07):
+      Fixed a real install-breaking bug: postgres-init generated the
+      billing_app database role with a garbage password (a shell escaping
+      bug, not just a CasaOS quirk), so the app and worker containers
+      crash-looped on every fresh install. Also fixed the icon/screenshot
+      links, which pointed at an unmerged upstream path and 404ed.
+
+      0.2.0 (2026-09-06):
+      Owner/Admin can now add teammates from Settings > Team — Bootstrap
+      previously only ever created the single first-run owner, with no way
+      to give anyone else at the business their own login. Also wires up
+      forgot-password screens for the reset flow the backend already
+      supported, and replaces the placeholder icon with the real Rechvix
+      logo. Full history:
+      https://github.com/Raktim94/rechvix/blob/main/CHANGELOG.md
+
+      0.1.0 (2026-09-05):
+      Initial CasaOS/ZimaOS release: self-hosted billing, inventory,
+      accounting, and India GST/e-Invoice/e-Way Bill platform. Double-entry
+      accounting, multi-company/branch/warehouse support, and a full web UI
+      served directly by the app container — no separate frontend needed.
+  website: "https://www.nodedr.com"
+  repo: "https://github.com/Raktim94/rechvix"
+  support: "https://github.com/Raktim94/rechvix/issues"
+  docs: "https://github.com/Raktim94/rechvix#readme"
