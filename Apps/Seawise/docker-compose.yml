@@ -1,0 +1,74 @@
+name: seawise
+services:
+  seawise:
+    image: seawiseinc/seawise-client:1.0.13
+    container_name: seawise
+    restart: unless-stopped
+    network_mode: bridge
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+    ports:
+      - target: 8082
+        published: "8082"
+        protocol: tcp
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: Run as user ID
+        - container: PGID
+          description:
+            en_US: Run as group ID
+      ports:
+        - container: "8082"
+          description:
+            en_US: WebUI Port
+      volumes:
+        - container: /config
+          description:
+            en_US: Seawise.io Client configuration and pairing data.
+x-casaos:
+  id: io.seawise.client
+  architectures:
+    - amd64
+    - arm64
+  main: seawise
+  index: /
+  port_map: "8082"
+  scheme: http
+  author: Seawise.io
+  developer: Seawise.io
+  category: Networking
+  icon: https://raw.githubusercontent.com/seawise-io/seawise-client/main/.github/assets/icon.png
+  screenshot_link:
+    - screenshot-1.png
+    - screenshot-2.png
+    - screenshot-3.png
+  title:
+    en_US: Seawise.io Client
+  tagline:
+    en_US: Share your self-hosted apps without port forwarding
+  description:
+    en_US: |
+      Seawise.io Client connects your server to Seawise.io over an outbound-only tunnel, so you can share apps like Jellyfin, Immich, Home Assistant or Nextcloud with family and friends without opening ports or setting up a VPN.
+
+      Add an app by its local address, for example http://192.168.1.10:8096, or http://host.docker.internal:PORT for apps on this device. Seawise.io gives it a secure link you can share, or you can group apps into portals.
+
+      **Learn More:**
+      - [Seawise.io](https://seawise.io)
+      - [GitHub Repository](https://github.com/seawise-io/seawise-client)
+  tips:
+    before_install:
+      en_US: Requires a free Seawise.io account. Open the Web UI within 5 minutes of the first start to set a password, then pair the client with your account.
+  version: "1.0.13"
+  update_at: "2026-10-15"
+  website: https://seawise.io
+  repo: https://github.com/seawise-io/seawise-client
+  support: https://github.com/seawise-io/seawise-client/issues
