@@ -70,9 +70,12 @@ services:
         secrets=/data/secrets.env
         if [ ! -f "$$secrets" ]; then
           rand() { head -c "$$1" /dev/urandom | od -An -tx1 | tr -d ' \n'; }
+          # Keep the database password if Postgres already has one.
+          db=$$(cat /db-secret/password 2>/dev/null || true)
+          [ -n "$$db" ] || db=$$(rand 24)
           umask 077
           printf 'NEXTAUTH_SECRET=%s\nCRON_SECRET=%s\nDB_PASSWORD=%s\n' \
-            "$$(rand 32)" "$$(rand 24)" "$$(rand 24)" > "$$secrets"
+            "$$(rand 32)" "$$(rand 24)" "$$db" > "$$secrets"
         fi
         . "$$secrets"
         umask 077
