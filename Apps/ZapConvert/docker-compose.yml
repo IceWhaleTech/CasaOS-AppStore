@@ -1,0 +1,126 @@
+name: zapconvert
+
+services:
+  zapconvert-web:
+    image: ghcr.io/zapconvert/zapconvert:1.0.0
+    container_name: zapconvert-web
+    ports:
+      - target: 3000
+        published: "3380"
+        protocol: tcp
+    environment:
+      GOTENBERG_URL: "http://zapconvert-gotenberg:3000"
+      MEDIA_WORKER_URL: "http://zapconvert-media-worker:8080"
+      MEDIA_WORKER_TOKEN: ""
+      LICENSE_KEY: ""
+    networks: [edge, backend]
+    depends_on:
+      zapconvert-gotenberg:
+        condition: service_healthy
+      zapconvert-media-worker:
+        condition: service_healthy
+    restart: unless-stopped
+    x-casaos:
+      ports:
+        - container: "3000"
+          description:
+            en_US: Web interface
+      envs:
+        - container: LICENSE_KEY
+          description:
+            en_US: Optional Lifetime Pass key. Unlocks Self-Hosted Pro (1 GB server uploads, no footer credit).
+        - container: MEDIA_WORKER_TOKEN
+          description:
+            en_US: Optional shared secret. Use the same value as WORKER_TOKEN on the media worker.
+
+  zapconvert-gotenberg:
+    image: gotenberg/gotenberg:8
+    container_name: zapconvert-gotenberg
+    command:
+      - "gotenberg"
+      - "--api-timeout=120s"
+      - "--libreoffice-auto-start=true"
+      - "--chromium-disable-routes=true"
+      - "--log-level=error"
+    tmpfs:
+      - /tmp:size=1024m,mode=1777
+    networks: [backend]
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:3000/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+    restart: unless-stopped
+
+  zapconvert-media-worker:
+    image: ghcr.io/zapconvert/zapconvert-media-worker:1.0.0
+    container_name: zapconvert-media-worker
+    environment:
+      WORKER_TOKEN: ""
+      MAX_UPLOAD_MB: "1024"
+      MAX_JOBS: "2"
+      JOB_TIMEOUT_SEC: "300"
+    tmpfs:
+      - /work:size=2048m,mode=1777
+    networks: [backend]
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8080/health',timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    restart: unless-stopped
+    x-casaos:
+      envs:
+        - container: WORKER_TOKEN
+          description:
+            en_US: Optional shared secret. Must match MEDIA_WORKER_TOKEN on the web container.
+
+networks:
+  edge: {}
+  backend:
+    internal: true
+
+x-casaos:
+  id: app.zapconvert
+  main: zapconvert-web
+  index: /
+  port_map: "3380"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ZapConvert/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ZapConvert/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ZapConvert/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ZapConvert/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ZapConvert/screenshot-3.png
+  title:
+    en_US: ZapConvert
+  tagline:
+    en_US: Private file converter. Most tools run in your browser.
+  description:
+    en_US: |-
+      Convert, compress, merge, split and protect PDFs, Office documents, images, spreadsheets, audio and video from any browser on your network.
+
+      38 of the 52 tools run entirely in the browser (pdf-lib, PDF.js, Tesseract and qpdf compiled to WebAssembly), so files never leave the device. Office to PDF, PDF to Word or Excel, and audio and video conversions run in two companion containers, Gotenberg and an ffmpeg worker, which sit on an internal network with no published ports and work in RAM, so nothing is written to disk.
+
+      No ads, no analytics, no accounts, and no internet access needed once installed. The free Community edition allows 100 MB per file for server conversions; an optional Lifetime Pass unlocks 1 GB and removes the footer credit.
+  tips:
+    before_install:
+      en_US: >-
+        The app is stateless and needs no storage. Large video conversions use RAM as scratch space
+        (up to 2 GB by default). Set LICENSE_KEY only if you have a Lifetime Pass.
+  author: TeaGee Labs
+  developer: TeaGee Labs
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+  version: "1.0.0"
+  update_at: "2026-10-15"
+  release_notes:
+    en_US: First release.
+  website: https://zapconvert.app
+  repo: https://github.com/zapconvert/zapconvert
+  support: https://github.com/zapconvert/zapconvert/issues
+  docs: https://github.com/zapconvert/zapconvert#readme
