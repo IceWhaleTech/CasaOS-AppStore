@@ -1,0 +1,103 @@
+name: librecloset
+services:
+  librecloset:
+    container_name: librecloset
+    image: ghcr.io/lazztech/libre-closet:0.6.0
+    restart: unless-stopped
+    ports:
+      - target: 3000
+        published: "3600"
+        protocol: tcp
+    environment:
+      TZ: $TZ
+      APP_NAME: Libre Closet
+      DATA_PATH: /app/data
+      AUTH_ENABLED: "false"
+      PWA_ENABLED: "true"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /app/data
+    x-casaos:
+      envs:
+        - container: APP_NAME
+          description:
+            en_US: Display name shown in the app and browser title.
+        - container: AUTH_ENABLED
+          description:
+            en_US: Enable user accounts and login. Off by default for a single-user wardrobe.
+        - container: PWA_ENABLED
+          description:
+            en_US: Enable the installable PWA and offline service worker.
+      volumes:
+        - container: /app/data
+          description:
+            en_US: SQLite database and uploaded garment photos.
+      ports:
+        - container: "3000"
+          description:
+            en_US: Libre Closet web interface.
+
+x-casaos:
+  id: org.lazztech.librecloset
+  main: librecloset
+  index: /
+  port_map: "3600"
+  scheme: http
+  title:
+    en_US: Libre Closet
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreCloset/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreCloset/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreCloset/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreCloset/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreCloset/screenshot-3.png
+  tagline:
+    en_US: Your wardrobe. Your data. A free, self-hosted wardrobe organizer.
+  description:
+    en_US: |
+      **Libre Closet is the easiest free, open-source wardrobe organizer to self-host.** Catalog your clothes, upload photos, build outfits, and open everything from your phone as an offline-ready PWA — all on your own server, with your data staying on your device.
+
+      **One container, nothing to babysit.** Libre Closet ships as a single Docker image that defaults to SQLite and local file storage, so there is no separate database or cache to deploy and maintain. Bring it up, open the web UI, and start cataloging.
+
+      **Built for real wardrobes.** Organize garments by category, color, season, and custom tags; combine them into outfits on a calendar with weather forecasts; record wash and care details; and share a closet with a partner or a stylist with view-only or edit access.
+
+      **Your data, your rules.** Libre Closet is AGPL-licensed and self-hosted, with local-first storage and no ads, tracking, or data selling. Optional user accounts and per-closet sharing let the whole household use it.
+
+      **Learn more:**
+      - [Libre Closet on GitHub](https://github.com/Lazztech/Libre-Closet)
+      - [Try the public demo](https://librecloset.lazz.tech)
+  tips:
+    before_install:
+      en_US: |
+        ## Getting started
+
+        Open the web UI at `http://<your-device-ip>:3600`. No account is required by default — start adding garments right away.
+
+        ## Storing your data
+
+        The SQLite database and uploaded photos live in the app's data folder and persist across updates and restarts. Back up that folder to keep your wardrobe safe.
+
+        ## Want accounts?
+
+        Set the `AUTH_ENABLED` environment variable to `true` before first launch to require sign-in. Change `ACCESS_TOKEN_SECRET` to a long random value if you enable accounts on a shared network.
+
+        ## Install as an app
+
+        Open the site in a mobile browser and use your browser's "Add to Home Screen" action to install Libre Closet as an offline-capable PWA.
+  author: Lazztech
+  developer: Lazztech
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+  version: "0.6.0"
+  update_at: "2026-10-05"
+  release_notes:
+    en_US: |-
+      - Initial ZimaOS/CasaOS app store release, tracking Libre Closet v0.6.0.
+      - v0.6.0 adds weather forecasts while scheduling outfits, Danish language support, and bug fixes.
+  website: "https://github.com/Lazztech/Libre-Closet"
+  repo: "https://github.com/Lazztech/Libre-Closet"
+  support: "https://github.com/Lazztech/Libre-Closet/issues"
+  docs: "https://github.com/Lazztech/Libre-Closet"
