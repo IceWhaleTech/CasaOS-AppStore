@@ -39,6 +39,8 @@ services:
     command:
       - "gotenberg"
       - "--api-timeout=120s"
+      - "--api-start-timeout=180s"
+      - "--libreoffice-start-timeout=120s"
       - "--libreoffice-auto-start=true"
       - "--chromium-disable-routes=true"
       - "--log-level=error"
@@ -48,9 +50,9 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://127.0.0.1:3000/health"]
       interval: 30s
-      timeout: 5s
-      start_period: 20s
-      retries: 3
+      timeout: 10s
+      start_period: 120s
+      retries: 5
     restart: unless-stopped
 
   zapconvert-media-worker:
@@ -67,9 +69,9 @@ services:
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8080/health',timeout=3)"]
       interval: 30s
-      timeout: 5s
-      start_period: 10s
-      retries: 3
+      timeout: 10s
+      start_period: 120s
+      retries: 5
     restart: unless-stopped
     x-casaos:
       envs:
