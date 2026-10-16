@@ -2,7 +2,7 @@ name: nodedr-invoice
 
 services:
   nodedr-invoice:
-    image: ghcr.io/raktim94/mavri:2.3.0
+    image: ghcr.io/raktim94/mavri:2.4.0
     container_name: nodedr-invoice
     hostname: nodedr-invoice
     restart: unless-stopped
@@ -53,7 +53,7 @@ services:
   # recreates the Mavri container (nothing else). Needs the Docker socket to do
   # that; your data in /DATA/AppData is untouched.
   updater:
-    image: ghcr.io/raktim94/mavri-updater:2.3.0
+    image: ghcr.io/raktim94/mavri-updater:2.4.0
     container_name: nodedr-invoice-updater
     hostname: nodedr-invoice-updater
     restart: unless-stopped
@@ -94,12 +94,13 @@ x-casaos:
       let other systems create invoices through an API key authenticated REST API
       (`/api/v1`), e-commerce webhooks, or the bundled MCP server.
 
-      Highlights: a one-page invoice editor with live preview, fifteen print
-      templates, UPI and SEPA payment QR codes, secure client links, email
-      through your own SMTP server, reminders and a daily "needs attention"
-      list, tax guidance for India, the UK, the EU, the UAE and the US
-      (guidance only, nothing is filed), CSV import and export, and encrypted
-      scheduled backups.
+      Highlights: a one-page invoice editor with live preview, drafts that are
+      locked when issued, credit and debit notes, fifteen print templates, UPI
+      and SEPA payment QR codes, secure client links, email through your own
+      SMTP server, reminders and a daily "needs attention" list, tax guidance
+      for India, the UK, the EU, the UAE and the US (guidance only, nothing is
+      filed), owner, staff and viewer accounts, CSV and accounting exports, and
+      encrypted scheduled backups.
 
       Open it at `http://<your-server>:8473`.
   tips:
@@ -115,13 +116,18 @@ x-casaos:
   repo: "https://github.com/Raktim94/mavri"
   support: "https://github.com/Raktim94/mavri/issues"
   docs: "https://mavri.nodedr.com/docs/"
-  version: "2.3.0"
-  update_at: "2026-10-16"
+  version: "2.4.0"
+  update_at: "2026-10-17"
   release_notes:
     en_US: |
-      2.3.0: a one-page invoice editor with live preview and a review
-      checklist, fifteen print templates, UPI and SEPA payment QR codes, a
-      daily "needs attention" list with promises to pay and disputes, tax
-      guidance for India, the UK, the EU, the UAE and the US, document
+      2.4.0: invoices start as drafts and are locked when issued; mistakes are
+      corrected with credit notes and debit notes; refunds; item codes, service
+      periods and tax reasons on lines; a second currency shown at a rate you
+      enter; owner, staff and viewer accounts; replay-safe API writes with
+      idempotency keys; journal and line-item CSV exports.
+
+      2.3.0: a one-page invoice editor with live preview, fifteen print
+      templates, UPI and SEPA payment QR codes, a daily "needs attention" list,
+      tax guidance for India, the UK, the EU, the UAE and the US, document
       languages (draft translations), invoice CSV import and a JSON export.
       Your data is kept; migrations run on first start.
