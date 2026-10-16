@@ -1,7 +1,7 @@
 name: libredb-studio
 services:
   libredb-studio:
-    image: libredb/libredb-studio:0.18.2
+    image: libredb/libredb-studio:0.18.3
     container_name: libredb-studio
     restart: unless-stopped
     ports:
@@ -99,19 +99,21 @@ x-casaos:
   index: /
   scheme: http
   port_map: "3016"
-  version: "0.18.2"
-  update_at: "2026-10-09"
+  version: "0.18.3"
+  update_at: "2026-10-16"
   release_notes:
     en_US: |-
-      - Updates LibreDB Studio to 0.18.2. Nine connection types join since 0.17.0, taking the count to 27: etcd, IBM Db2, Neo4j with a Graph tab for Cypher results, Qdrant, Milvus, InfluxDB as two connection types, Oxia, and Databend.
-      - Upgrade rather than wait if more than one person signs in to this instance. 0.18.1 closed `GHSA-jwvh-6phv-j9jh`, which affects the `sqlite` storage this app runs, in every release from 0.8.0 through 0.18.0. An account that signed in on a browser profile another account had signed out of received that account's saved connections, with their stored credentials, and its query history.
-      - On `sqlite` storage the local sign-in gains any number of accounts, managed from Admin. One consequence to know: the account now lives in the database, so `ADMIN_PASSWORD` seeds it on the first start only. Changing that variable later and restarting no longer changes the password; set `ADMIN_PASSWORD_RESET=true` alongside it, restart, then remove the flag.
-      - Studio can serve the Model Context Protocol at `/api/mcp`, so an AI client you already use can list connections, inspect a schema and run one read-only `SELECT` while the database credentials stay on the server. It is off in this package and stays off until you add `LIBREDB_MCP_ENABLED` and `LIBREDB_MCP_URL` as extra environment variables yourself. Each user then mints a bearer token that is shown once, only connections explicitly marked for it are visible, and the read query runs on PostgreSQL, SQLite, DuckDB and SQL Server.
+      - Updates LibreDB Studio to 0.18.3, a patch release. Two read-only connection types join since 0.18.2, taking the count to 29: Kubernetes, which reads one cluster over the API server with no driver, and S3-compatible object storage, verified on MinIO, Silo, Garage and RustFS and not on AWS S3 or any hosted service.
+      - The image carries no security fix this time, so there is no urgency to upgrade. The one security fix in this release is in the Helm chart, which this app does not use.
+      - A connection whose host never answers now fails with a sentence naming the host, the port and the seconds waited, instead of a Test Connection that hangs or suggests trying a simpler query.
+      - Query history now masks the value of a credential flag such as `--token` as `***`, including when the value hides behind a no-break space, a zero-width character or a typographic dash.
+      - Fixes land on StarRocks inline row edits, RisingWave read-back after an edit, ScyllaDB View Source on a materialized view, Milvus collections with dynamic fields, Oracle Generate Test Data, and Test Connection on Couchbase and Trino, which no longer reports success for a bucket or a pinned catalog that is not there. Terminate on a session row is now offered only to an admin.
     zh_CN: |-
-      - 将 LibreDB Studio 更新至 0.18.2。自 0.17.0 起新增九种连接类型，总数达到 27 种：etcd、IBM Db2、Neo4j（含用于 Cypher 结果的 Graph 标签页）、Qdrant、Milvus、InfluxDB（两种连接类型）、Oxia 和 Databend。
-      - 如果有多个人登录本实例，请尽快升级。0.18.1 修复了 `GHSA-jwvh-6phv-j9jh`，该问题影响本应用所使用的 `sqlite` 存储，波及 0.8.0 至 0.18.0 的每个版本。当某个账户在另一账户登出过的浏览器配置文件中登录时，会接收到对方已保存的连接（含其中存储的凭据）以及查询历史。
-      - 在 `sqlite` 存储下，本地登录支持任意数量的账户，可在管理后台管理。需要注意的一点是：账户现在保存在数据库中，`ADMIN_PASSWORD` 仅在首次启动时写入。之后修改该变量并重启不会再改变密码；请同时设置 `ADMIN_PASSWORD_RESET=true`，重启后再删除该变量。
-      - Studio 可在 `/api/mcp` 上提供 Model Context Protocol 服务，你现有的 AI 客户端可以列出连接、查看结构并执行一条只读 `SELECT`，数据库凭据始终留在服务端。本安装包中该功能处于关闭状态，需自行添加 `LIBREDB_MCP_ENABLED` 和 `LIBREDB_MCP_URL` 两个环境变量才能开启。开启后，每位用户生成的 bearer token 只显示一次，只有被显式标记的连接才可见，只读查询支持 PostgreSQL、SQLite、DuckDB 和 SQL Server。
+      - 将 LibreDB Studio 更新至 0.18.3，这是一个补丁版本。自 0.18.2 起新增两种只读连接类型，总数达到 29 种：Kubernetes（通过 API Server 读取单个集群，无需驱动）和兼容 S3 的对象存储（已在 MinIO、Silo、Garage 和 RustFS 上验证，未在 AWS S3 或任何托管服务上验证）。
+      - 本次镜像不包含安全修复，因此无需急于升级。本版本中唯一的安全修复位于 Helm chart，而本应用并不使用它。
+      - 当主机始终没有响应时，连接现在会直接报错，并在提示中写明主机、端口和已等待的秒数，而不再让连接测试一直挂起或建议改用更简单的查询。
+      - 查询历史现在会把 `--token` 等凭据参数的值显示为 `***`，即使该值前后夹着不换行空格、零宽字符或排版连字符也同样生效。
+      - 本次修复涵盖：StarRocks 的行内编辑、RisingWave 编辑后的回读、ScyllaDB 物化视图的查看源码、含动态字段的 Milvus 集合、Oracle 的生成测试数据，以及 Couchbase 和 Trino 的连接测试（不再对不存在的 bucket 或固定目录报告成功）。会话行上的终止操作现在仅对管理员可用。
   website: https://libredb.org
   repo: https://github.com/libredb/libredb-studio
   support: https://github.com/libredb/libredb-studio/issues
