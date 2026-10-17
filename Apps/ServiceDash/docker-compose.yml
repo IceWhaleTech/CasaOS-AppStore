@@ -2,7 +2,7 @@ name: service-dash
 
 services:
   service-dash:
-    image: ghcr.io/cvaghela/service-dash:1.5.2
+    image: ghcr.io/cvaghela/service-dash:1.6.0
     container_name: service-dash
     ports:
       - target: 80
@@ -59,7 +59,7 @@ services:
   # Answers one question for nginx: is this browser really signed in to Uptime
   # Kuma? Without it, saving settings would have to trust the browser's word.
   kuma-auth:
-    image: ghcr.io/cvaghela/service-dash-kuma-auth:1.5.2
+    image: ghcr.io/cvaghela/service-dash-kuma-auth:1.6.0
     container_name: service-dash-kuma-auth
     environment:
       # Must point at the same Uptime Kuma as KUMA_PORT above.
@@ -83,7 +83,7 @@ services:
     restart: unless-stopped
 
   network-info:
-    image: ghcr.io/cvaghela/service-dash-network-info:1.5.2
+    image: ghcr.io/cvaghela/service-dash-network-info:1.6.0
     container_name: service-dash-network-info
     network_mode: host
     read_only: true
@@ -116,10 +116,14 @@ services:
     environment:
       CETUSGUARD_BACKEND_ADDR: unix:///var/run/docker.sock
       CETUSGUARD_FRONTEND_ADDR: tcp://0.0.0.0:2375
-      # Read-only, and only the two network endpoints the dashboard needs.
+      # Every rule here was measured, not assumed: netdata resolves container
+      # names with exactly this set, and adding /_ping, /version or the
+      # container list changed nothing. The only request it makes that is NOT
+      # allowed is GET /images/json, which is refused and costs it nothing.
       CETUSGUARD_RULES: |
         GET %API_PREFIX_NETWORKS%(\?.*)?
         GET %API_PREFIX_NETWORKS%/%NETWORK_ID_OR_NAME%(\?.*)?
+        GET %API_PREFIX_CONTAINERS%/%CONTAINER_ID_OR_NAME%/json(\?.*)?
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
@@ -136,6 +140,16 @@ services:
     pid: host
     environment:
       DISABLE_TELEMETRY: "1"
+      # Netdata needs Docker only to turn a cgroup id into a container name.
+      # It used to get that from a direct bind of /var/run/docker.sock -- which
+      # is the whole Docker API, `:ro` or not: that mode makes the MOUNT
+      # read-only, never the socket, so POST /containers/create still worked.
+      # Measured on a real host: without any Docker access every chart reads as
+      # a truncated id (`80a653f2a9c5`) and the per-card container mapping,
+      # which is stored by name, breaks whenever a container is recreated. So
+      # the access is required -- but the raw socket is not. Through CetusGuard
+      # names resolve exactly as before while POST /containers/create is 403.
+      DOCKER_HOST: tcp://docker-metadata:2375
     cap_add:
       - SYS_PTRACE
       - SYS_ADMIN
@@ -159,7 +173,6 @@ services:
       - /sys:/host/sys:ro
       - /etc/os-release:/host/etc/os-release:ro
       - /var/log:/host/var/log:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
       - /run/dbus:/run/dbus:ro
     networks:
       service-dash-network:
@@ -184,7 +197,7 @@ services:
   #
   #   docker exec -it service-dash-claude-usage claude auth login
   claude-usage:
-    image: ghcr.io/cvaghela/service-dash-claude-usage:1.5.2
+    image: ghcr.io/cvaghela/service-dash-claude-usage:1.6.0
     container_name: service-dash-claude-usage
     environment:
       # Plan windows move slowly; polling harder gains nothing.
@@ -211,7 +224,7 @@ services:
   # localhost and hangs.
   #   docker exec -it service-dash-codex-usage codex login --device-auth
   codex-usage:
-    image: ghcr.io/cvaghela/service-dash-codex-usage:1.5.2
+    image: ghcr.io/cvaghela/service-dash-codex-usage:1.6.0
     container_name: service-dash-codex-usage
     environment:
       CODEX_USAGE_REFRESH_SECONDS: "300"
@@ -243,8 +256,8 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.5.2"
-  update_at: "2026-08-30"
+  version: "1.6.0"
+  update_at: "2026-10-17"
   author: Chintan Vaghela
   developer: Chintan Vaghela
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ServiceDash/icon.png
@@ -1378,298 +1391,256 @@ x-casaos:
         然后在 **8888** 端口打开 Service Dash。
   release_notes:
     en_US: |
-      1.5.2 makes an empty dashboard explain itself. A blank grid used to say
-      almost nothing: a small OFFLINE in the top bar, and a toast that cleared
-      itself after five seconds. Installing for the first time, you could not
-      tell "Uptime Kuma is not set up yet" from "this app is broken".
+      1.6.0 adds three things to the dashboard.
 
-      A blank grid now names which of three things happened, and what to do
-      about it:
+      A card mapped to a container now shows that container's network traffic: a
+      wave across the card for the last five minutes, download above the line and
+      upload below it, with the current rates beside CPU and RAM.
 
-        * Uptime Kuma is not answering. It is a separate application, and
-          Service Dash does not bundle or install it -- so the panel says that
-          plainly, then walks through installing it, publishing a status page,
-          and matching KUMA_PORT and STATUS_SLUG.
-        * It answered, but that status page has no monitors on it. Steps for
-          the Uptime Kuma editor, including adding a group first, which is
-          where most empty pages get stuck.
-        * Your cards are loaded, and the search and filters are hiding them.
+      Categories are filled in for well-known apps, so far fewer cards end up under
+      "Other". Any card can also be filed by hand from its settings, including under
+      categories you create yourself.
 
-      Nothing else changed. If your dashboard already shows cards, this release
-      is invisible to you.
+      The AI usage panel can show when your Claude and ChatGPT plans renew or
+      expire. Neither service reports this, so you enter the date once in Settings
+      and it moves forward on its own.
+
+      The Compose file only changes its image tags, so updating the images is
+      enough -- including from the app store.
     en_GB: |
-      1.5.2 makes an empty dashboard explain itself. A blank grid used to say
-      almost nothing: a small OFFLINE in the top bar, and a toast that cleared
-      itself after five seconds. Installing for the first time, you could not
-      tell "Uptime Kuma is not set up yet" from "this app is broken".
+      1.6.0 adds three things to the dashboard.
 
-      A blank grid now names which of three things happened, and what to do
-      about it:
+      A card mapped to a container now shows that container's network traffic: a
+      wave across the card for the last five minutes, download above the line and
+      upload below it, with the current rates beside CPU and RAM.
 
-        * Uptime Kuma is not answering. It is a separate application, and
-          Service Dash does not bundle or install it -- so the panel says that
-          plainly, then walks through installing it, publishing a status page,
-          and matching KUMA_PORT and STATUS_SLUG.
-        * It answered, but that status page has no monitors on it. Steps for
-          the Uptime Kuma editor, including adding a group first, which is
-          where most empty pages get stuck.
-        * Your cards are loaded, and the search and filters are hiding them.
+      Categories are filled in for well-known apps, so far fewer cards end up under
+      "Other". Any card can also be filed by hand from its settings, including under
+      categories you create yourself.
 
-      Nothing else changed. If your dashboard already shows cards, this release
-      is invisible to you.
+      The AI usage panel can show when your Claude and ChatGPT plans renew or
+      expire. Neither service reports this, so you enter the date once in Settings
+      and it moves forward on its own.
+
+      The Compose file only changes its image tags, so updating the images is
+      enough -- including from the app store.
     de_DE: |
-      1.5.2 lässt ein leeres Dashboard sich selbst erklären. Bisher sagte ein
-      leeres Raster fast nichts: ein kleines OFFLINE in der oberen Leiste und
-      eine Meldung, die nach fünf Sekunden verschwand. Bei der ersten
-      Installation war "Uptime Kuma ist noch nicht eingerichtet" nicht von
-      "diese App ist kaputt" zu unterscheiden.
+      1.6.0 bringt drei Neuerungen für das Dashboard.
 
-      Ein leeres Raster nennt jetzt, welcher der drei Fälle vorliegt, und was
-      zu tun ist:
+      Eine Karte, die einem Container zugeordnet ist, zeigt jetzt dessen
+      Netzwerkverkehr: eine Welle über die ganze Karte für die letzten fünf Minuten,
+      Download oberhalb der Linie und Upload darunter, mit den aktuellen Raten neben
+      CPU und RAM.
 
-        * Uptime Kuma antwortet nicht. Es ist eine eigenständige Anwendung, die
-          Service Dash weder mitliefert noch installiert -- das sagt das Panel
-          jetzt deutlich und führt dann durch Installation, Statusseite und die
-          passenden Werte für KUMA_PORT und STATUS_SLUG.
-        * Es hat geantwortet, aber auf der Statusseite liegen keine Monitore.
-          Schritte für den Editor von Uptime Kuma, einschließlich: zuerst eine
-          Gruppe anlegen -- daran scheitern die meisten leeren Seiten.
-        * Ihre Karten sind geladen, und Suche und Filter blenden sie aus.
+      Für bekannte Apps werden die Kategorien automatisch gesetzt, sodass deutlich
+      weniger Karten unter "Other" landen. Jede Karte lässt sich außerdem in ihren
+      Einstellungen von Hand einordnen, auch in selbst angelegte Kategorien.
 
-      Sonst hat sich nichts geändert. Zeigt Ihr Dashboard bereits Karten, ist
-      dieses Update für Sie unsichtbar.
+      Die AI-usage-Anzeige kann zeigen, wann deine Claude- und ChatGPT-Abos sich
+      verlängern oder auslaufen. Keiner der Dienste meldet das, also trägst du das
+      Datum einmal in den Einstellungen ein, und es rückt von selbst weiter.
+
+      In der Compose-Datei ändern sich nur die Image-Tags -- die Images zu
+      aktualisieren genügt, auch aus dem App Store.
     el_GR: |
-      Η έκδοση 1.5.2 κάνει έναν άδειο πίνακα να εξηγεί τον εαυτό του. Μέχρι
-      τώρα ένα άδειο πλέγμα δεν έλεγε σχεδόν τίποτα: ένα μικρό OFFLINE στην
-      επάνω μπάρα και ένα μήνυμα που έσβηνε μετά από πέντε δευτερόλεπτα. Στην
-      πρώτη εγκατάσταση, το "το Uptime Kuma δεν έχει ρυθμιστεί ακόμη" δεν
-      ξεχώριζε από το "η εφαρμογή χάλασε".
+      Η 1.6.0 φέρνει τρία νέα στο dashboard.
 
-      Τώρα το άδειο πλέγμα ονομάζει ποιο από τα τρία συνέβη, και τι να κάνετε:
+      Μια κάρτα που αντιστοιχεί σε container δείχνει τώρα την κίνηση δικτύου του: ένα
+      κύμα σε όλη την κάρτα για τα τελευταία πέντε λεπτά, λήψη πάνω από τη γραμμή και
+      αποστολή κάτω από αυτήν, με τους τρέχοντες ρυθμούς δίπλα σε CPU και RAM.
 
-        * Το Uptime Kuma δεν απαντά. Είναι ξεχωριστή εφαρμογή, την οποία το
-          Service Dash δεν περιλαμβάνει ούτε εγκαθιστά -- ο πίνακας το λέει
-          πλέον καθαρά και μετά σας οδηγεί στην εγκατάσταση, στη δημοσίευση
-          σελίδας κατάστασης και στην αντιστοίχιση KUMA_PORT και STATUS_SLUG.
-        * Απάντησε, αλλά η σελίδα κατάστασης δεν έχει monitors. Βήματα για τον
-          επεξεργαστή του Uptime Kuma, μαζί με το "πρώτα προσθέστε ομάδα", εκεί
-          όπου κολλάνε οι περισσότερες άδειες σελίδες.
-        * Οι κάρτες σας έχουν φορτώσει και τις κρύβουν η αναζήτηση και τα
-          φίλτρα.
+      Οι κατηγορίες συμπληρώνονται αυτόματα για γνωστές εφαρμογές, οπότε πολύ λιγότερες
+      κάρτες καταλήγουν στο "Other". Κάθε κάρτα μπορεί επίσης να ταξινομηθεί με το χέρι
+      από τις ρυθμίσεις της, και σε κατηγορίες που δημιουργείς εσύ.
 
-      Τίποτε άλλο δεν άλλαξε. Αν ο πίνακάς σας δείχνει ήδη κάρτες, αυτή η
-      έκδοση είναι αόρατη για εσάς.
+      Το πάνελ AI usage μπορεί να δείχνει πότε ανανεώνονται ή λήγουν οι συνδρομές σου
+      σε Claude και ChatGPT. Καμία υπηρεσία δεν το αναφέρει, οπότε βάζεις την
+      ημερομηνία μία φορά στις ρυθμίσεις και προχωρά μόνη της.
+
+      Στο αρχείο Compose αλλάζουν μόνο τα tags των images, άρα αρκεί να ενημερώσεις τα
+      images -- και από το app store.
     fr_FR: |
-      La version 1.5.2 fait en sorte qu'un tableau de bord vide s'explique
-      lui-même. Jusqu'ici une grille vide ne disait presque rien : un petit
-      OFFLINE dans la barre du haut et une notification qui disparaissait au
-      bout de cinq secondes. À la première installation, impossible de
-      distinguer « Uptime Kuma n'est pas encore configuré » de « cette
-      application est cassée ».
+      La 1.6.0 apporte trois nouveautés au tableau de bord.
 
-      Une grille vide indique désormais lequel des trois cas s'applique, et
-      quoi faire :
+      Une carte associée à un conteneur affiche maintenant son trafic réseau : une
+      vague sur toute la carte pour les cinq dernières minutes, le téléchargement
+      au-dessus de la ligne et l'envoi en dessous, avec les débits actuels à côté du
+      CPU et de la RAM.
 
-        * Uptime Kuma ne répond pas. C'est une application distincte, que
-          Service Dash n'embarque ni n'installe -- le panneau le dit clairement,
-          puis détaille l'installation, la publication d'une page de statut et
-          la correspondance de KUMA_PORT et STATUS_SLUG.
-        * Il a répondu, mais cette page de statut ne contient aucun moniteur.
-          Les étapes dans l'éditeur d'Uptime Kuma, dont « créer d'abord un
-          groupe », là où bloquent la plupart des pages vides.
-        * Vos cartes sont chargées, et la recherche et les filtres les masquent.
+      Les catégories sont renseignées pour les applications connues, si bien que bien
+      moins de cartes finissent dans « Other ». Chaque carte peut aussi être classée à
+      la main depuis ses réglages, y compris dans des catégories que vous créez.
 
-      Rien d'autre n'a changé. Si votre tableau de bord affiche déjà des cartes,
-      cette version vous est invisible.
+      Le panneau AI usage peut indiquer quand vos abonnements Claude et ChatGPT se
+      renouvellent ou expirent. Aucun des deux services ne le communique : vous
+      saisissez la date une fois dans les réglages et elle avance d'elle-même.
+
+      Seuls les tags d'images changent dans le fichier Compose : mettre à jour les
+      images suffit, y compris depuis l'app store.
     hr_HR: |
-      Verzija 1.5.2 čini da se prazna nadzorna ploča sama objasni. Dosad prazna
-      mreža nije govorila gotovo ništa: malen natpis OFFLINE u gornjoj traci i
-      poruka koja bi nestala nakon pet sekundi. Pri prvoj instalaciji niste
-      mogli razlikovati "Uptime Kuma još nije postavljen" od "aplikacija je
-      pokvarena".
+      1.6.0 donosi tri novosti na nadzornu ploču.
 
-      Prazna mreža sada imenuje koje se od tri stvari dogodilo i što učiniti:
+      Kartica povezana s containerom sada prikazuje njegov mrežni promet: val preko
+      cijele kartice za zadnjih pet minuta, preuzimanje iznad crte i slanje ispod nje,
+      s trenutnim brzinama pokraj CPU-a i RAM-a.
 
-        * Uptime Kuma ne odgovara. To je zasebna aplikacija koju Service Dash ne
-          isporučuje niti instalira -- ploča to sada jasno kaže, a zatim vodi
-          kroz instalaciju, objavu stranice stanja i usklađivanje KUMA_PORT i
-          STATUS_SLUG.
-        * Odgovorio je, ali na toj stranici stanja nema monitora. Koraci za
-          uređivač Uptime Kume, uključujući "prvo dodajte grupu", na čemu zapne
-          većina praznih stranica.
-        * Vaše su kartice učitane, a pretraga i filtri ih skrivaju.
+      Kategorije se popunjavaju za poznate aplikacije, pa znatno manje kartica završi
+      u "Other". Svaku karticu možete i ručno razvrstati u njezinim postavkama,
+      uključujući kategorije koje sami stvorite.
 
-      Ništa se drugo nije promijenilo. Ako vaša ploča već prikazuje kartice, ovo
-      je izdanje za vas nevidljivo.
+      Ploča AI usage može prikazati kada se vaše Claude i ChatGPT pretplate obnavljaju
+      ili istječu. Nijedna usluga to ne javlja, pa datum unesete jednom u postavkama i
+      on se sam pomiče naprijed.
+
+      U Compose datoteci mijenjaju se samo oznake imagea, pa je dovoljno ažurirati
+      image -- i iz app storea.
     it_IT: |
-      La 1.5.2 fa in modo che una dashboard vuota si spieghi da sola. Finora una
-      griglia vuota non diceva quasi nulla: un piccolo OFFLINE nella barra in
-      alto e un avviso che spariva dopo cinque secondi. Alla prima
-      installazione, "Uptime Kuma non è ancora configurato" era
-      indistinguibile da "questa app è rotta".
+      La 1.6.0 porta tre novità nella dashboard.
 
-      Ora una griglia vuota dice quale dei tre casi è il vostro, e cosa fare:
+      Una scheda associata a un container ora mostra il suo traffico di rete: un'onda
+      su tutta la scheda per gli ultimi cinque minuti, download sopra la linea e
+      upload sotto, con le velocità attuali accanto a CPU e RAM.
 
-        * Uptime Kuma non risponde. È un'applicazione separata, che Service Dash
-          non include né installa -- il pannello lo dice chiaramente e poi guida
-          all'installazione, alla pubblicazione di una pagina di stato e
-          all'allineamento di KUMA_PORT e STATUS_SLUG.
-        * Ha risposto, ma quella pagina di stato non ha monitor. I passaggi
-          nell'editor di Uptime Kuma, incluso "prima aggiungete un gruppo", dove
-          si bloccano quasi tutte le pagine vuote.
-        * Le vostre schede sono caricate, e ricerca e filtri le stanno
-          nascondendo.
+      Le categorie vengono assegnate per le app più note, quindi molte meno schede
+      finiscono in "Other". Ogni scheda si può anche classificare a mano dalle sue
+      impostazioni, anche in categorie create da te.
 
-      Nient'altro è cambiato. Se la vostra dashboard mostra già le schede,
-      questa versione è invisibile.
+      Il pannello AI usage può mostrare quando i tuoi abbonamenti Claude e ChatGPT si
+      rinnovano o scadono. Nessuno dei due servizi lo comunica, quindi inserisci la
+      data una volta nelle impostazioni e avanza da sola.
+
+      Nel file Compose cambiano solo i tag delle immagini, quindi aggiornare le
+      immagini basta -- anche dall'app store.
     ja_JP: |
-      1.5.2 では、空のダッシュボードが自分で理由を説明するようになりました。これまで
-      空のグリッドが伝えていたのは、上部バーの小さな OFFLINE と、5 秒で消えてしまう
-      通知だけでした。初めて導入した人には、「Uptime Kuma をまだ設定していない」のか
-      「このアプリが壊れている」のか見分けがつきませんでした。
+      1.6.0 ではダッシュボードに 3 つの機能が加わります。
 
-      空のグリッドは、次の 3 つのどれに当たるかと、その対処を示します。
+      コンテナに割り当てたカードに、そのコンテナのネットワーク通信が表示されるように
+      なりました。直近 5 分間の波形がカード全体に描かれ、線より上がダウンロード、下が
+      アップロードで、現在の速度は CPU と RAM の横に表示されます。
 
-        * Uptime Kuma が応答していない。これは別のアプリケーションで、Service Dash
-          は同梱もインストールもしません。パネルはそれをはっきり伝えたうえで、
-          インストール、ステータスページの公開、KUMA_PORT と STATUS_SLUG の
-          合わせ方まで案内します。
-        * 応答はあったが、そのステータスページに監視項目がない。Uptime Kuma の
-          エディターでの手順を示します。最初にグループを追加すること、が
-          空のページで最もつまずく点です。
-        * カードは読み込まれていて、検索とフィルターが隠している。
+      よく知られたアプリにはカテゴリが自動で付くため、"Other" に入るカードが大きく
+      減ります。各カードは設定から手動で分類することもでき、自分で作ったカテゴリも
+      使えます。
 
-      ほかに変更はありません。すでにカードが表示されているなら、この更新は
-      目に見えないはずです。
+      AI usage パネルに、Claude と ChatGPT のプランの更新日や終了日を表示できます。
+      どちらのサービスもこれを提供していないため、設定で一度日付を入力すれば、あとは
+      自動で先へ進みます。
+
+      Compose ファイルで変わるのはイメージのタグだけなので、イメージを更新すれば
+      十分です。アプリストアからの更新でも適用されます。
     ko_KR: |
-      1.5.2는 비어 있는 대시보드가 스스로 이유를 설명하게 합니다. 지금까지 빈 그리드가
-      알려 주는 것은 상단 바의 작은 OFFLINE과 5초 만에 사라지는 알림뿐이었습니다. 처음
-      설치한 사람은 "Uptime Kuma를 아직 설정하지 않았다"와 "이 앱이 고장 났다"를 구분할
-      수 없었습니다.
+      1.6.0은 대시보드에 세 가지를 더합니다.
 
-      이제 빈 그리드는 셋 중 어떤 상황인지와 무엇을 해야 하는지 알려 줍니다.
+      컨테이너에 연결된 카드에 이제 그 컨테이너의 네트워크 트래픽이 표시됩니다. 최근
+      5분 동안의 파형이 카드 전체에 그려지며, 선 위가 다운로드, 아래가 업로드이고, 현재
+      속도는 CPU와 RAM 옆에 표시됩니다.
 
-        * Uptime Kuma가 응답하지 않음. 이것은 별도의 애플리케이션이며 Service Dash가
-          함께 담거나 설치해 주지 않습니다. 패널이 그 점을 분명히 밝힌 뒤 설치, 상태
-          페이지 게시, KUMA_PORT와 STATUS_SLUG 맞추기까지 안내합니다.
-        * 응답은 왔지만 그 상태 페이지에 모니터가 없음. Uptime Kuma 편집기에서의
-          단계를 안내하며, 그중 "그룹을 먼저 추가"가 빈 페이지가 가장 많이 막히는
-          지점입니다.
-        * 카드는 불러왔고, 검색과 필터가 가리고 있음.
+      잘 알려진 앱은 카테고리가 자동으로 지정되어 "Other"에 들어가는 카드가 크게
+      줄어듭니다. 각 카드는 설정에서 직접 분류할 수도 있고, 직접 만든 카테고리도 쓸 수
+      있습니다.
 
-      그 밖에 달라진 것은 없습니다. 이미 카드가 보이고 있다면 이번 업데이트는 눈에
-      띄지 않을 것입니다.
+      AI usage 패널에서 Claude와 ChatGPT 요금제의 갱신일이나 만료일을 볼 수 있습니다.
+      두 서비스 모두 이를 알려 주지 않으므로 설정에서 날짜를 한 번 입력하면 이후에는
+      알아서 앞으로 넘어갑니다.
+
+      Compose 파일에서는 이미지 태그만 바뀌므로 이미지만 업데이트하면 됩니다. 앱
+      스토어에서 업데이트해도 적용됩니다.
     nb_NO: |
-      1.5.2 får et tomt dashbord til å forklare seg selv. Til nå sa et tomt
-      rutenett nesten ingenting: et lite OFFLINE i topplinjen og en melding som
-      forsvant etter fem sekunder. Ved første installasjon kunne du ikke skille
-      "Uptime Kuma er ikke satt opp ennå" fra "denne appen er ødelagt".
+      1.6.0 gir dashbordet tre nyheter.
 
-      Et tomt rutenett sier nå hvilken av tre ting som skjedde, og hva du gjør:
+      Et kort som er koblet til en container viser nå containerens nettverkstrafikk: en
+      bølge over hele kortet for de siste fem minuttene, nedlasting over linjen og
+      opplasting under den, med gjeldende hastigheter ved siden av CPU og RAM.
 
-        * Uptime Kuma svarer ikke. Det er en egen applikasjon, og Service Dash
-          hverken leverer eller installerer den -- panelet sier det rett ut, og
-          går deretter gjennom installasjon, publisering av en statusside og
-          hvordan KUMA_PORT og STATUS_SLUG skal stemme.
-        * Det svarte, men statussiden har ingen overvåkere. Stegene i Uptime
-          Kumas redigering, inkludert "legg til en gruppe først", der de fleste
-          tomme sider står fast.
-        * Kortene dine er lastet, og søket og filtrene skjuler dem.
+      Kategorier fylles ut for kjente apper, så langt færre kort havner under "Other".
+      Hvert kort kan også sorteres for hånd i innstillingene, også i kategorier du
+      lager selv.
 
-      Ingenting annet er endret. Viser dashbordet ditt allerede kort, er denne
-      utgivelsen usynlig for deg.
+      AI usage-panelet kan vise når Claude- og ChatGPT-abonnementene dine fornyes
+      eller utløper. Ingen av tjenestene oppgir dette, så du legger inn datoen én gang
+      i innstillingene, og den flytter seg fremover av seg selv.
+
+      Compose-filen endrer bare image-taggene, så det er nok å oppdatere imagene --
+      også fra appbutikken.
     pt_PT: |
-      A 1.5.2 faz com que um painel vazio se explique a si próprio. Até agora
-      uma grelha vazia não dizia quase nada: um pequeno OFFLINE na barra
-      superior e um aviso que desaparecia ao fim de cinco segundos. Numa
-      primeira instalação, não era possível distinguir "o Uptime Kuma ainda não
-      está configurado" de "esta aplicação está avariada".
+      A 1.6.0 traz três novidades ao painel.
 
-      Uma grelha vazia indica agora qual dos três casos se aplica, e o que
-      fazer:
+      Um cartão associado a um contentor mostra agora o tráfego de rede desse
+      contentor: uma onda em todo o cartão para os últimos cinco minutos, transferência
+      acima da linha e envio abaixo dela, com as velocidades atuais ao lado do CPU e
+      da RAM.
 
-        * O Uptime Kuma não responde. É uma aplicação separada, que o Service
-          Dash não inclui nem instala -- o painel di-lo claramente e depois
-          orienta a instalação, a publicação de uma página de estado e a
-          correspondência de KUMA_PORT e STATUS_SLUG.
-        * Respondeu, mas essa página de estado não tem monitores. Os passos no
-          editor do Uptime Kuma, incluindo "adicione primeiro um grupo", onde
-          encalham quase todas as páginas vazias.
-        * Os seus cartões estão carregados e a pesquisa e os filtros escondem-nos.
+      As categorias são preenchidas para aplicações conhecidas, pelo que muito menos
+      cartões acabam em "Other". Qualquer cartão pode também ser classificado à mão nas
+      suas definições, incluindo em categorias criadas por si.
 
-      Mais nada mudou. Se o seu painel já mostra cartões, esta versão é
-      invisível para si.
+      O painel AI usage pode mostrar quando os seus planos Claude e ChatGPT renovam ou
+      expiram. Nenhum dos serviços o indica, por isso introduz a data uma vez nas
+      definições e ela avança sozinha.
+
+      O ficheiro Compose só muda as tags das imagens, pelo que atualizar as imagens é
+      suficiente -- incluindo a partir da loja de aplicações.
     ru_RU: |
-      Версия 1.5.2 учит пустую панель объяснять саму себя. Раньше пустая сетка
-      сообщала почти ничего: маленькое OFFLINE в верхней строке и уведомление,
-      исчезавшее через пять секунд. При первой установке нельзя было отличить
-      «Uptime Kuma ещё не настроен» от «приложение сломано».
+      В 1.6.0 на панели появились три новые возможности.
 
-      Теперь пустая сетка называет, что именно из трёх произошло, и что делать:
+      Карточка, привязанная к контейнеру, теперь показывает его сетевой трафик: волна
+      через всю карточку за последние пять минут, загрузка над линией и отдача под
+      ней, а текущие скорости — рядом с CPU и RAM.
 
-        * Uptime Kuma не отвечает. Это отдельное приложение, которое Service
-          Dash не поставляет и не устанавливает, — панель прямо об этом
-          говорит, а затем проводит через установку, публикацию страницы
-          состояния и согласование KUMA_PORT и STATUS_SLUG.
-        * Ответ получен, но на этой странице состояния нет мониторов. Шаги в
-          редакторе Uptime Kuma, в том числе «сначала добавьте группу» — именно
-          здесь застревает большинство пустых страниц.
-        * Карточки загружены, а поиск и фильтры их скрывают.
+      Для известных приложений категории заполняются автоматически, поэтому в "Other"
+      попадает гораздо меньше карточек. Любую карточку можно также отнести к категории
+      вручную в её настройках, в том числе к категориям, созданным вами.
 
-      Больше ничего не изменилось. Если ваша панель уже показывает карточки,
-      этот выпуск для вас незаметен.
+      Панель AI usage может показывать, когда продлеваются или заканчиваются ваши
+      подписки Claude и ChatGPT. Ни один сервис этого не сообщает, поэтому дату нужно
+      один раз указать в настройках, дальше она сдвигается сама.
+
+      В файле Compose меняются только теги образов, так что достаточно обновить образы —
+      в том числе из магазина приложений.
     sv_SE: |
-      1.5.2 får en tom instrumentpanel att förklara sig själv. Hittills sa ett
-      tomt rutnät nästan ingenting: ett litet OFFLINE i topplisten och en
-      avisering som försvann efter fem sekunder. Vid en första installation gick
-      det inte att skilja "Uptime Kuma är inte uppsatt än" från "den här appen
-      är trasig".
+      1.6.0 ger instrumentpanelen tre nyheter.
 
-      Ett tomt rutnät säger nu vilket av tre fall det rör sig om, och vad du gör:
+      Ett kort som är kopplat till en container visar nu containerns nätverkstrafik:
+      en våg över hela kortet för de senaste fem minuterna, nedladdning ovanför linjen
+      och uppladdning under den, med aktuella hastigheter bredvid CPU och RAM.
 
-        * Uptime Kuma svarar inte. Det är en separat applikation som Service
-          Dash varken levererar eller installerar -- panelen säger det rakt ut
-          och går sedan igenom installation, publicering av en statussida och
-          hur KUMA_PORT och STATUS_SLUG ska stämma.
-        * Det svarade, men statussidan har inga övervakare. Stegen i Uptime
-          Kumas redigerare, inklusive "lägg till en grupp först", där de flesta
-          tomma sidor kör fast.
-        * Dina kort är laddade, och sökningen och filtren döljer dem.
+      Kategorier fylls i för välkända appar, så betydligt färre kort hamnar under
+      "Other". Varje kort kan också sorteras för hand i sina inställningar, även i
+      kategorier du skapar själv.
 
-      Inget annat har ändrats. Visar din panel redan kort är den här versionen
-      osynlig för dig.
+      Panelen AI usage kan visa när dina Claude- och ChatGPT-abonnemang förnyas eller
+      upphör. Ingen av tjänsterna anger det, så du fyller i datumet en gång i
+      inställningarna och det flyttar fram av sig självt.
+
+      Compose-filen ändrar bara avbildningarnas taggar, så det räcker att uppdatera
+      avbildningarna -- även från appbutiken.
     tr_TR: |
-      1.5.2, boş bir panonun kendini açıklamasını sağlıyor. Şimdiye kadar boş
-      bir ızgara neredeyse hiçbir şey söylemiyordu: üst çubukta küçük bir
-      OFFLINE ve beş saniyede kaybolan bir bildirim. İlk kurulumda "Uptime Kuma
-      henüz kurulmadı" ile "bu uygulama bozuk" birbirinden ayırt edilemiyordu.
+      1.6.0 panoya üç yenilik getiriyor.
 
-      Boş ızgara artık üç durumdan hangisinin geçerli olduğunu ve ne yapılacağını
-      söylüyor:
+      Bir container'a eşlenen kart artık o container'ın ağ trafiğini gösteriyor: son
+      beş dakika için kartın tamamına yayılan bir dalga, çizginin üstünde indirme,
+      altında yükleme; anlık hızlar da CPU ve RAM'in yanında.
 
-        * Uptime Kuma yanıt vermiyor. Ayrı bir uygulamadır ve Service Dash onu ne
-          içerir ne de kurar -- pano bunu açıkça söylüyor, ardından kurulumu,
-          bir durum sayfası yayımlamayı ve KUMA_PORT ile STATUS_SLUG değerlerini
-          eşleştirmeyi anlatıyor.
-        * Yanıt verdi, ama o durum sayfasında hiç izleyici yok. Uptime Kuma
-          düzenleyicisindeki adımlar, "önce bir grup ekleyin" dahil; boş
-          sayfaların çoğu tam burada takılıyor.
-        * Kartlarınız yüklendi, arama ve filtreler onları gizliyor.
+      Bilinen uygulamaların kategorileri otomatik dolduruluyor, böylece "Other" altında
+      çok daha az kart kalıyor. Her kart ayarlarından elle de sınıflandırılabiliyor,
+      kendi oluşturduğunuz kategoriler dahil.
 
-      Başka bir şey değişmedi. Panonuz zaten kart gösteriyorsa bu sürüm sizin
-      için görünmezdir.
+      AI usage paneli Claude ve ChatGPT planlarınızın ne zaman yenileneceğini ya da
+      sona ereceğini gösterebiliyor. İki hizmet de bunu bildirmediği için tarihi
+      ayarlara bir kez girersiniz, sonrasında kendiliğinden ilerler.
+
+      Compose dosyasında yalnızca imaj etiketleri değişiyor; imajları güncellemek
+      yeterli -- uygulama mağazasından güncellemek de dahil.
     zh_CN: |
-      1.5.2 让空白的仪表盘自己说明原因。过去空白的网格几乎什么都不说：顶栏里一个很小的
-      OFFLINE，加上一条五秒后就消失的提示。第一次安装的人根本分不清是「Uptime Kuma
-      还没配置好」还是「这个应用坏了」。
+      1.6.0 为仪表盘带来三项新功能。
 
-      现在空白的网格会指出是以下三种情况中的哪一种，以及该怎么做：
+      关联到容器的卡片现在会显示该容器的网络流量：整张卡片上画出最近五分钟的波形，
+      线以上是下载，线以下是上传，当前速率显示在 CPU 和 RAM 旁边。
 
-        * Uptime Kuma 没有响应。它是一个独立的应用，Service Dash 既不打包也不安装
-          它——面板会把这一点讲清楚，然后一步步说明如何安装、如何发布状态页，以及如何
-          让 KUMA_PORT 和 STATUS_SLUG 对得上。
-        * 有响应，但那个状态页上没有监控项。给出 Uptime Kuma 编辑器里的步骤，其中
-          「先添加一个分组」正是大多数空状态页卡住的地方。
-        * 卡片已经加载，是搜索和筛选把它们藏起来了。
+      常见应用会自动归类，落进 "Other" 的卡片大大减少。每张卡片也可以在其设置里手动
+      归类，包括归到你自己创建的分类。
 
-      其他没有变化。如果你的仪表盘已经能看到卡片，这次更新对你来说是无感的。
+      AI usage 面板可以显示你的 Claude 和 ChatGPT 套餐何时续订或到期。两项服务都不提供
+      这个信息，所以你在设置里填一次日期，之后它会自动顺延。
+
+      Compose 文件只改了镜像标签，更新镜像就够了，从应用商店更新同样适用。
