@@ -1,7 +1,7 @@
 name: libredb-studio
 services:
   libredb-studio:
-    image: libredb/libredb-studio:0.18.3
+    image: libredb/libredb-studio:1.0.0
     container_name: libredb-studio
     restart: unless-stopped
     ports:
@@ -99,8 +99,8 @@ x-casaos:
   index: /
   scheme: http
   port_map: "3016"
-  version: "0.18.3"
-  update_at: "2026-10-16"
+  version: "1.0.0"
+  update_at: "2026-10-18"
   release_notes:
     en_US: |-
       - Updates LibreDB Studio to 0.18.3, a patch release. Two read-only connection types join since 0.18.2, taking the count to 29: Kubernetes, which reads one cluster over the API server with no driver, and S3-compatible object storage, verified on MinIO, Silo, Garage and RustFS and not on AWS S3 or any hosted service.
