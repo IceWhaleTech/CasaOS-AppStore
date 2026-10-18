@@ -103,17 +103,17 @@ x-casaos:
   update_at: "2026-10-18"
   release_notes:
     en_US: |-
-      - Updates LibreDB Studio to 0.18.3, a patch release. Two read-only connection types join since 0.18.2, taking the count to 29: Kubernetes, which reads one cluster over the API server with no driver, and S3-compatible object storage, verified on MinIO, Silo, Garage and RustFS and not on AWS S3 or any hosted service.
-      - The image carries no security fix this time, so there is no urgency to upgrade. The one security fix in this release is in the Helm chart, which this app does not use.
-      - A connection whose host never answers now fails with a sentence naming the host, the port and the seconds waited, instead of a Test Connection that hangs or suggests trying a simpler query.
-      - Query history now masks the value of a credential flag such as `--token` as `***`, including when the value hides behind a no-break space, a zero-width character or a typographic dash.
-      - Fixes land on StarRocks inline row edits, RisingWave read-back after an edit, ScyllaDB View Source on a materialized view, Milvus collections with dynamic fields, Oracle Generate Test Data, and Test Connection on Couchbase and Trino, which no longer reports success for a bucket or a pinned catalog that is not there. Terminate on a session row is now offered only to an admin.
+      - Updates LibreDB Studio to 1.0.0, a major release. Twelve connection types join, taking the count to forty-one engines: BigQuery, MQTT, Firestore, RabbitMQ, Snowflake, OPC UA, Apache Spark, MTConnect, Modbus, Sparkplug B, NETCONF and SNMP.
+      - It carries one security fix: a disconnect request now closes only the caller's own connections (GHSA-78jw-7pvp-64h3), so a server that several accounts share should be upgraded.
+      - Studio can now run under a control plane that decides who may open which database with which credential. It stays off unless an operator sets `GOVERNANCE_SOURCE`, and an install without that variable behaves as 0.18.3 did.
+      - Agent mode now executes statements on MySQL and MariaDB, MongoDB and Kubernetes.
+      - For anyone calling the HTTP API: a refusal for a missing privilege answers 403 instead of 401, and a statement timeout 504 instead of 408.
     zh_CN: |-
-      - 将 LibreDB Studio 更新至 0.18.3，这是一个补丁版本。自 0.18.2 起新增两种只读连接类型，总数达到 29 种：Kubernetes（通过 API Server 读取单个集群，无需驱动）和兼容 S3 的对象存储（已在 MinIO、Silo、Garage 和 RustFS 上验证，未在 AWS S3 或任何托管服务上验证）。
-      - 本次镜像不包含安全修复，因此无需急于升级。本版本中唯一的安全修复位于 Helm chart，而本应用并不使用它。
-      - 当主机始终没有响应时，连接现在会直接报错，并在提示中写明主机、端口和已等待的秒数，而不再让连接测试一直挂起或建议改用更简单的查询。
-      - 查询历史现在会把 `--token` 等凭据参数的值显示为 `***`，即使该值前后夹着不换行空格、零宽字符或排版连字符也同样生效。
-      - 本次修复涵盖：StarRocks 的行内编辑、RisingWave 编辑后的回读、ScyllaDB 物化视图的查看源码、含动态字段的 Milvus 集合、Oracle 的生成测试数据，以及 Couchbase 和 Trino 的连接测试（不再对不存在的 bucket 或固定目录报告成功）。会话行上的终止操作现在仅对管理员可用。
+      - 将 LibreDB Studio 更新至 1.0.0，这是一个大版本。新增十二种连接类型，总数达到四十一种引擎：BigQuery、MQTT、Firestore、RabbitMQ、Snowflake、OPC UA、Apache Spark、MTConnect、Modbus、Sparkplug B、NETCONF 和 SNMP。
+      - 本版本包含一项安全修复：断开连接请求现在只关闭调用者自己的连接（GHSA-78jw-7pvp-64h3），因此多个账号共用的服务器应当升级。
+      - Studio 现在可以运行在一个控制平面之下，由它决定谁可以用哪个凭据打开哪个数据库。除非运维人员设置 `GOVERNANCE_SOURCE`，该功能保持关闭；未设置该变量的安装与 0.18.3 的行为一致。
+      - 代理模式现在可以在 MySQL 和 MariaDB、MongoDB 以及 Kubernetes 上执行语句。
+      - 调用 HTTP API 的一方需注意：权限不足的拒绝现在返回 403 而不是 401，语句超时返回 504 而不是 408。
   website: https://libredb.org
   repo: https://github.com/libredb/libredb-studio
   support: https://github.com/libredb/libredb-studio/issues
