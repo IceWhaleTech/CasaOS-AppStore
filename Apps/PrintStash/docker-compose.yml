@@ -1,0 +1,106 @@
+# CasaOS / ZimaOS app definition, derived from the root docker-compose.yml.
+# The administrator fields are blank by default: fill them in the install dialog
+# to create the administrator at first start, or leave them blank and register
+# in the browser from your local network.
+name: printstash
+services:
+  printstash:
+    image: ghcr.io/xiao-villamor/printstash:0.14.0
+    restart: unless-stopped
+    stop_grace_period: 60s
+    network_mode: bridge
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      VAULT_SETUP_MODE: trusted_network
+      VAULT_RESTART_ENABLED: "true"
+      VAULT_SETUP_ADMIN_USERNAME: ""
+      VAULT_SETUP_ADMIN_PASSWORD: ""
+      VAULT_SETUP_ADMIN_EMAIL: ""
+      # GPU use and memory budgets. The image uses a GPU when the container can
+      # see one (see docs/compute.md) and the CPU otherwise.
+      VAULT_COMPUTE_MODE: auto
+      VAULT_COMPUTE_MEMORY_MB: "1024"
+      VAULT_MESH_MEMORY_BUDGET_FRACTION: "0.5"
+      VAULT_EMBEDDING_MEMORY_BUDGET_FRACTION: "0.25"
+    # To give the app an Intel or AMD GPU, add under this service:
+    #   devices: ["/dev/dri:/dev/dri"]
+    # (left out because a host without /dev/dri would not start the app).
+    ports:
+      # 3000 is taken by many dashboard apps; the store remaps to a quieter port.
+      - target: 3000
+        published: "3378"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: Numeric owner of the data folder and mounted Library sources.
+        - container: PGID
+          description:
+            en_US: Numeric group of the data folder and mounted Library sources.
+        - container: VAULT_SETUP_ADMIN_USERNAME
+          description:
+            en_US: With VAULT_SETUP_MODE set to environment, creates this administrator at first start. Use it if you will first open PrintStash through Tailscale, a VPN, a reverse proxy or a domain. Leave it blank with trusted_network to create the administrator in the browser from your local network (casaos.local or the device's LAN IP).
+        - container: VAULT_SETUP_ADMIN_PASSWORD
+          description:
+            en_US: Optional, at least 8 characters. Used once; reset it later under Settings → Users.
+        - container: VAULT_SETUP_ADMIN_EMAIL
+          description:
+            en_US: Optional administrator email.
+        - container: VAULT_COMPUTE_MODE
+          description:
+            en_US: auto uses a GPU when the container can see one and falls back to the CPU; cpu never uses it.
+        - container: VAULT_COMPUTE_MEMORY_MB
+          description:
+            en_US: Most GPU memory in MiB (256 to 65536) PrintStash may plan to use. An upper bound, not a reservation.
+        - container: VAULT_MESH_MEMORY_BUDGET_FRACTION
+          description:
+            en_US: Share of the device's RAM (0 to 1) that thumbnail and geometry work may reserve. Lower it on a small device.
+        - container: VAULT_EMBEDDING_MEMORY_BUDGET_FRACTION
+          description:
+            en_US: Share of the device's RAM (above 0, below 1) that resident AI search models may hold.
+        - container: VAULT_SETUP_MODE
+          description:
+            en_US: trusted_network registers the first administrator in the browser from your local network, with the administrator fields blank. environment creates it at first start from the administrator fields, which are then required.
+      ports:
+        - container: "3000"
+          description:
+            en_US: Web UI port
+      volumes:
+        - container: /data
+          description:
+            en_US: Database, managed files, thumbnails, staging and backups. Do not point this at an existing model library.
+    container_name: printstash
+
+x-casaos:
+  id: org.printstash.printstash
+  architectures:
+    - amd64
+    - arm64
+  main: printstash
+  author: PrintStash contributors
+  developer: PrintStash
+  category: Utilities
+  title:
+    en_US: PrintStash
+  tagline:
+    en_US: A self-hosted library for 3D models and the G-code that prints them
+  description:
+    en_US: |
+      PrintStash keeps your 3D models, sliced G-code revisions and print history in one searchable library on your own server. Preview STL, 3MF, OBJ, STEP and G-code in the browser, keep the revisions that printed well, index existing folders in place, and send prints to Klipper/Moonraker, OctoPrint, PrusaLink, Bambu Lab and Elegoo printers.
+  tips:
+    before_install:
+      en_US: |
+        By default (VAULT_SETUP_MODE trusted_network) you create the first administrator in the browser from your local network (casaos.local or the device's LAN IP); registration through Tailscale, a VPN, a reverse proxy or a domain is refused. To create it at first start instead, set VAULT_SETUP_MODE to environment and fill in the administrator username and password. Either way, PrintStash then asks where to store your files.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PrintStash/icon.svg
+  thumbnail: ""
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PrintStash/screenshot-1.png
+  index: /
+  port_map: "3378"
+  version: "0.14.0"
