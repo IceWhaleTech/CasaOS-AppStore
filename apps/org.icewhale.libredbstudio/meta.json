@@ -5,7 +5,7 @@
   ],
   "author": "libredb",
   "category": "Developer",
-  "description": "LibreDB Studio is an open-source (MIT), self-hosted SQL IDE. It provides a modern web-based interface to connect to 16 database engines (PostgreSQL, MySQL, MongoDB, Redis, ClickHouse and more), browse schemas, write and run SQL queries, and manage your data from any browser on your LAN. Data is stored locally in a SQLite database, so everything stays under your control.",
+  "description": "LibreDB Studio is an open-source (MIT), self-hosted SQL IDE. It provides a modern web-based interface to connect to twenty-seven database engines (PostgreSQL, MySQL, Oracle, Db2, SQL Server, MongoDB, Redis, ClickHouse, Cassandra, Elasticsearch, Prometheus, Apache Kafka, Neo4j, Qdrant, Milvus, InfluxDB, etcd and more), browse schemas, and write and run queries from any browser on your LAN. Three of the twenty-seven are read-only because their own SQL is. Druid, Elasticsearch and OpenSearch have no `UPDATE` and no `CREATE TABLE` at all. Several more are read-only by construction. Data is stored locally in a SQLite database, so everything stays under your control.",
   "developer": "libredb",
   "screenshot_link": [
     "/apps/org.icewhale.libredbstudio/assets/screenshot-1.webp",
@@ -14,22 +14,22 @@
   ],
   "tagline": "Open-source self-hosted SQL IDE.",
   "thumbnail": "/apps/org.icewhale.libredbstudio/assets/thumbnail.webp",
-  "update_at": "2026-09-09",
+  "update_at": "2026-10-09",
   "website": "https://libredb.org",
   "repo": "https://github.com/libredb/libredb-studio",
   "support": "https://github.com/libredb/libredb-studio/issues",
   "docs": "https://github.com/libredb/libredb-studio/tree/main/docs",
   "title": "LibreDB Studio",
-  "release_note": "- Updates LibreDB Studio to 0.15.0.\n- CREATE TABLE now emits the DDL of the engine it is aimed at instead of PostgreSQL's, so the generated statement runs where it was generated.\n- A database size the server declines to report is shown as absent instead of 0 bytes on MySQL, PostgreSQL, SQL Server and Oracle.\n- No environment variable, port or volume changed, so existing installs need no reconfiguration.",
+  "release_note": "- Updates LibreDB Studio to 0.18.2. Nine connection types join since 0.17.0, taking the count to 27: etcd, IBM Db2, Neo4j with a Graph tab for Cypher results, Qdrant, Milvus, InfluxDB as two connection types, Oxia, and Databend.\n- Upgrade rather than wait if more than one person signs in to this instance. 0.18.1 closed `GHSA-jwvh-6phv-j9jh`, which affects the `sqlite` storage this app runs, in every release from 0.8.0 through 0.18.0. An account that signed in on a browser profile another account had signed out of received that account's saved connections, with their stored credentials, and its query history.\n- On `sqlite` storage the local sign-in gains any number of accounts, managed from Admin. One consequence to know: the account now lives in the database, so `ADMIN_PASSWORD` seeds it on the first start only. Changing that variable later and restarting no longer changes the password; set `ADMIN_PASSWORD_RESET=true` alongside it, restart, then remove the flag.\n- Studio can serve the Model Context Protocol at `/api/mcp`, so an AI client you already use can list connections, inspect a schema and run one read-only `SELECT` while the database credentials stay on the server. It is off in this package and stays off until you add `LIBREDB_MCP_ENABLED` and `LIBREDB_MCP_URL` as extra environment variables yourself. Each user then mints a bearer token that is shown once, only connections explicitly marked for it are visible, and the read query runs on PostgreSQL, SQLite, DuckDB and SQL Server.",
   "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
   "id": "org.icewhale.libredbstudio",
-  "version": "0.15.0",
+  "version": "0.18.2",
   "categories": [
     "developer"
   ],
   "min_memory": 268435456,
   "min_image_size": {
-    "amd64": 312367570,
-    "arm64": 305829300
+    "amd64": 226798666,
+    "arm64": 222933257
   }
 }

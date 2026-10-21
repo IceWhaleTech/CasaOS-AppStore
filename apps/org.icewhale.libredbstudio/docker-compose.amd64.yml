@@ -1,7 +1,7 @@
 name: libredb-studio
 services:
   libredb-studio:
-    image: libredb/libredb-studio:0.15.0@sha256:3438d2f646b064ecf1866a1f84b5b189f5ad09a30d103928ce6bae1d832d6263
+    image: libredb/libredb-studio:0.18.2@sha256:78815fa8568d4112cbd22e8766703a3724777f18ef9cfefb2114c6eb3466bc2f
     container_name: libredb-studio
     restart: unless-stopped
     ports:
@@ -10,8 +10,8 @@ services:
         protocol: tcp
     environment:
       ADMIN_EMAIL: admin@libredb.org
-      ADMIN_PASSWORD: changeme123
-      JWT_SECRET: libredb-studio-change-this-to-a-long-random-secret-value-min-48
+      ADMIN_PASSWORD: ""
+      JWT_SECRET: ""
       STORAGE_PROVIDER: sqlite
       STORAGE_SQLITE_PATH: /app/data/libredb-storage.db
       AUTH_COOKIE_SECURE: "false"
@@ -45,4 +45,4 @@ x-casaos:
   index: /
   scheme: http
   port_map: "3016"
-  version: "0.15.0"
+  version: "0.18.2"

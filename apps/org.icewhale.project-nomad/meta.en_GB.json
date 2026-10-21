@@ -1,0 +1,10 @@
+{
+  "id": "org.icewhale.project-nomad",
+  "title": "Project NOMAD",
+  "description": "Project NOMAD is an offline knowledge and education server with a browser-based Command Center. Install and manage offline Wikipedia and ebooks with Kiwix, educational courses with Kolibri, local AI with Ollama and Qdrant, offline maps, CyberChef, and notes from one interface.\n\nThis package includes the Command Center, MySQL, Redis, Dozzle for service logs, and host disk monitoring. Optional tools, AI models, and offline content are installed separately from the NOMAD interface.",
+  "tagline": "Knowledge that never goes offline",
+  "release_note": "1.35.1 (2026-10-05)\n\n- Restores image attachments for `gemma3` by checking model capabilities when the model list reports no vision support.\n- Preserves upstream redirects in translated content so book styles and article links work.\n- Fixes translation model downloads when prerelease models appear, downloads released language models, and documents supported languages.\n- Updates 11 curated ZIM download links whose upstream files are unavailable.\n\n[Official release notes](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)",
+  "tips": {
+    "before_install": "Requires an amd64 device with at least 4 GB RAM and 10 GB free disk space for installation. AI models and offline content require additional resources. Set URL to your device's address, choose a unique APP_KEY of at least 32 characters, and change DB_PASSWORD together with MYSQL_PASSWORD before first start; also change MYSQL_ROOT_PASSWORD. NOMAD has no login and can manage Docker containers: use it only on a trusted local network. Keep the nomad_admin container name and project-nomad_default network name. Update the Command Center through ZimaOS; the upstream self-updater is not included. Optional tools created by NOMAD are separate containers and must be removed in NOMAD before uninstalling this package."
+  }
+}

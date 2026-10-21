@@ -1,0 +1,10 @@
+{
+  "id": "org.icewhale.project-nomad",
+  "title": "Project NOMAD",
+  "description": "Project NOMAD, tarayıcı tabanlı bir kontrol merkeziyle yönetilen çevrimdışı bilgi ve eğitim sunucusudur. Kiwix ile Vikipedi ve e-kitapları, Kolibri ile kursları, Ollama ve Qdrant ile yerel yapay zekâyı, çevrimdışı haritaları, CyberChef ve notları tek arayüzden kurup yönetin.\n\nBu paket kontrol merkezini, MySQL, Redis, hizmet günlükleri için Dozzle ve ana makine disk izlemeyi içerir. İsteğe bağlı araçlar, yapay zekâ modelleri ve çevrimdışı içerikler NOMAD arayüzünden ayrıca kurulur.",
+  "tagline": "İnternet olmadan da erişilebilen bilgi",
+  "release_note": "1.35.1 (2026-10-05)\n\n- Model listesi görsel desteği bildirmediğinde modelin yeteneklerini kontrol eder ve `gemma3` için resim eklerini yeniden etkinleştirir.\n- Çevrilen içerikte kaynak yönlendirmelerini koruyarak kitap biçimlerinin ve makale bağlantılarının çalışmasını sağlar.\n- Ön sürümlerden kaynaklanan çeviri modeli indirme çökmelerini düzeltir, yayımlanmış dil modellerini indirir ve desteklenen dilleri belgeler.\n- Kaynak dosyaları artık bulunmayan seçilmiş ZIM dosyalarının 11 indirme bağlantısını günceller.\n\n[Resmî sürüm notları](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)",
+  "tips": {
+    "before_install": "Kurulum için en az 4 GB RAM ve 10 GB boş alanı olan bir amd64 cihaz gerekir. Yapay zekâ modelleri ve çevrimdışı içerikler ek kaynak gerektirir. İlk başlatmadan önce URL değerini cihaz adresine ayarlayın, en az 32 karakterlik benzersiz bir APP_KEY seçin ve DB_PASSWORD ile MYSQL_PASSWORD değerlerini birlikte değiştirin; MYSQL_ROOT_PASSWORD değerini de değiştirin. NOMAD oturum açma doğrulaması içermez ve Docker konteynerlerini yönetebilir: yalnızca güvenilir bir yerel ağda kullanın. nomad_admin konteyner adını ve project-nomad_default ağ adını koruyun. Kontrol merkezini ZimaOS üzerinden güncelleyin; projenin kendi güncelleme aracı pakete dahil değildir. İsteğe bağlı araçlar ayrı konteynerler olarak çalıştığından, paketi kaldırmadan önce bu araçları NOMAD üzerinden kaldırın."
+  }
+}

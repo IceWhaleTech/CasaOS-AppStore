@@ -1,0 +1,10 @@
+{
+  "id": "org.icewhale.project-nomad",
+  "title": "Project NOMAD",
+  "description": "Project NOMAD 是一個離線知識與教育伺服器，透過瀏覽器中的控制中心統一管理資源。你可以按需安裝 Kiwix 離線維基百科和電子書、Kolibri 教育課程、Ollama 與 Qdrant 本機 AI、離線地圖、CyberChef 和筆記工具。\n\n本套件包含控制中心、MySQL、Redis、Dozzle 服務日誌和主機磁碟監控。選用工具、AI 模型和離線資料需要在 NOMAD 介面中另行安裝。",
+  "tagline": "永不離線的知識庫",
+  "release_note": "1.35.1 (2026-10-05)\n\n- 當模型清單未宣告視覺能力時，檢測模型的實際能力，恢復 `gemma3` 的圖片附件功能。\n- 保留翻譯內容的上游重新導向，讓電子書樣式和文章連結正常顯示與跳轉。\n- 修正遇到預發佈翻譯模型時下載崩潰的問題，下載已發佈的語言模型，並補充支援語言的文件。\n- 更新 11 個精選 ZIM 資源的下載連結，替換上游已失效的檔案位址。\n\n[官方發佈說明](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)",
+  "tips": {
+    "before_install": "需要 amd64 裝置、至少 4 GB 記憶體和 10 GB 可用安裝空間；AI 模型和離線資料需要額外資源。首次啟動前，將 URL 設為裝置位址，設定至少 32 個字元的獨立 APP_KEY，同時修改 DB_PASSWORD 和 MYSQL_PASSWORD，並修改 MYSQL_ROOT_PASSWORD。NOMAD 沒有登入驗證且能管理 Docker 容器，僅適合可信任的區域網路。請保留 nomad_admin 容器名稱和 project-nomad_default 網路名稱。控制中心透過 ZimaOS 升級，不包含上游自動更新程式。NOMAD 建立的選用工具是獨立容器，解除安裝本套件前請先在 NOMAD 中移除這些工具。"
+  }
+}

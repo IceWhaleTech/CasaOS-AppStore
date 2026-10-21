@@ -1,0 +1,10 @@
+{
+  "id": "org.icewhale.project-nomad",
+  "title": "Project NOMAD",
+  "description": "Project NOMAD는 브라우저의 제어 센터로 관리하는 오프라인 지식 및 교육 서버입니다. Kiwix의 위키백과와 전자책, Kolibri의 교육 과정, Ollama와 Qdrant의 로컬 AI, 오프라인 지도, CyberChef와 메모 도구를 하나의 인터페이스에서 설치하고 관리할 수 있습니다.\n\n이 패키지에는 제어 센터, MySQL, Redis, 서비스 로그용 Dozzle과 호스트 디스크 모니터링이 포함됩니다. 선택 도구, AI 모델과 오프라인 콘텐츠는 NOMAD 인터페이스에서 별도로 설치합니다.",
+  "tagline": "오프라인에서도 사용할 수 있는 지식",
+  "release_note": "1.35.1 (2026-10-05)\n\n- 모델 목록에 이미지 지원이 표시되지 않을 때 실제 기능을 확인하여 `gemma3`의 이미지 첨부 기능을 복원합니다.\n- 번역된 콘텐츠에서 원본 서버의 리디렉션을 유지하여 전자책 스타일과 문서 링크가 정상적으로 작동하게 합니다.\n- 정식 출시 전 번역 모델을 처리할 때 발생하던 비정상 종료를 수정하고, 출시된 언어 모델을 다운로드하며 지원 언어를 문서에 추가합니다.\n- 원본 파일을 사용할 수 없게 된 추천 ZIM 콘텐츠 11개의 다운로드 링크를 업데이트합니다.\n\n[공식 릴리스 노트](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)",
+  "tips": {
+    "before_install": "amd64 장치, 최소 4 GB RAM과 설치용 여유 공간 10 GB가 필요합니다. AI 모델과 오프라인 콘텐츠에는 추가 리소스가 필요합니다. 처음 시작하기 전에 URL을 장치 주소로 설정하고 32자 이상의 고유한 APP_KEY를 지정하세요. DB_PASSWORD와 MYSQL_PASSWORD를 같은 값으로 변경하고 MYSQL_ROOT_PASSWORD도 변경하세요. NOMAD에는 로그인 인증이 없으며 Docker 컨테이너를 관리할 수 있으므로 신뢰할 수 있는 로컬 네트워크에서만 사용하세요. 컨테이너 이름 nomad_admin과 네트워크 이름 project-nomad_default를 유지하세요. 제어 센터는 ZimaOS에서 업데이트하며, 프로젝트의 자체 업데이트 도구는 포함되지 않습니다. 선택 도구는 독립 컨테이너로 생성되므로 이 패키지를 제거하기 전에 NOMAD에서 해당 도구를 먼저 제거하세요."
+  }
+}

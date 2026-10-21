@@ -1,0 +1,30 @@
+name: hfs
+services:
+  hfs:
+    image: rejetto/hfs:v3.3.4@sha256:dc4adf5d2d7297478d927106f1c584782db7b25b64e834bc000d9f1a682eb56a
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 80
+        published: "8082"
+        protocol: tcp
+    environment:
+      HFS_PORT: "80"
+      HFS_INITIAL_ADMIN_PASSWORD: please-change
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/shares
+        target: /shares
+x-casaos:
+  id: com.rejetto.hfs
+  main: hfs
+  index: /~/admin/
+  port_map: "8082"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/com.rejetto.hfs/assets/icon.svg
+  title:
+    en_US: HFS
+  version: "3.3.4"

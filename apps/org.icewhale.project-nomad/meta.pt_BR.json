@@ -1,0 +1,10 @@
+{
+  "id": "org.icewhale.project-nomad",
+  "title": "Project NOMAD",
+  "description": "O Project NOMAD é um servidor de conhecimento e educação offline com um centro de controle acessível pelo navegador. Instale e gerencie a Wikipédia e livros digitais com Kiwix, cursos com Kolibri, IA local com Ollama e Qdrant, mapas offline, CyberChef e notas em uma única interface.\n\nEste pacote inclui o centro de controle, MySQL, Redis, Dozzle para os logs dos serviços e monitoramento dos discos do host. As ferramentas opcionais, os modelos de IA e os conteúdos offline são instalados separadamente pela interface NOMAD.",
+  "tagline": "Conhecimento disponível mesmo sem conexão",
+  "release_note": "1.35.1 (2026-10-05)\n\n- Verifica as capacidades do modelo quando a lista não informa suporte visual e restaura os anexos de imagem para `gemma3`.\n- Preserva os redirecionamentos da origem nos conteúdos traduzidos para que funcionem os estilos dos livros e os links dos artigos.\n- Corrige falhas no download de modelos de tradução causadas por versões preliminares, baixa os modelos de idiomas publicados e documenta os idiomas compatíveis.\n- Atualiza 11 links de download de arquivos ZIM selecionados cujos arquivos de origem não estão mais disponíveis.\n\n[Notas oficiais da versão](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)",
+  "tips": {
+    "before_install": "Requer um dispositivo amd64 com pelo menos 4 GB de RAM e 10 GB livres para instalação. Os modelos de IA e os conteúdos offline exigem recursos adicionais. Antes da primeira inicialização, defina URL com o endereço do dispositivo, escolha um APP_KEY exclusivo com pelo menos 32 caracteres e altere DB_PASSWORD junto com MYSQL_PASSWORD, além de MYSQL_ROOT_PASSWORD. O NOMAD não tem autenticação e pode gerenciar contêineres Docker: use apenas em uma rede local confiável. Mantenha o nome do contêiner nomad_admin e o nome da rede project-nomad_default. Atualize o centro de controle pelo ZimaOS; o atualizador automático do projeto não está incluído. Remova as ferramentas opcionais no NOMAD antes de desinstalar este pacote, pois elas usam contêineres separados."
+  }
+}

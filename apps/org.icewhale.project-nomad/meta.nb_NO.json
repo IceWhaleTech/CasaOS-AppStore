@@ -1,0 +1,10 @@
+{
+  "id": "org.icewhale.project-nomad",
+  "title": "Project NOMAD",
+  "description": "Project NOMAD er en server for kunnskap og utdanning uten nettilkobling, med et kontrollsenter i nettleseren. Installer og administrer Wikipedia og e-bøker med Kiwix, kurs med Kolibri, lokal KI med Ollama og Qdrant, kart uten nett, CyberChef og notater fra ett grensesnitt.\n\nDenne pakken inneholder kontrollsenteret, MySQL, Redis, Dozzle for tjenestelogger og overvåking av vertens disker. Valgfrie verktøy, KI-modeller og innhold installeres separat fra NOMAD.",
+  "tagline": "Kunnskap tilgjengelig også uten nett",
+  "release_note": "1.35.1 (2026-10-05)\n\n- Kontrollerer modellens egenskaper når modellisten ikke oppgir bildestøtte, og gjenoppretter bildevedlegg for `gemma3`.\n- Bevarer omdirigeringer fra innholdskilden i oversatt innhold, slik at bokformatering og artikkellenker fungerer.\n- Retter krasj ved nedlasting av oversettelsesmodeller når forhåndsversjoner dukker opp, laster ned publiserte språkmodeller og dokumenterer støttede språk.\n- Oppdaterer 11 nedlastingslenker for utvalgte ZIM-filer der kildefilene ikke lenger er tilgjengelige.\n\n[Offisielle versjonsnotater](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)",
+  "tips": {
+    "before_install": "Krever en amd64-enhet med minst 4 GB RAM og 10 GB ledig plass til installasjon. KI-modeller og innhold trenger flere ressurser. Før første oppstart setter du URL til enhetens adresse, velger en unik APP_KEY på minst 32 tegn og endrer DB_PASSWORD og MYSQL_PASSWORD til samme verdi, samt MYSQL_ROOT_PASSWORD. NOMAD har ingen innlogging og kan administrere Docker-containere: bruk det bare på et lokalt nettverk du stoler på. Behold containernavnet nomad_admin og nettverksnavnet project-nomad_default. Oppdater kontrollsenteret via ZimaOS; prosjektets egen oppdateringstjeneste følger ikke med. Fjern valgfrie verktøy i NOMAD før du avinstallerer pakken, siden de kjører i separate containere."
+  }
+}

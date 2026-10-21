@@ -1,0 +1,30 @@
+{
+  "tagline": "Share files through your browser",
+  "description": "HFS is an HTTP file server with uploads, downloads, user accounts, permissions,\na virtual file system and plugins. Manage it through the Admin panel and share\nfiles with users through the web interface.\nThis installation starts with a dedicated empty shared folder. To share an\nexisting folder, change the host path of the /shares volume in app settings.\n",
+  "tips": {
+    "before_install": "**First login**\n\n| Username | Password |\n|----------|----------|\n| `admin` | `please-change` |\n\nAfter logging in, open **Accounts**, select **admin**, and change the password.\n\nTo choose your own password before installation, use Custom Installation\ninstead of Install. Under Environment Variables, replace the value of\nHFS_INITIAL_ADMIN_PASSWORD with your password (not username:password).\nThis variable is only used when no configuration file exists.\nAfter installation, change passwords in HFS Admin, not in app settings.\n"
+  },
+  "author": "rejetto",
+  "developer": "rejetto",
+  "category": "Productivity",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "website": "https://rejetto.com/hfs/",
+  "repo": "https://github.com/rejetto/hfs",
+  "docs": "https://github.com/rejetto/hfs/wiki/Docker",
+  "support": "https://github.com/rejetto/hfs/issues",
+  "title": "HFS",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "com.rejetto.hfs",
+  "version": "3.3.4",
+  "categories": [
+    "productivity"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 69707565,
+    "arm64": 69235247
+  }
+}

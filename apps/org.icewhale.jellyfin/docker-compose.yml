@@ -12,7 +12,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/jellyfin:10.11.10
+    image: linuxserver/jellyfin:12.2ubu2604-ls53
     deploy:
       resources:
         reservations:
@@ -51,4 +51,4 @@ x-casaos:
     en_US: Jellyfin
   index: /
   port_map: "8097"
-  version: "10.11.10"
+  version: "12.2.0"

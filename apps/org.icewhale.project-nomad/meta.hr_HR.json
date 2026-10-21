@@ -1,0 +1,10 @@
+{
+  "id": "org.icewhale.project-nomad",
+  "title": "Project NOMAD",
+  "description": "Project NOMAD je poslužitelj za znanje i obrazovanje bez internetske veze s upravljačkim centrom u pregledniku. Instalirajte i upravljajte Wikipedijom i e-knjigama uz Kiwix, tečajevima uz Kolibri, lokalnom umjetnom inteligencijom uz Ollama i Qdrant, kartama bez interneta, CyberChefom i bilješkama iz jednog sučelja.\n\nPaket uključuje upravljački centar, MySQL, Redis, Dozzle za zapisnike usluga i nadzor diskova glavnog računala. Dodatni alati, AI modeli i sadržaj instaliraju se zasebno kroz NOMAD.",
+  "tagline": "Znanje dostupno i bez interneta",
+  "release_note": "1.35.1 (2026-10-05)\n\n- Provjerava mogućnosti modela kada popis ne navodi podršku za slike i vraća slikovne privitke za `gemma3`.\n- Zadržava preusmjeravanja izvora u prevedenom sadržaju kako bi stilovi knjiga i poveznice na članke radili.\n- Ispravlja rušenja pri preuzimanju modela za prijevod uzrokovana predizdanjima, preuzima objavljene jezične modele i dokumentira podržane jezike.\n- Ažurira 11 poveznica za preuzimanje odabranih ZIM datoteka čije izvorne datoteke više nisu dostupne.\n\n[Službene bilješke o izdanju](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)",
+  "tips": {
+    "before_install": "Potreban je amd64 uređaj s najmanje 4 GB RAM-a i 10 GB slobodnog prostora za instalaciju. AI modeli i sadržaj zahtijevaju dodatne resurse. Prije prvog pokretanja postavite URL na adresu uređaja, odaberite jedinstveni APP_KEY s najmanje 32 znaka i zajedno promijenite DB_PASSWORD i MYSQL_PASSWORD, kao i MYSQL_ROOT_PASSWORD. NOMAD nema prijavu i može upravljati Docker kontejnerima: koristite ga samo u pouzdanoj lokalnoj mreži. Zadržite naziv kontejnera nomad_admin i naziv mreže project-nomad_default. Ažurirajte upravljački centar kroz ZimaOS; alat za samostalno ažuriranje projekta nije uključen. Uklonite dodatne alate u NOMAD-u prije deinstalacije paketa jer rade kao zasebni kontejneri."
+  }
+}
