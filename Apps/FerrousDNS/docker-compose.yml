@@ -1,0 +1,476 @@
+name: ferrous-dns
+services:
+  ferrous-dns:
+    image: ferrousnetworking/ferrous-dns:0.9.6
+    container_name: ferrous-dns
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    restart: unless-stopped
+    # Host networking is required: DNS listens on UDP/TCP 53 and mDNS/Bonjour
+    # discovery uses multicast on UDP 5353, which does not traverse Docker bridge
+    # port mapping. The web dashboard binds directly on the host at port 8080.
+    network_mode: host
+    # Run as root so the bootstrap entrypoint can write config, database, and
+    # migrations into the /DATA/AppData bind mount (created root-owned by CasaOS),
+    # and bind privileged port 53. NET_BIND_SERVICE is kept in the bounding set
+    # for hosts/orchestrators that strip Docker's default capability profile.
+    user: "0:0"
+    cap_add:
+      - NET_BIND_SERVICE
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    environment:
+      FERROUS_CONFIG: /data/config/ferrous-dns.toml
+      FERROUS_DNS_PORT: "53"
+      FERROUS_WEB_PORT: "8080"
+      FERROUS_BIND_ADDRESS: 0.0.0.0
+      FERROUS_DATABASE: /data/db/ferrous.db
+      FERROUS_LOG_LEVEL: info
+      TZ: $TZ
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/ferrous-dns", "--version"]
+      interval: 5s
+      timeout: 3s
+      start_period: 5s
+      retries: 60
+    x-casaos:
+      envs:
+        - container: FERROUS_WEB_PORT
+          description:
+            en_US: Web dashboard port
+            en_GB: Web dashboard port
+            it_IT: Porta della dashboard web
+            nb_NO: Port for nettdashbordet
+            zh_CN: Web 管理面板端口
+            ja_JP: Web ダッシュボードのポート
+            ko_KR: 웹 대시보드 포트
+            fr_FR: Port du tableau de bord web
+            de_DE: Port des Web-Dashboards
+            sv_SE: Port för webbpanelen
+            el_GR: Θύρα του web dashboard
+            hr_HR: Priključak web nadzorne ploče
+            pt_PT: Porta do painel web
+            pt_BR: Porta do painel web
+            ru_RU: Порт веб-панели
+            tr_TR: Web panosu bağlantı noktası
+        - container: FERROUS_DNS_PORT
+          description:
+            en_US: DNS server listening port
+            en_GB: DNS server listening port
+            it_IT: Porta di ascolto del server DNS
+            nb_NO: Lytteport for DNS-tjeneren
+            zh_CN: DNS 服务监听端口
+            ja_JP: DNS サーバーの待ち受けポート
+            ko_KR: DNS 서버 수신 포트
+            fr_FR: Port d'écoute du serveur DNS
+            de_DE: Lauschport des DNS-Servers
+            sv_SE: Lyssningsport för DNS-servern
+            el_GR: Θύρα ακρόασης του διακομιστή DNS
+            hr_HR: Priključak na kojem DNS poslužitelj sluša
+            pt_PT: Porta de escuta do servidor DNS
+            pt_BR: Porta de escuta do servidor DNS
+            ru_RU: Порт прослушивания DNS-сервера
+            tr_TR: DNS sunucusunun dinleme bağlantı noktası
+        - container: FERROUS_LOG_LEVEL
+          description:
+            en_US: Log level (debug, info, warn, error)
+            en_GB: Log level (debug, info, warn, error)
+            it_IT: Livello di log (debug, info, warn, error)
+            nb_NO: Loggnivå (debug, info, warn, error)
+            zh_CN: 日志级别（debug、info、warn、error）
+            ja_JP: ログレベル（debug、info、warn、error）
+            ko_KR: 로그 레벨(debug, info, warn, error)
+            fr_FR: Niveau de journalisation (debug, info, warn, error)
+            de_DE: Log-Level (debug, info, warn, error)
+            sv_SE: Loggnivå (debug, info, warn, error)
+            el_GR: Επίπεδο καταγραφής (debug, info, warn, error)
+            hr_HR: Razina zapisivanja (debug, info, warn, error)
+            pt_PT: Nível de registo (debug, info, warn, error)
+            pt_BR: Nível de log (debug, info, warn, error)
+            ru_RU: Уровень логирования (debug, info, warn, error)
+            tr_TR: Günlük düzeyi (debug, info, warn, error)
+        - container: TZ
+          description:
+            en_US: Timezone
+            en_GB: Timezone
+            it_IT: Fuso orario
+            nb_NO: Tidssone
+            zh_CN: 时区
+            ja_JP: タイムゾーン
+            ko_KR: 시간대
+            fr_FR: Fuseau horaire
+            de_DE: Zeitzone
+            sv_SE: Tidszon
+            el_GR: Ζώνη ώρας
+            hr_HR: Vremenska zona
+            pt_PT: Fuso horário
+            pt_BR: Fuso horário
+            ru_RU: Часовой пояс
+            tr_TR: Saat dilimi
+      volumes:
+        - container: /data
+          description:
+            en_US: Ferrous DNS data directory (config, database, migrations)
+            en_GB: Ferrous DNS data directory (config, database, migrations)
+            it_IT: Directory dati di Ferrous DNS (configurazione, database, migrazioni)
+            nb_NO: Ferrous DNS datakatalog (konfigurasjon, database, migreringer)
+            zh_CN: Ferrous DNS 数据目录（配置、数据库、迁移）
+            ja_JP: Ferrous DNS データディレクトリ（設定、データベース、マイグレーション）
+            ko_KR: Ferrous DNS 데이터 디렉터리(설정, 데이터베이스, 마이그레이션)
+            fr_FR: Répertoire de données Ferrous DNS (configuration, base de données, migrations)
+            de_DE: Ferrous-DNS-Datenverzeichnis (Konfiguration, Datenbank, Migrationen)
+            sv_SE: Ferrous DNS datakatalog (konfiguration, databas, migreringar)
+            el_GR: Κατάλογος δεδομένων Ferrous DNS (ρυθμίσεις, βάση δεδομένων, migrations)
+            hr_HR: Direktorij podataka Ferrous DNS (konfiguracija, baza podataka, migracije)
+            pt_PT: Diretório de dados do Ferrous DNS (configuração, base de dados, migrações)
+            pt_BR: Diretório de dados do Ferrous DNS (configuração, banco de dados, migrações)
+            ru_RU: Каталог данных Ferrous DNS (конфигурация, база данных, миграции)
+            tr_TR: Ferrous DNS veri dizini (yapılandırma, veritabanı, geçişler)
+x-casaos:
+  id: org.icewhale.ferrousdns
+  architectures:
+    - amd64
+    - arm64
+  main: ferrous-dns
+  category: Networking
+  developer: ferrous-networking
+  author: ferrous-networking
+  tagline:
+    en_US: High-performance DNS server with network-wide ad-blocking
+    en_GB: High-performance DNS server with network-wide ad-blocking
+    it_IT: Server DNS ad alte prestazioni con blocco pubblicità su tutta la rete
+    nb_NO: Høyytelses DNS-tjener med nettverksdekkende annonseblokkering
+    zh_CN: 高性能 DNS 服务器，全网络广告拦截
+    ja_JP: ネットワーク全体の広告ブロックを備えた高性能 DNS サーバー
+    ko_KR: 네트워크 전체 광고 차단 기능을 갖춘 고성능 DNS 서버
+    fr_FR: Serveur DNS haute performance avec blocage des publicités sur tout le réseau
+    de_DE: Hochleistungs-DNS-Server mit netzwerkweitem Werbeblocker
+    sv_SE: Högpresterande DNS-server med nätverksomfattande annonsblockering
+    el_GR: Διακομιστής DNS υψηλών επιδόσεων με φραγή διαφημίσεων σε όλο το δίκτυο
+    hr_HR: DNS poslužitelj visokih performansi s blokiranjem oglasa na cijeloj mreži
+    pt_PT: Servidor DNS de alto desempenho com bloqueio de anúncios em toda a rede
+    pt_BR: Servidor DNS de alto desempenho com bloqueio de anúncios em toda a rede
+    ru_RU: Высокопроизводительный DNS-сервер с блокировкой рекламы на уровне всей сети
+    tr_TR: Ağ genelinde reklam engellemeli yüksek performanslı DNS sunucusu
+  description:
+    en_US: |
+      Ferrous DNS is a high-performance, self-hosted DNS server with network-wide ad and tracker blocking, written in Rust. It bundles a DNS resolver, REST API, web dashboard, and SQLite query log into a single binary with no extra dependencies — a fast, lightweight alternative to Pi-hole and AdGuard Home.
+      Point your router's DNS at Ferrous DNS and every device on your network is protected, with no client software to install. A real-time dashboard shows query rates, blocked domains, top clients, and upstream latency, while a first-run setup wizard guides initial configuration.
+
+      **Main Features:**
+      - Network-wide ad, tracker, and malware blocking with regex and wildcard blocklists, allowlists, and 1-click service categories
+      - L1/L2 hierarchical cache with in-flight query coalescing for very high throughput
+      - Encrypted DNS upstreams and listeners (DoH, DoT, DoQ, HTTP/3) plus DNSSEC validation
+      - Named upstream pools with priority routing, health checks, and automatic failover
+      - Per-client and per-group policies with parental controls and conditional forwarding
+      - Malware detection: DNS tunneling, DGA, DNS rebinding, NXDOMAIN hijack, and C2 IP filtering
+      - Pi-hole v6 API compatibility as a drop-in replacement
+
+      **Learn More:**
+      - [Ferrous DNS Documentation](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    en_GB: |
+      Ferrous DNS is a high-performance, self-hosted DNS server with network-wide ad and tracker blocking, written in Rust. It bundles a DNS resolver, REST API, web dashboard, and SQLite query log into a single binary with no extra dependencies — a fast, lightweight alternative to Pi-hole and AdGuard Home.
+      Point your router's DNS at Ferrous DNS and every device on your network is protected, with no client software to install. A real-time dashboard shows query rates, blocked domains, top clients, and upstream latency, while a first-run setup wizard guides initial configuration.
+
+      **Main Features:**
+      - Network-wide ad, tracker, and malware blocking with regex and wildcard blocklists, allowlists, and 1-click service categories
+      - L1/L2 hierarchical cache with in-flight query coalescing for very high throughput
+      - Encrypted DNS upstreams and listeners (DoH, DoT, DoQ, HTTP/3) plus DNSSEC validation
+      - Named upstream pools with priority routing, health checks, and automatic failover
+      - Per-client and per-group policies with parental controls and conditional forwarding
+      - Malware detection: DNS tunnelling, DGA, DNS rebinding, NXDOMAIN hijack, and C2 IP filtering
+      - Pi-hole v6 API compatibility as a drop-in replacement
+
+      **Learn More:**
+      - [Ferrous DNS Documentation](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    it_IT: |
+      Ferrous DNS è un server DNS self-hosted ad alte prestazioni con blocco di pubblicità e tracker su tutta la rete, scritto in Rust. Riunisce resolver DNS, API REST, dashboard web e log delle query in SQLite in un unico binario senza dipendenze aggiuntive — un'alternativa veloce e leggera a Pi-hole e AdGuard Home.
+      Imposta il DNS del router su Ferrous DNS e ogni dispositivo della rete è protetto, senza installare alcun software client. Una dashboard in tempo reale mostra frequenza delle query, domini bloccati, client principali e latenza degli upstream, mentre una procedura guidata al primo avvio assiste la configurazione iniziale.
+
+      **Funzionalità Principali:**
+      - Blocco di pubblicità, tracker e malware su tutta la rete con blocklist regex e wildcard, allowlist e categorie di servizi con un clic
+      - Cache gerarchica L1/L2 con coalescing delle query in volo per un throughput molto elevato
+      - DNS cifrato in upstream e in ascolto (DoH, DoT, DoQ, HTTP/3) e validazione DNSSEC
+      - Pool di upstream con routing per priorità, health check e failover automatico
+      - Policy per client e per gruppo con controlli parentali e conditional forwarding
+      - Rilevamento malware: DNS tunneling, DGA, DNS rebinding, hijack NXDOMAIN e filtro IP C2
+      - Compatibilità con l'API Pi-hole v6 come sostituto immediato
+
+      **Ulteriori Informazioni:**
+      - [Documentazione di Ferrous DNS](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    nb_NO: |
+      Ferrous DNS er en høyytelses, selvhostet DNS-tjener med nettverksdekkende annonse- og sporingsblokkering, skrevet i Rust. Den samler DNS-resolver, REST API, nettdashbord og SQLite-spørringslogg i én enkelt binærfil uten ekstra avhengigheter — et raskt og lett alternativ til Pi-hole og AdGuard Home.
+      Pek ruterens DNS mot Ferrous DNS, så er hver enhet i nettverket beskyttet, uten klientprogramvare å installere. Et sanntidsdashbord viser spørringsrater, blokkerte domener, toppklienter og oppstrømsforsinkelse, mens en oppsettsveiviser ved første kjøring hjelper med den første konfigurasjonen.
+
+      **Hovedfunksjoner:**
+      - Nettverksdekkende blokkering av annonser, sporere og skadevare med regex- og jokertegnbaserte blokklister, tillatelseslister og tjenestekategorier med ett klikk
+      - L1/L2 hierarkisk hurtigbuffer med sammenslåing av samtidige spørringer for svært høy gjennomstrømming
+      - Kryptert DNS oppstrøms og som lytter (DoH, DoT, DoQ, HTTP/3) samt DNSSEC-validering
+      - Navngitte oppstrømsgrupper med prioritetsruting, helsesjekker og automatisk failover
+      - Retningslinjer per klient og per gruppe med foreldrekontroll og betinget videresending
+      - Skadevaredeteksjon: DNS-tunnelering, DGA, DNS-rebinding, NXDOMAIN-kapring og C2 IP-filtrering
+      - Pi-hole v6 API-kompatibilitet som direkte erstatning
+
+      **Lær Mer:**
+      - [Ferrous DNS-dokumentasjon](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    zh_CN: |
+      Ferrous DNS 是一款用 Rust 编写的高性能自托管 DNS 服务器，可在整个网络范围内拦截广告和跟踪器。它将 DNS 解析器、REST API、Web 管理面板和 SQLite 查询日志整合到单个二进制文件中，无需额外依赖——是 Pi-hole 和 AdGuard Home 的快速轻量替代方案。
+      只需将路由器的 DNS 指向 Ferrous DNS，网络中的每台设备都能获得保护，无需在客户端安装任何软件。实时面板可显示查询速率、被拦截域名、活跃客户端和上游延迟，首次运行的设置向导会引导你完成初始配置。
+
+      **主要功能：**
+      - 全网络拦截广告、跟踪器和恶意软件，支持正则与通配符黑名单、白名单以及一键服务分类
+      - L1/L2 分层缓存与在途查询合并，实现极高吞吐量
+      - 加密 DNS 上游与监听（DoH、DoT、DoQ、HTTP/3）以及 DNSSEC 验证
+      - 具名上游池，支持优先级路由、健康检查和自动故障转移
+      - 按客户端和按分组的策略，支持家长控制和条件转发
+      - 恶意软件检测：DNS 隧道、DGA、DNS 重绑定、NXDOMAIN 劫持和 C2 IP 过滤
+      - 兼容 Pi-hole v6 API，可直接替换
+
+      **了解更多：**
+      - [Ferrous DNS 文档](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    ja_JP: |
+      Ferrous DNS は Rust で書かれた高性能なセルフホスト型 DNS サーバーで、ネットワーク全体の広告とトラッカーをブロックします。DNS リゾルバー、REST API、Web ダッシュボード、SQLite クエリログを追加の依存関係なしに単一のバイナリにまとめており、Pi-hole や AdGuard Home の高速で軽量な代替となります。
+      ルーターの DNS を Ferrous DNS に向けるだけで、クライアントにソフトウェアを入れることなくネットワーク上のすべての端末を保護できます。リアルタイムのダッシュボードでクエリレート、ブロックしたドメイン、上位クライアント、上流の遅延を確認でき、初回起動時のセットアップウィザードが初期設定を案内します。
+
+      **主な機能：**
+      - 正規表現・ワイルドカードのブロックリスト、許可リスト、ワンクリックのサービスカテゴリによるネットワーク全体の広告・トラッカー・マルウェアのブロック
+      - 非常に高いスループットを実現する L1/L2 階層キャッシュと処理中クエリの結合
+      - 暗号化 DNS の上流およびリスナー（DoH、DoT、DoQ、HTTP/3）と DNSSEC 検証
+      - 優先度ルーティング、ヘルスチェック、自動フェイルオーバーを備えた名前付き上流プール
+      - ペアレンタルコントロールと条件付き転送を備えたクライアント別・グループ別ポリシー
+      - マルウェア検出：DNS トンネリング、DGA、DNS リバインディング、NXDOMAIN ハイジャック、C2 IP フィルタリング
+      - 差し替え可能な Pi-hole v6 API 互換
+
+      **詳細情報：**
+      - [Ferrous DNS ドキュメント](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    ko_KR: |
+      Ferrous DNS는 Rust로 작성된 고성능 자체 호스팅 DNS 서버로, 네트워크 전체에서 광고와 추적기를 차단합니다. DNS 리졸버, REST API, 웹 대시보드, SQLite 쿼리 로그를 추가 의존성 없이 단일 바이너리에 담아, Pi-hole과 AdGuard Home의 빠르고 가벼운 대안이 됩니다.
+      라우터의 DNS를 Ferrous DNS로 지정하기만 하면 클라이언트 소프트웨어 설치 없이 네트워크의 모든 기기를 보호할 수 있습니다. 실시간 대시보드에서 쿼리 속도, 차단된 도메인, 상위 클라이언트, 업스트림 지연을 확인할 수 있으며, 첫 실행 설정 마법사가 초기 구성을 안내합니다.
+
+      **주요 기능:**
+      - 정규식·와일드카드 차단 목록, 허용 목록, 원클릭 서비스 범주를 통한 네트워크 전체 광고·추적기·악성코드 차단
+      - 매우 높은 처리량을 위한 L1/L2 계층 캐시와 진행 중 쿼리 병합
+      - 암호화 DNS 업스트림 및 리스너(DoH, DoT, DoQ, HTTP/3)와 DNSSEC 검증
+      - 우선순위 라우팅, 상태 점검, 자동 장애 조치를 갖춘 명명된 업스트림 풀
+      - 자녀 보호 및 조건부 전달을 포함한 클라이언트별·그룹별 정책
+      - 악성코드 탐지: DNS 터널링, DGA, DNS 리바인딩, NXDOMAIN 하이재킹, C2 IP 필터링
+      - 즉시 교체 가능한 Pi-hole v6 API 호환성
+
+      **더 알아보기:**
+      - [Ferrous DNS 문서](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    fr_FR: |
+      Ferrous DNS est un serveur DNS auto-hébergé haute performance avec blocage des publicités et traqueurs sur tout le réseau, écrit en Rust. Il réunit un résolveur DNS, une API REST, un tableau de bord web et un journal des requêtes SQLite dans un seul binaire sans dépendances supplémentaires — une alternative rapide et légère à Pi-hole et AdGuard Home.
+      Pointez le DNS de votre routeur vers Ferrous DNS et chaque appareil du réseau est protégé, sans logiciel client à installer. Un tableau de bord en temps réel affiche le débit des requêtes, les domaines bloqués, les principaux clients et la latence des serveurs amont, tandis qu'un assistant de configuration au premier démarrage guide la mise en place initiale.
+
+      **Fonctionnalités Principales :**
+      - Blocage des publicités, traqueurs et logiciels malveillants sur tout le réseau avec listes de blocage regex et jokers, listes d'autorisation et catégories de services en un clic
+      - Cache hiérarchique L1/L2 avec fusion des requêtes en cours pour un débit très élevé
+      - DNS chiffré en amont et en écoute (DoH, DoT, DoQ, HTTP/3) et validation DNSSEC
+      - Pools amont nommés avec routage par priorité, vérifications de santé et basculement automatique
+      - Politiques par client et par groupe avec contrôle parental et transfert conditionnel
+      - Détection de logiciels malveillants : tunneling DNS, DGA, rebinding DNS, détournement NXDOMAIN et filtrage IP C2
+      - Compatibilité avec l'API Pi-hole v6 en remplacement direct
+
+      **En Savoir Plus :**
+      - [Documentation Ferrous DNS](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    de_DE: |
+      Ferrous DNS ist ein leistungsstarker, selbst gehosteter DNS-Server mit netzwerkweitem Werbe- und Tracker-Blocker, geschrieben in Rust. Er bündelt DNS-Resolver, REST-API, Web-Dashboard und SQLite-Abfrageprotokoll in einer einzigen Binärdatei ohne zusätzliche Abhängigkeiten — eine schnelle, schlanke Alternative zu Pi-hole und AdGuard Home.
+      Richten Sie den DNS Ihres Routers auf Ferrous DNS aus, und jedes Gerät im Netzwerk ist geschützt, ohne Client-Software installieren zu müssen. Ein Echtzeit-Dashboard zeigt Abfrageraten, blockierte Domains, Top-Clients und Upstream-Latenz an, während ein Einrichtungsassistent beim ersten Start die Erstkonfiguration begleitet.
+
+      **Hauptfunktionen:**
+      - Netzwerkweites Blockieren von Werbung, Trackern und Schadsoftware mit Regex- und Wildcard-Blocklisten, Zulassungslisten und Dienstkategorien per Klick
+      - Hierarchischer L1/L2-Cache mit Zusammenführung laufender Abfragen für sehr hohen Durchsatz
+      - Verschlüsseltes DNS als Upstream und Listener (DoH, DoT, DoQ, HTTP/3) sowie DNSSEC-Validierung
+      - Benannte Upstream-Pools mit Prioritäts-Routing, Health-Checks und automatischem Failover
+      - Richtlinien pro Client und pro Gruppe mit Kindersicherung und bedingter Weiterleitung
+      - Schadsoftware-Erkennung: DNS-Tunneling, DGA, DNS-Rebinding, NXDOMAIN-Hijacking und C2-IP-Filterung
+      - Pi-hole-v6-API-Kompatibilität als direkter Ersatz
+
+      **Mehr Erfahren:**
+      - [Ferrous-DNS-Dokumentation](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    sv_SE: |
+      Ferrous DNS är en högpresterande, självhostad DNS-server med nätverksomfattande annons- och spårningsblockering, skriven i Rust. Den samlar DNS-resolver, REST API, webbpanel och SQLite-frågelogg i en enda binär utan extra beroenden — ett snabbt och lätt alternativ till Pi-hole och AdGuard Home.
+      Rikta routerns DNS mot Ferrous DNS så skyddas varje enhet i nätverket, utan klientprogramvara att installera. En realtidspanel visar frågefrekvens, blockerade domäner, toppklienter och uppströmslatens, medan en installationsguide vid första körningen vägleder den första konfigurationen.
+
+      **Huvudfunktioner:**
+      - Nätverksomfattande blockering av annonser, spårare och skadlig kod med regex- och jokertecken-blocklistor, tillåtelselistor och tjänstekategorier med ett klick
+      - Hierarkisk L1/L2-cache med sammanslagning av pågående frågor för mycket hög genomströmning
+      - Krypterad DNS uppströms och som lyssnare (DoH, DoT, DoQ, HTTP/3) samt DNSSEC-validering
+      - Namngivna uppströmspooler med prioritetsrouting, hälsokontroller och automatisk failover
+      - Policyer per klient och per grupp med föräldrakontroll och villkorlig vidarebefordran
+      - Detektering av skadlig kod: DNS-tunnling, DGA, DNS-rebinding, NXDOMAIN-kapning och C2 IP-filtrering
+      - Pi-hole v6 API-kompatibilitet som direkt ersättning
+
+      **Läs Mer:**
+      - [Ferrous DNS-dokumentation](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    el_GR: |
+      Το Ferrous DNS είναι ένας υψηλών επιδόσεων, self-hosted διακομιστής DNS με φραγή διαφημίσεων και trackers σε όλο το δίκτυο, γραμμένος σε Rust. Συνδυάζει DNS resolver, REST API, web dashboard και αρχείο καταγραφής ερωτημάτων SQLite σε ένα ενιαίο εκτελέσιμο χωρίς επιπλέον εξαρτήσεις — μια γρήγορη και ελαφριά εναλλακτική στο Pi-hole και το AdGuard Home.
+      Στρέψτε το DNS του router σας στο Ferrous DNS και κάθε συσκευή στο δίκτυο προστατεύεται, χωρίς εγκατάσταση λογισμικού πελάτη. Ένα dashboard σε πραγματικό χρόνο δείχνει ρυθμό ερωτημάτων, αποκλεισμένα domains, κορυφαίους clients και καθυστέρηση upstream, ενώ ένας οδηγός εγκατάστασης κατά την πρώτη εκτέλεση καθοδηγεί την αρχική διαμόρφωση.
+
+      **Κύριες Λειτουργίες:**
+      - Φραγή διαφημίσεων, trackers και κακόβουλου λογισμικού σε όλο το δίκτυο με blocklists regex και wildcard, allowlists και κατηγορίες υπηρεσιών με ένα κλικ
+      - Ιεραρχική cache L1/L2 με συγχώνευση εν εξελίξει ερωτημάτων για πολύ υψηλή απόδοση
+      - Κρυπτογραφημένο DNS upstream και ως listener (DoH, DoT, DoQ, HTTP/3) και επικύρωση DNSSEC
+      - Ονομασμένα upstream pools με δρομολόγηση προτεραιότητας, ελέγχους υγείας και αυτόματο failover
+      - Πολιτικές ανά client και ανά ομάδα με γονικό έλεγχο και conditional forwarding
+      - Ανίχνευση κακόβουλου λογισμικού: DNS tunneling, DGA, DNS rebinding, NXDOMAIN hijack και φιλτράρισμα IP C2
+      - Συμβατότητα με το API Pi-hole v6 ως άμεση αντικατάσταση
+
+      **Μάθετε Περισσότερα:**
+      - [Τεκμηρίωση Ferrous DNS](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    hr_HR: |
+      Ferrous DNS je samohostirani DNS poslužitelj visokih performansi s blokiranjem oglasa i pratitelja na cijeloj mreži, napisan u Rustu. Objedinjuje DNS resolver, REST API, web nadzornu ploču i SQLite zapisnik upita u jednu izvršnu datoteku bez dodatnih ovisnosti — brza i lagana alternativa Pi-holeu i AdGuard Homeu.
+      Usmjerite DNS svog usmjerivača na Ferrous DNS i svaki uređaj na mreži je zaštićen, bez instalacije klijentskog softvera. Nadzorna ploča u stvarnom vremenu prikazuje stope upita, blokirane domene, najaktivnije klijente i latenciju upstreama, dok čarobnjak za postavljanje pri prvom pokretanju vodi početnu konfiguraciju.
+
+      **Glavne Funkcije:**
+      - Blokiranje oglasa, pratitelja i zloćudnog softvera na cijeloj mreži uz regex i wildcard blokliste, popise dopuštenja i kategorije usluga jednim klikom
+      - Hijerarhijska L1/L2 predmemorija sa spajanjem upita u tijeku za vrlo visoku propusnost
+      - Šifrirani DNS kao upstream i slušatelj (DoH, DoT, DoQ, HTTP/3) te DNSSEC validacija
+      - Imenovani upstream skupovi s usmjeravanjem po prioritetu, provjerama zdravlja i automatskim failoverom
+      - Pravila po klijentu i po grupi s roditeljskim nadzorom i uvjetnim prosljeđivanjem
+      - Otkrivanje zloćudnog softvera: DNS tuneliranje, DGA, DNS rebinding, NXDOMAIN otmica i filtriranje C2 IP-ova
+      - Kompatibilnost s Pi-hole v6 API-jem kao izravna zamjena
+
+      **Saznajte Više:**
+      - [Dokumentacija Ferrous DNS](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    pt_PT: |
+      O Ferrous DNS é um servidor DNS auto-hospedado de alto desempenho com bloqueio de anúncios e rastreadores em toda a rede, escrito em Rust. Reúne um resolvedor DNS, API REST, painel web e registo de consultas SQLite num único binário sem dependências adicionais — uma alternativa rápida e leve ao Pi-hole e ao AdGuard Home.
+      Aponte o DNS do seu router para o Ferrous DNS e todos os dispositivos da rede ficam protegidos, sem software cliente para instalar. Um painel em tempo real mostra a taxa de consultas, domínios bloqueados, principais clientes e latência dos upstreams, enquanto um assistente de configuração no primeiro arranque orienta a configuração inicial.
+
+      **Principais Funcionalidades:**
+      - Bloqueio de anúncios, rastreadores e malware em toda a rede com listas de bloqueio regex e wildcard, listas de permissões e categorias de serviços num clique
+      - Cache hierárquica L1/L2 com coalescência de consultas em curso para um débito muito elevado
+      - DNS cifrado em upstream e como listener (DoH, DoT, DoQ, HTTP/3) e validação DNSSEC
+      - Pools de upstream nomeados com encaminhamento por prioridade, verificações de saúde e failover automático
+      - Políticas por cliente e por grupo com controlos parentais e encaminhamento condicional
+      - Deteção de malware: tunelamento DNS, DGA, DNS rebinding, sequestro de NXDOMAIN e filtragem de IP C2
+      - Compatibilidade com a API Pi-hole v6 como substituto direto
+
+      **Saiba Mais:**
+      - [Documentação do Ferrous DNS](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    pt_BR: |
+      O Ferrous DNS é um servidor DNS auto-hospedado de alto desempenho com bloqueio de anúncios e rastreadores em toda a rede, escrito em Rust. Ele reúne um resolvedor DNS, API REST, painel web e log de consultas SQLite em um único binário sem dependências adicionais — uma alternativa rápida e leve ao Pi-hole e ao AdGuard Home.
+      Aponte o DNS do seu roteador para o Ferrous DNS e todos os dispositivos da rede ficam protegidos, sem precisar instalar nenhum software cliente. Um painel em tempo real mostra a taxa de consultas, domínios bloqueados, principais clientes e latência dos upstreams, enquanto um assistente de configuração na primeira execução orienta a configuração inicial.
+
+      **Principais Recursos:**
+      - Bloqueio de anúncios, rastreadores e malware em toda a rede com listas de bloqueio regex e curinga, listas de permissões e categorias de serviços em um clique
+      - Cache hierárquico L1/L2 com coalescência de consultas em andamento para altíssima vazão
+      - DNS criptografado como upstream e listener (DoH, DoT, DoQ, HTTP/3) e validação DNSSEC
+      - Pools de upstream nomeados com roteamento por prioridade, verificações de saúde e failover automático
+      - Políticas por cliente e por grupo com controle parental e encaminhamento condicional
+      - Detecção de malware: tunelamento DNS, DGA, DNS rebinding, sequestro de NXDOMAIN e filtragem de IP C2
+      - Compatibilidade com a API Pi-hole v6 como substituto direto
+
+      **Saiba Mais:**
+      - [Documentação do Ferrous DNS](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    ru_RU: |
+      Ferrous DNS — это высокопроизводительный, самостоятельно размещаемый DNS-сервер с блокировкой рекламы и трекеров на уровне всей сети, написанный на Rust. Он объединяет DNS-резолвер, REST API, веб-панель и журнал запросов SQLite в одном бинарном файле без дополнительных зависимостей — быстрая и лёгкая альтернатива Pi-hole и AdGuard Home.
+      Укажите в DNS вашего маршрутизатора Ferrous DNS, и каждое устройство в сети будет защищено без установки клиентского ПО. Панель в реальном времени показывает частоту запросов, заблокированные домены, топ клиентов и задержку вышестоящих серверов, а мастер настройки при первом запуске помогает с начальной конфигурацией.
+
+      **Основные Функции:**
+      - Блокировка рекламы, трекеров и вредоносного ПО на уровне всей сети с помощью regex- и wildcard-списков блокировки, списков разрешений и категорий сервисов в один клик
+      - Иерархический кэш L1/L2 с объединением выполняющихся запросов для очень высокой пропускной способности
+      - Шифрованный DNS как upstream и как слушатель (DoH, DoT, DoQ, HTTP/3), а также проверка DNSSEC
+      - Именованные пулы вышестоящих серверов с маршрутизацией по приоритету, проверками работоспособности и автоматическим отказоустойчивым переключением
+      - Политики по клиентам и по группам с родительским контролем и условной пересылкой
+      - Обнаружение вредоносного ПО: DNS-туннелирование, DGA, DNS rebinding, перехват NXDOMAIN и фильтрация IP C2
+      - Совместимость с API Pi-hole v6 как прямая замена
+
+      **Узнать Больше:**
+      - [Документация Ferrous DNS](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+    tr_TR: |
+      Ferrous DNS, Rust ile yazılmış, ağ genelinde reklam ve izleyici engelleme özelliğine sahip yüksek performanslı, kendi kendine barındırılan bir DNS sunucusudur. DNS çözümleyici, REST API, web panosu ve SQLite sorgu günlüğünü ek bağımlılık olmadan tek bir ikili dosyada birleştirir — Pi-hole ve AdGuard Home'a hızlı ve hafif bir alternatif.
+      Yönlendiricinizin DNS'ini Ferrous DNS'e yönlendirin; istemci yazılımı kurmadan ağdaki her cihaz korunur. Gerçek zamanlı pano sorgu oranlarını, engellenen alan adlarını, en aktif istemcileri ve üst sunucu gecikmesini gösterirken, ilk çalıştırmadaki kurulum sihirbazı ilk yapılandırmayı yönlendirir.
+
+      **Başlıca İşlevler:**
+      - Regex ve joker karakter engelleme listeleri, izin listeleri ve tek tıklamalı hizmet kategorileriyle ağ genelinde reklam, izleyici ve kötü amaçlı yazılım engelleme
+      - Çok yüksek verim için devam eden sorguları birleştiren L1/L2 hiyerarşik önbellek
+      - Üst sunucu ve dinleyici olarak şifreli DNS (DoH, DoT, DoQ, HTTP/3) ve DNSSEC doğrulaması
+      - Öncelikli yönlendirme, sağlık kontrolleri ve otomatik yük devretmeli adlandırılmış üst sunucu havuzları
+      - Ebeveyn denetimleri ve koşullu iletme ile istemci ve grup başına politikalar
+      - Kötü amaçlı yazılım tespiti: DNS tünelleme, DGA, DNS yeniden bağlama, NXDOMAIN ele geçirme ve C2 IP filtreleme
+      - Doğrudan yerine geçebilen Pi-hole v6 API uyumluluğu
+
+      **Daha Fazla Bilgi:**
+      - [Ferrous DNS Belgeleri](https://ferrous-networking.github.io/ferrous-dns/)
+      - [Ferrous DNS GitHub](https://github.com/ferrous-networking/ferrous-dns)
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FerrousDNS/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FerrousDNS/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FerrousDNS/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FerrousDNS/screenshot-3.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FerrousDNS/thumbnail.png
+  tips:
+    before_install:
+      en_US: |
+        Ferrous DNS uses host networking so it can bind DNS on port 53 and discover devices via mDNS.
+        Make sure ports 53 (TCP/UDP) and 8080 are free on the host — stop any other DNS server (e.g. systemd-resolved) using port 53 first.
+        Open the dashboard at http://<host-ip>:8080 and complete the first-run setup wizard to set your admin password, then point your router's DNS at this server.
+      en_GB: |
+        Ferrous DNS uses host networking so it can bind DNS on port 53 and discover devices via mDNS.
+        Make sure ports 53 (TCP/UDP) and 8080 are free on the host — stop any other DNS server (e.g. systemd-resolved) using port 53 first.
+        Open the dashboard at http://<host-ip>:8080 and complete the first-run setup wizard to set your admin password, then point your router's DNS at this server.
+      zh_CN: |
+        Ferrous DNS 使用主机网络模式，以便绑定 53 端口并通过 mDNS 发现设备。
+        请确保主机上的 53 端口（TCP/UDP）和 8080 端口空闲——先停止占用 53 端口的其他 DNS 服务（如 systemd-resolved）。
+        在 http://<主机IP>:8080 打开管理面板，完成首次运行的设置向导以设定管理员密码，然后将路由器的 DNS 指向本服务器。
+      pt_PT: |
+        O Ferrous DNS usa rede em modo host para poder ligar o DNS à porta 53 e descobrir dispositivos por mDNS.
+        Garanta que as portas 53 (TCP/UDP) e 8080 estão livres no anfitrião — pare primeiro qualquer outro servidor DNS (por exemplo, systemd-resolved) que use a porta 53.
+        Abra o painel em http://<ip-do-anfitriao>:8080 e conclua o assistente de configuração inicial para definir a palavra-passe de administrador, depois aponte o DNS do seu router para este servidor.
+      pt_BR: |
+        O Ferrous DNS usa rede em modo host para conseguir vincular o DNS à porta 53 e descobrir dispositivos via mDNS.
+        Garanta que as portas 53 (TCP/UDP) e 8080 estejam livres no host — pare primeiro qualquer outro servidor DNS (por exemplo, systemd-resolved) que use a porta 53.
+        Abra o painel em http://<ip-do-host>:8080 e conclua o assistente de configuração inicial para definir a senha de administrador, depois aponte o DNS do seu roteador para este servidor.
+  scheme: http
+  port_map: "8080"
+  index: /
+  title:
+    en_US: Ferrous DNS
+  version: "0.9.6"
+  update_at: "2026-07-22"
+  release_notes:
+    en_US: |-
+      - v0.9.6 adds TOTP two-factor authentication and passkey/WebAuthn login.
+      - Docker fixes: setcap for non-root port 53 binding, a corrected Compose healthcheck, and removal of a phantom image reference.
+      - Includes dependency and CI updates across the Cargo and Python toolchains.
+    en_GB: |-
+      - v0.9.6 adds TOTP two-factor authentication and passkey/WebAuthn login.
+      - Docker fixes: setcap for non-root port 53 binding, a corrected Compose healthcheck, and removal of a phantom image reference.
+      - Includes dependency and CI updates across the Cargo and Python toolchains.
+    zh_CN: |-
+      - v0.9.6 新增 TOTP 双因素认证和 passkey/WebAuthn 登录。
+      - Docker 修复：以非 root 用户绑定 53 端口的 setcap、修正 Compose 健康检查，并移除无效的镜像引用。
+      - 包含 Cargo 与 Python 工具链的依赖和 CI 更新。
+    pt_PT: |-
+      - A v0.9.6 adiciona autenticação de dois fatores TOTP e início de sessão com passkey/WebAuthn.
+      - Correções no Docker: setcap para ligação à porta 53 sem root, verificação de saúde do Compose corrigida e remoção de uma referência de imagem inexistente.
+      - Inclui atualizações de dependências e de CI nas toolchains Cargo e Python.
+    pt_BR: |-
+      - A v0.9.6 adiciona autenticação de dois fatores TOTP e login com passkey/WebAuthn.
+      - Correções no Docker: setcap para vincular à porta 53 sem root, verificação de saúde do Compose corrigida e remoção de uma referência de imagem inexistente.
+      - Inclui atualizações de dependências e de CI nas toolchains Cargo e Python.
+  store_app_id: ferrous-dns
+  website: "https://ferrous-networking.github.io/ferrous-dns/"
+  repo: "https://github.com/ferrous-networking/ferrous-dns"
+  support: "https://github.com/ferrous-networking/ferrous-dns/issues"
+  docs: "https://ferrous-networking.github.io/ferrous-dns/"
