@@ -1,7 +1,7 @@
 name: libredb-studio
 services:
   libredb-studio:
-    image: libredb/libredb-studio:0.15.0
+    image: libredb/libredb-studio:0.18.2
     container_name: libredb-studio
     restart: unless-stopped
     ports:
@@ -10,8 +10,8 @@ services:
         protocol: tcp
     environment:
       ADMIN_EMAIL: admin@libredb.org
-      ADMIN_PASSWORD: changeme123
-      JWT_SECRET: libredb-studio-change-this-to-a-long-random-secret-value-min-48
+      ADMIN_PASSWORD: ""
+      JWT_SECRET: ""
       STORAGE_PROVIDER: sqlite
       STORAGE_SQLITE_PATH: /app/data/libredb-storage.db
       AUTH_COOKIE_SECURE: "false"
@@ -43,12 +43,12 @@ services:
             zh_CN: 首次启动时创建的初始管理员账户的电子邮件地址。
         - container: ADMIN_PASSWORD
           description:
-            en_US: Password for the initial admin account (minimum 8 characters). Change this before the first login, otherwise anyone on your LAN can sign in.
-            zh_CN: 初始管理员账户的密码（至少 8 个字符）。请在首次登录前修改，否则局域网内任何人都可以登录。
+            en_US: Leave empty and the app generates a strong password on first start and prints it once to the container log. Set your own only if you prefer to choose it. It applies on the first start only. To change the password later, set this to the new value, add ADMIN_PASSWORD_RESET=true, restart, then remove that variable.
+            zh_CN: 留空时，应用会在首次启动时生成强密码并在容器日志中打印一次。仅在希望自行指定时填写。该值仅在首次启动时生效：之后如需更改密码，请将其设为新值并添加 ADMIN_PASSWORD_RESET=true，重启后再删除该变量。
         - container: JWT_SECRET
           description:
-            en_US: Secret key used to sign authentication tokens (minimum 32 characters). Set a long random value.
-            zh_CN: 用于签署身份验证令牌的密钥（至少 32 个字符）。请设置一个较长的随机值。
+            en_US: Leave empty and a strong secret is generated on first start. This value also encrypts saved connection passwords, so never reuse a value published anywhere. If you set your own it must be at least 32 characters, or the container exits at boot.
+            zh_CN: 留空时会在首次启动时生成强密钥。该值同时用于加密已保存的连接密码，因此切勿使用任何公开过的值。如自行设置，长度至少为 32 个字符，否则容器将在启动时退出。
         - container: STORAGE_PROVIDER
           description:
             en_US: Storage backend. Keep as "sqlite" for a self-contained setup.
@@ -81,8 +81,8 @@ x-casaos:
   author: libredb
   category: Developer
   description:
-    en_US: LibreDB Studio is an open-source (MIT), self-hosted SQL IDE. It provides a modern web-based interface to connect to 16 database engines (PostgreSQL, MySQL, MongoDB, Redis, ClickHouse and more), browse schemas, write and run SQL queries, and manage your data from any browser on your LAN. Data is stored locally in a SQLite database, so everything stays under your control.
-    zh_CN: LibreDB Studio 是一款开源（MIT）的自托管 SQL IDE。它提供现代化的基于 Web 的界面，可连接数据库、浏览架构、编写并运行 SQL 查询，并可通过局域网中的任意浏览器管理数据。数据本地存储于 SQLite 数据库中，一切尽在您的掌控之中。
+    en_US: LibreDB Studio is an open-source (MIT), self-hosted SQL IDE. It provides a modern web-based interface to connect to twenty-seven database engines (PostgreSQL, MySQL, Oracle, Db2, SQL Server, MongoDB, Redis, ClickHouse, Cassandra, Elasticsearch, Prometheus, Apache Kafka, Neo4j, Qdrant, Milvus, InfluxDB, etcd and more), browse schemas, and write and run queries from any browser on your LAN. Three of the twenty-seven are read-only because their own SQL is. Druid, Elasticsearch and OpenSearch have no `UPDATE` and no `CREATE TABLE` at all. Several more are read-only by construction. Data is stored locally in a SQLite database, so everything stays under your control.
+    zh_CN: LibreDB Studio 是一款开源（MIT）的自托管 SQL IDE。它提供现代化的基于 Web 的界面，支持连接 27 种数据库引擎（PostgreSQL、MySQL、Oracle、Db2、SQL Server、MongoDB、Redis、ClickHouse、Cassandra、Elasticsearch、Prometheus、Apache Kafka、Neo4j、Qdrant、Milvus、InfluxDB、etcd 等），浏览架构，并可通过局域网中的任意浏览器编写和运行查询。其中三种（Druid、Elasticsearch、OpenSearch）为只读，因为它们自身的 SQL 完全没有 `UPDATE`，也没有 `CREATE TABLE`；另有数种出于设计为只读。数据本地存储于 SQLite 数据库中，一切尽在您的掌控之中。
   developer: libredb
   icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreDBStudio/icon.svg
   screenshot_link:
@@ -99,19 +99,19 @@ x-casaos:
   index: /
   scheme: http
   port_map: "3016"
-  version: "0.15.0"
-  update_at: "2026-09-09"
+  version: "0.18.2"
+  update_at: "2026-10-09"
   release_notes:
     en_US: |-
-      - Updates LibreDB Studio to 0.15.0.
-      - CREATE TABLE now emits the DDL of the engine it is aimed at instead of PostgreSQL's, so the generated statement runs where it was generated.
-      - A database size the server declines to report is shown as absent instead of 0 bytes on MySQL, PostgreSQL, SQL Server and Oracle.
-      - No environment variable, port or volume changed, so existing installs need no reconfiguration.
+      - Updates LibreDB Studio to 0.18.2. Nine connection types join since 0.17.0, taking the count to 27: etcd, IBM Db2, Neo4j with a Graph tab for Cypher results, Qdrant, Milvus, InfluxDB as two connection types, Oxia, and Databend.
+      - Upgrade rather than wait if more than one person signs in to this instance. 0.18.1 closed `GHSA-jwvh-6phv-j9jh`, which affects the `sqlite` storage this app runs, in every release from 0.8.0 through 0.18.0. An account that signed in on a browser profile another account had signed out of received that account's saved connections, with their stored credentials, and its query history.
+      - On `sqlite` storage the local sign-in gains any number of accounts, managed from Admin. One consequence to know: the account now lives in the database, so `ADMIN_PASSWORD` seeds it on the first start only. Changing that variable later and restarting no longer changes the password; set `ADMIN_PASSWORD_RESET=true` alongside it, restart, then remove the flag.
+      - Studio can serve the Model Context Protocol at `/api/mcp`, so an AI client you already use can list connections, inspect a schema and run one read-only `SELECT` while the database credentials stay on the server. It is off in this package and stays off until you add `LIBREDB_MCP_ENABLED` and `LIBREDB_MCP_URL` as extra environment variables yourself. Each user then mints a bearer token that is shown once, only connections explicitly marked for it are visible, and the read query runs on PostgreSQL, SQLite, DuckDB and SQL Server.
     zh_CN: |-
-      - 将 LibreDB Studio 更新至 0.15.0。
-      - CREATE TABLE 现在会生成目标数据库引擎的 DDL，而不再固定使用 PostgreSQL 语法，生成的语句可以直接在对应引擎上运行。
-      - 在 MySQL、PostgreSQL、SQL Server 和 Oracle 上，服务端无法给出的数据库大小现在显示为不可用，而不是 0 字节。
-      - 环境变量、端口和数据卷均未变化，现有安装无需重新配置。
+      - 将 LibreDB Studio 更新至 0.18.2。自 0.17.0 起新增九种连接类型，总数达到 27 种：etcd、IBM Db2、Neo4j（含用于 Cypher 结果的 Graph 标签页）、Qdrant、Milvus、InfluxDB（两种连接类型）、Oxia 和 Databend。
+      - 如果有多个人登录本实例，请尽快升级。0.18.1 修复了 `GHSA-jwvh-6phv-j9jh`，该问题影响本应用所使用的 `sqlite` 存储，波及 0.8.0 至 0.18.0 的每个版本。当某个账户在另一账户登出过的浏览器配置文件中登录时，会接收到对方已保存的连接（含其中存储的凭据）以及查询历史。
+      - 在 `sqlite` 存储下，本地登录支持任意数量的账户，可在管理后台管理。需要注意的一点是：账户现在保存在数据库中，`ADMIN_PASSWORD` 仅在首次启动时写入。之后修改该变量并重启不会再改变密码；请同时设置 `ADMIN_PASSWORD_RESET=true`，重启后再删除该变量。
+      - Studio 可在 `/api/mcp` 上提供 Model Context Protocol 服务，你现有的 AI 客户端可以列出连接、查看结构并执行一条只读 `SELECT`，数据库凭据始终留在服务端。本安装包中该功能处于关闭状态，需自行添加 `LIBREDB_MCP_ENABLED` 和 `LIBREDB_MCP_URL` 两个环境变量才能开启。开启后，每位用户生成的 bearer token 只显示一次，只有被显式标记的连接才可见，只读查询支持 PostgreSQL、SQLite、DuckDB 和 SQL Server。
   website: https://libredb.org
   repo: https://github.com/libredb/libredb-studio
   support: https://github.com/libredb/libredb-studio/issues
