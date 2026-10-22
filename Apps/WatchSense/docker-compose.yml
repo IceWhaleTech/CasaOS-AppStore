@@ -1,7 +1,7 @@
 name: watchsense
 services:
   watchsense:
-    image: ghcr.io/peppeg/watchsense:1.1.0
+    image: ghcr.io/peppeg/watchsense:1.1.1
     container_name: watchsense
     restart: unless-stopped
     network_mode: bridge
@@ -133,12 +133,14 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.1.0"
+  version: "1.1.1"
   update_at: "2026-10-22"
   release_notes:
     en_US: |
+      - Error messages follow the app language (English or Italian); server logs in English.
       - PUID/PGID support: at startup the container gives /app/data to PUID:PGID and then drops root.
     it_IT: |
+      - I messaggi d'errore seguono la lingua dell'app (inglese o italiano); log del server in inglese.
       - Supporto PUID/PGID: all'avvio il container assegna /app/data a PUID:PGID e poi rinuncia ai privilegi di root.
   website: https://github.com/peppeg/watchsense
   repo: https://github.com/peppeg/watchsense
