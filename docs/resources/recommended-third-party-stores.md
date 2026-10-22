@@ -20,6 +20,14 @@ Community store sources for ZimaOS. Copy a source link, then import it in ZimaOS
   repo-url="https://github.com/bigbeartechworld/big-bear-casaos/"
 />
 
+<StoreSourceCard
+  title="CleanCut Store"
+  summary="CleanCut Suite, an all-in-one media manager and profanity filter for Plex: adds movies and shows from sources you add yourself and mutes the swearing. Paid app with a free trial."
+  url="https://cdn.jsdelivr.net/gh/LumbleHamb/cleancut-store@gh-pages/store.json"
+  maintainer="CleanCut Suite"
+  repo-url="https://github.com/LumbleHamb/cleancut-store"
+/>
+
 ## About this list
 
 - This is a community discovery page, not a formal endorsement list.
