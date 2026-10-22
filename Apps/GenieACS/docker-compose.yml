@@ -1,0 +1,171 @@
+name: genieacs
+
+services:
+  genieacs:
+    image: drumsergio/genieacs:1.2.16.6
+    container_name: genieacs
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    restart: unless-stopped
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+      - target: 7547
+        published: "7547"
+        protocol: tcp
+      - target: 7557
+        published: "7557"
+        protocol: tcp
+      - target: 7567
+        published: "7567"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/ext
+        target: /opt/genieacs/ext
+    environment:
+      GENIEACS_UI_JWT_SECRET: changeme-generate-with-openssl-rand-hex-32
+      GENIEACS_MONGODB_CONNECTION_URL: mongodb://genieacs-db/genieacs?authSource=admin
+      GENIEACS_CWMP_ACCESS_LOG_FILE: /var/log/genieacs/genieacs-cwmp-access.log
+      GENIEACS_NBI_ACCESS_LOG_FILE: /var/log/genieacs/genieacs-nbi-access.log
+      GENIEACS_FS_ACCESS_LOG_FILE: /var/log/genieacs/genieacs-fs-access.log
+      GENIEACS_UI_ACCESS_LOG_FILE: /var/log/genieacs/genieacs-ui-access.log
+      GENIEACS_DEBUG_FILE: /var/log/genieacs/genieacs-debug.yaml
+      GENIEACS_EXT_DIR: /opt/genieacs/ext
+    networks:
+      - genieacs-network
+    depends_on:
+      genieacs-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "--quiet", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    x-casaos:
+      envs:
+        - container: GENIEACS_UI_JWT_SECRET
+          description:
+            en_US: "Signs web UI logins. Replace it with the output of: openssl rand -hex 32"
+        - container: GENIEACS_MONGODB_CONNECTION_URL
+          description:
+            en_US: MongoDB connection URL
+        - container: GENIEACS_EXT_DIR
+          description:
+            en_US: Directory for GenieACS extension scripts
+      ports:
+        - container: "3000"
+          description:
+            en_US: Web UI Port
+          protocol: tcp
+        - container: "7547"
+          description:
+            en_US: CWMP (TR-069) Port, where devices inform
+          protocol: tcp
+        - container: "7557"
+          description:
+            en_US: NBI (Northbound Interface) Port
+          protocol: tcp
+        - container: "7567"
+          description:
+            en_US: File Server Port
+          protocol: tcp
+      volumes:
+        - container: /opt/genieacs/ext
+          description:
+            en_US: GenieACS extension scripts
+
+  genieacs-db:
+    image: mongo:8.0
+    container_name: genieacs-db
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/mongodb/db
+        target: /data/db
+      - type: bind
+        source: /DATA/AppData/$AppID/mongodb/configdb
+        target: /data/configdb
+    networks:
+      - genieacs-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    x-casaos:
+      volumes:
+        - container: /data/db
+          description:
+            en_US: MongoDB data directory
+        - container: /data/configdb
+          description:
+            en_US: MongoDB config directory
+
+networks:
+  genieacs-network:
+    name: genieacs-network
+
+x-casaos:
+  id: org.icewhale.genieacs
+  architectures:
+    - amd64
+    - arm64
+  main: genieacs
+  author: GeiserX
+  developer: GenieACS
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GenieACS/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GenieACS/screenshot-1.png
+  title:
+    en_US: GenieACS
+  tagline:
+    en_US: Open-source TR-069 ACS for routers, ONTs and other CPE
+    zh_CN: 用于路由器、ONT 等 CPE 的开源 TR-069 ACS
+  description:
+    en_US: |
+      GenieACS is the open-source TR-069 auto configuration server (ACS) that manages routers, ONTs and other customer-premises equipment (CPE) from a web console and a northbound API.
+
+      GenieACS ships no container of its own. This image runs its four services (CWMP, NBI, file server and web UI) in one container, built from upstream GenieACS 1.2.16 for amd64 and arm64 without changing it, with MongoDB beside it. The GenieACS processes run as an unprivileged user, and each service's log is rotated inside the container.
+    zh_CN: |
+      GenieACS 是开源的 TR-069 自动配置服务器（ACS），通过 Web 控制台和北向 API 管理路由器、ONT 和其他客户终端设备（CPE）。
+
+      GenieACS 官方不提供容器镜像。本镜像在一个容器中运行它的四个服务（CWMP、NBI、文件服务器和 Web 界面），基于上游 GenieACS 1.2.16 源码为 amd64 和 arm64 构建，未做任何修改，并在旁边运行 MongoDB。GenieACS 进程以非特权用户运行，每个服务的日志在容器内自动轮转。
+  tips:
+    before_install:
+      en_US: |
+        Replace `GENIEACS_UI_JWT_SECRET` with the output of `openssl rand -hex 32` before installing.
+
+        GenieACS listens on four ports:
+
+        | Port | Service | Description |
+        |------|---------|-------------|
+        | 3000 | Web UI | Administration console |
+        | 7547 | CWMP | TR-069 endpoint for CPE devices |
+        | 7557 | NBI | Northbound API for integrations |
+        | 7567 | FS | File server for firmware |
+
+        The first visit to the console runs a setup wizard that creates the `admin` / `admin` login; change that password. Set the ACS URL on your routers and ONTs to `http://<your-casaos-ip>:7547/`.
+  index: /
+  port_map: "3000"
+  scheme: http
+  version: "1.2.16+6"
+  update_at: "2026-10-10"
+  release_notes:
+    en_US: |-
+      - Updates the image to 1.2.16.6: upstream GenieACS 1.2.16, build 6.
+      - Logs stay inside the container, where the image rotates them, instead of on a host folder the unprivileged GenieACS user cannot write to.
+  website: https://genieacs.com
+  repo: https://github.com/GeiserX/genieacs-container
+  support: https://github.com/GeiserX/genieacs-container/issues
+  docs: https://geiserx.github.io/genieacs-container/
