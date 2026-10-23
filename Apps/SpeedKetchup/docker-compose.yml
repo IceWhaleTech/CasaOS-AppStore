@@ -1,0 +1,129 @@
+name: speedketchup
+services:
+  speedketchup:
+    image: gatispei/speedketchup:0.4.0
+    container_name: speedketchup
+    network_mode: bridge
+    restart: unless-stopped
+    environment:
+      SPEEDKETCHUP_INTERVAL: "10"
+      SPEEDKETCHUP_SERVER: ""
+      SPEEDKETCHUP_DOWNLOAD_DURATION: "10"
+      SPEEDKETCHUP_UPLOAD_DURATION: "10"
+      SPEEDKETCHUP_DOWNLOAD_CONNECTIONS: "8"
+      SPEEDKETCHUP_UPLOAD_CONNECTIONS: "8"
+      SPEEDKETCHUP_INFLUX_URL: ""
+      SPEEDKETCHUP_INFLUX_TOKEN: ""
+      SPEEDKETCHUP_MQTT: ""
+      SPEEDKETCHUP_MQTT_USER: ""
+      SPEEDKETCHUP_MQTT_PASSWORD: ""
+    ports:
+      - target: 8080
+        published: "8067"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: SPEEDKETCHUP_INTERVAL
+          description:
+            en_US: Minutes between the speed tests.
+        - container: SPEEDKETCHUP_SERVER
+          description:
+            en_US: Speedtest server host[:port] to always test against. Empty picks the server with the lowest latency for every test.
+        - container: SPEEDKETCHUP_DOWNLOAD_DURATION
+          description:
+            en_US: Seconds to test the download speed, 0 skips the download test.
+        - container: SPEEDKETCHUP_UPLOAD_DURATION
+          description:
+            en_US: Seconds to test the upload speed, 0 skips the upload test.
+        - container: SPEEDKETCHUP_DOWNLOAD_CONNECTIONS
+          description:
+            en_US: Parallel connections for the download test.
+        - container: SPEEDKETCHUP_UPLOAD_CONNECTIONS
+          description:
+            en_US: Parallel connections for the upload test.
+        - container: SPEEDKETCHUP_INFLUX_URL
+          description:
+            en_US: InfluxDB line protocol write url to also write every result to, http only, eg http://influxdb:8086/api/v2/write?org=home&bucket=speedketchup. Empty writes nowhere.
+        - container: SPEEDKETCHUP_INFLUX_TOKEN
+          description:
+            en_US: Token for the InfluxDB write url.
+        - container: SPEEDKETCHUP_MQTT
+          description:
+            en_US: MQTT broker host[:port] to also publish every result to, with Home Assistant discovery, plain mqtt only, port 1883 by default. Empty publishes nowhere.
+        - container: SPEEDKETCHUP_MQTT_USER
+          description:
+            en_US: User name for the MQTT broker.
+        - container: SPEEDKETCHUP_MQTT_PASSWORD
+          description:
+            en_US: Password for the MQTT broker.
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web page with the test results, Prometheus metrics at /metrics
+      volumes:
+        - container: /data
+          description:
+            en_US: Where the test results csv file is stored.
+x-casaos:
+  id: com.speedketchup.speedketchup
+  main: speedketchup
+  index: /
+  port_map: "8067"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SpeedKetchup/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SpeedKetchup/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SpeedKetchup/screenshot-1.png
+  title:
+    en_US: SpeedKetchup
+  tagline:
+    en_US: Periodic internet speed tests with charts in a builtin web page
+  description:
+    en_US: >-
+      SpeedKetchup runs an internet speed test every 10 minutes against the
+      nearest speedtest.net server, stores the results in a csv file and shows
+      them in a builtin web page.
+
+
+      The web page has speed and latency charts with distributions of the
+      displayed results, daily, monthly, time of day and time of week averages,
+      and a sortable table of every result.
+
+
+      Every result can also go to Prometheus (the last test is served at
+      /metrics), to InfluxDB over the line protocol, and to an MQTT broker with
+      Home Assistant discovery.
+
+
+      A single statically linked binary of a few hundred kilobytes, the image
+      has nothing else in it.
+  tips:
+    before_install:
+      en_US: >-
+        The first test runs right after the start, the next ones every 10
+        minutes. Every test downloads and uploads for 10 seconds at full speed,
+        so on a metered connection raise the interval or shorten the durations
+        in the settings.
+  author: gatispei
+  developer: Gatis Peisenieks
+  category: Networking
+  architectures:
+    - amd64
+    - arm64
+    - arm
+    - "386"
+  version: "0.4.0"
+  update_at: "2026-10-23"
+  release_notes:
+    en_US: |-
+      - Publishes every result to an MQTT broker with Home Assistant discovery.
+      - Writes every result to InfluxDB over the line protocol.
+      - Serves the last test as Prometheus metrics at /metrics.
+  website: https://speedketchup.com
+  repo: https://github.com/gatispei/speedketchup
+  support: https://github.com/gatispei/speedketchup/issues
+  docs: https://github.com/gatispei/speedketchup#readme
