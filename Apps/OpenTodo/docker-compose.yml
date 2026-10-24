@@ -13,7 +13,7 @@ services:
         source: /DATA/AppData/$AppID/data
         target: /data
   opentodo:
-    image: ghcr.io/pixari/opentodo:0.11.0
+    image: ghcr.io/pixari/opentodo:0.12.0
     container_name: opentodo
     depends_on:
       opentodo-init:
@@ -94,10 +94,10 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "0.11.0"
+  version: "0.12.0"
   update_at: "2026-10-18"
   release_notes:
-    en_US: "OpenTodo 0.11.0, the first version in this app store. Changes: https://github.com/pixari/opentodo/blob/main/CHANGELOG.md"
+    en_US: "OpenTodo 0.12.0, the first version in this app store. Changes: https://github.com/pixari/opentodo/blob/main/CHANGELOG.md"
   website: https://open-todo.app
   repo: https://github.com/pixari/opentodo
   support: https://github.com/pixari/opentodo/issues
