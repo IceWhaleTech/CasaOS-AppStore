@@ -1,14 +1,14 @@
-name: armanckeser-wishlist
+name: wishlist
 services:
   app:
     image: ghcr.io/armanckeser/wishlist:0.33.0
-    container_name: armanckeser-wishlist-app
+    container_name: wishlist-app
     restart: unless-stopped
     environment:
-      POSTGRES_SERVER: armanckeser-wishlist-postgres
+      POSTGRES_SERVER: wishlist-postgres
       POSTGRES_DB: wishlist
       POSTGRES_USER: wishlist
-      POSTGRES_PASSWORD: 6cc453d7a135555633a2b084c42af6a1
+      POSTGRES_PASSWORD: ""
     depends_on:
       postgres:
         condition: service_healthy
@@ -24,13 +24,13 @@ services:
             en_US: Web UI
   postgres:
     image: postgres:17
-    container_name: armanckeser-wishlist-postgres
+    container_name: wishlist-postgres
     restart: unless-stopped
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_DB: wishlist
       POSTGRES_USER: wishlist
-      POSTGRES_PASSWORD: 6cc453d7a135555633a2b084c42af6a1
+      POSTGRES_HOST_AUTH_METHOD: trust
     healthcheck:
       test:
         - CMD-SHELL
@@ -43,7 +43,7 @@ services:
         source: /DATA/AppData/$AppID/pgdata
         target: /var/lib/postgresql/data/pgdata
 x-casaos:
-  id: com.armanckeser.wishlist
+  id: com.selfhost.wishlist
   architectures:
     - amd64
     - arm64
