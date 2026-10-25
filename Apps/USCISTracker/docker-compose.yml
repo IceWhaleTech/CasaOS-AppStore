@@ -5,7 +5,7 @@ services:
     container_name: armanckeser-uscis-tracker-app
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://postgres:96437b174776a123af29cbd69106f02a@armanckeser-uscis-tracker-postgres:5432/app
+      DATABASE_URL: postgresql://postgres@armanckeser-uscis-tracker-postgres:5432/app
       AUTH_PASSWORD: ""
     depends_on:
       postgres:
@@ -30,7 +30,8 @@ services:
     environment:
       POSTGRES_DB: app
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 96437b174776a123af29cbd69106f02a
+      # Postgres is reachable only on this app's own network, so it runs without a password.
+      POSTGRES_HOST_AUTH_METHOD: trust
     healthcheck:
       test:
         - CMD-SHELL
