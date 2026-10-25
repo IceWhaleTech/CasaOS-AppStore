@@ -5,7 +5,7 @@ services:
     container_name: armanckeser-kumbara-app
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://postgres:b6f207ee1c65c3dc12b5bb1a8f03df7e@armanckeser-kumbara-postgres:5432/app
+      DATABASE_URL: postgresql://postgres@armanckeser-kumbara-postgres:5432/app
       ELECTRIC_URL: http://armanckeser-kumbara-electric:3000
       AUTH_PASSWORD: ""
     depends_on:
@@ -33,7 +33,8 @@ services:
     environment:
       POSTGRES_DB: app
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: b6f207ee1c65c3dc12b5bb1a8f03df7e
+      # Postgres is reachable only on this app's own network, so it runs without a password.
+      POSTGRES_HOST_AUTH_METHOD: trust
     command:
       - postgres
       - -c
@@ -58,7 +59,7 @@ services:
     container_name: armanckeser-kumbara-electric
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://postgres:b6f207ee1c65c3dc12b5bb1a8f03df7e@armanckeser-kumbara-postgres:5432/app?sslmode=disable
+      DATABASE_URL: postgresql://postgres:@armanckeser-kumbara-postgres:5432/app?sslmode=disable
       ELECTRIC_INSECURE: "true"
       ELECTRIC_STORAGE_DIR: /var/lib/electric/persistent
     depends_on:
