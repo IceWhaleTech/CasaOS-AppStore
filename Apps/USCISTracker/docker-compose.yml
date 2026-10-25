@@ -1,11 +1,11 @@
-name: armanckeser-uscis-tracker
+name: uscis-tracker
 services:
   app:
     image: ghcr.io/armanckeser/uscis-tracker:0.3.0
-    container_name: armanckeser-uscis-tracker-app
+    container_name: uscis-tracker-app
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://postgres@armanckeser-uscis-tracker-postgres:5432/app
+      DATABASE_URL: postgresql://postgres:@uscis-tracker-postgres:5432/app
       AUTH_PASSWORD: ""
     depends_on:
       postgres:
@@ -25,12 +25,11 @@ services:
             en_US: Web UI
   postgres:
     image: postgres:16-alpine
-    container_name: armanckeser-uscis-tracker-postgres
+    container_name: uscis-tracker-postgres
     restart: unless-stopped
     environment:
       POSTGRES_DB: app
       POSTGRES_USER: postgres
-      # Postgres is reachable only on this app's own network, so it runs without a password.
       POSTGRES_HOST_AUTH_METHOD: trust
     healthcheck:
       test:
@@ -44,7 +43,7 @@ services:
         source: /DATA/AppData/$AppID/pgdata
         target: /var/lib/postgresql/data
 x-casaos:
-  id: com.armanckeser.uscis-tracker
+  id: com.selfhost.uscis-tracker
   architectures:
     - amd64
     - arm64
