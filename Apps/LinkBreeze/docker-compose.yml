@@ -1,0 +1,73 @@
+name: linkbreeze
+services:
+  linkbreeze:
+    image: docker.io/omnirise/linkbreeze:v1.5.0
+    container_name: linkbreeze
+    network_mode: bridge
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    x-casaos:
+      ports:
+        - container: "3000"
+          description:
+            en_US: Web UI port
+      volumes:
+        - container: /app/data
+          description:
+            en_US: LinkBreeze data directory (database and uploads)
+x-casaos:
+  id: org.icewhale.linkbreeze
+  architectures:
+    - amd64
+    - arm64
+  main: linkbreeze
+  author: OmniRise
+  category: Networking
+  developer: OmniRise
+  description:
+    en_US: |
+      LinkBreeze is a self-hosted link-in-bio platform, the open source alternative to Linktree. One public page holds all your links, with a real admin dashboard, privacy-first analytics, QR codes, and a full theme engine.
+
+      It runs as a single container backed by SQLite, so there is no external database to manage. The public page is fully server rendered with zero client JavaScript and loads fast on any connection. On first open, the setup wizard walks you through creating your admin account in under a minute.
+
+      Key features:
+
+      - Unlimited pages, each with its own slug, theme, SEO settings, and analytics
+      - Migration wizard imports your links from Linktree, Bento, Hopp.bio, and more in about 30 seconds
+      - 11 built-in themes plus a token-level customizer with custom CSS
+      - Cookieless analytics: hashed visitor IPs, no third-party scripts, automatic data pruning
+      - Link scheduling, custom /go/ redirect slugs, email capture, and embeds for YouTube, Spotify, and Bandcamp
+      - Auto-generated QR codes with custom colors, exportable up to 1024 px
+      - Custom domains: bind your own domain names to pages
+      - Automatic scheduled backups with one-click restore
+
+      Your data stays on your server. No subscription, no tracking, no ads.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LinkBreeze/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LinkBreeze/screenshot-1.png
+  tagline:
+    en_US: The self-hosted Linktree alternative you actually own
+  title:
+    en_US: LinkBreeze
+  index: /
+  port_map: "3000"
+  scheme: http
+  version: v1.5.0
+  update_at: "2026-10-24"
+  release_notes:
+    en_US: |-
+      - 1.5.0: custom domains for pages, automatic scheduled backups, custom /go/ redirect slugs, @ in page slugs, Poster Hero social cards, and a first listing in the CasaOS App Store.
+  tips:
+    before_install: |
+      LinkBreeze serves its admin panel and public pages on port 3000. For a public link page, expose the app through a reverse proxy or a domain after install. On first open you create the admin account, so no credentials are needed at install time.
+  website: https://linkbreeze.omnirise.dev
+  repo: https://github.com/OmniRise/LinkBreeze
+  support: https://github.com/OmniRise/LinkBreeze/issues
+  docs: https://linkbreeze.omnirise.dev/docs
