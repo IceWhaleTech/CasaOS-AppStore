@@ -5,7 +5,7 @@ services:
     container_name: armanckeser-github-stars-organizer-app
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://postgres:247dc34368ecfde5412db79fc9a508f0@armanckeser-github-stars-organizer-postgres:5432/app
+      DATABASE_URL: postgresql://postgres@armanckeser-github-stars-organizer-postgres:5432/app
       ELECTRIC_URL: http://armanckeser-github-stars-organizer-electric:3000
       GITHUB_TOKEN: ""
       AUTH_PASSWORD: ""
@@ -37,7 +37,8 @@ services:
     environment:
       POSTGRES_DB: app
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 247dc34368ecfde5412db79fc9a508f0
+      # Postgres is reachable only on this app's own network, so it runs without a password.
+      POSTGRES_HOST_AUTH_METHOD: trust
     command:
       - postgres
       - -c
@@ -62,7 +63,7 @@ services:
     container_name: armanckeser-github-stars-organizer-electric
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://postgres:247dc34368ecfde5412db79fc9a508f0@armanckeser-github-stars-organizer-postgres:5432/app?sslmode=disable
+      DATABASE_URL: postgresql://postgres:@armanckeser-github-stars-organizer-postgres:5432/app?sslmode=disable
       ELECTRIC_INSECURE: "true"
       ELECTRIC_STORAGE_DIR: /var/lib/electric/persistent
     depends_on:
