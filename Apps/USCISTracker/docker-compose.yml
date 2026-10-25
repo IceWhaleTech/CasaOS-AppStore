@@ -1,0 +1,84 @@
+name: armanckeser-uscis-tracker
+services:
+  app:
+    image: ghcr.io/armanckeser/uscis-tracker:0.3.0
+    container_name: armanckeser-uscis-tracker-app
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://postgres:96437b174776a123af29cbd69106f02a@armanckeser-uscis-tracker-postgres:5432/app
+      AUTH_PASSWORD: ""
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - target: 8080
+        published: "5181"
+        protocol: tcp
+    x-casaos:
+      envs:
+        - container: AUTH_PASSWORD
+          description:
+            en_US: Password for the app (leave empty for no login). Set one if anyone else on your network can reach this server.
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web UI
+  postgres:
+    image: postgres:16-alpine
+    container_name: armanckeser-uscis-tracker-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 96437b174776a123af29cbd69106f02a
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U postgres -d app
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/pgdata
+        target: /var/lib/postgresql/data
+x-casaos:
+  id: com.armanckeser.uscis-tracker
+  architectures:
+    - amd64
+    - arm64
+  main: app
+  author: Armanc Keser
+  developer: Alex Keser
+  category: Utilities
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/USCISTracker/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/USCISTracker/screenshot-1.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/USCISTracker/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/USCISTracker/screenshot-2.png
+  title:
+    en_US: USCIS Tracker
+  tagline:
+    en_US: Know what moved on your green card case, and when your date comes up.
+  description:
+    en_US: |-
+      One tap from a signed-in my.uscis.gov tab reads every case in your household. The tracker keeps the full history, shows what changed since you last looked (including the updates USCIS never announces), and estimates when the visa bulletin will reach your priority date.
+
+      It sends a push notification when a case changes. The refresh runs from your own phone's USCIS session, so the server never holds your USCIS password; your phone has to reach the server (a home server plus Tailscale works well) over HTTPS.
+  tips:
+    before_install:
+      en_US: Set AUTH_PASSWORD if anyone else on your network can reach this server; leave it empty for no login.
+  index: /
+  port_map: "5181"
+  scheme: http
+  version: 0.3.0
+  update_at: 2026-10-24
+  release_notes:
+    en_US: |-
+      - Installs from the app stores of Cosmos, Umbrel, CasaOS/ZimaOS, Runtipi, Unraid and Portainer, through https://github.com/armanckeser/selfhost-apps. Or with one command and no checkout: `docker compose -f oci://ghcr.io/armanckeser/uscis-tracker-stack:latest up -d`.
+      - One container serves the tracker and its API on port 8080, for amd64 and arm64. An all-in-one image (`ghcr.io/armanckeser/uscis-tracker:aio`) puts the database in the same container, for Unraid and `docker run`.
+      - Nothing to set up by hand: the schema, the Web Push keys and the bookmarklet's import key are created on first start.
+      - Optional password sign-in (`AUTH_PASSWORD`) for servers that anyone else on the network can reach.
+  website: https://github.com/armanckeser/uscis-tracker
+  repo: https://github.com/armanckeser/uscis-tracker
+  support: https://github.com/armanckeser/uscis-tracker/issues
