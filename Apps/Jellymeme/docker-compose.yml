@@ -1,8 +1,8 @@
-name: armanckeser-jellymeme
+name: jellymeme
 services:
   app:
     image: ghcr.io/armanckeser/jellymeme:1.1.0
-    container_name: armanckeser-jellymeme-app
+    container_name: jellymeme-app
     restart: unless-stopped
     environment:
       AUTH_PASSWORD: ""
@@ -24,7 +24,7 @@ services:
           description:
             en_US: Web UI
 x-casaos:
-  id: com.armanckeser.jellymeme
+  id: com.selfhost.jellymeme
   architectures:
     - amd64
     - arm64
