@@ -1,0 +1,83 @@
+name: armanckeser-wishlist
+services:
+  app:
+    image: ghcr.io/armanckeser/wishlist:0.33.0
+    container_name: armanckeser-wishlist-app
+    restart: unless-stopped
+    environment:
+      POSTGRES_SERVER: armanckeser-wishlist-postgres
+      POSTGRES_DB: wishlist
+      POSTGRES_USER: wishlist
+      POSTGRES_PASSWORD: 6cc453d7a135555633a2b084c42af6a1
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - target: 8080
+        published: "5185"
+        protocol: tcp
+    x-casaos:
+      envs: []
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web UI
+  postgres:
+    image: postgres:17
+    container_name: armanckeser-wishlist-postgres
+    restart: unless-stopped
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: wishlist
+      POSTGRES_USER: wishlist
+      POSTGRES_PASSWORD: 6cc453d7a135555633a2b084c42af6a1
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U wishlist -d wishlist
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/pgdata
+        target: /var/lib/postgresql/data/pgdata
+x-casaos:
+  id: com.armanckeser.wishlist
+  architectures:
+    - amd64
+    - arm64
+  main: app
+  author: Armanc Keser
+  developer: Armanc Keser
+  category: Utilities
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Wishlist/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Wishlist/screenshot-1.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Wishlist/screenshot-1.png
+  title:
+    en_US: Wishlist
+  tagline:
+    en_US: A wishlist that makes you wait before you buy.
+  description:
+    en_US: |-
+      Wishlist gives you an allowance that grows by the second. Paste a product link and the name, photo and price fill in; prices are checked daily and you are told when they drop.
+
+      Each item has to cool off before it is ready to buy, by a rule you set such as 3 days for every $100. Buying before then freezes your balance for 7 days. Friends can gift an item from a list you share.
+
+      Open the app after installing and sign up: the first account is yours.
+  tips: {}
+  index: /
+  port_map: "5185"
+  scheme: http
+  version: 0.33.0
+  update_at: 2026-10-24
+  release_notes:
+    en_US: |-
+      - Wishlist now installs from the app stores of Cosmos, Umbrel, CasaOS/ZimaOS, Runtipi, Unraid and Portainer, through https://github.com/armanckeser/selfhost-apps. Or with one command and no checkout: `docker compose -f oci://ghcr.io/armanckeser/wishlist-stack:latest up -d`.
+      - One container serves the web app and its API on port 8080, for amd64 and arm64. An all-in-one image (`ghcr.io/armanckeser/wishlist:aio`) puts the database in the same container, for Unraid and `docker run`.
+      - Nothing to set up by hand: migrations, the session key and the Web Push keys are created on first start, and the first person to sign up gets the account. `FIRST_SUPERUSER` is optional.
+      - Settings shows every section to the admin account (it hid some before).
+  website: https://github.com/armanckeser/wishlist
+  repo: https://github.com/armanckeser/wishlist
+  support: https://github.com/armanckeser/wishlist/issues
