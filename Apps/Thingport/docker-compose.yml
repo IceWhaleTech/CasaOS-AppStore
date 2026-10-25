@@ -66,6 +66,7 @@ services:
       FILE_STORAGE: /app/storage
       DATABASE_URL: postgresql://thingport:${POSTGRES_PASSWORD}@db:5432/thingport?schema=public
       CORS_ORIGINS: ""
+      # First-run default only; afterwards change it in Administration -> Connections -> FlareSolverr
       FLARESOLVERR_URL: http://flaresolverr:8191/v1
     depends_on:
       db:
@@ -76,6 +77,11 @@ services:
       - type: bind
         source: /DATA/AppData/thingport/storage
         target: /app/storage
+      # Consume folder: files, folders and ZIPs dropped in it are imported automatically and
+      # moved out of it (Administration -> Storage -> Consume Folder).
+      - type: bind
+        source: /DATA/AppData/thingport/consume
+        target: /app/consume
     networks:
       - thingport-net
     x-casaos:
@@ -113,10 +119,16 @@ services:
         - container: CORS_ORIGINS
           description:
             en_US: Comma-separated list of extra allowed CORS origins (optional)
+        - container: FLARESOLVERR_URL
+          description:
+            en_US: FlareSolverr endpoint used on first start; change it later in Administration -> Connections
       volumes:
         - container: /app/storage
           description:
             en_US: Imported and archived 3D model files
+        - container: /app/consume
+          description:
+            en_US: Consume folder -- files, folders and ZIPs copied here are imported automatically, then removed from it
 
   frontend:
     image: ghcr.io/tautvydasderzinskas/thingport-frontend:latest
@@ -171,13 +183,14 @@ x-casaos:
       - Organize your collection with collections, tags, and search
       - Preview 3D models directly in the browser
       - Keep local archived copies of the models you want to keep
+      - Bulk-import an existing library by dropping it into the consume folder
       - Track metadata and retain links back to the original source
       - Multi-language interface
 
       This stack runs 4 containers: a Postgres database, a FlareSolverr helper used for
       some model-site imports, the backend API, and the web frontend. Data is stored under
-      `/DATA/AppData/thingport` (database and imported model storage), CasaOS's
-      conventional appdata location.
+      `/DATA/AppData/thingport` (database, imported model storage and the consume folder),
+      CasaOS's conventional appdata location.
 
       Before first use, set `POSTGRES_PASSWORD` (the db container refuses to start without
       it) and `AUTH_SECRET` to a random value. The first account you register becomes the
@@ -191,8 +204,8 @@ x-casaos:
   port_map: "8290"
   scheme: http
   index: /
-  version: "0.1.0"
-  update_at: "2026-09-14"
+  version: "1.3.1"
+  update_at: "2026-10-25"
   release_notes:
     en_US: Initial CasaOS App Store submission.
   website: "https://thingport.net"
