@@ -1,12 +1,12 @@
-name: armanckeser-github-stars-organizer
+name: github-stars-organizer
 services:
   app:
     image: ghcr.io/armanckeser/github-stars-organizer:1.2.1
-    container_name: armanckeser-github-stars-organizer-app
+    container_name: github-stars-organizer-app
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://postgres@armanckeser-github-stars-organizer-postgres:5432/app
-      ELECTRIC_URL: http://armanckeser-github-stars-organizer-electric:3000
+      DATABASE_URL: postgresql://postgres:@github-stars-organizer-postgres:5432/app
+      ELECTRIC_URL: http://github-stars-organizer-electric:3000
       GITHUB_TOKEN: ""
       AUTH_PASSWORD: ""
     depends_on:
@@ -32,12 +32,11 @@ services:
             en_US: Web UI
   postgres:
     image: postgres:16-alpine
-    container_name: armanckeser-github-stars-organizer-postgres
+    container_name: github-stars-organizer-postgres
     restart: unless-stopped
     environment:
       POSTGRES_DB: app
       POSTGRES_USER: postgres
-      # Postgres is reachable only on this app's own network, so it runs without a password.
       POSTGRES_HOST_AUTH_METHOD: trust
     command:
       - postgres
@@ -60,10 +59,10 @@ services:
         target: /var/lib/postgresql/data
   electric:
     image: electricsql/electric:1.7.6
-    container_name: armanckeser-github-stars-organizer-electric
+    container_name: github-stars-organizer-electric
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://postgres:@armanckeser-github-stars-organizer-postgres:5432/app?sslmode=disable
+      DATABASE_URL: postgresql://postgres:@github-stars-organizer-postgres:5432/app?sslmode=disable
       ELECTRIC_INSECURE: "true"
       ELECTRIC_STORAGE_DIR: /var/lib/electric/persistent
     depends_on:
@@ -74,7 +73,7 @@ services:
         source: /DATA/AppData/$AppID/electricdata
         target: /var/lib/electric/persistent
 x-casaos:
-  id: com.armanckeser.github-stars-organizer
+  id: com.selfhost.github-stars-organizer
   architectures:
     - amd64
     - arm64
