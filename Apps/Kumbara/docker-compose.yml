@@ -1,12 +1,12 @@
-name: armanckeser-kumbara
+name: kumbara
 services:
   app:
     image: ghcr.io/armanckeser/kumbara:0.22.0
-    container_name: armanckeser-kumbara-app
+    container_name: kumbara-app
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://postgres@armanckeser-kumbara-postgres:5432/app
-      ELECTRIC_URL: http://armanckeser-kumbara-electric:3000
+      DATABASE_URL: postgresql://postgres:@kumbara-postgres:5432/app
+      ELECTRIC_URL: http://kumbara-electric:3000
       AUTH_PASSWORD: ""
     depends_on:
       postgres:
@@ -28,12 +28,11 @@ services:
             en_US: Web UI
   postgres:
     image: postgres:16-alpine
-    container_name: armanckeser-kumbara-postgres
+    container_name: kumbara-postgres
     restart: unless-stopped
     environment:
       POSTGRES_DB: app
       POSTGRES_USER: postgres
-      # Postgres is reachable only on this app's own network, so it runs without a password.
       POSTGRES_HOST_AUTH_METHOD: trust
     command:
       - postgres
@@ -56,10 +55,10 @@ services:
         target: /var/lib/postgresql/data
   electric:
     image: electricsql/electric:1.7.6
-    container_name: armanckeser-kumbara-electric
+    container_name: kumbara-electric
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://postgres:@armanckeser-kumbara-postgres:5432/app?sslmode=disable
+      DATABASE_URL: postgresql://postgres:@kumbara-postgres:5432/app?sslmode=disable
       ELECTRIC_INSECURE: "true"
       ELECTRIC_STORAGE_DIR: /var/lib/electric/persistent
     depends_on:
@@ -70,7 +69,7 @@ services:
         source: /DATA/AppData/$AppID/electricdata
         target: /var/lib/electric/persistent
 x-casaos:
-  id: com.armanckeser.kumbara
+  id: com.selfhost.kumbara
   architectures:
     - amd64
     - arm64
