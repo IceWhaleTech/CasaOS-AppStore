@@ -13,7 +13,7 @@
 name: aldine
 services:
   app:
-    image: ghcr.io/trahloff/aldine-app:0.16.0
+    image: ghcr.io/trahloff/aldine-app:0.17.0
     container_name: aldine
     ports:
       - target: 3000
@@ -55,7 +55,7 @@ services:
             en_US: The address people open Aldine at, such as https://aldine.example.com. Needed for single sign-on, password-reset email and the Claude connector.
 
   compiler:
-    image: ghcr.io/trahloff/aldine-compiler:0.16.0
+    image: ghcr.io/trahloff/aldine-compiler:0.17.0
     container_name: aldine-compiler
     volumes:
       - type: bind
@@ -157,11 +157,11 @@ x-casaos:
         The compiler image carries TeX Live: about 2.4 GB to download and 5 GB on disk, so the first install takes a while.
 
         Aldine starts without a login: anyone who can reach port 8480 can open and edit every project. To require accounts, set AUTH_ENABLED to 1 in the app's settings and restart it. Anyone who can reach the port can still create an account, so keep it on your own network or behind a reverse proxy.
-  version: "0.16.0"
+  version: "0.17.0"
   update_at: "2026-10-25"
   release_notes:
     en_US: |-
-      Search and replace across a whole project. The visual editor is for everyone now; documents still open as source. From the next release on, compiler upgrades download about 100 MB instead of all of TeX Live.
+      Security: new password accounts confirm their email before invites apply, and repeated wrong passwords slow down further tries on that account. The project list now shows who edited last, page-1 previews and typeset status. Upgrade every instance.
   website: https://aldine.dev/
   repo: https://github.com/trahloff/Aldine
   support: https://github.com/trahloff/Aldine/issues
