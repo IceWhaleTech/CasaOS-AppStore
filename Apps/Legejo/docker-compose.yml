@@ -1,7 +1,7 @@
 name: legejo
 services:
   legejo:
-    image: slurvdjur/legejo:1.23.1
+    image: slurvdjur/legejo:1.33.0
     environment:
       LEGEJO_ADMIN_USER: admin
       LEGEJO_ADMIN_PASSWORD: ""
@@ -30,8 +30,8 @@ services:
             sv_SE: Det första adminkontot, som skapas vid första starten.
         - container: LEGEJO_ADMIN_PASSWORD
           description:
-            en_US: Its password, used only on the first start. Set your own here before installing; if left empty, one is generated and printed once in the app's log.
-            sv_SE: Dess lösenord, som bara används vid första starten. Sätt ett eget här före installationen; lämnas det tomt genereras ett och skrivs ut en gång i appens logg.
+            en_US: Its password, used only on the first start. Leave it empty to create the admin account in Legejo's web page instead.
+            sv_SE: Dess lösenord, som bara används vid första starten. Lämna det tomt för att i stället skapa adminkontot på Legejos webbsida.
         - container: LEGEJO_PUBLIC_URL
           description:
             en_US: The https:// address users reach Legejo on, if any. Needed for federation and links in mail; leave empty on the local network.
@@ -77,20 +77,20 @@ x-casaos:
   tips:
     before_install:
       en_US: |
-        Set **LEGEJO_ADMIN_PASSWORD** to a password of your own before installing, then sign in as **admin** with it. It is used only to create the admin account. If you leave it empty, a password is generated on the first start and printed once in the app's logs.
+        Leave **LEGEJO_ADMIN_PASSWORD** empty and open Legejo after installing: the first visitor creates the admin account there, in the language they choose. Or set it to a password of your own and sign in as **admin** with it; it is used only to create the admin account.
       sv_SE: |
-        Sätt **LEGEJO_ADMIN_PASSWORD** till ett eget lösenord före installationen och logga sedan in som **admin** med det. Det används bara för att skapa adminkontot. Lämnar du det tomt genereras ett lösenord vid första starten och skrivs ut en gång i appens loggar.
+        Lämna **LEGEJO_ADMIN_PASSWORD** tomt och öppna Legejo efter installationen: den första besökaren skapar adminkontot där, på det språk hen väljer. Eller sätt ett eget lösenord och logga in som **admin** med det; det används bara för att skapa adminkontot.
   title:
     en_US: Legejo
   index: /
   port_map: "3610"
   scheme: http
-  version: "1.23.1"
-  update_at: "2026-10-18"
+  version: "1.33.0"
+  update_at: "2026-10-27"
   release_notes:
     en_US: |-
-      - First version in the store, Legejo 1.23.1.
-      - 1.23 adds searching inside the books (LEGEJO_FULLTEXT=true) and a search_text tool for AI assistants.
+      - First version in the store, Legejo 1.33.0.
+      - 1.33 sets a new instance up in the browser: the first visitor creates the admin account, and mail, the public address and search inside the books are set up on the Admin page.
   website: "https://github.com/jularboolean/legejo"
   repo: "https://github.com/jularboolean/legejo"
   support: "https://github.com/jularboolean/legejo/issues"
