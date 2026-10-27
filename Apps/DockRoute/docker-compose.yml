@@ -1,0 +1,140 @@
+name: dockroute
+services:
+  dockroute:
+    image: ghcr.io/dockroute/dockroute:latest
+    container_name: dockroute
+    network_mode: bridge
+    restart: unless-stopped
+    environment:
+      - DOCKROUTE_PROVIDER=log
+      - DOCKROUTE_OWNER_ID=default
+      - DOCKROUTE_POLICY=sync
+      - DOCKROUTE_DELETE_GRACE_SECONDS=60
+      - DOCKROUTE_DEFAULT_TARGET=
+      - DOCKROUTE_DOMAIN_FILTER=
+      - DOCKROUTE_RESYNC_SECONDS=60
+      - CLOUDFLARE_API_TOKEN=
+      - CLOUDFLARE_ACCOUNT_ID=
+      - CLOUDFLARE_TUNNEL_ID=
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+    x-casaos:
+      envs:
+        - container: DOCKROUTE_PROVIDER
+          description:
+            en_US: >-
+              DNS provider. "log" is a dry run that only prints the desired
+              state and needs no credentials; switch to "cloudflare" when you
+              are ready.
+        - container: DOCKROUTE_OWNER_ID
+          description:
+            en_US: >-
+              Ownership id written to the companion TXT records. Lets several
+              DockRoute instances share a zone safely.
+        - container: DOCKROUTE_POLICY
+          description:
+            en_US: >-
+              sync = create, update and delete owned records; upsert-only =
+              never delete; create-only = never update or delete.
+        - container: DOCKROUTE_DELETE_GRACE_SECONDS
+          description:
+            en_US: >-
+              Seconds a record must stay gone before DockRoute deletes it.
+              Protects against container restarts; 0 deletes immediately.
+        - container: DOCKROUTE_DEFAULT_TARGET
+          description:
+            en_US: >-
+              Fallback record value (IP or CNAME target) for containers that
+              omit the dockroute.target label. Usually this server's LAN or
+              WAN IP.
+        - container: DOCKROUTE_DOMAIN_FILTER
+          description:
+            en_US: >-
+              Optional comma-separated allowlist of DNS zones DockRoute may
+              touch. Empty = every zone the token can see.
+        - container: DOCKROUTE_RESYNC_SECONDS
+          description:
+            en_US: >-
+              Interval of the periodic full reconcile that backs up the Docker
+              event stream.
+        - container: CLOUDFLARE_API_TOKEN
+          description:
+            en_US: >-
+              Required when the provider is cloudflare. Needs Zone -> DNS ->
+              Edit, plus Account -> Cloudflare Tunnel -> Edit for tunnel
+              publishing.
+        - container: CLOUDFLARE_ACCOUNT_ID
+          description:
+            en_US: Only needed for Cloudflare Tunnel publishing.
+        - container: CLOUDFLARE_TUNNEL_ID
+          description:
+            en_US: >-
+              Only needed for Cloudflare Tunnel publishing. Uses an existing
+              tunnel, so you keep running cloudflared yourself.
+      volumes:
+        - container: /var/run/docker.sock
+          description:
+            en_US: >-
+              Docker Engine socket. DockRoute only sends GET requests to
+              /_ping, /containers/json and /events; a :ro mount does not make
+              the API read-only, see
+              https://github.com/Dockroute/Dockroute/blob/main/SECURITY.md.
+
+x-casaos:
+  id: dev.dockroute.dockroute
+  main: dockroute
+  index: /
+  port_map: ""
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DockRoute/icon.png
+  title:
+    en_US: DockRoute
+  tagline:
+    en_US: External-DNS for plain Docker hosts, driven by container labels.
+  description:
+    en_US: |
+      DockRoute watches your running containers, reads their dockroute.* labels
+      and reconciles the matching DNS records, and Cloudflare Tunnel routes, in
+      a pluggable provider.
+
+      Your Docker labels are the source of truth; DockRoute makes the provider
+      match them. It never alters a record it cannot prove it manages, because
+      every record it creates is paired with an ownership TXT record in the
+      ExternalDNS style. That is what makes it safe to point at a zone you also
+      edit by hand.
+
+      Opt a container in with two labels:
+
+      - `dockroute.enabled=true`
+      - `dockroute.hostname=app.example.com`
+
+      DockRoute has no web interface. It is a background reconciler: check the
+      container logs to see what it is doing.
+  tips:
+    before_install:
+      en_US: |
+        Start with the default `log` provider. It is a zero-credential dry run
+        that only prints the DNS records it would create, so you can confirm
+        the labels are right before anything reaches your zone.
+
+        When the log output looks correct, set the provider to `cloudflare` and
+        fill in a Cloudflare API token with Zone -> DNS -> Edit permission.
+
+        Docker socket permissions are handled for you: the entrypoint grants the
+        app user whatever group owns the mounted socket, then drops privileges
+        before starting.
+  author: Danilo Dorgam
+  developer: DockRoute
+  category: Networking
+  architectures:
+    - amd64
+    - arm64
+  version: "0.7.2"
+  update_at: "2026-10-12"
+  release_notes: ""
+  website: "https://www.dockroute.dev"
+  repo: "https://github.com/Dockroute/Dockroute"
+  support: "https://github.com/Dockroute/Dockroute/issues"
+  docs: "https://www.dockroute.dev"
