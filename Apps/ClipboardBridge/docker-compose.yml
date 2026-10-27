@@ -1,7 +1,7 @@
 name: clipboard-bridge
 services:
   clipboard-bridge:
-    image: ghcr.io/mattboxx/clipboard-bridge-server:1.0.10
+    image: ghcr.io/mattboxx/clipboard-bridge-server:1.0.11
     container_name: clipboard-bridge
     restart: unless-stopped
     ports:
@@ -78,11 +78,11 @@ x-casaos:
     before_install:
       en_US: Use only on a trusted LAN or private VPN. Accounts and token are optional; credential URLs and HTTP are not encrypted. Keep /data persistent and back it up before updates. Open Connect your devices on the web page for setup instructions.
       it_IT: Usa solo su LAN fidata o VPN privata. Account e token sono opzionali; URL con credenziali e HTTP non sono cifrati. Mantieni /data persistente e salvalo prima di aggiornare. Apri Collega i tuoi dispositivi nella pagina web per le istruzioni.
-  version: "1.0.10"
-  update_at: "2026-10-24"
+  version: "1.0.11"
+  update_at: "2026-10-27"
   release_notes:
-    en_US: Seven-language web interface and login, device setup guide, website and tutorial links. Existing accounts, persistent data and Apple Shortcut URLs remain compatible.
-    it_IT: Interfaccia web e accesso in sette lingue, guida per i dispositivi, link a sito e tutorial. Account, dati persistenti e URL Apple restano compatibili.
+    en_US: GitHub and localized optional Ko-fi support are now visible at the top of the web page. Existing accounts, persistent data and Apple Shortcut URLs remain compatible.
+    it_IT: GitHub e il supporto opzionale Ko-fi nella lingua scelta sono ora visibili in alto nella pagina web. Account, dati persistenti e URL Apple restano compatibili.
   website: https://mattboxx.github.io/Clipboard-Bridge/
   repo: https://github.com/Mattboxx/Clipboard-Bridge
   support: https://github.com/Mattboxx/Clipboard-Bridge/issues
