@@ -1,7 +1,7 @@
 name: linkbreeze
 services:
   linkbreeze:
-    image: docker.io/omnirise/linkbreeze:v1.5.0
+    image: docker.io/omnirise/linkbreeze:v1.5.1
     container_name: linkbreeze
     network_mode: bridge
     ports:
@@ -59,10 +59,11 @@ x-casaos:
   index: /
   port_map: "3000"
   scheme: http
-  version: v1.5.0
-  update_at: "2026-10-24"
+  version: v1.5.1
+  update_at: "2026-10-27"
   release_notes:
     en_US: |-
+      - 1.5.1: 11-language admin and READMEs, first-party CasaOS, Runtipi and Unraid packaging, the Settings update status card, a Linktree import fix, and a demo-guard security fix.
       - 1.5.0: custom domains for pages, automatic scheduled backups, custom /go/ redirect slugs, @ in page slugs, Poster Hero social cards, and a first listing in the CasaOS App Store.
   tips:
     before_install: |
