@@ -1,0 +1,119 @@
+name: clean-media
+services:
+  clean-media:
+    image: ghcr.io/lumblehamb/clean-media-stack:1.3.0@sha256:e7d729c6beadf91ea9a5a69cfbe7def4d4b9c12c15162058b14fd27d1be03a97
+    container_name: clean-media
+    restart: unless-stopped
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        reservations:
+          memory: 1024M
+    cap_add:
+      - NET_ADMIN # only for the optional VPN; it creates its own tunnel device
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+    ports:
+      - target: 8585
+        published: "8585"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media
+        target: /media
+      - type: bind
+        source: /DATA/Media/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: The user that owns your movie and show files.
+        - container: PGID
+          description:
+            en_US: The group that owns your movie and show files.
+        - container: TZ
+          description:
+            en_US: Your time zone, for schedules and logs.
+      ports:
+        - container: "8585"
+          description:
+            en_US: CleanCut dashboard (the only page you open).
+          protocol: tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: CleanCut's settings, word list, history and backups (small).
+        - container: /media
+          description:
+            en_US: Your existing movie and show folders, so CleanCut can clean them. CleanCut adds a clean audio track to each file and keeps the original audio inside it as a backup track.
+        - container: /data
+          description:
+            en_US: Optional. Where new titles from sources you add yourself are saved (on your big media drive).
+x-casaos:
+  id: org.harrelsons.cleancut
+  architectures:
+    - amd64
+    - arm64
+  main: clean-media
+  store_app_id: cleancut
+  author: CleanCut Suite
+  developer: CleanCut Suite
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CleanCut/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CleanCut/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CleanCut/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CleanCut/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CleanCut/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/CleanCut/screenshot-4.png
+  title:
+    en_US: CleanCut
+  tagline:
+    en_US: All-in-one media manager and profanity filter for Plex.
+  description:
+    en_US: |-
+      CleanCut Suite is an all-in-one media manager and profanity filter for Plex. It finds and adds new movies and shows (like Radarr, Sonarr and a download client in one app) and mutes the swearing in the movies and shows on your Plex before your kids press play. CleanCut Cleaner is just the cleaning, for media you already have.
+
+      Choose the folders your movies and shows are in, and CleanCut mutes each bad word in the audio (the word, not the whole line) and stars it out in the subtitles. You pick the level (Lite, Moderate or Strict) and can add your own words. The picture is never re-encoded, and the original audio stays inside each file as a backup track, so you can undo a mute later. No subtitles? CleanCut can listen to the audio itself, on your server. Nothing is uploaded.
+
+      Clean titles get a Kid Safe label in Plex, so kid profiles only see titles that are cleaned and within the age limit you choose (for example, up to PG). New titles stay hidden from kids until they are cleaned.
+
+      Media manager (CleanCut Suite): it works with sources you add yourself. No sources are included or enabled by default, and you are responsible for what you download. An optional built-in VPN with a kill switch keeps your home address private while it downloads.
+
+      Free trial: 3 movies and 10 TV episodes, every feature, no card. After the trial, buy once: CleanCut Cleaner $2.99 or CleanCut Suite $5.99 (Cleaner to Suite later: $3). These are launch prices: the price rises for new buyers as features are added; once bought, it's yours forever. No subscription, free updates, 30-day money-back guarantee.
+
+      You need Plex Media Server. Limiting kid profiles by label needs a Plex Pass subscription, which is sold by Plex, not by CleanCut.
+  tips:
+    before_install:
+      en_US: |-
+        You need Plex Media Server (Plex Pass is needed to limit kid profiles to Kid Safe titles) and at least 4 GB of RAM (a Raspberry Pi 5 or a 64-bit Intel/AMD mini-PC). CleanCut sees your movies and shows under /media (your /DATA/Media folder). If they are on another drive, change the /media folder under Volumes before installing. CleanCut rewrites those files to add the clean audio track, so back up anything irreplaceable first.
+
+        The NET_ADMIN permission is only used by the optional VPN and its kill switch, inside the container.
+
+        After installing, open CleanCut on port 8585 and follow the setup guide (about ten minutes). Guide: https://shop.harrelsons.org/cleancut/install/
+  index: /
+  scheme: http
+  port_map: "8585"
+  version: "1.3.0"
+  update_at: "2026-10-24"
+  release_notes:
+    en_US: |-
+      - Kids' Plex profiles set up for you: switch on Kid next to each child. No Plex Pass? A Kids library with only clean titles instead.
+      - Helper computers: a gaming PC or laptop at home can listen for words and save space for the server. The Windows helper app uses the graphics chip.
+      - Space saving: oversized videos are re-saved smaller, checked frame by frame first, on a schedule you choose.
+      - Wrong version (a dub, a foreign cut of an old cartoon)? Pick a different copy, described in plain words. Titles without English sound are pointed out.
+      - Downloads get tidy file names.
+      - Phone notifications and a weekly summary.
+      - Moderate now also mutes damn, hell and goddamn; titles you already have are checked again by themselves.
+      - Fixes: a paused movie no longer holds up cleaning, forced subtitles, kid labels with Plex 1.43.
+      - Tested on Intel/AMD servers. The Raspberry Pi version was tested in emulation, not yet on a real Pi.
+  website: https://shop.harrelsons.org/cleancut/
+  repo: https://github.com/LumbleHamb/cleancut-store
+  support: https://shop.harrelsons.org/cleancut/help/
+  docs: https://shop.harrelsons.org/cleancut/install/
