@@ -1,0 +1,58 @@
+name: bookshelfng
+services:
+  bookshelfng:
+    image: docker.io/snapetech/bookshelfng:hardcover-v0.4.21.37
+    container_name: bookshelfng
+    restart: unless-stopped
+    ports:
+      - target: 8787
+        published: "8787"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Books
+        target: /books
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      ports:
+        - container: "8787"
+          description:
+            en_US: BookshelfNG web interface
+      volumes:
+        - container: /config
+          description:
+            en_US: BookshelfNG database and configuration
+        - container: /books
+          description:
+            en_US: Ebook and audiobook library
+        - container: /downloads
+          description:
+            en_US: Download directory shared with a download client
+x-casaos:
+  id: org.snapetech.bookshelfng
+  architectures:
+    - amd64
+    - arm64
+  main: bookshelfng
+  author: Snapetech
+  category: Media
+  description:
+    en_US: BookshelfNG is a self-hosted ebook and audiobook library manager with Readarr-compatible automation and Hardcover metadata.
+  developer: Snapetech
+  icon: https://raw.githubusercontent.com/snapetech/bookshelfng/main/Logo/512.png
+  tagline:
+    en_US: Ebook and audiobook collection manager with automation.
+  title:
+    en_US: BookshelfNG
+  port_map: "8787"
+  version: hardcover-v0.4.21.37
+  update_at: "2026-09-25"
+  website: https://github.com/snapetech/bookshelfng
+  repo: https://github.com/snapetech/bookshelfng
+  support: https://github.com/snapetech/bookshelfng/issues
+  docs: https://github.com/snapetech/bookshelfng#readme
