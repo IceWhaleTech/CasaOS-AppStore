@@ -1,0 +1,97 @@
+name: legejo
+services:
+  legejo:
+    image: slurvdjur/legejo:1.33.0
+    environment:
+      LEGEJO_ADMIN_USER: admin
+      LEGEJO_ADMIN_PASSWORD: ""
+      LEGEJO_PUBLIC_URL: ""
+      LEGEJO_FULLTEXT: ""
+      LEGEJO_MCP: "false"
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+      - target: 3000
+        published: "3610"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: LEGEJO_ADMIN_USER
+          description:
+            en_US: The first admin account, created on the first start.
+            sv_SE: Det första adminkontot, som skapas vid första starten.
+        - container: LEGEJO_ADMIN_PASSWORD
+          description:
+            en_US: Its password, used only on the first start. Leave it empty to create the admin account in Legejo's web page instead.
+            sv_SE: Dess lösenord, som bara används vid första starten. Lämna det tomt för att i stället skapa adminkontot på Legejos webbsida.
+        - container: LEGEJO_PUBLIC_URL
+          description:
+            en_US: The https:// address users reach Legejo on, if any. Needed for federation and links in mail; leave empty on the local network.
+            sv_SE: Den https://-adress användarna når Legejo på, om en sådan finns. Behövs för federation och länkar i mejl; lämna tomt i det lokala nätet.
+        - container: LEGEJO_FULLTEXT
+          description:
+            en_US: Leave empty to switch it on and off on the Admin page. true keeps the text of the EPUBs in the database for searching inside them.
+            sv_SE: Lämna tomt för att slå på och av det på admin-sidan. true sparar texten i EPUB-böckerna i databasen så att man kan söka i dem.
+        - container: LEGEJO_MCP
+          description:
+            en_US: true turns on the read-only MCP server for AI assistants at /api/mcp.
+            sv_SE: true slår på den skrivskyddade MCP-servern för AI-assistenter på /api/mcp.
+      ports:
+        - container: "3000"
+          description:
+            en_US: Web app, OPDS and Kobo sync.
+            sv_SE: Webbappen, OPDS och Kobo-synk.
+      volumes:
+        - container: /data
+          description:
+            en_US: The library, database included.
+            sv_SE: Biblioteket, databasen inräknad.
+x-casaos:
+  id: io.github.jularboolean.legejo
+  architectures:
+    - amd64
+    - arm64
+  main: legejo
+  author: Markus Rådberg
+  developer: Markus Rådberg
+  category: Media
+  description:
+    en_US: Legejo is a self-hosted library for your EPUB books. Upload books and they get their covers and details and land on shelves you arrange. Read them in the browser with highlights, notes and read-aloud, sync books, reading positions and highlights with a Kobo, connect reading apps such as KOReader or Thorium over OPDS, and keep KOReader's place in step. Several people can share one Legejo, each with a library of their own, and shelves of free books can be federated over ActivityPub. Legejo also keeps PDFs, comics and audiobooks, all in one container with SQLite.
+    sv_SE: Legejo är ett bibliotek för dina EPUB-böcker som du driver själv. Ladda upp böcker så får de omslag och uppgifter och hamnar på hyllor du ordnar. Läs dem i webbläsaren med understrykningar, anteckningar och uppläsning, synka böcker, läspositioner och understrykningar med en Kobo, anslut läsappar som KOReader eller Thorium via OPDS, och håll KOReaders plats i takt. Flera personer kan dela på ett Legejo, var och en med ett eget bibliotek, och hyllor med fria böcker kan federeras via ActivityPub. Legejo tar också PDF, serier och ljudböcker, allt i en container med SQLite.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Legejo/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Legejo/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Legejo/screenshot-2.png
+  tagline:
+    en_US: A self-hosted library for your EPUB books, with Kobo sync and OPDS
+    sv_SE: Ett eget bibliotek för dina EPUB-böcker, med Kobo-synk och OPDS
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Legejo/thumbnail.png
+  tips:
+    before_install:
+      en_US: |
+        Leave **LEGEJO_ADMIN_PASSWORD** empty and open Legejo after installing: the first visitor creates the admin account there, in the language they choose. Or set it to a password of your own and sign in as **admin** with it; it is used only to create the admin account.
+      sv_SE: |
+        Lämna **LEGEJO_ADMIN_PASSWORD** tomt och öppna Legejo efter installationen: den första besökaren skapar adminkontot där, på det språk hen väljer. Eller sätt ett eget lösenord och logga in som **admin** med det; det används bara för att skapa adminkontot.
+  title:
+    en_US: Legejo
+  index: /
+  port_map: "3610"
+  scheme: http
+  version: "1.33.0"
+  update_at: "2026-10-27"
+  release_notes:
+    en_US: |-
+      - First version in the store, Legejo 1.33.0.
+      - 1.33 sets a new instance up in the browser: the first visitor creates the admin account, and mail, the public address and search inside the books are set up on the Admin page.
+  website: "https://github.com/jularboolean/legejo"
+  repo: "https://github.com/jularboolean/legejo"
+  support: "https://github.com/jularboolean/legejo/issues"
+  docs: "https://github.com/jularboolean/legejo#readme"
