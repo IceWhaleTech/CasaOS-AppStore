@@ -1,0 +1,89 @@
+name: clipboard-bridge
+services:
+  clipboard-bridge:
+    image: ghcr.io/mattboxx/clipboard-bridge-server:1.0.11
+    container_name: clipboard-bridge
+    restart: unless-stopped
+    ports:
+      - target: 5088
+        published: "5088"
+        protocol: tcp
+    environment:
+      CLIPBOARD_PORT: "5088"
+      CLIPBOARD_DATA_DIR: /data
+      CLIPBOARD_MAX_HISTORY: "${CLIPBOARD_MAX_HISTORY:-200}"
+      CLIPBOARD_MAX_UPLOAD_MB: "${CLIPBOARD_MAX_UPLOAD_MB:-64}"
+      CLIPBOARD_TOKEN: "${CLIPBOARD_TOKEN:-}"
+      CLIPBOARD_PASSWORD: "${CLIPBOARD_PASSWORD:-}"
+      CLIPBOARD_ACCOUNTS: "${CLIPBOARD_ACCOUNTS:-}"
+    volumes:
+      - /DATA/AppData/clipboard-bridge/data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5088/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    x-casaos:
+      ports:
+        - container: "5088"
+          description:
+            en_US: Web interface and client API (trusted LAN or private VPN only)
+            it_IT: Pagina web e API client (solo LAN fidata o VPN privata)
+      volumes:
+        - container: /data
+          description:
+            en_US: Persistent history, files and remembered web sessions; preserve on update
+            it_IT: Cronologia, file e sessioni web persistenti; da conservare negli aggiornamenti
+      envs:
+        - container: CLIPBOARD_PASSWORD
+          description:
+            en_US: Optional password for the shared web page; empty means no web password
+            it_IT: Password opzionale per la pagina web condivisa; vuoto significa senza password
+        - container: CLIPBOARD_TOKEN
+          description:
+            en_US: Optional shared API token; leave empty unless needed
+            it_IT: Token API condiviso opzionale; lascia vuoto se non serve
+        - container: CLIPBOARD_ACCOUNTS
+          description:
+            en_US: Optional separate accounts as alice:password,bob:password; shared space stays available
+            it_IT: Account separati opzionali nel formato alice:password,bob:password; lo spazio condiviso resta disponibile
+x-casaos:
+  id: io.github.mattbox03.clipboard-bridge
+  architectures:
+    - amd64
+    - arm64
+  main: clipboard-bridge
+  store_app_id: clipboard-bridge
+  category: Productivity
+  author: Mattboxx
+  developer: Mattboxx
+  icon: https://raw.githubusercontent.com/Mattboxx/Clipboard-Bridge-AppStore/main/Apps/ClipboardBridge/icon.svg
+  port_map: "5088"
+  scheme: http
+  index: /
+  title:
+    en_US: Clipboard Bridge
+    it_IT: Clipboard Bridge
+  tagline:
+    en_US: Share text and files between Windows, Android, iPhone and your server.
+    it_IT: Condividi testo e file tra Windows, Android, iPhone e il tuo server.
+  description:
+    en_US: Share text, photos and file groups between Windows, Android and Apple Shortcuts. Includes persistent searchable history, optional separate accounts, browser access and a seven-language setup guide. No mandatory cloud account. Use a trusted LAN or private VPN; Apple actions are manual and Android background access is restricted.
+    it_IT: Condividi testo, foto e gruppi di file tra Windows, Android e Comandi Rapidi Apple. Cronologia persistente ricercabile, account separati opzionali, accesso web e guida in sette lingue. Nessun account cloud obbligatorio. Usa una LAN fidata o VPN privata; su Apple le azioni sono manuali e Android limita l'accesso in background.
+  thumbnail: ""
+  screenshot_link:
+    - server-web.png
+    - server-history.png
+  tips:
+    before_install:
+      en_US: Use only on a trusted LAN or private VPN. Accounts and token are optional; credential URLs and HTTP are not encrypted. Keep /data persistent and back it up before updates. Open Connect your devices on the web page for setup instructions.
+      it_IT: Usa solo su LAN fidata o VPN privata. Account e token sono opzionali; URL con credenziali e HTTP non sono cifrati. Mantieni /data persistente e salvalo prima di aggiornare. Apri Collega i tuoi dispositivi nella pagina web per le istruzioni.
+  version: "1.0.11"
+  update_at: "2026-10-27"
+  release_notes:
+    en_US: GitHub and localized optional Ko-fi support are now visible at the top of the web page. Existing accounts, persistent data and Apple Shortcut URLs remain compatible.
+    it_IT: GitHub e il supporto opzionale Ko-fi nella lingua scelta sono ora visibili in alto nella pagina web. Account, dati persistenti e URL Apple restano compatibili.
+  website: https://mattboxx.github.io/Clipboard-Bridge/
+  repo: https://github.com/Mattboxx/Clipboard-Bridge
+  support: https://github.com/Mattboxx/Clipboard-Bridge/issues
+  docs: https://mattboxx.github.io/Clipboard-Bridge/tutorial.html
