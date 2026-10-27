@@ -1,0 +1,99 @@
+name: sharetunnel
+services:
+  sharetunnel:
+    image: ghcr.io/shariqtechie/sharetunnel:0.3.2
+    container_name: sharetunnel
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      TZ: $TZ
+      PANEL_PORT: "9099"
+      SELF_CONTAINER: sharetunnel
+      UPDATE_MODE: managed
+      NC_CONTAINER: nextcloud
+      NC_URL: http://localhost:7580
+      DB_CONTAINER: db-nextcloud
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Your time zone.
+        - container: PANEL_PORT
+          description:
+            en_US: Port of the ShareTunnel web panel.
+        - container: NC_CONTAINER
+          description:
+            en_US: Name of your Nextcloud container. Can also be changed later on the panel's Setup page.
+        - container: NC_URL
+          description:
+            en_US: Where Nextcloud listens on this server. The CasaOS Nextcloud app uses port 7580.
+        - container: DB_CONTAINER
+          description:
+            en_US: Name of your PostgreSQL container, used to list your shared links.
+        - container: UPDATE_MODE
+          description:
+            en_US: Leave as managed. The app store handles updates.
+      volumes:
+        - container: /var/run/docker.sock
+          description:
+            en_US: Lets ShareTunnel work with your Nextcloud container on this server.
+        - container: /data
+          description:
+            en_US: ShareTunnel settings and password. Kept across updates.
+x-casaos:
+  id: io.github.shariqtechie.sharetunnel
+  main: sharetunnel
+  index: /
+  port_map: "9099"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ShareTunnel/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ShareTunnel/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ShareTunnel/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ShareTunnel/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ShareTunnel/screenshot-3.png
+  title:
+    en_US: ShareTunnel
+  tagline:
+    en_US: Share your Nextcloud files with anyone, in one click
+  description:
+    en_US: |-
+      Share files from your self-hosted Nextcloud with anyone on the internet in one click. No domain name and no port forwarding needed.
+
+      ShareTunnel opens a secure Cloudflare tunnel to your Nextcloud, adds the temporary address to Nextcloud's trusted domains for you, and lists every public share link in a clean dashboard with a Copy link button.
+
+      Features:
+      - One-click tunnel with automatic restart if it drops
+      - Dashboard with all your public share links, sizes and password-protected links
+      - Setup page that checks your Nextcloud and explains problems in plain words
+      - You choose your own password the first time you open it
+
+      Requirements: Nextcloud running in Docker with a PostgreSQL database, for example the Nextcloud app from this store. The free Cloudflare address changes each time the tunnel restarts; the panel always shows the current link.
+  tips:
+    before_install:
+      en_US: |-
+        1. Nextcloud must already be installed (with its PostgreSQL database).
+        2. After installing, open ShareTunnel. The first time, it asks you to create a password. Do this from a device on your home network.
+        3. Press Start tunnel. If a name or port is different on your server, the Setup page helps you fix it.
+  author: Shariqtechie
+  developer: Shariqtechie
+  category: Networking
+  architectures:
+    - amd64
+    - arm64
+  version: "0.3.2"
+  update_at: "2026-10-26"
+  release_notes:
+    en_US: |-
+      Updates page on CasaOS now explains how to update from CasaOS. CasaOS installs are detected automatically.
+  website: "https://github.com/Shariqtechie/Sharetunnel"
+  repo: "https://github.com/Shariqtechie/Sharetunnel"
+  support: "https://github.com/Shariqtechie/Sharetunnel/issues"
+  docs: "https://github.com/Shariqtechie/Sharetunnel#readme"
