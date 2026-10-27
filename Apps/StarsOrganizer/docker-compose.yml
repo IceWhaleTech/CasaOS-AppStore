@@ -1,0 +1,117 @@
+name: github-stars-organizer
+services:
+  app:
+    image: ghcr.io/armanckeser/github-stars-organizer:1.2.1
+    container_name: github-stars-organizer-app
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://postgres:@github-stars-organizer-postgres:5432/app
+      ELECTRIC_URL: http://github-stars-organizer-electric:3000
+      GITHUB_TOKEN: ""
+      AUTH_PASSWORD: ""
+    depends_on:
+      postgres:
+        condition: service_healthy
+      electric:
+        condition: service_started
+    ports:
+      - target: 8080
+        published: "5184"
+        protocol: tcp
+    x-casaos:
+      envs:
+        - container: GITHUB_TOKEN
+          description:
+            en_US: GitHub token (classic, repo scope). Create one at https://github.com/settings/tokens/new?scopes=repo
+        - container: AUTH_PASSWORD
+          description:
+            en_US: Password for the app (leave empty for no login). Set one if anyone else on your network can reach this server.
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web UI
+  postgres:
+    image: postgres:16-alpine
+    container_name: github-stars-organizer-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    command:
+      - postgres
+      - -c
+      - wal_level=logical
+      - -c
+      - max_replication_slots=10
+      - -c
+      - max_wal_senders=10
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U postgres
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/pgdata
+        target: /var/lib/postgresql/data
+  electric:
+    image: electricsql/electric:1.7.6
+    container_name: github-stars-organizer-electric
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://postgres:@github-stars-organizer-postgres:5432/app?sslmode=disable
+      ELECTRIC_INSECURE: "true"
+      ELECTRIC_STORAGE_DIR: /var/lib/electric/persistent
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/electricdata
+        target: /var/lib/electric/persistent
+x-casaos:
+  id: com.selfhost.github-stars-organizer
+  architectures:
+    - amd64
+    - arm64
+  main: app
+  author: Armanc Keser
+  developer: Armanc Keser
+  category: Utilities
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/StarsOrganizer/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/StarsOrganizer/screenshot-1.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/StarsOrganizer/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/StarsOrganizer/screenshot-2.png
+  title:
+    en_US: Stars Organizer
+  tagline:
+    en_US: Search, tag, rate and sort your GitHub stars into GitHub Lists.
+  description:
+    en_US: |-
+      Stars Organizer imports every repo you have starred on GitHub into one searchable table, with language, stars, last push and a health score. Tag repos, rate them, write notes, and sort them into GitHub Lists. Lists you make here are real GitHub Lists, so they show on your profile.
+
+      Explore finds repos you starred and forgot, and the ones that went quiet or were archived, so you can unstar them in bulk.
+
+      Needs a classic GitHub token with the repo scope, which you paste into the install form. Create one at https://github.com/settings/tokens/new?scopes=repo Tags, ratings and notes stay in this server's database; Lists and unstars are written to GitHub. Not affiliated with GitHub.
+  tips:
+    before_install:
+      en_US: |-
+        Use Custom Installation and set GITHUB_TOKEN: GitHub token (classic, repo scope). Create one at https://github.com/settings/tokens/new?scopes=repo
+
+        Set AUTH_PASSWORD if anyone else on your network can reach this server; leave it empty for no login.
+  index: /
+  port_map: "5184"
+  scheme: http
+  version: 1.2.1
+  update_at: 2026-10-24
+  release_notes:
+    en_US: |-
+      - With no GitHub token set, **Import Stars** now shows a **Create one** link that opens GitHub with the `repo` scope ticked.
+      - The app-store icon has transparent corners.
+  website: https://github.com/armanckeser/github-stars-organizer
+  repo: https://github.com/armanckeser/github-stars-organizer
+  support: https://github.com/armanckeser/github-stars-organizer/issues
