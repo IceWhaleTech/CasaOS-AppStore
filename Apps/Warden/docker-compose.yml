@@ -1,0 +1,78 @@
+name: warden
+services:
+  warden:
+    image: ghcr.io/projecthelena/warden:v0.9.0
+    restart: unless-stopped
+    stop_grace_period: 30s
+    ports:
+      - target: 9090
+        published: "9196"
+        protocol: tcp
+    sysctls:
+      net.ipv4.ping_group_range: "0 2147483647"
+    volumes:
+      - type: volume
+        source: warden_data
+        target: /data
+    x-casaos:
+      ports:
+        - container: "9090"
+          description:
+            en_US: Web interface
+            es_ES: Interfaz web
+      volumes:
+        - container: /data
+          description:
+            en_US: Persistent SQLite database (Docker volume)
+            es_ES: Base de datos SQLite persistente (volumen Docker)
+volumes:
+  warden_data:
+x-casaos:
+  id: com.projecthelena.warden
+  main: warden
+  index: /
+  port_map: "9196"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Warden/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Warden/screenshot-1.png
+  title:
+    en_US: Warden
+    es_ES: Warden
+  tagline:
+    en_US: Uptime monitoring with adaptive latency alerts
+    es_ES: Monitoreo de disponibilidad con alertas de latencia adaptativas
+  description:
+    en_US: |-
+      Warden monitors service availability and learns each service's normal latency to detect slowdowns even when HTTP requests still succeed. Confirmation thresholds and notification cooldowns help reduce noisy alerts.
+
+      Monitor HTTP, TCP, ping and DNS endpoints, investigate incidents, and share public status pages. Notifications include email, Slack, Discord and Telegram. Checks run from your own server; no cloud account is required.
+
+      This package runs a single container with SQLite. Open the web interface after installation to create your administrator account. Data is stored in a persistent Docker volume. Docker container monitoring is available after configuring a Docker host separately; this package does not mount the host Docker socket.
+    es_ES: |-
+      Warden monitorea la disponibilidad de tus servicios y aprende su latencia habitual para detectar lentitud incluso cuando las solicitudes HTTP siguen respondiendo correctamente. Los umbrales de confirmación y los intervalos entre notificaciones ayudan a reducir las alertas repetitivas.
+
+      Monitorea HTTP, TCP, ping y DNS, investiga incidentes y comparte páginas de estado públicas. Envía notificaciones por correo, Slack, Discord y Telegram. Las comprobaciones se ejecutan desde tu servidor y no necesitas una cuenta en la nube.
+
+      Este paquete ejecuta un contenedor con SQLite. Abre la interfaz web después de instalarlo para crear tu cuenta de administrador. Los datos se guardan en un volumen Docker persistente. Para monitorear contenedores debes configurar un host Docker por separado; este paquete no monta el socket Docker del servidor.
+  tips:
+    before_install:
+      en_US: |-
+        Uses port 9196. Create your administrator account on first launch. Back up the Docker volume mounted at /data; it is not stored under /DATA/AppData. Removing the volume deletes the database. For HTTPS behind a trusted reverse proxy, see the configuration guide for COOKIE_SECURE and TRUST_PROXY.
+      es_ES: |-
+        Usa el puerto 9196. Crea tu cuenta de administrador al abrir la aplicación. Respalda el volumen Docker montado en /data; no se guarda en /DATA/AppData. Eliminar el volumen borra la base de datos. Para usar HTTPS detrás de un proxy de confianza, consulta COOKIE_SECURE y TRUST_PROXY en la guía de configuración.
+  author: JesusPaz
+  developer: Project Helena
+  category: Networking
+  architectures:
+    - amd64
+    - arm64
+  version: "0.9.0"
+  update_at: "2026-10-08"
+  release_notes:
+    en_US: Initial store package for Warden 0.9.0 with SQLite and persistent storage.
+    es_ES: Paquete inicial de Warden 0.9.0 con SQLite y almacenamiento persistente.
+  website: https://projecthelena.com/
+  repo: https://github.com/projecthelena/warden
+  support: https://github.com/projecthelena/warden/issues
+  docs: https://github.com/projecthelena/warden/blob/main/docs/configuration.md
