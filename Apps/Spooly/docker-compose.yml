@@ -1,0 +1,79 @@
+name: spooly
+services:
+  spooly:
+    image: ghcr.io/oddloafhq/spooly:0.8.46
+    container_name: spooly
+    # Store-created bind directories are owned by root. Media stays read-only.
+    # Set a non-root UID:GID after granting it access to the data directory.
+    user: "0:0"
+    init: true
+    restart: unless-stopped
+    ports:
+      - target: 8000
+        published: "8000"
+        protocol: tcp
+    environment:
+      TZ: Etc/UTC
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /data
+      - type: bind
+        source: /DATA/Media
+        target: /media
+        read_only: true
+x-casaos:
+  id: dev.oddloaf.spooly
+  main: spooly
+  index: /
+  port_map: "8000"
+  scheme: http
+  icon: icon.png
+  thumbnail: thumbnail.jpg
+  screenshot_link:
+    - screenshot-1.jpg
+    - screenshot-2.jpg
+  title:
+    en_US: Spooly
+    zh_CN: Spooly
+  tagline:
+    en_US: A private, swipeable feed for your local photos and videos.
+    zh_CN: 把本地照片和视频变成可滑动浏览的私人信息流。
+  description:
+    en_US: >-
+      Rediscover your own media with Spooly. Browse photos and videos together
+      in Flow, explore a timeline library, and save favorites and collections.
+      Open source, self-hosted, and accessible from a phone or desktop browser.
+      This store configuration mounts media read-only for browsing; downloads
+      and deletion require a writable media mount. Spooly complements your
+      existing storage and backup setup.
+    zh_CN: >-
+      用 Spooly 重新发现自己的媒体：滑动浏览照片和视频，查看时间线媒体库，
+      保存喜欢的内容和合集。开源、自托管，手机和电脑浏览器均可访问。
+      此商店配置以只读方式挂载媒体；下载和删除需要可写挂载。Spooly 用于浏览，
+      请继续使用已有的存储与备份方案。
+  category: Media
+  developer: Oddloaf
+  author: Oddloaf
+  architectures:
+    - amd64
+    - arm64
+  version: "0.8.46"
+  tips:
+    before_install:
+      en_US: >-
+        Change /DATA/Media to your media directory and set your time zone.
+        The initial password appears in the container logs. Media is read-only;
+        downloads and trash deletion are unavailable until you enable writes.
+        The store configuration runs as root to write store-created data folders.
+        To run as a non-root user, grant it access to the data folder and set user
+        to its UID:GID. Initial scanning may take time for large libraries.
+      zh_CN: >-
+        将 /DATA/Media 改成媒体目录，并设置时区。首次密码在容器日志中。
+        默认只读挂载媒体；开启写入后才能下载和移入回收站。商店配置使用 root
+        写入自动创建的数据目录；如需非 root 运行，请先授权数据目录并设置 user
+        为对应 UID:GID。大型媒体库首次扫描需要等待。
+  website: https://oddloaf.dev
+  repo: https://github.com/oddloafhq/spooly
+  support: https://github.com/oddloafhq/spooly/issues
+  docs: https://github.com/oddloafhq/spooly/blob/main/docs/docker.md
