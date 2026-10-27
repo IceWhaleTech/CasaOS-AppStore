@@ -6,7 +6,7 @@ services:
       LEGEJO_ADMIN_USER: admin
       LEGEJO_ADMIN_PASSWORD: ""
       LEGEJO_PUBLIC_URL: ""
-      LEGEJO_FULLTEXT: "false"
+      LEGEJO_FULLTEXT: ""
       LEGEJO_MCP: "false"
     deploy:
       resources:
@@ -38,8 +38,8 @@ services:
             sv_SE: Den https://-adress användarna når Legejo på, om en sådan finns. Behövs för federation och länkar i mejl; lämna tomt i det lokala nätet.
         - container: LEGEJO_FULLTEXT
           description:
-            en_US: true keeps the text of the EPUBs in the database for searching inside them.
-            sv_SE: true sparar texten i EPUB-böckerna i databasen så att man kan söka i dem.
+            en_US: Leave empty to switch it on and off on the Admin page. true keeps the text of the EPUBs in the database for searching inside them.
+            sv_SE: Lämna tomt för att slå på och av det på admin-sidan. true sparar texten i EPUB-böckerna i databasen så att man kan söka i dem.
         - container: LEGEJO_MCP
           description:
             en_US: true turns on the read-only MCP server for AI assistants at /api/mcp.
