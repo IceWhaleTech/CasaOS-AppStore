@@ -1,0 +1,66 @@
+name: jellymeme
+services:
+  app:
+    image: ghcr.io/armanckeser/jellymeme:1.1.0
+    container_name: jellymeme-app
+    restart: unless-stopped
+    environment:
+      AUTH_PASSWORD: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    ports:
+      - target: 8080
+        published: "5186"
+        protocol: tcp
+    x-casaos:
+      envs:
+        - container: AUTH_PASSWORD
+          description:
+            en_US: Password for the app (leave empty for no login). Set one if anyone else on your network can reach this server.
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web UI
+x-casaos:
+  id: com.selfhost.jellymeme
+  architectures:
+    - amd64
+    - arm64
+  main: app
+  author: Armanc Keser
+  developer: Armanc Keser
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellymeme/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellymeme/screenshot-1.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Jellymeme/screenshot-1.png
+  title:
+    en_US: Jellymeme
+  tagline:
+    en_US: Describe a scene from your Jellyfin library and get it as a captioned GIF or clip.
+  description:
+    en_US: |-
+      Describe a moment the way you'd tell a friend, "when he admits the robot hand freaks him out", and Jellymeme finds it in your Jellyfin library. Trim it to the line you want, burn in the subtitles or your own caption, and export a GIF, a clip or a still.
+
+      Paste a list of scenes, such as the replies to a "best scenes in this show" thread, and every line becomes a clip in one montage.
+
+      Jellymeme reads subtitles and video through Jellyfin's HTTP API, so it needs no access to your media files. Connect your Jellyfin server and an API key in Settings after installing. Indexing and rendering use the CPU; a Raspberry Pi works but is slow.
+  tips:
+    before_install:
+      en_US: Set AUTH_PASSWORD if anyone else on your network can reach this server; leave it empty for no login.
+  index: /
+  port_map: "5186"
+  scheme: http
+  version: 1.1.0
+  update_at: 2026-10-24
+  release_notes:
+    en_US: |-
+      - Installs from the app stores of Cosmos, Umbrel, CasaOS/ZimaOS, Runtipi, Unraid and Portainer, through https://github.com/armanckeser/selfhost-apps. Or with one command and no checkout: `docker compose -f oci://ghcr.io/armanckeser/jellymeme-stack:latest up -d`.
+      - Images for amd64 and arm64: `ghcr.io/armanckeser/jellymeme`.
+      - Optional password: set `AUTH_PASSWORD` and every page asks for it first; a sign-in lasts 180 days.
+      - The container listens on port 8080 (was 3000), and the image is about half its old size.
+  website: https://github.com/armanckeser/jellymeme
+  repo: https://github.com/armanckeser/jellymeme
+  support: https://github.com/armanckeser/jellymeme/issues
