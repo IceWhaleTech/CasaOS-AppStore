@@ -1,0 +1,114 @@
+name: jltamp
+services:
+  jltamp:
+    image: ghcr.io/jltelectronics/jltamp-server:0.4.2
+    container_name: jltamp
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    restart: unless-stopped
+    ports:
+      - target: 32400
+        published: "32400"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music
+        read_only: true
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    environment:
+      SERVER_NAME: JLTamp
+      TZ: $TZ
+    network_mode: bridge
+    privileged: false
+    x-casaos:
+      ports:
+        - container: "32400"
+          description:
+            en_US: Web player, apps and Subsonic API
+            nl_NL: Webspeler, apps en Subsonic-API
+      volumes:
+        - container: /music
+          description:
+            en_US: Music folder, mounted read-only
+            nl_NL: Muziekmap, alleen-lezen
+        - container: /data
+          description:
+            en_US: Database, artwork cache and backups
+            nl_NL: Database, hoezen en back-ups
+      envs:
+        - container: SERVER_NAME
+          description:
+            en_US: Name shown in the apps
+            nl_NL: Naam in de apps
+        - container: TZ
+          description:
+            en_US: TimeZone
+            nl_NL: Tijdzone
+
+x-casaos:
+  id: org.icewhale.jltamp
+  architectures:
+    - amd64
+    - arm64
+  main: jltamp
+  author: JLT Electronics
+  developer: JLT Electronics
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/JLTamp/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/JLTamp/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/JLTamp/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/JLTamp/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/JLTamp/screenshot-3.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/JLTamp/screenshot-4.jpg
+  title:
+    en_US: JLTamp
+  tagline:
+    en_US: Self-hosted music server with its own apps
+    nl_NL: Eigen muziekserver met eigen apps
+  description:
+    en_US: >-
+      JLTamp is a self-hosted music server with its own apps for Android, iOS,
+      CarPlay and Android Auto, and a web player built in. Multi-user with
+      per-user libraries, Listen Together, a 24/7 radio, karaoke, party mode and
+      a Subsonic/OpenSubsonic API for clients such as Symfonium and Feishin.
+      Your music is mounted read-only; everything the server writes goes to its
+      AppData folder.
+    nl_NL: >-
+      JLTamp is een eigen muziekserver met apps voor Android, iOS, CarPlay en
+      Android Auto, en een ingebouwde webspeler. Meerdere gebruikers met eigen
+      bibliotheken, samen luisteren, een 24/7-radio, karaoke, feestmodus en een
+      Subsonic/OpenSubsonic-API voor apps als Symfonium en Feishin. Je muziek
+      wordt alleen-lezen gekoppeld.
+  tips:
+    before_install:
+      en_US: >-
+        Put your music in /DATA/Media/Music (or change the music folder before
+        installing). After installing, open JLTamp to create the admin account,
+        then add a library under Settings, Libraries. Port 32400 is also used by
+        Plex: pick another port if Plex runs on this device.
+      nl_NL: >-
+        Zet je muziek in /DATA/Media/Music (of kies vóór het installeren een
+        andere map). Open JLTamp na het installeren om het beheerdersaccount te
+        maken en voeg daarna een bibliotheek toe onder Instellingen,
+        Bibliotheken. Plex gebruikt ook poort 32400: kies een andere poort als
+        Plex op dit apparaat draait.
+  index: /
+  port_map: "32400"
+  scheme: http
+  version: "0.4.2"
+  update_at: "2026-10-24"
+  release_notes:
+    en_US: |-
+      - First release in the CasaOS app store.
+      - Subsonic/OpenSubsonic API for third-party clients.
+      - Multi-arch image (amd64, arm64) on GHCR.
+  website: "https://github.com/JLTelectronics/JLTamp-server"
+  repo: "https://github.com/JLTelectronics/JLTamp-server"
+  support: "https://github.com/JLTelectronics/JLTamp-server/issues"
+  docs: "https://github.com/JLTelectronics/JLTamp-server#readme"
