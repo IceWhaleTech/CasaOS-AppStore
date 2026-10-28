@@ -1,0 +1,94 @@
+name: solidping
+services:
+  solidping:
+    image: ghcr.io/fclairamb/solidping:0.36.0
+    container_name: solidping
+    network_mode: bridge
+    restart: unless-stopped
+    # Runs as root in THIS compose only — the image itself stays `nonroot`
+    # (uid 65532). CasaOS creates /DATA/AppData/$AppID/... as root before the
+    # container starts, and its users install through a store tile, not a
+    # terminal, so there is no `chown` step available to them. Matches how
+    # every other entry in this store (e.g. Uptime Kuma) handles the same
+    # constraint. The image has no shell either way — running as root does
+    # not add any capability beyond writing under the bind mount.
+    user: "0:0"
+    cap_add:
+      - NET_RAW
+    ports:
+      - target: 4000
+        published: "4000"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    healthcheck:
+      test: ["CMD", "/app/solidping", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        reservations:
+          # ~44 MiB idle working set (23.0 MiB cgroup anon+kernel, the
+          # primary metric, plus ~21 MiB mapped binary/RssFile), measured
+          # 2026-09-04 with the authoritative BENCH_MEM_MODE=docker harness
+          # at a 5-minute warm-up (wiki/runbooks/memory-profiling.md §5,
+          # corroborated against real k8xp pod working sets of 53-77 Mi).
+          # 64M is a soft floor with headroom above that idle figure for a
+          # single self-hosted org's traffic — CasaOS/Docker treat this as a
+          # scheduling hint, not a hard limit (no `limits:` is set here).
+          memory: "64M"
+    x-casaos:
+      ports:
+        - container: "4000"
+          description:
+            en_US: WebUI port
+      volumes:
+        - container: /data
+          description:
+            en_US: SQLite database and uploaded files.
+
+x-casaos:
+  id: io.solidping.solidping
+  main: solidping
+  architectures: [amd64, arm64]
+  category: Networking
+  index: /
+  port_map: "4000"
+  scheme: http
+  title: { en_US: SolidPing }
+  tagline: { en_US: "Uptime monitoring, alerting and status pages, self-hosted." }
+  description:
+    en_US: |
+      SolidPing monitors HTTP(S) endpoints, TCP/UDP ports, DNS records, SSL
+      certificates, ICMP ping, and databases, plus scriptable browser and
+      JavaScript checks for anything those don't cover. Alerts go out over
+      email, Slack, Discord, Telegram, WhatsApp and generic webhooks, with
+      escalation policies and maintenance windows. Public status pages, a
+      multi-region distributed worker system, and multi-user organizations
+      with role-based access are all included. Existing Uptime Kuma users can
+      import their monitors directly.
+
+      This app runs as root inside its container so CasaOS can own the
+      `/DATA/AppData` bind mount for you on install — there is no in-image
+      shell to `chown` it with otherwise.
+  tips:
+    before_install:
+      en_US: |
+        First login: admin@solidping.io / solidpass, organization "default".
+        You are asked to set a new password immediately.
+  developer: Florent Clairambault
+  author: Florent Clairambault
+  icon: icon.svg
+  thumbnail: thumbnail.png
+  screenshot_link: [screenshot-1.png, screenshot-2.png, screenshot-3.png]
+  version: "0.36.0"
+  update_at: "2026-09-28"
+  release_notes:
+    en_US: "The dashboard events list now names the private-location agent each connect and disconnect is about, and spells out why it dropped."
+  website: https://www.solidping.io
+  repo: https://github.com/fclairamb/solidping
+  support: https://github.com/fclairamb/solidping/issues
+  docs: https://solidping.io/docs
