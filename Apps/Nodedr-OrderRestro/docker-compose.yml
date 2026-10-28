@@ -1,0 +1,179 @@
+name: nodedr-restaurant-pos
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: nodedr-restaurant-pos-postgres
+    hostname: nodedr-restaurant-pos-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nodedr
+      POSTGRES_PASSWORD: "please-change-this-password"
+      POSTGRES_DB: nodedr_restaurant
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nodedr"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - nodedr-restaurant-pos
+
+  backend:
+    image: ghcr.io/raktim94/nodedr-restaurant-pos-backend:1.1.0
+    container_name: nodedr-restaurant-pos-backend
+    hostname: nodedr-restaurant-pos-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: "postgresql://nodedr:please-change-this-password@nodedr-restaurant-pos-postgres:5432/nodedr_restaurant"
+      # No JWT_SECRET here on purpose — the app generates a real random one
+      # itself on first boot and persists it to the /data/state volume
+      # below (see apps/backend/src/main.ts's resolveJwtSecret()). A
+      # hardcoded placeholder here would either be a real security hole
+      # (most CasaOS installers never change it) or, since a later backend
+      # update made the app refuse to boot with a known placeholder value,
+      # a broken install out of the box — this way nobody ever has to
+      # touch it and it still works correctly.
+      JWT_EXPIRES_IN: "12h"
+      PORT: "4000"
+      CORS_ORIGIN: "http://localhost:1995"
+      COOKIE_SECURE: "false"
+      UPLOADS_DIR: "/data/uploads"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/uploads
+        target: /data/uploads
+      - type: bind
+        source: /DATA/AppData/$AppID/state
+        target: /data/state
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - nodedr-restaurant-pos
+    x-casaos:
+      envs:
+        - container: DATABASE_URL
+          description:
+            en_US: Must match the Postgres password below if you change it. Leave as default unless you know why you're changing it.
+        - container: CORS_ORIGIN
+          description:
+            en_US: Origin allowed to call the API (CORS). Leave as the default for local/LAN use — only change for a VPS behind real HTTPS.
+        - container: COOKIE_SECURE
+          description:
+            en_US: Set to true only when served over real HTTPS. Leave false for plain local/LAN use — a true value on plain HTTP silently breaks login (the session cookie gets dropped by the browser).
+      volumes:
+        - container: /data/uploads
+          description:
+            en_US: Uploaded images (menu items, staff avatars, etc.) — back this up.
+        - container: /data/state
+          description:
+            en_US: Auto-generated login security key. Created automatically on first launch — leave it alone.
+
+  web:
+    image: ghcr.io/raktim94/nodedr-restaurant-pos-web:1.1.0
+    container_name: nodedr-restaurant-pos-web
+    hostname: nodedr-restaurant-pos-web
+    restart: unless-stopped
+    ports:
+      - target: 3000
+        published: "1995"
+        protocol: tcp
+    depends_on:
+      - backend
+    networks:
+      - nodedr-restaurant-pos
+    x-casaos:
+      ports:
+        - container: "3000"
+          description:
+            en_US: Nodedr OrderRestro web interface
+          protocol: tcp
+
+networks:
+  nodedr-restaurant-pos:
+    driver: bridge
+
+x-casaos:
+  id: com.nodedr.orderrestro
+  architectures:
+    - amd64
+    - arm64
+  main: web
+  author: Nodedr Infotech Private Limited
+  developer: Raktim94
+  category: Finance
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nodedr-OrderRestro/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nodedr-OrderRestro/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nodedr-OrderRestro/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nodedr-OrderRestro/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nodedr-OrderRestro/screenshot-3.png
+  title:
+    en_US: Nodedr OrderRestro
+  tagline:
+    en_US: Offline-first restaurant management — POS, kitchen display, tables, and reservations
+  description:
+    en_US: |
+      Nodedr OrderRestro is a free, open-source restaurant management system:
+      point-of-sale ordering, a live kitchen display (KDS) split by station,
+      table/floor management with QR-code table ordering, reservations and a
+      waitlist, inventory with automatic ingredient deduction, customer CRM
+      with loyalty points and gift cards, and full billing (splits, tips,
+      discounts, refunds). Runs entirely on your own hardware — no
+      subscription, no data leaving your server.
+
+      Access it from any device on your home network at
+      `http://<your-server>:1995` — a till, a waiter's tablet, or the
+      kitchen's own display.
+  tips:
+    before_install:
+      en_US: |
+        Login security is handled automatically — no setup needed there.
+
+        **Before anything beyond a quick local trial**, change the
+        placeholder Postgres password: it must be changed identically in
+        both the `postgres` service's `POSTGRES_PASSWORD` and the
+        `backend` service's `DATABASE_URL`. Leaving the default is not
+        safe for a real installation.
+
+        Your data (Postgres database + uploaded images) persists at
+        `/DATA/AppData/nodedr-restaurant-pos/`, following CasaOS/ZimaOS's
+        standard backup/restore convention.
+
+        After install, sign up for a new restaurant account from the app's
+        `/signup` page — no manual configuration or demo data needed.
+  index: /
+  scheme: http
+  port_map: "1995"
+  version: "1.1.0"
+  update_at: "2026-08-21"
+  release_notes:
+    en_US: |-
+      1.1.0: fixes a real fresh-install boot failure — CasaOS's own
+      placeholder JWT_SECRET tripped a later safety check that made the
+      backend refuse to start, so every out-of-the-box install crash-looped
+      with an opaque "Internal Server Error" and no way to diagnose it. The
+      backend now generates a real random secret itself on first boot and
+      persists it, so a fresh install just works with nothing to configure.
+
+      Also adds: one-click self-update (check for updates and apply them
+      from Settings), table occupancy timers with dashboard quick actions
+      and click-to-order POS, an MCP server plus integration API keys and a
+      public integrations REST API, and realtime push kept live across the
+      whole dashboard.
+
+      1.0.2: fixes an install that would silently fail to start ("Internal
+      Server Error" on login) — login security is now generated
+      automatically instead of requiring a manual config change.
+
+      Initial CasaOS/ZimaOS release: POS ordering, kitchen display, table
+      management with QR ordering, reservations, inventory, customer
+      loyalty/CRM, and billing.
+  website: "https://orderrestro.nodedr.com/"
+  repo: "https://github.com/Raktim94/nodedr-restaurant-pos"
+  support: "https://orderrestro.nodedr.com/contact"
+  docs: "https://github.com/Raktim94/nodedr-restaurant-pos#readme"
