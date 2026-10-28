@@ -1,0 +1,68 @@
+# CasaOS / ZimaOS app for Sara (Phase 57): standard Docker Compose plus the x-casaos store metadata
+# (https://github.com/IceWhaleTech/CasaOS-AppStore/blob/main/docs/specs/compose-and-x-casaos.md).
+# In the store repository it goes in Apps/Sara/docker-compose.yml, next to icon.png, thumbnail.png and
+# screenshot-1..3.png (outputs/casaos/Apps/Sara/ has the whole folder). The icon and screenshot
+# URLs point where the store serves that folder once the PR is merged.
+name: sara
+services:
+  sara:
+    image: ghcr.io/farena-ai/sara:1.1.0
+    container_name: sara
+    restart: unless-stopped
+    ports:
+      - target: 7860
+        published: "7860"
+        protocol: tcp
+    environment:
+      SARA_SECURE_COOKIES: "0"
+      SARA_TRUST_PROXY: "0"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    # Same hardening as Sara's own docker-compose.yml: only what her command sandbox needs.
+    cap_drop: [ALL]
+    cap_add: [SETUID, SETGID, CHOWN, FOWNER, DAC_OVERRIDE, KILL]
+    security_opt:
+      - no-new-privileges:true
+x-casaos:
+  id: com.backstagecoding.sara
+  main: sara
+  index: /
+  port_map: "7860"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sara/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sara/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sara/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sara/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sara/screenshot-3.png
+  title:
+    en_US: Sara
+  tagline:
+    en_US: A self-hosted AI companion and coding partner
+  description:
+    en_US: >-
+      Sara is a self-hosted AI companion and assistant for coding, creating and managing things:
+      chat with memory, a planner, coding tools, photos and voice, on your own server. You choose
+      the AI model (local with Ollama, or your own provider account); your data and keys stay on
+      this machine.
+  tips:
+    before_install:
+      en_US: >-
+        After installing, open Sara and set her up in the browser within an hour: she asks for the
+        8-character setup code printed in her log (the app's menu, then Logs, next to "setup code").
+        She then shows your owner token once: keep it in your password manager. Missed the hour?
+        Restart the app for a new code.
+  author: Backstage Coding
+  developer: Frank Arena and Backstage Coding
+  category: AI
+  architectures:
+    - amd64
+    - arm64
+  version: "1.1.0"
+  update_at: "2026-10-28"
+  website: https://sara.backstagecoding.com/
+  repo: https://github.com/farena-ai/sara
+  support: https://github.com/farena-ai/sara/issues
+  docs: https://github.com/farena-ai/sara/blob/main/docs/INSTALL.md
