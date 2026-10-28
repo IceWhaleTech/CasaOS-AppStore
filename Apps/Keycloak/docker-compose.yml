@@ -1,0 +1,466 @@
+name: keycloak
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.8.1
+    container_name: keycloak
+    command:
+      - start
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: keycloak-db
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: ""
+      KC_BOOTSTRAP_ADMIN_USERNAME: temp-admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ""
+      # Example: use Nginx Proxy Manager from this App Store to terminate HTTPS.
+      # Proxy Host: auth.example.com -> http://<ZimaOS-IP>:8180; configure an SSL certificate in NPM.
+      # Set KC_HOSTNAME to https://auth.example.com and configure the app tile to use that URL.
+      KC_HOSTNAME: ""
+      KC_HOSTNAME_STRICT: "true"
+      KC_HTTP_ENABLED: "true"
+      KC_PROXY_HEADERS: xforwarded
+      # Replace with NPM's source IP/CIDR as seen by Keycloak; 127.0.0.1 only trusts a local proxy.
+      KC_PROXY_TRUSTED_ADDRESSES: 127.0.0.1/32
+      KC_HEALTH_ENABLED: "true"
+    depends_on:
+      keycloak-db:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 2048M
+        reservations:
+          memory: 512M
+    ports:
+      - target: 8080
+        published: "8180"
+        protocol: tcp
+    networks:
+      - keycloak-network
+    healthcheck:
+      test:
+        - CMD
+        - bash
+        - -ec
+        - >-
+          exec 3<>/dev/tcp/127.0.0.1/9000;
+          printf 'HEAD /health/ready HTTP/1.0\r\n\r\n' >&3;
+          read -r status <&3;
+          [[ "$$status" == *" 200 "* ]]
+      interval: 30s
+      timeout: 5s
+      start_period: 120s
+      retries: 5
+    restart: unless-stopped
+    stop_grace_period: 60s
+    x-casaos:
+      envs:
+        - container: KC_HOSTNAME
+          description:
+            en_US: Required public HTTPS URL, for example https://auth.example.com.
+            de_DE: Erforderliche öffentliche HTTPS-URL, zum Beispiel https://auth.example.com.
+            zh_CN: 必须填写公开的 HTTPS 地址，例如 https://auth.example.com。
+        - container: KC_PROXY_TRUSTED_ADDRESSES
+          description:
+            en_US: IP address or CIDR of the reverse proxy as seen by Keycloak.
+            de_DE: IP-Adresse oder CIDR des Reverse Proxys aus Sicht von Keycloak.
+            zh_CN: Keycloak 所看到的反向代理 IP 地址或 CIDR。
+        - container: KC_BOOTSTRAP_ADMIN_USERNAME
+          description:
+            en_US: Temporary administrator created on first startup.
+            de_DE: Temporärer Administrator für den ersten Start.
+            zh_CN: 首次启动时创建的临时管理员。
+        - container: KC_BOOTSTRAP_ADMIN_PASSWORD
+          description:
+            en_US: Set a unique bootstrap administrator password before installing.
+            de_DE: Vor der Installation ein eigenes Passwort für den temporären Administrator setzen.
+            zh_CN: 安装前请设置独立的临时管理员密码。
+        - container: KC_DB_PASSWORD
+          description:
+            en_US: Required database password; must match POSTGRES_PASSWORD in keycloak-db.
+            de_DE: Erforderliches Datenbankpasswort; muss POSTGRES_PASSWORD in keycloak-db entsprechen.
+            zh_CN: 必须填写数据库密码，并与 keycloak-db 的 POSTGRES_PASSWORD 保持一致。
+      ports:
+        - container: "8080"
+          description:
+            en_US: HTTP backend for an HTTPS reverse proxy; restrict access to the proxy.
+            de_DE: HTTP-Backend für einen HTTPS-Reverse-Proxy; Zugriff auf den Proxy beschränken.
+            zh_CN: 供 HTTPS 反向代理使用的 HTTP 后端，请仅允许代理访问。
+
+  keycloak-db:
+    image: postgres:18.6-alpine
+    container_name: keycloak-db
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql
+    networks:
+      - keycloak-network
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"
+      interval: 10s
+      timeout: 5s
+      start_period: 30s
+      retries: 10
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 128M
+    restart: unless-stopped
+    x-casaos:
+      envs:
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: Required database password; must match KC_DB_PASSWORD in keycloak.
+            de_DE: Erforderliches Datenbankpasswort; muss KC_DB_PASSWORD in keycloak entsprechen.
+            zh_CN: 必须填写数据库密码，并与 keycloak 的 KC_DB_PASSWORD 保持一致。
+      volumes:
+        - container: /var/lib/postgresql
+          description:
+            en_US: Persistent PostgreSQL 18 data, including realms, users, and clients.
+            de_DE: Persistente PostgreSQL-18-Daten einschließlich Realms, Benutzern und Clients.
+            zh_CN: PostgreSQL 18 持久化数据，包括域、用户和客户端。
+
+networks:
+  keycloak-network:
+    driver: bridge
+
+x-casaos:
+  id: org.icewhale.keycloak
+  architectures:
+    - amd64
+    - arm64
+  main: keycloak
+  author: Mosman97
+  developer: Keycloak
+  category: Networking
+  title:
+    en_US: Keycloak
+  tagline:
+    en_US: Identity and access management with single sign-on.
+    de_DE: Identitäts- und Zugriffsverwaltung mit Single Sign-on.
+    zh_CN: 提供单点登录的身份与访问管理平台。
+    en_GB: Identity and access management with single sign-on.
+    ca_ES: Gestió d'identitats i accessos amb inici de sessió únic.
+    cs_CZ: Správa identit a přístupu s jednotným přihlášením.
+    da_DK: Identitets- og adgangsstyring med enkeltlogon.
+    el_GR: Διαχείριση ταυτοτήτων και πρόσβασης με ενιαία σύνδεση.
+    es_ES: Gestión de identidades y accesos con inicio de sesión único.
+    fr_FR: Gestion des identités et des accès avec authentification unique.
+    ga_IE: Bainistiú aitheantais agus rochtana le síniú isteach aonair.
+    hr_HR: Upravljanje identitetima i pristupom uz jedinstvenu prijavu.
+    hu_HU: Identitás- és hozzáférés-kezelés egyszeri bejelentkezéssel.
+    it_IT: Gestione delle identità e degli accessi con autenticazione unica.
+    ja_JP: シングルサインオンに対応した ID・アクセス管理。
+    ko_KR: 싱글 사인온을 지원하는 ID 및 접근 관리.
+    ml_IN: സിംഗിൾ സൈൻ-ഓൺ സൗകര്യത്തോടെ ഐഡന്റിറ്റിയും ആക്‌സസും നിയന്ത്രിക്കുക.
+    nb_NO: Identitets- og tilgangsstyring med felles pålogging.
+    nl_NL: Identiteits- en toegangsbeheer met eenmalige aanmelding.
+    pl_PL: Zarządzanie tożsamością i dostępem z jednokrotnym logowaniem.
+    pt_BR: Gerenciamento de identidades e acessos com login único.
+    pt_PT: Gestão de identidades e acessos com início de sessão único.
+    ro_RO: Gestionarea identităților și a accesului cu autentificare unică.
+    ru_RU: Управление идентификацией и доступом с единым входом.
+    sk_SK: Správa identít a prístupu s jednotným prihlásením.
+    sv_SE: Identitets- och åtkomsthantering med enkel inloggning.
+    tr_TR: Tek oturum açma ile kimlik ve erişim yönetimi.
+    zh_TW: 支援單一登入的身分與存取管理平台。
+    ar_SA: إدارة الهوية والوصول مع تسجيل الدخول الموحد.
+    uk_UA: Керування ідентифікацією та доступом з єдиним входом.
+  description:
+    en_US: |-
+      Keycloak provides single sign-on and identity management for your applications using OpenID Connect, OAuth 2.0, and SAML. It supports multi-factor authentication, user federation with LDAP and Active Directory, social login, and centralized user and client administration.
+
+      This package runs Keycloak in production mode with a dedicated PostgreSQL database and persistent storage. Configure a public HTTPS hostname, your reverse proxy, and unique administrator and database passwords before installing. HTTPS is terminated at your reverse proxy; Keycloak listens on HTTP port 8180 behind it.
+    de_DE: |-
+      Keycloak bietet Single Sign-on und Identitätsverwaltung für Anwendungen über OpenID Connect, OAuth 2.0 und SAML. Unterstützt werden Multi-Faktor-Authentifizierung, Benutzeranbindung über LDAP und Active Directory, Social Login sowie eine zentrale Benutzer- und Clientverwaltung.
+
+      Dieses Paket startet Keycloak im Produktionsmodus mit einer eigenen PostgreSQL-Datenbank und persistentem Speicher. Vor der Installation müssen eine öffentliche HTTPS-Adresse, der Reverse Proxy und eigene Administrator- und Datenbankpasswörter eingerichtet werden. HTTPS endet am Reverse Proxy; Keycloak ist dahinter über HTTP-Port 8180 erreichbar.
+    zh_CN: |-
+      Keycloak 通过 OpenID Connect、OAuth 2.0 和 SAML 为应用提供单点登录和身份管理，支持多因素认证、LDAP 和 Active Directory 用户联合、社交登录，以及集中式用户与客户端管理。
+
+      此软件包使用独立的 PostgreSQL 数据库和持久化存储，以生产模式运行 Keycloak。安装前必须配置公开的 HTTPS 地址、反向代理，以及独立的管理员和数据库密码。HTTPS 在反向代理处终止，代理通过 HTTP 端口 8180 访问 Keycloak。
+    en_GB: |-
+      Keycloak provides single sign-on and identity management for your applications using OpenID Connect, OAuth 2.0, and SAML. It supports multi-factor authentication, user federation with LDAP and Active Directory, social login, and centralized user and client administration.
+
+      This package runs Keycloak in production mode with a dedicated PostgreSQL database and persistent storage. Configure a public HTTPS hostname, your reverse proxy, and unique administrator and database passwords before installing. HTTPS is terminated at your reverse proxy; Keycloak listens on HTTP port 8180 behind it.
+    ca_ES: |-
+      Keycloak ofereix inici de sessió únic i gestió d'identitats per a les aplicacions mitjançant OpenID Connect, OAuth 2.0 i SAML. Admet autenticació multifactor, federació d'usuaris amb LDAP i Active Directory, inici de sessió amb xarxes socials i administració centralitzada d'usuaris i clients.
+
+      Aquest paquet executa Keycloak en mode de producció amb una base de dades PostgreSQL dedicada i emmagatzematge persistent. Abans d'instal·lar-lo, configureu una adreça HTTPS pública, el servidor intermediari invers i contrasenyes pròpies per a l'administrador i la base de dades. El servidor intermediari termina HTTPS i reenvia les peticions al port HTTP 8180.
+    cs_CZ: |-
+      Keycloak poskytuje jednotné přihlašování a správu identit aplikací pomocí OpenID Connect, OAuth 2.0 a SAML. Podporuje vícefaktorové ověřování, federaci uživatelů s LDAP a Active Directory, přihlášení přes sociální sítě a centrální správu uživatelů a klientů.
+
+      Tento balíček spouští Keycloak v produkčním režimu s vyhrazenou databází PostgreSQL a trvalým úložištěm. Před instalací nastavte veřejnou adresu HTTPS, reverzní proxy a vlastní hesla správce a databáze. HTTPS je ukončeno na reverzní proxy, která předává požadavky na port HTTP 8180.
+    da_DK: |-
+      Keycloak tilbyder enkeltlogon og identitetsstyring til dine applikationer via OpenID Connect, OAuth 2.0 og SAML. Det understøtter multifaktorgodkendelse, brugerføderation med LDAP og Active Directory, login via sociale tjenester samt central administration af brugere og klienter.
+
+      Denne pakke kører Keycloak i produktionstilstand med en dedikeret PostgreSQL-database og vedvarende lagring. Konfigurer en offentlig HTTPS-adresse, din reverse proxy og unikke adgangskoder til administratoren og databasen før installation. HTTPS termineres ved din reverse proxy, som videresender til HTTP-port 8180.
+    el_GR: |-
+      Το Keycloak παρέχει ενιαία σύνδεση και διαχείριση ταυτοτήτων για εφαρμογές μέσω OpenID Connect, OAuth 2.0 και SAML. Υποστηρίζει έλεγχο ταυτότητας πολλών παραγόντων, ομοσπονδία χρηστών με LDAP και Active Directory, σύνδεση μέσω κοινωνικών δικτύων και κεντρική διαχείριση χρηστών και πελατών.
+
+      Αυτό το πακέτο εκτελεί το Keycloak σε λειτουργία παραγωγής με ξεχωριστή βάση δεδομένων PostgreSQL και μόνιμη αποθήκευση. Πριν από την εγκατάσταση, ρυθμίστε μια δημόσια διεύθυνση HTTPS, τον αντίστροφο διαμεσολαβητή και μοναδικούς κωδικούς διαχειριστή και βάσης δεδομένων. Το HTTPS τερματίζεται στον διαμεσολαβητή, ο οποίος προωθεί τα αιτήματα στη θύρα HTTP 8180.
+    es_ES: |-
+      Keycloak proporciona inicio de sesión único y gestión de identidades para aplicaciones mediante OpenID Connect, OAuth 2.0 y SAML. Admite autenticación multifactor, federación de usuarios con LDAP y Active Directory, inicio de sesión con redes sociales y administración centralizada de usuarios y clientes.
+
+      Este paquete ejecuta Keycloak en modo de producción con una base de datos PostgreSQL dedicada y almacenamiento persistente. Antes de instalarlo, configure una dirección HTTPS pública, el proxy inverso y contraseñas únicas para el administrador y la base de datos. El proxy inverso termina HTTPS y reenvía las solicitudes al puerto HTTP 8180.
+    fr_FR: |-
+      Keycloak fournit l'authentification unique et la gestion des identités pour vos applications via OpenID Connect, OAuth 2.0 et SAML. Il prend en charge l'authentification multifacteur, la fédération d'utilisateurs avec LDAP et Active Directory, la connexion via les réseaux sociaux et l'administration centralisée des utilisateurs et des clients.
+
+      Ce paquet exécute Keycloak en mode production avec une base de données PostgreSQL dédiée et un stockage persistant. Avant l'installation, configurez une adresse HTTPS publique, votre proxy inverse et des mots de passe uniques pour l'administrateur et la base de données. Le proxy inverse termine HTTPS et transmet les requêtes au port HTTP 8180.
+    ga_IE: |-
+      Cuireann Keycloak síniú isteach aonair agus bainistiú aitheantais ar fáil d'fheidhmchláir trí OpenID Connect, OAuth 2.0 agus SAML. Tacaíonn sé le fíordheimhniú ilfhachtóra, cónaidhmiú úsáideoirí le LDAP agus Active Directory, síniú isteach trí líonraí sóisialta agus riarachán lárnach úsáideoirí agus cliant.
+
+      Ritheann an pacáiste seo Keycloak i mód táirgthe le bunachar sonraí tiomnaithe PostgreSQL agus stóráil bhuan. Sula suiteálann tú é, cumraigh seoladh poiblí HTTPS, seachfhreastalaí droim ar ais agus pasfhocail uathúla don riarthóir agus don bhunachar sonraí. Críochnaítear HTTPS ag an seachfhreastalaí, a chuireann iarratais ar aghaidh chuig port HTTP 8180.
+    hr_HR: |-
+      Keycloak pruža jedinstvenu prijavu i upravljanje identitetima aplikacija putem protokola OpenID Connect, OAuth 2.0 i SAML. Podržava višefaktorsku autentifikaciju, federaciju korisnika s LDAP-om i Active Directoryjem, prijavu putem društvenih mreža i središnje upravljanje korisnicima i klijentima.
+
+      Ovaj paket pokreće Keycloak u produkcijskom načinu s namjenskom bazom podataka PostgreSQL i trajnom pohranom. Prije instalacije postavite javnu HTTPS adresu, obrnuti proxy i jedinstvene lozinke administratora i baze podataka. HTTPS završava na obrnutom proxyju, koji prosljeđuje zahtjeve na HTTP priključak 8180.
+    hu_HU: |-
+      A Keycloak egyszeri bejelentkezést és identitáskezelést biztosít az alkalmazásokhoz OpenID Connect, OAuth 2.0 és SAML használatával. Támogatja a többtényezős hitelesítést, az LDAP- és Active Directory-alapú felhasználói föderációt, a közösségi bejelentkezést, valamint a felhasználók és kliensek központi kezelését.
+
+      Ez a csomag éles üzemmódban futtatja a Keycloakot, külön PostgreSQL-adatbázissal és tartós adattárolással. Telepítés előtt állítsa be a nyilvános HTTPS-címet, a fordított proxyt, valamint az egyedi rendszergazdai és adatbázisjelszavakat. A HTTPS-kapcsolatot a fordított proxy zárja le, és a kéréseket a 8180-as HTTP-portra továbbítja.
+    it_IT: |-
+      Keycloak offre autenticazione unica e gestione delle identità per le applicazioni tramite OpenID Connect, OAuth 2.0 e SAML. Supporta l'autenticazione a più fattori, la federazione degli utenti con LDAP e Active Directory, l'accesso tramite social network e l'amministrazione centralizzata di utenti e client.
+
+      Questo pacchetto esegue Keycloak in modalità produzione con un database PostgreSQL dedicato e archiviazione persistente. Prima dell'installazione, configurare un indirizzo HTTPS pubblico, il reverse proxy e password univoche per l'amministratore e il database. Il reverse proxy termina HTTPS e inoltra le richieste alla porta HTTP 8180.
+    ja_JP: |-
+      Keycloak は、OpenID Connect、OAuth 2.0、SAML を使い、アプリケーションにシングルサインオンと ID 管理を提供します。多要素認証、LDAP や Active Directory とのユーザーフェデレーション、ソーシャルログイン、ユーザーとクライアントの一元管理に対応しています。
+
+      このパッケージは、専用の PostgreSQL データベースと永続ストレージを使用し、本番モードで Keycloak を実行します。インストール前に公開 HTTPS URL、リバースプロキシ、管理者とデータベース用の固有のパスワードを設定してください。HTTPS はリバースプロキシで終端し、HTTP ポート 8180 に転送します。
+    ko_KR: |-
+      Keycloak은 OpenID Connect, OAuth 2.0 및 SAML을 통해 애플리케이션에 싱글 사인온과 ID 관리를 제공합니다. 다중 요소 인증, LDAP 및 Active Directory 사용자 연동, 소셜 로그인, 사용자 및 클라이언트의 중앙 관리를 지원합니다.
+
+      이 패키지는 전용 PostgreSQL 데이터베이스와 영구 저장소를 사용하여 Keycloak을 운영 모드로 실행합니다. 설치 전에 공개 HTTPS 주소, 리버스 프록시, 관리자 및 데이터베이스의 고유한 비밀번호를 설정하세요. HTTPS는 리버스 프록시에서 종료되며 HTTP 포트 8180으로 전달됩니다.
+    ml_IN: |-
+      OpenID Connect, OAuth 2.0, SAML എന്നിവ ഉപയോഗിച്ച് ആപ്ലിക്കേഷനുകൾക്ക് സിംഗിൾ സൈൻ-ഓണും ഐഡന്റിറ്റി മാനേജ്മെന്റും Keycloak നൽകുന്നു. മൾട്ടി-ഫാക്ടർ ഓതന്റിക്കേഷൻ, LDAP, Active Directory എന്നിവയുമായുള്ള ഉപയോക്തൃ ഫെഡറേഷൻ, സോഷ്യൽ ലോഗിൻ, ഉപയോക്താക്കളുടെയും ക്ലയന്റുകളുടെയും കേന്ദ്രീകൃത നിയന്ത്രണം എന്നിവ പിന്തുണയ്ക്കുന്നു.
+
+      ഈ പാക്കേജ് പ്രത്യേക PostgreSQL ഡാറ്റാബേസും സ്ഥിര സംഭരണവും ഉപയോഗിച്ച് Keycloak പ്രൊഡക്ഷൻ മോഡിൽ പ്രവർത്തിപ്പിക്കുന്നു. ഇൻസ്റ്റാൾ ചെയ്യുന്നതിനുമുമ്പ് പൊതു HTTPS വിലാസം, റിവേഴ്‌സ് പ്രോക്സി, അഡ്മിനിസ്ട്രേറ്ററിനും ഡാറ്റാബേസിനുമുള്ള തനതായ പാസ്‌വേഡുകൾ എന്നിവ സജ്ജമാക്കുക. HTTPS റിവേഴ്‌സ് പ്രോക്സിയിൽ അവസാനിക്കുകയും അഭ്യർത്ഥനകൾ HTTP പോർട്ട് 8180-ലേക്ക് കൈമാറുകയും ചെയ്യുന്നു.
+    nb_NO: |-
+      Keycloak tilbyr felles pålogging og identitetsstyring for applikasjoner via OpenID Connect, OAuth 2.0 og SAML. Det støtter flerfaktorautentisering, brukerføderasjon med LDAP og Active Directory, pålogging via sosiale tjenester og sentral administrasjon av brukere og klienter.
+
+      Denne pakken kjører Keycloak i produksjonsmodus med en dedikert PostgreSQL-database og vedvarende lagring. Konfigurer en offentlig HTTPS-adresse, en omvendt proxy og unike passord for administratoren og databasen før installasjon. HTTPS termineres ved proxyen, som videresender til HTTP-port 8180.
+    nl_NL: |-
+      Keycloak biedt eenmalige aanmelding en identiteitsbeheer voor applicaties via OpenID Connect, OAuth 2.0 en SAML. Het ondersteunt multifactorauthenticatie, gebruikersfederatie met LDAP en Active Directory, aanmelden via sociale netwerken en centraal beheer van gebruikers en clients.
+
+      Dit pakket draait Keycloak in productiemodus met een eigen PostgreSQL-database en permanente opslag. Configureer vóór de installatie een openbaar HTTPS-adres, je reverse proxy en unieke wachtwoorden voor de beheerder en database. De reverse proxy handelt HTTPS af en stuurt verzoeken door naar HTTP-poort 8180.
+    pl_PL: |-
+      Keycloak zapewnia jednokrotne logowanie i zarządzanie tożsamością aplikacji za pomocą OpenID Connect, OAuth 2.0 i SAML. Obsługuje uwierzytelnianie wieloskładnikowe, federację użytkowników z LDAP i Active Directory, logowanie przez serwisy społecznościowe oraz centralne zarządzanie użytkownikami i klientami.
+
+      Ten pakiet uruchamia Keycloak w trybie produkcyjnym z dedykowaną bazą danych PostgreSQL i trwałym magazynem danych. Przed instalacją skonfiguruj publiczny adres HTTPS, odwrotny serwer proxy oraz unikalne hasła administratora i bazy danych. Połączenie HTTPS jest kończone na serwerze proxy, który przekazuje żądania na port HTTP 8180.
+    pt_BR: |-
+      O Keycloak oferece login único e gerenciamento de identidades para aplicações usando OpenID Connect, OAuth 2.0 e SAML. Ele oferece suporte a autenticação multifator, federação de usuários com LDAP e Active Directory, login social e administração centralizada de usuários e clientes.
+
+      Este pacote executa o Keycloak em modo de produção com um banco de dados PostgreSQL dedicado e armazenamento persistente. Antes da instalação, configure um endereço HTTPS público, o proxy reverso e senhas exclusivas para o administrador e o banco de dados. O HTTPS é terminado no proxy reverso, que encaminha as solicitações para a porta HTTP 8180.
+    pt_PT: |-
+      O Keycloak disponibiliza início de sessão único e gestão de identidades para aplicações através de OpenID Connect, OAuth 2.0 e SAML. Suporta autenticação multifator, federação de utilizadores com LDAP e Active Directory, início de sessão através de redes sociais e administração centralizada de utilizadores e clientes.
+
+      Este pacote executa o Keycloak em modo de produção com uma base de dados PostgreSQL dedicada e armazenamento persistente. Antes da instalação, configure um endereço HTTPS público, o proxy inverso e palavras-passe únicas para o administrador e a base de dados. O HTTPS termina no proxy inverso, que encaminha os pedidos para a porta HTTP 8180.
+    ro_RO: |-
+      Keycloak oferă autentificare unică și gestionarea identităților pentru aplicații prin OpenID Connect, OAuth 2.0 și SAML. Acceptă autentificare multifactor, federarea utilizatorilor cu LDAP și Active Directory, autentificare prin rețele sociale și administrarea centralizată a utilizatorilor și clienților.
+
+      Acest pachet rulează Keycloak în modul de producție, cu o bază de date PostgreSQL dedicată și stocare persistentă. Înainte de instalare, configurați o adresă HTTPS publică, un proxy invers și parole unice pentru administrator și baza de date. HTTPS se termină la proxy, care transmite cererile către portul HTTP 8180.
+    ru_RU: |-
+      Keycloak обеспечивает единый вход и управление идентификацией для приложений с помощью OpenID Connect, OAuth 2.0 и SAML. Поддерживаются многофакторная аутентификация, федерация пользователей с LDAP и Active Directory, вход через социальные сети и централизованное управление пользователями и клиентами.
+
+      Этот пакет запускает Keycloak в промышленном режиме с отдельной базой данных PostgreSQL и постоянным хранилищем. Перед установкой настройте публичный HTTPS-адрес, обратный прокси и уникальные пароли администратора и базы данных. HTTPS завершается на обратном прокси, который перенаправляет запросы на HTTP-порт 8180.
+    sk_SK: |-
+      Keycloak poskytuje jednotné prihlasovanie a správu identít aplikácií pomocou OpenID Connect, OAuth 2.0 a SAML. Podporuje viacfaktorové overovanie, federáciu používateľov s LDAP a Active Directory, prihlasovanie cez sociálne siete a centrálnu správu používateľov a klientov.
+
+      Tento balík spúšťa Keycloak v produkčnom režime s vyhradenou databázou PostgreSQL a trvalým úložiskom. Pred inštaláciou nastavte verejnú adresu HTTPS, reverzný proxy server a jedinečné heslá správcu a databázy. HTTPS sa ukončuje na proxy serveri, ktorý presmerúva požiadavky na port HTTP 8180.
+    sv_SE: |-
+      Keycloak erbjuder enkel inloggning och identitetshantering för applikationer via OpenID Connect, OAuth 2.0 och SAML. Det stöder flerfaktorsautentisering, användarfederation med LDAP och Active Directory, inloggning via sociala tjänster samt central administration av användare och klienter.
+
+      Det här paketet kör Keycloak i produktionsläge med en dedikerad PostgreSQL-databas och beständig lagring. Konfigurera en offentlig HTTPS-adress, din omvända proxy och unika lösenord för administratören och databasen före installationen. HTTPS termineras vid proxyn, som vidarebefordrar till HTTP-port 8180.
+    tr_TR: |-
+      Keycloak, OpenID Connect, OAuth 2.0 ve SAML aracılığıyla uygulamalar için tek oturum açma ve kimlik yönetimi sağlar. Çok faktörlü kimlik doğrulamayı, LDAP ve Active Directory ile kullanıcı federasyonunu, sosyal hesaplarla oturum açmayı ve kullanıcılarla istemcilerin merkezi yönetimini destekler.
+
+      Bu paket, Keycloak'ı özel bir PostgreSQL veritabanı ve kalıcı depolama ile üretim modunda çalıştırır. Kurulumdan önce genel bir HTTPS adresi, ters proxy ve yönetici ile veritabanı için benzersiz parolalar yapılandırın. HTTPS, istekleri HTTP bağlantı noktası 8180'e ileten ters proxy'de sonlandırılır.
+    zh_TW: |-
+      Keycloak 透過 OpenID Connect、OAuth 2.0 和 SAML 為應用程式提供單一登入與身分管理，支援多因素驗證、LDAP 與 Active Directory 使用者聯邦、社群登入，以及集中式使用者與用戶端管理。
+
+      此套件使用專用 PostgreSQL 資料庫和持續性儲存空間，以正式環境模式執行 Keycloak。安裝前請設定公開的 HTTPS 網址、反向代理伺服器，以及管理員和資料庫的獨立密碼。HTTPS 在反向代理伺服器終止，再將請求轉送至 HTTP 連接埠 8180。
+    ar_SA: |-
+      يوفر Keycloak تسجيل الدخول الموحد وإدارة الهوية للتطبيقات باستخدام OpenID Connect وOAuth 2.0 وSAML. ويدعم المصادقة متعددة العوامل، واتحاد المستخدمين مع LDAP وActive Directory، وتسجيل الدخول عبر الشبكات الاجتماعية، والإدارة المركزية للمستخدمين والعملاء.
+
+      تشغّل هذه الحزمة Keycloak في وضع الإنتاج باستخدام قاعدة بيانات PostgreSQL مخصصة وتخزين دائم. قبل التثبيت، اضبط عنوان HTTPS عامًا والوكيل العكسي وكلمات مرور فريدة للمسؤول وقاعدة البيانات. تنتهي اتصالات HTTPS عند الوكيل العكسي الذي يوجّه الطلبات إلى منفذ HTTP رقم 8180.
+    uk_UA: |-
+      Keycloak забезпечує єдиний вхід і керування ідентифікацією для застосунків за допомогою OpenID Connect, OAuth 2.0 та SAML. Підтримує багатофакторну автентифікацію, федерацію користувачів з LDAP і Active Directory, вхід через соціальні мережі та централізоване керування користувачами й клієнтами.
+
+      Цей пакет запускає Keycloak у промисловому режимі з окремою базою даних PostgreSQL і постійним сховищем. Перед установленням налаштуйте публічну HTTPS-адресу, зворотний проксі та унікальні паролі адміністратора й бази даних. HTTPS завершується на зворотному проксі, який переспрямовує запити на HTTP-порт 8180.
+  tips:
+    before_install:
+      en_US: |-
+        Use Custom Install. Set KC_HOSTNAME to your full public HTTPS URL, KC_PROXY_TRUSTED_ADDRESSES to the IP/CIDR of your reverse proxy, and KC_BOOTSTRAP_ADMIN_PASSWORD to a unique password. Set the same unique database password in KC_DB_PASSWORD and the database service's POSTGRES_PASSWORD. Passwords are intentionally empty; the stack requires these settings before it can start.
+
+        Configure your reverse proxy to terminate HTTPS and forward to port 8180, overwriting X-Forwarded-* headers. Restrict direct access to port 8180 to that proxy. Open the administration console through your HTTPS hostname. After first login, create and verify a permanent administrator, then remove the temporary bootstrap account.
+      de_DE: |-
+        Benutzerdefinierte Installation verwenden. KC_HOSTNAME auf die vollständige öffentliche HTTPS-URL, KC_PROXY_TRUSTED_ADDRESSES auf die IP/CIDR des Reverse Proxys und KC_BOOTSTRAP_ADMIN_PASSWORD auf ein eigenes Passwort setzen. Dasselbe eigene Datenbankpasswort in KC_DB_PASSWORD und POSTGRES_PASSWORD des Datenbankdienstes eintragen. Die Passwörter sind absichtlich leer; vor dem Start müssen diese Werte gesetzt werden.
+
+        Der Reverse Proxy muss HTTPS bereitstellen, an Port 8180 weiterleiten und X-Forwarded-*-Header überschreiben. Direkten Zugriff auf Port 8180 auf diesen Proxy beschränken. Die Administrationskonsole über den HTTPS-Hostnamen öffnen. Nach der ersten Anmeldung einen dauerhaften Administrator anlegen und prüfen, anschließend das temporäre Bootstrap-Konto entfernen.
+      zh_CN: |-
+        请使用自定义安装。将 KC_HOSTNAME 设为完整的公开 HTTPS 地址，KC_PROXY_TRUSTED_ADDRESSES 设为反向代理的 IP/CIDR，并为 KC_BOOTSTRAP_ADMIN_PASSWORD 设置独立密码。KC_DB_PASSWORD 和数据库服务的 POSTGRES_PASSWORD 必须使用相同的独立密码。密码有意留空，必须在启动前完成设置。
+
+        反向代理应终止 HTTPS、转发至端口 8180，并覆盖 X-Forwarded-* 请求头。仅允许代理直接访问端口 8180。请通过 HTTPS 域名打开管理控制台。首次登录后，请创建并验证永久管理员，然后删除临时管理员账户。
+      en_GB: |-
+        Use Custom Install. Set KC_HOSTNAME to your full public HTTPS URL, KC_PROXY_TRUSTED_ADDRESSES to the IP/CIDR of your reverse proxy, and KC_BOOTSTRAP_ADMIN_PASSWORD to a unique password. Set the same unique database password in KC_DB_PASSWORD and the database service's POSTGRES_PASSWORD. Passwords are intentionally empty; the stack requires these settings before it can start.
+
+        Configure your reverse proxy to terminate HTTPS and forward to port 8180, overwriting X-Forwarded-* headers. Restrict direct access to port 8180 to that proxy. Open the administration console through your HTTPS hostname. After first login, create and verify a permanent administrator, then remove the temporary bootstrap account.
+      ca_ES: |-
+        Feu servir la instal·lació personalitzada. Definiu KC_HOSTNAME amb l'URL HTTPS pública completa, KC_PROXY_TRUSTED_ADDRESSES amb la IP/CIDR del servidor intermediari invers i KC_BOOTSTRAP_ADMIN_PASSWORD amb una contrasenya única. KC_DB_PASSWORD i POSTGRES_PASSWORD del servei de base de dades han de tenir la mateixa contrasenya única. Les contrasenyes es deixen buides expressament; cal configurar-les abans d'iniciar els serveis.
+
+        Configureu el servidor intermediari perquè termini HTTPS, reenviï les peticions al port 8180 i sobreescrigui les capçaleres X-Forwarded-*. Restringiu l'accés directe al port 8180 al servidor intermediari. Obriu la consola d'administració des de l'adreça HTTPS. Després del primer inici de sessió, creeu i comproveu un administrador permanent i elimineu el compte temporal d'arrencada.
+      cs_CZ: |-
+        Použijte vlastní instalaci. Nastavte KC_HOSTNAME na úplnou veřejnou adresu HTTPS, KC_PROXY_TRUSTED_ADDRESSES na IP/CIDR reverzní proxy a KC_BOOTSTRAP_ADMIN_PASSWORD na jedinečné heslo. KC_DB_PASSWORD a POSTGRES_PASSWORD databázové služby musí obsahovat stejné jedinečné heslo. Hesla jsou záměrně prázdná; před spuštěním je nutné tato nastavení vyplnit.
+
+        Nastavte reverzní proxy tak, aby ukončovala HTTPS, předávala požadavky na port 8180 a přepisovala hlavičky X-Forwarded-*. Přímý přístup k portu 8180 povolte pouze proxy. Konzoli správy otevřete přes adresu HTTPS. Po prvním přihlášení vytvořte a ověřte trvalého správce a poté odstraňte dočasný účet pro počáteční nastavení.
+      da_DK: |-
+        Brug tilpasset installation. Sæt KC_HOSTNAME til den fulde offentlige HTTPS-adresse, KC_PROXY_TRUSTED_ADDRESSES til din reverse proxys IP/CIDR og KC_BOOTSTRAP_ADMIN_PASSWORD til en unik adgangskode. Angiv samme unikke databaseadgangskode i KC_DB_PASSWORD og databasetjenestens POSTGRES_PASSWORD. Adgangskoderne er bevidst tomme; indstillingerne skal udfyldes før start.
+
+        Konfigurer din reverse proxy til at terminere HTTPS, videresende til port 8180 og overskrive X-Forwarded-*-headere. Begræns direkte adgang til port 8180 til proxyen. Åbn administrationskonsollen via HTTPS-adressen. Opret og kontrollér en permanent administrator efter første login, og fjern derefter den midlertidige opstartskonto.
+      el_GR: |-
+        Χρησιμοποιήστε την προσαρμοσμένη εγκατάσταση. Ορίστε το KC_HOSTNAME στην πλήρη δημόσια διεύθυνση HTTPS, το KC_PROXY_TRUSTED_ADDRESSES στην IP/CIDR του αντίστροφου διαμεσολαβητή και το KC_BOOTSTRAP_ADMIN_PASSWORD σε έναν μοναδικό κωδικό. Ορίστε τον ίδιο μοναδικό κωδικό στα KC_DB_PASSWORD και POSTGRES_PASSWORD της υπηρεσίας βάσης δεδομένων. Οι κωδικοί είναι σκόπιμα κενοί και πρέπει να συμπληρωθούν πριν από την εκκίνηση.
+
+        Ρυθμίστε τον αντίστροφο διαμεσολαβητή ώστε να τερματίζει το HTTPS, να προωθεί στη θύρα 8180 και να αντικαθιστά τις κεφαλίδες X-Forwarded-*. Επιτρέψτε άμεση πρόσβαση στη θύρα 8180 μόνο από τον διαμεσολαβητή. Ανοίξτε την κονσόλα διαχείρισης μέσω HTTPS. Μετά την πρώτη σύνδεση, δημιουργήστε και επαληθεύστε έναν μόνιμο διαχειριστή και διαγράψτε τον προσωρινό λογαριασμό αρχικής ρύθμισης.
+      es_ES: |-
+        Utilice la instalación personalizada. Establezca KC_HOSTNAME con la URL HTTPS pública completa, KC_PROXY_TRUSTED_ADDRESSES con la IP/CIDR del proxy inverso y KC_BOOTSTRAP_ADMIN_PASSWORD con una contraseña única. KC_DB_PASSWORD y POSTGRES_PASSWORD del servicio de base de datos deben tener la misma contraseña única. Las contraseñas están vacías de forma intencionada; debe configurarlas antes de iniciar los servicios.
+
+        Configure el proxy inverso para terminar HTTPS, reenviar al puerto 8180 y sobrescribir las cabeceras X-Forwarded-*. Restrinja el acceso directo al puerto 8180 al proxy. Abra la consola de administración desde la dirección HTTPS. Después del primer inicio de sesión, cree y verifique un administrador permanente y elimine la cuenta temporal de configuración inicial.
+      fr_FR: |-
+        Utilisez l'installation personnalisée. Définissez KC_HOSTNAME avec l'URL HTTPS publique complète, KC_PROXY_TRUSTED_ADDRESSES avec l'IP/CIDR du proxy inverse et KC_BOOTSTRAP_ADMIN_PASSWORD avec un mot de passe unique. Définissez le même mot de passe unique dans KC_DB_PASSWORD et POSTGRES_PASSWORD du service de base de données. Les mots de passe sont volontairement vides ; ces paramètres doivent être renseignés avant le démarrage.
+
+        Configurez le proxy inverse pour terminer HTTPS, transmettre les requêtes au port 8180 et remplacer les en-têtes X-Forwarded-*. Limitez l'accès direct au port 8180 au proxy. Ouvrez la console d'administration via l'adresse HTTPS. Après la première connexion, créez et vérifiez un administrateur permanent, puis supprimez le compte temporaire d'initialisation.
+      ga_IE: |-
+        Úsáid an tsuiteáil shaincheaptha. Socraigh KC_HOSTNAME chuig an URL iomlán poiblí HTTPS, KC_PROXY_TRUSTED_ADDRESSES chuig IP/CIDR an tseachfhreastalaí droim ar ais agus KC_BOOTSTRAP_ADMIN_PASSWORD chuig pasfhocal uathúil. Socraigh an pasfhocal uathúil céanna i KC_DB_PASSWORD agus POSTGRES_PASSWORD na seirbhíse bunachair sonraí. Tá na pasfhocail folamh d'aon ghnó; ní mór na socruithe seo a líonadh roimh thosú.
+
+        Cumraigh an seachfhreastalaí chun HTTPS a chríochnú, iarratais a chur ar aghaidh chuig port 8180 agus ceanntásca X-Forwarded-* a fhorscríobh. Ná ceadaigh rochtain dhíreach ar phort 8180 ach ón seachfhreastalaí. Oscail an consól riaracháin tríd an seoladh HTTPS. Tar éis an chéad sínithe isteach, cruthaigh agus fíoraigh riarthóir buan, ansin bain an cuntas sealadach tosaigh.
+      hr_HR: |-
+        Upotrijebite prilagođenu instalaciju. Postavite KC_HOSTNAME na puni javni HTTPS URL, KC_PROXY_TRUSTED_ADDRESSES na IP/CIDR obrnutog proxyja i KC_BOOTSTRAP_ADMIN_PASSWORD na jedinstvenu lozinku. Postavite istu jedinstvenu lozinku u KC_DB_PASSWORD i POSTGRES_PASSWORD usluge baze podataka. Lozinke su namjerno prazne; ove postavke morate unijeti prije pokretanja.
+
+        Postavite obrnuti proxy da završava HTTPS, prosljeđuje na priključak 8180 i prepisuje zaglavlja X-Forwarded-*. Izravan pristup priključku 8180 dopustite samo proxyju. Administracijsku konzolu otvorite putem HTTPS adrese. Nakon prve prijave izradite i provjerite stalnog administratora pa uklonite privremeni račun za početno postavljanje.
+      hu_HU: |-
+        Használja az egyéni telepítést. A KC_HOSTNAME értéke a teljes nyilvános HTTPS URL, a KC_PROXY_TRUSTED_ADDRESSES értéke a fordított proxy IP/CIDR címe, a KC_BOOTSTRAP_ADMIN_PASSWORD pedig egy egyedi jelszó legyen. A KC_DB_PASSWORD és az adatbázis-szolgáltatás POSTGRES_PASSWORD mezőjében ugyanazt az egyedi adatbázisjelszót adja meg. A jelszavak szándékosan üresek; ezeket indítás előtt ki kell tölteni.
+
+        Állítsa be a fordított proxyt a HTTPS lezárására, a 8180-as portra történő továbbításra és az X-Forwarded-* fejlécek felülírására. A 8180-as porthoz csak a proxy férhessen hozzá közvetlenül. Az adminisztrációs konzolt a HTTPS-címen nyissa meg. Az első bejelentkezés után hozzon létre és ellenőrizzen egy állandó rendszergazdát, majd törölje az ideiglenes kezdeti fiókot.
+      it_IT: |-
+        Usare l'installazione personalizzata. Impostare KC_HOSTNAME sull'URL HTTPS pubblico completo, KC_PROXY_TRUSTED_ADDRESSES sull'IP/CIDR del reverse proxy e KC_BOOTSTRAP_ADMIN_PASSWORD su una password univoca. Impostare la stessa password univoca in KC_DB_PASSWORD e POSTGRES_PASSWORD del servizio database. Le password sono intenzionalmente vuote; è necessario configurarle prima dell'avvio.
+
+        Configurare il reverse proxy per terminare HTTPS, inoltrare alla porta 8180 e sovrascrivere le intestazioni X-Forwarded-*. Limitare l'accesso diretto alla porta 8180 al proxy. Aprire la console di amministrazione tramite l'indirizzo HTTPS. Dopo il primo accesso, creare e verificare un amministratore permanente, quindi eliminare l'account temporaneo di inizializzazione.
+      ja_JP: |-
+        カスタムインストールを使用してください。KC_HOSTNAME に完全な公開 HTTPS URL、KC_PROXY_TRUSTED_ADDRESSES にリバースプロキシの IP/CIDR、KC_BOOTSTRAP_ADMIN_PASSWORD に固有のパスワードを設定します。KC_DB_PASSWORD とデータベースサービスの POSTGRES_PASSWORD には、同じ固有のデータベースパスワードを設定してください。パスワードは意図的に空欄にしてあり、起動前の設定が必要です。
+
+        リバースプロキシで HTTPS を終端し、ポート 8180 に転送して、X-Forwarded-* ヘッダーを上書きしてください。ポート 8180 への直接アクセスはプロキシのみに制限します。HTTPS URL から管理コンソールを開いてください。初回ログイン後、永続的な管理者を作成して動作を確認し、一時的な初期管理者アカウントを削除してください。
+      ko_KR: |-
+        사용자 지정 설치를 사용하세요. KC_HOSTNAME에는 전체 공개 HTTPS URL을, KC_PROXY_TRUSTED_ADDRESSES에는 리버스 프록시의 IP/CIDR을, KC_BOOTSTRAP_ADMIN_PASSWORD에는 고유한 비밀번호를 설정하세요. KC_DB_PASSWORD와 데이터베이스 서비스의 POSTGRES_PASSWORD에는 동일한 고유 데이터베이스 비밀번호를 설정해야 합니다. 비밀번호는 의도적으로 비워 두었으며 시작 전에 설정해야 합니다.
+
+        리버스 프록시가 HTTPS를 종료하고 포트 8180으로 전달하며 X-Forwarded-* 헤더를 덮어쓰도록 구성하세요. 포트 8180에 대한 직접 접근은 프록시에만 허용하세요. HTTPS 주소로 관리 콘솔을 여세요. 처음 로그인한 후 영구 관리자 계정을 만들고 확인한 다음 임시 초기 관리자 계정을 삭제하세요.
+      ml_IN: |-
+        കസ്റ്റം ഇൻസ്റ്റാൾ ഉപയോഗിക്കുക. KC_HOSTNAME പൂർണ്ണമായ പൊതു HTTPS URL ആയും KC_PROXY_TRUSTED_ADDRESSES റിവേഴ്‌സ് പ്രോക്സിയുടെ IP/CIDR ആയും KC_BOOTSTRAP_ADMIN_PASSWORD തനതായ പാസ്‌വേഡ് ആയും സജ്ജമാക്കുക. KC_DB_PASSWORD, ഡാറ്റാബേസ് സേവനത്തിലെ POSTGRES_PASSWORD എന്നിവയിൽ ഒരേ തനതായ ഡാറ്റാബേസ് പാസ്‌വേഡ് നൽകുക. പാസ്‌വേഡുകൾ മനപ്പൂർവം ഒഴിച്ചിട്ടതാണ്; ആരംഭിക്കുന്നതിനുമുമ്പ് ഇവ സജ്ജമാക്കണം.
+
+        HTTPS അവസാനിപ്പിക്കാനും പോർട്ട് 8180-ലേക്ക് കൈമാറാനും X-Forwarded-* ഹെഡറുകൾ തിരുത്തിയെഴുതാനും റിവേഴ്‌സ് പ്രോക്സി ക്രമീകരിക്കുക. പോർട്ട് 8180-ലേക്കുള്ള നേരിട്ടുള്ള പ്രവേശനം പ്രോക്സിക്ക് മാത്രമായി പരിമിതപ്പെടുത്തുക. HTTPS വിലാസത്തിലൂടെ അഡ്മിനിസ്ട്രേഷൻ കൺസോൾ തുറക്കുക. ആദ്യ ലോഗിനുശേഷം സ്ഥിര അഡ്മിനിസ്ട്രേറ്ററെ സൃഷ്ടിച്ച് പരിശോധിക്കുക; തുടർന്ന് താൽക്കാലിക പ്രാരംഭ അക്കൗണ്ട് നീക്കംചെയ്യുക.
+      nb_NO: |-
+        Bruk tilpasset installasjon. Sett KC_HOSTNAME til den fullstendige offentlige HTTPS-adressen, KC_PROXY_TRUSTED_ADDRESSES til den omvendte proxyens IP/CIDR og KC_BOOTSTRAP_ADMIN_PASSWORD til et unikt passord. Angi samme unike databasepassord i KC_DB_PASSWORD og databasetjenestens POSTGRES_PASSWORD. Passordene er bevisst tomme; innstillingene må fylles ut før oppstart.
+
+        Konfigurer proxyen til å terminere HTTPS, videresende til port 8180 og overskrive X-Forwarded-*-hoder. Begrens direkte tilgang til port 8180 til proxyen. Åpne administrasjonskonsollen via HTTPS-adressen. Opprett og kontroller en permanent administrator etter første pålogging, og fjern deretter den midlertidige oppstartskontoen.
+      nl_NL: |-
+        Gebruik de aangepaste installatie. Stel KC_HOSTNAME in op de volledige openbare HTTPS-URL, KC_PROXY_TRUSTED_ADDRESSES op het IP/CIDR van de reverse proxy en KC_BOOTSTRAP_ADMIN_PASSWORD op een uniek wachtwoord. Stel hetzelfde unieke databasewachtwoord in bij KC_DB_PASSWORD en POSTGRES_PASSWORD van de databaseservice. De wachtwoorden zijn bewust leeg; deze instellingen moeten vóór het starten worden ingevuld.
+
+        Configureer de reverse proxy om HTTPS af te handelen, door te sturen naar poort 8180 en de X-Forwarded-*-headers te overschrijven. Beperk directe toegang tot poort 8180 tot de proxy. Open de beheerconsole via het HTTPS-adres. Maak na de eerste aanmelding een permanente beheerder aan, controleer deze en verwijder daarna het tijdelijke opstartaccount.
+      pl_PL: |-
+        Użyj instalacji niestandardowej. Ustaw KC_HOSTNAME na pełny publiczny adres HTTPS, KC_PROXY_TRUSTED_ADDRESSES na IP/CIDR odwrotnego serwera proxy, a KC_BOOTSTRAP_ADMIN_PASSWORD na unikalne hasło. W KC_DB_PASSWORD i POSTGRES_PASSWORD usługi bazy danych ustaw to samo unikalne hasło bazy danych. Hasła celowo pozostawiono puste; trzeba je skonfigurować przed uruchomieniem.
+
+        Skonfiguruj odwrotny serwer proxy tak, aby kończył HTTPS, przekazywał żądania na port 8180 i nadpisywał nagłówki X-Forwarded-*. Ogranicz bezpośredni dostęp do portu 8180 do serwera proxy. Otwórz konsolę administracyjną przez adres HTTPS. Po pierwszym logowaniu utwórz i sprawdź stałego administratora, a następnie usuń tymczasowe konto inicjalizacyjne.
+      pt_BR: |-
+        Use a instalação personalizada. Defina KC_HOSTNAME com a URL HTTPS pública completa, KC_PROXY_TRUSTED_ADDRESSES com o IP/CIDR do proxy reverso e KC_BOOTSTRAP_ADMIN_PASSWORD com uma senha exclusiva. Defina a mesma senha exclusiva em KC_DB_PASSWORD e POSTGRES_PASSWORD do serviço de banco de dados. As senhas estão vazias intencionalmente; é necessário configurá-las antes de iniciar os serviços.
+
+        Configure o proxy reverso para terminar HTTPS, encaminhar para a porta 8180 e sobrescrever os cabeçalhos X-Forwarded-*. Restrinja o acesso direto à porta 8180 ao proxy. Abra o console de administração pelo endereço HTTPS. Após o primeiro login, crie e verifique um administrador permanente e remova a conta temporária de inicialização.
+      pt_PT: |-
+        Utilize a instalação personalizada. Defina KC_HOSTNAME com o URL HTTPS público completo, KC_PROXY_TRUSTED_ADDRESSES com o IP/CIDR do proxy inverso e KC_BOOTSTRAP_ADMIN_PASSWORD com uma palavra-passe única. Defina a mesma palavra-passe única em KC_DB_PASSWORD e POSTGRES_PASSWORD do serviço da base de dados. As palavras-passe estão vazias intencionalmente; é necessário configurá-las antes de iniciar os serviços.
+
+        Configure o proxy inverso para terminar HTTPS, encaminhar para a porta 8180 e substituir os cabeçalhos X-Forwarded-*. Restrinja o acesso direto à porta 8180 ao proxy. Abra a consola de administração através do endereço HTTPS. Após o primeiro início de sessão, crie e verifique um administrador permanente e remova a conta temporária de inicialização.
+      ro_RO: |-
+        Folosiți instalarea personalizată. Setați KC_HOSTNAME la adresa HTTPS publică completă, KC_PROXY_TRUSTED_ADDRESSES la IP/CIDR-ul proxy-ului invers și KC_BOOTSTRAP_ADMIN_PASSWORD la o parolă unică. Setați aceeași parolă unică în KC_DB_PASSWORD și POSTGRES_PASSWORD ale serviciului bazei de date. Parolele sunt lăsate intenționat goale; aceste setări trebuie completate înainte de pornire.
+
+        Configurați proxy-ul invers să termine HTTPS, să transmită către portul 8180 și să suprascrie antetele X-Forwarded-*. Permiteți accesul direct la portul 8180 doar proxy-ului. Deschideți consola de administrare prin adresa HTTPS. După prima autentificare, creați și verificați un administrator permanent, apoi eliminați contul temporar de inițializare.
+      ru_RU: |-
+        Используйте настраиваемую установку. Укажите в KC_HOSTNAME полный публичный HTTPS-адрес, в KC_PROXY_TRUSTED_ADDRESSES — IP/CIDR обратного прокси, а в KC_BOOTSTRAP_ADMIN_PASSWORD — уникальный пароль. Задайте одинаковый уникальный пароль базы данных в KC_DB_PASSWORD и POSTGRES_PASSWORD сервиса базы данных. Пароли намеренно оставлены пустыми; перед запуском их нужно задать.
+
+        Настройте обратный прокси для завершения HTTPS, перенаправления на порт 8180 и перезаписи заголовков X-Forwarded-*. Разрешите прямой доступ к порту 8180 только прокси. Открывайте консоль управления через HTTPS-адрес. После первого входа создайте и проверьте постоянного администратора, затем удалите временную учётную запись начальной настройки.
+      sk_SK: |-
+        Použite vlastnú inštaláciu. Nastavte KC_HOSTNAME na úplnú verejnú adresu HTTPS, KC_PROXY_TRUSTED_ADDRESSES na IP/CIDR reverzného proxy servera a KC_BOOTSTRAP_ADMIN_PASSWORD na jedinečné heslo. V KC_DB_PASSWORD a POSTGRES_PASSWORD databázovej služby nastavte rovnaké jedinečné heslo. Heslá sú zámerne prázdne; pred spustením ich musíte nastaviť.
+
+        Nastavte reverzný proxy server tak, aby ukončoval HTTPS, presmerúval požiadavky na port 8180 a prepisoval hlavičky X-Forwarded-*. Priamy prístup k portu 8180 povoľte iba proxy serveru. Konzolu správy otvorte cez adresu HTTPS. Po prvom prihlásení vytvorte a overte trvalého správcu a potom odstráňte dočasný účet na počiatočné nastavenie.
+      sv_SE: |-
+        Använd anpassad installation. Ange den fullständiga offentliga HTTPS-adressen i KC_HOSTNAME, proxyns IP/CIDR i KC_PROXY_TRUSTED_ADDRESSES och ett unikt lösenord i KC_BOOTSTRAP_ADMIN_PASSWORD. Ange samma unika databaslösenord i KC_DB_PASSWORD och databastjänstens POSTGRES_PASSWORD. Lösenorden är avsiktligt tomma; inställningarna måste fyllas i före start.
+
+        Konfigurera proxyn för att terminera HTTPS, vidarebefordra till port 8180 och skriva över X-Forwarded-*-huvuden. Begränsa direkt åtkomst till port 8180 till proxyn. Öppna administrationskonsolen via HTTPS-adressen. Skapa och kontrollera en permanent administratör efter den första inloggningen och ta sedan bort det tillfälliga startkontot.
+      tr_TR: |-
+        Özel kurulumu kullanın. KC_HOSTNAME değerini tam genel HTTPS URL'si, KC_PROXY_TRUSTED_ADDRESSES değerini ters proxy'nin IP/CIDR adresi ve KC_BOOTSTRAP_ADMIN_PASSWORD değerini benzersiz bir parola olarak ayarlayın. KC_DB_PASSWORD ve veritabanı hizmetinin POSTGRES_PASSWORD alanlarına aynı benzersiz veritabanı parolasını girin. Parolalar bilerek boş bırakılmıştır; başlatmadan önce bu ayarlar yapılmalıdır.
+
+        Ters proxy'yi HTTPS'yi sonlandıracak, 8180 bağlantı noktasına iletecek ve X-Forwarded-* başlıklarını üzerine yazacak şekilde yapılandırın. 8180 bağlantı noktasına doğrudan erişimi yalnızca proxy ile sınırlandırın. Yönetim konsolunu HTTPS adresinden açın. İlk oturum açmadan sonra kalıcı bir yönetici oluşturup doğrulayın ve ardından geçici başlangıç hesabını kaldırın.
+      zh_TW: |-
+        請使用自訂安裝。將 KC_HOSTNAME 設為完整的公開 HTTPS 網址、KC_PROXY_TRUSTED_ADDRESSES 設為反向代理伺服器的 IP/CIDR，並為 KC_BOOTSTRAP_ADMIN_PASSWORD 設定獨立密碼。KC_DB_PASSWORD 和資料庫服務的 POSTGRES_PASSWORD 必須使用相同的獨立密碼。密碼刻意留空，啟動前必須完成這些設定。
+
+        反向代理伺服器應終止 HTTPS、轉送至連接埠 8180，並覆寫 X-Forwarded-* 標頭。僅允許代理伺服器直接存取連接埠 8180。請透過 HTTPS 網址開啟管理主控台。首次登入後，請建立並驗證永久管理員，然後刪除暫時的初始管理員帳號。
+      ar_SA: |-
+        استخدم التثبيت المخصص. اضبط KC_HOSTNAME على عنوان HTTPS العام الكامل، وKC_PROXY_TRUSTED_ADDRESSES على عنوان IP/CIDR للوكيل العكسي، وKC_BOOTSTRAP_ADMIN_PASSWORD على كلمة مرور فريدة. اضبط كلمة مرور قاعدة البيانات الفريدة نفسها في KC_DB_PASSWORD وPOSTGRES_PASSWORD لخدمة قاعدة البيانات. تُركت كلمات المرور فارغة عمدًا؛ يجب ضبط هذه الإعدادات قبل التشغيل.
+
+        اضبط الوكيل العكسي لإنهاء HTTPS وتوجيه الطلبات إلى المنفذ 8180 واستبدال ترويسات X-Forwarded-*. اسمح بالوصول المباشر إلى المنفذ 8180 من الوكيل فقط. افتح لوحة الإدارة عبر عنوان HTTPS. بعد تسجيل الدخول الأول، أنشئ مسؤولًا دائمًا وتحقق من عمل الحساب، ثم احذف حساب المسؤول المؤقت للتهيئة الأولية.
+      uk_UA: |-
+        Використовуйте власне встановлення. Укажіть у KC_HOSTNAME повну публічну HTTPS-адресу, у KC_PROXY_TRUSTED_ADDRESSES — IP/CIDR зворотного проксі, а в KC_BOOTSTRAP_ADMIN_PASSWORD — унікальний пароль. Задайте однаковий унікальний пароль бази даних у KC_DB_PASSWORD і POSTGRES_PASSWORD служби бази даних. Паролі навмисно залишено порожніми; перед запуском їх потрібно задати.
+
+        Налаштуйте зворотний проксі для завершення HTTPS, переспрямування на порт 8180 та перезапису заголовків X-Forwarded-*. Дозвольте прямий доступ до порту 8180 лише проксі. Відкривайте консоль керування через HTTPS-адресу. Після першого входу створіть і перевірте постійного адміністратора, потім видаліть тимчасовий обліковий запис початкового налаштування.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Keycloak/icon.svg
+  screenshot_link:
+    - screenshot-1.png
+    - screenshot-2.png
+    - screenshot-3.png
+  scheme: http
+  port_map: "8180"
+  index: /admin/
+  version: "26.8.1"
+  update_at: "2026-10-28"
+  release_notes:
+    en_US: "Initial package with production-mode Keycloak and a persistent PostgreSQL database. Addresses app request #126."
+    de_DE: "Erstes Paket mit Keycloak im Produktionsmodus und persistenter PostgreSQL-Datenbank. Bezieht sich auf App-Anfrage #126."
+    zh_CN: "首次发布，包含生产模式 Keycloak 和持久化 PostgreSQL 数据库，对应应用请求 #126。"
+    en_GB: "Initial package with production-mode Keycloak and a persistent PostgreSQL database. Addresses app request #126."
+    ca_ES: "Paquet inicial amb Keycloak en mode de producció i una base de dades PostgreSQL persistent. Respon a la sol·licitud d'aplicació #126."
+    cs_CZ: 'První balíček s Keycloak v produkčním režimu a trvalou databází PostgreSQL. Reaguje na požadavek na aplikaci #126.'
+    da_DK: 'Første pakke med Keycloak i produktionstilstand og en vedvarende PostgreSQL-database. Vedrører appønske #126.'
+    el_GR: 'Αρχικό πακέτο με Keycloak σε λειτουργία παραγωγής και μόνιμη βάση δεδομένων PostgreSQL. Σχετίζεται με το αίτημα εφαρμογής #126.'
+    es_ES: 'Paquete inicial con Keycloak en modo de producción y una base de datos PostgreSQL persistente. Responde a la solicitud de aplicación #126.'
+    fr_FR: "Premier paquet avec Keycloak en mode production et une base de données PostgreSQL persistante. Répond à la demande d'application #126."
+    ga_IE: 'An chéad phacáiste le Keycloak i mód táirgthe agus bunachar sonraí buan PostgreSQL. Baineann sé le hiarratas ar aip #126.'
+    hr_HR: 'Početni paket s Keycloakom u produkcijskom načinu i trajnom bazom podataka PostgreSQL. Odnosi se na zahtjev za aplikaciju #126.'
+    hu_HU: 'Első csomag éles üzemmódban futó Keycloakkal és tartós PostgreSQL-adatbázissal. A #126 alkalmazásigényhez kapcsolódik.'
+    it_IT: "Pacchetto iniziale con Keycloak in modalità produzione e database PostgreSQL persistente. Risponde alla richiesta dell'app #126."
+    ja_JP: '本番モードの Keycloak と永続化された PostgreSQL データベースを含む初回パッケージです。アプリ追加リクエスト #126 に対応しています。'
+    ko_KR: '운영 모드 Keycloak과 영구 PostgreSQL 데이터베이스를 포함하는 첫 패키지입니다. 앱 추가 요청 #126에 대응합니다.'
+    ml_IN: 'പ്രൊഡക്ഷൻ മോഡിലുള്ള Keycloak-ഉം സ്ഥിര PostgreSQL ഡാറ്റാബേസും ഉൾപ്പെടുന്ന ആദ്യ പാക്കേജ്. ആപ്പ് അഭ്യർത്ഥന #126-നുള്ള പരിഹാരം.'
+    nb_NO: 'Første pakke med Keycloak i produksjonsmodus og en vedvarende PostgreSQL-database. Gjelder appforespørsel #126.'
+    nl_NL: 'Eerste pakket met Keycloak in productiemodus en een permanente PostgreSQL-database. Beantwoordt appverzoek #126.'
+    pl_PL: 'Pierwszy pakiet z Keycloak w trybie produkcyjnym i trwałą bazą danych PostgreSQL. Odpowiada na prośbę o aplikację #126.'
+    pt_BR: 'Pacote inicial com Keycloak em modo de produção e banco de dados PostgreSQL persistente. Atende à solicitação de aplicativo #126.'
+    pt_PT: 'Pacote inicial com Keycloak em modo de produção e base de dados PostgreSQL persistente. Responde ao pedido de aplicação #126.'
+    ro_RO: 'Primul pachet cu Keycloak în modul de producție și o bază de date PostgreSQL persistentă. Răspunde cererii de aplicație #126.'
+    ru_RU: 'Первый пакет с Keycloak в промышленном режиме и постоянной базой данных PostgreSQL. Связан с запросом на добавление приложения #126.'
+    sk_SK: 'Prvý balík s Keycloak v produkčnom režime a trvalou databázou PostgreSQL. Reaguje na požiadavku na aplikáciu #126.'
+    sv_SE: 'Första paketet med Keycloak i produktionsläge och en beständig PostgreSQL-databas. Avser appönskemål #126.'
+    tr_TR: 'Üretim modunda Keycloak ve kalıcı PostgreSQL veritabanı içeren ilk paket. #126 uygulama isteğine yanıt verir.'
+    zh_TW: '首次發佈，包含正式環境模式的 Keycloak 和持續性 PostgreSQL 資料庫，對應應用程式請求 #126。'
+    ar_SA: 'الحزمة الأولى مع Keycloak في وضع الإنتاج وقاعدة بيانات PostgreSQL دائمة. تستجيب لطلب إضافة التطبيق #126.'
+    uk_UA: "Перший пакет із Keycloak у промисловому режимі та постійною базою даних PostgreSQL. Пов'язаний із запитом на додавання застосунку #126."
+  website: https://www.keycloak.org
+  repo: https://github.com/keycloak/keycloak
+  docs: https://www.keycloak.org/documentation
+  support: https://www.keycloak.org/community
