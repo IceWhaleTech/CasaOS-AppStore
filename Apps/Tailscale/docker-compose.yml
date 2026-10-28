@@ -1,7 +1,7 @@
 name: tailscale
 services:
   tailscale:
-    image: tailscale/tailscale:v1.98.3
+    image: tailscale/tailscale:v1.104.2
     container_name: tailscale
     deploy:
       resources:
@@ -21,7 +21,7 @@ services:
     cap_add:
       - NET_ADMIN
       - NET_RAW
-    entrypoint: /bin/sh -c "tailscaled --state=/var/lib/tailscale/tailscaled.state & sleep 10; tailscale web --listen 0.0.0.0:5252"
+    entrypoint: /bin/sh -c "tailscaled --state=/var/lib/tailscale/tailscaled.state & sleep 10; tailscale web --listen 0.0.0.0:5253"
     x-casaos:
       volumes:
         - container: /var/lib/tailscale
@@ -424,73 +424,58 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Tailscale/screenshot-1.png
   thumbnail: ""
   scheme: ""
-  port_map: "5252"
+  port_map: "5253"
   index: /
   title:
     en_US: Tailscale
-  version: "1.98.3"
-  update_at: "2026-05-21"
+  version: "1.104.2"
+  update_at: "2026-10-28"
   release_notes:
     en_US: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - Update Tailscale to v1.104.2.
+      - Move the LAN web interface to port 5253 to avoid conflicts with the built-in tailnet web interface on port 5252.
     en_GB: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - Update Tailscale to v1.104.2.
+      - Move the LAN web interface to port 5253 to avoid conflicts with the built-in tailnet web interface on port 5252.
     it_IT: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - Aggiorna Tailscale alla versione v1.104.2.
+      - Sposta l’interfaccia web LAN sulla porta 5253 per evitare conflitti con l’interfaccia web tailnet integrata sulla porta 5252.
     nb_NO: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - Oppdater Tailscale til v1.104.2.
+      - Flytt webgrensesnittet for LAN til port 5253 for å unngå konflikter med det innebygde tailnet-webgrensesnittet på port 5252.
     zh_CN: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - 将 Tailscale 更新至 v1.104.2。
+      - 将局域网 Web 界面移至端口 5253，避免与端口 5252 上的内置 tailnet Web 界面冲突。
     ja_JP: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - Tailscale を v1.104.2 に更新。
+      - LAN 用 Web インターフェースをポート 5253 に変更し、ポート 5252 の組み込み tailnet Web インターフェースとの競合を回避。
     ko_KR: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - Tailscale을 v1.104.2로 업데이트합니다.
+      - LAN 웹 인터페이스를 포트 5253으로 이동하여 포트 5252의 내장 tailnet 웹 인터페이스와 충돌하지 않도록 합니다.
     fr_FR: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - Mise à jour de Tailscale vers la version v1.104.2.
+      - Déplacement de l’interface web LAN vers le port 5253 pour éviter les conflits avec l’interface web tailnet intégrée sur le port 5252.
     de_DE: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - Tailscale auf v1.104.2 aktualisiert.
+      - LAN-Weboberfläche auf Port 5253 verschoben, um Konflikte mit der integrierten Tailnet-Weboberfläche auf Port 5252 zu vermeiden.
     sv_SE: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - Uppdatera Tailscale till v1.104.2.
+      - Flytta webbgränssnittet för LAN till port 5253 för att undvika konflikter med det inbyggda tailnet-webbgränssnittet på port 5252.
     el_GR: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - Ενημέρωση του Tailscale στην έκδοση v1.104.2.
+      - Μεταφορά της διεπαφής ιστού LAN στη θύρα 5253 για αποφυγή συγκρούσεων με την ενσωματωμένη διεπαφή ιστού tailnet στη θύρα 5252.
     hr_HR: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - Ažuriranje Tailscalea na v1.104.2.
+      - Premještanje LAN web-sučelja na priključak 5253 radi izbjegavanja sukoba s ugrađenim tailnet web-sučeljem na priključku 5252.
     pt_PT: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - Atualização do Tailscale para a versão v1.104.2.
+      - Interface web LAN movida para a porta 5253 para evitar conflitos com a interface web tailnet integrada na porta 5252.
     ru_RU: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - Обновление Tailscale до v1.104.2.
+      - Веб-интерфейс локальной сети перенесён на порт 5253, чтобы избежать конфликта со встроенным веб-интерфейсом tailnet на порту 5252.
     tr_TR: |-
-      - Tailscale v1.98.3 resolves a Linux netfilter rule inconsistency after failed netfilter mode changes.
-      - The v1.98.3 container image refresh contains library updates.
-      - Recent 1.98.x fixes also include MagicDNS recovery after network changes and a Go 1.26.3 update.
+      - Tailscale v1.104.2 sürümüne güncellendi.
+      - 5252 numaralı bağlantı noktasındaki yerleşik tailnet web arayüzüyle çakışmaları önlemek için LAN web arayüzü 5253 numaralı bağlantı noktasına taşındı.
   website: "https://tailscale.com"
   repo: "https://github.com/tailscale/tailscale"
   support: "https://tailscale.com/contact/support"
