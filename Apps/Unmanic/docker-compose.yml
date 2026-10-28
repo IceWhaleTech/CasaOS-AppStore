@@ -1,0 +1,101 @@
+name: unmanic
+services:
+  unmanic:
+    image: josh5/unmanic:0.4.1
+    container_name: unmanic
+    restart: unless-stopped
+    network_mode: bridge
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+    ports:
+      - target: 8888
+        published: "8888"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/$AppID/cache
+        target: /tmp/unmanic
+      - type: bind
+        source: /DATA/Media
+        target: /library
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unmanic/icon.svg
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: User ID with read and write access to the library, configuration, and cache folders.
+        - container: PGID
+          description:
+            en_US: Group ID with read and write access to the library, configuration, and cache folders.
+        - container: TZ
+          description:
+            en_US: Time zone used for schedules and local time display.
+      ports:
+        - container: "8888"
+          description:
+            en_US: Unmanic web interface.
+      volumes:
+        - container: /config
+          description:
+            en_US: Persistent Unmanic settings, database, and installed plugins.
+        - container: /tmp/unmanic
+          description:
+            en_US: Temporary processing workspace. Choose a fast disk with enough free space for your workers.
+        - container: /library
+          description:
+            en_US: Files to process. Change the host path to your media or test folder.
+x-casaos:
+  id: org.icewhale.unmanic
+  main: unmanic
+  index: /
+  port_map: "8888"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Unmanic/icon.svg
+  title:
+    en_US: Unmanic
+  tagline:
+    en_US: Automate media conversion and file library maintenance.
+  description:
+    en_US: |
+      Unmanic is an open source file library automation tool. Configure libraries
+      and plugins to transcode video, process audio, and maintain your files
+      through its web interface.
+
+      This package uses the upstream Unmanic 0.4.1 Docker image. Settings and
+      installed plugins are stored persistently, and processing uses a separate
+      cache folder. Set the library's path to /library in Unmanic and add the
+      plugins you need before processing files.
+
+      CPU processing works with the default configuration. Intel or AMD GPU
+      acceleration requires a supported device, optional /dev/dri passthrough,
+      and the corresponding encoder settings. NVIDIA acceleration requires
+      compatible host drivers and the NVIDIA Container Toolkit.
+  tips:
+    before_install:
+      en_US: |
+        Set the /library host path to the folder you want to process and ensure
+        PUID/PGID have read and write access to all three mounted folders.
+        Start with copies of a few files: successful tasks replace source files
+        by default. Allow approximately twice the size of your largest input
+        file per active worker in the cache folder. Use one worker initially.
+        GPU passthrough is optional and is not enabled in this package.
+  author: Community contribution
+  developer: Unmanic
+  category: Media
+  architectures:
+    - amd64
+    - arm64
+  version: "0.4.1"
+  update_at: "2026-10-05"
+  release_notes:
+    en_US: Initial ZimaOS package using the stable upstream Unmanic 0.4.1 image.
+  website: https://docs.unmanic.app/
+  repo: https://github.com/Unmanic/unmanic
+  support: https://github.com/Unmanic/unmanic/issues
+  docs: https://docs.unmanic.app/docs/installation/docker/
