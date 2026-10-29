@@ -1,0 +1,43 @@
+name: baizhi
+services:
+  baizhi:
+    image: chaitin-registry.cn-hangzhou.cr.aliyuncs.com/monkeycode/monkeyai-frontend:latest
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 80
+        published: "8080"
+        protocol: tcp
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_US: Web UI
+            zh_CN: 网页
+    container_name: baizhi
+x-casaos:
+  id: cloud.baizhi.work
+  architectures:
+    - amd64
+    - arm64
+  main: baizhi
+  author: 长亭科技
+  category: Productivity
+  description:
+    en_US: Open-source team AI workspace for office, coding and design.
+    zh_CN: 面向团队的开源 AI 办公工作台。
+  developer: 长亭科技
+  icon: https://raw.githubusercontent.com/chaitin/MonkeyCode/main/monkeyai/landing/public/monkeyai-logo.png
+  tagline:
+    en_US: Team AI workspace
+    zh_CN: 团队 AI 办公工作台
+  title:
+    en_US: 百智办公
+    zh_CN: 百智办公
+  index: /
+  port_map: "8080"
+  scheme: http
+  tips:
+    before_install:
+      en_US: Official images are currently published to a private registry and may not pull anonymously.
+      zh_CN: 官方镜像目前在私有仓库，匿名拉取可能失败。
