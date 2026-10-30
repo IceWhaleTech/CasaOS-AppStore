@@ -1,0 +1,124 @@
+name: box3balans
+services:
+  box3balans:
+    image: ghcr.io/zenonymous/box3balans:0.1.45
+    container_name: box3balans
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      TIME_ZONE: Europe/Amsterdam
+      PUID: $PUID
+      PGID: $PGID
+      BACKUP_PASSPHRASE: ""
+    ports:
+      - target: 8080
+        published: "18088"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/backups
+        target: /backups
+    x-casaos:
+      envs:
+        - container: TIME_ZONE
+          description:
+            en_US: Time zone for days and the 1 January valuation date
+            nl_NL: Tijdzone voor dagen en de peildatum (1 januari)
+        - container: BACKUP_PASSPHRASE
+          description:
+            en_US: Your own passphrase for the backups. Leave empty and Box3balans makes one (Settings → Backups shows it); keep it in your password manager
+            nl_NL: Je eigen wachtzin voor de back-ups. Leeg laten mag, dan maakt Box3balans er een (Instellingen → Back-ups laat hem zien); bewaar hem in je wachtwoordmanager
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web interface
+            nl_NL: Webinterface
+      volumes:
+        - container: /data
+          description:
+            en_US: The database and the encryption key created on first start
+            nl_NL: De database en de versleutelsleutel die bij de eerste start wordt aangemaakt
+        - container: /backups
+          description:
+            en_US: Automatic backups
+            nl_NL: Automatische back-ups
+x-casaos:
+  id: org.icewhale.box3balans
+  architectures:
+    - amd64
+    - arm64
+  main: box3balans
+  category: Finance
+  developer: zenonymous
+  author: zenonymous
+  index: /
+  port_map: "18088"
+  scheme: http
+  title:
+    en_US: Box3balans
+  tagline:
+    en_US: Track your investments and the Dutch wealth tax (box 3), on your own server.
+    nl_NL: Je beleggingen en je box 3 bijhouden, op je eigen server.
+  description:
+    en_US: |
+      Box3balans tracks everything in box 3 for a household: savings, stocks and ETFs, crypto, gold and silver, a second home, loans and debts, in euros. Per year it calculates the deemed-return tax (rounded the way the Belastingdienst does) and your actual return for the tegenbewijsregeling, with an overview in the order of the Dutch tax return and a dossier that shows where every amount comes from.
+
+      **Key Features:**
+      - Box 3 per year, for you, a fiscal partner and children
+      - Actual return for the tegenbewijsregeling, and a preview of the planned 2028 system
+      - Imports from about twenty brokers and exchanges, bank statements (CAMT.053, MT940, CSV) and PDF annual statements
+      - Read-only connections to Bitvavo, Kraken, Coinbase, Bitpanda and Interactive Brokers, and wallets by address
+      - Connects only to a fixed list of hosts, never sends amounts, and shows every request in the app
+      - Encrypted backups and two-factor sign-in
+
+      To create your account, use the one-time setup code from the app's log (first start). The interface is in Dutch, with English as an option. Estimates, not tax advice.
+
+      **Learn More:**
+      - [Website and online demo](https://box3balans.nl)
+      - [GitHub repository](https://github.com/zenonymous/box3balans)
+      - [What Box3balans sends (in Dutch)](https://github.com/zenonymous/box3balans/blob/main/docs/privacy.md)
+    nl_NL: |
+      Box3balans houdt je box 3 bij, voor je hele huishouden: spaargeld, aandelen en ETF's, crypto, goud en zilver, een tweede woning, uitgeleend geld en schulden, in euro's. Per jaar rekent het de forfaitaire belasting uit (met de afronding van de Belastingdienst) en je werkelijk rendement voor de tegenbewijsregeling, met een overzicht in de volgorde van de aangifte en een dossier dat laat zien waar elk bedrag vandaan komt.
+
+      **Wat het kan:**
+      - Box 3 per jaar, voor jou, een fiscale partner en kinderen
+      - Werkelijk rendement voor de tegenbewijsregeling, en een vooruitblik op het stelsel vanaf 2028
+      - Exports van ruim twintig brokers en beurzen, bankexports (CAMT.053, MT940, CSV) en jaaroverzichten als pdf inlezen
+      - Koppelingen met alleen leesrechten met Bitvavo, Kraken, Coinbase, Bitpanda en Interactive Brokers, en wallets op adres
+      - Maakt alleen verbinding met een vaste lijst van adressen, verstuurt nooit bedragen, en laat elk verzoek zien in de app
+      - Versleutelde back-ups en tweestapsverificatie
+
+      Voor je gebruiker heb je de eenmalige setupcode uit het log van de app nodig (eerste start). Schattingen, geen belastingadvies.
+
+      **Meer:**
+      - [Website en online demo](https://box3balans.nl)
+      - [GitHub](https://github.com/zenonymous/box3balans)
+      - [Wat Box3balans verstuurt](https://github.com/zenonymous/box3balans/blob/main/docs/privacy.md)
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Box3balans/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Box3balans/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Box3balans/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Box3balans/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Box3balans/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Box3balans/screenshot-4.png
+  tips:
+    before_install:
+      en_US: Don't open Box3balans to the internet; use a VPN such as WireGuard or Tailscale to reach it from outside. Creating your account needs the setup code from the app's log. After the first start, keep a copy of /DATA/AppData/box3balans/data/app-secret and the backup passphrase (Settings → Backups) in your password manager.
+      nl_NL: Zet Box3balans niet open naar het internet; gebruik een VPN zoals WireGuard of Tailscale voor toegang van buitenaf. Voor je gebruiker heb je de setupcode uit het log van de app nodig. Bewaar na de eerste start een kopie van /DATA/AppData/box3balans/data/app-secret en de wachtzin voor de back-ups (Instellingen → Back-ups) in je wachtwoordmanager.
+  version: "0.1.45"
+  website: "https://box3balans.nl"
+  repo: "https://github.com/zenonymous/box3balans"
+  support: "https://github.com/zenonymous/box3balans/discussions/categories/q-a"
+  docs: "https://github.com/zenonymous/box3balans/blob/main/docs/installatie.md"
+  update_at: "2026-10-30"
+  release_notes:
+    en_US: |-
+      - First version in the App Store.
+      - Box3balans 0.1.45: values you enter quickly in the start wizard are no longer lost, recovery codes can be copied or downloaded, and sign-in errors are clearer and read out by screen readers.
+    nl_NL: |-
+      - Eerste versie in de App Store.
+      - Box3balans 0.1.45: waarden die je snel invult in de startwizard gaan niet meer verloren, herstelcodes kun je kopiëren of downloaden, en foutmeldingen bij het inloggen zijn duidelijker en worden voorgelezen.
