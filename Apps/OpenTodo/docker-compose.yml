@@ -1,0 +1,104 @@
+name: opentodo
+services:
+  opentodo-init:
+    # The OpenTodo image has no shell. This one-shot container gives the data folder,
+    # which Docker creates owned by root, to the image's user 65532 before OpenTodo starts.
+    image: busybox:1.37.0
+    user: "0:0"
+    command: ["chown", "-R", "65532:65532", "/data"]
+    network_mode: none
+    restart: "no"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+  opentodo:
+    image: ghcr.io/opentodoapp/opentodo:0.19.0
+    container_name: opentodo
+    depends_on:
+      opentodo-init:
+        condition: service_completed_successfully
+    environment:
+      OPENTODO_BASE_URL: ""
+      OPENTODO_SETUP_TOKEN: ""
+      OPENTODO_ALLOW_SIGNUP: "false"
+      OPENTODO_TRUSTED_PROXIES: ""
+    healthcheck:
+      test: ["CMD", "/opentodo", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      start_period: 5s
+      retries: 3
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    ports:
+      - target: 8080
+        published: "8418"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: OPENTODO_BASE_URL
+          description:
+            en_US: The address people open, for example https://todo.example.com. Needed behind a reverse proxy for passkeys, secure cookies and links in emails. Include the port if there is one. Leave empty when you open OpenTodo by the server's address.
+        - container: OPENTODO_SETUP_TOKEN
+          description:
+            en_US: Optional, at least 16 characters. When set, creating the first (owner) account asks for this token, so a server reachable from the internet cannot be claimed by a stranger.
+        - container: OPENTODO_ALLOW_SIGNUP
+          description:
+            en_US: true lets anyone who can reach the server create an account. Otherwise the owner invites people.
+        - container: OPENTODO_TRUSTED_PROXIES
+          description:
+            en_US: "Reverse proxies whose X-Forwarded-For is trusted for the visitor's address: IP addresses or ranges such as 192.0.2.0/24 separated by commas, or cloudflare. Set it only when every request comes through them."
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web UI port
+      volumes:
+        - container: /data
+          description:
+            en_US: The database, attachments and backups. Everything OpenTodo stores is here.
+x-casaos:
+  id: app.open-todo.opentodo
+  main: opentodo
+  index: /
+  port_map: "8418"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenTodo/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenTodo/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenTodo/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenTodo/screenshot-2.png
+  title:
+    en_US: OpenTodo
+  tagline:
+    en_US: Your tasks, your server
+  description:
+    en_US: |
+      OpenTodo is an open-source, local-first task manager you host yourself. Projects, labels, due dates, reminders and sharing work in the browser and as an installable app, and every device syncs through this one small container.
+
+      The first person to open it creates the owner account; after that the owner invites people. Installing the app on a phone, working offline, push notifications, passkeys and end-to-end encryption need an https address (a reverse proxy with a certificate); everything else works on the plain address.
+  tips:
+    before_install:
+      en_US: The first account created on the first visit becomes the owner; there is no default password. If this server can be reached from the internet, set OPENTODO_SETUP_TOKEN (16 characters or more) before installing, so nobody else can claim it.
+  author: OpenTodo
+  developer: OpenTodo
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+  version: "0.19.0"
+  update_at: "2026-10-31"
+  release_notes:
+    en_US: "OpenTodo 0.19.0, the first version in this app store. Changes: https://github.com/OpenTodoApp/OpenTodo/blob/main/CHANGELOG.md"
+  website: https://open-todo.app
+  repo: https://github.com/OpenTodoApp/OpenTodo
+  support: https://github.com/OpenTodoApp/OpenTodo/issues
+  docs: https://open-todo.app/docs/self-hosting/
