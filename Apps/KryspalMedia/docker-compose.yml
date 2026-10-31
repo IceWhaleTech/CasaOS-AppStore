@@ -2,7 +2,7 @@ name: kryspal-media
 services:
   # One-shot helper: the server runs as a non-root user, so make its data folder writable once.
   kryspal-media-init:
-    image: ghcr.io/kryspal/kryspal-media:0.9.13
+    image: ghcr.io/kryspal/kryspal-media:0.9.14
     container_name: kryspal-media-init
     user: "0:0"
     entrypoint:
@@ -20,7 +20,7 @@ services:
     restart: "no"
 
   kryspal-media:
-    image: ghcr.io/kryspal/kryspal-media:0.9.13
+    image: ghcr.io/kryspal/kryspal-media:0.9.14
     container_name: kryspal-media
     user: "${PUID:-1000}:${PGID:-1000}"
     restart: unless-stopped
@@ -64,7 +64,7 @@ services:
 
   # The service must be named "postgres": the server connects to postgres:5432.
   postgres:
-    image: ghcr.io/kryspal/kryspal-media-postgres:16-0.9.13
+    image: ghcr.io/kryspal/kryspal-media-postgres:16-0.9.14
     container_name: kryspal-media-postgres
     restart: unless-stopped
     stop_grace_period: 60s
@@ -148,7 +148,7 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "0.9.13"
+  version: "0.9.14"
   update_at: "2026-10-24"
   release_notes:
     en_US: First release in the ZimaOS App Store.
