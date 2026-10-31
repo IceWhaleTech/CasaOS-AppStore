@@ -1,0 +1,168 @@
+# Aldine for CasaOS and ZimaOS. This is also the app-store entry
+# (IceWhaleTech/CasaOS-AppStore, Apps/Aldine). Before the store carries it:
+# App Store → Custom Install → Import, paste this file, Submit, Install.
+#
+# Three CasaOS behaviours this file is written around:
+# - `${VAR:-default}` is not applied, so the image tags are literal. They must
+#   say the current release; scripts/check-release-pins.mjs enforces it.
+# - Uninstalling deletes named volumes, so the data lives in bind mounts under
+#   /DATA/AppData/$AppID/.
+# - Every variable in /etc/casaos/env is copied into every service that does
+#   not declare it. The compiler declares each secret the app reads as empty,
+#   so none of them reaches the container that runs untrusted LaTeX.
+name: aldine
+services:
+  app:
+    image: ghcr.io/trahloff/aldine-app:1.5.0
+    container_name: aldine
+    ports:
+      - target: 3000
+        published: "8480"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets
+        target: /secrets
+    environment:
+      AUTH_ENABLED: ""
+      ALDINE_PUBLIC_URL: ""
+    networks:
+      - frontend
+      - backend
+    init: true # reap orphaned git/compile children (node runs as PID 1 otherwise)
+    restart: unless-stopped
+    x-casaos:
+      ports:
+        - container: "3000"
+          description:
+            en_US: Web UI port
+      volumes:
+        - container: /data
+          description:
+            en_US: Projects (one git repository each) and the PDF cache. The compiler mounts it too.
+        - container: /secrets
+          description:
+            en_US: Accounts, sessions, API keys and comments. Only the app mounts it; back it up with /data.
+      envs:
+        - container: AUTH_ENABLED
+          description:
+            en_US: Set to 1 for accounts, sign-in and per-project sharing. Empty means no login, and anyone who can reach the port can open every project.
+        - container: ALDINE_PUBLIC_URL
+          description:
+            en_US: The address people open Aldine at, such as https://aldine.example.com. Needed for single sign-on, password-reset email and the Claude connector.
+
+  compiler:
+    image: ghcr.io/trahloff/aldine-compiler:1.5.0
+    container_name: aldine-compiler
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    environment:
+      ANTHROPIC_API_KEY: ""
+      OPENAI_API_KEY: ""
+      OPENROUTER_API_KEY: ""
+      GOOGLE_OAUTH_CLIENT_SECRET: ""
+      GITHUB_LOGIN_CLIENT_SECRET: ""
+      GITHUB_CLIENT_SECRET: ""
+      GITLAB_CLIENT_SECRET: ""
+      GITLAB_TOKEN: ""
+      ORCID_CLIENT_SECRET: ""
+      OIDC_CLIENT_SECRET: ""
+      ALDINE_MCP_TOKEN: ""
+      ALDINE_MCP_CLIENT_TOKEN: ""
+      ALDINE_SIGNING_SECRET: ""
+      SMTP_PASS: ""
+      SENTRY_DSN: ""
+      DATABASE_URL: ""
+      REDIS_URL: ""
+      AWS_ACCESS_KEY_ID: ""
+      AWS_SECRET_ACCESS_KEY: ""
+      AWS_SESSION_TOKEN: ""
+    # Hardening: no external egress (internal network), drop all Linux caps, no
+    # privilege escalation, bounded memory and PIDs. Packages are baked into the
+    # image at build time, so the compiler never needs the network. LaTeX
+    # processes untrusted input; keep these. (No `cpus:` cap: above the host's
+    # core count it makes the container refuse to start.)
+    networks:
+      - backend
+    mem_limit: 2g
+    pids_limit: 256
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges
+    init: true # reap orphaned pdflatex/biber children left by killed latexmk runs
+    restart: unless-stopped
+    x-casaos:
+      volumes:
+        - container: /data
+          description:
+            en_US: The app's project folder, where the compiler writes each PDF. Keep it the same path as the app's /data.
+
+networks:
+  frontend: {}
+  backend:
+    internal: true # the compiler has no route to the internet
+
+x-casaos:
+  id: org.icewhale.aldine
+  store_app_id: aldine
+  main: app
+  index: /
+  port_map: "8480"
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+  category: Productivity
+  author: trahloff
+  developer: trahloff
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Aldine/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Aldine/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Aldine/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Aldine/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Aldine/screenshot-3.png
+  title:
+    en_US: Aldine
+  tagline:
+    en_US: Collaborative LaTeX editor you host yourself
+  description:
+    en_US: |
+      Aldine is an open-source LaTeX editor for writing papers, theses and reports together, an alternative to Overleaf that runs on your own hardware.
+
+      **Features:**
+      - Real-time editing with several people at once, with live cursors
+      - Every project is a git repository with branches, history and merges
+      - Sync with GitHub, GitLab, Gitea and Forgejo
+      - Import an Overleaf project from its ZIP download
+      - Zotero libraries and collections, literature search, and BibTeX from a DOI or arXiv id
+      - Comments and suggested changes, and a visual editing mode
+      - A sandboxed compiler with TeX Live: no internet access, all Linux capabilities dropped, bounded memory and processes
+      - Optional accounts with sign-in through Google, GitHub, ORCID or your own OpenID Connect provider
+
+      Projects are plain files and git repositories in /DATA/AppData/aldine/data; there is no database to look after.
+
+      **Learn more:**
+      - [Aldine website](https://aldine.dev/)
+      - [Aldine on GitHub](https://github.com/trahloff/Aldine)
+      - [Configuration reference](https://github.com/trahloff/Aldine/blob/main/deploy/README.md#all-configuration)
+  tips:
+    before_install:
+      en_US: |
+        The compiler image carries TeX Live: about 2.4 GB to download and 5 GB on disk, so the first install takes a while.
+
+        Aldine starts without a login: anyone who can reach port 8480 can open and edit every project. To require accounts, set AUTH_ENABLED to 1 in the app's settings and restart it. Anyone who can reach the port can still create an account, so keep it on your own network or behind a reverse proxy.
+  version: "1.5.0"
+  update_at: "2026-10-31"
+  release_notes:
+    en_US: |-
+      Folders in the file tree can be renamed and deleted with what they hold, and files and folders move by drag and drop.
+  website: https://aldine.dev/
+  repo: https://github.com/trahloff/Aldine
+  support: https://github.com/trahloff/Aldine/issues
+  docs: https://github.com/trahloff/Aldine/blob/main/deploy/README.md
