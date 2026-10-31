@@ -1,0 +1,93 @@
+name: numa-home
+services:
+  numa-home:
+    image: ghcr.io/simmmmm/numa-home:0.48.1-home.1
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 8283
+        published: "8283"
+        protocol: tcp
+    environment:
+      TZ: $TZ
+      NUMA_HOME_PROXY: ""
+    volumes:
+      - type: bind
+        source: /DATA/Gallery
+        target: /photos
+      - type: bind
+        source: /DATA/AppData/$AppID/sent
+        target: /sent
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Time zone. The night shift runs from 01:00 to 06:00 in it.
+        - container: NUMA_HOME_PROXY
+          description:
+            en_US: Only behind a reverse proxy. Its address or network, comma separated. Without it the session cookie has no Secure, there is no HSTS and the sign-in limit counts every visitor as the proxy.
+      ports:
+        - container: "8283"
+          description:
+            en_US: Numa Home web interface
+      volumes:
+        - container: /photos
+          description:
+            en_US: Your photographs. Must be writable for the small catalog in each library's .numa folder.
+        - container: /sent
+          description:
+            en_US: Photographs each account sends home from the Numa apps
+        - container: /data
+          description:
+            en_US: Accounts, thumbnails, face and search models, database backups
+x-casaos:
+  id: photo.numa.home
+  main: numa-home
+  index: /
+  port_map: "8283"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NumaHome/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NumaHome/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NumaHome/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NumaHome/screenshot-3.png
+  title:
+    en_US: Numa Home
+  tagline:
+    en_US: Your household's photographs, at home
+  description:
+    en_US: |
+      Numa Home shows every photograph in the house in a browser, on a phone or on the TV. Raws (RAF, ARW, CR3, NEF, DNG and others) are rendered with Numa's colour and your edits. Faces are found and grouped, and search understands words such as "beach at sunset". Nothing goes to the cloud.
+
+      - A timeline of every month, with a scrubber that shows each trip
+      - An account for each person, and a filter by who took a photograph
+      - Albums, stars and picks, shared by the household
+      - Send Home from the Numa apps for Linux, Mac and iPhone
+      - Import from an SD card in the server, from the browser
+      - Your archive as it is: point it at the folders you already have
+
+      One container, with SQLite. No database server and no separate machine-learning container.
+
+      Numa Home is meant for your home network, or for Tailscale when you are away; do not put it on a public address.
+  tips:
+    before_install:
+      en_US: |
+        Open the page after installation and make the first account. It is the admin and can make an account for everyone else.
+
+        On the first start, the face and search models (about 520 MB) are downloaded into /data. The photographs in /photos are then read in the background.
+  author: Numa
+  developer: Numa
+  category: Media
+  architectures:
+    - amd64
+  version: "0.48.1-home.1"
+  update_at: "2026-10-31"
+  release_notes:
+    en_US: First release in this store.
+  website: https://numa.photo/numa-home
+  repo: https://github.com/simmmmm/Numa
+  support: https://github.com/simmmmm/numa-home/issues
+  docs: https://guide.numa.photo/numa-home
