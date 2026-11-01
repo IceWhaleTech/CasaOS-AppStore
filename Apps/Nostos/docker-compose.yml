@@ -1,0 +1,107 @@
+name: nostos
+services:
+  # One-shot helper: CasaOS creates the AppData folder as root, but Nostos runs
+  # as the image's non-root user (UID 1654). This hands the folder to that user
+  # and exits; it does not touch files inside the folder.
+  nostos-init:
+    image: ghcr.io/christian-gennari/nostos:v2026.10.25
+    user: "0:0"
+    entrypoint: ["chown", "1654:1654", "/data"]
+    restart: "no"
+    volumes:
+      - /DATA/AppData/$AppID/data:/data
+  nostos:
+    image: ghcr.io/christian-gennari/nostos:v2026.10.25
+    container_name: nostos
+    depends_on:
+      nostos-init:
+        condition: service_completed_successfully
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "5099"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/Media/Books
+        target: /external/media
+        read_only: true
+        bind:
+          create_host_path: true
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web UI port
+      volumes:
+        - container: /data
+          description:
+            en_US: "Everything Nostos keeps: the database, books, local backups and the key ring. Back up this folder."
+        - container: /external/media
+          description:
+            en_US: "Optional, read-only: ebooks and audiobooks you already have. Nostos reads them in place and never changes them."
+x-casaos:
+  id: page.nostos.nostos
+  main: nostos
+  index: /
+  port_map: "5099"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nostos/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nostos/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nostos/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nostos/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nostos/screenshot-3.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nostos/screenshot-4.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Nostos/screenshot-5.jpg
+  title:
+    en_US: Nostos
+  tagline:
+    en_US: A home for your reading life
+  description:
+    en_US: |
+      Nostos keeps reading, thinking and writing in one place. Collect physical books, EPUBs, PDFs and audiobooks. Read or listen in the app, save highlights, notes and whole passages next to the page they came from, connect ideas across books, and bring it all into a draft when you are ready to write.
+
+      **Features**
+      - One library for physical books, EPUB, PDF, TXT, MOBI and audiobooks (MP3, M4A, M4B)
+      - Free books built in: Project Gutenberg, Standard Ebooks, Wikisource and LibriVox
+      - EPUB and PDF readers and an audiobook player, with highlights, notes and passages
+      - The Brain: link ideas with [[Topic]] and follow them back to their source
+      - Writing Studio: quote your notes with @ and write in plain Markdown
+      - OPDS catalog for e-reader apps such as KOReader
+      - Local backups, and a portable .nostos export you can move to any Nostos
+
+      **Good to know**
+      - No account is needed. The self-hosted app has no login, so keep it on your home network or a VPN.
+      - Everything lives in /DATA/AppData/nostos/data. Back up that folder.
+      - Put ebooks and audiobooks you already have in /DATA/Media/Books, then open Settings, This server, External media.
+
+      **Learn more**
+      - [Documentation](https://docs.nostos.page)
+      - [Source code](https://github.com/Christian-Gennari/Nostos)
+  tips:
+    before_install:
+      en_US: Give Nostos at least 512 MB of memory; 1 GB leaves room for large imports and backups. Nostos has no login of its own, so do not expose it to the internet without an authenticating reverse proxy.
+  author: Christian Gennari
+  developer: Christian Gennari
+  category: Media
+  architectures:
+    - amd64
+    - arm64
+  version: "2026.10.25"
+  update_at: "2026-10-31"
+  release_notes:
+    en_US: First version in the CasaOS app store. Release notes for every version are at https://github.com/Christian-Gennari/Nostos/releases
+  website: https://nostos.page
+  repo: https://github.com/Christian-Gennari/Nostos
+  support: https://github.com/Christian-Gennari/Nostos/issues
+  docs: https://docs.nostos.page
