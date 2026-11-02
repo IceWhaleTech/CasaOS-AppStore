@@ -1,8 +1,8 @@
 {
   "id": "org.icewhale.ztnet",
-  "description": "ZTNET 是一款强大的 ZeroTier 网络管理工具，通过直观的 Web 界面简化网络配置和管理，适合团队和个人用户。其现代化的设计和丰富的功能，为构建安全、可扩展的虚拟网络提供高效解决方案。\n\n该工具以直观的 Web 界面和组织化多用户支持为核心。它通过 TypeScript 开发，作为用户与 ZeroTier 控制器 API 的中介，支持组织内多用户协作管理网络，简化团队任务。集成 ZeroTier Central API，允许通过直观界面直接管理网络、节点和成员，提升配置效率。\n\n它支持自定义私有根服务器，打造隔离的网络环境，增强隐私和控制力。提供个性化用户空间，用户可独立创建和管理网络。支持 6plane 和 rfc4193 IPv6 寻址，丰富企业或个人网络功能。适配 ARM64 和 AMD64 架构，确保多设备兼容性。该工具以用户友好性和灵活性为中心，提供现代化的网络管理体验。\n\n**主要功能：**\n- 直观的 Web 界面，简化 ZeroTier 网络管理\n- 组织和多用户支持，方便团队协作\n- 集成 ZeroTier Central API，管理网络和节点\n- 自定义私有根服务器，增强隐私和控制\n- 个性化用户空间，独立创建和管理网络\n- 支持 6plane 和 rfc4193 IPv6 寻址\n- 支持 ARM64 和 AMD64 架构，适配多种设备\n\n**了解更多：**\n- [ZTnet 官方网站](https://ztnet.network/)\n- [ZTnet GitHub](https://github.com/sinamics/ztnet)\n",
-  "tagline": "带有Web UI的自托管ZeroTier网络控制器，用于集中管理。",
   "release_note": "- v0.7.18 updates dependency packages, including defu 6.1.6.\n- The installer dependencies were also updated.\n- The sinamics/ztnet:0.7.18 Docker image tag was published on 2026-04-04.",
+  "tagline": "带有Web UI的自托管ZeroTier网络控制器，用于集中管理。",
+  "description": "ZTNET 是一款强大的 ZeroTier 网络管理工具，通过直观的 Web 界面简化网络配置和管理，适合团队和个人用户。其现代化的设计和丰富的功能，为构建安全、可扩展的虚拟网络提供高效解决方案。\n\n该工具以直观的 Web 界面和组织化多用户支持为核心。它通过 TypeScript 开发，作为用户与 ZeroTier 控制器 API 的中介，支持组织内多用户协作管理网络，简化团队任务。集成 ZeroTier Central API，允许通过直观界面直接管理网络、节点和成员，提升配置效率。\n\n它支持自定义私有根服务器，打造隔离的网络环境，增强隐私和控制力。提供个性化用户空间，用户可独立创建和管理网络。支持 6plane 和 rfc4193 IPv6 寻址，丰富企业或个人网络功能。适配 ARM64 和 AMD64 架构，确保多设备兼容性。该工具以用户友好性和灵活性为中心，提供现代化的网络管理体验。\n\n**主要功能：**\n- 直观的 Web 界面，简化 ZeroTier 网络管理\n- 组织和多用户支持，方便团队协作\n- 集成 ZeroTier Central API，管理网络和节点\n- 自定义私有根服务器，增强隐私和控制\n- 个性化用户空间，独立创建和管理网络\n- 支持 6plane 和 rfc4193 IPv6 寻址\n- 支持 ARM64 和 AMD64 架构，适配多种设备\n\n**了解更多：**\n- [ZTnet 官方网站](https://ztnet.network/)\n- [ZTnet GitHub](https://github.com/sinamics/ztnet)\n",
   "tips": {
     "before_install": "使用 ZTnet 的前提条件:\n1. 允许 ZTNET 管理您的本地 ZeroTier 实例，参考 [文档的第 2 步：配置 ZeroTier](https://ztnet.network/usage/migrate)\n2. (ZimaOS 用户不需要执行该步骤) 修改环境变量 `ZT_ADDR` 为您的 ZeroTier 控制器地址\n"
   }
