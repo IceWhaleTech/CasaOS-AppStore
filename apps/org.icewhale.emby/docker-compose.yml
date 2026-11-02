@@ -12,7 +12,7 @@ services:
       GID: "100"
       GIDLIST: "100"
       TZ: $TZ
-    image: emby/embyserver:4.10.1.0
+    image: emby/embyserver:4.10.2.0
     deploy:
       resources:
         reservations:
@@ -45,4 +45,4 @@ x-casaos:
     en_US: Emby
   index: /
   port_map: "8096"
-  version: "4.10.1.0"
+  version: "4.10.2.0"

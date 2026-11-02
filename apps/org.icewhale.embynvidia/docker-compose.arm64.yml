@@ -13,7 +13,7 @@ services:
       GIDLIST: "100"
       TZ: $TZ
       NVIDIA_VISIBLE_DEVICES: all
-    image: emby/embyserver:4.10.1.0@sha256:075377d2d0fee6f2034a2599df5036c8bd63b880ad29cbfbb3f192739aefdbba
+    image: emby/embyserver:4.10.2.0@sha256:383bcdaf090eeb1fd66daccfeab59ad51f0181189a98420aaeb27e269d52ee4b
     runtime: nvidia
     deploy:
       resources:
@@ -51,4 +51,4 @@ x-casaos:
     en_US: Emby(Nvidia GPU)
   index: /
   port_map: "8096"
-  version: "4.10.1.0"
+  version: "4.10.2.0"
