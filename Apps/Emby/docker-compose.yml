@@ -12,12 +12,12 @@ services:
       GID: "100"
       GIDLIST: "100"
       TZ: $TZ
-    image: emby/embyserver:4.9.5.0
+    image: emby/embyserver:4.10.1.0
     deploy:
       resources:
         reservations:
           memory: 512M
-    network_mode: bridge
+    network_mode: host
     ports:
       - target: 8096
         published: "8096"
@@ -407,69 +407,84 @@ x-casaos:
     en_US: Emby
   index: /
   port_map: "8096"
-  version: "4.9.5"
-  update_at: "2026-05-26"
+  version: "4.10.1.0"
+  update_at: "2026-10-15"
   release_notes:
     en_US: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - Update to Emby Server 4.10.1.0 stable.
+      - Improve search performance and Spotlight design and compatibility.
+      - Fix connections to certain SMB shares and intro detection on episodes without audio streams.
+      - Fix photo slideshow issues and improve TV display mode.
     en_GB: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - Update to Emby Server 4.10.1.0 stable.
+      - Improve search performance and Spotlight design and compatibility.
+      - Fix connections to certain SMB shares and intro detection on episodes without audio streams.
+      - Fix photo slideshow issues and improve TV display mode.
     it_IT: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - Aggiornamento alla versione stabile di Emby Server 4.10.1.0.
+      - Migliorate le prestazioni di ricerca, il design e la compatibilità di Spotlight.
+      - Corretti i problemi di connessione ad alcune condivisioni SMB e di rilevamento delle introduzioni negli episodi senza tracce audio.
+      - Corretti i problemi delle presentazioni fotografiche e migliorata la modalità di visualizzazione TV.
     nb_NO: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - Oppdatert til den stabile versjonen av Emby Server 4.10.1.0.
+      - Forbedret søkeytelse samt utforming og kompatibilitet for Spotlight.
+      - Rettet tilkobling til enkelte SMB-delinger og introregistrering for episoder uten lydspor.
+      - Rettet problemer med lysbildefremvisning og forbedret TV-visningsmodus.
     zh_CN: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - 更新至 Emby Server 4.10.1.0 稳定版。
+      - 提升搜索性能，改进 Spotlight 的界面设计和兼容性。
+      - 修复连接部分 SMB 共享时的错误，以及无音轨剧集的片头检测问题。
+      - 修复照片幻灯片播放问题，并改进电视显示模式。
     ja_JP: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - Emby Server 4.10.1.0 安定版に更新。
+      - 検索性能と Spotlight のデザインおよび互換性を改善。
+      - 一部の SMB 共有への接続エラーと、音声ストリームのないエピソードのイントロ検出の問題を修正。
+      - 写真スライドショーの問題を修正し、テレビ表示モードを改善。
     ko_KR: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - Emby Server 4.10.1.0 안정 버전으로 업데이트했습니다.
+      - 검색 성능과 Spotlight 디자인 및 호환성을 개선했습니다.
+      - 일부 SMB 공유 연결 오류와 오디오 스트림이 없는 에피소드의 인트로 감지 문제를 수정했습니다.
+      - 사진 슬라이드쇼 문제를 수정하고 TV 표시 모드를 개선했습니다.
     fr_FR: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - Mise à jour vers la version stable Emby Server 4.10.1.0.
+      - Amélioration des performances de recherche, du design et de la compatibilité de Spotlight.
+      - Correction des connexions à certains partages SMB et de la détection des introductions pour les épisodes sans piste audio.
+      - Correction des problèmes de diaporama photo et amélioration du mode TV.
     de_DE: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - Aktualisierung auf die stabile Version Emby Server 4.10.1.0.
+      - Verbesserte Suchleistung sowie verbessertes Design und Kompatibilität von Spotlight.
+      - Fehler bei Verbindungen zu bestimmten SMB-Freigaben und bei der Intro-Erkennung für Episoden ohne Audiospuren behoben.
+      - Probleme mit Foto-Diashows behoben und TV-Anzeigemodus verbessert.
     sv_SE: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - Uppdaterat till den stabila versionen av Emby Server 4.10.1.0.
+      - Förbättrad sökprestanda samt design och kompatibilitet för Spotlight.
+      - Åtgärdat anslutningar till vissa SMB-resurser och introdetektering för avsnitt utan ljudspår.
+      - Åtgärdat problem med bildspel och förbättrat TV-visningsläget.
     el_GR: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - Ενημέρωση στη σταθερή έκδοση Emby Server 4.10.1.0.
+      - Βελτίωση της απόδοσης αναζήτησης, της σχεδίασης και της συμβατότητας του Spotlight.
+      - Διόρθωση συνδέσεων σε ορισμένους κοινόχρηστους πόρους SMB και της ανίχνευσης εισαγωγής σε επεισόδια χωρίς ήχο.
+      - Διόρθωση προβλημάτων προβολής φωτογραφιών και βελτίωση της λειτουργίας προβολής TV.
     hr_HR: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - Ažuriranje na stabilnu verziju Emby Server 4.10.1.0.
+      - Poboljšane performanse pretraživanja te dizajn i kompatibilnost značajke Spotlight.
+      - Ispravljene veze s određenim SMB dijeljenim resursima i otkrivanje uvoda u epizodama bez zvučnih zapisa.
+      - Ispravljeni problemi s dijaprojekcijama fotografija i poboljšan način TV prikaza.
     pt_PT: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - Atualização para a versão estável do Emby Server 4.10.1.0.
+      - Melhorias no desempenho da pesquisa, no design e na compatibilidade do Spotlight.
+      - Correção de ligações a determinadas partilhas SMB e da deteção de introduções em episódios sem faixas de áudio.
+      - Correção de problemas nas apresentações de fotografias e melhorias no modo de visualização TV.
     ru_RU: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - Обновление до стабильной версии Emby Server 4.10.1.0.
+      - Улучшены производительность поиска, дизайн и совместимость Spotlight.
+      - Исправлены ошибки подключения к некоторым общим ресурсам SMB и определения заставок в эпизодах без аудиодорожек.
+      - Исправлены проблемы слайд-шоу фотографий и улучшен режим отображения для ТВ.
     tr_TR: |-
-      - Emby Server 4.9.5 improves library scanning, Live TV guide refresh, and database performance.
-      - The release updates .NET to 8 and SQLite to 3.49.2.
-      - It adds maintenance mode and network request protocol options.
+      - Emby Server 4.10.1.0 kararlı sürümüne güncellendi.
+      - Arama performansı ile Spotlight tasarımı ve uyumluluğu iyileştirildi.
+      - Bazı SMB paylaşımlarına bağlantı hataları ve ses akışı içermeyen bölümlerde giriş algılama sorunları düzeltildi.
+      - Fotoğraf slayt gösterisi sorunları düzeltildi ve TV görüntüleme modu iyileştirildi.
   website: "https://emby.media/"
   repo: "https://hub.docker.com/r/emby/embyserver"
   support: "https://emby.media/community/"
