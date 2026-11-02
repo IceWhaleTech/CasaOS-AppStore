@@ -2,7 +2,7 @@ name: clumoove
 
 services:
   frontend:
-    image: ghcr.io/xxroxxerxx/clumoove-frontend:v0.18.0@sha256:74e6cce4f2a2f52937b27b48a0137abd4be40d534556785cb579e0f464ba6888
+    image: ghcr.io/xxroxxerxx/clumoove-frontend:v0.19.0@sha256:8fbdb27158f4cfaabccf5b7f5f5866686dc3fb5e01bd40997f080b4facd6385a
     container_name: clumoove-frontend
     restart: unless-stopped
     ports:
@@ -16,7 +16,7 @@ services:
     networks:
       - clumoove-network
   api-backend:
-    image: ghcr.io/xxroxxerxx/clumoove-api:v0.18.0@sha256:d9c34a1c6db8c7ffbeb942cffae849796a9c4eab267d8af2a7d1eb75c932b9bc
+    image: ghcr.io/xxroxxerxx/clumoove-api:v0.19.0@sha256:d5a30c51c5ac6684e6afc399ca5ab845338bc06ab14cc3873bdbd52e2d3478cf
     container_name: clumoove-api
     restart: unless-stopped
     environment:
@@ -37,7 +37,7 @@ services:
     networks:
       - clumoove-network
   migration-worker:
-    image: ghcr.io/xxroxxerxx/clumoove-worker:v0.18.0@sha256:76ea62f213b117a66083a1414704fdde3f40216231ce2a69f3a396595c85b405
+    image: ghcr.io/xxroxxerxx/clumoove-worker:v0.19.0@sha256:680ba9935621eb032b6abd5d0d25472eddd2738222f35778fce86914d6a47662
     container_name: clumoove-worker
     restart: unless-stopped
     command: ["/app/worker"]
@@ -98,4 +98,4 @@ x-casaos:
   port_map: "8380"
   scheme: http
   index: /
-  version: "0.18.0"
+  version: "0.19.0"

@@ -1,0 +1,29 @@
+name: dispatcharr
+services:
+  dispatcharr:
+    image: ghcr.io/dispatcharr/dispatcharr:0.29.0@sha256:3ce081119e5a4da3cf2f398719f35d0987bcf4067440454a34e3d36cd0ab3bbb
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    restart: unless-stopped
+    ports:
+      - 9191:9191
+    volumes:
+      - /DATA/AppData/$AppID/data:/data
+    environment:
+      DISPATCHARR_ENV: aio
+      REDIS_HOST: localhost
+      CELERY_BROKER_URL: redis://localhost:6379/0
+      DISPATCHARR_LOG_LEVEL: info
+    container_name: dispatcharr
+
+x-casaos:
+  id: org.icewhale.dispatcharr
+  main: dispatcharr
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/org.icewhale.dispatcharr/assets/icon.png
+  title:
+    en_US: Dispatcharr
+  port_map: '9191'
+  scheme: http
+  version: "0.29.0"
