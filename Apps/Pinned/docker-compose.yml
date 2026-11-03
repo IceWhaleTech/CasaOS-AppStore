@@ -1,7 +1,7 @@
 name: pinned
 services:
   pinned:
-    image: ghcr.io/pinned-cc/pinned:0.1.10@sha256:cf19c3cc2fea817a85ea28e47e587baf36d38188242ead118b559d84470a4c2a
+    image: ghcr.io/pinned-cc/pinned:0.1.11@sha256:70e25477d6c062488c8933c4a831c092952e0ee61e052ce02c096be7f025c971
     container_name: pinned
     user: "1000:1000"
     restart: unless-stopped
@@ -64,17 +64,17 @@ x-casaos:
       The server contacts only the sites you save, to fetch their icons. No telemetry, no update checks.
   tips:
     before_install:
-      en_US: Set APP_PASSWORD to a password of at least 8 characters before you install. Pinned does not start without it. Put HTTPS in front before you use it from outside your network.
+      en_US: Set APP_PASSWORD to a password of at least 8 characters that is not a common one before you install. Pinned does not start without it. An install that ran with a common one before 0.1.11 still starts and asks you to change it. Put HTTPS in front before you use it from outside your network.
   author: Pinned
   developer: Pinned
   category: Productivity
   architectures:
     - amd64
     - arm64
-  version: "0.1.10"
-  update_at: "2026-10-28"
+  version: "0.1.11"
+  update_at: "2026-11-03"
   release_notes:
-    en_US: In light mode on the phone, the selected tab no longer carries a heavy dark shadow. It now has a thin edge and a soft shadow, like the rest of light mode.
+    en_US: Before an upgrade Pinned saves a copy of the database. An optional login code from an authenticator app. A list of the browsers that are signed in, to sign one out. New passwords are checked against a million leaked ones. Icons are rebuilt before they are stored. A one command install for a server.
   website: https://pinned.cc
   repo: https://github.com/pinned-cc/pinned
   support: https://github.com/pinned-cc/pinned/issues
