@@ -1,0 +1,77 @@
+name: nodeguard-node
+services:
+  nodeguard-node:
+    image: ghcr.io/thenodeguard/nodeguard-node:1.0.13
+    container_name: nodeguard-node
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 9596
+        published: "9596"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/nodeguard-node/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/nodeguard-node/data
+        target: /data
+    environment:
+      NODEGUARD_NODE_NAME: casaos
+      NODEGUARD_NODE_PASSWORD: ""
+    x-casaos:
+      envs:
+        - container: NODEGUARD_NODE_PASSWORD
+          description:
+            en_US: Choose a password for this page (8 characters or more). If empty, the page asks for a setup code, which is in this app's Logs
+        - container: NODEGUARD_NODE_NAME
+          description:
+            en_US: A name for this machine on the network
+      ports:
+        - container: "9596"
+          description:
+            en_US: NodeGuard Node's page
+      volumes:
+        - container: /config
+          description:
+            en_US: Settings and keys
+        - container: /data
+          description:
+            en_US: The space shared with the network (put this on your big disk)
+x-casaos:
+  id: uk.co.nodeguard.node
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  main: nodeguard-node
+  author: NodeGuard
+  developer: NodeGuard
+  category: Productivity
+  description:
+    en_US: >-
+      NodeGuard is cloud storage that runs on people's computers instead of giant data centres.
+      Share spare space on this machine and get 1 GB of NodeGuard storage for every 2 GB you share,
+      or be paid monthly. Everything it holds is encrypted and split into pieces, so nobody can read it.
+      You choose the space, the upload speed and the hours. Nothing on your home network is opened up.
+  tagline:
+    en_US: Share spare disk space, earn free storage or money
+  title:
+    en_US: NodeGuard Node
+  icon: https://raw.githubusercontent.com/TheNodeGuard/nodeguard-node/main/appstores/assets/nodeguard-node.png
+  screenshot_link:
+    - https://raw.githubusercontent.com/TheNodeGuard/nodeguard-node/main/appstores/assets/gallery-1.png
+    - https://raw.githubusercontent.com/TheNodeGuard/nodeguard-node/main/appstores/assets/gallery-2.png
+    - https://raw.githubusercontent.com/TheNodeGuard/nodeguard-node/main/appstores/assets/gallery-3.png
+  thumbnail: https://raw.githubusercontent.com/TheNodeGuard/nodeguard-node/main/appstores/assets/gallery-1.png
+  tips: {}
+  index: /
+  port_map: "9596"
+  scheme: http
+  version: "1.0.13"
+  update_at: "2026-10-23"
+  release_notes:
+    en_US: First release on the app store
+  website: "https://nodeguard.co.uk"
+  repo: "https://github.com/TheNodeGuard/nodeguard-node"
+  support: "https://github.com/TheNodeGuard/nodeguard-node/issues"
