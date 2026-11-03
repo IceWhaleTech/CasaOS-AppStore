@@ -158,7 +158,7 @@ services:
       - dify
 
   weaviate:
-    image: semitechnologies/weaviate:1.19.0
+    image: semitechnologies/weaviate:1.39.13
     container_name: dify-weaviate
     restart: unless-stopped
     volumes:
@@ -264,68 +264,98 @@ x-casaos:
   index: /
   port_map: "3701"
   version: "0.15.8"
-  update_at: "2025-05-30"
+  update_at: "2026-10-22"
   release_notes:
     en_US: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
     en_GB: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
     it_IT: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
     nb_NO: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
     zh_CN: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
     ja_JP: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
     ko_KR: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
     fr_FR: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
     de_DE: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
     sv_SE: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
     el_GR: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
     hr_HR: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
     pt_PT: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
     ru_RU: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
     tr_TR: |-
       - The 0.15.8 Git tag and Docker images were published without a matching GitHub Release object.
       - The API, worker, and web images are updated together to 0.15.8; the sandbox image is aligned to the 0.15.8 compose baseline.
       - Back up Dify data before upgrading and validate the Web UI after the service finishes migrations.
+      - The bundled Weaviate vector database is updated from 1.19.0 to 1.39.13, which is built with Go 1.26.10 (CVE-2026-111943). Dify stays at 0.15.8.
+      - Existing installs: Weaviate supports upgrading one minor version at a time. Starting 1.39.13 directly on 1.19.0 data keeps the knowledge base collections but shows them empty. Back up the `data/weaviate` folder first, then run 1.22, 1.23, 1.24 and 1.25 in turn (start each once) before 1.39.13.
   website: "https://dify.ai"
   repo: "https://github.com/langgenius/dify"
   support: "https://github.com/langgenius/dify/discussions"
