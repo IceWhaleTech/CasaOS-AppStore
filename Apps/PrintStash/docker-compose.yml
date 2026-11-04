@@ -1,0 +1,150 @@
+# CasaOS / ZimaOS app definition, derived from the root docker-compose.yml.
+# The administrator fields are blank by default: fill them in the install dialog
+# to create the administrator at first start, or leave them blank and register
+# in the browser from your local network.
+#
+# This is both the source of the store pull request and the copy the release
+# procedure sends to IceWhaleTech/CasaOS-AppStore, so the asset URLs below point
+# at the store repository and the files beside this one carry those names.
+name: printstash
+services:
+  printstash:
+    image: ghcr.io/xiao-villamor/printstash:0.14.0
+    restart: unless-stopped
+    stop_grace_period: 60s
+    network_mode: bridge
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      VAULT_SETUP_MODE: trusted_network
+      VAULT_RESTART_ENABLED: "true"
+      VAULT_SETUP_ADMIN_USERNAME: ""
+      VAULT_SETUP_ADMIN_PASSWORD: ""
+      VAULT_SETUP_ADMIN_EMAIL: ""
+      # GPU use and memory budgets. The image uses a GPU when the container can
+      # see one (see docs/compute.md) and the CPU otherwise.
+      VAULT_COMPUTE_MODE: auto
+      VAULT_COMPUTE_MEMORY_MB: "1024"
+      VAULT_MESH_MEMORY_BUDGET_FRACTION: "0.5"
+      VAULT_EMBEDDING_MEMORY_BUDGET_FRACTION: "0.25"
+    # To give the app an Intel or AMD GPU, add under this service:
+    #   devices: ["/dev/dri:/dev/dri"]
+    # (left out because a host without /dev/dri would not start the app).
+    ports:
+      # 3000 is taken by many dashboard apps; the store remaps to a quieter port.
+      - target: 3000
+        published: "3378"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    # Legacy CasaOS clients read this block; the v2 build keeps only the
+    # top-level one below. Both describe the same install.
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: Numeric owner of the data folder and mounted Library sources.
+            es_ES: Propietario numérico de la carpeta de datos y de las fuentes de Biblioteca montadas.
+        - container: PGID
+          description:
+            en_US: Numeric group of the data folder and mounted Library sources.
+            es_ES: Grupo numérico de la carpeta de datos y de las fuentes de Biblioteca montadas.
+        - container: VAULT_SETUP_ADMIN_USERNAME
+          description:
+            en_US: With VAULT_SETUP_MODE set to environment, creates this administrator at first start. Use it if you will first open PrintStash through Tailscale, a VPN, a reverse proxy or a domain. Leave it blank with trusted_network to create the administrator in the browser from your local network (casaos.local or the device's LAN IP).
+            es_ES: Con VAULT_SETUP_MODE en environment, crea este administrador en el primer arranque. Úsalo si vas a abrir PrintStash por primera vez a través de Tailscale, una VPN, un proxy inverso o un dominio. Déjalo vacío con trusted_network para crear el administrador en el navegador desde tu red local (casaos.local o la IP de la LAN del dispositivo).
+        - container: VAULT_SETUP_ADMIN_PASSWORD
+          description:
+            en_US: Optional, at least 8 characters. Used once; reset it later under Settings → Users.
+            es_ES: Opcional, mínimo 8 caracteres. Se usa una vez; puedes cambiarla después en Ajustes → Usuarios.
+        - container: VAULT_SETUP_ADMIN_EMAIL
+          description:
+            en_US: Optional administrator email.
+            es_ES: Correo del administrador, opcional.
+        - container: VAULT_COMPUTE_MODE
+          description:
+            en_US: auto uses a GPU when the container can see one and falls back to the CPU; cpu never uses it.
+            es_ES: auto usa una GPU cuando el contenedor puede verla y recurre a la CPU si no; cpu nunca la usa.
+        - container: VAULT_COMPUTE_MEMORY_MB
+          description:
+            en_US: Most GPU memory in MiB (256 to 65536) PrintStash may plan to use. An upper bound, not a reservation.
+            es_ES: Memoria de GPU máxima en MiB (256 a 65536) que PrintStash puede planificar. Es un límite superior, no una reserva.
+        - container: VAULT_MESH_MEMORY_BUDGET_FRACTION
+          description:
+            en_US: Share of the device's RAM (0 to 1) that thumbnail and geometry work may reserve. Lower it on a small device.
+            es_ES: Parte de la RAM del dispositivo (0 a 1) que pueden reservar las miniaturas y el trabajo de geometría. Bájala en un dispositivo pequeño.
+        - container: VAULT_EMBEDDING_MEMORY_BUDGET_FRACTION
+          description:
+            en_US: Share of the device's RAM (above 0, below 1) that resident AI search models may hold.
+            es_ES: Parte de la RAM del dispositivo (mayor que 0 y menor que 1) que pueden ocupar los modelos de búsqueda con IA residentes.
+        - container: VAULT_SETUP_MODE
+          description:
+            en_US: trusted_network registers the first administrator in the browser from your local network, with the administrator fields blank. environment creates it at first start from the administrator fields, which are then required.
+            es_ES: trusted_network registra el primer administrador en el navegador desde tu red local, con los campos de administrador vacíos. environment lo crea en el primer arranque a partir de esos campos, que entonces son obligatorios.
+      ports:
+        - container: "3000"
+          description:
+            en_US: Web UI port
+            es_ES: Puerto de la interfaz web
+      volumes:
+        - container: /data
+          description:
+            en_US: Database, managed files, thumbnails, staging and backups. Do not point this at an existing model library.
+            es_ES: Base de datos, archivos gestionados, miniaturas, preparación y copias de seguridad. No apuntes esto a una biblioteca de modelos existente.
+    container_name: printstash
+
+x-casaos:
+  id: org.printstash.printstash
+  architectures:
+    - amd64
+    - arm64
+  main: printstash
+  author: PrintStash contributors
+  developer: PrintStash
+  # One of the store's fixed categories (Media, Productivity, Home, Networking,
+  # AI, Finance, Social, Developer, Others). Productivity puts PrintStash beside
+  # the other self-hosted file and document libraries.
+  category: Productivity
+  title:
+    en_US: PrintStash
+    es_ES: PrintStash
+  tagline:
+    en_US: A self-hosted library for 3D models and the G-code that prints them
+    es_ES: Una biblioteca autoalojada para modelos 3D y el G-code que los imprime
+  description:
+    en_US: |
+      PrintStash keeps your 3D models, sliced G-code revisions and print history in one searchable library on your own server. Preview STL, 3MF, OBJ, STEP and G-code in the browser, with collections, tags and search. Attach several slices to one model, compare slicer settings and mark the revisions that printed well. Index an existing folder or NAS share in place instead of copying it. Send prints and follow jobs on Klipper/Moonraker, with beta support for OctoPrint, PrusaLink, Bambu Lab (LAN) and Elegoo printers.
+    es_ES: |
+      PrintStash reúne tus modelos 3D, las revisiones de G-code laminadas y el historial de impresión en una biblioteca buscable en tu propio servidor. Previsualiza STL, 3MF, OBJ, STEP y G-code en el navegador, con colecciones, etiquetas y búsqueda. Asocia varias laminaciones a un mismo modelo, compara ajustes del laminador y marca las revisiones que se imprimieron bien. Indexa una carpeta o un recurso compartido de NAS en su sitio en lugar de copiarlo. Envía impresiones y sigue los trabajos en Klipper/Moonraker, con soporte beta para impresoras OctoPrint, PrusaLink, Bambu Lab (LAN) y Elegoo.
+  tips:
+    before_install:
+      en_US: |
+        By default (VAULT_SETUP_MODE trusted_network) you create the first administrator in the browser from your local network (casaos.local or the device's LAN IP); registration through Tailscale, a VPN, a reverse proxy or a domain is refused. To create it at first start instead, set VAULT_SETUP_MODE to environment and fill in the administrator username and password. Either way, PrintStash then asks where to store your files.
+      es_ES: |
+        De forma predeterminada (VAULT_SETUP_MODE trusted_network) creas el primer administrador en el navegador desde tu red local (casaos.local o la IP de la LAN del dispositivo); el registro a través de Tailscale, una VPN, un proxy inverso o un dominio se rechaza. Para crearlo en el primer arranque, pon VAULT_SETUP_MODE en environment y rellena el usuario y la contraseña del administrador. En ambos casos PrintStash pregunta después dónde guardar tus archivos.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PrintStash/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PrintStash/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PrintStash/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PrintStash/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PrintStash/screenshot-3.png
+  index: /
+  scheme: http
+  port_map: "3378"
+  version: "0.14.0"
+  update_at: "2026-10-21"
+  release_notes:
+    en_US: |-
+      - PrintStash 0.14.0 is the current release: one container, one /data volume.
+      - The first administrator is created in the browser from your local network, then PrintStash asks where to store your files.
+      - Adds durable background jobs, AI Search, Similar Models and verified Vault migration.
+    es_ES: |-
+      - PrintStash 0.14.0 es la versión actual: un contenedor y un volumen /data.
+      - El primer administrador se crea en el navegador desde tu red local y después PrintStash pregunta dónde guardar tus archivos.
+      - Añade trabajos en segundo plano duraderos, búsqueda con IA, modelos similares y migración verificada de la bóveda.
+  website: https://printstash.org
+  repo: https://github.com/xiao-villamor/PrintStash
+  support: https://github.com/xiao-villamor/PrintStash/issues
+  docs: https://printstash.org/docs
