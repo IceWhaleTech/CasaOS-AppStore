@@ -1,6 +1,6 @@
 name: synaplan
 
-x-app-image: &app-image ghcr.io/metadist/synaplan:5.5.1
+x-app-image: &app-image ghcr.io/metadist/synaplan:5.6.6
 
 x-app-command: &app-command
   - |
@@ -13,8 +13,13 @@ x-app-command: &app-command
 x-app-environment: &app-environment
   APP_ENV: prod
   APP_DEBUG: "0"
+  FRANKENPHP_WORKER_NUM: ${FRANKENPHP_WORKER_NUM:-16}
+  FRANKENPHP_STREAM_WORKER_NUM: ${FRANKENPHP_STREAM_WORKER_NUM:-}
+  FRANKENPHP_NUM_THREADS: ${FRANKENPHP_NUM_THREADS:-}
+  FRANKENPHP_MAX_THREADS: ${FRANKENPHP_MAX_THREADS:-}
+  FRANKENPHP_MAX_WAIT_TIME: ${FRANKENPHP_MAX_WAIT_TIME:-15s}
   SYNAPLAN_PLATFORM: selfhost
-  APP_VERSION: "5.5.1"
+  APP_VERSION: "5.6.6"
   APP_URL: ${SYNAPLAN_URL:-http://localhost:8300}
   FRONTEND_URL: ${SYNAPLAN_URL:-http://localhost:8300}
   REALTIME_ALLOWED_ORIGINS: ${SYNAPLAN_URL:-http://localhost:8300}
@@ -52,7 +57,7 @@ x-app-environment: &app-environment
 
 services:
   secrets-init:
-    image: alpine:3.24
+    image: alpine:3.24@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a
     container_name: synaplan_secrets_init
     restart: "no"
     networks:
@@ -420,7 +425,7 @@ services:
     restart: unless-stopped
 
   db:
-    image: mariadb:13.0.2
+    image: mariadb:13.0.2@sha256:f4054da26e3a9dd6c8b5cc97363e544408b15c0fb369d7359c25dc04826eb6e1
     container_name: synaplan_db
     entrypoint: ["/bin/sh", "-ec"]
     command:
@@ -454,7 +459,7 @@ services:
     restart: unless-stopped
 
   redis:
-    image: redis:7.4-alpine
+    image: redis:8.10-alpine@sha256:21090af93f8324db2f0f0f4f38a7c60369d47d917e000c3423d89d2ae2883537
     container_name: synaplan_redis
     command: redis-server --appendonly yes --appendfsync everysec --maxmemory 256mb --maxmemory-policy allkeys-lru
     networks:
@@ -472,7 +477,7 @@ services:
     restart: unless-stopped
 
   centrifugo:
-    image: centrifugo/centrifugo:v6.9.7
+    image: centrifugo/centrifugo:v6.10.2@sha256:34b84f823515927266ce3abfb840fd9e0acabb58805e7e896f5de731217a627d
     container_name: synaplan_centrifugo
     entrypoint: ["/bin/sh", "-ec"]
     command:
@@ -520,7 +525,7 @@ services:
     restart: unless-stopped
 
   tika:
-    image: apache/tika:3.3.1.0
+    image: apache/tika:3.3.3.0@sha256:326b238b37904c94ff61fed87afe0af72e6a29fa715933b10af97b7d56f1d4cb
     container_name: synaplan_tika
     command: -h 0.0.0.0 -p 9998
     networks:
@@ -534,7 +539,7 @@ services:
     restart: unless-stopped
 
   qdrant:
-    image: qdrant/qdrant:v1.19.2
+    image: qdrant/qdrant:v1.20.0@sha256:9bfc89f9914fc14876a88c05270685921a55b8877b254a98bcc1cc2f0a424cd2
     container_name: synaplan_qdrant
     networks:
       - default
@@ -551,7 +556,7 @@ services:
     restart: unless-stopped
 
   tts:
-    image: ghcr.io/metadist/synaplan-tts:latest
+    image: ghcr.io/metadist/synaplan-tts:latest@sha256:4efc4535b90bf348b6c5598e3793ca5aa7b5bdb4c051456f74a1d2b0b1328388
     container_name: synaplan_tts
     networks:
       - default
@@ -626,10 +631,10 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "5.5.1"
-  update_at: "2026-10-20"
+  version: "5.6.6"
+  update_at: "2026-11-03"
   release_notes:
-    en_US: "## What's Changed\n* chore(release): install 5.5.0 in new deployments by @synaplan-release-tagger[bot] in https://github.com/metadist/synaplan/pull/2558\n* fix(voice): allow mobile WebView origins and reap stale live voice sessions by @cristiangrxs in https://github.com/metadist/synaplan/pull/2559\n* feat(chat): preview attached images and videos in the composer by @cristiangrxs in https://github.com/metadist/synaplan/pull/2562\n* fix(plugins): register plugin autoloading on every boot by @cristiangrxs in https://github.com/metadist/synaplan/pull/2565\n* feat(api): add Synaplan Demo gateway seams, /v1/embeddings and /v1/images/generations by @cristiangrxs in https://github.com/metadist/synaplan/pull/2563\n* feat(freeapi): add the Synaplan Demo client module by @cristiangrxs in https://github.com/metadist/synaplan/pull/2564\n* docs(planning): review and update of the out-of-process plugins plan — any language, started together with Synaplan by @orgaralf in https://github.com/metadist/synaplan/pull/2560\n* feat(freeapi): add the Synaplan Demo status, start and leave API by @cristiangrxs in https://github.com/metadist/synaplan/pull/2568\n* feat(freeapi): offer the Synaplan Demo on the welcome screen and in setup by @cristiangrxs in https://github.com/metadist/synaplan/pull/2569\n* docs: state what Synaplan is in the README intro by @cristiangrxs in https://github.com/metadist/synaplan/pull/2575\n*…\n\nFull release notes: https://github.com/metadist/synaplan/releases/tag/v5.5.1"
+    en_US: "## What's Changed\n* chore(release): install 5.6.5 in new deployments by @synaplan-release-tagger[bot] in https://github.com/metadist/synaplan/pull/2941\n* chore(deps): update backend dependencies by @renovate[bot] in https://github.com/metadist/synaplan/pull/2943\n* fix(deps): update frontend dependencies by @renovate[bot] in https://github.com/metadist/synaplan/pull/2945\n* chore(deps): update dependency vite to v8 by @renovate[bot] in https://github.com/metadist/synaplan/pull/2950\n* chore(deps): update dependency doctrine/orm to v3.7.6 by @renovate[bot] in https://github.com/metadist/synaplan/pull/2947\n* chore(deps): update dependency phpstan/phpstan-doctrine to v2.1.0 by @renovate[bot] in https://github.com/metadist/synaplan/pull/2948\n* feat(office): add a WOPI host so Collabora can open Synaplan files by @orgaralf in https://github.com/metadist/synaplan/pull/2944\n* chore(deps): update docker digests by @renovate[bot] in https://github.com/metadist/synaplan/pull/2942\n* docs: link one-click deploy options under More ways to install by @cosark in https://github.com/metadist/synaplan/pull/2952\n* chore(deps): update dependency ws to v8.22.1 by @renovate[bot] in https://github.com/metadist/synaplan/pull/2953\n* fix: retire Gemini 2.5 and stop writing the research markdown file by @cristiangrxs in https://github.com/metadist/synaplan/pull/2954\n\n## New Contributors\n* @cosark made their first contribution…\n\nFull release notes: https://github.com/metadist/synaplan/releases/tag/v5.6.6"
   website: "https://synaplan.com"
   repo: "https://github.com/metadist/synaplan"
   support: "https://github.com/metadist/synaplan/issues"
