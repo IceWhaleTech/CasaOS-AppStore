@@ -1,7 +1,7 @@
 name: box3balans
 services:
   box3balans:
-    image: ghcr.io/zenonymous/box3balans:0.1.45
+    image: ghcr.io/zenonymous/box3balans:0.1.46
     container_name: box3balans
     restart: unless-stopped
     security_opt:
@@ -109,16 +109,16 @@ x-casaos:
     before_install:
       en_US: Don't open Box3balans to the internet; use a VPN such as WireGuard or Tailscale to reach it from outside. Creating your account needs the setup code from the app's log. After the first start, keep a copy of /DATA/AppData/box3balans/data/app-secret and the backup passphrase (Settings → Backups) in your password manager.
       nl_NL: Zet Box3balans niet open naar het internet; gebruik een VPN zoals WireGuard of Tailscale voor toegang van buitenaf. Voor je gebruiker heb je de setupcode uit het log van de app nodig. Bewaar na de eerste start een kopie van /DATA/AppData/box3balans/data/app-secret en de wachtzin voor de back-ups (Instellingen → Back-ups) in je wachtwoordmanager.
-  version: "0.1.45"
+  version: "0.1.46"
   website: "https://box3balans.nl"
   repo: "https://github.com/zenonymous/box3balans"
   support: "https://github.com/zenonymous/box3balans/discussions/categories/q-a"
   docs: "https://github.com/zenonymous/box3balans/blob/main/docs/installatie.md"
-  update_at: "2026-10-30"
+  update_at: "2026-11-04"
   release_notes:
     en_US: |-
       - First version in the App Store.
-      - Box3balans 0.1.45: values you enter quickly in the start wizard are no longer lost, recovery codes can be copied or downloaded, and sign-in errors are clearer and read out by screen readers.
+      - Box3balans 0.1.46: box 3 for 2027 uses the figures the Dutch cabinet set on 3 November: a tax-free allowance of €60,280 per person and 6.37% for other assets (still a proposal).
     nl_NL: |-
       - Eerste versie in de App Store.
-      - Box3balans 0.1.45: waarden die je snel invult in de startwizard gaan niet meer verloren, herstelcodes kun je kopiëren of downloaden, en foutmeldingen bij het inloggen zijn duidelijker en worden voorgelezen.
+      - Box3balans 0.1.46: box 3 over 2027 rekent met de cijfers van het kabinet van 3 november: een heffingsvrij vermogen van € 60.280 per persoon en 6,37% voor overige bezittingen (nog een voorstel).
