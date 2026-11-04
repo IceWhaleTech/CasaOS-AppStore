@@ -1,0 +1,203 @@
+name: flowplan
+services:
+  flowplan:
+    image: ghcr.io/yannicschuller/flowplan:0.8.6
+    container_name: flowplan
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    ports:
+      - target: 3000
+        published: "3088"
+        protocol: tcp
+    environment:
+      # The address you open Flowplan with, exactly as in the browser.
+      # Flowplan only accepts changes from this origin.
+      APP_URL: http://localhost:3088
+      TZ: $TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    depends_on:
+      flowplan-init:
+        condition: service_completed_successfully
+    x-casaos:
+      ports:
+        - container: "3000"
+          description:
+            en_US: WebUI HTTP port
+            de_DE: HTTP-Port der Weboberfläche
+            fr_FR: Port HTTP de l'interface web
+            zh_CN: Web 界面 HTTP 端口
+      volumes:
+        - container: /app/data
+          description:
+            en_US: Database, files and backups of Flowplan
+            de_DE: Datenbank, Dateien und Sicherungen von Flowplan
+            fr_FR: Base de données, fichiers et sauvegardes de Flowplan
+            zh_CN: Flowplan 的数据库、文件和备份
+      envs:
+        - container: APP_URL
+          description:
+            en_US: The address you use to open Flowplan, for example http://192.168.1.10:3088
+            de_DE: Die Adresse, mit der du Flowplan öffnest, zum Beispiel http://192.168.1.10:3088
+            fr_FR: L'adresse avec laquelle vous ouvrez Flowplan, par exemple http://192.168.1.10:3088
+            zh_CN: 打开 Flowplan 所用的地址，例如 http://192.168.1.10:3088
+        - container: TZ
+          description:
+            en_US: Time zone
+            de_DE: Zeitzone
+            fr_FR: Fuseau horaire
+            zh_CN: 时区
+
+  # Flowplan runs as UID 1000, but Docker creates bind-mounted folders as
+  # root: this gives the data folder to that user before the app starts.
+  flowplan-init:
+    image: alpine:3.20
+    container_name: flowplan-init
+    restart: "no"
+    command: ["sh", "-c", "chown -R 1000:1000 /data"]
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+
+x-casaos:
+  id: org.flowplan.flowplan
+  main: flowplan
+  index: /
+  port_map: "3088"
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+  author: Yannic Schuller
+  developer: Yannic Schuller
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Flowplan/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Flowplan/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Flowplan/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Flowplan/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Flowplan/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Flowplan/screenshot-4.png
+  title:
+    en_US: Flowplan
+  tagline:
+    en_US: Documents, databases, whiteboards and a journal for teams
+    de_DE: Dokumente, Datenbanken, Whiteboards und Journal für Teams
+    fr_FR: Documents, bases de données, tableaux blancs et journal pour les équipes
+    zh_CN: 面向团队的文档、数据库、白板和日志
+  description:
+    en_US: |
+      Flowplan is an open-source alternative to Notion and Confluence. Documents, databases, whiteboards and a daily journal live in one page tree, and several people can edit together in real time.
+
+      **Key features:**
+      - Block editor with the / menu, Markdown shortcuts, math, Mermaid, comments and version history
+      - Databases with 23 property types, relations and formulas, shown as table, board, calendar, timeline, gallery or chart
+      - Whiteboards with sticky notes, connectors and mind maps
+      - Daily journal, handwritten notebooks and PDF annotation
+      - Apps for iPhone, iPad, Android and the desktop, also offline
+      - Single sign-on (OIDC, LDAP), passkeys and two-factor sign-in
+      - Export as Markdown, CSV or ZIP; import from Notion, Obsidian, AppFlowy, Jira and Trello
+      - Optional AI, off by default, also fully local with Ollama
+
+      One container with SQLite: no Postgres, no Redis. Licensed under the AGPL-3.0, with no closed enterprise edition and no tracking.
+
+      **Learn more:**
+      - [Website](https://flowplan.org)
+      - [Documentation](https://docs.flowplan.org/en)
+      - [GitHub](https://github.com/yannicschuller/flowplan)
+    de_DE: |
+      Flowplan ist eine Open-Source-Alternative zu Notion und Confluence. Dokumente, Datenbanken, Whiteboards und ein Journal liegen in einem Seitenbaum, und mehrere Personen bearbeiten gleichzeitig.
+
+      **Wichtigste Funktionen:**
+      - Block-Editor mit /-Menü, Markdown-Kürzeln, Formeln, Mermaid, Kommentaren und Versionsverlauf
+      - Datenbanken mit 23 Eigenschaftstypen, Relationen und Formeln, als Tabelle, Board, Kalender, Zeitleiste, Galerie oder Diagramm
+      - Whiteboards mit Haftnotizen, Verbindern und Mindmaps
+      - Journal, handschriftliche Notizbücher und PDF-Anmerkungen
+      - Apps für iPhone, iPad, Android und den Desktop, auch offline
+      - Single Sign-on (OIDC, LDAP), Passkeys und Zwei-Faktor-Anmeldung
+      - Export als Markdown, CSV oder ZIP; Import aus Notion, Obsidian, AppFlowy, Jira und Trello
+      - Optionale KI, standardmäßig aus, auch komplett lokal mit Ollama
+
+      Ein Container mit SQLite: kein Postgres, kein Redis. Lizenz AGPL-3.0, ohne geschlossene Enterprise-Version und ohne Tracking.
+
+      **Mehr erfahren:**
+      - [Website](https://flowplan.org)
+      - [Dokumentation](https://docs.flowplan.org)
+      - [GitHub](https://github.com/yannicschuller/flowplan)
+    fr_FR: |
+      Flowplan est une alternative open source à Notion et Confluence. Documents, bases de données, tableaux blancs et journal se trouvent dans une seule arborescence de pages, et plusieurs personnes peuvent modifier en même temps.
+
+      **Fonctionnalités principales :**
+      - Éditeur de blocs avec le menu /, raccourcis Markdown, formules, Mermaid, commentaires et historique des versions
+      - Bases de données avec 23 types de propriétés, relations et formules, en tableau, kanban, calendrier, chronologie, galerie ou graphique
+      - Tableaux blancs avec notes, connecteurs et cartes mentales
+      - Journal, carnets manuscrits et annotation de PDF
+      - Applications pour iPhone, iPad, Android et ordinateur, aussi hors ligne
+      - Authentification unique (OIDC, LDAP), passkeys et double authentification
+      - Export en Markdown, CSV ou ZIP ; import depuis Notion, Obsidian, AppFlowy, Jira et Trello
+      - IA facultative, désactivée par défaut, aussi entièrement locale avec Ollama
+
+      Un seul conteneur avec SQLite : ni Postgres, ni Redis. Sous licence AGPL-3.0, sans édition entreprise fermée et sans pistage.
+
+      **En savoir plus :**
+      - [Site web](https://flowplan.org)
+      - [Documentation](https://docs.flowplan.org/en)
+      - [GitHub](https://github.com/yannicschuller/flowplan)
+    zh_CN: |
+      Flowplan 是 Notion 和 Confluence 的开源替代品。文档、数据库、白板和日志都在同一个页面树中，多人可以实时协作编辑。
+
+      **主要功能：**
+      - 块编辑器，支持 / 菜单、Markdown 快捷方式、公式、Mermaid、评论和版本历史
+      - 数据库支持 23 种属性类型、关联和公式，可显示为表格、看板、日历、时间线、画廊或图表
+      - 白板，支持便签、连接线和思维导图
+      - 日志、手写笔记本和 PDF 批注
+      - 适用于 iPhone、iPad、Android 和桌面的应用，也可离线使用
+      - 单点登录（OIDC、LDAP）、通行密钥和双重验证
+      - 导出为 Markdown、CSV 或 ZIP；可从 Notion、Obsidian、AppFlowy、Jira 和 Trello 导入
+      - 可选 AI，默认关闭，也可通过 Ollama 完全在本地运行
+
+      单个容器搭配 SQLite：无需 Postgres 或 Redis。采用 AGPL-3.0 许可，没有封闭的企业版，也没有跟踪。
+
+      **了解更多：**
+      - [网站](https://flowplan.org)
+      - [文档](https://docs.flowplan.org/en)
+      - [GitHub](https://github.com/yannicschuller/flowplan)
+  tips:
+    before_install:
+      en_US: |
+        Set **APP_URL** to the address you will open Flowplan with, for example `http://192.168.1.10:3088` (your device's IP or host name and the port). Flowplan only accepts sign-ins and changes from exactly this address.
+
+        After installing, open Flowplan and choose **Create account**: the first account administers the instance.
+      de_DE: |
+        Setze **APP_URL** auf die Adresse, mit der du Flowplan öffnen wirst, zum Beispiel `http://192.168.1.10:3088` (IP oder Hostname deines Geräts und der Port). Flowplan nimmt Anmeldungen und Änderungen nur von genau dieser Adresse an.
+
+        Öffne Flowplan nach der Installation und wähle **Konto erstellen**: Das erste Konto verwaltet die Instanz.
+      fr_FR: |
+        Réglez **APP_URL** sur l'adresse avec laquelle vous ouvrirez Flowplan, par exemple `http://192.168.1.10:3088` (l'IP ou le nom d'hôte de votre appareil et le port). Flowplan n'accepte les connexions et les modifications que depuis exactement cette adresse.
+
+        Après l'installation, ouvrez Flowplan et choisissez **Créer un compte** : le premier compte administre l'instance.
+      zh_CN: |
+        请将 **APP_URL** 设置为你打开 Flowplan 时使用的地址，例如 `http://192.168.1.10:3088`（设备的 IP 或主机名加端口）。Flowplan 只接受来自这个地址的登录和更改。
+
+        安装后打开 Flowplan 并选择 **创建账户**：第一个账户将管理该实例。
+  website: https://flowplan.org
+  repo: https://github.com/yannicschuller/flowplan
+  docs: https://docs.flowplan.org/en
+  support: https://github.com/yannicschuller/flowplan/issues
+  version: "0.8.6"
+  update_at: "2026-11-04"
+  release_notes:
+    en_US: |-
+      First version in the app store.
+    de_DE: |-
+      Erste Version im App Store.
+    fr_FR: |-
+      Première version dans l'App Store.
+    zh_CN: |-
+      应用商店中的首个版本。
