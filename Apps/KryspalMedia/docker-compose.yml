@@ -1,0 +1,159 @@
+name: kryspal-media
+services:
+  # One-shot helper: the server runs as a non-root user, so make its data folder writable once.
+  kryspal-media-init:
+    image: ghcr.io/kryspal/kryspal-media:0.9.14
+    container_name: kryspal-media-init
+    user: "0:0"
+    entrypoint:
+      - /bin/sh
+      - -c
+    command:
+      - '[ "$$(stat -c %u:%g /var/lib/mediaserver)" = "${PUID:-1000}:${PGID:-1000}" ] || chown -R "${PUID:-1000}:${PGID:-1000}" /var/lib/mediaserver'
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /var/lib/mediaserver
+    healthcheck:
+      disable: true
+    network_mode: none
+    restart: "no"
+
+  kryspal-media:
+    image: ghcr.io/kryspal/kryspal-media:0.9.14
+    container_name: kryspal-media
+    user: "${PUID:-1000}:${PGID:-1000}"
+    restart: unless-stopped
+    stop_grace_period: 60s
+    environment:
+      TZ: $TZ
+      # The mounted media folders, listed explicitly. Add more container paths separated by a colon, for example /media:/movies.
+      MEDIA_ROOT: /media
+      # Second web port for access from the internet: forward only this port on your router.
+      EXTERNAL_HTTP_ADDR: ":5798"
+    ports:
+      - target: 5797
+        published: "5797"
+        protocol: tcp
+      - target: 5798
+        published: "5798"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/Media
+        target: /media
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /var/lib/mediaserver
+      # The database container writes a generated password here on first start; the server only reads it.
+      - type: bind
+        source: /DATA/AppData/$AppID/db
+        target: /var/lib/kryspal-db
+        read_only: true
+    depends_on:
+      kryspal-media-init:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+    networks:
+      - kryspal-media
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+
+  # The service must be named "postgres": the server connects to postgres:5432.
+  postgres:
+    image: ghcr.io/kryspal/kryspal-media-postgres:16-0.9.14
+    container_name: kryspal-media-postgres
+    restart: unless-stopped
+    stop_grace_period: 60s
+    environment:
+      TZ: $TZ
+      # The mounted media folders, listed explicitly. Add more container paths separated by a colon, for example /media:/movies.
+      MEDIA_ROOT: /media
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/pgdata
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: /DATA/AppData/$AppID/db
+        target: /var/lib/kryspal-db
+    networks:
+      - kryspal-media
+
+networks:
+  kryspal-media:
+    driver: bridge
+
+x-casaos:
+  id: net.kryspal.media
+  main: kryspal-media
+  index: /
+  port_map: "5797"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KryspalMedia/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KryspalMedia/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KryspalMedia/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KryspalMedia/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KryspalMedia/screenshot-3.png
+  title:
+    en_US: Kryspal Media
+  tagline:
+    en_US: A media server that stays fast at any library size
+    zh_CN: 片库再大也飞快的媒体服务器
+  description:
+    en_US: |
+      Kryspal Media is a self-hosted media server for your movies and TV shows. It stays fast on very large libraries: browsing, sorting and filtering run in PostgreSQL, so even a library of nearly 200,000 movies opens instantly.
+
+      - **Original quality.** Direct play keeps 4K, HDR and lossless audio. Video is never transcoded, so your CPU stays free.
+      - **Works with your players.** Emby and Jellyfin players such as Infuse, SenPlayer and VidHub connect as usual. A web player is built in.
+      - **Tidy, even with messy names.** Flexible folder layouts and version grouping.
+      - **Members.** A separate watch history for every member, with parental controls.
+      - **Plugins.** Open-source plugins for metadata and subtitles, and an Apache-2.0 Plugin SDK.
+      - **No account needed.** The FREE plan is a complete media server. PRO and MAX add features such as automatic intro detection and encrypted backups; see https://media.kryspal.net/pricing/.
+
+      Kryspal Media is proprietary software; the server image is free to use.
+    zh_CN: |
+      Kryspal Media 是自托管的电影与剧集媒体服务器。片库再大也飞快：浏览、排序、筛选都在 PostgreSQL 里完成，近 20 万部电影的片库也能秒开。
+
+      - **原画质，不转码。** 直接播放，4K、HDR 与无损音轨原样保留；视频从不转码，处理器不再满载。
+      - **沿用你的播放器。** Infuse、SenPlayer、VidHub 等 Emby、Jellyfin 播放器照常连接；内置网页播放器。
+      - **文件名再乱也能整理。** 灵活的目录结构与多版本归并。
+      - **成员。** 每位成员独立的观看记录，支持家长控制。
+      - **插件。** 开源的元数据与字幕插件，另有 Apache-2.0 协议的 Plugin SDK。
+      - **无需账号。** FREE 就是完整的媒体服务器；PRO、MAX 增加片头自动检测、加密备份等功能，详见 https://media.kryspal.net/zh/pricing/。
+
+      Kryspal Media 是专有软件，服务器镜像可免费使用。
+  tips:
+    before_install:
+      en_US: |
+        - Your media is read from `/DATA/Media` (mounted at `/media`). To use another folder, change that volume in the app settings, or add more folders at separate container paths such as `/movies` (not inside `/media`) and list them in the `MEDIA_ROOT` setting, for example `/media:/movies`.
+        - After install, open the app and create the first administrator in the setup wizard, then add libraries from folders under `/media`.
+        - In Infuse, SenPlayer or VidHub, add an Emby (or Jellyfin) server at `http://<your-device>:5797`.
+        - The database password is generated on first start and kept in `/DATA/AppData/kryspal-media/db`. Keep that folder together with `pgdata` when you back up or move the app.
+        - Port 5798 is for access from the internet: forward only this port on your router. Automatic discovery on the local network (UDP 7359) is off; add the server by address.
+        - This is a beta release. Before upgrading, back up the database (see https://media.kryspal.net/docs/).
+      zh_CN: |
+        - 默认读取 `/DATA/Media` 里的媒体（挂载到容器的 `/media`）。要换文件夹，请在应用设置里修改这个卷；更多文件夹请挂到单独的容器路径，例如 `/movies`（不要放在 `/media` 里面），并在 `MEDIA_ROOT` 设置里列出，例如 `/media:/movies`。
+        - 安装后打开应用，按设置向导创建第一位管理员，再从 `/media` 下的文件夹添加片库。
+        - 在 Infuse、SenPlayer 或 VidHub 里添加 Emby（或 Jellyfin）服务器，地址填 `http://<设备地址>:5797`。
+        - 数据库密码在第一次启动时自动生成，保存在 `/DATA/AppData/kryspal-media/db`。备份或迁移时请与 `pgdata` 一起保留。
+        - 5798 端口供外网访问：路由器只转发这一个端口。局域网自动发现（UDP 7359）未开启，请手动输入地址。
+        - 当前是测试版，升级前请先备份数据库（见 https://media.kryspal.net/zh/docs/）。
+  author: Kryspal
+  developer: Kryspal
+  category: Media
+  architectures:
+    - amd64
+    - arm64
+  version: "0.9.14"
+  update_at: "2026-10-24"
+  release_notes:
+    en_US: First release in the ZimaOS App Store.
+    zh_CN: 首次上架 ZimaOS 应用商店。
+  website: https://media.kryspal.net
+  repo: https://github.com/kryspal/kryspal-media
+  support: https://github.com/kryspal/kryspal-media/discussions
+  docs: https://media.kryspal.net/docs/
