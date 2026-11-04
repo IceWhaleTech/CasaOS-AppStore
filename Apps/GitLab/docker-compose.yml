@@ -1,0 +1,221 @@
+# Based on https://docs.gitlab.com/install/docker/installation/#install-gitlab-by-using-docker-compose
+name: gitlab
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:19.5.3-ce.0
+    container_name: gitlab
+    environment:
+      # Required: the address users will open, including the published HTTP port.
+      # Example: http://192.168.1.10:8929
+      GITLAB_EXTERNAL_URL: ""
+      GITLAB_SSH_PORT: "2424"
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url ENV.fetch('GITLAB_EXTERNAL_URL')
+        nginx['listen_port'] = 80
+        nginx['listen_https'] = false
+        letsencrypt['enable'] = false
+        gitlab_rails['gitlab_shell_ssh_port'] = Integer(ENV.fetch('GITLAB_SSH_PORT'))
+        # Small-instance settings from GitLab's memory-constrained environment guide.
+        puma['worker_processes'] = 0
+        sidekiq['concurrency'] = 10
+        prometheus_monitoring['enable'] = false
+        gitlab_kas['enable'] = false
+        puma['exporter_enabled'] = false
+        sidekiq['metrics_enabled'] = false
+        gitlab_rails['env'] = { 'MALLOC_CONF' => 'dirty_decay_ms:1000,muzzy_decay_ms:1000' }
+        gitaly['configuration'] = {
+          concurrency: [
+            { 'rpc' => '/gitaly.SmartHTTPService/PostReceivePack', 'max_per_repo' => 3 },
+            { 'rpc' => '/gitaly.SSHService/SSHUploadPack', 'max_per_repo' => 3 }
+          ]
+        }
+        gitaly['env'] = {
+          'MALLOC_CONF' => 'dirty_decay_ms:1000,muzzy_decay_ms:1000',
+          'GITALY_COMMAND_SPAWN_MAX_PARALLEL' => '2'
+        }
+      # For HTTPS behind a reverse proxy, set
+      # GITLAB_EXTERNAL_URL to https://gitlab.example.com and forward to
+      # http://<ZimaOS-IP>:8929. Configure the app tile to open the HTTPS URL.
+    ports:
+      - target: 80
+        published: "8929"
+        protocol: tcp
+      - target: 22
+        published: "2424"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /etc/gitlab
+      - type: bind
+        source: /DATA/AppData/$AppID/logs
+        target: /var/log/gitlab
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /var/opt/gitlab
+    shm_size: 256m
+    # Total RAM + swap allowance; requires at least 1 GB of swap on the host.
+    memswap_limit: 3G
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 2G
+    healthcheck:
+      test:
+        - CMD
+        - /opt/gitlab/bin/gitlab-healthcheck
+        - --fail
+        - --max-time
+        - "10"
+      interval: 60s
+      timeout: 30s
+      start_period: 10m
+      retries: 5
+    restart: unless-stopped
+    stop_grace_period: 120s
+    x-casaos:
+      envs:
+        - container: GITLAB_EXTERNAL_URL
+          description:
+            en_US: "Required full GitLab URL, for example http://192.168.1.10:8929."
+            de_DE: "Erforderliche vollständige GitLab-URL, zum Beispiel http://192.168.1.10:8929."
+            zh_CN: "必须填写完整 GitLab 地址，例如 http://192.168.1.10:8929。"
+        - container: GITLAB_SSH_PORT
+          description:
+            en_US: Published SSH port advertised in clone URLs; must match the SSH host port.
+            de_DE: In Clone-URLs angezeigter SSH-Port; muss dem veröffentlichten SSH-Hostport entsprechen.
+            zh_CN: 克隆地址中显示的 SSH 端口，必须与发布的 SSH 主机端口一致。
+      ports:
+        - container: "80"
+          description:
+            en_US: GitLab HTTP port; also update GITLAB_EXTERNAL_URL when changing the host port.
+            de_DE: GitLab-HTTP-Port; bei Änderung des Hostports auch GITLAB_EXTERNAL_URL anpassen.
+            zh_CN: GitLab HTTP 端口；修改主机端口时也需更新 GITLAB_EXTERNAL_URL。
+        - container: "22"
+          description:
+            en_US: Git over SSH; also update GITLAB_SSH_PORT when changing the host port.
+            de_DE: Git über SSH; bei Änderung des Hostports auch GITLAB_SSH_PORT anpassen.
+            zh_CN: Git SSH 端口；修改主机端口时也需更新 GITLAB_SSH_PORT。
+      volumes:
+        - container: /etc/gitlab
+          description:
+            en_US: GitLab configuration, secrets and SSH host keys.
+            de_DE: GitLab-Konfiguration, Geheimnisse und SSH-Hostschlüssel.
+            zh_CN: GitLab 配置、密钥及 SSH 主机密钥。
+        - container: /var/log/gitlab
+          description:
+            en_US: GitLab service logs.
+            de_DE: Protokolle der GitLab-Dienste.
+            zh_CN: GitLab 服务日志。
+        - container: /var/opt/gitlab
+          description:
+            en_US: Repositories, uploads and bundled database data.
+            de_DE: Repositories, Uploads und Daten der integrierten Datenbank.
+            zh_CN: 仓库、上传文件及内置数据库数据。
+x-casaos:
+  id: org.icewhale.gitlab
+  architectures:
+    - amd64
+    - arm64
+  main: gitlab
+  author: Mosman97
+  category: Developer
+  developer: GitLab
+  title:
+    en_US: GitLab Community Edition
+  description:
+    en_US: GitLab Community Edition is a self-hosted platform for Git repositories, code review, issues, wikis and CI/CD. This package uses the official GitLab image with bundled PostgreSQL and Redis. CI/CD jobs require a separately installed GitLab Runner.
+    en_GB: GitLab Community Edition is a self-hosted platform for Git repositories, code review, issues, wikis and CI/CD. This package uses the official GitLab image with bundled PostgreSQL and Redis. CI/CD jobs require a separately installed GitLab Runner.
+    ca_ES: GitLab Community Edition és una plataforma autoallotjada per a repositoris Git, revisió de codi, incidències, wikis i CI/CD. Aquest paquet utilitza la imatge oficial de GitLab amb PostgreSQL i Redis integrats. Les tasques de CI/CD requereixen un GitLab Runner instal·lat per separat.
+    cs_CZ: GitLab Community Edition je platforma na vlastním serveru pro repozitáře Git, kontrolu kódu, úkoly, wiki a CI/CD. Tento balíček používá oficiální obraz GitLab s integrovanými PostgreSQL a Redis. Úlohy CI/CD vyžadují samostatně nainstalovaný GitLab Runner.
+    da_DK: GitLab Community Edition er en selvhostet platform til Git-repositorier, kodegennemgang, sager, wikier og CI/CD. Pakken bruger det officielle GitLab-image med indbygget PostgreSQL og Redis. CI/CD-job kræver en separat installeret GitLab Runner.
+    de_DE: GitLab Community Edition ist eine selbst gehostete Plattform für Git-Repositories, Code-Reviews, Issues, Wikis und CI/CD. Dieses Paket verwendet das offizielle GitLab-Image mit integriertem PostgreSQL und Redis. CI/CD-Jobs benötigen einen separat installierten GitLab Runner.
+    el_GR: Το GitLab Community Edition είναι μια αυτοφιλοξενούμενη πλατφόρμα για αποθετήρια Git, έλεγχο κώδικα, ζητήματα, wiki και CI/CD. Το πακέτο χρησιμοποιεί την επίσημη εικόνα GitLab με ενσωματωμένα PostgreSQL και Redis. Οι εργασίες CI/CD απαιτούν ξεχωριστή εγκατάσταση του GitLab Runner.
+    es_ES: GitLab Community Edition es una plataforma autoalojada para repositorios Git, revisión de código, incidencias, wikis y CI/CD. Este paquete utiliza la imagen oficial de GitLab con PostgreSQL y Redis integrados. Los trabajos de CI/CD requieren un GitLab Runner instalado por separado.
+    fr_FR: GitLab Community Edition est une plateforme auto-hébergée pour les dépôts Git, la revue de code, les tickets, les wikis et la CI/CD. Ce paquet utilise l’image officielle GitLab avec PostgreSQL et Redis intégrés. Les tâches CI/CD nécessitent un GitLab Runner installé séparément.
+    ga_IE: Is ardán féinóstáilte é GitLab Community Edition do stórtha Git, athbhreithniú cóid, saincheisteanna, vicithe agus CI/CD. Úsáideann an pacáiste seo íomhá oifigiúil GitLab le PostgreSQL agus Redis ionsuite. Teastaíonn GitLab Runner atá suiteáilte ar leithligh le haghaidh jabanna CI/CD.
+    hr_HR: GitLab Community Edition je platforma na vlastitom poslužitelju za Git repozitorije, pregled koda, zadatke, wikije i CI/CD. Ovaj paket koristi službenu GitLab sliku s ugrađenim PostgreSQL-om i Redisom. CI/CD zadaci zahtijevaju zasebno instaliran GitLab Runner.
+    hu_HU: A GitLab Community Edition saját szerveren futtatható platform Git-tárolókhoz, kódellenőrzéshez, hibajegyekhez, wikikhez és CI/CD-hez. Ez a csomag a hivatalos GitLab-képet használja beépített PostgreSQL-lel és Redisszel. A CI/CD-feladatokhoz külön telepített GitLab Runner szükséges.
+    it_IT: GitLab Community Edition è una piattaforma ospitata sul proprio server per repository Git, revisione del codice, segnalazioni, wiki e CI/CD. Questo pacchetto usa l’immagine ufficiale GitLab con PostgreSQL e Redis integrati. I processi CI/CD richiedono un GitLab Runner installato separatamente.
+    ja_JP: GitLab Community Edition は、Git リポジトリ、コードレビュー、課題、Wiki、CI/CD を提供するセルフホスト型プラットフォームです。このパッケージは PostgreSQL と Redis を内蔵した公式 GitLab イメージを使用します。CI/CD ジョブには別途 GitLab Runner のインストールが必要です。
+    ko_KR: GitLab Community Edition은 Git 저장소, 코드 리뷰, 이슈, 위키 및 CI/CD를 위한 자체 호스팅 플랫폼입니다. 이 패키지는 PostgreSQL과 Redis가 내장된 공식 GitLab 이미지를 사용합니다. CI/CD 작업에는 별도로 설치한 GitLab Runner가 필요합니다.
+    ml_IN: Git റിപ്പോസിറ്ററികൾ, കോഡ് അവലോകനം, പ്രശ്നങ്ങൾ, വിക്കികൾ, CI/CD എന്നിവയ്ക്കുള്ള സ്വയം ഹോസ്റ്റ് ചെയ്യാവുന്ന പ്ലാറ്റ്‌ഫോമാണ് GitLab Community Edition. ഈ പാക്കേജ് PostgreSQL, Redis എന്നിവ ഉൾപ്പെടുത്തിയ ഔദ്യോഗിക GitLab ഇമേജ് ഉപയോഗിക്കുന്നു. CI/CD ജോലികൾക്ക് പ്രത്യേകം ഇൻസ്റ്റാൾ ചെയ്ത GitLab Runner ആവശ്യമാണ്.
+    nb_NO: GitLab Community Edition er en selvhostet plattform for Git-repositorier, kodegjennomgang, saker, wikier og CI/CD. Pakken bruker det offisielle GitLab-imaget med innebygd PostgreSQL og Redis. CI/CD-jobber krever en separat installert GitLab Runner.
+    nl_NL: GitLab Community Edition is een zelfgehost platform voor Git-repositories, codebeoordeling, issues, wiki’s en CI/CD. Dit pakket gebruikt de officiële GitLab-image met ingebouwde PostgreSQL en Redis. CI/CD-taken vereisen een afzonderlijk geïnstalleerde GitLab Runner.
+    pl_PL: GitLab Community Edition to platforma na własnym serwerze do repozytoriów Git, przeglądu kodu, zgłoszeń, wiki i CI/CD. Ten pakiet korzysta z oficjalnego obrazu GitLab z wbudowanymi PostgreSQL i Redis. Zadania CI/CD wymagają osobno zainstalowanego GitLab Runnera.
+    pt_BR: GitLab Community Edition é uma plataforma auto-hospedada para repositórios Git, revisão de código, issues, wikis e CI/CD. Este pacote usa a imagem oficial do GitLab com PostgreSQL e Redis integrados. Os trabalhos de CI/CD exigem um GitLab Runner instalado separadamente.
+    pt_PT: GitLab Community Edition é uma plataforma alojada no próprio servidor para repositórios Git, revisão de código, ocorrências, wikis e CI/CD. Este pacote usa a imagem oficial do GitLab com PostgreSQL e Redis integrados. Os trabalhos de CI/CD requerem um GitLab Runner instalado separadamente.
+    ro_RO: GitLab Community Edition este o platformă găzduită pe propriul server pentru depozite Git, revizuirea codului, probleme, wiki-uri și CI/CD. Acest pachet folosește imaginea oficială GitLab cu PostgreSQL și Redis incluse. Sarcinile CI/CD necesită un GitLab Runner instalat separat.
+    ru_RU: GitLab Community Edition — платформа на собственном сервере для Git-репозиториев, проверки кода, задач, вики и CI/CD. Этот пакет использует официальный образ GitLab со встроенными PostgreSQL и Redis. Для заданий CI/CD требуется отдельно установленный GitLab Runner.
+    sk_SK: GitLab Community Edition je platforma na vlastnom serveri pre repozitáre Git, kontrolu kódu, úlohy, wiki a CI/CD. Tento balík používa oficiálny obraz GitLab so zabudovanými PostgreSQL a Redis. Úlohy CI/CD vyžadujú samostatne nainštalovaný GitLab Runner.
+    sv_SE: GitLab Community Edition är en självhostad plattform för Git-arkiv, kodgranskning, ärenden, wikier och CI/CD. Paketet använder den officiella GitLab-avbildningen med inbyggd PostgreSQL och Redis. CI/CD-jobb kräver en separat installerad GitLab Runner.
+    tr_TR: GitLab Community Edition; Git depoları, kod incelemesi, sorunlar, vikiler ve CI/CD için kendi sunucunuzda barındırılan bir platformdur. Bu paket, PostgreSQL ve Redis içeren resmi GitLab imajını kullanır. CI/CD işleri için ayrı bir GitLab Runner kurulumu gerekir.
+    zh_CN: GitLab Community Edition 是用于 Git 仓库、代码审查、议题、Wiki 和 CI/CD 的自托管平台。本应用使用内置 PostgreSQL 和 Redis 的官方 GitLab 镜像。CI/CD 作业需要单独安装 GitLab Runner。
+    zh_TW: GitLab Community Edition 是提供 Git 儲存庫、程式碼審查、議題、Wiki 和 CI/CD 的自架平台。本應用使用內建 PostgreSQL 和 Redis 的官方 GitLab 映像檔。CI/CD 工作需要另外安裝 GitLab Runner。
+  tagline:
+    en_US: Self-hosted Git repositories, code review and CI/CD
+    en_GB: Self-hosted Git repositories, code review and CI/CD
+    ca_ES: Repositoris Git, revisió de codi i CI/CD autoallotjats
+    cs_CZ: Repozitáře Git, kontrola kódu a CI/CD na vlastním serveru
+    da_DK: Selvhostede Git-repositorier, kodegennemgang og CI/CD
+    de_DE: Selbst gehostete Git-Repositories, Code-Reviews und CI/CD
+    el_GR: Αυτοφιλοξενούμενα αποθετήρια Git, έλεγχος κώδικα και CI/CD
+    es_ES: Repositorios Git, revisión de código y CI/CD autoalojados
+    fr_FR: Dépôts Git, revue de code et CI/CD auto-hébergés
+    ga_IE: Stórtha Git, athbhreithniú cóid agus CI/CD féinóstáilte
+    hr_HR: Git repozitoriji, pregled koda i CI/CD na vlastitom poslužitelju
+    hu_HU: Git-tárolók, kódellenőrzés és CI/CD saját szerveren
+    it_IT: Repository Git, revisione del codice e CI/CD sul proprio server
+    ja_JP: セルフホスト型 Git リポジトリ、コードレビュー、CI/CD
+    ko_KR: 자체 호스팅 Git 저장소, 코드 리뷰 및 CI/CD
+    ml_IN: സ്വയം ഹോസ്റ്റ് ചെയ്യുന്ന Git റിപ്പോസിറ്ററികൾ, കോഡ് അവലോകനം, CI/CD
+    nb_NO: Selvhostede Git-repositorier, kodegjennomgang og CI/CD
+    nl_NL: Zelfgehoste Git-repositories, codebeoordeling en CI/CD
+    pl_PL: Repozytoria Git, przegląd kodu i CI/CD na własnym serwerze
+    pt_BR: Repositórios Git, revisão de código e CI/CD auto-hospedados
+    pt_PT: Repositórios Git, revisão de código e CI/CD no próprio servidor
+    ro_RO: Depozite Git, revizuirea codului și CI/CD pe propriul server
+    ru_RU: Git-репозитории, проверка кода и CI/CD на собственном сервере
+    sk_SK: Repozitáre Git, kontrola kódu a CI/CD na vlastnom serveri
+    sv_SE: Självhostade Git-arkiv, kodgranskning och CI/CD
+    tr_TR: Kendi sunucunuzda Git depoları, kod incelemesi ve CI/CD
+    zh_CN: 自托管 Git 仓库、代码审查和 CI/CD
+    zh_TW: 自架 Git 儲存庫、程式碼審查和 CI/CD
+  tips:
+    before_install:
+      en_US: |
+        Use Custom Install and set GITLAB_EXTERNAL_URL to the full address you will use, for example http://192.168.1.10:8929. If you change the HTTP host port, update the URL too. If you change the SSH host port, also update GITLAB_SSH_PORT. For HTTPS, use a reverse proxy and set the external URL to your HTTPS address.
+
+        This small-instance profile limits GitLab to 2 GB RAM and 2 vCPUs, with reduced concurrency, monitoring and the Kubernetes agent disabled. Provide at least 1 GB of host swap and SSD storage; this profile is intended for a few users with small repositories. Initial setup can take several minutes. Sign in as root using the generated password in /DATA/AppData/<AppID>/config/initial_root_password, or retrieve it with: docker exec gitlab grep 'Password:' /etc/gitlab/initial_root_password. Save it promptly and change it after signing in; the file is removed on the first restart after 24 hours.
+
+        PostgreSQL and Redis are bundled. GitLab Runner and SMTP are not configured. Back up configuration and data before upgrades, and follow GitLab's required upgrade stops.
+      de_DE: |
+        Benutzerdefinierte Installation verwenden und GITLAB_EXTERNAL_URL auf die vollständige Zugriffsadresse setzen, zum Beispiel http://192.168.1.10:8929. Bei Änderung des HTTP-Hostports auch die URL anpassen. Bei Änderung des SSH-Hostports auch GITLAB_SSH_PORT anpassen. Für HTTPS einen Reverse Proxy verwenden und die externe URL auf die HTTPS-Adresse setzen.
+
+        Dieses Profil für kleine Installationen begrenzt GitLab auf 2 GB RAM und 2 vCPUs, reduziert die Parallelität und deaktiviert Monitoring sowie den Kubernetes-Agenten. Mindestens 1 GB Swap auf dem Host und SSD-Speicher bereitstellen; das Profil ist für wenige Benutzer mit kleinen Repositories gedacht. Die Ersteinrichtung kann mehrere Minuten dauern. Als root mit dem erzeugten Passwort aus /DATA/AppData/<AppID>/config/initial_root_password anmelden oder es mit folgendem Befehl auslesen: docker exec gitlab grep 'Password:' /etc/gitlab/initial_root_password. Zeitnah sichern und nach der Anmeldung ändern; die Datei wird beim ersten Neustart nach 24 Stunden gelöscht.
+
+        PostgreSQL und Redis sind enthalten. GitLab Runner und SMTP sind nicht eingerichtet. Vor Updates Konfiguration und Daten sichern und GitLabs erforderliche Zwischenversionen beachten.
+      zh_CN: |
+        请使用自定义安装，将 GITLAB_EXTERNAL_URL 设为完整访问地址，例如 http://192.168.1.10:8929。修改 HTTP 主机端口时也需更新该地址；修改 SSH 主机端口时也需更新 GITLAB_SSH_PORT。如需 HTTPS，请使用反向代理，并将外部地址设为 HTTPS 地址。
+
+        此小型实例配置将 GitLab 限制为 2 GB 内存和 2 个 vCPU，降低并发并禁用监控及 Kubernetes 代理。主机需提供至少 1 GB 交换空间和 SSD 存储；此配置适用于少量用户及小型仓库。首次初始化可能需要数分钟。使用 root 和 /DATA/AppData/<AppID>/config/initial_root_password 中生成的密码登录，或执行 docker exec gitlab grep 'Password:' /etc/gitlab/initial_root_password 获取密码。请及时保存并在登录后修改；该文件会在超过 24 小时后的首次重启时删除。
+
+        已内置 PostgreSQL 和 Redis。未配置 GitLab Runner 和 SMTP。升级前请备份配置和数据，并遵循 GitLab 要求的中间升级版本。
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GitLab/icon.svg
+  screenshot_link:
+    - screenshot-1.png
+    - screenshot-2.png
+  scheme: http
+  port_map: "8929"
+  index: /
+  version: "19.5.3"
+  update_at: "2026-11-04"
+  release_notes:
+    en_US: "Initial package using the official GitLab CE image with persistent configuration, logs and data. Addresses app request #283."
+    de_DE: "Erstes Paket mit dem offiziellen GitLab-CE-Image und persistenter Konfiguration, Protokollen und Daten. Bezieht sich auf App-Anfrage #283."
+    zh_CN: "首次发布，使用官方 GitLab CE 镜像，持久化保存配置、日志和数据，对应应用请求 #283。"
+  website: https://about.gitlab.com/
+  repo: https://gitlab.com/gitlab-org/gitlab
+  docs: https://docs.gitlab.com/install/docker/
+  support: https://forum.gitlab.com/
