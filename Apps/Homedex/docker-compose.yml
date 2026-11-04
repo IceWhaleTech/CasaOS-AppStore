@@ -1,0 +1,172 @@
+name: homedex
+services:
+  # Homedex web UI and discovery engine. It reads Docker only through the
+  # docker-socket-proxy service below and never receives the raw socket.
+  homedex:
+    container_name: homedex
+    image: ghcr.io/harshshah0203/homedex:0.2.1
+    restart: unless-stopped
+    depends_on:
+      homedex-init:
+        condition: service_completed_successfully
+      docker-socket-proxy:
+        condition: service_started
+    deploy:
+      resources:
+        reservations:
+          memory: "64M"
+    environment:
+      HOMEDEX_DATA_DIR: /data
+      HOMEDEX_LISTEN: ":7377"
+      # Set before installing: Homedex stores only its Argon2id hash on the
+      # first start and ignores this value once an admin exists.
+      HOMEDEX_ADMIN_PASSWORD: ""
+    ports:
+      - target: 7377
+        published: "7377"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - app
+      - discovery
+    x-casaos:
+      envs:
+        - container: HOMEDEX_ADMIN_PASSWORD
+          description:
+            en_US: Admin password, 12 or more characters. Set it before the first start so nobody else on your network can claim Homedex through its setup page. Ignored once an admin exists.
+      ports:
+        - container: "7377"
+          description:
+            en_US: WebUI HTTP Port
+          protocol: tcp
+      volumes:
+        - container: /data
+          description:
+            en_US: SQLite inventory and the key that encrypts source credentials.
+
+  # One-shot: CasaOS creates the data folder as root, and Homedex runs as the
+  # unprivileged user 65532, so hand the folder to that user and exit.
+  homedex-init:
+    container_name: homedex-init
+    image: tecnativa/docker-socket-proxy:v0.4.2
+    user: "0:0"
+    entrypoint:
+      - chown
+      - "65532:65532"
+      - /data
+    restart: "no"
+    network_mode: none
+    read_only: true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+
+  # Read-only Docker API for Homedex: POST=0 rejects every mutating call, only
+  # the inventory endpoints are allowed, and it has no published port.
+  docker-socket-proxy:
+    container_name: homedex-socket-proxy
+    image: tecnativa/docker-socket-proxy:v0.4.2
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: "16M"
+    environment:
+      CONTAINERS: 1
+      IMAGES: 1
+      INFO: 1
+      NETWORKS: 1
+      VERSION: 1
+      POST: 0
+      ALLOW_START: 0
+      ALLOW_STOP: 0
+      ALLOW_RESTARTS: 0
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - discovery
+
+networks:
+  app:
+    driver: bridge
+  discovery:
+    internal: true
+
+x-casaos:
+  id: io.github.harshshah0203.homedex
+  main: homedex
+  index: /
+  port_map: "7377"
+  scheme: http
+  title:
+    en_US: Homedex
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Homedex/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Homedex/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Homedex/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Homedex/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Homedex/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Homedex/screenshot-5.png
+  tagline:
+    en_US: Read-only inventory of every service, host, port and route in your homelab
+  description:
+    en_US: |
+      **The missing inventory for your homelab.** Homedex builds a searchable record of services, hosts, ports, routes, certificates, domains and changes from what your infrastructure reports, instead of another spreadsheet to maintain.
+
+      - **Docker**: containers, images, Compose stacks, ports and networks, read through the bundled socket proxy that rejects every write.
+      - **Proxmox VE and Tailscale**: nodes, VMs, containers and tailnet devices, each shown on the machine it runs on.
+      - **Reverse proxies**: Traefik, Caddy, Nginx Proxy Manager and nginx routes, followed from domain to container, with broken chains flagged.
+      - **Expiry and changes**: certificates and domains by days remaining, image updates, and what moved between scans.
+
+      Homedex only reads. It never starts, stops or reconfigures anything, and it sends no telemetry.
+  tips:
+    before_install:
+      en_US: |
+        **Set the admin password first.** In the install settings, fill in `HOMEDEX_ADMIN_PASSWORD` with 12 or more characters. Homedex is published on your network straight away, and without it whoever opens the Web UI first chooses the password. Homedex stores only its Argon2id hash and ignores the value once an admin exists.
+
+        After install, open the Web UI, sign in, and add the first source: keep the prefilled Docker endpoint `tcp://docker-socket-proxy:2375`, which is the read-only socket proxy installed with this app.
+  author: Harsh Shah
+  developer: Harsh Shah
+  category: Networking
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  version: "0.2.1"
+  update_at: "2026-09-27"
+  release_notes:
+    en_US: |-
+      - First CasaOS release.
+      - Set the admin password at install time with HOMEDEX_ADMIN_PASSWORD.
+  website: "https://github.com/HarshShah0203/homedex"
+  repo: "https://github.com/HarshShah0203/homedex"
+  support: "https://github.com/HarshShah0203/homedex/issues"
+  docs: "https://github.com/HarshShah0203/homedex#readme"
