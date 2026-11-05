@@ -1,7 +1,7 @@
 name: 2fauth
 services:
   2fauth:
-    image: 2fauth/2fauth:6.1.3
+    image: 2fauth/2fauth:9.0.1
     deploy:
       resources:
         reservations:
@@ -78,54 +78,69 @@ x-casaos:
     en_US: 2FAuth
   index: /
   port_map: "8000"
-  version: "6.1.3"
-  update_at: "2026-04-03"
+  version: "9.0.1"
+  update_at: "2026-11-02"
   release_notes:
     en_US: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 fixes database migration, OpenID ownership transfer, and login language issues.
+      - Includes security fixes for account enumeration, email host injection, SSO token restrictions, auto-logout, and SSRF protection.
+      - Back up your application data before upgrading from v6. Existing personal access tokens must be regenerated; authentication proxies must be configured with TRUSTED_PROXIES.
     en_GB: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 fixes database migration, OpenID ownership transfer, and login language issues.
+      - Includes security fixes for account enumeration, email host injection, SSO token restrictions, auto-logout, and SSRF protection.
+      - Back up your application data before upgrading from v6. Existing personal access tokens must be regenerated; authentication proxies must be configured with TRUSTED_PROXIES.
     it_IT: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 fixes database migration, OpenID ownership transfer, and login language issues.
+      - Includes security fixes for account enumeration, email host injection, SSO token restrictions, auto-logout, and SSRF protection.
+      - Back up your application data before upgrading from v6. Existing personal access tokens must be regenerated; authentication proxies must be configured with TRUSTED_PROXIES.
     nb_NO: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 fixes database migration, OpenID ownership transfer, and login language issues.
+      - Includes security fixes for account enumeration, email host injection, SSO token restrictions, auto-logout, and SSRF protection.
+      - Back up your application data before upgrading from v6. Existing personal access tokens must be regenerated; authentication proxies must be configured with TRUSTED_PROXIES.
     zh_CN: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 修复数据库迁移、OpenID 用户所有权转移和登录页面语言问题。
+      - 修复账号枚举、邮件 Host 注入、SSO 令牌限制、自动退出和 SSRF 防护相关安全问题。
+      - 从 v6 升级前请备份应用数据。已有个人访问令牌需重新生成；认证代理需通过 TRUSTED_PROXIES 配置为可信代理。
     ja_JP: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 fixes database migration, OpenID ownership transfer, and login language issues.
+      - Includes security fixes for account enumeration, email host injection, SSO token restrictions, auto-logout, and SSRF protection.
+      - Back up your application data before upgrading from v6. Existing personal access tokens must be regenerated; authentication proxies must be configured with TRUSTED_PROXIES.
     ko_KR: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 fixes database migration, OpenID ownership transfer, and login language issues.
+      - Includes security fixes for account enumeration, email host injection, SSO token restrictions, auto-logout, and SSRF protection.
+      - Back up your application data before upgrading from v6. Existing personal access tokens must be regenerated; authentication proxies must be configured with TRUSTED_PROXIES.
     fr_FR: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 fixes database migration, OpenID ownership transfer, and login language issues.
+      - Includes security fixes for account enumeration, email host injection, SSO token restrictions, auto-logout, and SSRF protection.
+      - Back up your application data before upgrading from v6. Existing personal access tokens must be regenerated; authentication proxies must be configured with TRUSTED_PROXIES.
     de_DE: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 fixes database migration, OpenID ownership transfer, and login language issues.
+      - Includes security fixes for account enumeration, email host injection, SSO token restrictions, auto-logout, and SSRF protection.
+      - Back up your application data before upgrading from v6. Existing personal access tokens must be regenerated; authentication proxies must be configured with TRUSTED_PROXIES.
     sv_SE: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 fixes database migration, OpenID ownership transfer, and login language issues.
+      - Includes security fixes for account enumeration, email host injection, SSO token restrictions, auto-logout, and SSRF protection.
+      - Back up your application data before upgrading from v6. Existing personal access tokens must be regenerated; authentication proxies must be configured with TRUSTED_PROXIES.
     el_GR: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 fixes database migration, OpenID ownership transfer, and login language issues.
+      - Includes security fixes for account enumeration, email host injection, SSO token restrictions, auto-logout, and SSRF protection.
+      - Back up your application data before upgrading from v6. Existing personal access tokens must be regenerated; authentication proxies must be configured with TRUSTED_PROXIES.
     hr_HR: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 fixes database migration, OpenID ownership transfer, and login language issues.
+      - Includes security fixes for account enumeration, email host injection, SSO token restrictions, auto-logout, and SSRF protection.
+      - Back up your application data before upgrading from v6. Existing personal access tokens must be regenerated; authentication proxies must be configured with TRUSTED_PROXIES.
     pt_PT: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 fixes database migration, OpenID ownership transfer, and login language issues.
+      - Includes security fixes for account enumeration, email host injection, SSO token restrictions, auto-logout, and SSRF protection.
+      - Back up your application data before upgrading from v6. Existing personal access tokens must be regenerated; authentication proxies must be configured with TRUSTED_PROXIES.
     ru_RU: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 fixes database migration, OpenID ownership transfer, and login language issues.
+      - Includes security fixes for account enumeration, email host injection, SSO token restrictions, auto-logout, and SSRF protection.
+      - Back up your application data before upgrading from v6. Existing personal access tokens must be regenerated; authentication proxies must be configured with TRUSTED_PROXIES.
     tr_TR: |-
-      - v6.1.3 fixes the Try my luck feature being grayed out.
-      - It also fixes minor UI glitches.
+      - v9.0.1 fixes database migration, OpenID ownership transfer, and login language issues.
+      - Includes security fixes for account enumeration, email host injection, SSO token restrictions, auto-logout, and SSRF protection.
+      - Back up your application data before upgrading from v6. Existing personal access tokens must be regenerated; authentication proxies must be configured with TRUSTED_PROXIES.
   website: "https://2fauth.app"
   repo: "https://github.com/Bubka/2FAuth"
   support: "https://github.com/Bubka/2FAuth/issues"
