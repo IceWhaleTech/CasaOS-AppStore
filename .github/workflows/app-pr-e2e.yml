@@ -1,0 +1,85 @@
+name: Application PR E2E
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: Pull request number to test (current head)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+
+jobs:
+  prepare:
+    if: github.event_name == 'workflow_dispatch' || !github.event.pull_request.draft
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.prepare.outputs.matrix }}
+      has-apps: ${{ steps.prepare.outputs.has-apps }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Tooling comes from the base repository, never the application PR.
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - name: Select and stage changed Compose files
+        id: prepare
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number || inputs.pr }}
+        run: python3 .github/scripts/app_pr_e2e.py prepare
+      - uses: actions/upload-artifact@v6
+        with:
+          name: app-e2e-inputs-${{ github.run_attempt }}
+          path: out/app-e2e/
+          if-no-files-found: error
+          retention-days: 1
+      - uses: actions/upload-artifact@v6
+        with:
+          name: app-e2e-manifest-${{ github.run_attempt }}
+          path: out/app-e2e/manifest.json
+          if-no-files-found: error
+          retention-days: 14
+
+  validate:
+    needs: prepare
+    if: needs.prepare.outputs.has-apps == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: actions/download-artifact@v6
+        with:
+          name: app-e2e-inputs-${{ github.run_attempt }}
+          path: out/app-e2e
+      - name: Validate selected Compose metadata and syntax
+        run: |
+          python3 -m pip install 'PyYAML==6.0.3'
+          python3 .github/scripts/app_pr_e2e.py validate
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: app-e2e-validation-${{ github.run_attempt }}
+          path: out/app-e2e-validation/
+          if-no-files-found: warn
+
+  lifecycle:
+    needs: [prepare, validate]
+    if: needs.prepare.outputs.has-apps == 'true'
+    name: E2E ${{ matrix.key }}
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    uses: ./.github/workflows/app-lifecycle.yml
+    with:
+      app-key: ${{ matrix.key }}
+      input-artifact: app-e2e-inputs-${{ github.run_attempt }}

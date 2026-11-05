@@ -1,0 +1,29 @@
+name: Application PR E2E Report
+
+on:
+  workflow_run:
+    workflows: [Application PR E2E]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
+
+# Serialize writers, but never cancel a report that may be publishing a comment.
+concurrency:
+  group: app-e2e-report-${{ github.event.workflow_run.head_sha }}
+  cancel-in-progress: false
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Update PR report from GitHub run metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 .github/scripts/app_pr_e2e.py report
