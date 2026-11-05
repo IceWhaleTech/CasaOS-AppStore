@@ -1,7 +1,7 @@
 name: clean-media
 services:
   clean-media:
-    image: ghcr.io/lumblehamb/clean-media-stack:1.3.0@sha256:e7d729c6beadf91ea9a5a69cfbe7def4d4b9c12c15162058b14fd27d1be03a97
+    image: ghcr.io/lumblehamb/clean-media-stack:1.3.1@sha256:cf4c4353642f7c5657eb91f84abe51e44a062c52c2ef2306b3b3d1fc5d4efbba
     container_name: clean-media
     restart: unless-stopped
     stop_grace_period: 60s
@@ -100,10 +100,15 @@ x-casaos:
   index: /
   scheme: http
   port_map: "8585"
-  version: "1.3.0"
-  update_at: "2026-10-24"
+  version: "1.3.1"
+  update_at: "2026-11-05"
   release_notes:
     en_US: |-
+      - 1.3.1: a title is only "In your library" when its file is really there. Titles with no copy yet can be searched again from Find and the Library.
+      - 1.3.1: a film with no English sound is shown as Not filterable and is never labelled Kid Safe. Home links straight to English copies.
+      - 1.3.1: downloads that never finish are replaced automatically, and dead ones stop taking up download slots.
+      - 1.3.1: a movie file far shorter than the film (a sample or part of it) is replaced automatically.
+      - 1.3.1: English dubs of Japanese-made cartoons are no longer refused, and Choose a copy also finds copies listed under a film's other year.
       - Kids' Plex profiles set up for you: switch on Kid next to each child. No Plex Pass? A Kids library with only clean titles instead.
       - Helper computers: a gaming PC or laptop at home can listen for words and save space for the server. The Windows helper app uses the graphics chip.
       - Space saving: oversized videos are re-saved smaller, checked frame by frame first, on a schedule you choose.
