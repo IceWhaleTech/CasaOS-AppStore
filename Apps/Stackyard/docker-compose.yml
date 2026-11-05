@@ -1,0 +1,107 @@
+name: stackyard
+services:
+  stackyard:
+    image: ghcr.io/sandobserver/stackyard:1.21.0
+    container_name: stackyard
+    restart: unless-stopped
+    init: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          memory: 384M
+        reservations:
+          memory: 96M
+    ports:
+      - target: 80
+        published: "8700"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/icons
+        target: /icons
+    environment:
+      ALLOW_PRIVATE_IPS: "true"
+      NODE_OPTIONS: --max-old-space-size=192
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_US: Web UI port
+            zh_CN: 网页界面端口
+      volumes:
+        - container: /data
+          description:
+            en_US: Dashboard config, settings and uploaded wallpapers
+            zh_CN: 仪表板配置、设置和上传的壁纸
+        - container: /icons
+          description:
+            en_US: Custom app icons
+            zh_CN: 自定义应用图标
+      envs:
+        - container: ALLOW_PRIVATE_IPS
+          description:
+            en_US: Lets badges and widgets reach services on your local network. Most homelab installs need it.
+            zh_CN: 允许徽章和小组件访问本地网络上的服务。大多数家庭实验室安装都需要开启。
+
+x-casaos:
+  id: com.sandobserver.stackyard
+  main: stackyard
+  index: /
+  port_map: "8700"
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+  author: SandObserver
+  developer: SandObserver
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stackyard/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stackyard/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stackyard/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stackyard/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stackyard/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Stackyard/screenshot-4.png
+  title:
+    en_US: Stackyard
+    zh_CN: Stackyard
+  tagline:
+    en_US: A calm homelab dashboard with live status badges
+    zh_CN: 简洁安静的家庭实验室仪表板，带实时状态徽章
+  description:
+    en_US: |-
+      Stackyard is a self-hosted dashboard and start page for your homelab. It shows your apps as a grid of tiles and folders, with a small set of widgets for media, downloads, DNS, backups, disk health, system stats and weather.
+
+      Health badges appear on a tile only when its service has a problem. Any service with an API can show a live badge, with no custom code. Everything is set up in the web interface, with config import and export, and Homepage and Dashy configs can be imported.
+
+      It runs as one container with no runtime npm dependencies, installs as a web app on phones, and comes in six languages, including right-to-left.
+    zh_CN: |-
+      Stackyard 是一个自托管的家庭实验室仪表板和起始页。它把你的应用显示为由磁贴和文件夹组成的网格，并提供少量小组件，用于媒体、下载、DNS、备份、磁盘健康、系统状态和天气。
+
+      只有当服务出现问题时，它的磁贴上才会显示健康徽章。任何提供 API 的服务都可以显示实时徽章，无需编写代码。所有设置都在网页界面中完成，配置可以导出和导入，也可以导入 Homepage 和 Dashy 的配置。
+
+      它以单个容器运行，没有运行时 npm 依赖，可以在手机上作为网页应用安装，并提供六种语言，包括从右到左书写的语言。
+  tips:
+    before_install:
+      en_US: |-
+        Open the app after install and set a dashboard password in Settings, General. Until a password is set, anyone who can reach the dashboard can change it.
+      zh_CN: |-
+        安装后打开应用，在“设置”的“通用”中设置仪表板密码。设置密码之前，任何能访问仪表板的人都可以更改它。
+  version: "1.21.0"
+  update_at: "2026-11-01"
+  release_notes:
+    en_US: First release in the ZimaOS App Store.
+    zh_CN: 首次上架 ZimaOS 应用商店。
+  website: https://stackyard.sandobserver.com
+  repo: https://github.com/SandObserver/Stackyard
+  support: https://github.com/SandObserver/Stackyard/issues
+  docs: https://stackyard.sandobserver.com/docs/
