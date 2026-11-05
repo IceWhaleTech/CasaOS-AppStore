@@ -1,7 +1,7 @@
 name: maily
 services:
   maily:
-    image: ghcr.io/stormsia/maily:latest
+    image: ghcr.io/stormsia/maily:0.8.0
     container_name: maily
     deploy:
       resources:
@@ -87,7 +87,7 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Maily/screenshot-1.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Maily/screenshot-2.png
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Maily/screenshot-3.png
-  version: "0.6.0"
+  version: "0.8.0"
   update_at: "2026-11-05"
   release_notes:
     en_US: First release of Maily in CasaOS AppStore.
