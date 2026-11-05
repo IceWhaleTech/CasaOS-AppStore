@@ -1,0 +1,170 @@
+name: frameleaf
+
+services:
+  frameleaf-server:
+    container_name: frameleaf-server
+    image: ghcr.io/frameleaf/frameleaf-server:frameleaf-v1.2.3
+    deploy:
+      resources:
+        reservations:
+          memory: 1024M
+    environment:
+      TZ: $TZ
+      DB_HOSTNAME: frameleaf-database
+      DB_USERNAME: frameleaf
+      DB_PASSWORD: Fr4meleafDbPassw0rd
+      DB_DATABASE_NAME: frameleaf
+      FRAMELEAF_MACHINE_LEARNING_URL: http://frameleaf-machine-learning:3003
+    ports:
+      - target: 2283
+        published: "2283"
+        protocol: tcp
+    volumes:
+      - /DATA/AppData/$AppID/library:/data
+      - /DATA/AppData/$AppID/studio-worker:/run/frameleaf/studio-worker
+    depends_on:
+      frameleaf-database:
+        condition: service_healthy
+    shm_size: 2gb
+    stop_grace_period: 10s
+    restart: unless-stopped
+    healthcheck:
+      disable: false
+    networks:
+      - frameleaf
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Time zone
+        - container: DB_PASSWORD
+          description:
+            en_US: Database password (letters and digits only; must match the database service)
+      ports:
+        - container: "2283"
+          description:
+            en_US: Web UI and API port
+      volumes:
+        - container: /data
+          description:
+            en_US: Photo and video library (originals, thumbnails and encoded videos)
+        - container: /run/frameleaf/studio-worker
+          description:
+            en_US: Studio render worker enrolment, shared with machine learning
+
+  frameleaf-machine-learning:
+    container_name: frameleaf-machine-learning
+    image: ghcr.io/frameleaf/frameleaf-machine-learning:frameleaf-v1.2.3
+    deploy:
+      resources:
+        reservations:
+          memory: 1024M
+    environment:
+      TZ: $TZ
+      FRAMELEAF_STUDIO_WORKER_SERVER_URL: http://frameleaf-server:2283
+    volumes:
+      - /DATA/AppData/$AppID/model-cache:/cache
+      - /DATA/AppData/$AppID/studio-worker:/run/frameleaf/studio-worker:ro
+    restart: unless-stopped
+    healthcheck:
+      disable: false
+    networks:
+      - frameleaf
+    x-casaos:
+      volumes:
+        - container: /cache
+          description:
+            en_US: Machine learning model cache
+        - container: /run/frameleaf/studio-worker
+          description:
+            en_US: Studio render worker enrolment (read-only)
+
+  frameleaf-database:
+    container_name: frameleaf-database
+    image: ghcr.io/frameleaf/frameleaf-postgres:19beta4-pgvector0.8.7@sha256:7b155ed85302ab66c1022309f1f70f0b79f98f70bd52af8d7d3611a0cbf08cf0
+    environment:
+      POSTGRES_USER: frameleaf
+      POSTGRES_PASSWORD: Fr4meleafDbPassw0rd
+      POSTGRES_DB: frameleaf
+      POSTGRES_INITDB_ARGS: "--data-checksums"
+    volumes:
+      - /DATA/AppData/$AppID/postgres:/var/lib/postgresql
+    shm_size: 128mb
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --host=127.0.0.1 --dbname=\"$${POSTGRES_DB}\" --username=\"$${POSTGRES_USER}\" && /usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      start_period: 5m
+      start_interval: 5s
+    networks:
+      - frameleaf
+    x-casaos:
+      envs:
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: Database password (letters and digits only; must match DB_PASSWORD on the server)
+      volumes:
+        - container: /var/lib/postgresql
+          description:
+            en_US: PostgreSQL data (keep on a local disk, not a network share)
+
+networks:
+  frameleaf:
+    driver: bridge
+
+x-casaos:
+  id: app.frameleaf.frameleaf
+  main: frameleaf-server
+  index: /
+  port_map: "2283"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Frameleaf/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Frameleaf/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Frameleaf/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Frameleaf/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Frameleaf/screenshot-3.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Frameleaf/screenshot-4.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Frameleaf/screenshot-5.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Frameleaf/screenshot-6.jpg
+  title:
+    en_US: Frameleaf
+  tagline:
+    en_US: Your photos. Your server. Everywhere.
+  description:
+    en_US: |
+      A self-hosted photo and video library with native apps, private face and smart search, photo and video editing, and optional cloud backup.
+
+      Frameleaf is a photo and video library that runs on your own NAS, home server or Linux machine with Docker. Your originals stay as ordinary files on your own disks. Faces, smart search and AI captions are worked out on your own hardware, and there is no telemetry. It has native apps for iPhone, iPad, Android, Apple TV and Android TV, a desktop app for Mac, Windows and Linux, a photo editor, Studio (a video editor), Boards for references and design files, and client galleries for photographers. The server is open source (AGPLv3) and a fork of Immich. Frameleaf is in beta.
+
+      Bring everything home: import a Google Photos Takeout, sync iCloud Photos, or add folders already on your disks. Search in plain words ("photos of Alice in Banff last summer"), find text in photos and words spoken in videos, and rediscover memories, places and landmarks. Give each person in the family their own library and share with partner sharing, albums and links. Library Care finds duplicates and missing or damaged originals. Frameleaf Cloud is optional and adds remote access, 1 TB of off-site backup, buddy backup and cloud GPU processing.
+
+      Frameleaf started as a fork of Immich and keeps its AGPLv3 licence. It adds Studio (video editing), Boards, Clients, Library Care, Frameleaf Manager, native mobile and TV apps, a desktop app and optional Frameleaf Cloud.
+  tips:
+    before_install:
+      en_US: |
+        Frameleaf is in beta. Keep a separate backup of your photos and videos.
+
+        - Recommended: 6 GB RAM and 2 CPU cores. Machine learning (faces, smart search) uses the most memory.
+        - First run: open the web UI and create the admin account in the browser. There are no default credentials.
+        - The database password is set in both `DB_PASSWORD` (frameleaf-server) and `POSTGRES_PASSWORD` (frameleaf-database). To change it, change both before the first start, using letters and digits only.
+        - Library data is stored in `/DATA/AppData/frameleaf/library`. Keep the database folder on a local disk, never on a network share.
+
+        Documentation: https://frameleaf.app/docs/start/introduction/
+  author: Frameleaf
+  developer: Frameleaf
+  category: Media
+  architectures:
+    - amd64
+    - arm64
+  version: "1.2.3"
+  update_at: "2026-11-04"
+  release_notes:
+    en_US: |-
+      - First Frameleaf release in the ZimaOS App Store (Frameleaf 1.2.3, beta).
+      - More photo-library imports preserve ownership, ratings, albums and metadata.
+      - Frameleaf Desktop can read whether automatic AI credit top-up is enabled on a linked library.
+  website: "https://frameleaf.app"
+  repo: "https://github.com/Frameleaf/frameleaf-app"
+  support: "https://github.com/Frameleaf/frameleaf-app/issues"
+  docs: "https://frameleaf.app/docs/start/introduction/"
