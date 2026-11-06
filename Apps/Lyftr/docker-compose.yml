@@ -28,7 +28,7 @@ services:
       PORT: "3000"
       DB_TYPE: sqlite
       DB_PATH: /app/data/lyftr.db
-      REGISTRATION: open
+      REGISTRATION: first-user
       DEMO_MODE: "false"
     volumes:
       - type: bind
@@ -52,7 +52,7 @@ services:
       envs:
         - container: REGISTRATION
           description:
-            en_US: "Who may create an account: open (anyone who can reach the server; the Lyftr default), first-user (only until the first account exists), or closed."
+            en_US: "Who may create an account. first-user: only the first account can sign up, then sign-up closes. open: anyone who can reach the server. closed: nobody."
 
   lyftr:
     image: cwlumm/lyftr-frontend:v0.1.0-beta.9@sha256:9428710c93bdcf03add1c78e43318b3f89ce36a8e4452e0c6bfd6e9f2f8ab292
@@ -119,7 +119,7 @@ x-casaos:
   tips:
     before_install:
       en_US: |
-        After installing, open Lyftr and create your account. Registration is open: anyone who can reach this server can create an account. Once everyone who needs an account has one, set REGISTRATION to closed in the app settings.
+        After installing, open Lyftr and create your account. Only the first account can sign up; after that, sign-up is closed. To let someone else join, set REGISTRATION to open in the app settings, then set it back to first-user once they have an account.
 
         Lyftr is in beta. Back up /DATA/AppData/lyftr before updating.
   version: "0.1.0-beta.9"
