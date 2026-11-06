@@ -1,0 +1,154 @@
+name: corvus
+services:
+  corvus:
+    image: ghcr.io/corvus-gateway/gateway:1.2.0
+    network_mode: bridge
+    ports:
+      - target: 80
+        published: "80"
+        protocol: tcp
+      - target: 443
+        published: "443"
+        protocol: tcp
+      - target: 9443
+        published: "9443"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_US: HTTP port for proxied sites
+            zh_CN: 代理站点的 HTTP 端口
+            ko_KR: 프록시 사이트용 HTTP 포트
+
+        - container: "443"
+          description:
+            en_US: HTTPS port for proxied sites
+            zh_CN: 代理站点的 HTTPS 端口
+            ko_KR: 프록시 사이트용 HTTPS 포트
+
+        - container: "9443"
+          description:
+            en_US: Admin console port (HTTPS, self-signed certificate)
+            zh_CN: 管理控制台端口（HTTPS，自签名证书）
+            ko_KR: 관리 콘솔 포트 (HTTPS, 자체 서명 인증서)
+
+      volumes:
+        - container: /data
+          description:
+            en_US: Corvus data directory (configuration, certificates, logs).
+            zh_CN: Corvus 数据目录（配置、证书、日志）。
+            ko_KR: Corvus 데이터 디렉터리 (설정, 인증서, 로그).
+    container_name: corvus
+x-casaos:
+  id: org.icewhale.corvus
+  architectures:
+    - amd64
+    - arm64
+  main: corvus
+  author: moonjikwang
+  category: Networking
+  description:
+    en_US: Corvus is a self-hosted reverse proxy and web application firewall with a web console. Manage proxy hosts, free Let's Encrypt certificates (HTTP-01 and DNS-01), redirections and TCP/UDP streams, and protect your sites with attack-pattern blocking, automatic bans, security rules by IP, country, path, header or user agent, a browser challenge and an access queue (waiting room). It also includes a live traffic monitor, alerts to Slack, Discord, Teams, Telegram or webhooks, versioned configuration with rollback, and an importer for an existing Nginx Proxy Manager setup.
+    zh_CN: Corvus 是一款自托管的反向代理和 Web 应用防火墙，带有 Web 管理控制台。可管理代理主机、免费的 Let's Encrypt 证书（HTTP-01 和 DNS-01）、重定向以及 TCP/UDP 流，并通过攻击特征拦截、自动封禁、基于 IP、国家、路径、请求头或 User-Agent 的安全规则、浏览器验证和访问排队（等候室）来保护您的网站。此外还提供实时流量监控、发送到 Slack、Discord、Teams、Telegram 或 Webhook 的告警、支持回滚的版本化配置，以及从现有 Nginx Proxy Manager 导入配置的功能。
+    de_DE: Corvus ist ein selbst gehosteter Reverse Proxy und eine Web Application Firewall mit Web-Konsole. Verwalten Sie Proxy-Hosts, kostenlose Let's-Encrypt-Zertifikate (HTTP-01 und DNS-01), Weiterleitungen und TCP/UDP-Streams und schützen Sie Ihre Websites mit Blockierung von Angriffsmustern, automatischen Sperren, Sicherheitsregeln nach IP, Land, Pfad, Header oder User-Agent, einer Browser-Challenge und einer Zugangswarteschlange (Warteraum). Dazu kommen ein Live-Traffic-Monitor, Benachrichtigungen an Slack, Discord, Teams, Telegram oder Webhooks, versionierte Konfiguration mit Rollback und ein Import für eine bestehende Nginx-Proxy-Manager-Installation.
+    es_ES: Corvus es un proxy inverso y firewall de aplicaciones web autoalojado con consola web. Gestione hosts proxy, certificados gratuitos de Let's Encrypt (HTTP-01 y DNS-01), redirecciones y streams TCP/UDP, y proteja sus sitios con bloqueo de patrones de ataque, bloqueos automáticos, reglas de seguridad por IP, país, ruta, cabecera o user agent, un desafío de navegador y una cola de acceso (sala de espera). También incluye un monitor de tráfico en vivo, alertas a Slack, Discord, Teams, Telegram o webhooks, configuración versionada con reversión y un importador para una instalación existente de Nginx Proxy Manager.
+    fr_FR: Corvus est un reverse proxy et un pare-feu applicatif web auto-hébergé, avec une console web. Gérez les hôtes proxy, les certificats Let's Encrypt gratuits (HTTP-01 et DNS-01), les redirections et les flux TCP/UDP, et protégez vos sites avec le blocage des schémas d'attaque, les bannissements automatiques, des règles de sécurité par IP, pays, chemin, en-tête ou user agent, un défi navigateur et une file d'accès (salle d'attente). Il inclut aussi un moniteur de trafic en direct, des alertes vers Slack, Discord, Teams, Telegram ou des webhooks, une configuration versionnée avec retour arrière et un import d'une installation Nginx Proxy Manager existante.
+    hu_HU: A Corvus egy saját üzemeltetésű fordított proxy és webalkalmazás-tűzfal webes konzollal. Kezelheti a proxy hosztokat, az ingyenes Let's Encrypt tanúsítványokat (HTTP-01 és DNS-01), az átirányításokat és a TCP/UDP streameket, webhelyeit pedig támadásminták blokkolásával, automatikus kitiltással, IP, ország, útvonal, fejléc vagy user agent alapú biztonsági szabályokkal, böngésző-ellenőrzéssel és hozzáférési sorral (várószobával) védheti. Tartalmaz továbbá élő forgalomfigyelőt, riasztásokat Slack, Discord, Teams, Telegram vagy webhook felé, visszaállítható verziózott konfigurációt, valamint egy meglévő Nginx Proxy Manager beállítás importálását.
+    it_IT: Corvus è un reverse proxy e web application firewall self-hosted con console web. Gestisci host proxy, certificati Let's Encrypt gratuiti (HTTP-01 e DNS-01), reindirizzamenti e stream TCP/UDP, e proteggi i tuoi siti con blocco dei pattern di attacco, ban automatici, regole di sicurezza per IP, paese, percorso, header o user agent, una verifica del browser e una coda di accesso (sala d'attesa). Include inoltre un monitor del traffico in tempo reale, avvisi verso Slack, Discord, Teams, Telegram o webhook, configurazione versionata con rollback e un importatore per un'installazione esistente di Nginx Proxy Manager.
+    ja_JP: Corvus は Web コンソールを備えたセルフホスト型のリバースプロキシ兼 Web アプリケーションファイアウォールです。プロキシホスト、無料の Let's Encrypt 証明書（HTTP-01 と DNS-01）、リダイレクト、TCP/UDP ストリームを管理し、攻撃パターンのブロック、自動 BAN、IP・国・パス・ヘッダー・User-Agent によるセキュリティルール、ブラウザチャレンジ、アクセスキュー（待合室）でサイトを保護します。リアルタイムのトラフィックモニター、Slack・Discord・Teams・Telegram・Webhook へのアラート、ロールバック可能なバージョン管理された設定、既存の Nginx Proxy Manager 環境のインポート機能も備えています。
+    ko_KR: Corvus는 웹 콘솔을 갖춘 셀프 호스팅 리버스 프록시 겸 웹 방화벽입니다. 프록시 호스트, 무료 Let's Encrypt 인증서(HTTP-01, DNS-01), 리디렉션, TCP/UDP 스트림을 관리하고, 공격 패턴 차단, 자동 차단, IP·국가·경로·헤더·User-Agent 기반 보안 규칙, 브라우저 챌린지, 접속 대기열로 사이트를 보호합니다. 실시간 트래픽 모니터, Slack·Discord·Teams·Telegram·웹훅 알림, 롤백 가능한 버전별 설정 관리, 기존 Nginx Proxy Manager 설정 가져오기 기능도 제공합니다.
+    pl_PL: Corvus to samodzielnie hostowany reverse proxy i zapora aplikacji webowych z konsolą webową. Zarządzaj hostami proxy, darmowymi certyfikatami Let's Encrypt (HTTP-01 i DNS-01), przekierowaniami i strumieniami TCP/UDP, a swoje strony chroń blokowaniem wzorców ataków, automatycznymi banami, regułami bezpieczeństwa według IP, kraju, ścieżki, nagłówka lub user agenta, weryfikacją przeglądarki i kolejką dostępu (poczekalnią). W zestawie są także monitor ruchu na żywo, alerty do Slacka, Discorda, Teams, Telegrama lub webhooków, wersjonowana konfiguracja z możliwością przywrócenia oraz import istniejącej konfiguracji Nginx Proxy Manager.
+    pt_BR: Corvus é um proxy reverso e firewall de aplicações web auto-hospedado, com console web. Gerencie hosts de proxy, certificados gratuitos do Let's Encrypt (HTTP-01 e DNS-01), redirecionamentos e streams TCP/UDP, e proteja seus sites com bloqueio de padrões de ataque, banimentos automáticos, regras de segurança por IP, país, caminho, cabeçalho ou user agent, um desafio de navegador e uma fila de acesso (sala de espera). Também inclui monitor de tráfego ao vivo, alertas para Slack, Discord, Teams, Telegram ou webhooks, configuração versionada com rollback e um importador para uma instalação existente do Nginx Proxy Manager.
+    ru_RU: Corvus — это самостоятельно размещаемый обратный прокси и межсетевой экран для веб-приложений с веб-консолью. Управляйте прокси-хостами, бесплатными сертификатами Let's Encrypt (HTTP-01 и DNS-01), перенаправлениями и потоками TCP/UDP и защищайте свои сайты блокировкой шаблонов атак, автоматическими банами, правилами безопасности по IP, стране, пути, заголовку или User-Agent, проверкой браузера и очередью доступа (комнатой ожидания). Также есть монитор трафика в реальном времени, оповещения в Slack, Discord, Teams, Telegram или через вебхуки, версионируемая конфигурация с откатом и импорт существующей установки Nginx Proxy Manager.
+    sv_SE: Corvus är en självhostad omvänd proxy och brandvägg för webbapplikationer med en webbkonsol. Hantera proxyvärdar, kostnadsfria Let's Encrypt-certifikat (HTTP-01 och DNS-01), omdirigeringar och TCP/UDP-strömmar, och skydda dina webbplatser med blockering av attackmönster, automatiska avstängningar, säkerhetsregler per IP, land, sökväg, header eller user agent, en webbläsarutmaning och en åtkomstkö (väntrum). Dessutom ingår en trafikövervakning i realtid, larm till Slack, Discord, Teams, Telegram eller webhooks, versionshanterad konfiguration med återställning och import av en befintlig Nginx Proxy Manager-installation.
+  developer: Jikwang Moon
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Corvus/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Corvus/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Corvus/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Corvus/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Corvus/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Corvus/screenshot-5.png
+  tagline:
+    en_US: Reverse proxy and web application firewall with a web console.
+    zh_CN: 带 Web 管理控制台的反向代理和 Web 应用防火墙。
+    de_DE: Reverse Proxy und Web Application Firewall mit Web-Konsole.
+    es_ES: Proxy inverso y firewall de aplicaciones web con consola web.
+    fr_FR: Reverse proxy et pare-feu applicatif web avec console web.
+    hu_HU: Fordított proxy és webalkalmazás-tűzfal webes konzollal.
+    it_IT: Reverse proxy e web application firewall con console web.
+    ja_JP: Web コンソール付きのリバースプロキシ兼 Web アプリケーションファイアウォール。
+    ko_KR: 웹 콘솔을 갖춘 리버스 프록시 겸 웹 방화벽.
+    pl_PL: Reverse proxy i zapora aplikacji webowych z konsolą webową.
+    pt_BR: Proxy reverso e firewall de aplicações web com console web.
+    ru_RU: Обратный прокси и межсетевой экран для веб-приложений с веб-консолью.
+    sv_SE: Omvänd proxy och brandvägg för webbapplikationer med webbkonsol.
+  tips:
+    before_install:
+      en_US: |
+        ⚠️ Warning!
+        This is a technical app, please make sure you know what you are doing.
+        Corvus occupies ports 80 and 443 by default for the sites it proxies. It occupies port 9443 for the admin console.
+        Please change the CasaOS WebUI port to a port other than 80/443/9443. And pay attention to whether the ports conflict with other apps (for example Nginx Proxy Manager). Otherwise, it may cause your CasaOS to run abnormally.
+
+        First run
+
+        The console uses HTTPS with a self-signed certificate. Open `https://<your-device-ip>:9443`, and accept the browser warning. Enter the one-time setup token from the app logs (the line with `setup_token`), then create the administrator account. There is no default password.
+
+        TCP/UDP streams listen on ports you choose, so add a port mapping for each stream in the app settings.
+      zh_CN: |
+        ⚠️ 警告！
+        这是一个技术类应用，请确保你知道你在做什么。
+        Corvus 默认占用 80 和 443 端口给代理的站点使用。占用 9443 端口给管理控制台。
+        请将 CasaOS WebUI 端口改为非 80/443/9443 的端口。并注意是否与其他应用（例如 Nginx Proxy Manager）冲突。否则可能导致你的 CasaOS 运行异常。
+
+        首次运行
+
+        控制台使用带自签名证书的 HTTPS。打开 `https://<设备 IP>:9443`，接受浏览器警告。输入应用日志中的一次性设置令牌（包含 `setup_token` 的那一行），然后创建管理员账户。没有默认密码。
+
+        TCP/UDP 流监听你自行选择的端口，请在应用设置中为每个流添加端口映射。
+      ko_KR: |
+        ⚠️ 주의!
+        기술적인 앱입니다. 무엇을 하는지 알고 설치해 주세요.
+        Corvus는 기본적으로 프록시하는 사이트용으로 80, 443 포트를, 관리 콘솔용으로 9443 포트를 사용합니다.
+        CasaOS WebUI 포트를 80/443/9443이 아닌 포트로 변경해 주세요. 다른 앱(예: Nginx Proxy Manager)과 포트가 겹치지 않는지도 확인해 주세요. 그렇지 않으면 CasaOS가 정상적으로 동작하지 않을 수 있습니다.
+
+        첫 실행
+
+        콘솔은 자체 서명 인증서를 쓰는 HTTPS입니다. `https://<기기 IP>:9443`에 접속해 브라우저 경고를 수락하세요. 앱 로그에서 일회용 설정 토큰(`setup_token`이 있는 줄)을 찾아 입력한 뒤 관리자 계정을 만드세요. 기본 비밀번호는 없습니다.
+
+        TCP/UDP 스트림은 직접 정한 포트에서 수신하므로, 스트림마다 앱 설정에서 포트 매핑을 추가해 주세요.
+  title:
+    en_US: Corvus
+    zh_CN: Corvus
+  index: /
+  port_map: "9443"
+  scheme: https
+  version: "1.2.0"
+  update_at: "2026-11-05"
+  release_notes:
+    en_US: |-
+      - Saved DNS credentials: enter a DNS provider token once and reuse it for every DNS-01 certificate. Tokens saved per certificate in older versions are moved over automatically on upgrade.
+      - Unknown hosts: choose what Corvus answers for host names it does not serve: a 404 page, close the connection, or redirect to a URL.
+      - Console host guard: the proxy host the console is opened through is marked, and disabling or deleting it asks first.
+      - Fixes: security rules in Log mode no longer count toward automatic bans; the first-run setup form is readable in dark mode.
+    zh_CN: |-
+      - 保存的 DNS 凭据：只需输入一次 DNS 服务商令牌，即可用于所有 DNS-01 证书。旧版本中按证书保存的令牌会在升级时自动迁移。
+      - 未知主机：可选择对未配置的主机名返回 404 页面、关闭连接或重定向到指定 URL。
+      - 控制台主机保护：标记用于打开控制台的代理主机，禁用或删除前会先确认。
+      - 修复：日志模式下的安全规则不再计入自动封禁；首次设置表单在深色模式下可正常阅读。
+    ko_KR: |-
+      - DNS 자격 증명 저장: DNS 제공자 토큰을 한 번 입력하면 모든 DNS-01 인증서에 재사용합니다. 이전 버전에서 인증서별로 저장된 토큰은 업그레이드 시 자동으로 옮겨집니다.
+      - 알 수 없는 호스트: 서비스하지 않는 호스트 이름에 404 페이지, 연결 종료, URL 리디렉션 중 어떻게 응답할지 선택할 수 있습니다.
+      - 콘솔 호스트 보호: 콘솔에 접속 중인 프록시 호스트를 표시하고, 비활성화하거나 삭제할 때 먼저 확인합니다.
+      - 수정: 로그 모드의 보안 규칙이 더 이상 자동 차단에 집계되지 않으며, 첫 실행 설정 화면이 다크 모드에서도 잘 보입니다.
+  website: "https://corvus-gateway.github.io/corvus/"
+  repo: "https://github.com/corvus-gateway/corvus"
+  support: "https://github.com/corvus-gateway/corvus/issues"
+  docs: "https://corvus-gateway.github.io/corvus/"
