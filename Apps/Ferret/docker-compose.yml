@@ -1,0 +1,97 @@
+name: ferret
+services:
+  ferret:
+    image: ghcr.io/ferret-project/ferret:2026.11.4
+    container_name: ferret
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    ports:
+      - target: 8787
+        published: "8786"
+        protocol: tcp
+    environment:
+      TZ: $TZ
+      # Left empty, Ferret accepts sign-ins from whatever address it's opened at; set it (for example
+      # http://192.168.1.10:8786) so invitation and share links, passkeys and single sign-on work.
+      PUBLIC_URL: ""
+    # AUTH_SECRET, FILES_KEY and the push keys are made by Ferret on first start and kept in /data.
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    depends_on:
+      ferret-init:
+        condition: service_completed_successfully
+    x-casaos:
+      ports:
+        - container: "8787"
+          description:
+            en_US: WebUI HTTP Port
+      volumes:
+        - container: /data
+          description:
+            en_US: The database, uploaded photos and documents (encrypted), and the secrets Ferret made
+      envs:
+        - container: PUBLIC_URL
+          description:
+            en_US: The address you open Ferret at, for example http://192.168.1.10:8786 (links and passkeys use it)
+        - container: TZ
+          description:
+            en_US: Time zone
+
+  # Ferret runs as UID 1000; Docker creates bind-mounted folders as root. This hands the folder to Ferret once.
+  ferret-init:
+    image: alpine:3.20
+    container_name: ferret-init
+    restart: "no"
+    command: ["chown", "1000:1000", "/data"]
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+
+x-casaos:
+  id: io.github.ferret-project.ferret
+  main: ferret
+  index: /
+  port_map: "8786"
+  scheme: http
+  icon: icon.svg
+  thumbnail: thumbnail.webp
+  screenshot_link:
+    - screenshot-1.webp
+    - screenshot-2.webp
+    - screenshot-3.webp
+  title:
+    en_US: Ferret
+  tagline:
+    en_US: Find anything you own
+  description:
+    en_US: |
+      Ferret is a self-hosted home inventory for the whole household. Add things by photo, barcode or a walk through a room,
+      find them again by what they are, print QR labels for boxes, and keep warranties, manuals, maintenance and an
+      insurance report in one place. Several households and people with roles, a REST API, and an MCP server for AI
+      assistants. Every AI feature is optional and runs on your own models.
+
+      Open it and sign up: the first account runs the server. Then, in Settings → Server, set the address you use
+      (PUBLIC_URL) and make a key file for Ferret's keys.
+  tips:
+    before_install:
+      en_US: |
+        Ferret makes its own secrets the first time it starts and keeps them in its data folder. Once it runs, make a key
+        file (Settings → Server → Keys) and keep it off this machine: without the file key, uploaded photos and documents
+        can't be read.
+  author: Ferret
+  developer: Ferret
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+  version: "2026.11.4"
+  website: https://github.com/ferret-project/ferret
+  repo: https://github.com/ferret-project/ferret
+  support: https://github.com/ferret-project/ferret/issues
+  docs: https://github.com/ferret-project/ferret/tree/main/apps/docs/hosting
