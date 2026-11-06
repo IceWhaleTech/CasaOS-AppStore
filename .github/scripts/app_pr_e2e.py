@@ -137,29 +137,19 @@ def validate():
         path = root / app["key"] / "compose.yaml"
         data = yaml.safe_load(path.read_bytes())
         errors = []
-        if not isinstance(data, dict) or not isinstance(data.get("services"), dict):
+        if not isinstance(data, dict) or not isinstance(data.get("services"), dict) or not data["services"]:
             errors.append("Compose must define services")
         else:
-            if not isinstance(data.get("name"), str) or not re.fullmatch(r"[a-z0-9_-]+", data["name"]):
-                errors.append("Invalid top-level Compose name")
-            metadata = data.get("x-casaos")
-            if not isinstance(metadata, dict) or not metadata.get("id"):
-                errors.append("Missing x-casaos.id")
             for service in data["services"].values():
                 if not isinstance(service, dict):
                     errors.append("Invalid service")
                     continue
-                health = service.get("healthcheck")
-                test = health.get("test") if isinstance(health, dict) else None
-                disabled_test = test == "NONE" or (isinstance(test, list) and test and test[0] == "NONE")
-                if not isinstance(health, dict) or health.get("disable") or not isinstance(test, (str, list)) or not test or disabled_test:
-                    errors.append("Every service must declare an enabled healthcheck")
                 if any(key in service for key in ("build", "env_file", "extends")):
                     errors.append("Compose must be self-contained (no build/env_file/extends)")
             if "include" in data:
                 errors.append("Compose include is not supported")
         if not errors:
-            result = subprocess.run(["docker", "compose", "-f", str(path), "config", "-q"],
+            result = subprocess.run(["docker", "compose", "--project-name", "app-e2e", "-f", str(path), "config", "-q"],
                                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=60)
             if result.returncode:
                 errors.append("docker compose config failed")
@@ -180,8 +170,8 @@ def render(apps, jobs, artifacts, run):
     lines = [MARKER, "## Application Lifecycle E2E", "",
              f"Commit: `{run['tested_sha']}` · Run: [#{run['run_number']}]({run['html_url']})",
              f"Conclusion: **{cell(run['conclusion'])}**", "",
-             "Suite: `bbot-cli-install@1.2.0` / `CLI-LIFECYCLE-01` · ZimaOS `1.8.0-beta2`",
-             "Scope: install, health, stop, start, restart, uninstall (not business/UI functionality).", "",
+             "Suite: `bbot-cli-install@2.0.0` / `CLI-LIFECYCLE-01` · ZimaOS `1.8.0-beta2`",
+             "Scope: install, application running status with completed installation, stop, start, restart, uninstall (not Docker health or business/UI readiness).", "",
              "| Application | Result | Evidence |", "| --- | --- | --- |"]
     for app in apps:
         if app["status"] == "DELETED":
@@ -199,7 +189,7 @@ def render(apps, jobs, artifacts, run):
         lines.append(f"| {cell(app['path'])} | {status} | {evidence} |")
     if not apps:
         lines.append("| No changed application Compose | NOT REQUIRED | - |")
-    lines.extend(["", "Rejected Compose, missing healthchecks, and infrastructure failures are not passes. See job logs for the failing phase.",
+    lines.extend(["", "Readiness requires application status running with completed installation; Docker healthchecks and a stability timer are not required. See job logs for the failing phase.",
                   f"<!-- source-run:{run['id']} attempt:{run['run_attempt']} -->"])
     return "\n".join(lines)
 

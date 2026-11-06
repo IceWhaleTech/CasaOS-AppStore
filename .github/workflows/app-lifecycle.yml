@@ -24,7 +24,8 @@ jobs:
     env:
       APP_KEY: ${{ inputs.app-key }}
       E2E_CLI: ${{ vars.E2E_CLI || '/opt/zimaos-e2e/current/e2e' }}
-      E2E_PLUGIN: ${{ vars.E2E_LIFECYCLE_PLUGIN || '/opt/bbot/bbot-cli-install-1.2.0.wasm' }}
+      # Deployment updates this link explicitly; each run uses a private plugin store.
+      E2E_PLUGIN: ${{ vars.E2E_LIFECYCLE_PLUGIN || '/opt/bbot/bbot-cli-install-latest.wasm' }}
       E2E_ENV_FILE: ${{ vars.E2E_ENV_FILE || '/dev/null' }}
       E2E_NODES: ${{ vars.E2E_NODES || '/var/lib/zimaos-e2e/nodes.json' }}
       CASE_ID: CLI-LIFECYCLE-01
@@ -37,11 +38,17 @@ jobs:
           set -euo pipefail
           [[ "$APP_KEY" =~ ^app-[0-9a-f]{24}$ ]]
           umask 077
+          evidence=/home/runner/e2e-runs
+          mkdir -p "$evidence"
+          if [[ ! -w "$evidence" || ! -x "$evidence" ]]; then
+            echo "Evidence directory is not writable/searchable by $(id -un): $evidence" >&2
+            exit 1
+          fi
           root=$(mktemp -d "$RUNNER_TEMP/bbot-lifecycle.XXXXXXXX")
-          mkdir "$root/input" "$root/evidence" "$root/plugins"
+          mkdir "$root/input" "$root/plugins"
           echo "root=$root" >> "$GITHUB_OUTPUT"
           echo "BBOT_RUN_ROOT=$root" >> "$GITHUB_ENV"
-          echo "E2E_ARTIFACTS=$root/evidence" >> "$GITHUB_ENV"
+          echo "E2E_ARTIFACTS=$evidence" >> "$GITHUB_ENV"
           echo "E2E_PLUGINS=$root/plugins" >> "$GITHUB_ENV"
           echo "E2E_RUN_ID=github-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-$APP_KEY" >> "$GITHUB_ENV"
       - name: Download Compose data
@@ -69,7 +76,7 @@ jobs:
           export E2E_APP_COMPOSE_BASE64
           E2E_APP_COMPOSE_BASE64=$(base64 -w0 "$BBOT_RUN_ROOT/input/$APP_KEY/compose.yaml")
           "$E2E_CLI" plugin add "$E2E_PLUGIN"
-          "$E2E_CLI" run -suite bbot-cli-install@1.2.0 -id "$CASE_ID" \
+          "$E2E_CLI" run -suite bbot-cli-install -id "$CASE_ID" \
             -gate -lanes 1 -select node=pve -os-version 1.8.0-beta2 \
             -env "$E2E_ENV_FILE"
           jq -se --arg id "$CASE_ID" '
@@ -81,7 +88,7 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: app-e2e-evidence-${{ github.run_attempt }}-${{ inputs.app-key }}
-          path: ${{ steps.paths.outputs.root }}/evidence/
+          path: ${{ env.E2E_ARTIFACTS }}/${{ env.E2E_RUN_ID }}/
           if-no-files-found: error
           retention-days: 14
       - name: Clean private directories
