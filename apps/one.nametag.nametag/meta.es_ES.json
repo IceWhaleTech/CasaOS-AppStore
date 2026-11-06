@@ -1,0 +1,8 @@
+{
+  "id": "one.nametag.nametag",
+  "description": "Nametag te ayuda a recordar a las personas que te importan. Guarda notas, cumpleaños y fechas importantes, mira cómo se conecta todo el mundo en un gráfico de red interactivo, organiza a las personas en grupos, lleva un diario y recibe recordatorios para mantener el contacto. La sincronización CardDAV bidireccional lo mantiene al día con Google Contacts, iCloud, Outlook o Nextcloud.",
+  "tagline": "Un CRM personal para las personas de tu vida",
+  "tips": {
+    "before_install": "Antes de instalarlo, cambia NEXTAUTH_URL a la dirección con la que abrirás Nametag, por ejemplo http://192.168.1.10:10300 (usa la IP o el dominio de tu ZimaOS). El valor por defecto, http://localhost:10300, solo funciona desde el propio dispositivo ZimaOS, y los enlaces de inicio de sesión y de los correos apuntarán al sitio equivocado.\n\nDespués de instalarlo, abre Nametag y crea tu cuenta. Cualquiera que pueda acceder a este puerto también puede registrarse, así que cuando tengas tu cuenta puedes añadir DISABLE_REGISTRATION=true para cerrar el registro.\n\nEl correo es opcional. Para enviar recordatorios y correos de restablecimiento de contraseña, añade las variables SMTP_* que se explican en https://docs.nametag.one/self-hosting/email/\n"
+  }
+}

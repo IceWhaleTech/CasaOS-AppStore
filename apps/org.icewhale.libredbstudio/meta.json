@@ -14,7 +14,7 @@
   ],
   "tagline": "Open-source self-hosted SQL IDE.",
   "thumbnail": "/apps/org.icewhale.libredbstudio/assets/thumbnail.webp",
-  "update_at": "2026-10-18",
+  "update_at": "2026-11-01",
   "website": "https://libredb.org",
   "repo": "https://github.com/libredb/libredb-studio",
   "support": "https://github.com/libredb/libredb-studio/issues",
@@ -23,13 +23,13 @@
   "release_note": "- Updates LibreDB Studio to 1.0.0, a major release. Twelve connection types join, taking the count to forty-one engines: BigQuery, MQTT, Firestore, RabbitMQ, Snowflake, OPC UA, Apache Spark, MTConnect, Modbus, Sparkplug B, NETCONF and SNMP.\n- It carries one security fix: a disconnect request now closes only the caller's own connections (GHSA-78jw-7pvp-64h3), so a server that several accounts share should be upgraded.\n- Studio can now run under a control plane that decides who may open which database with which credential. It stays off unless an operator sets `GOVERNANCE_SOURCE`, and an install without that variable behaves as 0.18.3 did.\n- Agent mode now executes statements on MySQL and MariaDB, MongoDB and Kubernetes.\n- For anyone calling the HTTP API: a refusal for a missing privilege answers 403 instead of 401, and a statement timeout 504 instead of 408.",
   "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
   "id": "org.icewhale.libredbstudio",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "categories": [
     "developer"
   ],
   "min_memory": 268435456,
   "min_image_size": {
-    "amd64": 232766629,
-    "arm64": 228910584
+    "amd64": 235346483,
+    "arm64": 231449621
   }
 }

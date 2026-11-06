@@ -1,7 +1,7 @@
 {
   "id": "org.icewhale.libredbstudio",
   "title": "LibreDB Studio",
-  "release_note": "- 将 LibreDB Studio 更新至 1.0.0，这是一个大版本。新增十二种连接类型，总数达到四十一种引擎：BigQuery、MQTT、Firestore、RabbitMQ、Snowflake、OPC UA、Apache Spark、MTConnect、Modbus、Sparkplug B、NETCONF 和 SNMP。\n- 本版本包含一项安全修复：断开连接请求现在只关闭调用者自己的连接（GHSA-78jw-7pvp-64h3），因此多个账号共用的服务器应当升级。\n- Studio 现在可以运行在一个控制平面之下，由它决定谁可以用哪个凭据打开哪个数据库。除非运维人员设置 `GOVERNANCE_SOURCE`，该功能保持关闭；未设置该变量的安装与 0.18.3 的行为一致。\n- 代理模式现在可以在 MySQL 和 MariaDB、MongoDB 以及 Kubernetes 上执行语句。\n- 调用 HTTP API 的一方需注意：权限不足的拒绝现在返回 403 而不是 401，语句超时返回 504 而不是 408。",
+  "description": "LibreDB Studio 是一款开源（MIT）的自托管 SQL IDE。它提供现代化的基于 Web 的界面，支持连接 41 种数据库引擎（PostgreSQL、MySQL、Oracle、Db2、SQL Server、MongoDB、Redis、ClickHouse、Cassandra、Elasticsearch、Prometheus、Apache Kafka、Neo4j、Qdrant、Milvus、InfluxDB、etcd 等），浏览架构，并可通过局域网中的任意浏览器编写和运行查询。其中一部分（如 Druid、Elasticsearch、OpenSearch）为只读，因为它们自身的 SQL 完全没有 `UPDATE`，也没有 `CREATE TABLE`；另有数种出于设计为只读。数据本地存储于 SQLite 数据库中，一切尽在您的掌控之中。",
   "tagline": "开源自托管 SQL IDE。",
-  "description": "LibreDB Studio 是一款开源（MIT）的自托管 SQL IDE。它提供现代化的基于 Web 的界面，支持连接 41 种数据库引擎（PostgreSQL、MySQL、Oracle、Db2、SQL Server、MongoDB、Redis、ClickHouse、Cassandra、Elasticsearch、Prometheus、Apache Kafka、Neo4j、Qdrant、Milvus、InfluxDB、etcd 等），浏览架构，并可通过局域网中的任意浏览器编写和运行查询。其中一部分（如 Druid、Elasticsearch、OpenSearch）为只读，因为它们自身的 SQL 完全没有 `UPDATE`，也没有 `CREATE TABLE`；另有数种出于设计为只读。数据本地存储于 SQLite 数据库中，一切尽在您的掌控之中。"
+  "release_note": "- 将 LibreDB Studio 更新至 1.0.0，这是一个大版本。新增十二种连接类型，总数达到四十一种引擎：BigQuery、MQTT、Firestore、RabbitMQ、Snowflake、OPC UA、Apache Spark、MTConnect、Modbus、Sparkplug B、NETCONF 和 SNMP。\n- 本版本包含一项安全修复：断开连接请求现在只关闭调用者自己的连接（GHSA-78jw-7pvp-64h3），因此多个账号共用的服务器应当升级。\n- Studio 现在可以运行在一个控制平面之下，由它决定谁可以用哪个凭据打开哪个数据库。除非运维人员设置 `GOVERNANCE_SOURCE`，该功能保持关闭；未设置该变量的安装与 0.18.3 的行为一致。\n- 代理模式现在可以在 MySQL 和 MariaDB、MongoDB 以及 Kubernetes 上执行语句。\n- 调用 HTTP API 的一方需注意：权限不足的拒绝现在返回 403 而不是 401，语句超时返回 504 而不是 408。"
 }

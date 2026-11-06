@@ -1,0 +1,153 @@
+name: nametag
+services:
+  nametag:
+    image: ghcr.io/mattogodoy/nametag:0.64.0@sha256:406ff34f0a7c064fbf15ee57ed47e01cb5b157d4f992ff903fc559c435296c42
+    container_name: nametag
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    ports:
+      - target: 3000
+        published: "10300"
+        protocol: tcp
+    environment:
+      DB_HOST: nametag-db
+      DB_PORT: "5432"
+      DB_NAME: nametag
+      DB_USER: nametag
+      NEXTAUTH_URL: http://localhost:10300
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    # DB_PASSWORD, NEXTAUTH_SECRET and CRON_SECRET come from the file that
+    # nametag-init generates, so every install gets its own secrets.
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -a
+        . /app/data/secrets.env
+        set +a
+        exec docker-entrypoint.sh node server.js
+    depends_on:
+      nametag-init:
+        condition: service_completed_successfully
+      nametag-db:
+        condition: service_healthy
+    networks:
+      - nametag
+  nametag-init:
+    image: alpine:3.20@sha256:45e09956dc667c5eff3583c9d94830261fb1ca0be10a0a7db36266edf5de9e1d
+    container_name: nametag-init
+    restart: "no"
+    command:
+      - /bin/sh
+      - -c
+      # ZimaOS interpolates this file twice, so even escaped shell
+      # variables arrive empty. This script and the cron one use none.
+      - |
+        set -e
+        cd /data
+        if [ ! -f secrets.env ]; then
+          umask 077
+          {
+            printf 'NEXTAUTH_SECRET='
+            head -c 32 /dev/urandom | od -An -tx1 | tr -d ' \n'
+            printf '\nCRON_SECRET='
+            head -c 24 /dev/urandom | od -An -tx1 | tr -d ' \n'
+            printf '\nDB_PASSWORD='
+            # Keep the database password if Postgres already has one.
+            if [ -s /db-secret/password ]; then
+              tr -d '\n' < /db-secret/password
+            else
+              head -c 24 /dev/urandom | od -An -tx1 | tr -d ' \n'
+            fi
+            printf '\n'
+          } > secrets.env.tmp
+          mv secrets.env.tmp secrets.env
+        fi
+        umask 077
+        sed -n 's/^DB_PASSWORD=//p' secrets.env | tr -d '\n' > /db-secret/password
+        chown 70:70 /db-secret/password
+        chown -R 1001:1001 /data
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/db-secret
+        target: /db-secret
+
+  nametag-db:
+    image: postgres:16-alpine@sha256:2c942175a1255a9abe0366e48c1b401d9f50f835b04dfea13f111609b5530df7
+    container_name: nametag-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nametag
+      POSTGRES_PASSWORD_FILE: /run/nametag/password
+      POSTGRES_DB: nametag
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: /DATA/AppData/$AppID/db-secret
+        target: /run/nametag
+        read_only: true
+    depends_on:
+      nametag-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nametag -d nametag"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - nametag
+  nametag-cron:
+    image: alpine:3.20@sha256:45e09956dc667c5eff3583c9d94830261fb1ca0be10a0a7db36266edf5de9e1d
+    container_name: nametag-cron
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+        read_only: true
+    command:
+      - /bin/sh
+      - -c
+      # No shell variables here either (see nametag-init). sed builds one
+      # crontab entry per schedule line, then fills in the secret.
+      - |
+        while [ ! -f /data/secrets.env ]; do sleep 2; done
+        printf '%s\n' \
+          '0 8 * * * send-reminders' \
+          '0 3 * * * purge-deleted' \
+          '0 2,10,18 * * * carddav-sync' \
+          '*/5 * * * * geocode' > /tmp/jobs
+        sed -n 's/^CRON_SECRET=//p' /data/secrets.env > /tmp/secret
+        sed 's|^\(.* \)\([a-z-]*\)|\1wget -q -O - --header="Authorization: Bearer SECRET" http://nametag:3000/api/cron/\2 > /proc/1/fd/1 2>\&1|' /tmp/jobs > /tmp/crontab
+        sed "s|SECRET|`cat /tmp/secret`|" /tmp/crontab > /etc/crontabs/root
+        rm -f /tmp/jobs /tmp/secret /tmp/crontab
+        exec crond -f -l 2
+    depends_on:
+      - nametag
+    networks:
+      - nametag
+
+networks:
+  nametag:
+    name: nametag
+
+x-casaos:
+  id: one.nametag.nametag
+  main: nametag
+  index: /
+  port_map: "10300"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages/apps/one.nametag.nametag/assets/icon.png
+  title:
+    en_US: Nametag
+  version: "0.64.0"

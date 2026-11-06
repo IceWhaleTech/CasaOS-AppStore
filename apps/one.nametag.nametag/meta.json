@@ -1,0 +1,39 @@
+{
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "Matto Godoy",
+  "developer": "Matto Godoy",
+  "category": "Productivity",
+  "thumbnail": "/apps/one.nametag.nametag/assets/thumbnail.webp",
+  "screenshot_link": [
+    "/apps/one.nametag.nametag/assets/screenshot-1.webp",
+    "/apps/one.nametag.nametag/assets/screenshot-2.webp",
+    "/apps/one.nametag.nametag/assets/screenshot-3.webp",
+    "/apps/one.nametag.nametag/assets/screenshot-4.webp"
+  ],
+  "tagline": "A personal CRM for the people in your life",
+  "description": "Nametag helps you remember the people you care about. Keep notes, birthdays and important dates, see how everyone is connected in an interactive network graph, organize people into groups, keep a journal, and get reminders to stay in touch. Two-way CardDAV sync keeps it in step with Google Contacts, iCloud, Outlook or Nextcloud.",
+  "tips": {
+    "before_install": "Before installing, set NEXTAUTH_URL to the address you will open Nametag at, for example http://192.168.1.10:10300 (use your ZimaOS IP or domain). The default, http://localhost:10300, only works from the ZimaOS device itself, and sign-in and email links will point to the wrong place.\n\nAfter installing, open Nametag and create your account. Anyone who can reach this port can also register, so once your account exists you can add DISABLE_REGISTRATION=true to close sign-ups.\n\nEmail is optional. To send reminder and password-reset emails, add the SMTP_* variables described at https://docs.nametag.one/self-hosting/email/\n"
+  },
+  "website": "https://nametag.one",
+  "repo": "https://github.com/mattogodoy/nametag",
+  "docs": "https://docs.nametag.one",
+  "support": "https://github.com/mattogodoy/nametag/issues",
+  "update_at": "2026-10-15",
+  "title": "Nametag",
+  "release_note": "First version in the ZimaOS App Store.",
+  "base_url": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@gh-pages",
+  "id": "one.nametag.nametag",
+  "version": "0.64.0",
+  "categories": [
+    "productivity"
+  ],
+  "min_memory": 268435456,
+  "min_image_size": {
+    "amd64": 458595317,
+    "arm64": 451695905
+  }
+}
