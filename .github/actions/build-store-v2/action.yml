@@ -47,7 +47,7 @@ runs:
   steps:
     - name: Run upstream build action
       id: build
-      uses: IceWhaleTech/build-appstore-action@e3d9d9b28a473bd7ee82118621fb728559e4e5cb
+      uses: IceWhaleTech/build-appstore-action@c9bb47fad5b32d7928a07978fad68801f52e910f
       with:
         source: ${{ inputs.source }}
         output: ${{ inputs.output }}

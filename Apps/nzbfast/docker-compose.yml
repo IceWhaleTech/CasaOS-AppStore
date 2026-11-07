@@ -1,0 +1,90 @@
+name: nzbfast
+services:
+  nzbfast:
+    image: nzbfast/nzbfast:1.3.1
+    container_name: nzbfast
+    network_mode: bridge
+    restart: unless-stopped
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      NZBFAST_APIKEY: ""
+    ports:
+      - target: 6789
+        published: "6790"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/$AppID/watch
+        target: /watch
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+x-casaos:
+  id: com.nzbfast.nzbfast
+  main: nzbfast
+  index: /
+  port_map: "6790"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/nzbfast/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/nzbfast/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/nzbfast/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/nzbfast/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/nzbfast/screenshot-4.png
+  title:
+    en_US: nzbfast
+  tagline:
+    en_US: Fast Usenet downloader with a SABnzbd-compatible API
+  description:
+    en_US: >-
+      nzbfast is a speed-focused Usenet (NZB) downloader written in Rust. It is
+      one small binary with a low memory footprint, and it saturates a fast line
+      with a handful of connections.
+
+
+      Articles are verified while they arrive, so most jobs finish with no
+      separate verify pass. Repair and unpack run only when they are actually
+      needed, and extraction starts before the last article lands.
+
+
+      The web dashboard on port 6790 also serves a SABnzbd-compatible API, so
+      Sonarr, Radarr, Prowlarr and friends work with no extra glue. Add an .nzb
+      from the dashboard, or drop one into the watch folder.
+
+
+      First run: open the dashboard, add your Usenet provider under Settings,
+      and copy the API key it shows you into your *arr apps. If you would rather
+      pin the key yourself so it survives a reinstall, set NZBFAST_APIKEY before
+      the first start. Leave it empty and nzbfast generates one for you.
+  tips:
+    before_install:
+      en_US: >-
+        Your settings, API key and queue live in the config folder. Keep that
+        mapping pointed at the same host folder when you update or reinstall, or
+        nzbfast comes back looking like a fresh install.
+  author: nzbfast
+  developer: nzbfast
+  category: Media
+  architectures:
+    - amd64
+    - arm64
+  version: "1.3.1"
+  update_at: "2026-09-01"
+  release_notes:
+    en_US: |-
+      - Posts that hide their real names now land under them, with folder structure intact.
+      - Three ways a download could stall for hours are closed.
+      - SABnzbd-compatible API answers corrected for nzb360, Sonarr, Radarr and other remotes.
+  website: https://nzbfast.github.io/nzbfast/
+  repo: https://github.com/nzbfast/nzbfast
+  support: https://github.com/nzbfast/nzbfast/issues
+  docs: https://nzbfast.github.io/nzbfast/MANUAL.html

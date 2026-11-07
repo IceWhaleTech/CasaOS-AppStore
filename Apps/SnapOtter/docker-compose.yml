@@ -1,0 +1,188 @@
+name: snapotter
+services:
+  snapotter:
+    image: snapotter/snapotter:2.2.0
+    deploy:
+      resources:
+        reservations:
+          memory: "1024M"
+    network_mode: bridge
+    ports:
+      - target: 1349
+        published: "1349"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/workspace
+        target: /tmp/workspace
+    environment:
+      - AUTH_ENABLED=true
+      - DEFAULT_USERNAME=admin
+      - DEFAULT_PASSWORD=admin
+      - MAX_UPLOAD_SIZE_MB=0
+      - MAX_BATCH_SIZE=0
+      - CONCURRENT_JOBS=0
+      - REDIS_MAXMEMORY=512mb
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:1349/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 90s
+    x-casaos:
+      ports:
+        - container: "1349"
+          description:
+            en_US: Web UI and API port
+      volumes:
+        - container: /data
+          description:
+            en_US: SnapOtter data, user files, AI models, logs, embedded PostgreSQL, and embedded Redis
+        - container: /tmp/workspace
+          description:
+            en_US: Temporary file-processing workspace
+      envs:
+        - container: AUTH_ENABLED
+          description:
+            en_US: Require login before using SnapOtter
+        - container: DEFAULT_USERNAME
+          description:
+            en_US: Initial administrator username, used only on first run
+        - container: DEFAULT_PASSWORD
+          description:
+            en_US: Initial administrator password, change after first login
+        - container: MAX_UPLOAD_SIZE_MB
+          description:
+            en_US: Maximum upload size in MB, set to 0 for unlimited
+        - container: MAX_BATCH_SIZE
+          description:
+            en_US: Maximum files per batch, set to 0 for unlimited
+        - container: CONCURRENT_JOBS
+          description:
+            en_US: Number of concurrent jobs, set to 0 to auto-detect
+        - container: REDIS_MAXMEMORY
+          description:
+            en_US: Memory cap for embedded Redis
+        - container: TRUST_PROXY
+          description:
+            en_US: Trust reverse proxy headers
+    container_name: snapotter
+x-casaos:
+  id: com.snapotter.snapotter
+  main: snapotter
+  index: /
+  port_map: "1349"
+  scheme: http
+  title:
+    en_US: SnapOtter
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SnapOtter/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SnapOtter/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SnapOtter/screenshot-1.png
+  tagline:
+    en_US: Self-hosted file toolkit for images, video, audio, PDFs, and files
+  description:
+    en_US: |
+      SnapOtter is an open-source, self-hosted file manipulation suite with 200+ tools across images, video, audio, PDFs, and files. It includes batch processing, reusable pipelines, local AI tools, a browser image editor, and a REST API so files stay on your own server.
+
+      This package uses SnapOtter's single-container embedded mode for an easy CasaOS install. PostgreSQL 17 and Redis 8 run inside the container when DATABASE_URL and REDIS_URL are left unset, with persistent data stored under /data.
+
+      Default login is admin / admin. SnapOtter asks you to change the default password after first login.
+  tips:
+    before_install:
+      en_US: |
+        Default login is admin / admin. You will be asked to change the password after first login.
+
+        This package uses SnapOtter embedded mode, so leave DATABASE_URL and REDIS_URL unset unless you are moving to the upstream multi-container PostgreSQL and Redis stack.
+  author: SnapOtter
+  developer: SnapOtter
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+  version: "2.2.0"
+  update_at: "2026-09-02"
+  release_notes:
+    en_US: |
+      - Security: fixes delegated `users:manage` privilege escalation, gates every tool endpoint, and hardens proxy trust so login rate limiting cannot be bypassed with forged headers.
+      - New features: adds Rounded Crop and Remove GIF Background, plus Object Eraser lasso and high-quality modes, resize aspect-ratio presets, and two-tier OCR.
+      - Reliability: fixes iPhone HEIC imports, multi-file PDF conversion presets, stuck downloads, and PostgreSQL/Redis startup and recovery failures.
+      - Localization and accessibility: translates the docs, website, and API reference into 21 languages and brings interface contrast to WCAG AA.
+    en_GB: |
+      - Security: fixes delegated `users:manage` privilege escalation, gates every tool endpoint, and hardens proxy trust so login rate limiting cannot be bypassed with forged headers.
+      - New features: adds Rounded Crop and Remove GIF Background, plus Object Eraser lasso and high-quality modes, resize aspect-ratio presets, and two-tier OCR.
+      - Reliability: fixes iPhone HEIC imports, multi-file PDF conversion presets, stuck downloads, and PostgreSQL/Redis startup and recovery failures.
+      - Localisation and accessibility: translates the docs, website, and API reference into 21 languages and brings interface contrast to WCAG AA.
+    it_IT: |
+      - Sicurezza: corregge l'escalation dei privilegi per i ruoli `users:manage` delegati, protegge tutti gli endpoint degli strumenti e limita la fiducia nei proxy per impedire di aggirare il limite dei tentativi di accesso con intestazioni falsificate.
+      - Novita: aggiunge Rounded Crop e Remove GIF Background, oltre al lazo e alla modalita di alta qualita di Object Eraser, ai formati predefiniti per il ridimensionamento e all'OCR a due livelli.
+      - Affidabilita: corregge l'importazione dei file HEIC da iPhone, le conversioni PDF predefinite con piu file, i download bloccati e gli errori di avvio e ripristino di PostgreSQL/Redis.
+      - Localizzazione e accessibilita: traduce documentazione, sito web e riferimento API in 21 lingue e porta il contrasto dell'interfaccia allo standard WCAG AA.
+    nb_NO: |
+      - Sikkerhet: retter privilegieeskalering for delegerte `users:manage`-roller, beskytter alle verktøyendepunkter og strammer inn proxy-tillit slik at innloggingsbegrensningen ikke kan omgas med forfalskede hoder.
+      - Nye funksjoner: legger til Rounded Crop og Remove GIF Background, samt lasso- og hoykvalitetsmodus i Object Eraser, sideforholdsvalg for storrelsesendring og toniva-OCR.
+      - Stabilitet: retter import av HEIC-filer fra iPhone, PDF-konverteringsvalg med flere filer, fastlagte nedlastinger og feil ved oppstart og gjenoppretting av PostgreSQL/Redis.
+      - Sprak og tilgjengelighet: oversetter dokumentasjonen, nettstedet og API-referansen til 21 sprak og gir grensesnittet kontrast i henhold til WCAG AA.
+    zh_CN: |
+      - 安全性：修复委派 `users:manage` 角色的权限提升漏洞，为所有工具端点强制执行权限检查，并收紧代理信任设置，防止通过伪造请求头绕过登录速率限制。
+      - 新功能：新增 Rounded Crop（圆角裁剪）和 Remove GIF Background（移除 GIF 背景），并为 Object Eraser 加入套索与高质量模式，同时新增调整尺寸的宽高比预设和双层 OCR。
+      - 稳定性：修复 iPhone HEIC 文件导入、多文件 PDF 转换预设、下载卡死，以及 PostgreSQL/Redis 启动和恢复失败等问题。
+      - 本地化与无障碍：文档、网站和 API 参考现已支持 21 种语言，界面对比度达到 WCAG AA 标准。
+    ja_JP: |
+      - セキュリティ: 委任された `users:manage` ロールの権限昇格を修正し、すべてのツールエンドポイントに権限チェックを適用しました。また、偽装ヘッダーでログインのレート制限を回避できないよう、プロキシの信頼設定を強化しました。
+      - 新機能: Rounded Crop と Remove GIF Background を追加し、Object Eraser の投げ縄・高品質モード、リサイズのアスペクト比プリセット、2段階OCRにも対応しました。
+      - 信頼性: iPhoneのHEIC読み込み、複数ファイルのPDF変換プリセット、停止するダウンロード、PostgreSQL/Redisの起動・復旧エラーを修正しました。
+      - ローカライズとアクセシビリティ: ドキュメント、Webサイト、APIリファレンスを21言語に翻訳し、画面のコントラストをWCAG AA準拠に改善しました。
+    ko_KR: |
+      - 보안: 위임된 `users:manage` 역할의 권한 상승 취약점을 수정하고 모든 도구 엔드포인트에 권한 검사를 적용했으며, 위조 헤더로 로그인 속도 제한을 우회하지 못하도록 프록시 신뢰 설정을 강화했습니다.
+      - 새로운 기능: Rounded Crop과 Remove GIF Background를 추가하고 Object Eraser 올가미 및 고품질 모드, 크기 조정 화면 비율 프리셋, 2단계 OCR을 지원합니다.
+      - 안정성: iPhone HEIC 가져오기, 여러 파일 PDF 변환 프리셋, 멈춘 다운로드, PostgreSQL/Redis 시작 및 복구 오류를 수정했습니다.
+      - 현지화 및 접근성: 문서, 웹사이트, API 참조를 21개 언어로 번역하고 인터페이스 대비를 WCAG AA 수준으로 개선했습니다.
+    fr_FR: |
+      - Securite : corrige l'elevation de privileges des roles `users:manage` delegues, protege tous les points de terminaison des outils et durcit la confiance accordee aux proxys afin que de faux en-tetes ne puissent plus contourner la limitation des connexions.
+      - Nouveautes : ajoute Rounded Crop et Remove GIF Background, ainsi que les modes lasso et haute qualite d'Object Eraser, des proportions predefinies pour le redimensionnement et un OCR a deux niveaux.
+      - Fiabilite : corrige l'importation des fichiers HEIC d'iPhone, les conversions PDF predefinies avec plusieurs fichiers, les telechargements bloques et les echecs de demarrage et de recuperation de PostgreSQL/Redis.
+      - Localisation et accessibilite : traduit la documentation, le site web et la reference API en 21 langues et rend le contraste de l'interface conforme au niveau WCAG AA.
+    de_DE: |
+      - Sicherheit: behebt die Rechteausweitung bei delegierten `users:manage`-Rollen, sichert alle Werkzeug-Endpunkte ab und hartet das Proxy-Vertrauen, damit gefalschte Header die Anmeldebegrenzung nicht umgehen konnen.
+      - Neue Funktionen: fugt Rounded Crop und Remove GIF Background sowie Lasso- und Hochqualitatsmodi fur Object Eraser, Seitenverhaltnis-Vorlagen beim Skalieren und zweistufige OCR hinzu.
+      - Zuverlassigkeit: behebt den Import von iPhone-HEIC-Dateien, PDF-Konvertierungsvorlagen mit mehreren Dateien, hangende Downloads sowie Start- und Wiederherstellungsfehler von PostgreSQL/Redis.
+      - Lokalisierung und Barrierefreiheit: ubersetzt Dokumentation, Website und API-Referenz in 21 Sprachen und verbessert den Oberflachenkontrast auf WCAG-AA-Niveau.
+    sv_SE: |
+      - Sakerhet: atgardar privilegieeskalering for delegerade `users:manage`-roller, skyddar alla verktygsandpunkter och skarper proxyfortroendet sa att forfalskade huvuden inte kan kringga inloggningens hastighetsbegransning.
+      - Nya funktioner: lagger till Rounded Crop och Remove GIF Background samt lasso- och hogkvalitetslage i Object Eraser, bildformatsmallar for storleksandring och OCR i tva nivaer.
+      - Tillforlitlighet: atgardar import av HEIC-filer fran iPhone, PDF-konverteringsmallar med flera filer, fastnade hamtningar och fel vid start och aterstallning av PostgreSQL/Redis.
+      - Lokalisering och tillganglighet: oversatter dokumentationen, webbplatsen och API-referensen till 21 sprak och hojer granssnittets kontrast till WCAG AA.
+    el_GR: |
+      - Ασφάλεια: διορθώνει την κλιμάκωση προνομίων σε εκχωρημένους ρόλους `users:manage`, προστατεύει όλα τα τελικά σημεία εργαλείων και περιορίζει την εμπιστοσύνη σε διακομιστές μεσολάβησης ώστε πλαστές κεφαλίδες να μην παρακάμπτουν τον περιορισμό συνδέσεων.
+      - Νέες δυνατότητες: προσθέτει τα Rounded Crop και Remove GIF Background, καθώς και λάσο και λειτουργία υψηλής ποιότητας στο Object Eraser, προκαθορισμένες αναλογίες αλλαγής μεγέθους και OCR δύο επιπέδων.
+      - Αξιοπιστία: διορθώνει την εισαγωγή HEIC από iPhone, τις μετατροπές PDF πολλών αρχείων, τις λήψεις που κολλούσαν και αποτυχίες εκκίνησης και ανάκτησης PostgreSQL/Redis.
+      - Τοπική προσαρμογή και προσβασιμότητα: μεταφράζει την τεκμηρίωση, τον ιστότοπο και την αναφορά API σε 21 γλώσσες και φέρνει την αντίθεση της διεπαφής στο επίπεδο WCAG AA.
+    hr_HR: |
+      - Sigurnost: ispravlja eskalaciju ovlasti za delegirane uloge `users:manage`, stiti sve krajnje tocke alata i poostrava povjerenje prema proxyjima kako krivotvorena zaglavlja ne bi mogla zaobici ogranicenje prijava.
+      - Nove znacajke: dodaje Rounded Crop i Remove GIF Background te laso i visokokvalitetni nacin rada u Object Eraseru, zadane omjere za promjenu velicine i dvorazinski OCR.
+      - Pouzdanost: ispravlja uvoz HEIC datoteka s iPhonea, PDF pretvorbe s vise datoteka, zaglavljena preuzimanja te pogreske pri pokretanju i oporavku PostgreSQL-a/Redisa.
+      - Lokalizacija i pristupacnost: prevodi dokumentaciju, web-mjesto i API referencu na 21 jezik te podize kontrast sucelja na razinu WCAG AA.
+    pt_PT: |
+      - Seguranca: corrige a elevacao de privilegios nas funcoes `users:manage` delegadas, protege todos os endpoints das ferramentas e restringe a confianca nos proxies para impedir que cabecalhos falsificados contornem o limite de tentativas de inicio de sessao.
+      - Novidades: adiciona Rounded Crop e Remove GIF Background, bem como os modos laco e alta qualidade do Object Eraser, proporcoes predefinidas para redimensionamento e OCR em dois niveis.
+      - Fiabilidade: corrige a importacao de ficheiros HEIC do iPhone, as conversoes PDF com varios ficheiros, as transferencias bloqueadas e as falhas de arranque e recuperacao do PostgreSQL/Redis.
+      - Localizacao e acessibilidade: traduz a documentacao, o site e a referencia da API para 21 idiomas e eleva o contraste da interface ao nivel WCAG AA.
+    ru_RU: |
+      - Безопасность: устранено повышение привилегий для делегированных ролей `users:manage`, защищены все конечные точки инструментов и ужесточено доверие к прокси, чтобы поддельные заголовки не позволяли обходить ограничение попыток входа.
+      - Новые функции: добавлены Rounded Crop и Remove GIF Background, режимы лассо и высокого качества для Object Eraser, шаблоны соотношения сторон при изменении размера и двухуровневое OCR.
+      - Надёжность: исправлены импорт HEIC с iPhone, преобразование PDF для нескольких файлов, зависающие загрузки и ошибки запуска и восстановления PostgreSQL/Redis.
+      - Локализация и доступность: документация, сайт и справочник API переведены на 21 язык, а контраст интерфейса приведён к уровню WCAG AA.
+    tr_TR: |
+      - Guvenlik: devredilmis `users:manage` rollerindeki ayricalik yukseltme acigini kapatir, tum arac uc noktalarini korur ve sahte basliklarla oturum acma hiz sinirinin asilmasini onlemek icin proxy guvenini sikilastirir.
+      - Yeni ozellikler: Rounded Crop ve Remove GIF Background araclarinin yani sira Object Eraser icin kement ve yuksek kalite modlarini, yeniden boyutlandirma en-boy orani hazir ayarlarini ve iki kademeli OCR'yi ekler.
+      - Guvenilirlik: iPhone HEIC ice aktarma, cok dosyali PDF donusturme hazir ayarlari, takilan indirmeler ve PostgreSQL/Redis baslatma ve kurtarma hatalarini duzeltir.
+      - Yerellestirme ve erisilebilirlik: belgeleri, web sitesini ve API basvurusunu 21 dile cevirir ve arayuz kontrastini WCAG AA duzeyine getirir.
+  website: https://snapotter.com
+  repo: https://github.com/snapotter-hq/SnapOtter
+  support: https://discord.gg/hr3s7HPUsr
+  docs: https://docs.snapotter.com/guide/getting-started
