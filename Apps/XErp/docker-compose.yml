@@ -1,0 +1,105 @@
+name: xerp
+services:
+  xerp:
+    image: ghcr.io/zyc009234/xerp:2.1.2
+    container_name: xerp
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 8686
+        published: "8686"
+        protocol: tcp
+    environment:
+      TZ: Asia/Shanghai
+      XERP_ADMIN_PASSWORD: admin123
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Time zone used for document dates and the daily backup
+            zh_CN: 时区，影响单据日期和每日自动备份时间
+        - container: XERP_ADMIN_PASSWORD
+          description:
+            en_US: Initial password of the admin account (at least 6 characters). Only used on the first start; change it later in the app.
+            zh_CN: 管理员账号 admin 的初始密码（至少 6 位），只在第一次启动时生效，之后请在软件里修改
+      volumes:
+        - container: /data
+          description:
+            en_US: Database, daily automatic backups and logs
+            zh_CN: 数据库、每日自动备份和日志
+      ports:
+        - container: "8686"
+          description:
+            en_US: Web interface
+            zh_CN: 网页界面
+x-casaos:
+  id: xyz.zhaoyoucai.xerp
+  main: xerp
+  index: /
+  port_map: "8686"
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+  author: Zyc009234
+  developer: Zyc009234
+  category: Finance
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/XErp/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/XErp/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/XErp/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/XErp/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/XErp/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/XErp/screenshot-4.png
+  title:
+    en_US: x.erp
+  tagline:
+    en_US: Inventory, sales and purchasing for small businesses
+    zh_CN: 面向小店和小企业的进销存系统
+  description:
+    en_US: |
+      x.erp is a lightweight, free and open-source (AGPL-3.0) ERP for small shops and small businesses.
+      It covers products with barcodes and multiple units, purchase and sales orders, returns,
+      payments received and paid, multi-warehouse stock with transfers and stock taking, low-stock alerts,
+      finance records, reports, and staff accounts with permissions. It runs in the browser on desktop
+      and mobile, uses a single SQLite database, and keeps all data on your own device.
+      The user interface is in Simplified Chinese.
+    zh_CN: |
+      x.erp 是一个轻量、免费、开源（AGPL-3.0）的进销存系统，面向小店和中小企业。
+      商品档案（条码、辅助单位）、采购单、销售单、退货、收款付款、多仓库库存与调拨盘点、缺货预警、
+      财务流水、统计报表、员工账号与权限，一站搞定。电脑和手机浏览器都能用，数据全部存在你自己的设备上。
+  tips:
+    before_install:
+      en_US: |
+        **First login**
+
+        | Username | Password |
+        |----------|----------|
+        | `admin` | `admin123` |
+
+        Change the password after logging in. To set your own initial password, use Custom Installation
+        and change XERP_ADMIN_PASSWORD before the first start.
+
+        Anonymous usage statistics (a random install ID, version and platform only) can be turned off in 系统设置 (Settings).
+      zh_CN: |
+        **首次登录**
+
+        | 账号 | 密码 |
+        |----------|----------|
+        | `admin` | `admin123` |
+
+        登录后请及时修改密码。想自定义初始密码，请用「自定义安装」，在第一次启动前修改 XERP_ADMIN_PASSWORD。
+
+        匿名使用统计（只含随机安装 ID、版本号和平台）可以在「系统设置」里关闭。
+  website: https://www.zhaoyoucai.xyz/xerp/
+  repo: https://github.com/Zyc009234/x.erp
+  support: https://github.com/Zyc009234/x.erp/issues
+  version: "2.1.2"
+  update_at: "2026-11-07"
+  release_notes:
+    en_US: First version in the ZimaOS App Store.
+    zh_CN: 首次上架 ZimaOS 应用商店。
