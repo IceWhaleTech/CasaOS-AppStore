@@ -1,0 +1,307 @@
+# The-Y CRM for ZimaOS / CasaOS (target: github.com/IceWhaleTech/CasaOS-AppStore, folder Apps/TheYCRM/).
+# Based on the self-hosting bundle (docker-compose.self-host.yml), without Caddy, Watchtower, translation and phone system.
+# Note: ZimaOS interpolates this file twice, so the shell scripts below use no shell variables at all.
+name: the-y-crm
+
+services:
+  app:
+    image: theyat/crm-app:1.1.58
+    restart: unless-stopped
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    # Like the image CMD (database migrations, then start), plus:
+    # - the restricted database role crm_app gets its password (like install.sh / app-rolle.sh)
+    # - first company and admin are created on the very first start (bootstrap does nothing afterwards)
+    command:
+      - /bin/sh
+      - -c
+      - |
+        set -e
+        set -a
+        . /secrets/crm.env
+        set +a
+        npm run migrate
+        node - <<'JS'
+        const { Client } = require('pg');
+        const roleUrl = process.env.APP_DATABASE_URL || '';
+        if (!roleUrl) process.exit(0);
+        const pw = decodeURIComponent(new URL(roleUrl).password || '');
+        if (!pw) { console.error('[the-y-crm] APP_DATABASE_URL has no password'); process.exit(1); }
+        const c = new Client({ connectionString: process.env.DATABASE_URL });
+        (async () => {
+          await c.connect();
+          const r = await c.query("select rolsuper from pg_roles where rolname = 'crm_app'");
+          if (!r.rows.length) throw new Error('database role crm_app is missing');
+          if (r.rows[0].rolsuper) throw new Error('database role crm_app must not be a superuser');
+          await c.query('alter role crm_app with login password ' + c.escapeLiteral(pw));
+          await c.end();
+          console.log('[the-y-crm] database role crm_app ready');
+        })().catch((e) => { console.error('[the-y-crm] crm_app: ' + e.message); process.exit(1); });
+        JS
+        npm run bootstrap
+        unset ADMIN_PASSWORD
+        exec npm run start
+    environment:
+      TZ: $TZ
+      NODE_ENV: production
+      INSTANCE_MODE: live
+      TENANT_MODE: single
+      DEFAULT_TENANT_SLUG: main
+      SELF_HOST: "true"
+      CONTROL_PLANE_URL: https://crm.the-y.at
+      # The address you open the app with. It must start with http:// for sign-in without HTTPS in your home network.
+      APP_URL: http://localhost:8327
+      BASE_DOMAIN: ""
+      PUBLIC_BASE_URL: ""
+      LICENSE_KEY: ""
+      REDIS_URL: redis://redis:6379
+      S3_ENDPOINT: minio:9000
+      S3_ACCESS_KEY: crmminio
+      S3_BUCKET: crm-media
+      # First sign-in (only used on the very first start). Password: AppData/the-y-crm/secrets/admin-password.txt
+      ADMIN_EMAIL: admin@example.com
+      COMPANY_NAME: My Company
+    ports:
+      - target: 3000
+        published: "8327"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets
+        target: /secrets
+        read_only: true
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/api/public/health >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 180s
+    x-casaos:
+      ports:
+        - container: "3000"
+          description:
+            en_US: WebUI HTTP Port
+      volumes:
+        - container: /secrets
+          description:
+            en_US: Generated passwords and keys (keep this folder in your backups)
+      envs:
+        - container: APP_URL
+          description:
+            en_US: The address you open The-Y CRM with, for example http://192.168.1.10:8327. Keep http:// at the start.
+        - container: LICENSE_KEY
+          description:
+            en_US: Optional. You can also enter the licence key in the app on first sign-in.
+        - container: ADMIN_EMAIL
+          description:
+            en_US: Email of the first admin. Only used on the very first start.
+        - container: COMPANY_NAME
+          description:
+            en_US: Company name. Only used on the very first start.
+
+  worker:
+    image: theyat/crm-worker:1.1.58
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_healthy
+    command:
+      - /bin/sh
+      - -c
+      - |
+        set -e
+        set -a
+        . /secrets/crm.env
+        set +a
+        unset ADMIN_PASSWORD
+        exec npm run worker
+    environment:
+      TZ: $TZ
+      NODE_ENV: production
+      INSTANCE_MODE: live
+      TENANT_MODE: single
+      DEFAULT_TENANT_SLUG: main
+      SELF_HOST: "true"
+      CONTROL_PLANE_URL: https://crm.the-y.at
+      APP_URL: http://localhost:8327
+      BASE_DOMAIN: ""
+      PUBLIC_BASE_URL: ""
+      REDIS_URL: redis://redis:6379
+      S3_ENDPOINT: minio:9000
+      S3_ACCESS_KEY: crmminio
+      S3_BUCKET: crm-media
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets
+        target: /secrets
+        read_only: true
+
+  # One-shot service: creates all passwords and keys on the first start (random, per install), then exits.
+  # Later starts change nothing. No password is stored in this file.
+  init:
+    image: theyat/crm-app:1.1.58
+    restart: "no"
+    user: "0:0"
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -eu
+        umask 077
+        mkdir -p /secrets/postgres /secrets/minio
+        cd /secrets
+        if [ ! -s crm.env ]; then
+          head -c 24 /dev/urandom | od -An -tx1 | tr -d ' \n' > postgres/password
+          head -c 24 /dev/urandom | od -An -tx1 | tr -d ' \n' > minio/password
+          head -c 24 /dev/urandom | od -An -tx1 | tr -d ' \n' > .crm_app_password
+          head -c 9 /dev/urandom | od -An -tx1 | tr -d ' \n' > admin-password.txt
+          {
+            printf 'DATABASE_URL=postgres://crm:'; cat postgres/password; printf '@postgres:5432/crm\n'
+            printf 'APP_DATABASE_URL=postgres://crm_app:'; cat .crm_app_password; printf '@postgres:5432/crm\n'
+            printf 'S3_SECRET_KEY='; cat minio/password; printf '\n'
+            printf 'APP_ENCRYPTION_KEY='; head -c 32 /dev/urandom | od -An -tx1 | tr -d ' \n'; printf '\n'
+            printf 'ADMIN_PASSWORD='; cat admin-password.txt; printf '\n'
+            printf 'INSTANCE_ID=casaos-'; head -c 8 /dev/urandom | od -An -tx1 | tr -d ' \n'; printf '\n'
+          } > crm.env.tmp
+          rm -f .crm_app_password
+          mv crm.env.tmp crm.env
+          echo "The-Y CRM: passwords and keys created in AppData/the-y-crm/secrets"
+        fi
+        chmod 755 postgres minio
+        chmod 644 postgres/password minio/password
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets
+        target: /secrets
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    environment:
+      POSTGRES_USER: crm
+      POSTGRES_PASSWORD_FILE: /run/crm-db/password
+      POSTGRES_DB: crm
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets/postgres
+        target: /run/crm-db
+        read_only: true
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U crm -d crm"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/redis
+        target: /data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # File storage (attachments, media), internal only, no port. Same image as the self-hosting bundle (pinned by digest).
+  minio:
+    image: cgr.dev/chainguard/minio@sha256:2136d593beacf4461187035eca949fe49abd589d5079735025c711ca58fee0c8
+    restart: unless-stopped
+    user: "0:0"
+    command: server /data
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    environment:
+      MINIO_ROOT_USER: crmminio
+      MINIO_ROOT_PASSWORD_FILE: /run/crm-minio/password
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/minio
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets/minio
+        target: /run/crm-minio
+        read_only: true
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+x-casaos:
+  id: at.the-y.crm
+  main: app
+  index: /
+  port_map: "8327"
+  scheme: http
+  icon: icon.png
+  screenshot_link:
+    - screenshot-1.png
+    - screenshot-2.png
+    - screenshot-3.png
+  title:
+    en_US: The-Y CRM
+  tagline:
+    en_US: Shared inbox, CRM and invoicing for small teams
+  description:
+    en_US: |
+      The-Y CRM brings customer conversations, contacts and paperwork into one place. It runs on this device, and your data is stored only here.
+
+      **Before you install**
+      - The-Y CRM is in **Alpha**. Features change, so please keep backups.
+      - The-Y CRM is **proprietary** software (freemium), **not open source**. Terms: https://the-y.at/en/nutzungsbedingungen/
+      - You need a **licence key**. **Free** for up to 3 users (1,000 outgoing messages per month, 2 GB storage, 1 brand, no support): create the free key after signing up at crm.the-y.at. A paid self-hosting licence without these limits starts at €10 per month (Alpha/Beta price, businesses only): https://the-y.at/en/crm/costs/
+      - Without a key the app runs fully for 14 days and then becomes read-only until you enter one.
+      - The app checks its licence with crm.the-y.at (licence key, installation ID and version only) and asks for new versions.
+      - **Not included in this package:** the built-in phone system and the translation service in the inbox.
+      - This package opens over plain http in your home network. That works for sign-in, inbox, email (IMAP/SMTP), CRM and invoices. It does **not** work for: phone and video in the browser, push notifications, installing the app on a phone, and everything that needs a public HTTPS address (WhatsApp, Facebook, Instagram, Telegram, Google sign-in, Microsoft 365 mailboxes).
+
+      **What you get**
+      - Shared inbox: email, WhatsApp, Facebook Messenger, Instagram and web chat in one place, with assignment, labels and internal notes
+      - CRM: contacts, companies, deals and pipeline with the full customer history
+      - Automation: rules, auto-replies, macros and rule-based chatbots
+      - Appointments and booking links
+      - Invoices, payments, dunning and receipts, with an export for your tax advisor (DATEV, BMD)
+      - Marketing campaigns (WhatsApp and SMS only to contacts who agreed)
+      - Team tools: time clock, vacation and shift plan
+      - Interface in English, German and Turkish
+      - AI features with your own API key (Anthropic, OpenAI or Google)
+  tips:
+    before_install:
+      en_US: |
+        Sign-in after installation:
+        - Email: admin@example.com (change it later in the app under your profile)
+        - Password: open Files, then AppData > the-y-crm > secrets > admin-password.txt
+
+        The first start takes 1 to 3 minutes (database setup). The interface starts in German: switch the language at the top right of the sign-in page.
+        If you open the app with another address than http://localhost:8327, enter that address as APP_URL in the app settings, for example http://192.168.1.10:8327. Keep http:// at the start, otherwise sign-in over http does not work.
+        On first sign-in the app asks for your licence key. Free key: sign up at https://crm.the-y.at, then Settings > License > Create free key.
+        Please change the password after the first sign-in. Keep the "secrets" folder in your backups: it holds the key that encrypts saved mailbox passwords.
+  author: The-Y e.U.
+  developer: The-Y e.U.
+  category: Productivity
+  architectures:
+    - amd64
+  version: "1.1.58"
+  update_at: "2026-11-07"
+  release_notes:
+    en_US: "First release in the ZimaOS/CasaOS app store. Release notes: https://the-y.at/en/release-notes/"
+  website: https://the-y.at/en/crm/
+  support: https://the-y.at/en/kontakt/
+  docs: https://the-y.at/en/docs/self-host/
