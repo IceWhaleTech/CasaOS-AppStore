@@ -1,0 +1,59 @@
+name: openfault
+services:
+  openfault:
+    image: ghcr.io/openfault/openfault:0.1.0
+    container_name: openfault
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "10880"
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: openfault-data
+        target: /data
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_US: WebUI HTTP Port
+      volumes:
+        - container: /data
+          description:
+            en_US: SQLite database and generated secret
+
+volumes:
+  openfault-data:
+    name: openfault-data
+
+x-casaos:
+  id: org.openfault.openfault
+  main: openfault
+  index: /
+  port_map: "10880"
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+  author: OpenFault
+  developer: OpenFault
+  category: Developer
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenFault/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenFault/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenFault/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenFault/screenshot-2.png
+  title:
+    en_US: OpenFault
+  tagline:
+    en_US: Self-hosted, Sentry-compatible error tracker
+  description:
+    en_US: OpenFault is a free, MIT-licensed, self-hosted error tracker that accepts events from your existing Sentry SDKs; change the DSN and you are done. One container with SQLite inside, plus an MCP server so coding agents can triage errors.
+  website: https://openfault.dev
+  repo: https://github.com/OpenFault/openfault
+  docs: https://openfault.dev/docs/install
+  support: https://github.com/OpenFault/openfault/issues
+  version: "0.1.0"
+  update_at: "2026-11-08"
+  release_notes:
+    en_US: First version in the app store.
