@@ -1,0 +1,112 @@
+name: contrack
+services:
+  contrack:
+    image: ghcr.io/arvarik/contrack:2.0.6
+    container_name: contrack
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    ports:
+      - target: 3210
+        published: "3210"
+        protocol: tcp
+    environment:
+      AUTH_REQUIRED: "true"
+      PUBLIC_URL: ""
+      TRUST_PROXY_HOPS: "0"
+      ALLOWED_HOSTS: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    depends_on:
+      contrack-init:
+        condition: service_completed_successfully
+    x-casaos:
+      envs:
+        - container: AUTH_REQUIRED
+          description:
+            en_US: Require sign-in. Keep true when port 3210 is reachable on your network; the first visit creates the admin account.
+        - container: PUBLIC_URL
+          description:
+            en_US: Optional external origin with no path (for example https://crm.example.com). Needed behind a reverse proxy or for outgoing mail, passkeys, and OAuth links.
+        - container: TRUST_PROXY_HOPS
+          description:
+            en_US: Number of reverse proxies in front of Contrack (0 to 10). Set to 1 behind one reverse proxy.
+        - container: ALLOWED_HOSTS
+          description:
+            en_US: Optional comma-separated hostnames allowed before the first account exists (for example a Tailscale .ts.net name).
+      ports:
+        - container: "3210"
+          description:
+            en_US: WebUI HTTP Port
+      volumes:
+        - container: /app/data
+          description:
+            en_US: SQLite database, uploads, verified backups, and encryption key
+
+  # Contrack runs as UID 1000 (node), while Docker creates bind-mounted host
+  # folders as root. Fix ownership on /app/data before the server starts.
+  # Keep command free of $ variables because ZimaOS interpolates Compose twice.
+  contrack-init:
+    image: ghcr.io/arvarik/contrack:2.0.6
+    container_name: contrack-init
+    user: "0:0"
+    restart: "no"
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["chown -R 1000:1000 /app/data"]
+    healthcheck:
+      disable: true
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+
+x-casaos:
+  id: io.github.arvarik.contrack
+  main: contrack
+  index: /
+  port_map: "3210"
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+  author: Arvind Arik
+  developer: Arvind Arik
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Contrack/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Contrack/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Contrack/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Contrack/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Contrack/screenshot-3.png
+  title:
+    en_US: Contrack
+  tagline:
+    en_US: Self-hosted personal CRM with local semantic search
+  description:
+    en_US: |
+      Contrack is an open-source (AGPL-3.0), self-hosted personal CRM that keeps your contacts, notes, meetings, and reminders in one SQLite database on your own server.
+
+      Import contacts from Apple, Google, LinkedIn, or Facebook, sync calendars and mailboxes (Google Workspace, CardDAV, ICS, IMAP), merge duplicates with a 90-day undo, and track follow-ups, birthdays, and milestones on the daily Pulse page or an interactive map. Built-in local semantic search (Ask Contrack) runs inside the container with no external API required, while AI enrichment and MCP client connections remain optional. Multiple family or team profiles can share one instance with isolated address books and verified automatic snapshots.
+  tips:
+    before_install:
+      en_US: |
+        Sign-in is enabled by default (AUTH_REQUIRED=true). Open Contrack at your device's IP address or local hostname after installing to create the admin account on first visit.
+
+        When serving Contrack behind a reverse proxy over HTTPS, set PUBLIC_URL to the external origin with no path (for example https://crm.example.com) and set TRUST_PROXY_HOPS=1. If you open Contrack via a non-local hostname such as a Tailscale .ts.net address before creating the first account, set PUBLIC_URL or add that hostname to ALLOWED_HOSTS.
+
+        AI providers, outgoing mail, and calendar or CardDAV connectors are optional and can be configured in Settings after sign-in.
+  website: https://github.com/arvarik/contrack
+  repo: https://github.com/arvarik/contrack
+  support: https://github.com/arvarik/contrack/issues
+  docs: https://github.com/arvarik/contrack/blob/main/docs/self-hosting.md
+  version: "2.0.6"
+  update_at: "2026-11-08"
+  release_notes:
+    en_US: |
+      - Initial CasaOS and ZimaOS App Store release packaging Contrack 2.0.6.
+      - Syncs birthdays, addresses, notes, websites, and labels from Google Contacts, and adds alias support to the Calendar connector.
+      - Fixes Gmail sync when AI summaries are disabled, improves correspondent deduplication across Google and IMAP, and hardens CardDAV private-host checks.
