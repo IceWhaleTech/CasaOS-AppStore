@@ -8,7 +8,7 @@ services:
           memory: 1024M
     container_name: immich-server
     hostname: immich-server
-    image: ghcr.io/immich-app/immich-server:v2.7.2
+    image: ghcr.io/immich-app/immich-server:v3.2.4
     volumes:
       - /DATA/Gallery/immich:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
@@ -30,7 +30,7 @@ services:
   immich-machine-learning:
     container_name: immich-machine-learning
     hostname: immich-machine-learning
-    image: ghcr.io/immich-app/immich-machine-learning:v2.7.2
+    image: ghcr.io/immich-app/immich-machine-learning:v3.2.4
     environment:
       DB_DATABASE_NAME: immich
       DB_PASSWORD: postgres
@@ -110,15 +110,15 @@ x-casaos:
 
       Immich è qui per trasformare il modo in cui gestisci e godi dei tuoi file multimediali su TV, smartphone e altri dispositivi. A differenza degli album fotografici tradizionali o dei servizi cloud mainstream, immich offre una piattaforma moderna e fluida per organizzare, condividere e accedere alle tue foto e video. Immagina di eseguire il backup dei tuoi momenti preziosi dai dispositivi mobili in modo semplice e di visualizzarli istantaneamente sulla tua TV o condividerli con i membri della famiglia: immich rende tutto questo possibile.
 
-      Immich si distingue per il backup automatico dai dispositivi mobili, un'interfaccia web elegante per una facile navigazione dei contenuti e funzionalità avanzate come il riconoscimento facciale e il rilevamento di oggetti. Puoi organizzare i tuoi contenuti per posizione, goderti la riproduzione di video in 4K e persino gestire foto RAW. Inoltre, con il supporto multiutente, condividere ricordi con amici e familiari è semplicissimo. La parte migliore? Immich offre queste potenti funzionalità a basso costo, garantendo un'esperienza premium senza spendere una fortuna.
+      Immich si distingue per il backup automatico dai dispositivi mobili, un'interfaccia web elegante per una facile navigazione dei contenuti e funzionalità avanzate come il riconoscimento facciale e il rilevamento di oggetti. Puoi organizzare i tuoi contenuti per posizione, goderti la riproduzione di video in 4K e persino gestire foto RAW. Inoltre, con il supporto multiutente, condividere ricordi con amici e famiglia è semplicissimo. La parte migliore? Immich offre queste potenti funzionalità a basso costo, garantendo un'esperienza premium senza spendere una fortuna.
 
       Installare immich su un dispositivo cloud privato come Zima offre una comodità senza pari. Goditi una capacità di archiviazione illimitata, velocità di rete locale incredibilmente rapide e un facile accesso multi-dispositivo. Con immich sul tuo cloud privato Zima, i tuoi contenuti sono sempre a portata di mano, sicuri e protetti a casa tua.
     nb_NO: |
       Immich: Revolusjonerer din hjemmemedieopplevelse
 
-      Immich er her for å forvandle måten du administrerer og nyter mediefilene dine på tvers av hjemme-TV, smarttelefoner og andre enheter. I motsetning til tradisjonelle fotoalbum eller vanlige skylagringstjenester, tilbyr immich en sømløs og moderne plattform for å organisere, dele og få tilgang til bildene og videoene dine. Forestill deg å enkelt sikkerhetskopiere dine dyrebare øyeblikk fra mobilenheter og se dem umiddelbart på TV-en eller dele dem med familiemedlemmer – immich gjør alt dette mulig.
+      Immich er her for å forvandle måten du administrerer og nyter mediefilene dine på tvers av hjemme-TV, smarttelefoner og andre enheter. I motsetning til tradisjonelle fotoalbum eller vanlige skylagringstjenester, tilbyr Immich en sømløs og moderne plattform for å organisere, dele og få tilgang til bildene og videoene dine. Forestill deg å enkelt sikkerhetskopiere dine dyrebare øyeblikk fra mobilenheter og se dem umiddelbart på TV-en eller dele dem med familiemedlemmer – immich gjør alt dette mulig.
 
-      Immich skiller seg ut med automatisk sikkerhetskopiering fra mobilenheter, et elegant nettbasert grensesnitt for enkel medienavigering og avanserte funksjoner som ansiktsgjenkjenning og objektdeteksjon. Du kan organisere mediene dine etter sted, nyte 4K-videoplayback og til og med administrere RAW-bilder. Med støtte for flere brukere er det enkelt å dele minner med venner og familie. Det beste? Immich tilbyr disse kraftige funksjonene til en lav kostnad, slik at du får en førsteklasses opplevelse uten å sprenge budsjettet.
+      Immich skiller seg ut med automatisk sikkerhetskopiering fra mobilenheter, et elegant nettbasert grensesnitt for enkel medienavigering og avanserte funksjoner som ansiktsgjenkjenning og objektdeteksjon. Du kan organisere mediene dine etter sted, nyte 4K-videoplayback og til og med administrere RAW-foton. Med støtte for flere brukere er det enkelt å dele minner med venner og familie. Det beste? Immich tilbyr disse kraftige funksjonene til en lav kostnad, slik at du får en førsteklasses opplevelse uten å sprenge budsjettet.
 
       Å distribuere immich på en privat skysenhet som Zima gir uovertruffen bekvemmelighet. Nyt ubegrenset lagringskapasitet, lynraske lokale nettverkshastigheter og enkel tilgang fra flere enheter. Med immich på din private Zima-sky er mediene dine alltid tilgjengelige, trygge og sikre hjemme hos deg.
     zh_CN: |
@@ -136,7 +136,7 @@ x-casaos:
 
       Immichは、モバイルデバイスからの自動バックアップ、メディアを簡単に閲覧できる洗練されたウェブベースのインターフェース、顔認識や物体検出などの高度な機能で際立っています。位置情報に基づいてメディアを整理したり、4Kビデオの再生を楽しんだり、RAW写真を管理したりできます。さらに、複数ユーザー対応により、友人や家族との思い出の共有が簡単です。最大の魅力は？Immichはこれらの強力な機能を低コストで提供し、予算を抑えながらプレミアムな体験を保証します。
 
-      ZimaのようなプライベートクラウドデバイスにImmichを導入することで、比類ない利便性が得られます。無制限のストレージ容量、超高速なローカルネットワーク速度、複数のデバイスからの簡単なアクセスが可能です。Zimaプライベートクラウド上のImmichを使えば、メディアは常に手の届くところにあり、家庭内で安全に保護されます。
+      ZimaのようなプライベートクラウドデバイスにImmichを導入することで、比類ない便利さが得られます。無制限のストレージ容量、超高速なローカルネットワーク速度、複数のデバイスからの簡単なアクセスが可能です。Zimaプライベートクラウド上のImmichを使えば、メディアは常に手の届くところにあり、家庭内で安全に保護されます。
     ko_KR: |
       Immich: 가정 미디어 경험의 혁신
 
@@ -160,7 +160,7 @@ x-casaos:
 
       Immich hebt sich durch automatische Backups von Mobilgeräten, eine elegante webbasierte Benutzeroberfläche für einfaches Medienbrowsing und fortschrittliche Funktionen wie Gesichtserkennung und Objekterkennung ab. Sie können Ihre Medien nach Standort organisieren, 4K-Videowiedergabe genießen und sogar RAW-Fotos verwalten. Mit der Unterstützung für mehrere Benutzer ist das Teilen von Erinnerungen mit Freunden und Familie kinderleicht. Das Beste daran? Immich bietet diese leistungsstarken Funktionen zu geringen Kosten, sodass Sie ein Premium-Erlebnis erhalten, ohne Ihr Budget zu sprengen.
 
-      Das Bereitstellen von immich auf einem privaten Cloud-Gerät wie Zima bietet unvergleichlichen Komfort. Genießen Sie unbegrenzte Speicherkapazität, blitzschnelle lokale Netzwerkgeschwindigkeiten und einfachen Zugriff von mehreren Geräten. Mit immich auf Ihrer privaten Zima-Cloud sind Ihre Medien immer griffbereit, sicher und geschützt in Ihrem Zuhause.
+      Das Bereitstellen von immich auf einem privaten Cloud-Gerät wie Zima bietet unvergleichlichen Komfort. Genießen Sie unbegrenzte Speicherkapazität, blitzschnelle lokale Netzwerkgeschwindigkeiten und einfachen Zugriff von mehreren Geräten. Mit Immich auf Ihrer privaten Zima-Cloud sind Ihre Medien immer griffbereit, sicher und geschützt in Ihrem Zuhause.
     sv_SE: |
       Immich: Revolutionerar din hemmamediaupplevelse
 
@@ -168,7 +168,7 @@ x-casaos:
 
       Immich sticker ut med sin automatiska säkerhetskopiering från mobila enheter, ett elegant webbaserat gränssnitt för enkel medienavigering och avancerade funktioner som ansiktsigenkänning och objektdetektering. Du kan organisera dina medier efter plats, njuta av 4K-videouppspelning och till och med hantera RAW-foton. Med stöd för flera användare är det enkelt att dela minnen med vänner och familj. Det bästa? Immich erbjuder dessa kraftfulla funktioner till en låg kostnad, vilket garanterar en premiumupplevelse utan att spräcka budgeten.
 
-      Att distribuera immich på en privat molnenhet som Zima ger oöverträffad bekvämlighet. Njut av obegränsad lagringskapacitet, blixtsnabba lokala nätverkshastigheter och enkel åtkomst från flera enheter. Med immich på din privata Zima-moln är dina medier alltid inom räckhåll, säkra och skyddade i ditt hem.
+      Att distribuera immich på en privat molnenhet som Zima ger oöverträffad bekvämlighet. Njut av obegränsad lagringskapacitet, blixtsnabba lokala nätverkshastigheter och enkel åtkomst från flera enheter. Med immich på din privata Zima-moln är medienen alltid inom räckhåll, säkra och skyddade i ditt hem.
     el_GR: |
       Immich: Επανάσταση στην εμπειρία οικιακών μέσων
 
@@ -332,8 +332,8 @@ x-casaos:
       sv_SE: |
         ⚠️ Projektet är under mycket aktiv utveckling.
         ⚠️ Förvänta dig buggar och förändringar som kan orsaka problem.
-        ⚠️ Använd inte appen som det enda sättet att lagra dina bilder och videor.
-        ⚠️ Följ alltid 3-2-1 backup-planen för dina värdefulla bilder och videor!
+        ⚠️ Använd inte appen som det enda sättet att lagra dina bilder och videor!
+        ⚠️ Följ alltid 3-2-1 backup-planen för dina värdefulla foton och videor!
 
         ## Auktoriserade mediefiler och data
         1. Klicka på inställningsikonen i det övre högra hörnet av appen.
@@ -343,7 +343,7 @@ x-casaos:
       el_GR: |
         ⚠️ Το έργο βρίσκεται σε πολύ ενεργή ανάπτυξη.
         ⚠️ Αναμένονται σφάλματα και αλλαγές που μπορεί να προκαλέσουν προβλήματα.
-        ⚠️ Μην χρησιμοποιείτε την εφαρμογή ως τον μοναδικό τρόπο αποθήκευσης των φωτογραφιών και βίντεό σας.
+        ⚠️ Μην χρησιμοποιείτε την εφαρμογή ως τον μοναδικό τρόπο αποθήκευσης των φωτογραφιών και βίντεό σας!
         ⚠️ Ακολουθείτε πάντα το σχέδιο backup 3-2-1 για τις πολύτιμες φωτογραφίες και βίντεό σας!
 
         ## Εξουσιοδοτημένα αρχεία μέσων και δεδομένα
@@ -354,8 +354,7 @@ x-casaos:
       hr_HR: |
         ⚠️ Projekt je u vrlo aktivnom razvoju.
         ⚠️ Očekujte pogreške i promjene koje mogu uzrokovati probleme.
-        ⚠️ Nemojte koristiti aplikaciju kao jedini način pohrane vaših fotografija i videa.
-        ⚠️ Uvijek slijedite 3-2-1 plan sigurnosnog kopiranja za svoje dragocjene fotografije i videe!
+        ⚠️ Nemojte koristiti aplikaciju kao jedini način pohrane vaših fotografija i videa!
 
         ## Ovlaštene medijske datoteke i podaci
         1. Kliknite na ikonu postavki u gornjem desnom kutu aplikacije.
@@ -364,9 +363,9 @@ x-casaos:
         Za potpunu dokumentaciju projekta i upute za instalaciju, molimo [pogledajte](https://immich.app).
       pt_PT: |
         ⚠️ O projeto está em desenvolvimento muito ativo.
-        ⚠️ Espere bugs e alterações que podem causar problemas.
-        ⚠️ Não utilize a aplicação como a única forma de armazenar as suas fotos e vídeos.
-        ⚠️ Siga sempre o plano de backup 3-2-1 para as suas fotos e vídeos valiosos!
+        ⚠️ Espere bugs e alterações que podem causar problemas!
+        ⚠️ Não utilize a aplicação como a única forma de armazenar as suas fotos e vídeos!
+        ⚠️ Siga o plano de backup 3-2-1 para os seus ficheiros multimédia valiosos!
 
         ## Ficheiros multimédia e dados autorizados
         1. Clique no ícone de configurações no canto superior direito da aplicação.
@@ -376,18 +375,17 @@ x-casaos:
       ru_RU: |
         ⚠️ Проект находится в стадии активной разработки.
         ⚠️ Ожидайте ошибок и изменений, которые могут вызвать проблемы.
-        ⚠️ Не используйте приложение как единственный способ хранения ваших фотографий и видео.
-        ⚠️ Всегда следуйте плану резервного копирования 3-2-1 для ваших ценных фотографий и видео!
+        ⚠️ Не используйте приложение как единственный способ хранения ваших фотографий и видео!
 
         ## Авторизованные медиафайлы и данные
         1. Нажмите на значок настроек в правом верхнем углу приложения.
         2. На вкладке immich-server укажите расположение хранилища альбома в разделе Volumes (по умолчанию `/DATA/Gallery/immich`).
 
-        Полную документацию по проекту и инструкции по установке можно найти [здесь](https://immich.app).
+        Полную документацию проекта и инструкции по установке можно найти [здесь](https://immich.app).
       tr_TR: |
         ⚠️ Proje çok aktif bir geliştirme aşamasında.
-        ⚠️ Hatalar ve sorunlara yol açabilecek değişiklikler bekleniyor.
-        ⚠️ Fotoğraflarınızı ve videolarınızı saklamanın tek yolu olarak uygulamayı kullanmayın.
+        ⚠️ Hatalar ve sorunlara yol açabilecek değişiklikler bekleniyor!
+        ⚠️ Fotoğraflarınızı ve videolarınızı saklamanın tek yolu olarak uygulamayı kullanmayın!
         ⚠️ Değerli fotoğraflarınız ve videolarınız için her zaman 3-2-1 yedekleme planını takip edin!
 
         ## Yetkili Medya Dosyaları ve Veriler
@@ -395,72 +393,58 @@ x-casaos:
         2. immich-server sekmesinde, Volumes bölümünde albüm depolama konumunuzu eşleştirin (varsayılan `/DATA/Gallery/immich`).
 
         Tam proje dokümantasyonu ve kurulum talimatları için lütfen [buraya](https://immich.app) bakın.
+
   port_map: "2283"
   scheme: http
   index: /
-  version: "2.7.2"
-  update_at: "2026-04-07"
+  version: "3.2.4"
+  update_at: "2026-09-28"
   release_notes:
     en_US: |-
-      - v2.7.2 fixes the default helmet.json file handling.
-      - Machine-learning containers were fixed for some older CPUs by downgrading numpy.
-      - External library import batch sizing was corrected.
+      - fix(mobile): sync status page goes blank when the counts query fails (#31644).
+      - Fixed a memory leak observed through a dependency update.
     en_GB: |-
-      - v2.7.2 fixes the default helmet.json file handling.
-      - Machine-learning containers were fixed for some older CPUs by downgrading numpy.
-      - External library import batch sizing was corrected.
+      - fix(mobile): sync status page goes blank when the counts query fails (#31644).
+      - Fixed a memory leak observed through a dependency update.
     it_IT: |-
-      - v2.7.2 corregge la gestione predefinita dei file helmet.json.
-      - I contenitori Machine-learning sono stati corretti per alcuni CPUs meno recenti da downgrading numpy.
-      - Il dimensionamento del batch di importazione della libreria esterna è stato corretto.
+      - fix(mobile): la pagina dello stato di sincronizzazione diventa vuota quando la query dei conteggi fallisce (#31644).
+      - Risolta una perdita di memoria osservata tramite un aggiornamento delle dipendenze.
     nb_NO: |-
-      - v2.7.2 fikser standard helmet.json filhåndtering.
-      - Machine-learning containere ble fikset for noen eldre CPUs av downgrading numpy.
-      - Størrelsen på batchstørrelsen for eksternt bibliotekimport ble korrigert.
+      - fix(mobile): synkroniseringsstatussiden blir tom når forespørselen for tellinger mislykkes (#31644).
+      - Rettet en minnelekkasje som ble observert gjennom en avhengighetsoppdatering.
     zh_CN: |-
-      - v2.7.2 修复了默认 helmet.json 文件处理。
-      - 通过降级 numpy 修复了部分旧 CPU 上的 machine-learning containers。
-      - 修正了 external library import batch sizing。
+      - fix(mobile)：当计数查询失败时，同步状态页面显示为空白 (#31644)。
+      - 修复了通过依赖项更新发现的内存泄漏问题。
     ja_JP: |-
-      - v2.7.2 はデフォルトの helmet.json ファイル処理を修正します。
-      - numpy をダウングレードすることで、一部の古い CPU 向け machine-learning containers が修正されました。
-      - external library import batch sizing が修正されました。
+      - fix(mobile): カウントクエリに失敗すると同期ステータスページが空白になる問題を修正しました (#31644)。
+      - 依存関係の更新によって発生していたメモリリークを修正しました。
     ko_KR: |-
-      - v2.7.2는 기본 helmet.json 파일 처리를 수정합니다.
-      - numpy를 다운그레이드하여 일부 오래된 CPU의 machine-learning containers 문제가 수정되었습니다.
-      - external library import batch sizing이 수정되었습니다.
+      - fix(mobile): 카운트 쿼리가 실패할 때 동기화 상태 페이지가 비어 보이는 문제를 수정했습니다 (#31644).
+      - 의존성 업데이트를 통해 관찰된 메모리 누수를 수정했습니다.
     fr_FR: |-
-      - v2.7.2 corrige la gestion du fichier helmet.json par defaut.
-      - Les machine-learning containers ont ete corriges pour certains anciens CPU en retrogradant numpy.
-      - External library import batch sizing a ete corrige.
+      - fix(mobile) : la page d'état de synchronisation devient vide lorsque la requête des compteurs échoue (#31644).
+      - Correction d'une fuite mémoire observée suite à une mise à jour de dépendance.
     de_DE: |-
-      - v2.7.2 behebt die Behandlung der Standarddatei helmet.json.
-      - Machine-learning containers wurden fuer einige aeltere CPUs durch Downgrade von numpy korrigiert.
-      - External library import batch sizing wurde korrigiert.
+      - fix(mobile): Die Synchronisierungsstatusseite bleibt leer, wenn die Abfrage der Zähler fehlschlägt (#31644).
+      - Ein durch ein Abhängigkeitsupdate beobachtetes Speicherleck wurde behoben.
     sv_SE: |-
-      - v2.7.2 fixar standard helmet.json filhantering.
-      - Machine-learning-behållare fixades för några äldre CPUs av downgrading numpy.
-      - Storleken på batchstorleken för extern biblioteksimport har korrigerats.
+      - fix(mobile): synkroniseringsstatussidan blir tom när räknarfrågan misslyckas (#31644).
+      - Åtgärdade en minnesläcka som observerades genom en beroendeuppdatering.
     el_GR: |-
-      - Το v2.7.2 διορθώνει τον προεπιλεγμένο χειρισμό αρχείων helmet.json.
-      - Τα δοχεία Machine-learning επισκευάστηκαν για μερικά παλαιότερα CPUs από downgrading numpy.
-      - Διορθώθηκε το μέγεθος παρτίδας εισαγωγής εξωτερικής βιβλιοθήκης.
+      - fix(mobile): η σελίδα κατάστασης συγχρονισμού εμφανίζεται κενή όταν αποτυγχάνει το ερώτημα μετρήσεων (#31644).
+      - Διορθώθηκε μια διαρροή μνήμης που παρατηρήθηκε μέσω μιας ενημέρωσης εξάρτησης.
     hr_HR: |-
-      - v2.7.2 popravlja zadano rukovanje datotekama helmet.json.
-      - Machine-learning spremnike je popravio downgrading numpy za neke starije CPUs.
-      - Dimenzioniranje serije uvoza vanjske knjižnice je ispravljeno.
+      - fix(mobile): stranica statusa sinkronizacije postaje prazna kada upit za brojanja ne uspije (#31644).
+      - Ispravljeno je curenje memorije uočeno nakon ažuriranja ovisnosti.
     pt_PT: |-
-      - v2.7.2 corrige o tratamento padrão do ficheiro helmet.json.
-      - Os contentores Machine-learning foram corrigidos para alguns CPUs mais antigos por downgrading numpy.
-      - O tamanho do lote de importação de bibliotecas externas foi corrigido.
+      - fix(mobile): a página de estado da sincronização fica em branco quando a consulta das contagens falha (#31644).
+      - Corrigida uma fuga de memória observada através de uma atualização de dependência.
     ru_RU: |-
-      - v2.7.2 исправляет обработку файла helmet.json по умолчанию.
-      - Контейнеры Machine-learning были исправлены для некоторых старых CPUs с помощью downgrading numpy.
-      - Исправлен размер пакета импорта внешней библиотеки.
+      - fix(mobile): страница состояния синхронизации становится пустой, когда запрос счетчиков завершается ошибкой (#31644).
+      - Исправлена утечка памяти, обнаруженная после обновления зависимости.
     tr_TR: |-
-      - v2.7.2, varsayılan helmet.json dosya işlemeyi düzeltir.
-      - Machine-learning konteynerleri bazı eski CPUs için downgrading numpy tarafından düzeltildi.
-      - Harici kitaplık içe aktarma toplu boyutu düzeltildi.
+      - fix(mobile): sayım sorgusu başarısız olduğunda senkronizasyon durumu sayfasının boş görünmesi düzeltildi (#31644).
+      - Bir bağımlılık güncellemesi aracılığıyla gözlemlenen bellek sızıntısı düzeltildi.
   website: "https://immich.app/"
   repo: "https://github.com/immich-app/immich"
   support: "https://github.com/immich-app/immich/issues"
