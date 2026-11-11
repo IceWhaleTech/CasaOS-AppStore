@@ -1,0 +1,101 @@
+name: strix
+services:
+  strix:
+    image: eduard256/strix:1.0.11
+    container_name: strix
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 4567
+        published: "4567"
+        protocol: tcp
+    x-casaos:
+      ports:
+        - container: "4567"
+          description:
+            en_us: WebUI Port
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: strix
+  author: eduard256
+  category: Utilities
+  description:
+    en_us: |
+      Finding working streams for your cameras. Most IP cameras - especially Chinese NVRs and budget models - come with zero documentation. No RTSP URLs, no protocol specs, no way to connect them to Frigate. Strix solves this by matching your camera against a database of over 100,000 URL patterns for 67,000 models, testing them and returning only working streams.
+
+      Enter your camera IP, model, username and password. Strix tests all matching URL patterns and gives you working streams in seconds. Then paste your existing frigate.yml - even with 500 cameras - and Strix adds camera 501 with main and sub stream through go2rtc without breaking anything. Works with cameras that don't support RTSP or ONVIF - finds BUBBLE, MJPEG, JPEG, HTTP-FLV and many other protocols that are constantly being added.
+    zh_cn: |
+      为您的摄像头查找可用的视频流。大多数IP摄像头——尤其是中国的NVR和廉价型号——没有任何文档。没有RTSP地址，没有协议说明，无法连接到Frigate。Strix通过将您的摄像头与包含超过100,000个URL模式和67,000个型号的数据库进行匹配来解决这个问题，测试它们并只返回可用的视频流。
+
+      输入您的摄像头IP、型号、用户名和密码。Strix测试所有匹配的URL模式，几秒钟内给出可用的视频流。然后粘贴您现有的frigate.yml——即使有500个摄像头——Strix也能添加第501个摄像头，通过go2rtc配置主码流和子码流，不会破坏任何现有配置。支持不支持RTSP和ONVIF的摄像头——可以发现BUBBLE、MJPEG、JPEG、HTTP-FLV等多种协议，并且在不断添加新协议。
+    ru_ru: |
+      Поиск рабочих потоков для ваших камер. Большинство IP-камер - особенно китайские NVR и бюджетные модели - поставляются без документации. Нет RTSP URL, нет описания протоколов, нет способа подключить их к Frigate. Strix решает эту проблему, сопоставляя вашу камеру с базой данных из более чем 100 000 URL-паттернов для 67 000 моделей, тестируя их и возвращая только рабочие потоки.
+
+      Введите IP камеры, модель, имя пользователя и пароль. Strix тестирует все подходящие URL-паттерны и выдает рабочие потоки за секунды. Затем вставьте ваш существующий frigate.yml - даже с 500 камерами - и Strix добавит 501 камеру с основным и дополнительным потоком через go2rtc ничего не сломав. Работает с камерами без поддержки RTSP и ONVIF - находит BUBBLE, MJPEG, JPEG, HTTP-FLV и множество других протоколов, которые постоянно добавляются.
+    de_de: |
+      Funktionierende Streams fuer Ihre Kameras finden. Die meisten IP-Kameras - insbesondere chinesische NVRs und Budget-Modelle - werden ohne Dokumentation geliefert. Keine RTSP-URLs, keine Protokollspezifikationen, keine Moeglichkeit sie mit Frigate zu verbinden. Strix loest dieses Problem, indem es Ihre Kamera mit einer Datenbank von ueber 100.000 URL-Mustern fuer 67.000 Modelle abgleicht, diese testet und nur funktionierende Streams zurueckgibt.
+
+      Geben Sie die IP-Adresse, das Modell, den Benutzernamen und das Passwort Ihrer Kamera ein. Strix testet alle passenden URL-Muster und liefert Ihnen in Sekunden funktionierende Streams. Fuegen Sie dann Ihre bestehende frigate.yml ein - auch mit 500 Kameras - und Strix fuegt Kamera 501 mit Haupt- und Substream ueber go2rtc hinzu, ohne etwas zu beschaedigen. Funktioniert mit Kameras ohne RTSP- und ONVIF-Unterstuetzung - findet BUBBLE, MJPEG, JPEG, HTTP-FLV und viele weitere Protokolle, die staendig hinzugefuegt werden.
+    fr_fr: |
+      Trouver des flux fonctionnels pour vos cameras. La plupart des cameras IP - en particulier les NVR chinois et les modeles bon marche - sont livrees sans documentation. Pas d'URLs RTSP, pas de specifications de protocole, aucun moyen de les connecter a Frigate. Strix resout ce probleme en comparant votre camera avec une base de donnees de plus de 100 000 modeles d'URL pour 67 000 modeles, en les testant et en ne renvoyant que les flux fonctionnels.
+
+      Entrez l'IP de votre camera, le modele, le nom d'utilisateur et le mot de passe. Strix teste tous les modeles d'URL correspondants et vous donne des flux fonctionnels en quelques secondes. Collez ensuite votre frigate.yml existant - meme avec 500 cameras - et Strix ajoute la camera 501 avec le flux principal et secondaire via go2rtc sans rien casser. Fonctionne avec les cameras sans support RTSP et ONVIF - trouve BUBBLE, MJPEG, JPEG, HTTP-FLV et de nombreux autres protocoles constamment ajoutes.
+    es_es: |
+      Encuentra streams funcionales para tus camaras. La mayoria de las camaras IP - especialmente los NVR chinos y los modelos economicos - vienen sin documentacion. Sin URLs RTSP, sin especificaciones de protocolo, sin forma de conectarlas a Frigate. Strix resuelve esto comparando tu camara con una base de datos de mas de 100,000 patrones de URL para 67,000 modelos, probandolos y devolviendo solo los streams funcionales.
+
+      Introduce la IP de tu camara, modelo, usuario y contrasena. Strix prueba todos los patrones de URL coincidentes y te da streams funcionales en segundos. Luego pega tu frigate.yml existente - incluso con 500 camaras - y Strix anade la camara 501 con stream principal y secundario a traves de go2rtc sin romper nada. Funciona con camaras sin soporte RTSP y ONVIF - encuentra BUBBLE, MJPEG, JPEG, HTTP-FLV y muchos otros protocolos que se anaden constantemente.
+    pt_br: |
+      Encontrando streams funcionais para suas cameras. A maioria das cameras IP - especialmente NVRs chineses e modelos economicos - vem sem documentacao. Sem URLs RTSP, sem especificacoes de protocolo, sem como conecta-las ao Frigate. O Strix resolve isso comparando sua camera com um banco de dados de mais de 100.000 padroes de URL para 67.000 modelos, testando-os e retornando apenas os streams funcionais.
+
+      Digite o IP da camera, modelo, usuario e senha. O Strix testa todos os padroes de URL correspondentes e fornece streams funcionais em segundos. Em seguida, cole seu frigate.yml existente - mesmo com 500 cameras - e o Strix adiciona a camera 501 com stream principal e secundario via go2rtc sem quebrar nada. Funciona com cameras sem suporte a RTSP e ONVIF - encontra BUBBLE, MJPEG, JPEG, HTTP-FLV e muitos outros protocolos que estao sendo constantemente adicionados.
+    it_it: |
+      Trova stream funzionanti per le tue telecamere. La maggior parte delle telecamere IP - specialmente i NVR cinesi e i modelli economici - vengono fornite senza documentazione. Nessun URL RTSP, nessuna specifica di protocollo, nessun modo per collegarle a Frigate. Strix risolve questo problema confrontando la tua telecamera con un database di oltre 100.000 pattern URL per 67.000 modelli, testandoli e restituendo solo gli stream funzionanti.
+
+      Inserisci l'IP della telecamera, il modello, il nome utente e la password. Strix testa tutti i pattern URL corrispondenti e fornisce stream funzionanti in pochi secondi. Poi incolla il tuo frigate.yml esistente - anche con 500 telecamere - e Strix aggiunge la telecamera 501 con stream principale e secondario tramite go2rtc senza rompere nulla. Funziona con telecamere senza supporto RTSP e ONVIF - trova BUBBLE, MJPEG, JPEG, HTTP-FLV e molti altri protocolli in costante aggiornamento.
+    pl_pl: |
+      Znajdowanie dzialajacych strumieni dla twoich kamer. Wiekszosc kamer IP - szczegolnie chinskie NVR-y i budzetowe modele - sa dostarczane bez dokumentacji. Brak adresow RTSP, brak specyfikacji protokolow, brak sposobu na podlaczenie ich do Frigate. Strix rozwiazuje ten problem, dopasowujac twoja kamere do bazy danych zawierajacej ponad 100 000 wzorcow URL dla 67 000 modeli, testujac je i zwracajac tylko dzialajace strumienie.
+
+      Wprowadz IP kamery, model, nazwe uzytkownika i haslo. Strix testuje wszystkie pasujace wzorce URL i podaje dzialajace strumienie w kilka sekund. Nastepnie wklej swoj istniejacy frigate.yml - nawet z 500 kamerami - a Strix doda kamere 501 z glownym i dodatkowym strumieniem przez go2rtc niczego nie psujac. Dziala z kamerami bez obslugi RTSP i ONVIF - znajduje BUBBLE, MJPEG, JPEG, HTTP-FLV i wiele innych protokolow, ktore sa stale dodawane.
+    uk_ua: |
+      Пошук робочих потокiв для ваших камер. Бiльшiсть IP-камер - особливо китайськi NVR та бюджетнi моделi - постачаються без документацii. Немае RTSP URL, немае опису протоколiв, немае способу пiдключити iх до Frigate. Strix вирiшує цю проблему, зiставляючи вашу камеру з базою даних з понад 100 000 URL-шаблонiв для 67 000 моделей, тестуючи iх та повертаючи лише робочi потоки.
+
+      Введiть IP камери, модель, iм'я користувача та пароль. Strix тестує всi вiдповiднi URL-шаблони та видає робочi потоки за секунди. Потiм вставте ваш iснуючий frigate.yml - навiть з 500 камерами - i Strix додасть 501 камеру з основним та додатковим потоком через go2rtc нiчого не зламавши. Працює з камерами без пiдтримки RTSP та ONVIF - знаходить BUBBLE, MJPEG, JPEG, HTTP-FLV та безлiч iнших протоколiв, якi постiйно додаються.
+    ar_sa: Strix هو اداة لاكتشاف تدفقات كاميرات IP. يحتوي على قاعدة بيانات تضم اكثر من 100,000 نمط URL لـ 67,000 طراز كاميرا. ادخل عنوان IP للكاميرا والطراز واسم المستخدم وكلمة المرور. يختبر Strix جميع انماط URL المطابقة ويعيد فقط التدفقات العاملة. يولد تكوينات جاهزة للاستخدام لـ Frigate و go2rtc. يعمل مع الكاميرات التي لا تدعم RTSP و ONVIF.
+    sv_se: Strix hittar fungerande stroemmar foer dina kameror. De flesta IP-kameror - saerskilt kinesiska NVR:er och budgetmodeller - levereras utan dokumentation. Strix loeser detta genom att matcha din kamera mot en databas med oever 100 000 URL-moenster foer 67 000 modeller, testa dem och returnera endast fungerande stroemmar. Ange kamerans IP, modell, anvaendarnamn och loesenord. Strix testar alla matchande URL-moenster och ger dig fungerande stroemmar paa sekunder. Fungerar med kameror utan RTSP- och ONVIF-stoedd - hittar BUBBLE, MJPEG, JPEG, HTTP-FLV och manga andra protokoll.
+    hu_hu: Strix megkeresi a mukodo streameket az IP kamerakhoz. A legtobb IP kamera - kulonosen a kinai NVR-ek es az olcso modellek - dokumentacio nelkul erkeznek. Strix megoldja ezt azaltal, hogy a kamerat egy tobb mint 100 000 URL-mintat es 67 000 modellt tartalmazo adatbazissal veti ossze, teszteli oket es csak a mukodo streameket adja vissza. Adja meg a kamera IP-cimet, modelljct, felhasznalonevct es jelszavat. A Strix masodpercek alatt mukodo streameket ad. Mukodik RTSP es ONVIF nelkuli kamerakkal is - megtalalja a BUBBLE, MJPEG, JPEG, HTTP-FLV es sok mas protokollt.
+  developer: eduard256
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Strix/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Strix/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Strix/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Strix/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Strix/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Strix/screenshot-5.png
+  tagline:
+    en_us: IP camera stream discovery tool for Frigate
+    zh_cn: Frigate IP摄像头视频流发现工具
+    ru_ru: Инструмент обнаружения потоков IP-камер для Frigate
+    de_de: IP-Kamera-Stream-Erkennungstool fuer Frigate
+    fr_fr: Outil de decouverte de flux de cameras IP pour Frigate
+    es_es: Herramienta de descubrimiento de streams de camaras IP para Frigate
+    pt_br: Ferramenta de descoberta de streams de cameras IP para Frigate
+    it_it: Strumento di scoperta stream per telecamere IP per Frigate
+    pl_pl: Narzedzie do odkrywania strumieni kamer IP dla Frigate
+    uk_ua: Iнструмент виявлення потокiв IP-камер для Frigate
+    ar_sa: اداة اكتشاف تدفقات كاميرات IP لـ Frigate
+    sv_se: IP-kamera stroemdiscovery-verktyg foer Frigate
+    hu_hu: IP kamera stream felderito eszkoz Frigate-hoz
+  tips:
+    before_install:
+      en_us: |
+        Strix needs network access to your cameras. Make sure your cameras are reachable from the CasaOS host.
+  title:
+    en_us: Strix
+  index: /
+  port_map: "4567"
