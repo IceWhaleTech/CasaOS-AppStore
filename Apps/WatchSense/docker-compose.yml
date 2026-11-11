@@ -1,0 +1,148 @@
+name: watchsense
+services:
+  watchsense:
+    image: ghcr.io/peppeg/watchsense:1.1.1
+    container_name: watchsense
+    restart: unless-stopped
+    network_mode: bridge
+    privileged: false
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TMDB_API_KEY: ""
+      LLM_BASE_URL: ""
+      LLM_API_KEY: ""
+      LLM_MODEL: ""
+      WATCHSENSE_TOKEN: ""
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+        bind:
+          create_host_path: true
+      - type: bind
+        source: /DATA/AppData/$AppID/exports
+        target: /app/exports
+        read_only: true
+        bind:
+          create_host_path: true
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: User ID the app runs as. At startup /app/data is given to PUID:PGID if needed.
+            it_IT: ID utente con cui gira l'app. All'avvio /app/data viene assegnata a PUID:PGID se serve.
+        - container: PGID
+          description:
+            en_US: Group ID the app runs as.
+            it_IT: ID gruppo con cui gira l'app.
+        - container: TMDB_API_KEY
+          description:
+            en_US: Optional. TMDB v3 API key; it can also be set in Settings, which takes precedence.
+            it_IT: Facoltativa. Chiave API TMDB v3; si può impostare anche nelle Impostazioni, che hanno la precedenza.
+        - container: LLM_BASE_URL
+          description:
+            en_US: Optional. Base URL of an OpenAI-compatible provider, cloud or local (e.g. Ollama). Settings take precedence.
+            it_IT: Facoltativo. URL base di un provider compatibile OpenAI, cloud o locale (es. Ollama). Le Impostazioni hanno la precedenza.
+        - container: LLM_API_KEY
+          description:
+            en_US: Optional. API key of the LLM provider, not needed for local addresses. Settings take precedence.
+            it_IT: Facoltativa. Chiave API del provider LLM, non serve per indirizzi locali. Le Impostazioni hanno la precedenza.
+        - container: LLM_MODEL
+          description:
+            en_US: Optional. Model name. Settings take precedence.
+            it_IT: Facoltativo. Nome del modello. Le Impostazioni hanno la precedenza.
+        - container: WATCHSENSE_TOKEN
+          description:
+            en_US: Optional access token. Empty = no login.
+            it_IT: Token di accesso facoltativo. Vuoto = nessun login.
+      ports:
+        - container: "3000"
+          description:
+            en_US: Web UI port
+            it_IT: Porta dell'interfaccia web
+          protocol: tcp
+      volumes:
+        - container: /app/data
+          description:
+            en_US: Database and secret.key (the key that encrypts saved secrets). Back up both together.
+            it_IT: Database e secret.key (la chiave che cifra i segreti salvati). Fai il backup di entrambi insieme.
+        - container: /app/exports
+          description:
+            en_US: Read-only. Only for the Trakt import, put the files of your Trakt data export in its trakt/ subfolder.
+            it_IT: Sola lettura. Solo per l'import Trakt, metti i file dell'export dati di Trakt nella sottocartella trakt/.
+x-casaos:
+  id: io.github.peppeg.watchsense
+  main: watchsense
+  index: /
+  port_map: "3000"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WatchSense/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WatchSense/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WatchSense/screenshot-1.webp
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WatchSense/screenshot-2.webp
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WatchSense/screenshot-3.webp
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/WatchSense/screenshot-4.webp
+  title:
+    en_US: WatchSense
+    it_IT: WatchSense
+  tagline:
+    en_US: TV series recommendations from your viewing history and an LLM of your choice
+    it_IT: Consigli di serie TV dalla tua cronologia di visione e da un LLM a tua scelta
+  description:
+    en_US: |
+      WatchSense suggests TV series to watch next, based on what you actually watched and an LLM of your choice.
+
+      - Imports your history from Netflix (session cookies with automatic sync, bookmarklet or CSV), Prime Video (bookmarklet or CSV), Stremio (account sync) and Trakt (data export).
+      - Enriches it with TMDB metadata: posters, genres and the streaming providers of your region.
+      - Asks any OpenAI-compatible endpoint for recommendations, cloud (OpenRouter, OpenAI, Groq, Mistral, ...) or local (Ollama, LM Studio).
+      - Your ratings, show status and taste notes shape the next suggestions.
+
+      TV series only: films found in your histories are stored but not shown or used. Services without a viewing history (Disney+, Apple TV+, ...) are not imported.
+
+      All data stays on your device in one SQLite file. The UI is in English and Italian.
+    it_IT: |
+      WatchSense ti suggerisce la prossima serie TV da guardare, partendo da quello che hai visto davvero e da un LLM a tua scelta.
+
+      - Importa la cronologia da Netflix (cookie di sessione con sync automatica, bookmarklet o CSV), Prime Video (bookmarklet o CSV), Stremio (sync dell'account) e Trakt (export dei dati).
+      - La arricchisce con i metadati TMDB: locandine, generi e piattaforme streaming della tua regione.
+      - Chiede i consigli a qualsiasi endpoint compatibile OpenAI, cloud (OpenRouter, OpenAI, Groq, Mistral, ...) o locale (Ollama, LM Studio).
+      - Voti, stato delle serie e note sui tuoi gusti orientano i consigli successivi.
+
+      Solo serie TV: i film presenti nelle cronologie vengono salvati ma non mostrati né usati. I servizi senza cronologia di visione (Disney+, Apple TV+, ...) non vengono importati.
+
+      Tutti i dati restano sul tuo dispositivo in un unico file SQLite. L'interfaccia è in inglese e in italiano.
+  tips:
+    before_install:
+      en_US: |
+        You need a free TMDB API key (themoviedb.org, Settings > API, "API Key (v3 auth)") and an OpenAI-compatible LLM endpoint, cloud or local. Both are set in Settings on first start: the Home page shows a Getting started list.
+      it_IT: |
+        Servono una chiave API TMDB gratuita (themoviedb.org, Impostazioni > API, "API Key (v3 auth)") e un endpoint LLM compatibile OpenAI, cloud o locale. Entrambi si impostano nelle Impostazioni al primo avvio: la Home mostra la lista Per iniziare.
+  author: Giuseppe Giardina
+  developer: Giuseppe Giardina (Your Future Me)
+  category: Media
+  architectures:
+    - amd64
+    - arm64
+  version: "1.1.1"
+  update_at: "2026-10-22"
+  release_notes:
+    en_US: |
+      - Error messages follow the app language (English or Italian); server logs in English.
+      - PUID/PGID support: at startup the container gives /app/data to PUID:PGID and then drops root.
+    it_IT: |
+      - I messaggi d'errore seguono la lingua dell'app (inglese o italiano); log del server in inglese.
+      - Supporto PUID/PGID: all'avvio il container assegna /app/data a PUID:PGID e poi rinuncia ai privilegi di root.
+  website: https://github.com/peppeg/watchsense
+  repo: https://github.com/peppeg/watchsense
+  support: https://github.com/peppeg/watchsense/issues
+  docs: https://github.com/peppeg/watchsense/blob/main/docs/CONFIGURATION.md
