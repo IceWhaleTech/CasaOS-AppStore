@@ -1,0 +1,106 @@
+name: yuvomi
+services:
+  yuvomi:
+    image: ghcr.io/ulsklyc/yuvomi:2.85.0
+    container_name: yuvomi
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    ports:
+      - target: 3000
+        published: "3880"
+        protocol: tcp
+    environment:
+      NODE_ENV: production
+      TZ: $TZ
+      DB_PATH: /data/yuvomi.db
+      BACKUP_DIR: /backups
+      # Opened over plain HTTP on the LAN; set to true behind an HTTPS reverse proxy.
+      SESSION_SECURE: "false"
+    # SESSION_SECRET and DB_ENCRYPTION_KEY are generated on the first start
+    # and kept in /data/.secrets, so no secret is published in this file.
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/backups
+        target: /backups
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    x-casaos:
+      ports:
+        - container: "3000"
+          description:
+            en_US: WebUI HTTP Port
+            de_DE: HTTP-Port der Weboberfläche
+      volumes:
+        - container: /data
+          description:
+            en_US: Database and generated secrets
+            de_DE: Datenbank und erzeugte Schlüssel
+        - container: /backups
+          description:
+            en_US: Scheduled backups
+            de_DE: Geplante Sicherungen
+      envs:
+        - container: SESSION_SECURE
+          description:
+            en_US: Set to true only when Yuvomi is opened over HTTPS behind a reverse proxy
+            de_DE: Nur auf true setzen, wenn Yuvomi über HTTPS hinter einem Reverse Proxy läuft
+        - container: TZ
+          description:
+            en_US: Time zone, the default for the household
+            de_DE: Zeitzone, Voreinstellung für den Haushalt
+
+x-casaos:
+  id: cloud.yuvomi.yuvomi
+  main: yuvomi
+  index: /
+  port_map: "3880"
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+  author: Ulas Kalayci
+  developer: Ulas Kalayci
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Yuvomi/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Yuvomi/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Yuvomi/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Yuvomi/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Yuvomi/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Yuvomi/screenshot-4.png
+  title:
+    en_US: Yuvomi
+  tagline:
+    en_US: Self-hosted family planner for the whole household
+    de_DE: Selbst gehosteter Familienplaner für den ganzen Haushalt
+  description:
+    en_US: Yuvomi brings a family's everyday planning into one place on your own server. Shared calendar, tasks, shopping lists, meal planning and recipes, budget, health, birthdays, notes and more; each module can be switched off. It is an installable web app (PWA) for phones and desktops, available in 27 languages, with an encrypted SQLite database and no trackers.
+    de_DE: Yuvomi bündelt die Alltagsplanung einer Familie an einem Ort auf dem eigenen Server. Gemeinsamer Kalender, Aufgaben, Einkaufslisten, Essensplanung und Rezepte, Budget, Gesundheit, Geburtstage, Notizen und mehr; jedes Modul lässt sich abschalten. Eine installierbare Web-App (PWA) für Smartphone und Desktop in 27 Sprachen, mit verschlüsselter SQLite-Datenbank und ohne Tracker.
+  tips:
+    before_install:
+      en_US: |
+        After installing, open Yuvomi and create the first admin account. Do this right away: until an admin exists, anyone who can reach the port can create it.
+
+        The database key is generated on the first start and stored in the data folder. Keep a copy of it somewhere else (Settings > Household > Backup and restore shows it): without it, backups cannot be opened once the folder is lost.
+      de_DE: |
+        Nach der Installation Yuvomi öffnen und das erste Admin-Konto anlegen. Gleich erledigen: solange kein Admin existiert, kann ihn jeder anlegen, der den Port erreicht.
+
+        Der Datenbankschlüssel entsteht beim ersten Start und liegt im Datenordner. Eine Kopie davon woanders aufbewahren (Einstellungen > Haushalt > Backup und Wiederherstellung zeigt ihn): ohne ihn lassen sich Sicherungen nicht mehr öffnen, sobald der Ordner verloren ist.
+  website: https://yuvomi.cloud
+  repo: https://github.com/ulsklyc/yuvomi
+  docs: https://yuvomi.cloud/install.html
+  support: https://github.com/ulsklyc/yuvomi/issues
+  version: "2.85.0"
+  update_at: "2026-11-06"
+  release_notes:
+    en_US: First version in the ZimaOS App Store.
