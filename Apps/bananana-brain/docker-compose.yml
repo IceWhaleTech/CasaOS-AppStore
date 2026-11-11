@@ -1,0 +1,58 @@
+name: bananana-brain
+services:
+  bananana-brain:
+    image: romanvaxman/bananana-brain:2026.11.2
+    container_name: bananana-brain
+    environment:
+      BANANANA_SETUP_TOKEN: ""
+    restart: unless-stopped
+    network_mode: bridge
+    privileged: false
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    x-casaos:
+      envs:
+        - container: BANANANA_SETUP_TOKEN
+          description:
+            en_US: Setup token from https://bananana.dev/start (starts with bst_). Only used on the first start.
+      volumes:
+        - container: /data
+          description:
+            en_US: The brain's data (identity, settings, users and history) and its nightly backups.
+
+x-casaos:
+  id: dev.bananana.brain
+  architectures:
+    - amd64
+    - arm64
+  main: bananana-brain
+  author: CTF Designs, LLC
+  developer: bananana.dev
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/bananana-brain/icon.png
+  title:
+    en_US: bananana brain
+  tagline:
+    en_US: Your own control room for servers, Macs and PCs.
+  description:
+    en_US: |-
+      The bananana.dev brain keeps your machines' live readings, alerts, automations, files, terminals and history on your own hardware, and you reach it from anywhere at your-name.bananana.dev and in the bananana.dev apps for iPhone and Android. It connects out through an end-to-end encrypted relay, so it opens no ports and needs no VPN.
+  tips:
+    before_install:
+      en_US: |-
+        Create a free account at https://bananana.dev/start and copy the setup token it shows (it starts with bst_). Paste it into BANANANA_SETUP_TOKEN before installing; it's only used on the first start. The brain has no page on this device: open it at the address bananana.dev gives you, then add your other machines from its Nodes page.
+  index: /
+  port_map: ""
+  version: "2026.11.2"
+  update_at: "2026-11-02"
+  release_notes:
+    en_US: First release in the CasaOS app store.
+  website: "https://bananana.dev"
+  support: "https://bananana.dev/support"
+  docs: "https://bananana.dev/help/docker"
