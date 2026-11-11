@@ -1,0 +1,106 @@
+name: filehub
+services:
+  filehub:
+    image: ghcr.io/ericleung001/nas-filehub:0.3.22
+    container_name: filehub
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 8080
+        published: "8088"
+        protocol: tcp
+    environment:
+      ADMIN_USER: admin
+      SECURE_COOKIES: "false"
+      DATA_ROOT: /data/files
+      DB_PATH: /data/filehub.db
+      THUMB_CACHE_DIR: /data/thumbs
+      THUMB_ENABLE: "true"
+      THUMB_VAAPI: "false"
+      LOGIN_RATE_LIMIT: "10"
+      MAX_UPLOAD_MB: "4096"
+      CREDENTIALS_FILE: /data/admin-credentials.txt
+      DOTENV_FILE: /data/.env
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /data
+    x-casaos:
+      envs:
+        - container: ADMIN_USER
+          description:
+            en_US: Username of the seed admin account created on first boot (default admin). Changing this later does not rename an existing admin.
+        - container: SECURE_COOKIES
+          description:
+            en_US: Leave false so http://IP:port login works. Set true when the Web UI is served over HTTPS (reverse proxy).
+        - container: THUMB_ENABLE
+          description:
+            en_US: Generate image and video thumbnails with ffmpeg (software by default).
+        - container: THUMB_VAAPI
+          description:
+            en_US: Set true only if you also map /dev/dri for Intel/AMD VAAPI thumbnail acceleration. Leave false by default. The image does not support PUID/PGID.
+      volumes:
+        - container: /data
+          description:
+            en_US: Persistent app data (database, thumbs, homes, and admin-credentials.txt written on first boot).
+      ports:
+        - container: "8080"
+          description:
+            en_US: Filehub Web UI HTTP port (container 8080). The default host port is 8088.
+x-casaos:
+  id: io.github.ericleung001.filehub
+  main: filehub
+  index: /
+  port_map: "8088"
+  scheme: http
+  title:
+    en_US: Filehub
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Filehub/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Filehub/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Filehub/screenshot-1.png
+  tagline:
+    en_US: Lightweight self-hosted file manager for sharing folders
+  description:
+    en_US: |
+      Filehub is a lightweight, self-hosted file manager for sharing folders among users on your own server.
+
+      It is a single Go binary with an embedded web UI and SQLite. You can create users, share folders with read/write and optional delete permission, and share links. Optional ffmpeg thumbnails are enabled by default (software). The container image is linux/amd64 and runs as uid 1000 (user filehub). It does not support PUID/PGID.
+
+      After the first start, read the generated admin password in `admin-credentials.txt` on the `/data` volume, sign in as `admin`, then change the password under Settings → Change password. Prefer a reverse proxy; set `SECURE_COOKIES=true` once the Web UI is served over HTTPS.
+
+      Open source under Apache-2.0. If you find Filehub useful, you can support the project at https://buymeacoffee.com/filehub
+  tips:
+    before_install:
+      en_US: |
+        **First boot**
+
+        Leave `ADMIN_PASSWORD` unset (this package does not set it). On first start the entrypoint writes a random admin password and session secret once to:
+
+        - `/DATA/AppData/$AppID/admin-credentials.txt` ← read this
+        - `/DATA/AppData/$AppID/.env`
+
+        Existing files are never overwritten.
+
+        Open `http://<your-device-IP>:8088`, sign in as `admin` with the generated password, then change it under **Settings → Change password**.
+
+        `SECURE_COOKIES` is `false` so login works over `http://IP:port`. If you put Filehub behind an HTTPS reverse proxy, set `SECURE_COOKIES` to `true`.
+
+        The image runs as uid **1000** (user `filehub`). It has no PUID/PGID settings — do not expect those variables to change the process user.
+
+        The published container image is **linux/amd64** only (`ghcr.io/ericleung001/nas-filehub:0.3.22`).
+  author: ericleung001
+  developer: Filehub / Eric
+  category: Productivity
+  architectures:
+    - amd64
+  version: "0.3.22"
+  update_at: "2026-11-10"
+  release_notes:
+    en_US: |-
+      Initial CasaOS / ZimaOS App Store submission for Filehub v0.3.22.
+      Pin: ghcr.io/ericleung001/nas-filehub:0.3.22 (linux/amd64).
+  website: https://github.com/ericleung001/nas-filehub
+  repo: https://github.com/ericleung001/nas-filehub
+  support: https://github.com/ericleung001/nas-filehub/issues
+  docs: https://github.com/ericleung001/nas-filehub#readme
