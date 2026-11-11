@@ -1,0 +1,80 @@
+name: karakeep-dashboard
+services:
+  karakeep-dashboard:
+    image: ghcr.io/bartlomiejborzucki/karakeep-dashboard:2.3.0
+    container_name: karakeep-dashboard
+    deploy:
+      resources:
+        reservations:
+          memory: 16M
+    restart: unless-stopped
+    ports:
+      - target: 8595
+        published: "8595"
+        protocol: tcp
+    environment:
+      KARAKEEP_URL: ""
+    x-casaos:
+      ports:
+        - container: "8595"
+          description:
+            en_US: WebUI HTTP Port
+      envs:
+        - container: KARAKEEP_URL
+          description:
+            en_US: "Optional. Pre-fills the setup screen with your Karakeep address as your browser reaches it, e.g. http://192.168.1.50:14592 for the Karakeep app from this store."
+x-casaos:
+  id: io.github.bartlomiejborzucki.karakeep-dashboard
+  architectures:
+    - amd64
+    - arm64
+  main: karakeep-dashboard
+  store_app_id: karakeep-dashboard
+  category: Productivity
+  developer: bartlomiejborzucki
+  author: bartlomiejborzucki
+  tagline:
+    en_US: A fast start page for your Karakeep bookmarks
+  description:
+    en_US: |
+      KaraKeep Dashboard shows all your Karakeep bookmarks on one page, organised by list, like a classic browser start page. Bookmark management stays in Karakeep; this is the quickest way to get to your links.
+
+      **Main Features:**
+      - Every list on one page in a masonry grid, with collapsible lists and sublists
+      - Renders instantly from a local cache and keeps working offline
+      - Instant search over titles, URLs and tags, with a fallback to Karakeep's server search
+      - Drag and drop columns; edit mode to move bookmarks between lists, archive or delete
+      - Optional favourites card, dark mode, mobile layout, installable as a PWA
+      - Static, non-root container with no volumes: your API key stays in your browser
+
+      **Learn More:**
+      - [GitHub](https://github.com/bartlomiejborzucki/karakeep-dashboard)
+      - [Live demo](https://bartlomiejborzucki.github.io/karakeep-dashboard/)
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KarakeepDashboard/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KarakeepDashboard/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KarakeepDashboard/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KarakeepDashboard/screenshot-3.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/KarakeepDashboard/thumbnail.png
+  tips:
+    before_install:
+      en_US: |
+        Requires a running Karakeep instance (for example the Karakeep app from this store).
+        After installing, open the dashboard, enter your Karakeep address as your browser reaches it (for the Karakeep app from this store: http://<your-device-ip>:14592) and paste an API key from Karakeep → Settings → API Keys.
+        The key is stored only in your browser. There is no login screen of its own, so keep the port on your local network.
+  scheme: http
+  port_map: "8595"
+  index: /
+  title:
+    en_US: KaraKeep Dashboard
+  version: "2.3.0"
+  update_at: "2026-10-07"
+  release_notes:
+    en_US: |
+      - Optional favourites card, pinned to the top of the dashboard
+      - Embedding in Homepage, Homarr or Dashy via FRAME_ANCESTORS
+      - Non-root image, mobile layout fixes
+  website: "https://bartlomiejborzucki.github.io/karakeep-dashboard/"
+  repo: "https://github.com/bartlomiejborzucki/karakeep-dashboard"
+  support: "https://github.com/bartlomiejborzucki/karakeep-dashboard/discussions"
+  docs: "https://github.com/bartlomiejborzucki/karakeep-dashboard#readme"
