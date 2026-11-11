@@ -1,0 +1,45 @@
+name: icloudpd-manager
+services:
+  icloudpd-admin:
+    image: yizzus9/icloudpd-manager:latest
+    container_name: icloudpd-admin
+    ports:
+      - "3000:3000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /DATA/AppData/icloudpd-manager:/data
+    restart: unless-stopped
+    privileged: false
+    network_mode: bridge
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: icloudpd-admin
+  author: yizzus
+  category: Backup
+  description:
+    en_us: "Easy-to-use web interface for managing iCloudPD containers. Download your iCloud Photos to your server without touching the terminal. Supports multiple users and 2FA authentication."
+  tagline:
+    en_us: Manage iCloud Photos downloads with ease
+  title:
+    en_us: iCloudPD Manager
+  index: /
+  port_map: "3000"
+  scheme: http
+  store_app_id: icloudpd-manager
+  icon: https://raw.githubusercontent.com/yizzus/CasaOS-AppStore/main/Apps/iCloudPDManager/icon.png
+  screenshot_link:
+    - https://raw.githubusercontent.com/yizzus/CasaOS-AppStore/main/Apps/iCloudPDManager/screenshot-1.png
+  thumbnail: https://raw.githubusercontent.com/yizzus/CasaOS-AppStore/main/Apps/iCloudPDManager/thumbnail.png
+  tips:
+    before_install:
+      en_us: |
+        After installation, access the web interface at port 3000 to:
+        1. Set up your Apple ID and authenticate with 2FA
+        2. Choose where to download your photos
+        3. Configure sync settings
+        
+        Each user can create their own iCloudPD container through the web UI.
+        No terminal access required!
