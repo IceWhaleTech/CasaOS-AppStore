@@ -1,0 +1,99 @@
+name: openrestymanager
+services:
+  openresty-manager:
+    image: uusec/openresty-manager:1.1.3
+    container_name: openresty-manager
+    deploy:
+      resources:
+        reservations:
+          memory: "512M"
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+      - type: bind
+        source: /etc/resolv.conf
+        target: /etc/resolv.conf
+        read_only: true
+      - type: bind
+        source: /DATA/AppData/$AppID/acme
+        target: /opt/om/acme
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /opt/om/data
+      - type: bind
+        source: /DATA/AppData/$AppID/sites
+        target: /opt/om/nginx/conf/sites
+      - type: bind
+        source: /DATA/AppData/$AppID/upstreams
+        target: /opt/om/nginx/conf/upstreams
+      - type: bind
+        source: /DATA/AppData/$AppID/certs
+        target: /opt/om/nginx/conf/certs
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_us: Nginx HTTP Port
+            zh_cn: Nginx HTTP 端口
+
+        - container: "443"
+          description:
+            en_us: Nginx HTTPS Port
+            zh_cn: Nginx HTTPS 端口
+
+        - container: "34567"
+          description:
+            en_us: WebUI Port
+            zh_cn: WebUI 端口
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: openrestymanager
+  author: UUSEC
+  category: Network
+  description:
+    en_us: "The easiest using, powerful and beautiful OpenResty Manager, open source alternative to OpenResty Edge, which can enable you to easily reverse proxy your websites with security running at home or internet, including Access Control, HTTP Flood Protection, Free SSL, without having to know too much about OpenResty or Let's Encrypt."
+    zh_cn: "最简单易用、功能强大、漂亮的OpenResty管理器(Nginx增强版)，OpenResty Edge 的开源替代品。它可以让您轻松地安全反向代理在家或互联网上运行的网站，包括访问控制、拒绝服务攻击防护、自动申请并续期免费的SSL证书，而无需对OpenResty或Let's Encrypt了解太多。"
+  developer: UUSEC
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenRestyManager/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenRestyManager/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenRestyManager/screenshot-2.png
+  tagline:
+    en_us: Managing OpenResty proxy hosts with a simple, powerful interface and security enhancement.
+    zh_cn: 通过简单、强大的界面和安全增强来管理 OpenResty 代理主机。
+  tips:
+    before_install:
+      en_us: |
+        ⚠️ Warning!
+        This is a technical app, please make sure you know what you are doing.
+        OpenResty Manager occupies ports 80 and 443 by default for built-in Nginx use. It occupies port 34567 for the admin page.
+        Please change the CasaOS WebUI port to a port other than 80/443. And pay attention to whether the ports conflict with other apps. Otherwise, it may cause your CasaOS to run abnormally.
+
+        Default Administrator User
+
+        | Username | Password |
+        | -------- | -------- |
+        | `admin` | `#Passw0rd` |
+      zh_cn: |
+        ⚠️ 警告！
+        这是一个技术类应用，请确保你知道你在做什么。
+        OpenResty Manager 默认占用 80 和 443 端口给内置 Nginx 使用。占用 34567 端口给管理页面。
+        请将 CasaOS WebUI 端口改为非 80/443 的端口。并注意是否与其他应用冲突。否则可能导致你的 CasaOS 运行异常。
+
+        默认管理员用户
+
+        | 用户名 | 密码 |
+        | -------- | -------- |
+        | `admin` | `#Passw0rd` |
+  title:
+    en_us: OpenResty Manager
+    zh_cn: OpenResty管理器
+  index: /
+  port_map: "34567"
