@@ -1,0 +1,99 @@
+name: koel
+services:
+  koel:
+    container_name: koel
+    image: phanan/koel:9.11.3
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/koel/icon.svg
+    restart: unless-stopped
+    ports:
+      - target: 80
+        published: "8008"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music
+      - type: bind
+        source: /DATA/AppData/$AppID/images
+        target: /var/www/html/storage/app/public/images
+      - type: bind
+        source: /DATA/AppData/$AppID/search
+        target: /var/www/html/storage/search-indexes
+      - type: bind
+        source: /DATA/AppData/$AppID/db-data
+        target: /var/www/html/storage/app-data
+    environment:
+      DB_CONNECTION: sqlite-persistent
+      DB_DATABASE: /var/www/html/storage/app-data/database.sqlite
+    entrypoint: []
+    command:
+      - sh
+      - -c
+      - 'mkdir -p /var/www/html/storage/app-data; touch /var/www/html/storage/app-data/database.sqlite; touch /var/www/html/storage/app-data/.env; ln -sfn /var/www/html/storage/app-data/.env /var/www/html/.env; chown -h www-data:www-data /var/www/html/.env; chown -R www-data:www-data /var/www/html/storage; exec koel-entrypoint apache2-foreground'
+    x-casaos:
+      volumes:
+        - container: /music
+          description:
+            en_US: Your music library folder
+        - container: /var/www/html/storage/app/public/images
+          description:
+            en_US: Album art and avatar storage
+        - container: /var/www/html/storage/search-indexes
+          description:
+            en_US: Search index storage
+        - container: /var/www/html/storage/app-data
+          description:
+            en_US: Database and configuration storage, including the encryption key. Do not delete
+      ports:
+        - container: "80"
+          description:
+            en_US: WebUI Port for Koel
+
+x-casaos:
+  id: org.icewhale.koel
+  store_app_id: koel
+  architectures:
+    - amd64
+    - arm64
+  author: Phan An
+  developer: Phan An
+  category: Media
+  description:
+    en_US: |
+      Koel is an open-source, self-hosted music streaming server. Point it at your own audio library and stream it from any modern browser, with a clean, fast interface inspired by popular music players.
+      
+      Default login after install: email `admin@koel.dev`, password `KoelIsCool`. Change this immediately after your first login. Koel does not scan your music library automatically on first install. Go to Settings and click "Save & Scan" after logging in to index your music; the built-in automatic scan only runs once every 24 hours.
+
+      Beyond basic playback, Koel supports lossless streaming, cross-device playback sync, smart playlists, favorites, an equalizer, visualizers, and internet radio and podcast playback. Multi-user accounts are supported out of the box, and your library's metadata can be automatically enriched through integrations with MusicBrainz, Last.fm, Spotify, and YouTube.
+
+      Koel also implements the Subsonic and OpenSubsonic APIs, so it works with existing third-party Subsonic-compatible clients, not just its own web interface. A separate mobile app, Koel Player, is available for iOS and Android for listening on the go.
+  tips:
+    before_install:
+      en_US: |
+        Default admin account:
+
+        | Email | Password |
+        | --- | --- |
+        | `admin@koel.dev` | `KoelIsCool` |
+
+        Change this immediately after your first login.
+
+        Koel does not scan your music library automatically on first install — the built-in scan schedule only runs once every 24 hours. After logging in, go to Settings and click "Save & Scan" to index your music right away.
+  tagline:
+    en_US: Your personal music streaming server
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/koel/icon.svg
+  index: /
+  main: koel
+  port_map: "8008"
+  scheme: http
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/koel/screenshot-1.webp
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/koel/screenshot-2.webp
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/koel/screenshot-3.webp
+  title:
+    en_US: Koel
+  version: "9.11.3"
+  website: "https://koel.dev"
+  repo: "https://github.com/koel/koel"
+  docs: "https://docs.koel.dev"
