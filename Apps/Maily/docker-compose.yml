@@ -1,0 +1,98 @@
+name: maily
+services:
+  maily:
+    image: ghcr.io/stormsia/maily:latest
+    container_name: maily
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+        limits:
+          memory: 512M
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 8477
+        published: "8477"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    environment:
+      - MAILY_HOST=0.0.0.0
+      - MAILY_PORT=8477
+      - MAILY_API_KEY=your_secret_api_key
+      - MAILY_DATABASE_URL=sqlite+aiosqlite:////data/maily.db
+      - MAILY_SECRET_KEY_PATH=/data/maily.key
+    x-casaos:
+      ports:
+        - container: "8477"
+          description:
+            en_US: Web UI & REST API Port
+            ru_RU: Порт веб-интерфейса и REST API
+      volumes:
+        - container: /data
+          description:
+            en_US: Persistent SQLite database and credentials directory
+            ru_RU: Директория базы данных SQLite и ключей
+x-casaos:
+  id: io.github.stormsia.maily
+  architectures:
+    - amd64
+    - arm64
+  main: maily
+  author: stormsia
+  developer: stormsia
+  category: Developer
+  description:
+    en_US: |
+      Maily is the Universal Temporary Email Gateway & REST API Platform.
+      Aggregates 8+ disposable email providers (Mail.tm, TempMail Plus, Temp-Mail.io, NoopMail, DispoEmail, and Gmail OAuth2) into a single high-performance REST gateway with automatic OTP verification code extraction and a sleek dark-mode web console.
+
+      **Key Features:**
+      - Aggregates 8 disposable email services under one unified REST API.
+      - 1-line automatic verification code (OTP) and activation link extraction for Playwright/Pytest/QA bots.
+      - Cyberpunk dark-mode web dashboard at port 8477.
+      - Multi-tenant scoped API keys and Fernet-encrypted vault.
+      - Automatic background retention sweeps & SQLite WAL maintenance.
+      - Native async Python SDK (`maily-client`) and OpenAPI/Swagger documentation.
+    ru_RU: |
+      Maily — универсальный шлюз и REST API временной почты.
+      Объединяет 8+ сервисов одноразовой почты (Mail.tm, TempMail Plus, Temp-Mail.io, NoopMail, DispoEmail и др.) в единый быстрый REST API с мгновенным извлечением проверочных OTP-кодов и современным темным веб-интерфейсом.
+
+      **Основные возможности:**
+      - Объединение 8 провайдеров временной почты в едином интерфейсе.
+      - Мгновенное извлечение кодов подтверждения (OTP) и ссылок активации для автотестов.
+      - Стильная темная веб-консоль управления на порту 8477.
+      - Гранулярные API-ключи с разграничением прав доступа.
+      - Автоматическая очистка истекших ящиков и оптимизация SQLite WAL.
+      - Готовый Python SDK (`maily-client`) и интерактивный Swagger.
+  tagline:
+    en_US: Universal Temporary Email Gateway & OTP Extraction API
+    ru_RU: Универсальный шлюз временной почты и извлечения OTP-кодов
+  title:
+    en_US: Maily
+    ru_RU: Maily
+  tips:
+    before_install:
+      en_US: Maily runs on port 8477. You can change MAILY_API_KEY to protect your REST API and dashboard.
+      ru_RU: Maily работает на порту 8477. Измените MAILY_API_KEY для защиты вашего REST API и консоли.
+  index: /
+  port_map: "8477"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Maily/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Maily/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Maily/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Maily/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Maily/screenshot-3.png
+  version: "0.8.0"
+  update_at: "2026-11-05"
+  release_notes:
+    en_US: First release of Maily in CasaOS AppStore.
+    ru_RU: Первый релиз Maily в каталоге CasaOS AppStore.
+  website: https://stormsia.github.io/maily/
+  repo: https://github.com/stormsia/maily
+  support: https://github.com/stormsia/maily/issues
+  docs: https://stormsia.github.io/maily/
