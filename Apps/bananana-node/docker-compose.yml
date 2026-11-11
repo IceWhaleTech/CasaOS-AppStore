@@ -1,0 +1,65 @@
+name: bananana-node
+services:
+  bananana-node:
+    image: romanvaxman/bananana-node:2026.11.5
+    container_name: bananana-node
+    environment:
+      BANANANA_NODE_TOKEN: ""
+      BANANANA_NODE_NAME: ""
+    restart: unless-stopped
+    network_mode: host
+    pid: host
+    uts: host
+    privileged: true
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    x-casaos:
+      envs:
+        - container: BANANANA_NODE_TOKEN
+          description:
+            en_US: Code from your brain's Nodes › Add node (pick Docker; it starts with bnn-). Only used on the first start.
+        - container: BANANANA_NODE_NAME
+          description:
+            en_US: Optional name shown on the brain. Defaults to the name in the code, or this device's name.
+      volumes:
+        - container: /data
+          description:
+            en_US: The agent's identity and settings.
+
+x-casaos:
+  id: dev.bananana.node
+  architectures:
+    - amd64
+    - arm64
+  main: bananana-node
+  author: CTF Designs, LLC
+  developer: bananana.dev
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/bananana-node/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/bananana-node/thumbnail.png
+  title:
+    en_US: bananana agent
+  tagline:
+    en_US: Connects this device to your bananana brain.
+  description:
+    en_US: |-
+      The bananana.dev agent reports this device to your bananana brain: live CPU, memory, disk, temperature and network readings, processes, Docker containers, files and a terminal, with alerts, from the dashboard and the bananana.dev apps. It connects out through an end-to-end encrypted relay; no ports are opened. It runs privileged and shares the device's processes, network and name, because it reports and manages the device itself, not just its own container. What it may do (terminal, files, service control) is chosen when you create its code on the brain, and the agent enforces it.
+  tips:
+    before_install:
+      en_US: |-
+        You need a bananana brain (the bananana brain app, or one from https://bananana.dev/start). On the brain, open Nodes › Add node › Install command, pick Docker, create the command and paste the code from it (it starts with bnn-) into BANANANA_NODE_TOKEN. It works once.
+  index: /
+  port_map: ""
+  version: "2026.11.5"
+  update_at: "2026-11-05"
+  release_notes:
+    en_US: First release in the ZimaOS App Store.
+  website: "https://bananana.dev"
+  support: "https://bananana.dev/support"
+  docs: "https://bananana.dev/help/docker"

@@ -1,0 +1,81 @@
+name: bananana-brain
+services:
+  bananana-brain:
+    image: romanvaxman/bananana-brain:2026.11.5
+    container_name: bananana-brain
+    environment:
+      BANANANA_SETUP_TOKEN: ""
+    ports:
+      - target: 18771
+        published: "18771"
+        protocol: tcp
+    restart: unless-stopped
+    network_mode: bridge
+    privileged: false
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request,ssl;urllib.request.urlopen('https://127.0.0.1:18771/login',context=ssl._create_unverified_context(),timeout=3)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    x-casaos:
+      envs:
+        - container: BANANANA_SETUP_TOKEN
+          description:
+            en_US: Setup token from https://bananana.dev/start (starts with bst_). Only used on the first start.
+      ports:
+        - container: "18771"
+          description:
+            en_US: Local dashboard (HTTPS, self-signed certificate). Keep it at 18771; the brain only answers its dashboard on this port number.
+      volumes:
+        - container: /data
+          description:
+            en_US: The brain's data (identity, settings, users and history) and its nightly backups.
+
+x-casaos:
+  id: dev.bananana.brain
+  architectures:
+    - amd64
+    - arm64
+  main: bananana-brain
+  author: CTF Designs, LLC
+  developer: bananana.dev
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/bananana-brain/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/bananana-brain/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/bananana-brain/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/bananana-brain/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/bananana-brain/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/bananana-brain/screenshot-4.png
+  title:
+    en_US: bananana brain
+  tagline:
+    en_US: Your own control room for servers, Macs and PCs.
+  description:
+    en_US: |-
+      The bananana.dev brain keeps your machines' live readings, alerts, automations, files, terminals and history on your own hardware, and you reach it from anywhere at your-name.bananana.dev and in the bananana.dev apps for iPhone and Android. It connects out through an end-to-end encrypted relay, so it opens no ports on your router and needs no VPN.
+
+      On your local network the brain also serves its dashboard over HTTPS on port 18771, with the same sign-in. It uses a self-signed certificate, so your browser asks you to accept it the first time.
+  tips:
+    before_install:
+      en_US: |-
+        Create a free account at https://bananana.dev/start and copy the setup token it shows (it starts with bst_). Paste it into BANANANA_SETUP_TOKEN before installing; it's only used on the first start. Then open the brain at the address bananana.dev gives you, or on this device at https://<device-ip>:18771 (accept the self-signed certificate), and add your other machines from its Nodes page.
+  index: /
+  port_map: "18771"
+  scheme: https
+  version: "2026.11.5"
+  update_at: "2026-11-05"
+  release_notes:
+    en_US: First release in the ZimaOS App Store.
+  website: "https://bananana.dev"
+  support: "https://bananana.dev/support"
+  docs: "https://bananana.dev/help/docker"
