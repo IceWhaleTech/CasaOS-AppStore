@@ -1,0 +1,314 @@
+name: guacamole
+services:
+  guacamole:
+    image: guacamole/guacamole:1.6.0
+    container_name: guacamole
+    environment:
+      GUACD_HOSTNAME: guacd
+      POSTGRESQL_ENABLED: "true"
+      POSTGRESQL_HOSTNAME: guacamole-db
+      POSTGRESQL_DATABASE: guacamole
+      POSTGRESQL_USERNAME: guacamole
+      POSTGRESQL_PASSWORD: ""
+      # Optional: Nginx Proxy Manager -> http://<ZimaOS-IP>:8085, with Websockets Support enabled.
+      # Preserve /guacamole/; enable REMOTE_IP_VALVE_ENABLED only when using a trusted reverse proxy.
+    depends_on:
+      guacamole-db:
+        condition: service_healthy
+      guacd:
+        condition: service_healthy
+    ports:
+      - target: 8080
+        published: "8085"
+        protocol: tcp
+    networks:
+      - guacamole-network
+    healthcheck:
+      test: [CMD, curl, --fail, --silent, --show-error, --output, /dev/null, 'http://127.0.0.1:8080/guacamole/']
+      interval: 30s
+      timeout: 5s
+      start_period: 120s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 2048M
+        reservations:
+          memory: 512M
+    restart: unless-stopped
+    x-casaos:
+      envs:
+        - container: POSTGRESQL_PASSWORD
+          description:
+            en_US: Required database password; must match POSTGRES_PASSWORD in guacamole-db.
+            de_DE: Erforderliches Datenbankpasswort; muss POSTGRES_PASSWORD in guacamole-db entsprechen.
+            zh_CN: 必须设置数据库密码，并与 guacamole-db 的 POSTGRES_PASSWORD 保持一致。
+      ports:
+        - container: "8080"
+          description:
+            en_US: Guacamole web interface; use /guacamole/.
+            de_DE: Guacamole-Weboberfläche; unter /guacamole/ erreichbar.
+            zh_CN: Guacamole 网页界面，访问路径为 /guacamole/。
+
+  guacd:
+    image: guacamole/guacd:1.6.0
+    container_name: guacd
+    networks:
+      - guacamole-network
+    # Same probe as the official image, with a shorter interval for startup ordering.
+    healthcheck:
+      test: [CMD-SHELL, "nc -z 127.0.0.1 4822"]
+      interval: 10s
+      timeout: 5s
+      start_period: 10s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 128M
+    restart: unless-stopped
+
+  guacamole-db:
+    image: postgres:18.6-alpine
+    container_name: guacamole-db
+    environment:
+      POSTGRES_DB: guacamole
+      POSTGRES_USER: guacamole
+      POSTGRES_PASSWORD: ""
+    depends_on:
+      guacamole-init:
+        condition: service_completed_successfully
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql
+      - type: volume
+        source: guacamole-initdb
+        target: /docker-entrypoint-initdb.d
+        read_only: true
+    networks:
+      - guacamole-network
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"']
+      interval: 10s
+      timeout: 5s
+      start_period: 30s
+      retries: 10
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 128M
+    restart: unless-stopped
+    x-casaos:
+      envs:
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: Required database password; must match POSTGRESQL_PASSWORD in guacamole.
+            de_DE: Erforderliches Datenbankpasswort; muss POSTGRESQL_PASSWORD in guacamole entsprechen.
+            zh_CN: 必须设置数据库密码，并与 guacamole 的 POSTGRESQL_PASSWORD 保持一致。
+      volumes:
+        - container: /var/lib/postgresql
+          description:
+            en_US: Persistent PostgreSQL 18 data, including users, connections, and settings.
+            de_DE: Persistente PostgreSQL-18-Daten mit Benutzern, Verbindungen und Einstellungen.
+            zh_CN: PostgreSQL 18 持久化数据，包括用户、连接和设置。
+
+  guacamole-init:
+    image: guacamole/guacamole:1.6.0
+    container_name: guacamole-init
+    # Docker populates the empty volume with the official bundled SQL before PostgreSQL starts.
+    # These scripts run only on the first initialization of an empty database.
+    command: [/bin/true]
+    volumes:
+      - type: volume
+        source: guacamole-initdb
+        target: /opt/guacamole/extensions/guacamole-auth-jdbc/postgresql/schema
+        read_only: true
+    network_mode: none
+    restart: "no"
+
+networks:
+  guacamole-network:
+    driver: bridge
+
+volumes:
+  guacamole-initdb:
+
+x-casaos:
+  id: org.icewhale.guacamole
+  architectures:
+    - amd64
+    - arm64
+  main: guacamole
+  author: Mosman97
+  developer: Apache Software Foundation
+  category: Networking
+  title:
+    en_US: Apache Guacamole
+  tagline:
+    en_US: Access remote desktops and SSH terminals from your browser.
+    de_DE: Remote-Desktops und SSH-Terminals direkt im Browser nutzen.
+    zh_CN: 通过浏览器访问远程桌面和 SSH 终端。
+    en_GB: Access remote desktops and SSH terminals from your browser.
+    ca_ES: Accediu a escriptoris remots i terminals SSH des del navegador.
+    cs_CZ: Přístup ke vzdáleným plochám a terminálům SSH z prohlížeče.
+    da_DK: Få adgang til fjernskriveborde og SSH-terminaler i browseren.
+    el_GR: Πρόσβαση σε απομακρυσμένες επιφάνειες εργασίας και τερματικά SSH από τον περιηγητή.
+    es_ES: Acceda a escritorios remotos y terminales SSH desde el navegador.
+    fr_FR: Accédez aux bureaux distants et aux terminaux SSH depuis votre navigateur.
+    ga_IE: Faigh rochtain ar dheasca cianda agus teirminéil SSH sa bhrabhsálaí.
+    hr_HR: Pristup udaljenim radnim površinama i SSH terminalima iz preglednika.
+    hu_HU: Távoli asztalok és SSH-terminálok elérése a böngészőből.
+    it_IT: Accedi a desktop remoti e terminali SSH dal browser.
+    ja_JP: ブラウザーからリモートデスクトップや SSH 端末にアクセス。
+    ko_KR: 브라우저에서 원격 데스크톱과 SSH 터미널에 접속하세요.
+    ml_IN: ബ്രൗസറിൽ നിന്ന് റിമോട്ട് ഡെസ്‌ക്‌ടോപ്പുകളും SSH ടെർമിനലുകളും ഉപയോഗിക്കുക.
+    nb_NO: Åpne eksterne skrivebord og SSH-terminaler i nettleseren.
+    nl_NL: Open externe bureaubladen en SSH-terminals vanuit je browser.
+    pl_PL: Dostęp do zdalnych pulpitów i terminali SSH z przeglądarki.
+    pt_BR: Acesse áreas de trabalho remotas e terminais SSH pelo navegador.
+    pt_PT: Aceda a ambientes de trabalho remotos e terminais SSH no navegador.
+    ro_RO: Accesați desktopuri la distanță și terminale SSH din browser.
+    ru_RU: Доступ к удалённым рабочим столам и терминалам SSH из браузера.
+    sk_SK: Prístup k vzdialeným plochám a terminálom SSH z prehliadača.
+    sv_SE: Öppna fjärrskrivbord och SSH-terminaler i webbläsaren.
+    tr_TR: Tarayıcınızdan uzak masaüstlerine ve SSH terminallerine erişin.
+    zh_TW: 透過瀏覽器存取遠端桌面和 SSH 終端機。
+    ar_SA: الوصول إلى أسطح المكتب البعيدة وطرفيات SSH من المتصفح.
+    uk_UA: Доступ до віддалених робочих столів і терміналів SSH із браузера.
+  description:
+    en_US: |-
+      Apache Guacamole is a clientless remote desktop gateway for RDP, VNC, and SSH. Manage users and connections through a web interface without installing a client on your device.
+
+      This package uses the official Guacamole and guacd images with a persistent PostgreSQL database. The bundled upstream SQL initializes new databases automatically. Only the web interface is published; PostgreSQL and guacd stay on the app network.
+    de_DE: |-
+      Apache Guacamole ist ein Remote-Desktop-Gateway für RDP, VNC und SSH ohne zusätzliche Clientinstallation. Benutzer und Verbindungen werden über eine Weboberfläche verwaltet.
+
+      Dieses Paket verwendet die offiziellen Guacamole- und guacd-Images mit einer persistenten PostgreSQL-Datenbank. Neue Datenbanken werden automatisch mit den mitgelieferten SQL-Skripten initialisiert. Nur die Weboberfläche wird veröffentlicht; PostgreSQL und guacd bleiben im App-Netzwerk.
+    zh_CN: |-
+      Apache Guacamole 是支持 RDP、VNC 和 SSH 的无客户端远程桌面网关。无需安装客户端，即可通过网页管理用户和连接。
+
+      此软件包使用官方 Guacamole 和 guacd 镜像及持久化 PostgreSQL 数据库。新数据库会使用上游内置 SQL 自动初始化。仅开放网页界面端口，PostgreSQL 和 guacd 保留在应用内部网络。
+    en_GB: |-
+      Apache Guacamole is a clientless remote desktop gateway for RDP, VNC, and SSH. Manage users and connections through a web interface without installing a client on your device.
+
+      This package uses the official Guacamole and guacd images with a persistent PostgreSQL database. The bundled upstream SQL initializes new databases automatically. Only the web interface is published; PostgreSQL and guacd stay on the app network.
+    ca_ES: Apache Guacamole és una passarel·la d'escriptori remot per a RDP, VNC i SSH que no requereix instal·lar cap client. Gestioneu usuaris i connexions des del navegador. Aquest paquet utilitza les imatges oficials de Guacamole i guacd amb PostgreSQL persistent i inicialitza automàticament les bases de dades noves amb l'SQL original. Només es publica la interfície web.
+    cs_CZ: Apache Guacamole je brána ke vzdálené ploše pro RDP, VNC a SSH bez nutnosti instalovat klienta. Uživatelé a připojení se spravují v prohlížeči. Balíček používá oficiální obrazy Guacamole a guacd s trvalou databází PostgreSQL. Nové databáze se automaticky inicializují původními skripty SQL. Zpřístupněno je pouze webové rozhraní.
+    da_DK: Apache Guacamole er en gateway til fjernskriveborde med RDP, VNC og SSH uden installation af en klient. Administrer brugere og forbindelser i browseren. Pakken bruger de officielle Guacamole- og guacd-images med vedvarende PostgreSQL. Nye databaser initialiseres automatisk med de originale SQL-scripts. Kun webgrænsefladen offentliggøres.
+    el_GR: Το Apache Guacamole είναι μια πύλη απομακρυσμένης επιφάνειας εργασίας για RDP, VNC και SSH χωρίς εγκατάσταση πελάτη. Διαχειριστείτε χρήστες και συνδέσεις από τον περιηγητή. Το πακέτο χρησιμοποιεί τις επίσημες εικόνες Guacamole και guacd με μόνιμη PostgreSQL. Οι νέες βάσεις δεδομένων αρχικοποιούνται αυτόματα με τα αρχικά SQL scripts. Δημοσιεύεται μόνο η διαδικτυακή διεπαφή.
+    es_ES: Apache Guacamole es una pasarela de escritorio remoto para RDP, VNC y SSH que no requiere instalar un cliente. Gestione usuarios y conexiones desde el navegador. Este paquete utiliza las imágenes oficiales de Guacamole y guacd con PostgreSQL persistente. Las bases de datos nuevas se inicializan automáticamente con el SQL original. Solo se publica la interfaz web.
+    fr_FR: Apache Guacamole est une passerelle de bureau à distance pour RDP, VNC et SSH ne nécessitant aucune installation de client. Gérez les utilisateurs et les connexions depuis le navigateur. Ce paquet utilise les images officielles Guacamole et guacd avec PostgreSQL persistant. Les nouvelles bases sont initialisées automatiquement avec le SQL d'origine. Seule l'interface web est exposée.
+    ga_IE: Is geata deisce cianda é Apache Guacamole do RDP, VNC agus SSH nach gá cliant a shuiteáil dó. Bainistigh úsáideoirí agus naisc sa bhrabhsálaí. Úsáideann an pacáiste íomhánna oifigiúla Guacamole agus guacd le PostgreSQL buan. Cuirtear bunachair sonraí nua ar bun go huathoibríoch leis na scripteanna SQL bunaidh. Ní fhoilsítear ach an comhéadan gréasáin.
+    hr_HR: Apache Guacamole je pristupnik za udaljenu radnu površinu putem RDP-a, VNC-a i SSH-a bez instalacije klijenta. Upravljajte korisnicima i vezama iz preglednika. Paket koristi službene slike Guacamole i guacd s trajnim PostgreSQL-om. Nove baze podataka automatski se inicijaliziraju izvornim SQL skriptama. Objavljuje se samo web-sučelje.
+    hu_HU: Az Apache Guacamole RDP-, VNC- és SSH-kapcsolatokat biztosító távoliasztal-átjáró, amelyhez nem kell klienst telepíteni. A felhasználók és kapcsolatok a böngészőből kezelhetők. A csomag a hivatalos Guacamole- és guacd-képeket használja tartós PostgreSQL-lel. Az új adatbázisokat az eredeti SQL-szkriptek automatikusan inicializálják. Csak a webes felület érhető el külső portról.
+    it_IT: Apache Guacamole è un gateway per desktop remoti tramite RDP, VNC e SSH che non richiede l'installazione di un client. Gestisci utenti e connessioni dal browser. Il pacchetto usa le immagini ufficiali Guacamole e guacd con PostgreSQL persistente. I nuovi database vengono inizializzati automaticamente con gli script SQL originali. Viene esposta solo l'interfaccia web.
+    ja_JP: Apache Guacamole は、クライアントのインストールが不要な RDP、VNC、SSH 対応のリモートデスクトップゲートウェイです。ブラウザーからユーザーと接続を管理できます。このパッケージは公式 Guacamole・guacd イメージと永続化された PostgreSQL を使用し、付属の公式 SQL で新しいデータベースを自動初期化します。公開するのは Web インターフェースのみです。
+    ko_KR: Apache Guacamole은 클라이언트를 설치하지 않고 RDP, VNC, SSH를 사용하는 원격 데스크톱 게이트웨이입니다. 브라우저에서 사용자와 연결을 관리할 수 있습니다. 이 패키지는 공식 Guacamole 및 guacd 이미지와 영구 PostgreSQL을 사용하며, 포함된 공식 SQL로 새 데이터베이스를 자동 초기화합니다. 웹 인터페이스만 외부에 공개됩니다.
+    ml_IN: ക്ലയന്റ് ഇൻസ്റ്റാൾ ചെയ്യാതെ RDP, VNC, SSH എന്നിവ ഉപയോഗിക്കാനുള്ള റിമോട്ട് ഡെസ്‌ക്‌ടോപ്പ് ഗേറ്റ്‌വേയാണ് Apache Guacamole. ബ്രൗസറിൽ നിന്ന് ഉപയോക്താക്കളെയും കണക്ഷനുകളെയും നിയന്ത്രിക്കാം. ഈ പാക്കേജ് ഔദ്യോഗിക Guacamole, guacd ഇമേജുകളും സ്ഥിര PostgreSQL സംഭരണവും ഉപയോഗിക്കുന്നു. പുതിയ ഡാറ്റാബേസുകൾ ഔദ്യോഗിക SQL സ്ക്രിപ്റ്റുകൾ ഉപയോഗിച്ച് സ്വയമേവ സജ്ജമാക്കുന്നു. വെബ് ഇന്റർഫേസ് മാത്രമാണ് പുറത്തേക്ക് തുറക്കുന്നത്.
+    nb_NO: Apache Guacamole er en gateway for eksterne skrivebord med RDP, VNC og SSH uten installasjon av en klient. Administrer brukere og forbindelser i nettleseren. Pakken bruker de offisielle Guacamole- og guacd-imagene med vedvarende PostgreSQL. Nye databaser initialiseres automatisk med de originale SQL-skriptene. Bare nettgrensesnittet publiseres.
+    nl_NL: Apache Guacamole is een gateway voor externe bureaubladen via RDP, VNC en SSH zonder installatie van een client. Beheer gebruikers en verbindingen vanuit de browser. Dit pakket gebruikt de officiële Guacamole- en guacd-images met permanente PostgreSQL-opslag. Nieuwe databases worden automatisch geïnitialiseerd met de oorspronkelijke SQL-scripts. Alleen de webinterface wordt gepubliceerd.
+    pl_PL: Apache Guacamole to brama zdalnego pulpitu dla RDP, VNC i SSH, która nie wymaga instalowania klienta. Zarządzaj użytkownikami i połączeniami w przeglądarce. Pakiet korzysta z oficjalnych obrazów Guacamole i guacd oraz trwałej bazy PostgreSQL. Nowe bazy są automatycznie inicjalizowane oryginalnymi skryptami SQL. Udostępniany jest tylko interfejs internetowy.
+    pt_BR: O Apache Guacamole é um gateway de acesso remoto para RDP, VNC e SSH que não exige a instalação de um cliente. Gerencie usuários e conexões pelo navegador. Este pacote usa as imagens oficiais do Guacamole e guacd com PostgreSQL persistente. Os novos bancos de dados são inicializados automaticamente com os scripts SQL originais. Apenas a interface web é exposta.
+    pt_PT: O Apache Guacamole é uma porta de acesso remoto para RDP, VNC e SSH que não exige a instalação de um cliente. Faça a gestão de utilizadores e ligações no navegador. Este pacote usa as imagens oficiais do Guacamole e guacd com PostgreSQL persistente. As novas bases de dados são inicializadas automaticamente com os scripts SQL originais. Apenas a interface web é exposta.
+    ro_RO: Apache Guacamole este un gateway pentru desktopuri la distanță prin RDP, VNC și SSH, fără instalarea unui client. Gestionați utilizatorii și conexiunile din browser. Pachetul folosește imaginile oficiale Guacamole și guacd cu PostgreSQL persistent. Bazele de date noi sunt inițializate automat cu scripturile SQL originale. Doar interfața web este expusă.
+    ru_RU: Apache Guacamole — шлюз удалённого рабочего стола для RDP, VNC и SSH без установки клиента. Управляйте пользователями и подключениями в браузере. Пакет использует официальные образы Guacamole и guacd с постоянной базой PostgreSQL. Новые базы автоматически инициализируются исходными SQL-скриптами. Публикуется только веб-интерфейс.
+    sk_SK: Apache Guacamole je brána vzdialenej plochy pre RDP, VNC a SSH bez inštalácie klienta. Spravujte používateľov a pripojenia v prehliadači. Balík používa oficiálne obrazy Guacamole a guacd s trvalou databázou PostgreSQL. Nové databázy sa automaticky inicializujú pôvodnými skriptmi SQL. Sprístupnené je iba webové rozhranie.
+    sv_SE: Apache Guacamole är en gateway för fjärrskrivbord med RDP, VNC och SSH utan installation av en klient. Hantera användare och anslutningar i webbläsaren. Paketet använder de officiella Guacamole- och guacd-avbilderna med beständig PostgreSQL. Nya databaser initieras automatiskt med de ursprungliga SQL-skripten. Endast webbgränssnittet publiceras.
+    tr_TR: Apache Guacamole, istemci kurulumu gerektirmeyen bir RDP, VNC ve SSH uzak masaüstü ağ geçididir. Kullanıcıları ve bağlantıları tarayıcıdan yönetin. Paket, kalıcı PostgreSQL ile resmi Guacamole ve guacd imajlarını kullanır. Yeni veritabanları özgün SQL betikleriyle otomatik olarak başlatılır. Yalnızca web arayüzü dışarıya açılır.
+    zh_TW: Apache Guacamole 是支援 RDP、VNC 和 SSH 的遠端桌面閘道，無需安裝用戶端即可透過瀏覽器管理使用者與連線。此套件使用官方 Guacamole 和 guacd 映像及持久化 PostgreSQL 資料庫，並使用上游內建 SQL 自動初始化新資料庫。僅公開網頁介面。
+    ar_SA: Apache Guacamole بوابة لسطح المكتب البعيد تدعم RDP وVNC وSSH دون تثبيت عميل. يمكنك إدارة المستخدمين والاتصالات من المتصفح. تستخدم الحزمة الصور الرسمية لـ Guacamole وguacd مع PostgreSQL دائم. تُهيّأ قواعد البيانات الجديدة تلقائيًا باستخدام نصوص SQL الأصلية. تُنشر واجهة الويب فقط.
+    uk_UA: Apache Guacamole — шлюз віддаленого робочого стола для RDP, VNC і SSH без установлення клієнта. Керуйте користувачами та підключеннями в браузері. Пакет використовує офіційні образи Guacamole й guacd із постійною базою PostgreSQL. Нові бази автоматично ініціалізуються оригінальними SQL-скриптами. Публікується лише вебінтерфейс.
+  tips:
+    before_install:
+      en_US: |-
+        Use Custom Install and set the same unique database password in Guacamole's POSTGRESQL_PASSWORD and the database service's POSTGRES_PASSWORD. These values are intentionally empty. Open /guacamole/ and sign in with guacadmin / guacadmin, then change this default password immediately.
+
+        Use HTTPS when exposing the app through a reverse proxy. For Nginx Proxy Manager, forward to host port 8085, enable Websockets Support, and preserve /guacamole/. Back up PostgreSQL before upgrades; existing databases require the upstream migration procedure.
+      de_DE: |-
+        Benutzerdefinierte Installation verwenden und dasselbe eigene Datenbankpasswort in POSTGRESQL_PASSWORD von Guacamole und POSTGRES_PASSWORD des Datenbankdienstes setzen. Diese Werte sind absichtlich leer. /guacamole/ öffnen, mit guacadmin / guacadmin anmelden und das Standardpasswort sofort ändern.
+
+        Bei Zugriff über einen Reverse Proxy HTTPS verwenden. In Nginx Proxy Manager an Host-Port 8085 weiterleiten, Websockets Support aktivieren und /guacamole/ beibehalten. Vor Updates PostgreSQL sichern; bestehende Datenbanken benötigen das Migrationsverfahren von Apache.
+      zh_CN: |-
+        请使用自定义安装，在 Guacamole 的 POSTGRESQL_PASSWORD 和数据库服务的 POSTGRES_PASSWORD 中设置相同的独立数据库密码。这些值有意留空。打开 /guacamole/，使用 guacadmin / guacadmin 登录，然后立即修改默认密码。
+
+        通过反向代理公开应用时请使用 HTTPS。在 Nginx Proxy Manager 中转发至主机端口 8085，启用 Websockets Support，并保留 /guacamole/ 路径。升级前备份 PostgreSQL；现有数据库需要按照 Apache 的迁移流程升级。
+      en_GB: |-
+        Use Custom Install and set the same unique database password in Guacamole's POSTGRESQL_PASSWORD and the database service's POSTGRES_PASSWORD. These values are intentionally empty. Open /guacamole/ and sign in with guacadmin / guacadmin, then change this default password immediately.
+
+        Use HTTPS when exposing the app through a reverse proxy. For Nginx Proxy Manager, forward to host port 8085, enable Websockets Support, and preserve /guacamole/. Back up PostgreSQL before upgrades; existing databases require the upstream migration procedure.
+      ca_ES: Feu servir la instal·lació personalitzada i definiu la mateixa contrasenya única a POSTGRESQL_PASSWORD i POSTGRES_PASSWORD del servei de base de dades. Els valors es deixen buits expressament. Obriu /guacamole/, inicieu sessió amb guacadmin / guacadmin i canvieu la contrasenya immediatament. Amb Nginx Proxy Manager, feu servir HTTPS, reenviament al port 8085 i Websockets Support, mantenint /guacamole/. Abans d'actualitzar, feu una còpia de PostgreSQL i seguiu el procediment de migració d'Apache.
+      cs_CZ: Použijte vlastní instalaci a nastavte stejné jedinečné heslo v POSTGRESQL_PASSWORD a POSTGRES_PASSWORD databázové služby. Hodnoty jsou záměrně prázdné. Otevřete /guacamole/, přihlaste se pomocí guacadmin / guacadmin a ihned změňte heslo. V Nginx Proxy Manager použijte HTTPS, předávání na port 8085 a Websockets Support; zachovejte cestu /guacamole/. Před aktualizací zálohujte PostgreSQL a postupujte podle migračních pokynů Apache.
+      da_DK: Brug tilpasset installation, og angiv samme unikke adgangskode i POSTGRESQL_PASSWORD og databasetjenestens POSTGRES_PASSWORD. Værdierne er bevidst tomme. Åbn /guacamole/, log ind med guacadmin / guacadmin, og skift straks adgangskoden. Med Nginx Proxy Manager skal du bruge HTTPS, videresende til port 8085, aktivere Websockets Support og bevare /guacamole/. Sikkerhedskopiér PostgreSQL før opgraderinger, og følg Apaches migrationsvejledning.
+      el_GR: Χρησιμοποιήστε προσαρμοσμένη εγκατάσταση και ορίστε τον ίδιο μοναδικό κωδικό στα POSTGRESQL_PASSWORD και POSTGRES_PASSWORD της υπηρεσίας βάσης δεδομένων. Οι τιμές είναι σκόπιμα κενές. Ανοίξτε το /guacamole/, συνδεθείτε με guacadmin / guacadmin και αλλάξτε αμέσως τον κωδικό. Στο Nginx Proxy Manager χρησιμοποιήστε HTTPS, προώθηση στη θύρα 8085 και Websockets Support, διατηρώντας το /guacamole/. Πριν από αναβαθμίσεις, δημιουργήστε αντίγραφο ασφαλείας της PostgreSQL και ακολουθήστε τη διαδικασία μετάβασης του Apache.
+      es_ES: Utilice la instalación personalizada y configure la misma contraseña única en POSTGRESQL_PASSWORD y POSTGRES_PASSWORD del servicio de base de datos. Los valores están vacíos de forma intencionada. Abra /guacamole/, acceda con guacadmin / guacadmin y cambie inmediatamente la contraseña. Con Nginx Proxy Manager, utilice HTTPS, reenvío al puerto 8085 y Websockets Support, conservando /guacamole/. Antes de actualizar, haga una copia de PostgreSQL y siga el procedimiento de migración de Apache.
+      fr_FR: Utilisez l'installation personnalisée et définissez le même mot de passe unique dans POSTGRESQL_PASSWORD et POSTGRES_PASSWORD du service de base de données. Ces valeurs sont volontairement vides. Ouvrez /guacamole/, connectez-vous avec guacadmin / guacadmin et changez immédiatement le mot de passe. Avec Nginx Proxy Manager, utilisez HTTPS, le transfert vers le port 8085 et Websockets Support, en conservant /guacamole/. Sauvegardez PostgreSQL avant toute mise à niveau et suivez la procédure de migration d'Apache.
+      ga_IE: Úsáid an tsuiteáil shaincheaptha agus socraigh an pasfhocal uathúil céanna i POSTGRESQL_PASSWORD agus POSTGRES_PASSWORD na seirbhíse bunachair sonraí. Tá na luachanna folamh d'aon ghnó. Oscail /guacamole/, sínigh isteach le guacadmin / guacadmin agus athraigh an pasfhocal láithreach. Le Nginx Proxy Manager, úsáid HTTPS, seol iarratais chuig port 8085 agus cumasaigh Websockets Support, ag coinneáil /guacamole/. Déan cúltaca de PostgreSQL roimh uasghrádú agus lean nós imeachta imirce Apache.
+      hr_HR: Upotrijebite prilagođenu instalaciju i postavite istu jedinstvenu lozinku u POSTGRESQL_PASSWORD i POSTGRES_PASSWORD usluge baze podataka. Vrijednosti su namjerno prazne. Otvorite /guacamole/, prijavite se s guacadmin / guacadmin i odmah promijenite lozinku. U Nginx Proxy Manageru koristite HTTPS, prosljeđivanje na priključak 8085 i Websockets Support uz zadržavanje putanje /guacamole/. Prije nadogradnje izradite sigurnosnu kopiju PostgreSQL-a i slijedite Apacheov postupak migracije.
+      hu_HU: Használja az egyéni telepítést, és adja meg ugyanazt az egyedi jelszót a POSTGRESQL_PASSWORD és az adatbázis-szolgáltatás POSTGRES_PASSWORD mezőjében. Az értékek szándékosan üresek. Nyissa meg a /guacamole/ útvonalat, jelentkezzen be a guacadmin / guacadmin adatokkal, és azonnal módosítsa a jelszót. Nginx Proxy Manager esetén használjon HTTPS-t, továbbítson a 8085-ös portra, kapcsolja be a Websockets Support funkciót, és őrizze meg a /guacamole/ útvonalat. Frissítés előtt mentse a PostgreSQL-t, és kövesse az Apache migrációs eljárását.
+      it_IT: Usare l'installazione personalizzata e impostare la stessa password univoca in POSTGRESQL_PASSWORD e POSTGRES_PASSWORD del servizio database. I valori sono intenzionalmente vuoti. Aprire /guacamole/, accedere con guacadmin / guacadmin e cambiare immediatamente la password. Con Nginx Proxy Manager usare HTTPS, inoltrare alla porta 8085, attivare Websockets Support e mantenere /guacamole/. Prima degli aggiornamenti eseguire un backup di PostgreSQL e seguire la procedura di migrazione di Apache.
+      ja_JP: カスタムインストールで、POSTGRESQL_PASSWORD とデータベースサービスの POSTGRES_PASSWORD に同じ固有のパスワードを設定してください。初期値は意図的に空欄です。/guacamole/ を開き、guacadmin / guacadmin でログイン後、直ちにパスワードを変更してください。Nginx Proxy Manager では HTTPS とポート 8085 への転送を設定し、Websockets Support を有効にして /guacamole/ を維持してください。更新前に PostgreSQL をバックアップし、Apache の移行手順に従ってください。
+      ko_KR: 사용자 지정 설치에서 POSTGRESQL_PASSWORD와 데이터베이스 서비스의 POSTGRES_PASSWORD에 동일한 고유 비밀번호를 설정하세요. 값은 의도적으로 비워 두었습니다. /guacamole/에서 guacadmin / guacadmin으로 로그인한 후 즉시 비밀번호를 변경하세요. Nginx Proxy Manager에서는 HTTPS와 포트 8085 전달을 설정하고 Websockets Support를 활성화하며 /guacamole/ 경로를 유지하세요. 업그레이드 전에 PostgreSQL을 백업하고 Apache의 마이그레이션 절차를 따르세요.
+      ml_IN: കസ്റ്റം ഇൻസ്റ്റാൾ ഉപയോഗിച്ച് POSTGRESQL_PASSWORD, ഡാറ്റാബേസ് സേവനത്തിലെ POSTGRES_PASSWORD എന്നിവയിൽ ഒരേ തനതായ പാസ്‌വേഡ് നൽകുക. മൂല്യങ്ങൾ മനപ്പൂർവം ഒഴിച്ചിട്ടതാണ്. /guacamole/ തുറന്ന് guacadmin / guacadmin ഉപയോഗിച്ച് ലോഗിൻ ചെയ്തശേഷം ഉടൻ പാസ്‌വേഡ് മാറ്റുക. Nginx Proxy Manager-ൽ HTTPS, പോർട്ട് 8085-ലേക്കുള്ള ഫോർവേഡിങ്, Websockets Support എന്നിവ സജ്ജമാക്കുകയും /guacamole/ നിലനിർത്തുകയും ചെയ്യുക. അപ്‌ഗ്രേഡിന് മുമ്പ് PostgreSQL ബാക്കപ്പ് എടുത്ത് Apache-യുടെ മൈഗ്രേഷൻ നടപടിക്രമം പിന്തുടരുക.
+      nb_NO: Bruk tilpasset installasjon og angi samme unike passord i POSTGRESQL_PASSWORD og databasetjenestens POSTGRES_PASSWORD. Verdiene er bevisst tomme. Åpne /guacamole/, logg inn med guacadmin / guacadmin og endre passordet umiddelbart. Med Nginx Proxy Manager bruker du HTTPS, videresending til port 8085 og Websockets Support, og beholder /guacamole/. Sikkerhetskopier PostgreSQL før oppgraderinger og følg Apaches migrasjonsprosedyre.
+      nl_NL: Gebruik de aangepaste installatie en stel hetzelfde unieke wachtwoord in bij POSTGRESQL_PASSWORD en POSTGRES_PASSWORD van de databaseservice. De waarden zijn bewust leeg. Open /guacamole/, meld je aan met guacadmin / guacadmin en wijzig het wachtwoord meteen. Gebruik in Nginx Proxy Manager HTTPS, doorsturen naar poort 8085 en Websockets Support en behoud /guacamole/. Maak vóór upgrades een PostgreSQL-back-up en volg de migratieprocedure van Apache.
+      pl_PL: Użyj instalacji niestandardowej i ustaw to samo unikalne hasło w POSTGRESQL_PASSWORD i POSTGRES_PASSWORD usługi bazy danych. Wartości celowo pozostawiono puste. Otwórz /guacamole/, zaloguj się przez guacadmin / guacadmin i natychmiast zmień hasło. W Nginx Proxy Manager użyj HTTPS, przekierowania na port 8085 i Websockets Support, zachowując /guacamole/. Przed aktualizacją wykonaj kopię PostgreSQL i postępuj zgodnie z procedurą migracji Apache.
+      pt_BR: Use a instalação personalizada e defina a mesma senha exclusiva em POSTGRESQL_PASSWORD e POSTGRES_PASSWORD do serviço de banco de dados. Os valores estão vazios intencionalmente. Abra /guacamole/, entre com guacadmin / guacadmin e altere imediatamente a senha. No Nginx Proxy Manager, use HTTPS, encaminhamento para a porta 8085 e Websockets Support, preservando /guacamole/. Faça backup do PostgreSQL antes de atualizar e siga o procedimento de migração do Apache.
+      pt_PT: Utilize a instalação personalizada e defina a mesma palavra-passe única em POSTGRESQL_PASSWORD e POSTGRES_PASSWORD do serviço da base de dados. Os valores estão vazios intencionalmente. Abra /guacamole/, inicie sessão com guacadmin / guacadmin e altere imediatamente a palavra-passe. No Nginx Proxy Manager, use HTTPS, encaminhamento para a porta 8085 e Websockets Support, mantendo /guacamole/. Faça uma cópia de segurança do PostgreSQL antes de atualizar e siga o procedimento de migração do Apache.
+      ro_RO: Folosiți instalarea personalizată și setați aceeași parolă unică în POSTGRESQL_PASSWORD și POSTGRES_PASSWORD ale serviciului bazei de date. Valorile sunt intenționat goale. Deschideți /guacamole/, autentificați-vă cu guacadmin / guacadmin și schimbați imediat parola. În Nginx Proxy Manager folosiți HTTPS, transmitere către portul 8085 și Websockets Support, păstrând /guacamole/. Înainte de actualizare, faceți o copie de siguranță a PostgreSQL și urmați procedura de migrare Apache.
+      ru_RU: Используйте настраиваемую установку и задайте одинаковый уникальный пароль в POSTGRESQL_PASSWORD и POSTGRES_PASSWORD сервиса базы данных. Значения намеренно оставлены пустыми. Откройте /guacamole/, войдите с guacadmin / guacadmin и сразу смените пароль. В Nginx Proxy Manager используйте HTTPS, перенаправление на порт 8085 и Websockets Support, сохраняя путь /guacamole/. Перед обновлением сохраните резервную копию PostgreSQL и следуйте процедуре миграции Apache.
+      sk_SK: Použite vlastnú inštaláciu a nastavte rovnaké jedinečné heslo v POSTGRESQL_PASSWORD a POSTGRES_PASSWORD databázovej služby. Hodnoty sú zámerne prázdne. Otvorte /guacamole/, prihláste sa pomocou guacadmin / guacadmin a ihneď zmeňte heslo. V Nginx Proxy Manager použite HTTPS, presmerovanie na port 8085 a Websockets Support, pričom zachovajte /guacamole/. Pred aktualizáciou zálohujte PostgreSQL a postupujte podľa migračných pokynov Apache.
+      sv_SE: Använd anpassad installation och ange samma unika lösenord i POSTGRESQL_PASSWORD och databastjänstens POSTGRES_PASSWORD. Värdena är avsiktligt tomma. Öppna /guacamole/, logga in med guacadmin / guacadmin och ändra lösenordet omedelbart. I Nginx Proxy Manager använder du HTTPS, vidarebefordran till port 8085 och Websockets Support, och behåller /guacamole/. Säkerhetskopiera PostgreSQL före uppgraderingar och följ Apaches migreringsanvisningar.
+      tr_TR: Özel kurulumu kullanın ve POSTGRESQL_PASSWORD ile veritabanı hizmetinin POSTGRES_PASSWORD alanlarına aynı benzersiz parolayı girin. Değerler bilerek boş bırakılmıştır. /guacamole/ adresini açın, guacadmin / guacadmin ile giriş yapın ve parolayı hemen değiştirin. Nginx Proxy Manager'da HTTPS, 8085 bağlantı noktasına yönlendirme ve Websockets Support kullanın; /guacamole/ yolunu koruyun. Yükseltmeden önce PostgreSQL'i yedekleyin ve Apache'nin geçiş prosedürünü izleyin.
+      zh_TW: 請使用自訂安裝，為 POSTGRESQL_PASSWORD 和資料庫服務的 POSTGRES_PASSWORD 設定相同的獨立密碼。這些值刻意留空。開啟 /guacamole/，使用 guacadmin / guacadmin 登入後立即變更密碼。在 Nginx Proxy Manager 中使用 HTTPS、轉送至連接埠 8085、啟用 Websockets Support，並保留 /guacamole/ 路徑。升級前請備份 PostgreSQL 並遵循 Apache 的遷移程序。
+      ar_SA: استخدم التثبيت المخصص واضبط كلمة المرور الفريدة نفسها في POSTGRESQL_PASSWORD وPOSTGRES_PASSWORD لخدمة قاعدة البيانات. تُركت القيم فارغة عمدًا. افتح /guacamole/ وسجل الدخول باستخدام guacadmin / guacadmin ثم غيّر كلمة المرور فورًا. في Nginx Proxy Manager استخدم HTTPS والتوجيه إلى المنفذ 8085 وWebsockets Support مع الحفاظ على /guacamole/. انسخ PostgreSQL احتياطيًا قبل الترقية واتبع إجراء الترحيل الخاص بـ Apache.
+      uk_UA: Використовуйте власне встановлення й задайте однаковий унікальний пароль у POSTGRESQL_PASSWORD і POSTGRES_PASSWORD служби бази даних. Значення навмисно залишено порожніми. Відкрийте /guacamole/, увійдіть із guacadmin / guacadmin та одразу змініть пароль. У Nginx Proxy Manager використовуйте HTTPS, переспрямування на порт 8085 і Websockets Support, зберігаючи /guacamole/. Перед оновленням створіть резервну копію PostgreSQL і дотримуйтеся процедури міграції Apache.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Guacamole/icon.svg
+  screenshot_link:
+    - screenshot-1.png
+    - screenshot-2.png
+    - screenshot-3.png
+  scheme: http
+  port_map: "8085"
+  index: /guacamole/
+  version: "1.6.0"
+  update_at: "2026-10-29"
+  release_notes:
+    en_US: "Initial package with official Guacamole, guacd, and persistent PostgreSQL. Addresses app request #56."
+    de_DE: "Erstes Paket mit offiziellen Guacamole- und guacd-Images sowie persistentem PostgreSQL. Bezieht sich auf App-Anfrage #56."
+    zh_CN: "首次发布，包含官方 Guacamole、guacd 和持久化 PostgreSQL，对应应用请求 #56。"
+    en_GB: "Initial package with official Guacamole, guacd, and persistent PostgreSQL. Addresses app request #56."
+    ca_ES: "Paquet inicial amb Guacamole, guacd i PostgreSQL persistent. Sol·licitud d'aplicació #56."
+    cs_CZ: 'První balíček s Guacamole, guacd a trvalou databází PostgreSQL. Požadavek na aplikaci #56.'
+    da_DK: 'Første pakke med Guacamole, guacd og vedvarende PostgreSQL. Appønske #56.'
+    el_GR: 'Αρχικό πακέτο με Guacamole, guacd και μόνιμη PostgreSQL. Αίτημα εφαρμογής #56.'
+    es_ES: 'Paquete inicial con Guacamole, guacd y PostgreSQL persistente. Solicitud de aplicación #56.'
+    fr_FR: "Premier paquet avec Guacamole, guacd et PostgreSQL persistant. Demande d'application #56."
+    ga_IE: 'An chéad phacáiste le Guacamole, guacd agus PostgreSQL buan. Iarratas ar aip #56.'
+    hr_HR: 'Početni paket s Guacamoleom, guacd-om i trajnim PostgreSQL-om. Zahtjev za aplikaciju #56.'
+    hu_HU: 'Első csomag Guacamole-lal, guacd-vel és tartós PostgreSQL-lel. Alkalmazásigény: #56.'
+    it_IT: "Pacchetto iniziale con Guacamole, guacd e PostgreSQL persistente. Richiesta dell'app #56."
+    ja_JP: 'Guacamole、guacd、永続化 PostgreSQL を含む初回パッケージ。アプリ追加リクエスト #56 に対応。'
+    ko_KR: 'Guacamole, guacd, 영구 PostgreSQL을 포함한 첫 패키지입니다. 앱 요청 #56에 대응합니다.'
+    ml_IN: 'Guacamole, guacd, സ്ഥിര PostgreSQL എന്നിവയുള്ള ആദ്യ പാക്കേജ്. ആപ്പ് അഭ്യർത്ഥന #56.'
+    nb_NO: 'Første pakke med Guacamole, guacd og vedvarende PostgreSQL. Appforespørsel #56.'
+    nl_NL: 'Eerste pakket met Guacamole, guacd en permanente PostgreSQL-opslag. Appverzoek #56.'
+    pl_PL: 'Pierwszy pakiet z Guacamole, guacd i trwałą bazą PostgreSQL. Prośba o aplikację #56.'
+    pt_BR: 'Pacote inicial com Guacamole, guacd e PostgreSQL persistente. Solicitação de aplicativo #56.'
+    pt_PT: 'Pacote inicial com Guacamole, guacd e PostgreSQL persistente. Pedido de aplicação #56.'
+    ro_RO: 'Primul pachet cu Guacamole, guacd și PostgreSQL persistent. Cerere de aplicație #56.'
+    ru_RU: 'Первый пакет с Guacamole, guacd и постоянной базой PostgreSQL. Запрос на добавление приложения #56.'
+    sk_SK: 'Prvý balík s Guacamole, guacd a trvalou databázou PostgreSQL. Požiadavka na aplikáciu #56.'
+    sv_SE: 'Första paketet med Guacamole, guacd och beständig PostgreSQL. Appönskemål #56.'
+    tr_TR: 'Guacamole, guacd ve kalıcı PostgreSQL içeren ilk paket. Uygulama isteği #56.'
+    zh_TW: '首次發佈，包含 Guacamole、guacd 和持久化 PostgreSQL，對應應用程式請求 #56。'
+    ar_SA: 'الحزمة الأولى مع Guacamole وguacd وPostgreSQL دائم. طلب إضافة التطبيق #56.'
+    uk_UA: 'Перший пакет із Guacamole, guacd і постійною базою PostgreSQL. Запит на додавання застосунку #56.'
+  website: https://guacamole.apache.org/
+  repo: https://github.com/apache/guacamole-client
+  docs: https://guacamole.apache.org/doc/gug/
+  support: https://guacamole.apache.org/support/
