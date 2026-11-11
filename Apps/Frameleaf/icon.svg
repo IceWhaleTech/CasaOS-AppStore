@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+ <title id="title">Frameleaf — app icon</title>
+ <desc id="desc">Native vector artwork: paths, shapes and gradients only. Lettering is outlined. No embedded images, font files, scripts or external resources.</desc>
+ <defs>
+  <linearGradient id="tile-gradient" x1="0.05" y1="0.03" x2="0.96" y2="0.94">
+   <stop offset="0" stop-color="#88f54a"/><stop offset="0.38" stop-color="#1bdd72"/>
+   <stop offset="0.66" stop-color="#00c4ad"/><stop offset="1" stop-color="#00acc9"/>
+  </linearGradient>
+  <linearGradient id="tile-edge" x1="0" y1="0" x2="1" y2="1">
+   <stop offset="0" stop-color="#b3ff8b"/><stop offset="0.45" stop-color="#33f1ac"/>
+   <stop offset="1" stop-color="#0adee9"/>
+  </linearGradient>
+  <path id="frame-path" d="M 67 2 H 171 C 207 2 236 31 236 67 V 172 C 236 208 207 237 171 237 H 130 C 145 230 158 219 169 205 C 190 202 205 189 205 168 V 71 C 205 50 188 34 167 34 H 72 C 51 34 34 51 34 72 V 166 C 34 182 37 192 47 200 L 48 235 C 21 228 2 203 2 171 V 68 C 2 31 30 2 67 2 Z"/>
+  <path id="leaf-path" d="M 174 102 C 147 102 128 101 112 106 C 89 112 72 124 61 140 C 49 157 45 177 46 200 L 48 235 C 60 201 83 172 119 147 C 94 173 77 202 66 239 C 101 239 128 229 149 208 C 169 188 175 159 174 129 Z"/>
+  <g id="symbol-mono" fill="currentColor" aria-label="Frameleaf monochrome symbol">
+   <use xlink:href="#frame-path"/><use xlink:href="#leaf-path"/>
+   <circle cx="172.5" cy="66.5" r="16.5"/>
+  </g>
+  <g id="app-tile" aria-label="Frameleaf app icon">
+   <rect x="1" y="1" width="238" height="238" rx="62" fill="url(#tile-gradient)"/>
+   <rect x="1" y="1" width="238" height="238" rx="62" fill="none" stroke="url(#tile-edge)" stroke-width="1.6"/>
+   <use xlink:href="#symbol-mono" transform="translate(44 44) scale(0.6417)" color="#ffffff"/>
+  </g>
+ </defs>
+ <use xlink:href="#app-tile" transform="translate(0 0) scale(4.2667)"/>
+</svg>
