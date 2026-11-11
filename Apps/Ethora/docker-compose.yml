@@ -1,0 +1,309 @@
+# Ethora Core for CasaOS / ZimaOS. GENERATED from deploy/compose/single/docker-compose.yml
+# by deploy/compose/platforms/casaos/build.sh; edit those, not this.
+name: ethora
+services:
+  config:
+    image: docker.io/dappros/ethora-compose-init:2610.10
+    user: "0:0"
+    entrypoint: ["/bin/sh", "/ethora/scripts/render-config.sh"]
+    environment:
+      PUBLIC_URL: http://casaos.local:8456
+      ADMIN_EMAIL: admin@casaos.local
+      ADMIN_PASSWORD: ""
+      BASE_APP_DISPLAY_NAME: Ethora
+      ETHORA_LICENSE_CALL_HOME: "true"
+    volumes:
+      - /DATA/AppData/$AppID/config:/out/config
+      - /DATA/AppData/$AppID/mysql-initdb:/out/mysql-initdb
+      - /DATA/AppData/$AppID/secrets:/out/secrets
+    restart: "no"
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+  mongo:
+    image: docker.io/library/mongo:6.0.8
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+    volumes:
+      - /DATA/AppData/$AppID/mongo:/data/db
+      - /DATA/AppData/$AppID/mongo-config:/data/configdb
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/27017"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+  mongo-init:
+    image: docker.io/library/mongo:6.0.8
+    entrypoint: ["bash", "/ethora/config/scripts/mongo-init.sh"]
+    volumes:
+      - /DATA/AppData/$AppID/config:/ethora/config:ro
+    depends_on:
+      config:
+        condition: service_completed_successfully
+      mongo:
+        condition: service_healthy
+    restart: "no"
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+  mysql:
+    image: docker.io/library/mysql:8.1.0
+    command: ["--default-authentication-plugin=mysql_native_password"]
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /ethora/config/mysql/root-password
+      MYSQL_ROOT_HOST: "%"
+    volumes:
+      - /DATA/AppData/$AppID/mysql:/var/lib/mysql
+      - /DATA/AppData/$AppID/mysql-initdb:/docker-entrypoint-initdb.d:ro
+      - /DATA/AppData/$AppID/config:/ethora/config:ro
+    depends_on:
+      config:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$$(cat /ethora/config/mysql/root-password)\" --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+  redis:
+    image: docker.io/library/redis:7.4-alpine
+    volumes:
+      - /DATA/AppData/$AppID/redis:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+  minio:
+    image: docker.io/dappros/minio:RELEASE.2025-09-07T16-13-09Z
+    command: ["server", "/data"]
+    environment:
+      MINIO_ROOT_USER_FILE: /ethora/config/minio/root-user
+      MINIO_ROOT_PASSWORD_FILE: /ethora/config/minio/root-password
+    volumes:
+      - /DATA/AppData/$AppID/minio:/data
+      - /DATA/AppData/$AppID/config:/ethora/config:ro
+    depends_on:
+      config:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:9000/minio/health/live"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+  centrifugo:
+    image: docker.io/centrifugo/centrifugo:v6.9.7
+    command: ["centrifugo", "-c", "/ethora/config/centrifugo/config.json"]
+    volumes:
+      - /DATA/AppData/$AppID/config:/ethora/config:ro
+    depends_on:
+      config:
+        condition: service_completed_successfully
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8000/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+  xmpp:
+    image: docker.io/dappros/ethora-xmpp:2610.10
+    entrypoint: ["/bin/sh", "/ethora/config/scripts/xmpp-start.sh"]
+    volumes:
+      - /DATA/AppData/$AppID/config:/ethora/config:ro
+    depends_on:
+      config:
+        condition: service_completed_successfully
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /tmp/ethora-admin-ready && /opt/ejabberd/bin/ejabberdctl status >/dev/null"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+  api:
+    image: docker.io/dappros/ethora-api:2610.10
+    entrypoint: ["tini", "--", "bash", "/ethora/config/scripts/api-entrypoint.sh"]
+    volumes:
+      - /DATA/AppData/$AppID/config:/ethora/config:ro
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+    command: ["api"]
+    depends_on:
+      config:
+        condition: service_completed_successfully
+      mongo-init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      xmpp:
+        condition: service_started
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/v1/ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
+  jobs:
+    image: docker.io/dappros/ethora-api:2610.10
+    entrypoint: ["tini", "--", "bash", "/ethora/config/scripts/api-entrypoint.sh"]
+    volumes:
+      - /DATA/AppData/$AppID/config:/ethora/config:ro
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+    command: ["jobs"]
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      disable: true
+  init:
+    image: docker.io/dappros/ethora-api:2610.10
+    entrypoint: ["tini", "--", "bash", "/ethora/config/scripts/api-entrypoint.sh"]
+    volumes:
+      - /DATA/AppData/$AppID/config:/ethora/config:ro
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+    command: ["init"]
+    depends_on:
+      api:
+        condition: service_healthy
+      xmpp:
+        condition: service_healthy
+    restart: "no"
+    healthcheck:
+      disable: true
+  frontend:
+    image: docker.io/dappros/ethora-frontend:2610.10
+    entrypoint: ["/bin/sh", "/ethora/config/scripts/frontend-start.sh"]
+    command: ["serve"]
+    volumes:
+      - /DATA/AppData/$AppID/config:/ethora/config:ro
+    depends_on:
+      config:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+  caddy:
+    image: docker.io/library/caddy:2.10.2-alpine
+    command: ["caddy", "run", "--config", "/ethora/config/caddy/Caddyfile", "--adapter", "caddyfile"]
+    ports:
+      - target: 80
+        published: "8456"
+        protocol: tcp
+    volumes:
+      - /DATA/AppData/$AppID/config:/ethora/config:ro
+      - /DATA/AppData/$AppID/caddy-data:/data
+      - /DATA/AppData/$AppID/caddy-config:/config
+    depends_on:
+      config:
+        condition: service_completed_successfully
+      api:
+        condition: service_started
+      frontend:
+        condition: service_started
+      xmpp:
+        condition: service_started
+      minio:
+        condition: service_started
+      centrifugo:
+        condition: service_started
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
+x-casaos:
+  id: com.ethora.core
+  architectures:
+    - amd64
+    - arm64
+  main: caddy
+  store_app_id: ethora
+  index: /
+  port_map: "8456"
+  scheme: http
+  category: Social
+  author: Dappros
+  developer: Dappros
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ethora/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ethora/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ethora/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ethora/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Ethora/screenshot-3.png
+  title:
+    en_US: Ethora
+  tagline:
+    en_US: Your own chat server with a web app, admin panel and SDKs
+  description:
+    en_US: 'Ethora is a chat and messaging platform you run yourself: a web chat and admin panel, an API, an XMPP server (ejabberd) and file storage, with mobile and web SDKs on top. This is Ethora Core: free, with per-server limits of 5 apps and 500 user accounts, raised to 10 and 5,000 by registering for free on the License page of the admin panel. Licence: https://ethora.com/legal/ethora-core-license/'
+  tips:
+    before_install:
+      en_US: 'Before installing, set two variables of the config container: PUBLIC_URL to the address you open this device by, with port 8456 (for example http://192.168.1.20:8456; shared file links point there), and ADMIN_PASSWORD to the password of the admin account (sign-in e-mail: ADMIN_EMAIL, admin@casaos.local by default). Left empty, a password is generated and printed once in the log of the config container. Every other secret is generated on the first start and kept under /DATA/AppData/ethora/secrets.'
+  version: 26.10.10
+  website: https://ethora.com
+  repo: https://github.com/dappros/ethora-install
+  support: https://github.com/dappros/ethora-install/issues
+  docs: https://github.com/dappros/ethora-install/tree/main/deploy/compose
