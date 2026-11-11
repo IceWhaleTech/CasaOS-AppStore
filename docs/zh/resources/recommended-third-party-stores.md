@@ -28,6 +28,18 @@
   repo-url="https://github.com/bigbeartechworld/big-bear-casaos/"
 />
 
+<StoreSourceCard
+  title="CleanCut 应用商店"
+  summary="CleanCut Suite：适用于 Plex 的一体化媒体管理器和脏话过滤器，从你自己添加的来源添加电影和剧集，并自动静音脏话。付费应用，可免费试用。"
+  url="https://cdn.jsdelivr.net/gh/LumbleHamb/cleancut-store@gh-pages/store.json"
+  maintainer="CleanCut Suite"
+  copy-label="复制链接"
+  copied-label="已复制"
+  open-label="打开链接"
+  repo-label="GitHub 仓库"
+  repo-url="https://github.com/LumbleHamb/cleancut-store"
+/>
+
 ## 页面说明
 
 - 这是一个社区发现页，不是正式背书列表。
