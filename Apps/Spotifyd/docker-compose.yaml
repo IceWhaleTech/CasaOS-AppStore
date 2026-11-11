@@ -1,0 +1,46 @@
+name: impressive_rachid
+services:
+  spotifyd:
+    cpu_shares: 90
+    command: []
+    container_name: spotify
+    deploy:
+      resources:
+        limits:
+          memory: 7812M
+    devices:
+      - /dev/snd:/dev/snd
+    group_add:
+      - "29"
+    image: hvalev/spotifyd-alsa-dbus:0.3.5
+    restart: always
+    volumes:
+      - type: bind
+        source: /usr/share/alsa
+        target: /usr/share/alsa
+      - type: bind
+        source: /etc/spotifyd/spotifyd.conf
+        target: /etc/spotifyd.conf
+      - type: bind
+        source: /etc/asound.conf
+        target: /etc/asound.conf
+    ports: []
+    cap_add: []
+    environment: []
+    network_mode: host
+    privileged: false
+x-casaos:
+  author: Luc van Loon
+  developer: hvalev
+  category: Media
+  description:
+    en_us: Spotifyd streams music just like the official client, but is more lightweight and supports more platforms. Spotifyd also supports the Spotify Connect protocol, which makes it show up as a device that can be controlled from the official clients. Please make sure to create a spotifyd.conf file in the config directory. Read the documentation at https://docs.spotifyd.rs/config/File.html
+  tagline:
+    en_us: An open source Spotify client running as a UNIX daemon.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Spotifyd/icon.png
+  index: /
+  port_map: "4629"
+  scheme: http
+  store_app_id: impressive_rachid
+  title:
+    en_us: Spotifyd
