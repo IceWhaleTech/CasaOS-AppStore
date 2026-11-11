@@ -1,0 +1,137 @@
+name: systemmonitoring
+
+services:
+  backend:
+    container_name: system-monitoring-backend
+    hostname: system-monitoring-backend
+    image: diabolaychild/system-monitoring:backend-1.0.0
+    volumes:
+      - type: bind
+        source: /DATA/AppData/systemmonitoring/db
+        target: /app
+    ports:
+      - target: 3000
+        published: 3002
+        protocol: tcp
+    networks:
+      - system-monitoring-network
+    restart: unless-stopped
+
+  frontend:
+    container_name: system-monitoring-frontend
+    hostname: system-monitoring-frontend
+    image: diabolaychild/system-monitoring:frontend-1.0.0
+    ports:
+      - target: 80
+        published: ${WEBUI_PORT:-8080}
+        protocol: tcp
+    depends_on:
+      - backend
+    networks:
+      - system-monitoring-network
+    restart: unless-stopped
+
+networks:
+  system-monitoring-network:
+    driver: bridge
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: frontend
+  category: Utilities
+  author: El Houssine DARRAZI
+  developer: El Houssine DARRAZI
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/systemmonitoring/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/systemmonitoring/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/systemmonitoring/screenshot-2.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/systemmonitoring/thumbnail.png
+  description:
+    en_US: |
+      Application System Monitoring
+
+      A comprehensive system monitoring solution that provides real-time monitoring of your server's resources, applications, and services.
+
+      Key features include:
+      - Real-time system metrics (CPU, memory, disk, network)
+      - Customizable dashboards
+      - Alerting and notification system
+      - Scalable data collection
+      - Support for multiple monitoring sources
+    fr_FR: |
+      Application System Monitoring
+
+      Une solution de surveillance système complète qui fournit une surveillance en temps réel des ressources, des applications et des services de votre serveur.
+
+      Les fonctionnalités clés incluent :
+      - Métriques système en temps réel (CPU, mémoire, disque, réseau)
+      - Tableaux de bord personnalisables
+      - Système d'alerte et de notification
+      - Collecte de données évolutive
+      - Prise en charge de multiples sources de surveillance
+    zh_CN: |
+      应用系统监控
+
+      一个全面的系统监控解决方案，可实时监控服务器的资源、应用程序和服务。
+
+      主要功能包括：
+      - 实时系统指标（CPU、内存、磁盘、网络）
+      - 可定制的仪表板
+      - 警报和通知系统
+      - 可扩展的数据收集
+      - 支持多种监控源
+  tagline:
+    en_US: System monitoring and analytics platform
+    fr_FR: Plateforme de surveillance et d'analyse système
+    zh_CN: 系统监控和分析平台
+  title:
+    en_US: System Monitoring
+    fr_FR: Surveillance Système
+    zh_CN: 系统监控
+  tips:
+    before_install:
+      en_US: |
+        ## Initial Configuration
+        1. After installation, access the application at http://[your-ip]:${WEBUI_PORT:-8080}
+        2. The application will start collecting system metrics automatically
+
+        For more information, please refer to the documentation.
+      fr_FR: |
+        ## Configuration initiale
+        1. Après installation, accédez à l'application sur http://[votre-ip]:${WEBUI_PORT:-8080}
+        2. L'application commencera automatiquement à collecter les métriques système
+
+        Pour plus d'informations, veuillez consulter la documentation.
+      zh_CN: |
+        ## 初始配置
+        1. 安装后，访问应用程序：http://[您的IP]:${WEBUI_PORT:-8080}
+        2. 应用程序将自动开始收集系统指标
+
+        如需更多信息，请参考文档。
+  port_map: ${WEBUI_PORT:-8080}
+  scheme: http
+  index: /
+  services:
+    backend:
+      envs: []
+      ports:
+        - container: "3000"
+          description:
+            en_US: Backend API port
+            fr_FR: Port API backend
+            zh_CN: 后端 API 端口
+      volumes:
+        - container: /app
+          description:
+            en_US: Application data directory
+            fr_FR: Répertoire de données de l'application
+            zh_CN: 应用程序数据目录
+    frontend:
+      ports:
+        - container: "80"
+          description:
+            en_US: Frontend web UI port
+            fr_FR: Port UI web frontend
+            zh_CN: 前端网页 UI 端口
