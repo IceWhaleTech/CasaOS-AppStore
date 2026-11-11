@@ -1,7 +1,7 @@
 name: linkbreeze
 services:
   linkbreeze:
-    image: docker.io/omnirise/linkbreeze:v1.5.1
+    image: docker.io/omnirise/linkbreeze:v1.6.0
     container_name: linkbreeze
     network_mode: bridge
     ports:
@@ -59,7 +59,7 @@ x-casaos:
   index: /
   port_map: "3000"
   scheme: http
-  version: v1.5.1
+  version: v1.6.0
   update_at: "2026-10-27"
   release_notes:
     en_US: |-
