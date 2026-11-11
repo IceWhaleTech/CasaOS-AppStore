@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">AspireUI App Icon</title>
+  <desc id="desc">Modern gradient app icon with a stylized A and growth bars.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="120" y1="120" x2="900" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#246BFD"/>
+      <stop offset="0.48" stop-color="#5B2CE3"/>
+      <stop offset="1" stop-color="#FF2DAA"/>
+    </linearGradient>
+
+    <linearGradient id="aRight" x1="540" y1="250" x2="760" y2="700" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#48FFF4"/>
+      <stop offset="0.52" stop-color="#16D7E9"/>
+      <stop offset="1" stop-color="#FF49C6"/>
+    </linearGradient>
+
+    <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7AFFF8"/>
+      <stop offset="1" stop-color="#00C8DF"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="26" stdDeviation="34" flood-color="#12002D" flood-opacity=".45"/>
+    </filter>
+
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+
+    <clipPath id="cardClip">
+      <rect x="168" y="168" width="688" height="688" rx="154"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1024" height="1024" fill="#0B0714"/>
+
+  <g opacity=".45" filter="url(#softGlow)">
+    <circle cx="290" cy="300" r="180" fill="#216BFF"/>
+    <circle cx="735" cy="310" r="180" fill="#FF27B7"/>
+    <circle cx="600" cy="760" r="190" fill="#7C2EFF"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="168" y="168" width="688" height="688" rx="154" fill="url(#bg)"/>
+    <rect x="168.75" y="168.75" width="686.5" height="686.5" rx="153.25" fill="none" stroke="#FFFFFF" stroke-opacity=".16" stroke-width="1.5"/>
+  </g>
+
+  <g clip-path="url(#cardClip)">
+    <ellipse cx="740" cy="725" rx="250" ry="170" fill="#FF2DAA" opacity=".16"/>
+    <ellipse cx="285" cy="255" rx="230" ry="170" fill="#2E7DFF" opacity=".18"/>
+  </g>
+
+  <!-- Stylized A -->
+  <g>
+    <!-- left wing -->
+    <path d="M305 610
+             C390 548 438 464 489 350
+             L529 258
+             L565 330
+             C525 463 455 552 368 610
+             Z"
+          fill="#FFFFFF"/>
+
+    <path d="M305 610
+             C370 575 426 517 465 449
+             C435 515 399 575 348 642
+             L275 642
+             Z"
+          fill="#DDE8FF" opacity=".92"/>
+
+    <!-- right leg -->
+    <path d="M574 302
+             L735 642
+             L661 642
+             L540 385
+             C555 357 565 331 574 302
+             Z"
+          fill="url(#aRight)"/>
+
+    <!-- inner cut -->
+    <path d="M548 377
+             L613 514
+             L571 548
+             L520 438
+             C534 418 543 398 548 377
+             Z"
+          fill="#1B168E" opacity=".8"/>
+
+    <!-- growth bars -->
+    <g>
+      <rect x="468" y="535" width="34" height="63" rx="4" fill="url(#bar)"/>
+      <rect x="516" y="505" width="36" height="93" rx="4" fill="url(#bar)"/>
+      <rect x="568" y="466" width="38" height="132" rx="4" fill="url(#bar)"/>
+    </g>
+
+    <!-- bridge / swoosh -->
+    <path d="M445 598
+             C505 568 574 567 646 591
+             C603 585 554 587 508 601
+             C486 607 466 614 445 622
+             Z"
+          fill="#FF5BD4"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="512" y="755"
+        text-anchor="middle"
+        font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="92"
+        font-weight="750"
+        letter-spacing="-4"
+        fill="#FFFFFF">AspireUI</text>
+</svg>
