@@ -10,18 +10,20 @@ services:
           memory: 64M
     # The image needs JWT_SECRET in production. Generate one on first start and keep it on the
     # data volume, so it survives updates and no install ships a shared default.
+    # The script holds no "$" on purpose: the store interpolates this file more than once, and a
+    # "$$" that survives one pass is emptied by the next.
     entrypoint:
       - /bin/sh
       - -c
     command:
       - |
         set -e
+        umask 077
         if [ ! -s /app/data/.jwt_secret ]; then
-          umask 077
           head -c 32 /dev/urandom | od -An -tx1 | tr -d ' \n' > /app/data/.jwt_secret
         fi
-        JWT_SECRET="$$(cat /app/data/.jwt_secret)"
-        export JWT_SECRET
+        sed 's/^/export JWT_SECRET=/' /app/data/.jwt_secret > /app/data/.jwt_env
+        . /app/data/.jwt_env
         exec /app/lyftr-api
     environment:
       ENV: production
