@@ -1,0 +1,134 @@
+name: lyftr
+services:
+  lyftr-backend:
+    image: cwlumm/lyftr-backend:v0.1.0-beta.9@sha256:4f45cfe71f1f59154e4848793878ac5819495d7f3eca38ecb65d61d1437df174
+    container_name: lyftr-backend
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    # The image needs JWT_SECRET in production. Generate one on first start and keep it on the
+    # data volume, so it survives updates and no install ships a shared default.
+    # The script holds no "$" on purpose: the store interpolates this file more than once, and a
+    # "$$" that survives one pass is emptied by the next.
+    entrypoint:
+      - /bin/sh
+      - -c
+    command:
+      - |
+        set -e
+        umask 077
+        if [ ! -s /app/data/.jwt_secret ]; then
+          head -c 32 /dev/urandom | od -An -tx1 | tr -d ' \n' > /app/data/.jwt_secret
+        fi
+        sed 's/^/export JWT_SECRET=/' /app/data/.jwt_secret > /app/data/.jwt_env
+        . /app/data/.jwt_env
+        exec /app/lyftr-api
+    environment:
+      ENV: production
+      PORT: "3000"
+      DB_TYPE: sqlite
+      DB_PATH: /app/data/lyftr.db
+      REGISTRATION: first-user
+      DEMO_MODE: "false"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    expose:
+      - "3000"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - lyftr
+    x-casaos:
+      volumes:
+        - container: /app/data
+          description:
+            en_US: Lyftr database (lyftr.db) and the generated sign-in secret.
+      envs:
+        - container: REGISTRATION
+          description:
+            en_US: "Who may create an account. first-user: only the first account can sign up, then sign-up closes. open: anyone who can reach the server. closed: nobody."
+
+  lyftr:
+    image: cwlumm/lyftr-frontend:v0.1.0-beta.9@sha256:9428710c93bdcf03add1c78e43318b3f89ce36a8e4452e0c6bfd6e9f2f8ab292
+    container_name: lyftr
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 32M
+    environment:
+      BACKEND_ORIGIN: lyftr-backend:3000
+    ports:
+      - target: 80
+        published: "6342"
+        protocol: tcp
+    depends_on:
+      lyftr-backend:
+        condition: service_healthy
+    networks:
+      - lyftr
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_US: Web UI port
+
+networks:
+  lyftr:
+    name: lyftr
+
+x-casaos:
+  id: io.github.cawlumm.lyftr
+  main: lyftr
+  index: /
+  port_map: "6342"
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  author: Cawlumm
+  developer: Cawlumm
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Lyftr/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Lyftr/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Lyftr/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Lyftr/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Lyftr/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Lyftr/screenshot-4.png
+  title:
+    en_US: Lyftr
+  tagline:
+    en_US: Workout, nutrition and bodyweight tracker
+  description:
+    en_US: |
+      Lyftr is a workout and nutrition tracker. Build training programs from a library of 800+ exercises with instructions and photos, log sets with a rest timer, and follow one exercise at a time in Gym Mode. Personal bests, a per-exercise weight chart, a muscle diagram and a consistency heatmap show how training is going.
+
+      The nutrition diary logs calories and macros against your own targets, with food search and barcode scanning through Open Food Facts. A bodyweight log shows the trend in lbs or kg.
+
+      All data is kept in one SQLite file. The server downloads the exercise catalog from the hosted open-exercise-db instance at startup and once a day, and food search queries Open Food Facts, so both need internet access. An Android app is available from the project's GitHub releases.
+
+      Lyftr is in beta: back up the data folder before updating.
+  tips:
+    before_install:
+      en_US: |
+        After installing, open Lyftr and create your account. Only the first account can sign up; after that, sign-up is closed. To let someone else join, set REGISTRATION to open in the app settings, then set it back to first-user once they have an account.
+
+        Lyftr is in beta. Back up /DATA/AppData/lyftr before updating.
+  version: "0.1.0-beta.9"
+  update_at: "2026-11-06"
+  release_notes:
+    en_US: https://github.com/Cawlumm/lyftr/releases/tag/v0.1.0-beta.9
+  website: https://lyftr-app.pages.dev
+  repo: https://github.com/Cawlumm/lyftr
+  support: https://github.com/Cawlumm/lyftr/issues
+  docs: https://lyftr-app.pages.dev
