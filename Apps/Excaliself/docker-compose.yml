@@ -1,0 +1,184 @@
+name: excaliself
+services:
+  excaliself:
+    image: ghcr.io/maciekzygmunt/excaliself:0.12.0
+    container_name: excaliself
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    ports:
+      - target: 3000
+        published: "3497"
+        protocol: tcp
+    environment:
+      # Empty: the app takes its address from each request, so the device IP,
+      # its .local name, and a domain all work without setup.
+      BASE_URL: ""
+      # Any http:// entry keeps sign-in cookies usable over plain HTTP.
+      TRUSTED_ORIGINS: http://casaos.local:3497,http://zimaos.local:3497
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets
+        target: /secrets
+        read_only: true
+    # DATABASE_URL and BETTER_AUTH_SECRET come from the file that
+    # excaliself-init generates, so every install gets its own secrets.
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -a
+        . /secrets/secrets.env
+        set +a
+        exec node .output/server/index.mjs
+    depends_on:
+      excaliself-init:
+        condition: service_completed_successfully
+      excaliself-db:
+        condition: service_healthy
+    networks:
+      - excaliself
+    x-casaos:
+      ports:
+        - container: "3000"
+          description:
+            en_US: WebUI HTTP Port
+      envs:
+        - container: BASE_URL
+          description:
+            en_US: Optional. The https:// address of a reverse proxy in front of Excaliself, for example https://draw.example.com
+        - container: TRUSTED_ORIGINS
+          description:
+            en_US: Extra addresses users open Excaliself at, comma-separated
+      volumes:
+        - container: /secrets
+          description:
+            en_US: Generated database password and auth secret
+
+  # Generates the secrets on first start. The app runs as UID 1000 and
+  # Postgres as UID 70, but Docker creates bind-mounted folders as root.
+  excaliself-init:
+    image: alpine:3.22
+    container_name: excaliself-init
+    restart: "no"
+    command:
+      - /bin/sh
+      - -c
+      # ZimaOS interpolates this file twice, so even escaped shell variables
+      # arrive empty. The script uses none.
+      - |
+        set -e
+        cd /secrets
+        if [ ! -f secrets.env ]; then
+          umask 077
+          {
+            printf 'BETTER_AUTH_SECRET='
+            head -c 32 /dev/urandom | od -An -tx1 | tr -d ' \n'
+            printf '\nDATABASE_URL=postgresql://excaliself:'
+            # Keep the database password if Postgres already has one.
+            if [ -s /db-secret/password ]; then
+              tr -d '\n' < /db-secret/password
+            else
+              head -c 24 /dev/urandom | od -An -tx1 | tr -d ' \n'
+            fi
+            printf '@excaliself-db:5432/excaliself\n'
+          } > secrets.env.tmp
+          mv secrets.env.tmp secrets.env
+        fi
+        umask 077
+        sed -n 's|^DATABASE_URL=postgresql://excaliself:\([0-9a-f]*\)@.*|\1|p' secrets.env | tr -d '\n' > /db-secret/password
+        chown 70:70 /db-secret/password
+        chown -R 1000:1000 /secrets
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets
+        target: /secrets
+      - type: bind
+        source: /DATA/AppData/$AppID/db-secret
+        target: /db-secret
+
+  excaliself-db:
+    image: postgres:17-alpine
+    container_name: excaliself-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: excaliself
+      POSTGRES_PASSWORD_FILE: /run/excaliself/password
+      POSTGRES_DB: excaliself
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/postgres
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: /DATA/AppData/$AppID/db-secret
+        target: /run/excaliself
+        read_only: true
+    depends_on:
+      excaliself-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U excaliself -d excaliself"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - excaliself
+    x-casaos:
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_US: PostgreSQL database with all drawings
+
+networks:
+  excaliself:
+    name: excaliself
+
+x-casaos:
+  id: com.excaliself.excaliself
+  main: excaliself
+  index: /
+  port_map: "3497"
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+  author: Maciej Zygmunt
+  developer: Maciej Zygmunt
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Excaliself/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Excaliself/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Excaliself/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Excaliself/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Excaliself/screenshot-3.png
+  title:
+    en_US: Excaliself
+  tagline:
+    en_US: Self-hosted, open-source alternative to Excalidraw+ for teams
+  description:
+    en_US: |
+      Excaliself is a self-hosted, open-source alternative to Excalidraw+ for teams. It runs the Excalidraw editor in a small web app and stores every drawing in its own PostgreSQL database.
+
+      - Live collaboration, with cursors and follow mode
+      - A team space every member can edit, next to each member's private space
+      - Share links for members only or for anyone, including guests without an account
+      - Folders, stars, search by title and by text inside drawings, and a trash with restore
+      - A shared team library of shapes
+      - Import from Excalidraw+ with an API key
+      - MCP server, so AI clients such as Claude can read and create drawings
+      - Optional single sign-on with Google Workspace, Microsoft Entra ID, or any OIDC provider
+  tips:
+    before_install:
+      en_US: |
+        After installing, open Excaliself and create the admin account. Do this soon: until an admin exists, anyone who can reach this port can create it. Other people join with an invite link from Settings.
+
+        Excaliself works at the device IP and at its .local name with no setup. If you put it behind a reverse proxy with HTTPS, set BASE_URL to that address, and list any other address you still use in TRUSTED_ORIGINS. Single sign-on and other settings are described at https://excaliself.com/docs/environment/
+  website: https://excaliself.com
+  repo: https://github.com/maciekzygmunt/excaliself
+  docs: https://excaliself.com/docs/
+  support: https://github.com/maciekzygmunt/excaliself/issues
+  version: "0.12.0"
+  update_at: "2026-11-12"
+  release_notes:
+    en_US: First version in the ZimaOS App Store.
