@@ -1,7 +1,7 @@
 name: box3balans
 services:
   box3balans:
-    image: ghcr.io/zenonymous/box3balans:0.1.48
+    image: ghcr.io/zenonymous/box3balans:0.1.49
     container_name: box3balans
     restart: unless-stopped
     security_opt:
@@ -75,7 +75,7 @@ x-casaos:
       - Connects only to a fixed list of hosts, never sends amounts, and shows every request in the app
       - Encrypted backups and two-factor sign-in
 
-      To create your account, use the one-time setup code from the app's log (first start). The interface is in Dutch, with English as an option. Estimates, not tax advice.
+      To create your user, use the setup code from the app's log (first start). The interface is in Dutch, with English as an option. Estimates, not tax advice.
 
       **Learn More:**
       - [Website and online demo](https://box3balans.nl)
@@ -107,9 +107,9 @@ x-casaos:
     - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Box3balans/screenshot-4.png
   tips:
     before_install:
-      en_US: Don't open Box3balans to the internet; use a VPN such as WireGuard or Tailscale to reach it from outside. Creating your account needs the setup code from the app's log. After the first start, keep a copy of /DATA/AppData/box3balans/data/app-secret and the backup passphrase (Settings → Backups) in your password manager.
+      en_US: Don't open Box3balans to the internet; use a VPN such as WireGuard or Tailscale to reach it from outside. Creating your user needs the setup code from the app's log. After the first start, keep a copy of /DATA/AppData/box3balans/data/app-secret and the backup passphrase (Settings → Backups) in your password manager.
       nl_NL: Zet Box3balans niet open naar het internet; gebruik een VPN zoals WireGuard of Tailscale voor toegang van buitenaf. Voor je gebruiker heb je de setupcode uit het log van de app nodig. Bewaar na de eerste start een kopie van /DATA/AppData/box3balans/data/app-secret en de wachtzin voor de back-ups (Instellingen → Back-ups) in je wachtwoordmanager.
-  version: "0.1.48"
+  version: "0.1.49"
   website: "https://box3balans.nl"
   repo: "https://github.com/zenonymous/box3balans"
   support: "https://github.com/zenonymous/box3balans/discussions/categories/q-a"
@@ -121,8 +121,10 @@ x-casaos:
       - Box3balans 0.1.46: box 3 for 2027 uses the figures the Dutch cabinet set on 3 November: a tax-free allowance of €60,280 per person and 6.37% for other assets (still a proposal).
       - Box3balans 0.1.47: security fixes from an audit. A backup from before your first user can no longer be restored (it opened setup again without the setup code), and restoring a backup or turning on two-step verification now asks for your password.
       - Box3balans 0.1.48: the overview also shows what is on accounts kept as values per year, and the box 3 preview follows the amendment of 3 November (proposed from 2029, €1,800 tax-free).
+      - Box3balans 0.1.49: small fixes from a review. History keeps every digit of a quantity, restoring a backup forgives a mistyped password or code, and an overview with only accounts kept as values per year no longer calls itself empty.
     nl_NL: |-
       - Eerste versie in de App Store.
       - Box3balans 0.1.46: box 3 over 2027 rekent met de cijfers van het kabinet van 3 november: een heffingsvrij vermogen van € 60.280 per persoon en 6,37% voor overige bezittingen (nog een voorstel).
       - Box3balans 0.1.47: beveiligingsoplossingen uit een audit. Een back-up van vóór je eerste gebruiker kan niet meer worden teruggezet (dan ging de installatie weer open zonder setupcode), en terugzetten of tweestapsverificatie aanzetten vraagt nu je wachtwoord.
       - Box3balans 0.1.48: het overzicht toont ook wat er op rekeningen met waarden per jaar staat, en de vooruitblik op box 3 volgt de novelle van 3 november (voorgesteld vanaf 2029, € 1.800 heffingsvrij).
+      - Box3balans 0.1.49: kleine verbeteringen na een controle. Geschiedenis houdt elk cijfer van een aantal, een back-up terugzetten vergeeft een tikfout in je wachtwoord of code, en een overzicht met alleen rekeningen met waarden per jaar noemt zich niet meer leeg.
