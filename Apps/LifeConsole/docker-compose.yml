@@ -1,0 +1,98 @@
+name: life-console
+services:
+  life-console:
+    image: ghcr.io/tj-coding/life-console:0.1.0
+    container_name: life-console
+    restart: unless-stopped
+    depends_on:
+      - life-console-db
+    ports:
+      - target: 8080
+        published: "8370"
+        protocol: tcp
+    environment:
+      # no password: the database publishes no ports and is only reachable on this app's own network
+      DATABASE_URL: postgres://lifeconsole@life-console-db:5432/lifeconsole
+      SIGNUPS: open
+      AUTH_PASSWORD: "on"
+      UPDATE_CHECK: "off"
+      BACKUP_DIR: /backups
+    volumes:
+      # a named volume: it takes the image's ownership of /backups, which the app (uid 1000) can write
+      - type: volume
+        source: backups
+        target: /backups
+    networks:
+      - life-console-network
+
+  life-console-db:
+    image: postgres:17-alpine
+    container_name: life-console-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lifeconsole
+      POSTGRES_DB: lifeconsole
+      # only this app's private network can reach it (no published ports), so it needs no password
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/pgdata
+        target: /var/lib/postgresql/data
+    networks:
+      - life-console-network
+
+networks:
+  life-console-network:
+    driver: bridge
+
+volumes:
+  backups:
+
+x-casaos:
+  id: dev.life-console
+  architectures:
+    - amd64
+    - arm64
+  main: life-console
+  category: Productivity
+  developer: TJ-coding
+  author: TJ-coding
+  tagline:
+    en_US: Keyboard-first planner that shows what to do right now
+  description:
+    en_US: |
+      Life Console answers one question all day: what should I be doing right now? The Command Center shows the current time block with a live countdown, the task to work on, what comes next and the next deadline.
+
+      **Key features:**
+      - Plan the week in three moves: backlog → day → time, with a daily workload budget
+      - Auto time-box fills free gaps by priority
+      - Deadlines as live countdowns, with personal target dates
+      - Strategic plans from vision to goals to milestones; tasks link to the goal they serve
+      - One-line quick-add, command palette and single-key shortcuts
+      - Multi-user accounts, works offline, installs on phones, push reminders
+
+      The first account you create becomes the admin. Set SIGNUPS to off afterwards to stop others signing up.
+
+      **Learn more:**
+      - [Website](https://life-console.dev)
+      - [GitHub](https://github.com/TJ-coding/life-console)
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LifeConsole/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LifeConsole/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LifeConsole/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LifeConsole/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LifeConsole/screenshot-4.png
+  thumbnail: ""
+  scheme: http
+  port_map: "8370"
+  index: /
+  title:
+    en_US: Life Console
+  version: "0.1.0"
+  update_at: "2026-11-13"
+  release_notes:
+    en_US: First release in the CasaOS App Store.
+  website: "https://life-console.dev"
+  repo: "https://github.com/TJ-coding/life-console"
+  support: "https://github.com/TJ-coding/life-console/issues"
+  docs: "https://life-console.dev/docs/self-hosting"
