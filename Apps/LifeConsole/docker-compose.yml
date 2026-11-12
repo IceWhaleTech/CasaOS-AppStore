@@ -11,8 +11,8 @@ services:
         published: "8370"
         protocol: tcp
     environment:
-      # the database is only reachable on this app's own network
-      DATABASE_URL: postgres://lifeconsole:lifeconsole-casaos@life-console-db:5432/lifeconsole
+      # no password: the database publishes no ports and is only reachable on this app's own network
+      DATABASE_URL: postgres://lifeconsole@life-console-db:5432/lifeconsole
       SIGNUPS: open
       AUTH_PASSWORD: "on"
       UPDATE_CHECK: "off"
@@ -31,8 +31,9 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: lifeconsole
-      POSTGRES_PASSWORD: lifeconsole-casaos
       POSTGRES_DB: lifeconsole
+      # only this app's private network can reach it (no published ports), so it needs no password
+      POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/pgdata
