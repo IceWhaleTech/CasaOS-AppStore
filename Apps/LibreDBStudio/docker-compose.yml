@@ -1,7 +1,7 @@
 name: libredb-studio
 services:
   libredb-studio:
-    image: libredb/libredb-studio:1.2.0
+    image: libredb/libredb-studio:1.3.0
     container_name: libredb-studio
     restart: unless-stopped
     ports:
@@ -99,21 +99,21 @@ x-casaos:
   index: /
   scheme: http
   port_map: "3016"
-  version: "1.2.0"
-  update_at: "2026-11-01"
+  version: "1.3.0"
+  update_at: "2026-11-12"
   release_notes:
     en_US: |-
-      - Updates LibreDB Studio to 1.0.0, a major release. Twelve connection types join, taking the count to forty-one engines: BigQuery, MQTT, Firestore, RabbitMQ, Snowflake, OPC UA, Apache Spark, MTConnect, Modbus, Sparkplug B, NETCONF and SNMP.
-      - It carries one security fix: a disconnect request now closes only the caller's own connections (GHSA-78jw-7pvp-64h3), so a server that several accounts share should be upgraded.
-      - Studio can now run under a control plane that decides who may open which database with which credential. It stays off unless an operator sets `GOVERNANCE_SOURCE`, and an install without that variable behaves as 0.18.3 did.
-      - Agent mode now executes statements on MySQL and MariaDB, MongoDB and Kubernetes.
-      - For anyone calling the HTTP API: a refusal for a missing privilege answers 403 instead of 401, and a statement timeout 504 instead of 408.
+      - Updates LibreDB Studio to 1.3.0. MCP and the read-only agent now reach most of the engines Studio connects to, and each MCP token gets a tool list of its own.
+      - Every engine now records what Studio can write, so read-only means the same thing in the connection form, the seed file and the agent.
+      - Action required: an OPC UA seed connection must declare `agentReadRoots`. Until it does, agents and MCP no longer read it.
+      - Where Studio has no write path, the connection form shows a fixed Read-only label instead of a toggle, and a stored `readOnly: true` there is dropped on the connection's next save.
+      - A seed connection can carry a separate `agentUser` and `agentPassword`, so agent mode and MCP run under a narrower login than the seed's own.
     zh_CN: |-
-      - 将 LibreDB Studio 更新至 1.0.0，这是一个大版本。新增十二种连接类型，总数达到四十一种引擎：BigQuery、MQTT、Firestore、RabbitMQ、Snowflake、OPC UA、Apache Spark、MTConnect、Modbus、Sparkplug B、NETCONF 和 SNMP。
-      - 本版本包含一项安全修复：断开连接请求现在只关闭调用者自己的连接（GHSA-78jw-7pvp-64h3），因此多个账号共用的服务器应当升级。
-      - Studio 现在可以运行在一个控制平面之下，由它决定谁可以用哪个凭据打开哪个数据库。除非运维人员设置 `GOVERNANCE_SOURCE`，该功能保持关闭；未设置该变量的安装与 0.18.3 的行为一致。
-      - 代理模式现在可以在 MySQL 和 MariaDB、MongoDB 以及 Kubernetes 上执行语句。
-      - 调用 HTTP API 的一方需注意：权限不足的拒绝现在返回 403 而不是 401，语句超时返回 504 而不是 408。
+      - 将 LibreDB Studio 更新至 1.3.0。MCP 和只读代理现在覆盖 Studio 所连接的大多数引擎，并且每个 MCP 令牌都有自己的工具列表。
+      - 每个引擎现在都会记录 Studio 的写入范围，因此只读在连接表单、种子文件和代理中含义一致。
+      - 需要操作：OPC UA 种子连接必须声明 `agentReadRoots`。在声明之前，代理和 MCP 不再读取该连接。
+      - 在 Studio 没有写入路径的引擎上，连接表单显示固定的 Read-only 标签而不是开关，并且该处已保存的 `readOnly: true` 会在下次保存连接时被移除。
+      - 种子连接可以单独携带 `agentUser` 和 `agentPassword`，使代理模式和 MCP 以比种子本身更窄的登录身份运行。
   website: https://libredb.org
   repo: https://github.com/libredb/libredb-studio
   support: https://github.com/libredb/libredb-studio/issues
