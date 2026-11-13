@@ -1,0 +1,104 @@
+name: nyxiontech-pdf-tools
+services:
+  nyxiontech-pdf-tools:
+    container_name: nyxiontech-pdf-tools
+    image: ghcr.io/jurecki007/nyxiontech-tools:1.2.0
+    network_mode: bridge
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: "64M"
+    ports:
+      - target: 80
+        published: "27842"
+        protocol: tcp
+    # 127.0.0.1 rather than localhost: the image serves on IPv4 only, and inside the
+    # container /etc/hosts resolves localhost to ::1 first, which refuses the connection.
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_US: Web UI HTTP port.
+            pl_PL: Port HTTP interfejsu webowego.
+
+x-casaos:
+  id: com.nyxiontech.pdftools
+  main: nyxiontech-pdf-tools
+  index: /
+  port_map: "27842"
+  scheme: http
+  title:
+    en_US: Nyxiontech PDF Tools
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NyxiontechPDFTools/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NyxiontechPDFTools/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NyxiontechPDFTools/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NyxiontechPDFTools/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NyxiontechPDFTools/screenshot-3.png
+  tagline:
+    en_US: 25 PDF and image tools that never upload your files
+    pl_PL: 25 narzędzi do PDF i obrazów, które nigdy nie wysyłają twoich plików
+  description:
+    en_US: |
+      **There is no backend.** The container serves static files. Every operation is JavaScript and WebAssembly running in the browser tab, so a document never reaches the server. On your own hardware that means the work happens on the machine you are sitting at rather than on the one running the app, and nothing you open is ever sent across your network.
+
+      **25 tools in one place.** Pages: merge, split, extract, rotate, reorder and delete pages, add page numbers and watermarks, and compare two versions of a document with both a text diff and a pixel diff. Conversion: PDF to Word, to plain text or to images, images to PDF, Word to PDF, HEIC to JPG, image compression and background removal. Security: set or remove a password, fill forms, add a signature, strip metadata including the XMP packet, and redact. Redaction re-renders the page as an image with the boxes burnt in, so the text underneath is removed rather than covered over. OCR makes a scanned page searchable, in Polish or English.
+
+      **The privacy claim is checkable rather than asserted.** The Content-Security-Policy is `default-src 'self'` with `form-action 'none'`, so the page cannot send a document anywhere even if it tried. The app's own Privacy panel prints the policy it was served with and walks you through confirming it in your browser's network panel, or by pulling the plug and carrying on working.
+
+      No account, no limit on file size or file count, no watermark, no advertising. Interface in English and Polish, chosen by the address. Source under AGPL-3.0-or-later.
+    pl_PL: |
+      **Nie ma backendu.** Kontener serwuje pliki statyczne. Każda operacja to JavaScript i WebAssembly działające w karcie przeglądarki, więc dokument nigdy nie trafia na serwer. Na własnym sprzęcie oznacza to, że praca dzieje się na komputerze, przy którym siedzisz, a nie na tym, który uruchamia aplikację, i nic, co otwierasz, nie wędruje przez twoją sieć.
+
+      **25 narzędzi w jednym miejscu.** Strony: łączenie, dzielenie, wyodrębnianie, obracanie, porządkowanie i usuwanie stron, numeracja stron, znaki wodne oraz porównanie dwóch wersji dokumentu, tekstowe i pikselowe. Konwersja: PDF do Worda, do zwykłego tekstu lub do obrazów, zdjęcia do PDF, Word do PDF, HEIC do JPG, kompresja obrazów i usuwanie tła. Bezpieczeństwo: ustawianie i zdejmowanie hasła, wypełnianie formularzy, podpis, czyszczenie metadanych razem z pakietem XMP oraz zaczernianie. Zaczernianie renderuje stronę jako obraz z wypalonymi prostokątami, więc tekst pod spodem znika, a nie zostaje przykryty. OCR sprawia, że skan staje się przeszukiwalny, po polsku lub po angielsku.
+
+      **Deklarację o prywatności można sprawdzić, a nie tylko w nią uwierzyć.** Content-Security-Policy to `default-src 'self'` z `form-action 'none'`, więc strona nie wyśle dokumentu nigdzie, nawet gdyby próbowała. Panel Prywatność w aplikacji pokazuje politykę, z jaką została podana, i prowadzi przez jej sprawdzenie w zakładce sieci w przeglądarce albo przez odłączenie internetu i pracę dalej.
+
+      Bez konta, bez limitu rozmiaru i liczby plików, bez znaków wodnych i bez reklam. Interfejs po angielsku i po polsku, wybierany adresem. Kod źródłowy na licencji AGPL-3.0-or-later.
+  tips:
+    before_install:
+      en_US: |
+        ## Getting started
+
+        Open the Web UI at `http://<your-device-ip>:27842`. There is nothing to configure: no account, no database, no first-run wizard, and no volume to mount, because the app keeps nothing on the server.
+
+        ## Where the work happens
+
+        Files are read and written by the browser you open it in, not by the container. A large merge or an OCR run uses the CPU and memory of the machine you are sitting at, so an older server will not slow it down.
+
+        ## Language
+
+        The address decides the language: `/pl/` opens the Polish interface and everything else opens the English one.
+      pl_PL: |
+        ## Pierwsze kroki
+
+        Otwórz interfejs pod adresem `http://<ip-twojego-urzadzenia>:27842`. Nie ma czego konfigurować: żadnego konta, bazy danych, kreatora przy pierwszym uruchomieniu ani wolumenu do podpięcia, bo aplikacja nic nie trzyma na serwerze.
+
+        ## Gdzie dzieje się praca
+
+        Pliki czyta i zapisuje przeglądarka, w której otwierasz aplikację, a nie kontener. Duże łączenie plików albo OCR obciąża procesor i pamięć komputera, przy którym siedzisz, więc starszy serwer tego nie spowolni.
+
+        ## Język
+
+        O języku decyduje adres: `/pl/` otwiera interfejs polski, a każdy inny adres angielski.
+  author: Nyxiontech
+  developer: Nyxiontech
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+  version: "1.2.0"
+  update_at: "2026-11-12"
+  release_notes:
+    en_US: First version in the app store.
+    pl_PL: Pierwsza wersja w sklepie z aplikacjami.
+  website: "https://tools.nyxiontech.com"
+  repo: "https://github.com/jurecki007/nyxiontech-tools"
+  support: "https://github.com/jurecki007/nyxiontech-tools/issues"
+  docs: "https://tools.nyxiontech.com/guides"
