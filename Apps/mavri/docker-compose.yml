@@ -13,9 +13,6 @@ services:
     environment:
       COOKIE_SECURE: "false"
       TRUST_PROXY: "0"
-      # In-app "Update now" button (Settings > Updates) -> the updater below.
-      UPDATER_URL: "http://nodedr-invoice-updater:8080"
-      UPDATER_TOKEN: "nodedr-invoice-updater"
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/data
@@ -46,27 +43,6 @@ services:
         - container: /data
           description:
             en_US: SQLite database, session secret and encryption key, and scheduled backups (in backups/). Back this up.
-
-  # Powers the in-app "Update now" button. Does nothing on its own (no
-  # polling): when you press the button, Mavri tells it which published
-  # version to move to, and it pulls that version of the Mavri image and
-  # recreates the Mavri container (nothing else). Needs the Docker socket to do
-  # that; your data in /DATA/AppData is untouched.
-  updater:
-    image: ghcr.io/raktim94/mavri-updater:2.5.0
-    container_name: nodedr-invoice-updater
-    hostname: nodedr-invoice-updater
-    restart: unless-stopped
-    environment:
-      UPDATER_TOKEN: "nodedr-invoice-updater"
-      TARGET_CONTAINERS: "nodedr-invoice"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    x-casaos:
-      volumes:
-        - container: /var/run/docker.sock
-          description:
-            en_US: Docker socket, used only by the in-app "Update now" button to move the Mavri container to a newer version.
 
 x-casaos:
   id: com.nodedr.invoice
@@ -109,6 +85,8 @@ x-casaos:
         Your data persists at `/DATA/AppData/nodedr-invoice/data`.
         On first launch you create the owner account, then set the public
         address under Automation so links in emails and client pages work.
+        CasaOS manages updates for this listing. The in-app updater is
+        disabled because it requires broad access to the host Docker socket.
   index: /
   scheme: http
   port_map: "8473"
@@ -117,10 +95,10 @@ x-casaos:
   support: "https://github.com/Raktim94/mavri/issues"
   docs: "https://mavri.nodedr.com/docs/"
   version: "2.5.0"
-  update_at: "2026-10-17"
+  update_at: "2026-11-13"
   release_notes:
     en_US: |
-      2.5.0: bank statement matching (you confirm every match), customer pages
+      2.5.0: CasaOS now manages updates directly; the Docker socket updater is removed. Bank statement matching (you confirm every match), customer pages
       with what they owe by lateness, VIES checks of EU VAT numbers, quiet
       hours for reminders, India e-invoice JSON prepared for upload, eleven more
       draft document languages, sales filters, organisation default template,
