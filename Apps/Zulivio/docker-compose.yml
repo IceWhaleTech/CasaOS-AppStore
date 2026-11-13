@@ -23,7 +23,7 @@ services:
       - zulivio
 
   backend:
-    image: ghcr.io/raktim94/zulivio-backend:1.11.0
+    image: ghcr.io/raktim94/zulivio-backend:1.12.1
     container_name: zulivio-backend
     hostname: zulivio-backend
     restart: unless-stopped
@@ -129,7 +129,7 @@ services:
               (you'd just need to re-enter them from Settings).
 
   web:
-    image: ghcr.io/raktim94/zulivio-web:1.11.0
+    image: ghcr.io/raktim94/zulivio-web:1.12.1
     container_name: zulivio-web
     hostname: zulivio-web
     restart: unless-stopped
@@ -207,10 +207,20 @@ x-casaos:
   index: /
   scheme: http
   port_map: "2996"
-  version: "1.11.0"
-  update_at: "2026-09-20"
+  version: "1.12.1"
+  update_at: "2026-10-24"
   release_notes:
     en_US: |-
+      1.12.1: security update: zod 4.6.6 (fixes a memory-exhaustion advisory). No behaviour changes.
+
+      1.12.0: added Mobile Call History — register company phones under
+      Settings > Mobile Devices (per-device token, shown once), sync call
+      metadata in real time (MacroDroid) or in bulk (a future Android app, or
+      an uploaded call-log export to back-fill old history), and browse it
+      under Sales > Calls and on each lead. De-duplicated, tenant-isolated,
+      role-scoped, with retention and delete controls. Also removes the
+      DISABLE_CSP opt-out (CodeQL insecure-helmet alert).
+
       1.11.0: added a MacroDroid missed-call integration — a MASTER_OWNER
       can issue a per-device API token (Settings > Integrations) for an
       employee's phone, then MacroDroid's "Call Missed" trigger posts it to
