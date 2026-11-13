@@ -6,14 +6,33 @@ services:
     container_name: zulivio-postgres
     hostname: zulivio-postgres
     restart: unless-stopped
+    entrypoint: ["sh", "-c"]
+    command: |
+      set -eu
+      mkdir -p /run/secrets
+      chmod 755 /run/secrets
+      if [ -s /var/lib/postgresql/data/PG_VERSION ] && [ ! -s /run/secrets/postgres_password ]; then
+        echo "Existing database detected without its persisted password file; preserve the existing DB password in the AppData secrets directory before upgrading." >&2
+        exit 1
+      fi
+      if [ ! -s /run/secrets/postgres_password ]; then
+        umask 077
+        tr -dc "A-Za-z0-9" </dev/urandom | head -c 40 > /run/secrets/.postgres_password.tmp
+        chmod 444 /run/secrets/.postgres_password.tmp
+        mv /run/secrets/.postgres_password.tmp /run/secrets/postgres_password
+      fi
+      exec docker-entrypoint.sh postgres
     environment:
       POSTGRES_USER: nodedr
-      POSTGRES_PASSWORD: "please-change-this-password"
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
       POSTGRES_DB: zulivio
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/postgres
         target: /var/lib/postgresql/data
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets
+        target: /run/secrets
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U nodedr -d zulivio"]
       interval: 5s
@@ -31,9 +50,8 @@ services:
     # main app, so migrations run inline here on every start instead of the
     # separate `migrate` service used by the plain `compose.yaml` — Prisma
     # migrate deploy is idempotent, so this is safe on restarts.
-    command: ["sh", "-c", "npx prisma migrate deploy && node dist/src/main.js"]
+    command: ["sh", "-c", "export DATABASE_URL=\"postgresql://nodedr:$(cat /data/secrets/postgres_password)@zulivio-postgres:5432/zulivio\"; npx prisma migrate deploy && exec node dist/src/main.js"]
     environment:
-      DATABASE_URL: "postgresql://nodedr:please-change-this-password@zulivio-postgres:5432/zulivio"
       PORT: "4100"
       NODE_ENV: "production"
       CORS_ORIGIN: "http://localhost:2996"
@@ -187,9 +205,15 @@ x-casaos:
   tips:
     before_install:
       en_US: |
-        **Before first launch**, change the placeholder Postgres password
-        in both the `postgres` service's `POSTGRES_PASSWORD` and the
-        `backend` service's `DATABASE_URL` — they must match.
+        On a fresh install, a random Postgres password is generated once
+        and stored in the persistent secrets directory. Back up that
+        directory with the database. For an existing install, copy its
+        current database password into `secrets/postgres_password` before
+        updating so the existing database remains accessible. Do not delete
+        or rotate this file without changing the database password too.
+
+        CasaOS manages updates for this listing. The in-app updater is not
+        enabled because it requires access to the host Docker socket.
 
         Your data (Postgres database + uploaded knowledge-base PDFs)
         persists at `/DATA/AppData/zulivio/`, following CasaOS/ZimaOS's
