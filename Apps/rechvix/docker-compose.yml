@@ -70,7 +70,7 @@ services:
   # on install, often before postgres/its secrets file are ready — this
   # keeps retrying until they are, then exits 0 and stays stopped.
   migrate:
-    image: ghcr.io/raktim94/rechvix-server:0.15.2
+    image: ghcr.io/raktim94/rechvix-server:0.23.0
     container_name: rechvix-migrate
     entrypoint: ["sh", "-c"]
     command:
@@ -93,7 +93,7 @@ services:
       envs: []
 
   app:
-    image: ghcr.io/raktim94/rechvix-server:0.15.2
+    image: ghcr.io/raktim94/rechvix-server:0.23.0
     container_name: rechvix-app
     hostname: rechvix-app
     restart: unless-stopped
@@ -169,7 +169,7 @@ services:
           protocol: tcp
 
   worker:
-    image: ghcr.io/raktim94/rechvix-worker:0.15.2
+    image: ghcr.io/raktim94/rechvix-worker:0.23.0
     container_name: rechvix-worker
     hostname: rechvix-worker
     restart: unless-stopped
@@ -282,4 +282,11 @@ x-casaos:
   index: /
   scheme: http
   port_map: "8090"
-  version: "0.15.2"
+  version: "0.23.0"
+  update_at: "2026-11-08"
+
+  release_notes:
+    en_US: |-
+      0.23.0: fixes mobile backup and restore, invoice returns, GST document titles,
+      sales and overdue dashboard totals, receivables ageing, and adds configurable
+      low-stock levels. Full history: https://github.com/Raktim94/rechvix/blob/main/CHANGELOG.md
