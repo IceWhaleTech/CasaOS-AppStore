@@ -2,7 +2,7 @@ name: nodedr-pos
 
 services:
   backend:
-    image: ghcr.io/raktim94/nodedr-pos-backend:1.1.0
+    image: ghcr.io/raktim94/nodedr-pos-backend:1.6.2
     container_name: nodedr-pos-backend
     hostname: nodedr-pos-backend
     restart: unless-stopped
@@ -44,7 +44,7 @@ services:
             en_US: USB passthrough for optional direct-USB thermal receipt printing. Safe to leave as-is with no printer attached.
 
   frontend:
-    image: ghcr.io/raktim94/nodedr-pos-frontend:1.1.0
+    image: ghcr.io/raktim94/nodedr-pos-frontend:1.6.2
     container_name: nodedr-pos-frontend
     hostname: nodedr-pos-frontend
     restart: unless-stopped
@@ -120,10 +120,47 @@ x-casaos:
   index: /
   scheme: http
   port_map: "1994"
-  version: "1.1.0"
-  update_at: "2026-08-21"
+  version: "1.6.2"
+  update_at: "2026-10-24"
   release_notes:
     en_US: |-
+      1.6.2 (2026-10-24):
+      - Security update: zod 4.6.6 (fixes a memory-exhaustion advisory). No behaviour changes.
+
+      1.6.1 (2026-10-22):
+      - VERI*FACTU now works only for shops in Spain (euro shops): it is hidden and never
+        records for any other currency.
+
+      1.6.0 (2026-10-22):
+      - New: Spain VERI*FACTU (Settings > VERI*FACTU). Every sale becomes a
+        simplified invoice in a tamper-evident chain, returns become corrective
+        invoices, receipts print the AEAT QR code, and records can be reported to
+        the tax agency with your own certificate. Implemented, not certified: it
+        has not been run against the live AEAT portal and no Declaracion
+        Responsable has been issued. Off by default; nothing changes elsewhere.
+
+      1.5.1 (2026-10-08):
+      - Scanning an unknown barcode in Inventory now looks it up online and
+        opens the form pre-filled (falls back to a blank form if offline).
+      - Online data is validated (barcode check digit, junk names, wrong-code
+        records) with warnings, and "Check online" in the product form lets you
+        replace the name, category or photo of an existing product.
+
+      1.5.0 (2026-10-08):
+      - New: find products online by name or barcode and add them after review;
+        product photos; edit/delete suppliers and create purchase orders by hand.
+      - New: customer display on any phone/tablet/second screen over the LAN,
+        with the UPI payment QR, plus a payment-confirmation sound.
+      - Online orders: orders already paid on the website are handed over without
+        a POS bill; pay-at-pickup orders are billed at hand-over. Developer guide
+        for connecting your own website through the API (docs/CUSTOM_STORE.md).
+
+      1.4.0 (2026-10-07):
+      - New: in-app updates. Settings > Updates shows when a new version is
+        available and updates NodeDR POS with one click.
+      - Many more currencies (incl. Hong Kong dollar), online orders, IMEI &
+        warranty, purchasing, reports and more — see the project README.
+
       1.1.0 (2026-08-21):
       - Dashboard: new "Total Due" stat and a customers-with-due section for
         quick collections follow-up.
