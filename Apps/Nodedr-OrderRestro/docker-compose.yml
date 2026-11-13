@@ -6,14 +6,33 @@ services:
     container_name: nodedr-restaurant-pos-postgres
     hostname: nodedr-restaurant-pos-postgres
     restart: unless-stopped
+    entrypoint: ["sh", "-c"]
+    command: |
+      set -eu
+      mkdir -p /run/secrets
+      chmod 755 /run/secrets
+      if [ -s /var/lib/postgresql/data/PG_VERSION ] && [ ! -s /run/secrets/postgres_password ]; then
+        echo "Existing database detected without its persisted password file; preserve the existing DB password at /DATA/AppData/<app-id>/secrets/postgres_password before upgrading." >&2
+        exit 1
+      fi
+      if [ ! -s /run/secrets/postgres_password ]; then
+        umask 077
+        tr -dc "A-Za-z0-9" </dev/urandom | head -c 40 > /run/secrets/.postgres_password.tmp
+        chmod 444 /run/secrets/.postgres_password.tmp
+        mv /run/secrets/.postgres_password.tmp /run/secrets/postgres_password
+      fi
+      exec docker-entrypoint.sh postgres
     environment:
       POSTGRES_USER: nodedr
-      POSTGRES_PASSWORD: "please-change-this-password"
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
       POSTGRES_DB: nodedr_restaurant
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/postgres
         target: /var/lib/postgresql/data
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets
+        target: /run/secrets
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U nodedr"]
       interval: 5s
@@ -23,12 +42,11 @@ services:
       - nodedr-restaurant-pos
 
   backend:
-    image: ghcr.io/raktim94/nodedr-restaurant-pos-backend:1.20.0
+    image: ghcr.io/raktim94/nodedr-restaurant-pos-backend:1.26.0
     container_name: nodedr-restaurant-pos-backend
     hostname: nodedr-restaurant-pos-backend
     restart: unless-stopped
     environment:
-      DATABASE_URL: "postgresql://nodedr:please-change-this-password@nodedr-restaurant-pos-postgres:5432/nodedr_restaurant"
       # No JWT_SECRET here on purpose — the app generates a real random one
       # itself on first boot and persists it to the /data/state volume
       # below (see apps/backend/src/main.ts's resolveJwtSecret()). A
@@ -47,10 +65,12 @@ services:
       # Set to a long random key to make this server the sync hub for Windows
       # PCs (Settings > Server Sync). Empty = sync server off.
       SYNC_API_KEY: ""
-      # In-app "Update now" button (Settings > Updates) -> the updater below.
-      UPDATER_URL: "http://nodedr-restaurant-pos-updater:8080"
-      UPDATER_TOKEN: "nodedr-restaurant-updater"
+    command: ["sh", "-c", "export DATABASE_URL=\"postgresql://nodedr:$(cat /run/secrets/postgres_password)@nodedr-restaurant-pos-postgres:5432/nodedr_restaurant\"; npx prisma migrate deploy && exec node dist/src/main.js"]
     volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/secrets
+        target: /run/secrets
+        read_only: true
       - type: bind
         source: /DATA/AppData/$AppID/uploads
         target: /data/uploads
@@ -64,9 +84,6 @@ services:
       - nodedr-restaurant-pos
     x-casaos:
       envs:
-        - container: DATABASE_URL
-          description:
-            en_US: Must match the Postgres password below if you change it. Leave as default unless you know why you're changing it.
         - container: CORS_ORIGIN
           description:
             en_US: Origin allowed to call the API (CORS). Leave as the default for local/LAN use — only change for a VPS behind real HTTPS.
@@ -85,7 +102,7 @@ services:
             en_US: Auto-generated login security key. Created automatically on first launch — leave it alone.
 
   web:
-    image: ghcr.io/raktim94/nodedr-restaurant-pos-web:1.20.0
+    image: ghcr.io/raktim94/nodedr-restaurant-pos-web:1.26.0
     container_name: nodedr-restaurant-pos-web
     hostname: nodedr-restaurant-pos-web
     restart: unless-stopped
@@ -103,29 +120,6 @@ services:
           description:
             en_US: Nodedr OrderRestro web interface
           protocol: tcp
-
-  # In-app "Update now" (Settings > Updates): pulls the newer OrderRestro
-  # images above and recreates those two containers (nothing else). Needs the
-  # Docker socket to do that; data in /DATA/AppData is untouched. The updater
-  # image is generic (it only manages the containers named below), so the
-  # one published for NodeDR POS is reused.
-  updater:
-    image: ghcr.io/raktim94/nodedr-pos-updater:1.5.1
-    container_name: nodedr-restaurant-pos-updater
-    hostname: nodedr-restaurant-pos-updater
-    restart: unless-stopped
-    environment:
-      UPDATER_TOKEN: "nodedr-restaurant-updater"
-      TARGET_CONTAINERS: "nodedr-restaurant-pos-backend,nodedr-restaurant-pos-web"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - nodedr-restaurant-pos
-    x-casaos:
-      volumes:
-        - container: /var/run/docker.sock
-          description:
-            en_US: Docker socket, used only by the in-app "Update now" button to move the two OrderRestro containers to a newer version.
 
 networks:
   nodedr-restaurant-pos:
@@ -168,11 +162,15 @@ x-casaos:
       en_US: |
         Login security is handled automatically — no setup needed there.
 
-        **Before anything beyond a quick local trial**, change the
-        placeholder Postgres password: it must be changed identically in
-        both the `postgres` service's `POSTGRES_PASSWORD` and the
-        `backend` service's `DATABASE_URL`. Leaving the default is not
-        safe for a real installation.
+        A random Postgres password is generated once on first install and
+        saved under the app's persistent `secrets` directory. Keep that
+        directory in backups. For an existing installation, copy its current
+        database password to `secrets/postgres_password` before updating;
+        this preserves the existing database credentials. Do not delete or
+        rotate this file without changing the database password too.
+
+        CasaOS manages app updates for this listing. The in-app updater is
+        disabled because it requires broad Docker socket access.
 
         Your data (Postgres database + uploaded images) persists at
         `/DATA/AppData/nodedr-restaurant-pos/`, following CasaOS/ZimaOS's
@@ -183,10 +181,12 @@ x-casaos:
   index: /
   scheme: http
   port_map: "1995"
-  version: "1.20.0"
-  update_at: "2026-11-03"
+  version: "1.26.0"
+  update_at: "2026-11-13"
   release_notes:
     en_US: |-
+      1.26.0: Updated to the current published OrderRestro images. CasaOS manages updates, and the database password is generated and persisted on first install.
+
       1.20.0: departments and per-person access. Group staff into departments, and allow or
       block single permissions for one person (with an optional end date) without making a new
       role. Paste a supplier invoice's text to fill in the invoice form. The dashboard is
