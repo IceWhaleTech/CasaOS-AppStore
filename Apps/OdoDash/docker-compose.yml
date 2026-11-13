@@ -1,0 +1,71 @@
+name: ododash
+services:
+  ododash:
+    image: ghcr.io/moshiur-hridoy/ododash:0.50.0
+    restart: unless-stopped
+    ports:
+      - target: 5050
+        published: "5050"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    environment:
+      DATABASE_URL: sqlite:////app/data/may.db
+      UPLOAD_FOLDER: /app/data/uploads
+      PUID: "1000"
+      PGID: "1000"
+    # SECRET_KEY is deliberately not set: OdoDash generates one on first start
+    # and keeps it in the data folder. ADMIN_PASSWORD is optional; without it
+    # a random admin password is printed once in the container logs.
+    x-casaos:
+      ports:
+        - container: "5050"
+          description:
+            en_US: OdoDash web interface port
+      volumes:
+        - container: /app/data
+          description:
+            en_US: Database, uploads and the generated secret key.
+x-casaos:
+  id: space.moshiur.ododash
+  main: ododash
+  index: /
+  port_map: "5050"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OdoDash/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OdoDash/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OdoDash/screenshot-2.png
+  title:
+    en_US: OdoDash
+  tagline:
+    en_US: Track fuel, expenses, maintenance and trips for your vehicles
+  description:
+    en_US: |
+      OdoDash is a self-hosted vehicle management app. It tracks fuel, expenses,
+      maintenance, reminders, trips and EV charging across your fleet, with costs,
+      distance and consumption for every vehicle. It is a fork of May with a
+      redesigned light and dark interface, a custom accent colour and a
+      phone-friendly layout. On first start the admin password is printed once
+      in the container logs (username admin).
+  tips:
+    before_install:
+      en_US: |
+        Sign in as admin. The generated password is shown once in the container
+        logs, and you can set ADMIN_PASSWORD to choose your own. Change it after
+        the first login.
+  author: moshiur-hridoy
+  developer: Danny McClelland (May)
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+  version: "0.50.0"
+  update_at: "2026-11-13"
+  website: https://moshiur-hridoy.github.io/OdoDash/
+  repo: https://github.com/moshiur-hridoy/OdoDash
+  support: https://github.com/moshiur-hridoy/OdoDash/discussions
+  release_notes:
+    en_US: Initial listing of OdoDash 0.50.0.
