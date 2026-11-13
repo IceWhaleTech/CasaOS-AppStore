@@ -9,12 +9,31 @@ services:
     container_name: kinetirx-postgres
     hostname: kinetirx-postgres
     restart: unless-stopped
+    entrypoint: ["sh", "-c"]
+    command: |
+      set -eu
+      mkdir -p /run/secrets
+      chmod 755 /run/secrets
+      if [ -s /var/lib/postgresql/data/PG_VERSION ] && { [ ! -s /run/secrets/postgres_password ] || [ ! -s /run/secrets/jwt_secret ]; }; then
+        echo "Existing database detected without persisted credential files; preserve the existing DB password and JWT secret in the AppData secrets directory before upgrading." >&2
+        exit 1
+      fi
+      for secret in postgres_password jwt_secret; do
+        if [ ! -s "/run/secrets/$secret" ]; then
+          umask 077
+          tr -dc "A-Za-z0-9" </dev/urandom | head -c 48 > "/run/secrets/.$secret.tmp"
+          chmod 444 "/run/secrets/.$secret.tmp"
+          mv "/run/secrets/.$secret.tmp" "/run/secrets/$secret"
+        fi
+      done
+      exec docker-entrypoint.sh postgres
     environment:
       POSTGRES_USER: kinetirx
-      POSTGRES_PASSWORD: "please-change-this-password"
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
       POSTGRES_DB: kinetirx
     volumes:
       - /DATA/AppData/$AppID/postgres:/var/lib/postgresql/data
+      - /DATA/AppData/$AppID/secrets:/run/secrets
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U kinetirx -d kinetirx"]
       interval: 5s
@@ -32,9 +51,14 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    entrypoint: ["/bin/sh", "-c"]
+    command: |
+      export DATABASE_URL="postgres://kinetirx:$(cat /run/secrets/postgres_password)@postgres:5432/kinetirx?sslmode=disable"
+      export JWT_SECRET="$(cat /run/secrets/jwt_secret)"
+      exec /app/kinetirx-server
+    volumes:
+      - /DATA/AppData/$AppID/secrets:/run/secrets:ro
     environment:
-      DATABASE_URL: "postgres://kinetirx:please-change-this-password@postgres:5432/kinetirx?sslmode=disable"
-      JWT_SECRET: "please-change-this-jwt-secret-before-going-live"
       # Left blank on purpose — create the admin account from the app's own
       # first-run screen on first visit instead of a shared default password.
       KINETIRX_ADMIN_PASSWORD: ""
@@ -56,12 +80,6 @@ services:
       start_period: 10s
     x-casaos:
       envs:
-        - container: DATABASE_URL
-          description:
-            en_US: Must match the Postgres password below if you change it. Leave as default unless you know why you're changing it.
-        - container: JWT_SECRET
-          description:
-            en_US: Signs login sessions. Change this to a long random value (32+ random bytes) before exposing the instance beyond your own LAN — changing it later logs everyone out.
         - container: KINETIRX_ADMIN_PASSWORD
           description:
             en_US: Optional. Leave blank to create the admin account from the app's own first-run screen instead. If set, it seeds the Master Admin account (id EMP-ADMIN-1) on first boot — change it immediately after first login from Employee Control, there is no password-reset flow.
@@ -137,16 +155,22 @@ x-casaos:
     before_install:
       en_US: >-
         On first visit, create your admin account right in the app — no
-        manual configuration needed. **Change the Postgres password and JWT
-        secret below before using this for anything beyond a local trial**
-        — neither is auto-generated. To use Settings -> S3 Offsite Backup,
-        set BACKUP_ENCRYPTION_KEY below first (openssl rand -hex 32) — the
-        S3 endpoint/bucket/keys themselves are entered later, from Settings.
+        A random Postgres password and JWT signing secret are generated once
+        on first install and stored in the persistent secrets directory.
+        Back up that directory with the database. For an existing install,
+        preserve its current database password and JWT secret as
+        `secrets/postgres_password` and `secrets/jwt_secret` before
+        updating. Replacing the JWT secret logs out existing sessions.
+        CasaOS manages app updates for this listing.
+
+        To use Settings -> S3 Offsite Backup, set BACKUP_ENCRYPTION_KEY
+        below first (openssl rand -hex 32); endpoint and credentials are
+        entered later from Settings.
   index: /
   port_map: "3080"
   scheme: http
   version: "1.6.14"
-  update_at: "2026-09-11"
+  update_at: "2026-11-13"
   release_notes:
     en_US: >-
       1.6.14: Fixed the Due Khata "Collect" action recording a hardcoded
