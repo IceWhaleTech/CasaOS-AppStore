@@ -1,0 +1,107 @@
+name: filex
+services:
+  filex:
+    image: ghcr.io/brf-tech/filex:v0.60.2
+    container_name: filex
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 5212
+        published: "5212"
+        protocol: tcp
+    environment:
+      FILEX_PUBLIC_URL: http://localhost:5212
+      FILEX_DEFAULT_STORAGE_DRIVER: local
+      FILEX_DEFAULT_STORAGE_PATH: /srv/files
+      FILEX_ADMIN_EMAIL: ""
+      FILEX_ADMIN_PASSWORD: ""
+      FILEX_SECRET_KEY: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/$AppID/files
+        target: /srv/files
+      - type: bind
+        source: /DATA
+        target: /media/DATA
+    stop_grace_period: 30s
+    x-casaos:
+      envs:
+        - container: FILEX_PUBLIC_URL
+          description:
+            en_US: The address you open filex at, for example http://192.168.1.10:5212. Share links and sign-in redirects are built from it.
+        - container: FILEX_DEFAULT_STORAGE_DRIVER
+          description:
+            en_US: Storage created on the first start. Keep local to use the /srv/files folder.
+        - container: FILEX_DEFAULT_STORAGE_PATH
+          description:
+            en_US: Container path of the storage created on the first start.
+        - container: FILEX_ADMIN_EMAIL
+          description:
+            en_US: Optional. Email of the first administrator. Leave empty for admin@local.
+        - container: FILEX_ADMIN_PASSWORD
+          description:
+            en_US: Optional. Password of the first administrator. Leave empty for a random password, printed once in the app log.
+        - container: FILEX_SECRET_KEY
+          description:
+            en_US: Optional. 32 or more random characters used to encrypt stored secrets (S3 access keys, push notifications, sign-in provider secrets). Back it up and keep it unchanged once set.
+      ports:
+        - container: "5212"
+          description:
+            en_US: Web UI and API port
+      volumes:
+        - container: /data
+          description:
+            en_US: filex database (SQLite), search index and thumbnail cache.
+        - container: /srv/files
+          description:
+            en_US: Folder used as the first storage.
+        - container: /media/DATA
+          description:
+            en_US: The /DATA folder. Add it as another local storage in the filex admin panel to manage your files there.
+x-casaos:
+  id: sh.filex.filex
+  main: filex
+  index: /
+  port_map: "5212"
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+  author: BRF Tech
+  developer: BRF Tech
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/filex/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/filex/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/filex/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/filex/screenshot-2.png
+  title:
+    en_US: filex
+  tagline:
+    en_US: Web file manager for local folders and remote storage
+  description:
+    en_US: |
+      filex is a self-hosted web file manager. It browses, uploads, previews, shares and edits files on local folders and on S3, SFTP, WebDAV, FTP and SMB storage. The same files can also be reached over S3, SFTP, FTPS, NFS and WebDAV, so tools such as rclone, restic or WinSCP can connect to filex directly.
+
+      It has share links with a PIN, an expiry date and a download limit, upload-only links, full-text search, thumbnails, trash and version history, end-to-end encrypted folders, roles and groups, two-factor sign-in, and optional OIDC or LDAP sign-in. Add-on apps run in a WebAssembly sandbox and are installed from the admin panel, among them an editor for Word, Excel and PowerPoint files. A desktop app with folder sync and an MCP server are also available.
+
+      This package keeps the database, search index and thumbnails in /DATA/AppData/filex/data and creates the first storage from /DATA/AppData/filex/files. The /DATA folder is mounted at /media/DATA and can be added as another storage in the admin panel.
+  tips:
+    before_install:
+      en_US: |
+        Before installing, set FILEX_PUBLIC_URL to the address you will open filex at, for example http://192.168.1.10:5212 (your ZimaOS IP or domain). Share links and sign-in redirects are built from it. The default, http://localhost:5212, only works on the device itself.
+
+        On the first start filex creates the administrator admin@local with a random password. The password is printed once in the app log and saved in /DATA/AppData/filex/data/.first-run.txt. To choose the first administrator yourself, set FILEX_ADMIN_EMAIL and FILEX_ADMIN_PASSWORD before installing.
+
+        The app opens at /admin, where the administrator signs in. Accounts you create for other people sign in at /drive.
+  version: "0.60.2"
+  update_at: "2026-11-12"
+  release_notes:
+    en_US: First version in the ZimaOS App Store.
+  website: https://filex.sh
+  repo: https://github.com/BRF-Tech/filex
+  support: https://github.com/BRF-Tech/filex/issues
+  docs: https://docs.filex.sh
