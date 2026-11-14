@@ -1,0 +1,88 @@
+name: tubehaus
+
+services:
+  # the web app and its router (Caddy)
+  web:
+    container_name: tubehaus-web
+    image: ghcr.io/biolend83/tubehaus-web:1.6.0
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "8796"
+        protocol: tcp
+    environment:
+      TUBEHAUS_SITE: ":8080"
+      TUBEHAUS_AUTH: none
+    depends_on:
+      - tubehaus
+    networks:
+      - tubehaus
+
+  # the TubeHaus server: its own YouTube engine, the shared library, live streams and captions, offline saves.
+  # HT_WARP=0: on a home connection YouTube needs no detour, so no extra capabilities.
+  tubehaus:
+    container_name: tubehaus-server
+    image: ghcr.io/biolend83/tubehaus:1.6.0
+    restart: unless-stopped
+    init: true
+    environment:
+      HT_WARP: "0"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/tubehaus/server
+        target: /data
+    networks:
+      - tubehaus
+
+networks:
+  tubehaus:
+    driver: bridge
+
+x-casaos:
+  id: io.github.biolend83.tubehaus
+  architectures:
+    - amd64
+    - arm64
+  main: web
+  store_app_id: tubehaus
+  category: Media
+  author: biolend83
+  developer: biolend83
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TubeHaus/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TubeHaus/screenshot-1.jpg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/TubeHaus/screenshot-1.jpg
+  title:
+    en_US: TubeHaus
+  tagline:
+    en_US: Your own YouTube, without ads or tracking, for the whole household
+    ko_KR: 광고와 추적 없는 우리 집 유튜브
+  description:
+    en_US: |
+      TubeHaus is a YouTube app you host yourself. It looks and feels like YouTube, but there are no ads, no tracking and no account with Google: your subscriptions, history, playlists and resume points live on your own device, and every phone, computer and TV in the house sees the same library.
+
+      It asks YouTube itself (TubeHaus' own engine), so nothing else needs to be installed: no Invidious, no database.
+
+      - Up to 4K, SponsorBlock, dubbed audio tracks, chapters, captions and translated subtitles
+      - Live streams with live captions transcribed on your device
+      - Send to TV, and watch together in a room that keeps everyone on the same moment
+      - Offline save, a music mode with lyrics, and a big-screen mode for TVs
+    ko_KR: |
+      TubeHaus는 내 기기에서 직접 돌리는 유튜브 앱이에요. 화면과 사용감은 유튜브 그대로지만 광고와 추적이 없고 구글 계정도 필요 없어요. 구독, 시청 기록, 재생목록, 이어보기 위치가 내 기기에 저장되고, 집 안의 휴대폰·컴퓨터·TV 모두 같은 라이브러리를 봐요.
+
+      유튜브에 직접 물어보는 자체 엔진이 있어서 따로 설치할 것이 없어요(Invidious도, 데이터베이스도 필요 없어요).
+  tips:
+    before_install:
+      en_US: |
+        Everyone who can open this address shares one library. To give each person their own, set TUBEHAUS_AUTH to "accounts" on both the web and tubehaus containers.
+  port_map: "8796"
+  scheme: http
+  index: /
+  version: "1.6.0"
+  update_at: "2026-11-12"
+  release_notes:
+    en_US: First version in the CasaOS App Store.
+  website: "https://github.com/biolend83/tubehaus"
+  repo: "https://github.com/biolend83/tubehaus"
+  support: "https://github.com/biolend83/tubehaus/issues"
+  docs: "https://github.com/biolend83/tubehaus/blob/main/docs/SELF-HOSTING.md"
