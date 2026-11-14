@@ -1,0 +1,87 @@
+name: pingkit-agent
+services:
+  pingkit-agent:
+    image: ghcr.io/pingkit/agent:1.0.0
+    # Host networking is the one privilege: the agent reads the host's neighbour (ARP) table
+    # and hears the mDNS and SSDP announcements of the devices on your network, which a
+    # bridge network hides. With it there are no port mappings: the status page is on the
+    # host's port 7474 and the iPhone connects on 7475.
+    network_mode: host
+    restart: unless-stopped
+    stop_grace_period: 20s
+    # Nothing else: every capability dropped, a read-only root file system, a non-root user,
+    # no privilege escalation. The agent writes only to /data and a small /tmp.
+    read_only: true
+    cap_drop:
+      - ALL
+    user: "65532:65532"
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=16m
+    mem_limit: 256m
+    pids_limit: 64
+    # The same 256 MB where CasaOS's settings form reads it: without this the form's memory
+    # slider starts at the whole machine's memory and a Settings > Save writes that here,
+    # which outranks mem_limit (seen on CasaOS v0.4.15, 2026-11-12: 4100980736 bytes).
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          pids: 64
+    environment:
+      TZ: $TZ
+      # Optional: the 8-character code from your iPhone. You can type it on the status page
+      # instead, which leaves nothing in the container settings.
+      PINGKIT_CLAIM_CODE: ""
+    # A named volume, not a folder under /DATA/AppData: a new bind folder is created owned by
+    # root, which user 65532 cannot write, while a new named volume takes the image's /data,
+    # already owned by 65532.
+    volumes:
+      - type: volume
+        source: pingkit-agent-data
+        target: /data
+volumes:
+  pingkit-agent-data:
+x-casaos:
+  id: app.pingkit.agent
+  main: pingkit-agent
+  index: /
+  port_map: "7474"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PingKitAgent/icon.png
+  title:
+    en_US: PingKit Agent
+  tagline:
+    en_US: Watch your network from a Raspberry Pi, NAS or Docker host that stays on, with alerts on your iPhone through PingKit Guardian. Free to run.
+    de_DE: Überwachen Sie Ihr Netzwerk von einem Raspberry Pi, NAS oder Docker-Host, der eingeschaltet bleibt. Meldungen aufs iPhone mit Guardian. Kostenlos.
+  description:
+    en_US: |-
+      Run it on a device of your own that stays on: a Raspberry Pi, a NAS, a Linux computer with Docker, or Home Assistant. It watches your network and, with Guardian, tells your iPhone when the internet goes down, a new device joins, or a device goes offline.
+
+      Running the agent is free, and so are pairing an agent, the agent's status and the last 24 hours of its timeline on your iPhone. The agent's device list and outage log, 90 days of its timeline on your iPhone, and alerts from your agent, need PingKit Guardian. 365 days of history, and more than one agent, up to five, need Guardian Plus.
+
+      The agent uses the host's network, the one privilege it needs, to read the neighbour (ARP) table and to hear the Bonjour (mDNS) and UPnP (SSDP) announcements your devices make. It runs as a non-root user with no added capabilities and a read-only file system, and it never opens a raw socket.
+    de_DE: |-
+      Betreiben Sie ihn auf einem eigenen Gerät, das eingeschaltet bleibt: einem Raspberry Pi, einem NAS, einem Linux-Computer mit Docker oder Home Assistant. Er überwacht Ihr Netzwerk und meldet Ihrem iPhone mit Guardian, wenn das Internet ausfällt, ein neues Gerät hinzukommt oder ein Gerät offline geht.
+
+      Der Agent selbst ist kostenlos, ebenso das Koppeln eines Agents, der Status des Agents und die letzten 24 Stunden seiner Zeitleiste auf Ihrem iPhone. Geräteliste und Ausfallprotokoll des Agents, 90 Tage seiner Zeitleiste auf Ihrem iPhone sowie Meldungen von Ihrem Agent erfordern PingKit Guardian. 365 Tage Verlauf und mehr als ein Agent, bis zu fünf, erfordern Guardian Plus.
+
+      Der Agent nutzt das Netzwerk des Hosts, das einzige Sonderrecht, das er braucht, um die Nachbartabelle (ARP) zu lesen und die Bonjour- (mDNS) und UPnP-Ankündigungen (SSDP) Ihrer Geräte zu hören. Er läuft als Benutzer ohne Root-Rechte, ohne zusätzliche Capabilities und mit schreibgeschütztem Dateisystem und öffnet nie einen Raw Socket.
+  tips:
+    before_install:
+      en_US: First, open PingKit on your iPhone, go to Agents, tap Add an Agent and keep the 8-character code it shows. The code works once, for 10 minutes. After installing, open the app and type the code into its page. The agent needs a Linux host on your network; it cannot see your devices from Docker Desktop on Windows or macOS.
+  author: PingKit
+  developer: PingKit
+  category: Networking
+  architectures:
+    - amd64
+    - arm64
+  version: "1.0.0"
+  update_at: "2026-11-14"
+  release_notes:
+    en_US: First release.
+  website: https://pingkit.app/agent/docker/
+  repo: https://github.com/pingkit/agent
+  support: https://github.com/pingkit/agent/issues
+  docs: https://github.com/pingkit/agent#readme
