@@ -1,7 +1,7 @@
 name: libre-webui
 services:
   libre-webui:
-    image: docker.io/librewebui/libre-webui:0.44.0
+    image: docker.io/librewebui/libre-webui:0.44.1
     container_name: libre-webui
     restart: unless-stopped
     ports:
@@ -134,11 +134,11 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "0.44.0"
-  update_at: "2026-11-14"
+  version: "0.44.1"
+  update_at: "2026-11-15"
   release_notes:
-    en_US: "Libre WebUI 0.44.0 adds bundled Modal and Baseten providers that run open models in Chat and Work, adds GPT-6.1 Terra to the Codex, OpenAI and OpenRouter catalogs, keeps persona chats labeled as their persona, and updates dependencies for security. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.44.0"
-    en_GB: "Libre WebUI 0.44.0 adds bundled Modal and Baseten providers that run open models in Chat and Work, adds GPT-6.1 Terra to the Codex, OpenAI and OpenRouter catalogs, keeps persona chats labeled as their persona, and updates dependencies for security. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.44.0"
+    en_US: "Libre WebUI 0.44.1 adds Claude Fable 5.2 to the Anthropic provider and Claude Code and Muse Ember to the Meta provider and Muse Code, fixes thinking on the Claude models from Opus 4.7 on, and stops cutting long replies short on Opus 4.6 to 4.8 and Sonnet 4.6. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.44.1"
+    en_GB: "Libre WebUI 0.44.1 adds Claude Fable 5.2 to the Anthropic provider and Claude Code and Muse Ember to the Meta provider and Muse Code, fixes thinking on the Claude models from Opus 4.7 on, and stops cutting long replies short on Opus 4.6 to 4.8 and Sonnet 4.6. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.44.1"
   website: https://librewebui.org
   repo: https://github.com/libre-webui/libre-webui
   support: https://github.com/libre-webui/libre-webui/issues
