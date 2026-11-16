@@ -23,7 +23,7 @@ services:
         condition: service_completed_successfully
     environment:
       TZ: $TZ
-      KWNT_SIGNIN_HINT: "To sign in, open kwnt's menu on the CasaOS dashboard, choose Terminal, run: kwnt token --raw and paste what it prints here."
+      KWNT_SIGNIN_HINT: "On the CasaOS dashboard, open kwant's menu, choose Terminal and run kwnt token --raw. Paste what it prints below."
     network_mode: bridge
     ports:
       - target: 8799
@@ -84,7 +84,7 @@ x-casaos:
     before_install:
       en_US: >-
         kwant asks for a sign-in token the first time you open it. On the CasaOS dashboard, open
-        kwnt's menu, choose Terminal, run `kwnt token --raw` and paste what it prints. The browser
+        kwant's menu, choose Terminal, run `kwnt token --raw` and paste what it prints. The browser
         then stays signed in for a year. Add an AI account in the app to start; this image has no
         AI command-line tools inside.
   version: "0.9.17"
