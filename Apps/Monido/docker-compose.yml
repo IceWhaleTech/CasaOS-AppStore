@@ -1,0 +1,87 @@
+name: monido
+services:
+  monido:
+    image: ghcr.io/stanislav-petryashov/monido:1.3.0
+    container_name: monido
+    # a root start on purpose: the image hands /DATA/AppData/monido to PUID:PGID and runs the server as them, never as root
+    user: "0:0"
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID
+        target: /data
+    ports:
+      - target: 8080
+        published: "18080"
+        protocol: tcp
+    x-casaos:
+      volumes:
+        - container: /data
+          description:
+            en_US: Monido data (the SQLite database). Back it up.
+      ports:
+        - container: "8080"
+          description:
+            en_US: Monido web interface port
+      envs:
+        - container: PUID
+          description:
+            en_US: User ID that owns the data folder
+        - container: PGID
+          description:
+            en_US: Group ID that owns the data folder
+x-casaos:
+  id: dev.monido.app
+  architectures:
+    - amd64
+    - arm64
+  main: monido
+  category: Finance
+  developer: Stanislav Petryashov
+  author: Stanislav Petryashov
+  tagline:
+    en_US: Family net worth and cash flow, self-hosted, with an optional AI advisor.
+  description:
+    en_US: |
+      Monido tracks your net worth and cash flow, on your own or as a family. Enter monthly balances, income and expenses by hand (no bank connections), close the month, and see net worth, loans, property, goals and financial health in one dashboard.
+
+      An optional AI advisor lets Claude weigh a purchase, a loan or a goal against your own numbers and file bank statements into the month after your yes. One container, SQLite, English and Russian, light and dark themes.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Monido/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Monido/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Monido/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Monido/screenshot-3.png
+  thumbnail: ""
+  tips:
+    before_install:
+      en_US: |
+        Open the web page within 15 minutes of the first start and set the family password. If you miss the window, restart the app to open it again.
+  scheme: http
+  port_map: "18080"
+  index: /
+  title:
+    en_US: Monido
+  version: "1.3.0"
+  update_at: "2026-11-16"
+  release_notes:
+    en_US: |-
+      Run as the data folder's owner (PUID/PGID), Claude's connector with the family password, and the advisor over stdio (monido-mcp). Full notes: https://github.com/stanislav-petryashov/monido/releases
+  website: "https://monido.dev"
+  repo: "https://github.com/stanislav-petryashov/monido"
+  support: "https://github.com/stanislav-petryashov/monido/issues"
+  docs: "https://github.com/stanislav-petryashov/monido/blob/master/docs/deploy-docker.md"
