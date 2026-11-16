@@ -1,0 +1,78 @@
+# OpenFamily for CasaOS and ZimaOS.
+#
+# One container: the web interface, the API and PostgreSQL. Nothing to edit
+# before installing: the secrets are generated on the first start and kept in
+# the data folder.
+name: openfamily
+services:
+  openfamily:
+    container_name: openfamily
+    image: ghcr.io/nexaflowfrance/openfamily:2.2.0
+    restart: unless-stopped
+    environment:
+      # true lets anyone who reaches the app create an account. Set it to
+      # false once yours exists: people invited from the Family page still can.
+      - REGISTRATION_ENABLED=true
+    volumes:
+      # The database and the secrets generated on the first start
+      - /DATA/AppData/$AppID/data:/data
+    ports:
+      # Web interface, API and live updates
+      - "8480:3000"
+    x-casaos:
+      envs:
+        - container: REGISTRATION_ENABLED
+          description:
+            en_US: "true lets anyone create an account. Set to false once yours exists: invited people still can."
+            fr_FR: "true laisse n'importe qui créer un compte. Passez à false une fois le vôtre créé : les personnes invitées le peuvent toujours."
+      volumes:
+        - container: /data
+          description:
+            en_US: "The database and the generated secrets: the folder to back up"
+            fr_FR: "La base de données et les secrets générés : le dossier à sauvegarder"
+      ports:
+        - container: "3000"
+          description:
+            en_US: "Web interface and API"
+            fr_FR: "Interface web et API"
+
+x-casaos:
+  id: fr.openfamily.app
+  version: "2.2.0"
+  update_at: "2026-11-16"
+  website: https://openfamily.fr/
+  repo: https://github.com/NexaFlowFrance/OpenFamily
+  support: https://github.com/NexaFlowFrance/OpenFamily/issues
+  docs: https://github.com/NexaFlowFrance/OpenFamily/blob/main/INSTALLATION.md
+  architectures:
+    - amd64
+    - arm64
+  main: openfamily
+  description:
+    en_US: OpenFamily keeps the whole household organized from your own server. Shared family calendar with reminders and birthdays, tasks and chores with a rewards system for kids, shopping lists updated live, a pantry with use-by dates, weekly meal planning with a recipe book, family budget, a kiosk mode for a wall tablet and an optional AI assistant. Android app, documented API with webhooks, interface in eight languages. Integrates with Home Assistant, Gladys Assistant, Mealie, Tandoor, Grocy and Nextcloud.
+    fr_FR: OpenFamily organise toute la famille depuis votre propre serveur. Agenda familial partagé avec rappels et anniversaires, tâches et corvées avec un système de récompenses pour les enfants, listes de courses mises à jour en direct, garde-manger avec dates limites, planification des repas avec livre de recettes, budget familial, mode kiosque pour tablette murale et assistant IA facultatif. Application Android, API documentée avec webhooks, interface en huit langues. S'intègre avec Home Assistant, Gladys Assistant, Mealie, Tandoor, Grocy et Nextcloud.
+  tagline:
+    en_US: The family organizer you host yourself
+    fr_FR: L'organiseur familial que vous hébergez vous-même
+  developer: NexaFlow
+  author: NexaFlow
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenFamily/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenFamily/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenFamily/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenFamily/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenFamily/screenshot-3.png
+  tips:
+    before_install:
+      en_US: |
+        Nothing to configure: open the web UI after the first start and create your account.
+        It becomes the owner of a new family.
+      fr_FR: |
+        Rien à configurer : ouvrez l'interface web après le premier démarrage et créez votre compte.
+        Il devient le propriétaire d'une nouvelle famille.
+  title:
+    en_US: OpenFamily
+  category: Home
+  port_map: "8480"
+  scheme: http
+  index: /
