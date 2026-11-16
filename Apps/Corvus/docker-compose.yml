@@ -1,7 +1,7 @@
 name: corvus
 services:
   corvus:
-    image: ghcr.io/corvus-gateway/gateway:1.2.0
+    image: ghcr.io/corvus-gateway/gateway:1.5.0
     network_mode: bridge
     ports:
       - target: 80
@@ -130,25 +130,25 @@ x-casaos:
   index: /
   port_map: "9443"
   scheme: https
-  version: "1.2.0"
-  update_at: "2026-11-05"
+  version: "1.5.0"
+  update_at: "2026-11-16"
   release_notes:
     en_US: |-
-      - Saved DNS credentials: enter a DNS provider token once and reuse it for every DNS-01 certificate. Tokens saved per certificate in older versions are moved over automatically on upgrade.
-      - Unknown hosts: choose what Corvus answers for host names it does not serve: a 404 page, close the connection, or redirect to a URL.
-      - Console host guard: the proxy host the console is opened through is marked, and disabling or deleting it asks first.
-      - Fixes: security rules in Log mode no longer count toward automatic bans; the first-run setup form is readable in dark mode.
+      - Check connection: test a proxy host's target from the gateway before saving (name lookup, port, firewall, TLS), with a hint when it fails.
+      - Upstream errors: the host list shows why visitors got a 502 or 504, with the reason and the address the gateway tried.
+      - If the gateway cannot start with the current configuration, Corvus falls back to the last working one and keeps the console reachable, showing why.
+      - PROXY protocol for hosts and TCP streams (for FRP, HAProxy or a load balancer in front), and many stability fixes.
     zh_CN: |-
-      - 保存的 DNS 凭据：只需输入一次 DNS 服务商令牌，即可用于所有 DNS-01 证书。旧版本中按证书保存的令牌会在升级时自动迁移。
-      - 未知主机：可选择对未配置的主机名返回 404 页面、关闭连接或重定向到指定 URL。
-      - 控制台主机保护：标记用于打开控制台的代理主机，禁用或删除前会先确认。
-      - 修复：日志模式下的安全规则不再计入自动封禁；首次设置表单在深色模式下可正常阅读。
+      - 检查连接：保存前从网关测试代理主机的目标（名称解析、端口、防火墙、TLS），失败时给出提示。
+      - 上游错误：主机列表显示访客收到 502 或 504 的原因以及网关尝试连接的地址。
+      - 如果网关无法使用当前配置启动，Corvus 会回退到上一个可用的配置，并保持控制台可访问、显示原因。
+      - 支持主机和 TCP 流的 PROXY protocol（适用于前置的 FRP、HAProxy 或负载均衡器），以及多项稳定性修复。
     ko_KR: |-
-      - DNS 자격 증명 저장: DNS 제공자 토큰을 한 번 입력하면 모든 DNS-01 인증서에 재사용합니다. 이전 버전에서 인증서별로 저장된 토큰은 업그레이드 시 자동으로 옮겨집니다.
-      - 알 수 없는 호스트: 서비스하지 않는 호스트 이름에 404 페이지, 연결 종료, URL 리디렉션 중 어떻게 응답할지 선택할 수 있습니다.
-      - 콘솔 호스트 보호: 콘솔에 접속 중인 프록시 호스트를 표시하고, 비활성화하거나 삭제할 때 먼저 확인합니다.
-      - 수정: 로그 모드의 보안 규칙이 더 이상 자동 차단에 집계되지 않으며, 첫 실행 설정 화면이 다크 모드에서도 잘 보입니다.
-  website: "https://corvus-gateway.github.io/corvus/"
+      - 연결 확인: 저장하기 전에 게이트웨이에서 프록시 호스트의 대상에 접속해 봅니다(이름 조회, 포트, 방화벽, TLS). 실패하면 해결 힌트를 보여 줍니다.
+      - 업스트림 오류: 방문자가 502나 504를 받은 이유와 게이트웨이가 시도한 주소를 호스트 목록에 표시합니다.
+      - 게이트웨이가 현재 설정으로 시작하지 못하면 마지막으로 정상 동작한 설정으로 되돌리고, 콘솔은 계속 열어 이유를 보여 줍니다.
+      - 호스트와 TCP 스트림의 PROXY protocol 지원(앞단의 FRP, HAProxy, 로드 밸런서용)과 여러 안정성 개선.
+  website: "https://corvusgateway.org"
   repo: "https://github.com/corvus-gateway/corvus"
   support: "https://github.com/corvus-gateway/corvus/issues"
-  docs: "https://corvus-gateway.github.io/corvus/"
+  docs: "https://corvusgateway.org/getting-started/install/"
