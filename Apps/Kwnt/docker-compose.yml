@@ -1,0 +1,98 @@
+name: kwnt
+services:
+  # Docker creates /DATA/AppData/kwnt/data as root; kwnt runs as uid 10001, so hand it the folder first.
+  kwnt-init:
+    image: ghcr.io/alexsergivan/kwnt:0.9.17@sha256:8ce673fe74fe309d408f0a93b3b55659d263a0aa5abbe17a202ffa07a7f62ae3
+    user: "0:0"
+    entrypoint:
+      - /bin/sh
+      - -c
+    command:
+      - chown -R 10001:10001 /data
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    network_mode: none
+    restart: "no"
+  kwnt:
+    image: ghcr.io/alexsergivan/kwnt:0.9.17@sha256:8ce673fe74fe309d408f0a93b3b55659d263a0aa5abbe17a202ffa07a7f62ae3
+    container_name: kwnt
+    depends_on:
+      kwnt-init:
+        condition: service_completed_successfully
+    environment:
+      TZ: $TZ
+      KWNT_SIGNIN_HINT: "To sign in, open kwnt's menu on the CasaOS dashboard, choose Terminal, run: kwnt token --raw and paste what it prints here."
+    network_mode: bridge
+    ports:
+      - target: 8799
+        published: "8799"
+        protocol: tcp
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Time zone
+        - container: KWNT_SIGNIN_HINT
+          description:
+            en_US: The line kwnt's sign-in screen shows before you sign in
+      ports:
+        - container: "8799"
+          description:
+            en_US: Web UI
+      volumes:
+        - container: /data
+          description:
+            en_US: Bots, chats, settings and the sign-in token. Back this up.
+x-casaos:
+  id: si.kwant.kwnt
+  architectures:
+    - amd64
+    - arm64
+  main: kwnt
+  index: /
+  port_map: "8799"
+  scheme: http
+  author: alexsergivan
+  developer: kwant
+  category: AI
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Kwnt/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Kwnt/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Kwnt/screenshot-1.webp
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Kwnt/screenshot-2.webp
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Kwnt/screenshot-3.webp
+  title:
+    en_US: kwant
+  tagline:
+    en_US: Your own team of AI bots that check each other's work
+  description:
+    en_US: >-
+      kwant is an open-source, self-hosted team of AI bots. They share chats, hand work to each
+      other and run on a schedule, and a step only counts as done once kwant has seen the proof.
+      Add an AI account you already have (an API key, or a Claude, Codex or Grok sign-in) and ask
+      your first question. Everything stays in one folder on your CasaOS box.
+  tips:
+    before_install:
+      en_US: >-
+        kwant asks for a sign-in token the first time you open it. On the CasaOS dashboard, open
+        kwnt's menu, choose Terminal, run `kwnt token --raw` and paste what it prints. The browser
+        then stays signed in for a year. Add an AI account in the app to start; this image has no
+        AI command-line tools inside.
+  version: "0.9.17"
+  update_at: "2026-11-16"
+  release_notes:
+    en_US: |-
+      - kwnt 0.9.17. What's new: https://github.com/alexsergivan/kwant/releases/tag/mac-v0.9.17
+  website: https://kwant.si
+  repo: https://github.com/alexsergivan/kwant
+  support: https://github.com/alexsergivan/kwant/issues
+  docs: https://kwant.si/docs/install
