@@ -1,5 +1,7 @@
 name: openuem
 
+x-openuem-db-url: &openuem-db-url postgres://openuem:openuem-secret@openuem-db:5432/openuem
+
 services:
   openuem-db:
     container_name: openuem-db
@@ -39,7 +41,7 @@ services:
       COUNTRY: US
       DOMAIN: openuem.local
       OCSP: http://ocsp.openuem.local:8000
-      DATABASE_URL: postgres://openuem:openuem-secret@openuem-db:5432/openuem
+      DATABASE_URL: *openuem-db-url
       SERVER_NAME: console.openuem.local
       REVERSE_PROXY_SERVER: ""
       NATS_SERVER: nats.openuem.local
@@ -64,7 +66,7 @@ services:
     restart: always
     environment:
       OCSP_PORT: 8000
-      DATABASE_URL: postgres://openuem:openuem-secret@openuem-db:5432/openuem
+      DATABASE_URL: *openuem-db-url
     ports:
       - target: 8000
         published: "8000"
@@ -147,7 +149,7 @@ services:
     restart: always
     environment:
       NATS_SERVERS: nats.openuem.local:4433
-      DATABASE_URL: postgres://openuem:openuem-secret@openuem-db:5432/openuem
+      DATABASE_URL: *openuem-db-url
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/certificates/notification-worker/worker.cer
@@ -176,7 +178,7 @@ services:
     environment:
       OCSP: http://ocsp.openuem.local:8000
       NATS_SERVERS: nats.openuem.local:4433
-      DATABASE_URL: postgres://openuem:openuem-secret@openuem-db:5432/openuem
+      DATABASE_URL: *openuem-db-url
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/certificates/cert-manager-worker/worker.cer
@@ -207,7 +209,7 @@ services:
     restart: always
     environment:
       NATS_SERVERS: nats.openuem.local:4433
-      DATABASE_URL: postgres://openuem:openuem-secret@openuem-db:5432/openuem
+      DATABASE_URL: *openuem-db-url
     volumes:
       - type: bind
         source: /DATA/AppData/$AppID/certificates/agents-worker/worker.cer
@@ -235,7 +237,7 @@ services:
     command: "start"
     environment:
       NATS_SERVERS: nats.openuem.local:4433
-      DATABASE_URL: postgres://openuem:openuem-secret@openuem-db:5432/openuem
+      DATABASE_URL: *openuem-db-url
       JWT_KEY: change-me-to-a-long-random-string
       SERVER_NAME: console.openuem.local
       CONSOLE_PORT: 1323
