@@ -1,0 +1,367 @@
+name: openuem
+
+x-openuem-db-url: &openuem-db-url postgres://openuem:openuem-secret@openuem-db:5432/openuem
+
+services:
+  openuem-db:
+    container_name: openuem-db
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: openuem
+      POSTGRES_PASSWORD: openuem-secret
+      POSTGRES_DB: openuem
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/pgdata
+        target: /var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U openuem" ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - openuem
+    x-casaos:
+      envs:
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: Password for the OpenUEM PostgreSQL database. It is only reachable inside the app network, but changing it is recommended.
+
+  openuem-certs:
+    container_name: openuem-certs
+    image: openuem/openuem-cert-manager:0.12.0
+    entrypoint:
+      - /bin/configure.sh
+    environment:
+      ORGNAME: ZimaOS
+      ORGPROVINCE: Province
+      ORGLOCALITY: Locality
+      ORGADDRESS: ""
+      COUNTRY: US
+      DOMAIN: openuem.local
+      OCSP: http://ocsp.openuem.local:8000
+      DATABASE_URL: *openuem-db-url
+      SERVER_NAME: console.openuem.local
+      REVERSE_PROXY_SERVER: ""
+      NATS_SERVER: nats.openuem.local
+      NATS_PORT: 4433
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates
+        target: /certificates
+      - type: bind
+        source: /DATA/AppData/$AppID/nats
+        target: /etc/nats
+    depends_on:
+      openuem-db:
+        condition: service_healthy
+    networks:
+      - openuem
+
+  openuem-ocsp-responder:
+    container_name: openuem-ocsp-responder
+    image: openuem/openuem-ocsp-responder:0.12.0
+    command: "start"
+    restart: always
+    environment:
+      OCSP_PORT: 8000
+      DATABASE_URL: *openuem-db-url
+    ports:
+      - target: 8000
+        published: "8000"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/ocsp/ocsp.cer
+        target: /usr/bin/certificates/ocsp.cer
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/ocsp/ocsp.key
+        target: /usr/bin/certificates/ocsp.key
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/ca/ca.cer
+        target: /usr/bin/certificates/ca.cer
+    healthcheck:
+      test: curl -f http://localhost:8000/health || exit 1
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+    depends_on:
+      openuem-certs:
+        condition: service_completed_successfully
+      openuem-db:
+        condition: service_healthy
+    networks:
+      openuem:
+        aliases:
+          - ocsp.openuem.local
+
+  openuem-nats-server:
+    container_name: openuem-nats-server
+    image: nats:2.15.3
+    environment:
+      NATS_SERVER: nats.openuem.local
+      NATS_PORT: 4433
+      ORGNAME: ZimaOS
+      ORGPROVINCE: Province
+      ORGLOCALITY: Locality
+      ORGADDRESS: ""
+      COUNTRY: US
+    ports:
+      - target: 4433
+        published: "4433"
+        protocol: tcp
+    restart: always
+    command: "-c /etc/nats.cfg"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/nats/nats.cer
+        target: /etc/nats-certificates/nats.cer
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/nats/nats.key
+        target: /etc/nats-certificates/nats.key
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/ca/ca.cer
+        target: /etc/nats-certificates/ca.cer
+      - type: bind
+        source: /DATA/AppData/$AppID/nats/nats.cfg
+        target: /etc/nats.cfg
+      - type: bind
+        source: /DATA/AppData/$AppID/jetstream
+        target: /var/lib/jetstream/data
+    depends_on:
+      openuem-certs:
+        condition: service_completed_successfully
+      openuem-db:
+        condition: service_healthy
+      openuem-ocsp-responder:
+        condition: service_healthy
+    networks:
+      openuem:
+        aliases:
+          - nats.openuem.local
+
+  openuem-notification-worker:
+    container_name: openuem-notification-worker
+    image: openuem/openuem-worker:0.12.0
+    command: "notifications start"
+    restart: always
+    environment:
+      NATS_SERVERS: nats.openuem.local:4433
+      DATABASE_URL: *openuem-db-url
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/notification-worker/worker.cer
+        target: /tmp/certificates/worker.cer
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/notification-worker/worker.key
+        target: /tmp/certificates/worker.key
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/ca/ca.cer
+        target: /tmp/certificates/ca.cer
+    depends_on:
+      openuem-certs:
+        condition: service_completed_successfully
+      openuem-db:
+        condition: service_healthy
+      openuem-nats-server:
+        condition: service_started
+    networks:
+      - openuem
+
+  openuem-cert-manager-worker:
+    container_name: openuem-cert-manager-worker
+    image: openuem/openuem-worker:0.12.0
+    command: "cert-manager start"
+    restart: always
+    environment:
+      OCSP: http://ocsp.openuem.local:8000
+      NATS_SERVERS: nats.openuem.local:4433
+      DATABASE_URL: *openuem-db-url
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/cert-manager-worker/worker.cer
+        target: /tmp/certificates/worker.cer
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/cert-manager-worker/worker.key
+        target: /tmp/certificates/worker.key
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/ca/ca.cer
+        target: /tmp/certificates/ca.cer
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/ca/ca.key
+        target: /tmp/certificates/ca.key
+    depends_on:
+      openuem-certs:
+        condition: service_completed_successfully
+      openuem-db:
+        condition: service_healthy
+      openuem-nats-server:
+        condition: service_started
+    networks:
+      - openuem
+
+  openuem-agents-worker:
+    container_name: openuem-agents-worker
+    image: openuem/openuem-worker:0.12.0
+    command: "agents start"
+    restart: always
+    environment:
+      NATS_SERVERS: nats.openuem.local:4433
+      DATABASE_URL: *openuem-db-url
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/agents-worker/worker.cer
+        target: /tmp/certificates/worker.cer
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/agents-worker/worker.key
+        target: /tmp/certificates/worker.key
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/ca/ca.cer
+        target: /tmp/certificates/ca.cer
+    depends_on:
+      openuem-certs:
+        condition: service_completed_successfully
+      openuem-db:
+        condition: service_healthy
+      openuem-nats-server:
+        condition: service_started
+    networks:
+      - openuem
+
+  openuem-console:
+    container_name: openuem-console
+    image: openuem/openuem-console:0.12.0
+    restart: always
+    command: "start"
+    environment:
+      NATS_SERVERS: nats.openuem.local:4433
+      DATABASE_URL: *openuem-db-url
+      JWT_KEY: change-me-to-a-long-random-string
+      SERVER_NAME: console.openuem.local
+      CONSOLE_PORT: 1323
+      AUTH_PORT: 1324
+      DOMAIN: openuem.local
+      ORGNAME: ZimaOS
+      ORGPROVINCE: Province
+      ORGLOCALITY: Locality
+      ORGADDRESS: ""
+      COUNTRY: US
+      REVERSE_PROXY_AUTH_PORT: ""
+      REVERSE_PROXY_SERVER: ""
+      RE_ENABLE_CERTIFICATES_AUTH: ""
+      RE_ENABLE_PASSWD_AUTH: ""
+      RESET_OPENUEM_USER: ""
+      TZ: $TZ
+    ports:
+      - target: 1323
+        published: "1323"
+        protocol: tcp
+      - target: 1324
+        published: "1324"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/console/console.cer
+        target: /bin/certificates/console.cer
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/console/console.key
+        target: /bin/certificates/console.key
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/console/sftp.key
+        target: /bin/certificates/sftp.key
+      - type: bind
+        source: /DATA/AppData/$AppID/certificates/ca/ca.cer
+        target: /bin/certificates/ca.cer
+    depends_on:
+      openuem-certs:
+        condition: service_completed_successfully
+      openuem-db:
+        condition: service_healthy
+      openuem-nats-server:
+        condition: service_started
+    networks:
+      openuem:
+        aliases:
+          - console.openuem.local
+    x-casaos:
+      envs:
+        - container: JWT_KEY
+          description:
+            en_US: Secret used to sign console tokens. Set a long random string before exposing the console to other users.
+      ports:
+        - container: "1323"
+          description:
+            en_US: OpenUEM console WebUI port (HTTPS).
+        - container: "1324"
+          description:
+            en_US: OpenUEM console authentication port (HTTPS).
+      volumes:
+        - container: /bin/certificates
+          description:
+            en_US: TLS certificates generated by the OpenUEM certificate manager.
+
+networks:
+  openuem:
+    driver: bridge
+
+x-casaos:
+  id: eu.openuem.openuem
+  architectures:
+    - amd64
+    - arm64
+  main: openuem-console
+  store_app_id: openuem
+  author: Devority
+  developer: open-uem
+  category: Networking
+  title:
+    en_US: OpenUEM
+  tagline:
+    en_US: Self-hosted Unified Endpoint Manager
+    cs_CZ: Samostatně hostovaná správa koncových zařízení
+    es_ES: Gestor unificado de endpoints autoalojado
+  description:
+    en_US: |
+      OpenUEM is an open-source, self-hosted Unified Endpoint Manager. It lets you inventory, monitor and manage your IT assets (Windows, Linux and macOS) from a single web console powered by lightweight agents and a NATS message bus.
+
+      With OpenUEM you can browse endpoint hardware and software inventory, deploy WinGet packages, run scheduled tasks and PowerShell scripts, provide remote assistance with VNC or RustDesk, manage profiles, tags, organizations and sites, and keep an eye on Windows updates and security tools.
+
+      This app installs the full OpenUEM server stack (PostgreSQL, NATS, certificate manager, OCSP responder and workers). Once it is running, deploy the OpenUEM agent on your endpoints pointing to this machine's NATS port to start managing them.
+    cs_CZ: |
+      OpenUEM je open-source, samostatně hostovaný Unified Endpoint Manager. Umožňuje inventarizovat, monitorovat a spravovat IT zařízení (Windows, Linux a macOS) z jedné webové konzole pomocí lightweight agentů a NATS message busu.
+
+      S OpenUEM můžete prohlížet inventář hardwaru a softwaru koncových bodů, nasazovat WinGet balíčky, spouštět naplánované úlohy a PowerShell skripty, poskytovat vzdálenou pomoc přes VNC nebo RustDesk, spravovat profily, štítky, organizace a lokality a sledovat aktualizace Windows a bezpečnostní nástroje.
+
+      Tato aplikace nainstaluje celý serverový stack OpenUEM (PostgreSQL, NATS, správce certifikátů, OCSP responder a workery). Po spuštění nasaďte na koncová zařízení OpenUEM agenty směřující na NATS port tohoto stroje a začněte je spravovat.
+    es_ES: |
+      OpenUEM es un Unified Endpoint Manager de código abierto y autoalojado. Permite inventariar, monitorizar y gestionar sus activos de TI (Windows, Linux y macOS) desde una única consola web basada en agentes ligeros y un bus de mensajes NATS.
+
+      Con OpenUEM puede explorar el inventario de hardware y software de los endpoints, desplegar paquetes WinGet, ejecutar tareas programadas y scripts de PowerShell, ofrecer asistencia remota con VNC o RustDesk, gestionar perfiles, etiquetas, organizaciones y sedes, y supervisar las actualizaciones de Windows y las herramientas de seguridad.
+
+      Esta aplicación instala la pila completa del servidor OpenUEM (PostgreSQL, NATS, gestor de certificados, respondedor OCSP y workers). Cuando esté en marcha, despliegue el agente de OpenUEM en sus endpoints apuntando al puerto NATS de esta máquina para empezar a gestionarlos.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenUEM/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenUEM/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenUEM/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/OpenUEM/screenshot-2.png
+  tips:
+    before_install:
+      en_US: |
+        The console is served over HTTPS with a self-signed certificate; your browser will warn you on first access.
+
+        Change JWT_KEY and POSTGRES_PASSWORD before using this in production. OpenUEM agents on your endpoints must be able to reach this machine on TCP port 4433 (NATS) — see the official docs for agent installation.
+  index: /
+  port_map: "1323"
+  scheme: https
+  version: "0.12.0"
+  update_at: "2026-11-16"
+  release_notes:
+    en_US: |
+      - Initial ZimaOS app store release of OpenUEM 0.12.0.
+      - Includes the complete server stack: console, agents/notifications/cert-manager workers, OCSP responder, NATS and PostgreSQL.
+  website: "https://openuem.eu"
+  repo: "https://github.com/open-uem"
+  support: "https://github.com/open-uem/openuem-console/issues"
+  docs: "https://openuem.eu/docs/intro"
