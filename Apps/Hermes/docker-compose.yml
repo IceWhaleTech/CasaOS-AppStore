@@ -1,7 +1,7 @@
 name: hermes
 services:
   hermes:
-    image: nousresearch/hermes-agent:v2026.8.18
+    image: nousresearch/hermes-agent:v0.23.2
     container_name: hermes
     deploy:
       resources:
@@ -392,178 +392,378 @@ x-casaos:
   tips:
     before_install:
       en_US: |
-        Default dashboard login: `zimaos` / `hermes`. Change these credentials in the app settings after installation.
-        In most cases, you can configure models and messaging directly from the Hermes WebUI.
-        If you cannot find the relevant option, see [this guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) and complete the configuration in the container terminal.
+        Default dashboard login: `zimaos` / `hermes`. Change these credentials
+        in the app settings after installation.
+        In most cases, you can configure models and messaging directly from the
+        Hermes WebUI.
+        If you cannot find the relevant option, see [this
+        guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) and
+        complete the configuration in the container terminal.
       en_GB: |
-        Default dashboard login: `zimaos` / `hermes`. Change these credentials in the app settings after installation.
-        In most cases, you can configure models and messaging directly from the Hermes WebUI.
-        If you cannot find the relevant option, see [this guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) and complete the configuration in the container terminal.
+        Default dashboard login: `zimaos` / `hermes`. Change these credentials
+        in the app settings after installation.
+        In most cases, you can configure models and messaging directly from the
+        Hermes WebUI.
+        If you cannot find the relevant option, see [this
+        guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) and
+        complete the configuration in the container terminal.
       it_IT: |
-        Accesso predefinito alla dashboard: `zimaos` / `hermes`. Modifica queste credenziali nelle impostazioni dell’app dopo l’installazione.
-        Nella maggior parte dei casi, puoi configurare direttamente modelli e messaggistica dalla WebUI di Hermes.
-        Se non trovi l'opzione corrispondente, consulta [questa guida](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) e completa la configurazione nel terminale del container.
+        Accesso predefinito alla dashboard: `zimaos` / `hermes`. Modifica queste
+        credenziali nelle impostazioni dell’app dopo l’installazione.
+        Nella maggior parte dei casi, puoi configurare direttamente modelli e
+        messaggistica dalla WebUI di Hermes.
+        Se non trovi l'opzione corrispondente, consulta [questa
+        guida](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) e
+        completa la configurazione nel terminale del container.
       nb_NO: |
-        Standard innlogging til dashbordet: `zimaos` / `hermes`. Endre legitimasjonen i appinnstillingene etter installasjonen.
-        I de fleste tilfeller kan du konfigurere modeller og meldinger direkte fra Hermes WebUI.
-        Hvis du ikke finner det aktuelle alternativet, se [denne veiledningen](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) og fullfor konfigurasjonen i containerterminalen.
+        Standard innlogging til dashbordet: `zimaos` / `hermes`. Endre
+        legitimasjonen i appinnstillingene etter installasjonen.
+        I de fleste tilfeller kan du konfigurere modeller og meldinger direkte
+        fra Hermes WebUI.
+        Hvis du ikke finner det aktuelle alternativet, se [denne
+        veiledningen](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup)
+        og fullfor konfigurasjonen i containerterminalen.
       zh_CN: |
         仪表盘默认登录凭据：`zimaos` / `hermes`。安装后请在应用设置中修改。
         在大多数情况下，你可以直接通过 Hermes WebUI 配置模型和消息。
-        如果找不到相应选项，请参考 [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) 在容器终端完成配置。
+        如果找不到相应选项，请参考
+        [该教程](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup)
+        在容器终端完成配置。
       ja_JP: |
         ダッシュボードのデフォルトログインは `zimaos` / `hermes` です。インストール後にアプリ設定で変更してください。
         ほとんどの場合、モデル設定やメッセージ機能は Hermes WebUI から直接設定できます。
-        該当する項目が見つからない場合は、[このガイド](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) を参照し、コンテナのターミナルで設定を完了してください。
+        該当する項目が見つからない場合は、
+        [このガイド](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup)
+        を参照し、コンテナのターミナルで設定を完了してください。
       ko_KR: |
         대시보드 기본 로그인은 `zimaos` / `hermes`입니다. 설치 후 앱 설정에서 변경하세요.
         대부분의 경우 Hermes WebUI에서 모델과 메시징을 직접 설정할 수 있습니다.
-        해당 옵션이 보이지 않으면 [이 가이드](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) 를 참고해 컨테이너 터미널에서 설정을 완료하세요.
+        해당 옵션이 보이지 않으면 [이
+        가이드](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) 를 참고해
+        컨테이너 터미널에서 설정을 완료하세요.
       fr_FR: |
-        Identifiants par defaut du tableau de bord : `zimaos` / `hermes`. Modifiez-les dans les parametres de l’application apres l’installation.
-        Dans la plupart des cas, vous pouvez configurer directement les modeles et la messagerie depuis l'interface WebUI de Hermes.
-        Si vous ne trouvez pas l'option correspondante, consultez [ce guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) et terminez la configuration dans le terminal du conteneur.
+        Identifiants par defaut du tableau de bord : `zimaos` / `hermes`.
+        Modifiez-les dans les parametres de l’application apres l’installation.
+        Dans la plupart des cas, vous pouvez configurer directement les modeles
+        et la messagerie depuis l'interface WebUI de Hermes.
+        Si vous ne trouvez pas l'option correspondante, consultez [ce
+        guide](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) et
+        terminez la configuration dans le terminal du conteneur.
       de_DE: |
-        Standardanmeldung fur das Dashboard: `zimaos` / `hermes`. Andern Sie diese Zugangsdaten nach der Installation in den App-Einstellungen.
-        In den meisten Fallen konnen Sie Modelle und Messaging direkt uber die Hermes WebUI konfigurieren.
-        Wenn Sie die entsprechende Option nicht finden, lesen Sie [diese Anleitung](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) und schliessen Sie die Konfiguration im Container-Terminal ab.
+        Standardanmeldung fur das Dashboard: `zimaos` / `hermes`. Andern Sie
+        diese Zugangsdaten nach der Installation in den App-Einstellungen.
+        In den meisten Fallen konnen Sie Modelle und Messaging direkt uber die
+        Hermes WebUI konfigurieren.
+        Wenn Sie die entsprechende Option nicht finden, lesen Sie [diese
+        Anleitung](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) und
+        schliessen Sie die Konfiguration im Container-Terminal ab.
       sv_SE: |
-        Standardinloggning till webbpanelen: `zimaos` / `hermes`. Andra uppgifterna i appinstallningarna efter installationen.
-        I de flesta fall kan du konfigurera modeller och meddelanden direkt i Hermes WebUI.
-        Om du inte hittar motsvarande alternativ, se [den här guiden](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) och slutför konfigureringen i containerns terminal.
+        Standardinloggning till webbpanelen: `zimaos` / `hermes`. Andra
+        uppgifterna i appinstallningarna efter installationen.
+        I de flesta fall kan du konfigurera modeller och meddelanden direkt i
+        Hermes WebUI.
+        Om du inte hittar motsvarande alternativ, se [den här
+        guiden](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) och
+        slutför konfigureringen i containerns terminal.
       el_GR: |
-        Προεπιλεγμενη συνδεση dashboard: `zimaos` / `hermes`. Αλλαξτε τα στοιχεια στις ρυθμισεις εφαρμογης μετα την εγκατασταση.
-        Στις περισσότερες περιπτώσεις, μπορείτε να ρυθμίσετε μοντέλα και μηνύματα απευθείας από το Hermes WebUI.
-        Αν δεν βρείτε τη σχετική επιλογή, δείτε το [σχετικό οδηγό](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) και ολοκληρώστε τη ρύθμιση στο τερματικό του container.
+        Προεπιλεγμενη συνδεση dashboard: `zimaos` / `hermes`. Αλλαξτε τα
+        στοιχεια στις ρυθμισεις εφαρμογης μετα την εγκατασταση.
+        Στις περισσότερες περιπτώσεις, μπορείτε να ρυθμίσετε μοντέλα και
+        μηνύματα απευθείας από το Hermes WebUI.
+        Αν δεν βρείτε τη σχετική επιλογή, δείτε το [σχετικό
+        οδηγό](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) και
+        ολοκληρώστε τη ρύθμιση στο τερματικό του container.
       hr_HR: |
-        Zadana prijava na nadzornu plocu: `zimaos` / `hermes`. Promijenite podatke u postavkama aplikacije nakon instalacije.
-        U vecini slucajeva modele i razmjenu poruka mozete konfigurirati izravno kroz Hermes WebUI.
-        Ako ne mozete pronaci odgovarajucu opciju, pogledajte [ovaj vodic](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) i dovrsite konfiguraciju u terminalu kontejnera.
+        Zadana prijava na nadzornu plocu: `zimaos` / `hermes`. Promijenite
+        podatke u postavkama aplikacije nakon instalacije.
+        U vecini slucajeva modele i razmjenu poruka mozete konfigurirati izravno
+        kroz Hermes WebUI.
+        Ako ne mozete pronaci odgovarajucu opciju, pogledajte [ovaj
+        vodic](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) i
+        dovrsite konfiguraciju u terminalu kontejnera.
       pt_PT: |
-        Inicio de sessao predefinido no painel: `zimaos` / `hermes`. Altere estas credenciais nas definicoes da aplicacao apos a instalacao.
-        Na maioria dos casos, pode configurar modelos e mensagens diretamente na WebUI do Hermes.
-        Se nao encontrar a opcao correspondente, consulte [este guia](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) e conclua a configuracao no terminal do contentor.
+        Inicio de sessao predefinido no painel: `zimaos` / `hermes`. Altere
+        estas credenciais nas definicoes da aplicacao apos a instalacao.
+        Na maioria dos casos, pode configurar modelos e mensagens diretamente na
+        WebUI do Hermes.
+        Se nao encontrar a opcao correspondente, consulte [este
+        guia](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) e
+        conclua a configuracao no terminal do contentor.
       ru_RU: |
-        Данные для входа в панель по умолчанию: `zimaos` / `hermes`. После установки измените их в настройках приложения.
-        В большинстве случаев вы можете настроить модели и обмен сообщениями прямо через Hermes WebUI.
-        Если нужный параметр не находится, откройте [это руководство](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) и завершите настройку в терминале контейнера.
+        Данные для входа в панель по умолчанию: `zimaos` / `hermes`. После
+        установки измените их в настройках приложения.
+        В большинстве случаев вы можете настроить модели и обмен сообщениями
+        прямо через Hermes WebUI.
+        Если нужный параметр не находится, откройте [это
+        руководство](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) и
+        завершите настройку в терминале контейнера.
       tr_TR: |
-        Varsayilan panel girisi: `zimaos` / `hermes`. Kurulumdan sonra bu bilgileri uygulama ayarlarindan degistirin.
-        Cogu durumda modelleri ve mesajlasmayi dogrudan Hermes WebUI uzerinden yapilandirabilirsiniz.
-        Ilgili secenegi bulamazsaniz [bu rehbere](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) bakin ve kurulumu konteyner terminalinde tamamlayin.
+        Varsayilan panel girisi: `zimaos` / `hermes`. Kurulumdan sonra bu
+        bilgileri uygulama ayarlarindan degistirin.
+        Cogu durumda modelleri ve mesajlasmayi dogrudan Hermes WebUI uzerinden
+        yapilandirabilirsiniz.
+        Ilgili secenegi bulamazsaniz [bu
+        rehbere](https://www.zimaspace.com/docs/zimaos/hermes-agent-setup) bakin
+        ve kurulumu konteyner terminalinde tamamlayin.
   scheme: http
   port_map: "9119"
   index: /
   title:
     en_US: Hermes
-  version: "0.20.4"
+  version: "0.23.2"
   update_at: "2026-08-18"
   release_notes:
     en_US: |-
-      ## Patch Release
+      ## v0.23.2 (2026-11-16)
 
-      - Stable v0.20.4 rolls up about 74 merged pull requests since v0.20.3 for Docker images, hosted deployments, and fresh installs.
-      - Highlights include desktop translucency improvements, the tabbed SESSIONS | BOTS sidebar, Bot Mode group-chat fixes, skill security scans, and reliability hardening for cron media, SessionDB, updates, and notifications.
+      - Before upgrading to v0.23.2, stop the app and back up
+        `/DATA/AppData/$AppID/`. Keep the existing data mount.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - Default dashboard login: `zimaos` / `hermes`. Change these credentials
+        in the app settings after installation.
+
+      - Older installations using `HERMES_DASHBOARD_INSECURE` must remove it and
+        set `HERMES_DASHBOARD_BASIC_AUTH_USERNAME` and
+        `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` in app settings. LAN access
+        requires login; use a trusted network or an HTTPS reverse proxy.
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
+
     en_GB: |-
-      ## Patch Release
+      ## v0.23.2 (2026-11-16)
 
-      - Stable v0.20.4 rolls up about 74 merged pull requests since v0.20.3 for Docker images, hosted deployments, and fresh installs.
-      - Highlights include desktop translucency improvements, the tabbed SESSIONS | BOTS sidebar, Bot Mode group-chat fixes, skill security scans, and reliability hardening for cron media, SessionDB, updates, and notifications.
+      - Before upgrading to v0.23.2, stop the app and back up
+        `/DATA/AppData/$AppID/`. Keep the existing data mount.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - Default dashboard login: `zimaos` / `hermes`. Change these credentials
+        in the app settings after installation.
+
+      - Older installations using `HERMES_DASHBOARD_INSECURE` must remove it and
+        set `HERMES_DASHBOARD_BASIC_AUTH_USERNAME` and
+        `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` in app settings. LAN access
+        requires login; use a trusted network or an HTTPS reverse proxy.
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
+
     it_IT: |-
-      ## Release Correttiva
+      ## v0.23.2 (2026-11-16)
 
-      - La versione stabile v0.20.4 riunisce circa 74 pull request integrate dopo v0.20.3 per immagini Docker, deployment ospitati e nuove installazioni.
-      - Le novita includono trasparenze desktop migliorate, la barra SESSIONS | BOTS a schede, correzioni alle chat di gruppo Bot Mode, scansioni di sicurezza delle skill e maggiore affidabilita di cron, SessionDB, aggiornamenti e notifiche.
+      - Prima di aggiornare a v0.23.2, arresta l'app ed esegui un backup di
+        `/DATA/AppData/$AppID/`. Mantieni il montaggio dati esistente.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - Accesso predefinito alla dashboard: `zimaos` / `hermes`. Modifica queste
+        credenziali nelle impostazioni dell’app dopo l’installazione.
+
+      - Le installazioni precedenti che usano `HERMES_DASHBOARD_INSECURE` devono
+        rimuoverlo e impostare `HERMES_DASHBOARD_BASIC_AUTH_USERNAME` e
+        `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` nelle impostazioni dell'app.
+        L'accesso LAN richiede il login; usa una rete fidata o un reverse proxy
+        HTTPS.
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
+
     nb_NO: |-
-      ## Vedlikeholdsutgivelse
+      ## v0.23.2 (2026-11-16)
 
-      - Stabil v0.20.4 samler rundt 74 sammenslatte pull requests siden v0.20.3 for Docker-avbildninger, driftede utrullinger og nye installasjoner.
-      - Hoydepunktene omfatter bedre gjennomsiktighet pa skrivebordet, sidefeltet SESSIONS | BOTS med faner, rettelser for Bot Mode-gruppechat, sikkerhetsskanning av ferdigheter og mer robust cron, SessionDB, oppdatering og varsling.
+      - Stopp appen og ta sikkerhetskopi av `/DATA/AppData/$AppID/` før
+        oppgradering til v0.23.2. Behold eksisterende datamontering.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - Standard innlogging til dashbordet: `zimaos` / `hermes`. Endre
+        legitimasjonen i appinnstillingene etter installasjonen.
+
+      - Eldre installasjoner som bruker `HERMES_DASHBOARD_INSECURE`, må fjerne
+        den og angi `HERMES_DASHBOARD_BASIC_AUTH_USERNAME` og
+        `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` i appinnstillingene. LAN-tilgang
+        krever innlogging; bruk et betrodd nettverk eller en HTTPS reverse
+        proxy.
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
+
     zh_CN: |-
-      ## 补丁版本
+      ## v0.23.2 (2026-11-16)
 
-      - 稳定版 v0.20.4 汇总了自 v0.20.3 以来合并的约 74 个拉取请求，适用于 Docker 镜像、托管部署和全新安装。
-      - 主要更新包括桌面半透明效果、带标签页的 SESSIONS | BOTS 侧栏、Bot Mode 群聊修复、技能安全扫描，以及对定时媒体发送、SessionDB、更新和通知的可靠性增强。
+      - 升级到 v0.23.2 前，请先停止应用并备份 `/DATA/AppData/$AppID/`，保留现有数据挂载。
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - 仪表盘默认登录凭据：`zimaos` / `hermes`。安装后请在应用设置中修改。
+
+      - 使用 `HERMES_DASHBOARD_INSECURE` 的旧安装需移除该变量，并在应用设置中配置
+        `HERMES_DASHBOARD_BASIC_AUTH_USERNAME` 和
+        `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD`。局域网访问也需要登录；请使用可信网络或 HTTPS 反向代理。
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
+
     ja_JP: |-
-      ## パッチリリース
+      ## v0.23.2 (2026-11-16)
 
-      - 安定版 v0.20.4 は、v0.20.3 以降にマージされた約74件のプルリクエストを、Dockerイメージ、ホスト型デプロイ、新規インストール向けにまとめたものです。
-      - デスクトップの半透明表現、タブ式 SESSIONS | BOTS サイドバー、Bot Mode グループチャット修正、スキルのセキュリティ検査、cron、SessionDB、更新、通知の信頼性向上が含まれます。
+      - v0.23.2 に更新する前にアプリを停止し、`/DATA/AppData/$AppID/`
+        をバックアップしてください。既存のデータマウントは維持してください。
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - ダッシュボードのデフォルトログインは `zimaos` / `hermes` です。インストール後にアプリ設定で変更してください。
+
+      - `HERMES_DASHBOARD_INSECURE` を使用する旧環境では、その変数を削除し、アプリ設定で
+        `HERMES_DASHBOARD_BASIC_AUTH_USERNAME` と
+        `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` を設定してください。LAN
+        アクセスにもログインが必要です。信頼できるネットワークまたは HTTPS リバースプロキシを使用してください。
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
+
     ko_KR: |-
-      ## 패치 릴리스
+      ## v0.23.2 (2026-11-16)
 
-      - 안정 버전 v0.20.4는 Docker 이미지, 호스팅 배포 및 신규 설치를 위해 v0.20.3 이후 병합된 약 74개의 풀 리퀘스트를 통합합니다.
-      - 데스크톱 반투명 효과, 탭형 SESSIONS | BOTS 사이드바, Bot Mode 그룹 채팅 수정, 스킬 보안 검사와 cron, SessionDB, 업데이트 및 알림 안정성 개선이 포함됩니다.
+      - v0.23.2로 업그레이드하기 전에 앱을 중지하고 `/DATA/AppData/$AppID/`를 백업하세요. 기존 데이터 마운트를
+        유지하세요.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - 대시보드 기본 로그인은 `zimaos` / `hermes`입니다. 설치 후 앱 설정에서 변경하세요.
+
+      - `HERMES_DASHBOARD_INSECURE`를 사용하는 이전 설치에서는 해당 변수를 제거하고 앱 설정에서
+        `HERMES_DASHBOARD_BASIC_AUTH_USERNAME`과
+        `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD`를 설정해야 합니다. LAN 접근도 로그인이 필요하므로 신뢰할
+        수 있는 네트워크 또는 HTTPS 리버스 프록시를 사용하세요.
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
+
     fr_FR: |-
-      ## Version Corrective
+      ## v0.23.2 (2026-11-16)
 
-      - La version stable v0.20.4 regroupe environ 74 pull requests fusionnees depuis v0.20.3 pour les images Docker, les deploiements heberges et les nouvelles installations.
-      - Elle apporte une meilleure transparence du bureau, la barre SESSIONS | BOTS a onglets, des correctifs de groupe Bot Mode, l'analyse de securite des skills et une fiabilite accrue de cron, SessionDB, des mises a jour et des notifications.
+      - Avant la mise à niveau vers v0.23.2, arrêtez l'application et
+        sauvegardez `/DATA/AppData/$AppID/`. Conservez le montage de données
+        existant.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - Identifiants par defaut du tableau de bord : `zimaos` / `hermes`.
+        Modifiez-les dans les parametres de l’application apres l’installation.
+
+      - Les anciennes installations utilisant `HERMES_DASHBOARD_INSECURE`
+        doivent le supprimer et définir `HERMES_DASHBOARD_BASIC_AUTH_USERNAME`
+        et `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` dans les paramètres de
+        l'application. L'accès LAN nécessite une connexion ; utilisez un réseau
+        de confiance ou un proxy inverse HTTPS.
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
+
     de_DE: |-
-      ## Patch-Release
+      ## v0.23.2 (2026-11-16)
 
-      - Die stabile Version v0.20.4 bundelt rund 74 seit v0.20.3 zusammengefuhrte Pull Requests fur Docker-Images, gehostete Deployments und Neuinstallationen.
-      - Enthalten sind bessere Desktop-Transparenz, die SESSIONS | BOTS-Seitenleiste mit Tabs, Bot-Mode-Gruppenchat-Korrekturen, Sicherheitsprufungen fur Skills sowie robustere cron-, SessionDB-, Update- und Benachrichtigungsablaufe.
+      - Stoppe die App vor dem Upgrade auf v0.23.2 und sichere
+        `/DATA/AppData/$AppID/`. Behalte die vorhandene Dateneinbindung bei.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - Standardanmeldung fur das Dashboard: `zimaos` / `hermes`. Andern Sie
+        diese Zugangsdaten nach der Installation in den App-Einstellungen.
+
+      - Ältere Installationen mit `HERMES_DASHBOARD_INSECURE` müssen diese
+        Variable entfernen und `HERMES_DASHBOARD_BASIC_AUTH_USERNAME` sowie
+        `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` in den App-Einstellungen setzen.
+        Auch LAN-Zugriffe erfordern eine Anmeldung; nutze ein vertrauenswürdiges
+        Netzwerk oder einen HTTPS-Reverse-Proxy.
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
+
     sv_SE: |-
-      ## Korrigeringsversion
+      ## v0.23.2 (2026-11-16)
 
-      - Stabil v0.20.4 samlar omkring 74 sammanslagna pull requests sedan v0.20.3 for Docker-avbildningar, vardbaserade driftsattningar och nya installationer.
-      - Den innehaller battre skrivbordstransparens, sidofaltet SESSIONS | BOTS med flikar, rattningar for Bot Mode-gruppchatt, sakerhetsskanning av skills och robustare cron-, SessionDB-, uppdaterings- och aviseringsfloden.
+      - Stoppa appen och säkerhetskopiera `/DATA/AppData/$AppID/` före
+        uppgradering till v0.23.2. Behåll den befintliga datamonteringen.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - Standardinloggning till webbpanelen: `zimaos` / `hermes`. Andra
+        uppgifterna i appinstallningarna efter installationen.
+
+      - Äldre installationer som använder `HERMES_DASHBOARD_INSECURE` måste ta
+        bort variabeln och ange `HERMES_DASHBOARD_BASIC_AUTH_USERNAME` och
+        `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` i appinställningarna. LAN-åtkomst
+        kräver inloggning; använd ett betrott nätverk eller en
+        HTTPS-reverseproxy.
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
+
     el_GR: |-
-      ## Διορθωτικη Εκδοση
+      ## v0.23.2 (2026-11-16)
 
-      - Η σταθερη εκδοση v0.20.4 συγκεντρωνει περιπου 74 συγχωνευμενα pull requests μετα την v0.20.3 για Docker images, hosted deployments και νεες εγκαταστασεις.
-      - Περιλαμβανει καλυτερη διαφανεια desktop, την πλευρικη στηλη SESSIONS | BOTS με καρτελες, διορθωσεις ομαδικης συνομιλιας Bot Mode, ελεγχους ασφαλειας skills και ενισχυση cron, SessionDB, ενημερωσεων και ειδοποιησεων.
+      - Πριν από την αναβάθμιση σε v0.23.2, σταματήστε την εφαρμογή και
+        δημιουργήστε αντίγραφο ασφαλείας του `/DATA/AppData/$AppID/`. Διατηρήστε
+        την υπάρχουσα προσάρτηση δεδομένων.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - Προεπιλεγμενη συνδεση dashboard: `zimaos` / `hermes`. Αλλαξτε τα
+        στοιχεια στις ρυθμισεις εφαρμογης μετα την εγκατασταση.
+
+      - Οι παλιές εγκαταστάσεις με `HERMES_DASHBOARD_INSECURE` πρέπει να το
+        αφαιρέσουν και να ορίσουν `HERMES_DASHBOARD_BASIC_AUTH_USERNAME` και
+        `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` στις ρυθμίσεις της εφαρμογής.
+        Απαιτείται σύνδεση και στο LAN· χρησιμοποιήστε έμπιστο δίκτυο ή
+        αντίστροφο διακομιστή μεσολάβησης HTTPS.
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
+
     hr_HR: |-
-      ## Zakrpno Izdanje
+      ## v0.23.2 (2026-11-16)
 
-      - Stabilna verzija v0.20.4 objedinjuje oko 74 spojena pull requesta nakon v0.20.3 za Docker slike, hostane implementacije i nove instalacije.
-      - Ukljucuje bolju prozirnost radne povrsine, karticnu bocnu traku SESSIONS | BOTS, ispravke grupnog razgovora Bot Mode, sigurnosne provjere skillova i pouzdaniji cron, SessionDB, azuriranja i obavijesti.
+      - Prije nadogradnje na v0.23.2 zaustavite aplikaciju i sigurnosno
+        kopirajte `/DATA/AppData/$AppID/`. Zadržite postojeće montiranje
+        podataka.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - Zadana prijava na nadzornu plocu: `zimaos` / `hermes`. Promijenite
+        podatke u postavkama aplikacije nakon instalacije.
+
+      - Starije instalacije koje koriste `HERMES_DASHBOARD_INSECURE` moraju ga
+        ukloniti i postaviti `HERMES_DASHBOARD_BASIC_AUTH_USERNAME` i
+        `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` u postavkama aplikacije. Pristup
+        putem LAN-a zahtijeva prijavu; koristite pouzdanu mrežu ili HTTPS
+        obrnuti proxy.
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
+
     pt_PT: |-
-      ## Versao Corretiva
+      ## v0.23.2 (2026-11-16)
 
-      - A versao estavel v0.20.4 reune cerca de 74 pull requests integrados desde a v0.20.3 para imagens Docker, implementacoes alojadas e novas instalacoes.
-      - Inclui melhor transparencia no ambiente de trabalho, a barra SESSIONS | BOTS com separadores, correcoes de grupo do Bot Mode, analises de seguranca de skills e maior fiabilidade de cron, SessionDB, atualizacoes e notificacoes.
+      - Antes de atualizar para v0.23.2, pare a aplicação e faça uma cópia de
+        segurança de `/DATA/AppData/$AppID/`. Mantenha a montagem de dados
+        existente.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - Inicio de sessao predefinido no painel: `zimaos` / `hermes`. Altere
+        estas credenciais nas definicoes da aplicacao apos a instalacao.
+
+      - As instalações antigas que usam `HERMES_DASHBOARD_INSECURE` devem
+        removê-lo e definir `HERMES_DASHBOARD_BASIC_AUTH_USERNAME` e
+        `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` nas definições da aplicação. O
+        acesso pela LAN requer autenticação; use uma rede de confiança ou um
+        proxy inverso HTTPS.
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
+
     ru_RU: |-
-      ## Исправляющий Релиз
+      ## v0.23.2 (2026-11-16)
 
-      - Стабильная версия v0.20.4 объединяет около 74 запросов на слияние после v0.20.3 для Docker-образов, размещенных развертываний и новых установок.
-      - В нее входят улучшенная прозрачность рабочего стола, вкладки SESSIONS | BOTS, исправления групповых чатов Bot Mode, проверка безопасности навыков и повышение надежности cron, SessionDB, обновлений и уведомлений.
+      - Перед обновлением до v0.23.2 остановите приложение и создайте резервную
+        копию `/DATA/AppData/$AppID/`. Сохраните существующее подключение
+        каталога данных.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - Данные для входа в панель по умолчанию: `zimaos` / `hermes`. После
+        установки измените их в настройках приложения.
+
+      - В старых установках с `HERMES_DASHBOARD_INSECURE` удалите эту переменную
+        и задайте `HERMES_DASHBOARD_BASIC_AUTH_USERNAME` и
+        `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` в настройках приложения. Для
+        доступа по LAN также нужен вход; используйте доверенную сеть или
+        обратный прокси с HTTPS.
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
+
     tr_TR: |-
-      ## Yama Surumu
+      ## v0.23.2 (2026-11-16)
 
-      - Kararli v0.20.4 surumu, Docker imajlari, barindirilan dagitimlar ve yeni kurulumlar icin v0.20.3 sonrasinda birlestirilen yaklasik 74 pull requesti toplar.
-      - Masaustu seffafligi, sekmeli SESSIONS | BOTS kenar cubugu, Bot Mode grup sohbeti duzeltmeleri, skill guvenlik taramalari ile cron, SessionDB, guncelleme ve bildirim guvenilirligi iyilestirmeleri bulunur.
+      - v0.23.2 sürümüne yükseltmeden önce uygulamayı durdurun ve
+        `/DATA/AppData/$AppID/` dizinini yedekleyin. Mevcut veri bağlamasını
+        koruyun.
 
-      [https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18](https://github.com/NousResearch/hermes-agent/releases/tag/v2026.8.18)
+      - Varsayilan panel girisi: `zimaos` / `hermes`. Kurulumdan sonra bu
+        bilgileri uygulama ayarlarindan degistirin.
+
+      - `HERMES_DASHBOARD_INSECURE` kullanan eski kurulumlar bu değişkeni
+        kaldırmalı ve uygulama ayarlarında
+        `HERMES_DASHBOARD_BASIC_AUTH_USERNAME` ile
+        `HERMES_DASHBOARD_BASIC_AUTH_PASSWORD` değerlerini ayarlamalıdır. LAN
+        erişimi de oturum açmayı gerektirir; güvenilir bir ağ veya HTTPS ters
+        proxy kullanın.
+
+      <https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.2>
   store_app_id: hermes
   website: "https://hermes-agent.nousresearch.com/"
   repo: "https://github.com/NousResearch/hermes-agent"
