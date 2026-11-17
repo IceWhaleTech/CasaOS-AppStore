@@ -1,0 +1,82 @@
+name: pellu-home
+services:
+  pellu-home:
+    image: ghcr.io/yonikrispil/pellu-home:1.0.0
+    container_name: pellu-home
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+    deploy:
+      resources:
+        reservations:
+          memory: "64M"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config
+      - type: bind
+        source: /DATA/Media
+        target: /media/Media
+        read_only: true
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: The user the server runs as; it needs to read your media.
+        - container: PGID
+          description:
+            en_US: The group the server runs as.
+        - container: TZ
+          description:
+            en_US: Time zone.
+      volumes:
+        - container: /config
+          description:
+            en_US: The server's settings, kept between updates.
+        - container: /media/Media
+          description:
+            en_US: Your media, read-only. More folders can be added inside /media.
+x-casaos:
+  id: co.pellu.home
+  architectures:
+    - amd64
+    - arm64
+  main: pellu-home
+  author: Pellu
+  developer: Pellu
+  category: Media
+  title:
+    en_US: Pellu Home Server
+  tagline:
+    en_US: Your media on Pellu, on every screen at home
+  description:
+    en_US: |
+      Pellu Home Server shares the videos (and their subtitles) in the folders you choose with the Pellu apps on your phones, tablets and TV at home. Files play as they are: nothing is transcoded, and nothing is uploaded.
+
+      Set it up in your browser: open the app, enter the setup code from its log and choose a password, pick your folders from /media, and link the server to your free Pellu account. The Pellu apps then find it by themselves.
+  tips:
+    before_install:
+      en_US: |
+        Your media in /DATA/Media is shared read-only. To share other folders, add them in the app's settings, inside /media.
+
+        After installing, the settings page asks for a setup code: open the app's log (or run `docker logs pellu-home`) and look for a line like `enter the setup code ABCD-EFGH`.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PelluHome/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PelluHome/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PelluHome/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PelluHome/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PelluHome/screenshot-3.png
+  scheme: http
+  index: /admin
+  port_map: "8484"
+  version: "1.0.0"
+  update_at: "2026-11-17"
+  release_notes:
+    en_US: First release.
+  website: "https://pellu.co/home-server/linux"
+  repo: "https://github.com/yonikrispil/pellu-home"
+  support: "https://pellu.co/support"
+  docs: "https://pellu.co/home-server/linux"
