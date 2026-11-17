@@ -1,0 +1,87 @@
+name: playroom
+services:
+  playroom:
+    image: ghcr.io/hexguardsec/playroom-selfhosted:2.0.1
+    container_name: playroom
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    network_mode: bridge
+    restart: unless-stopped
+    # Runs as root inside the container only so it can write to the folder CasaOS creates;
+    # all Linux capabilities are dropped and the file system is read-only.
+    user: "0:0"
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      TZ: $TZ
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Time zone used to split days in the activity calendar
+            fr_FR: Fuseau horaire utilisé pour le calendrier d'activité
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web UI port
+            fr_FR: Port de l'interface web
+      volumes:
+        - container: /app/data
+          description:
+            en_US: Account, API keys, notes and history. Back it up, it contains secrets.
+            fr_FR: Compte, clés API, notes et historique. À sauvegarder, il contient des secrets.
+x-casaos:
+  id: com.hexguardsec.playroom
+  architectures:
+    - amd64
+    - arm64
+  main: playroom
+  author: HexGuardSec
+  developer: HexGuardSec
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/HexGuardSec/playroom-selfhosted@main/public/favicon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/HexGuardSec/playroom-selfhosted@main/docs/screenshots/home.jpg
+    - https://cdn.jsdelivr.net/gh/HexGuardSec/playroom-selfhosted@main/docs/screenshots/game.jpg
+    - https://cdn.jsdelivr.net/gh/HexGuardSec/playroom-selfhosted@main/docs/screenshots/activity.jpg
+  thumbnail: https://cdn.jsdelivr.net/gh/HexGuardSec/playroom-selfhosted@main/docs/brand/thumbnail.png
+  tagline:
+    en_US: Your Steam, PlayStation, Xbox and Nintendo games in one place
+    fr_FR: Tes jeux Steam, PlayStation, Xbox et Nintendo au même endroit
+    de_DE: Deine Steam-, PlayStation-, Xbox- und Nintendo-Spiele an einem Ort
+    es_ES: Tus juegos de Steam, PlayStation, Xbox y Nintendo en un solo lugar
+    zh_CN: 在一个地方查看你的 Steam、PlayStation、Xbox 和 Nintendo 游戏
+  description:
+    en_US: Playroom is a self-hosted video game collection. It syncs your Steam, PlayStation and Xbox libraries and lets you add Nintendo games by hand, with covers, playtime, achievements and trophies, an activity calendar, your backlog with time to beat, ratings and notes. Available in 15 languages, with no telemetry.
+    fr_FR: Playroom est une collection de jeux vidéo auto-hébergée. Elle synchronise tes bibliothèques Steam, PlayStation et Xbox et permet d'ajouter tes jeux Nintendo à la main, avec jaquettes, temps de jeu, succès et trophées, calendrier d'activité, backlog avec durée de vie, notes et commentaires. Disponible en 15 langues, sans télémétrie.
+    de_DE: Playroom ist eine selbst gehostete Videospielsammlung. Es synchronisiert deine Steam-, PlayStation- und Xbox-Bibliotheken, Nintendo-Spiele fügst du von Hand hinzu. Mit Covern, Spielzeit, Erfolgen und Trophäen, Aktivitätskalender, Backlog, Bewertungen und Notizen. In 15 Sprachen, ohne Telemetrie.
+    es_ES: Playroom es una colección de videojuegos autoalojada. Sincroniza tus bibliotecas de Steam, PlayStation y Xbox y permite añadir juegos de Nintendo a mano, con portadas, tiempo de juego, logros y trofeos, calendario de actividad, pendientes, valoraciones y notas. Disponible en 15 idiomas, sin telemetría.
+    zh_CN: Playroom 是一个自托管的游戏收藏库。它同步你的 Steam、PlayStation 和 Xbox 游戏库，并可手动添加 Nintendo 游戏，提供封面、游玩时长、成就与奖杯、活动日历、待玩列表、评分和笔记。支持 15 种语言，无遥测。
+  tips:
+    before_install:
+      en_US: On first launch, open the container logs to read the one-time setup code, then create your account in the web interface.
+      fr_FR: Au premier lancement, ouvre les logs du conteneur pour lire le code de configuration à usage unique, puis crée ton compte dans l'interface web.
+  title:
+    en_US: Playroom
+  index: /
+  port_map: "8080"
+  version: "2.0.1"
+  website: "https://hexguardsec.github.io/playroom-selfhosted/"
+  repo: "https://github.com/HexGuardSec/playroom-selfhosted"
+  support: "https://github.com/HexGuardSec/playroom-selfhosted/issues"
+  docs: "https://github.com/HexGuardSec/playroom-selfhosted#readme"
