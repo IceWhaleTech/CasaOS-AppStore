@@ -1,0 +1,513 @@
+name: project-nomad
+services:
+  admin:
+    image: ghcr.io/crosstalk-solutions/project-nomad:1.35.1
+    container_name: nomad_admin
+    restart: unless-stopped
+    networks:
+      - default
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    environment:
+      NODE_ENV: production
+      PORT: "8080"
+      HOST: 0.0.0.0
+      URL: http://localhost:8080
+      LOG_LEVEL: info
+      APP_KEY: project-nomad-change-this-app-key
+      NOMAD_STORAGE_PATH: /DATA/AppData/$AppID/storage
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_DATABASE: nomad
+      DB_USER: nomad_user
+      DB_PASSWORD: nomad_change_this_password
+      DB_SSL: "false"
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      DISABLE_COMPRESSION: "false"
+      TZ: $TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/storage
+        target: /app/storage
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, curl, -f, http://localhost:8080/api/health]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    x-casaos:
+      envs:
+        - container: URL
+          description:
+            en_US: Public URL used to access NOMAD, including the web port
+            zh_CN: 访问 NOMAD 的完整地址，包含 Web 端口
+        - container: APP_KEY
+          description:
+            en_US: Application key; use a unique value of at least 32 characters
+            zh_CN: 应用密钥；请设置至少 32 个字符的独立密钥
+        - container: NOMAD_STORAGE_PATH
+          description:
+            en_US: Host storage path; must match the /app/storage bind mount
+            zh_CN: 主机存储路径；必须与 /app/storage 的挂载源路径一致
+      ports:
+        - container: "8080"
+          description:
+            en_US: Command Center web interface
+            zh_CN: 控制中心 Web 界面
+      volumes:
+        - container: /app/storage
+          description:
+            en_US: Offline content, models, uploads, and application storage
+            zh_CN: 离线资料、模型、上传文件和应用存储
+        - container: /var/run/docker.sock
+          description:
+            en_US: Docker access for installing and managing optional NOMAD tools
+            zh_CN: 用于安装和管理 NOMAD 可选工具的 Docker 接口
+
+  mysql:
+    image: mysql:8.0.45
+    container_name: nomad_mysql
+    restart: unless-stopped
+    networks:
+      - default
+    environment:
+      MYSQL_ROOT_PASSWORD: nomad_change_this_root_password
+      MYSQL_DATABASE: nomad
+      MYSQL_USER: nomad_user
+      MYSQL_PASSWORD: nomad_change_this_password
+      TZ: $TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/mysql
+        target: /var/lib/mysql
+    healthcheck:
+      test: [CMD, mysqladmin, ping, -h, 127.0.0.1]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 60s
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+
+  redis:
+    image: redis:7.4.8-alpine
+    container_name: nomad_redis
+    restart: unless-stopped
+    networks:
+      - default
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/redis
+        target: /data
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+
+  dozzle:
+    image: amir20/dozzle:v10.0.7
+    container_name: nomad_dozzle
+    restart: unless-stopped
+    networks:
+      - default
+    environment:
+      DOZZLE_ENABLE_ACTIONS: "false"
+      DOZZLE_ENABLE_SHELL: "false"
+    ports:
+      - target: 8080
+        published: "9999"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+
+  disk-collector:
+    image: ghcr.io/crosstalk-solutions/project-nomad-disk-collector:latest
+    container_name: nomad_disk_collector
+    restart: unless-stopped
+    networks:
+      - default
+    volumes:
+      - type: bind
+        source: /
+        target: /host
+        read_only: true
+        bind:
+          propagation: rslave
+      - type: bind
+        source: /DATA/AppData/$AppID/storage
+        target: /storage
+
+# NOMAD attaches the optional tools it creates to this exact network name.
+# Explicit service networks keep ZimaOS Compose imports from using network_mode: bridge.
+networks:
+  default:
+    name: project-nomad_default
+    driver: bridge
+
+x-casaos:
+  id: org.icewhale.project-nomad
+  architectures:
+    - amd64
+  main: admin
+  author: IceWhaleTech
+  developer: Crosstalk Solutions
+  category: Productivity
+  title:
+    en_US: Project NOMAD
+    en_GB: Project NOMAD
+    it_IT: Project NOMAD
+    nb_NO: Project NOMAD
+    zh_CN: Project NOMAD
+    zh_TW: Project NOMAD
+    ja_JP: Project NOMAD
+    ko_KR: Project NOMAD
+    fr_FR: Project NOMAD
+    de_DE: Project NOMAD
+    sv_SE: Project NOMAD
+    el_GR: Project NOMAD
+    hr_HR: Project NOMAD
+    pt_PT: Project NOMAD
+    pt_BR: Project NOMAD
+    es_ES: Project NOMAD
+    ru_RU: Project NOMAD
+    tr_TR: Project NOMAD
+  tagline:
+    en_US: Knowledge that never goes offline
+    en_GB: Knowledge that never goes offline
+    it_IT: Conoscenze disponibili anche senza connessione
+    nb_NO: Kunnskap tilgjengelig også uten nett
+    zh_CN: 永不离线的知识库
+    zh_TW: 永不離線的知識庫
+    ja_JP: オフラインでも使える知識ライブラリ
+    ko_KR: 오프라인에서도 사용할 수 있는 지식
+    fr_FR: Des connaissances accessibles même hors ligne
+    de_DE: Wissen, das auch offline verfügbar bleibt
+    sv_SE: Kunskap tillgänglig även utan nätanslutning
+    el_GR: Γνώση διαθέσιμη ακόμη και χωρίς σύνδεση
+    hr_HR: Znanje dostupno i bez interneta
+    pt_PT: Conhecimento disponível mesmo sem ligação
+    pt_BR: Conhecimento disponível mesmo sem conexão
+    es_ES: Conocimiento disponible incluso sin conexión
+    ru_RU: Знания, доступные даже без интернета
+    tr_TR: İnternet olmadan da erişilebilen bilgi
+  description:
+    en_US: |-
+      Project NOMAD is an offline knowledge and education server with a browser-based Command Center. Install and manage offline Wikipedia and ebooks with Kiwix, educational courses with Kolibri, local AI with Ollama and Qdrant, offline maps, CyberChef, and notes from one interface.
+
+      This package includes the Command Center, MySQL, Redis, Dozzle for service logs, and host disk monitoring. Optional tools, AI models, and offline content are installed separately from the NOMAD interface.
+    en_GB: |-
+      Project NOMAD is an offline knowledge and education server with a browser-based Command Center. Install and manage offline Wikipedia and ebooks with Kiwix, educational courses with Kolibri, local AI with Ollama and Qdrant, offline maps, CyberChef, and notes from one interface.
+
+      This package includes the Command Center, MySQL, Redis, Dozzle for service logs, and host disk monitoring. Optional tools, AI models, and offline content are installed separately from the NOMAD interface.
+    it_IT: |-
+      Project NOMAD è un server per conoscenze e formazione offline con un centro di controllo accessibile dal browser. Installa e gestisci Wikipedia e libri digitali con Kiwix, corsi con Kolibri, IA locale con Ollama e Qdrant, mappe offline, CyberChef e note da una sola interfaccia.
+
+      Questo pacchetto include il centro di controllo, MySQL, Redis, Dozzle per i log dei servizi e il monitoraggio dei dischi dell’host. Gli strumenti opzionali, i modelli IA e i contenuti offline si installano separatamente dall’interfaccia NOMAD.
+    nb_NO: |-
+      Project NOMAD er en server for kunnskap og utdanning uten nettilkobling, med et kontrollsenter i nettleseren. Installer og administrer Wikipedia og e-bøker med Kiwix, kurs med Kolibri, lokal KI med Ollama og Qdrant, kart uten nett, CyberChef og notater fra ett grensesnitt.
+
+      Denne pakken inneholder kontrollsenteret, MySQL, Redis, Dozzle for tjenestelogger og overvåking av vertens disker. Valgfrie verktøy, KI-modeller og innhold installeres separat fra NOMAD.
+    zh_CN: |-
+      Project NOMAD 是一个离线知识与教育服务器，通过浏览器中的控制中心统一管理资源。你可以按需安装 Kiwix 离线维基百科和电子书、Kolibri 教育课程、Ollama 与 Qdrant 本地 AI、离线地图、CyberChef 和笔记工具。
+
+      本应用包含控制中心、MySQL、Redis、Dozzle 服务日志和主机磁盘监控。可选工具、AI 模型和离线资料需要在 NOMAD 界面中另行安装。
+    zh_TW: |-
+      Project NOMAD 是一個離線知識與教育伺服器，透過瀏覽器中的控制中心統一管理資源。你可以按需安裝 Kiwix 離線維基百科和電子書、Kolibri 教育課程、Ollama 與 Qdrant 本機 AI、離線地圖、CyberChef 和筆記工具。
+
+      本套件包含控制中心、MySQL、Redis、Dozzle 服務日誌和主機磁碟監控。選用工具、AI 模型和離線資料需要在 NOMAD 介面中另行安裝。
+    ja_JP: |-
+      Project NOMAD は、ブラウザーのコマンドセンターから操作できるオフラインの知識・教育サーバーです。Kiwix による Wikipedia と電子書籍、Kolibri の学習コース、Ollama と Qdrant によるローカル AI、オフライン地図、CyberChef、メモを一つの画面からインストールして管理できます。
+
+      このパッケージにはコマンドセンター、MySQL、Redis、サービスログ用の Dozzle、ホストのディスク監視が含まれます。追加ツール、AI モデル、オフラインコンテンツは NOMAD の画面から別途インストールします。
+    ko_KR: |-
+      Project NOMAD는 브라우저의 제어 센터로 관리하는 오프라인 지식 및 교육 서버입니다. Kiwix의 위키백과와 전자책, Kolibri의 교육 과정, Ollama와 Qdrant의 로컬 AI, 오프라인 지도, CyberChef와 메모 도구를 하나의 인터페이스에서 설치하고 관리할 수 있습니다.
+
+      이 패키지에는 제어 센터, MySQL, Redis, 서비스 로그용 Dozzle과 호스트 디스크 모니터링이 포함됩니다. 선택 도구, AI 모델과 오프라인 콘텐츠는 NOMAD 인터페이스에서 별도로 설치합니다.
+    fr_FR: |-
+      Project NOMAD est un serveur de connaissances et de formation hors ligne avec un centre de commande accessible dans le navigateur. Installez et gérez Wikipédia et des livres numériques avec Kiwix, des cours avec Kolibri, une IA locale avec Ollama et Qdrant, des cartes hors ligne, CyberChef et des notes depuis une seule interface.
+
+      Ce paquet comprend le centre de commande, MySQL, Redis, Dozzle pour les journaux des services et la surveillance des disques de la machine hôte. Les outils facultatifs, les modèles IA et les contenus hors ligne se téléchargent séparément depuis NOMAD.
+    de_DE: |-
+      Project NOMAD ist ein Server für Offline-Wissen und Bildung mit einer browserbasierten Steuerzentrale. Installieren und verwalten Sie Wikipedia und E-Books mit Kiwix, Lernkurse mit Kolibri, lokale KI mit Ollama und Qdrant, Offline-Karten, CyberChef und Notizen über eine Oberfläche.
+
+      Dieses Paket enthält die Steuerzentrale, MySQL, Redis, Dozzle für Dienstprotokolle und die Überwachung der Host-Datenträger. Optionale Werkzeuge, KI-Modelle und Offline-Inhalte installieren Sie separat über NOMAD.
+    sv_SE: |-
+      Project NOMAD är en server för kunskap och utbildning utan nätanslutning, med ett kontrollcenter i webbläsaren. Installera och hantera Wikipedia och e-böcker med Kiwix, kurser med Kolibri, lokal AI med Ollama och Qdrant, offlinekartor, CyberChef och anteckningar från ett gränssnitt.
+
+      Paketet innehåller kontrollcentret, MySQL, Redis, Dozzle för tjänsteloggar och övervakning av värddatorns diskar. Valfria verktyg, AI-modeller och offlineinnehåll installeras separat från NOMAD.
+    el_GR: |-
+      Το Project NOMAD είναι διακομιστής γνώσης και εκπαίδευσης χωρίς σύνδεση, με κέντρο ελέγχου στον φυλλομετρητή. Εγκαταστήστε και διαχειριστείτε τη Wikipedia και ηλεκτρονικά βιβλία με το Kiwix, μαθήματα με το Kolibri, τοπική τεχνητή νοημοσύνη με Ollama και Qdrant, χάρτες χωρίς σύνδεση, το CyberChef και σημειώσεις από μία διεπαφή.
+
+      Το πακέτο περιλαμβάνει το κέντρο ελέγχου, MySQL, Redis, Dozzle για αρχεία καταγραφής υπηρεσιών και παρακολούθηση των δίσκων του κεντρικού υπολογιστή. Τα προαιρετικά εργαλεία, τα μοντέλα τεχνητής νοημοσύνης και το περιεχόμενο εγκαθίστανται ξεχωριστά μέσω του NOMAD.
+    hr_HR: |-
+      Project NOMAD je poslužitelj za znanje i obrazovanje bez internetske veze s upravljačkim centrom u pregledniku. Instalirajte i upravljajte Wikipedijom i e-knjigama uz Kiwix, tečajevima uz Kolibri, lokalnom umjetnom inteligencijom uz Ollama i Qdrant, kartama bez interneta, CyberChefom i bilješkama iz jednog sučelja.
+
+      Paket uključuje upravljački centar, MySQL, Redis, Dozzle za zapisnike usluga i nadzor diskova glavnog računala. Dodatni alati, AI modeli i sadržaj instaliraju se zasebno kroz NOMAD.
+    pt_PT: |-
+      O Project NOMAD é um servidor de conhecimento e educação offline com um centro de controlo acessível no navegador. Instale e faça a gestão da Wikipédia e livros digitais com Kiwix, cursos com Kolibri, IA local com Ollama e Qdrant, mapas offline, CyberChef e notas numa única interface.
+
+      Este pacote inclui o centro de controlo, MySQL, Redis, Dozzle para os registos dos serviços e monitorização dos discos do anfitrião. As ferramentas opcionais, os modelos de IA e os conteúdos offline são instalados separadamente na interface NOMAD.
+    pt_BR: |-
+      O Project NOMAD é um servidor de conhecimento e educação offline com um centro de controle acessível pelo navegador. Instale e gerencie a Wikipédia e livros digitais com Kiwix, cursos com Kolibri, IA local com Ollama e Qdrant, mapas offline, CyberChef e notas em uma única interface.
+
+      Este pacote inclui o centro de controle, MySQL, Redis, Dozzle para os logs dos serviços e monitoramento dos discos do host. As ferramentas opcionais, os modelos de IA e os conteúdos offline são instalados separadamente pela interface NOMAD.
+    es_ES: |-
+      Project NOMAD es un servidor de conocimiento y educación sin conexión con un centro de control accesible desde el navegador. Instala y gestiona Wikipedia y libros electrónicos con Kiwix, cursos con Kolibri, IA local con Ollama y Qdrant, mapas sin conexión, CyberChef y notas desde una sola interfaz.
+
+      Este paquete incluye el centro de control, MySQL, Redis, Dozzle para los registros de los servicios y la supervisión de los discos del equipo anfitrión. Las herramientas opcionales, los modelos de IA y el contenido sin conexión se instalan por separado desde NOMAD.
+    ru_RU: |-
+      Project NOMAD представляет собой сервер знаний и обучения без подключения к интернету с центром управления в браузере. Устанавливайте и управляйте Википедией и электронными книгами через Kiwix, курсами через Kolibri, локальным ИИ через Ollama и Qdrant, офлайн-картами, CyberChef и заметками в одном интерфейсе.
+
+      Пакет включает центр управления, MySQL, Redis, Dozzle для журналов служб и мониторинг дисков хоста. Дополнительные инструменты, модели ИИ и офлайн-материалы устанавливаются отдельно через NOMAD.
+    tr_TR: |-
+      Project NOMAD, tarayıcı tabanlı bir kontrol merkeziyle yönetilen çevrimdışı bilgi ve eğitim sunucusudur. Kiwix ile Vikipedi ve e-kitapları, Kolibri ile kursları, Ollama ve Qdrant ile yerel yapay zekâyı, çevrimdışı haritaları, CyberChef ve notları tek arayüzden kurup yönetin.
+
+      Bu paket kontrol merkezini, MySQL, Redis, hizmet günlükleri için Dozzle ve ana makine disk izlemeyi içerir. İsteğe bağlı araçlar, yapay zekâ modelleri ve çevrimdışı içerikler NOMAD arayüzünden ayrıca kurulur.
+  tips:
+    before_install:
+      en_US: |-
+        Requires an amd64 device with at least 4 GB RAM and 10 GB free disk space for installation. AI models and offline content require additional resources. Set URL to your device's address, choose a unique APP_KEY of at least 32 characters, and change DB_PASSWORD together with MYSQL_PASSWORD before first start; also change MYSQL_ROOT_PASSWORD. NOMAD has no login and can manage Docker containers: use it only on a trusted local network. Keep the nomad_admin container name and project-nomad_default network name. Update the Command Center through ZimaOS; the upstream self-updater is not included. Optional tools created by NOMAD are separate containers and must be removed in NOMAD before uninstalling this package.
+      en_GB: |-
+        Requires an amd64 device with at least 4 GB RAM and 10 GB free disk space for installation. AI models and offline content require additional resources. Set URL to your device's address, choose a unique APP_KEY of at least 32 characters, and change DB_PASSWORD together with MYSQL_PASSWORD before first start; also change MYSQL_ROOT_PASSWORD. NOMAD has no login and can manage Docker containers: use it only on a trusted local network. Keep the nomad_admin container name and project-nomad_default network name. Update the Command Center through ZimaOS; the upstream self-updater is not included. Optional tools created by NOMAD are separate containers and must be removed in NOMAD before uninstalling this package.
+      it_IT: |-
+        Richiede un dispositivo amd64 con almeno 4 GB di RAM e 10 GB liberi per l’installazione. I modelli IA e i contenuti offline richiedono risorse aggiuntive. Prima del primo avvio, imposta URL sull’indirizzo del dispositivo, scegli un APP_KEY univoco di almeno 32 caratteri e modifica insieme DB_PASSWORD e MYSQL_PASSWORD, oltre a MYSQL_ROOT_PASSWORD. NOMAD non prevede autenticazione e può gestire container Docker: usalo solo in una rete locale affidabile. Mantieni il nome del container nomad_admin e il nome della rete project-nomad_default. Aggiorna il centro di controllo tramite ZimaOS; il sistema di aggiornamento autonomo del progetto non è incluso. Rimuovi gli strumenti opzionali da NOMAD prima di disinstallare il pacchetto, poiché usano container separati.
+      nb_NO: |-
+        Krever en amd64-enhet med minst 4 GB RAM og 10 GB ledig plass til installasjon. KI-modeller og innhold trenger flere ressurser. Før første oppstart setter du URL til enhetens adresse, velger en unik APP_KEY på minst 32 tegn og endrer DB_PASSWORD og MYSQL_PASSWORD til samme verdi, samt MYSQL_ROOT_PASSWORD. NOMAD har ingen innlogging og kan administrere Docker-containere: bruk det bare på et lokalt nettverk du stoler på. Behold containernavnet nomad_admin og nettverksnavnet project-nomad_default. Oppdater kontrollsenteret via ZimaOS; prosjektets egen oppdateringstjeneste følger ikke med. Fjern valgfrie verktøy i NOMAD før du avinstallerer pakken, siden de kjører i separate containere.
+      zh_CN: |-
+        需要 amd64 设备、至少 4 GB 内存和 10 GB 可用安装空间；AI 模型和离线资料需要额外资源。首次启动前，将 URL 设置为设备地址，设置至少 32 个字符的独立 APP_KEY，同时修改 DB_PASSWORD 和 MYSQL_PASSWORD，并修改 MYSQL_ROOT_PASSWORD。NOMAD 没有登录认证且能管理 Docker 容器，仅适合可信局域网。请保留 nomad_admin 容器名和 project-nomad_default 网络名。控制中心通过 ZimaOS 升级，不包含上游自更新器。NOMAD 创建的可选工具是独立容器，卸载本应用前请先在 NOMAD 中移除这些工具。
+      zh_TW: |-
+        需要 amd64 裝置、至少 4 GB 記憶體和 10 GB 可用安裝空間；AI 模型和離線資料需要額外資源。首次啟動前，將 URL 設為裝置位址，設定至少 32 個字元的獨立 APP_KEY，同時修改 DB_PASSWORD 和 MYSQL_PASSWORD，並修改 MYSQL_ROOT_PASSWORD。NOMAD 沒有登入驗證且能管理 Docker 容器，僅適合可信任的區域網路。請保留 nomad_admin 容器名稱和 project-nomad_default 網路名稱。控制中心透過 ZimaOS 升級，不包含上游自動更新程式。NOMAD 建立的選用工具是獨立容器，解除安裝本套件前請先在 NOMAD 中移除這些工具。
+      ja_JP: |-
+        amd64 デバイス、4 GB 以上の RAM、インストール用の空き容量 10 GB 以上が必要です。AI モデルとオフラインコンテンツには追加のリソースが必要です。初回起動前に URL をデバイスのアドレスに設定し、32 文字以上の固有の APP_KEY を指定してください。DB_PASSWORD と MYSQL_PASSWORD を同じ値に変更し、MYSQL_ROOT_PASSWORD も変更してください。NOMAD にはログイン認証がなく、Docker コンテナーを管理できるため、信頼できるローカルネットワークでのみ使用してください。コンテナー名 nomad_admin とネットワーク名 project-nomad_default は維持してください。コマンドセンターは ZimaOS から更新します。上流の自己更新ツールは含まれません。NOMAD が作成する追加ツールは独立したコンテナーです。このパッケージをアンインストールする前に、NOMAD から追加ツールを削除してください。
+      ko_KR: |-
+        amd64 장치, 최소 4 GB RAM과 설치용 여유 공간 10 GB가 필요합니다. AI 모델과 오프라인 콘텐츠에는 추가 리소스가 필요합니다. 처음 시작하기 전에 URL을 장치 주소로 설정하고 32자 이상의 고유한 APP_KEY를 지정하세요. DB_PASSWORD와 MYSQL_PASSWORD를 같은 값으로 변경하고 MYSQL_ROOT_PASSWORD도 변경하세요. NOMAD에는 로그인 인증이 없으며 Docker 컨테이너를 관리할 수 있으므로 신뢰할 수 있는 로컬 네트워크에서만 사용하세요. 컨테이너 이름 nomad_admin과 네트워크 이름 project-nomad_default를 유지하세요. 제어 센터는 ZimaOS에서 업데이트하며, 프로젝트의 자체 업데이트 도구는 포함되지 않습니다. 선택 도구는 독립 컨테이너로 생성되므로 이 패키지를 제거하기 전에 NOMAD에서 해당 도구를 먼저 제거하세요.
+      fr_FR: |-
+        Nécessite une machine amd64 avec au moins 4 Go de RAM et 10 Go libres pour l’installation. Les modèles IA et les contenus hors ligne nécessitent des ressources supplémentaires. Avant le premier démarrage, définissez URL sur l’adresse de votre machine, choisissez un APP_KEY unique d’au moins 32 caractères et modifiez ensemble DB_PASSWORD et MYSQL_PASSWORD, ainsi que MYSQL_ROOT_PASSWORD. NOMAD n’a pas d’authentification et peut gérer des conteneurs Docker : utilisez-le uniquement sur un réseau local de confiance. Conservez le nom de conteneur nomad_admin et le nom de réseau project-nomad_default. Mettez le centre de commande à jour via ZimaOS ; le mécanisme de mise à jour autonome du projet n’est pas inclus. Supprimez les outils facultatifs dans NOMAD avant de désinstaller ce paquet, car ils fonctionnent dans des conteneurs distincts.
+      de_DE: |-
+        Erfordert ein amd64-Gerät mit mindestens 4 GB RAM und 10 GB freiem Speicher für die Installation. KI-Modelle und Offline-Inhalte benötigen zusätzliche Ressourcen. Setzen Sie URL vor dem ersten Start auf die Geräteadresse, wählen Sie einen eigenen APP_KEY mit mindestens 32 Zeichen und ändern Sie DB_PASSWORD zusammen mit MYSQL_PASSWORD sowie MYSQL_ROOT_PASSWORD. NOMAD hat keine Anmeldung und kann Docker-Container verwalten; verwenden Sie es nur in einem vertrauenswürdigen lokalen Netzwerk. Behalten Sie den Containernamen nomad_admin und den Netzwerknamen project-nomad_default bei. Aktualisieren Sie die Steuerzentrale über ZimaOS; der Upstream-Selbstaktualisierer ist nicht enthalten. Entfernen Sie optionale Werkzeuge zuerst in NOMAD, bevor Sie dieses Paket deinstallieren, da sie als separate Container laufen.
+      sv_SE: |-
+        Kräver en amd64-enhet med minst 4 GB RAM och 10 GB ledigt utrymme för installationen. AI-modeller och offlineinnehåll kräver ytterligare resurser. Före första starten anger du enhetens adress i URL, väljer en unik APP_KEY med minst 32 tecken och ändrar DB_PASSWORD och MYSQL_PASSWORD till samma värde, samt MYSQL_ROOT_PASSWORD. NOMAD har ingen inloggning och kan hantera Docker-containrar: använd det endast i ett betrott lokalt nätverk. Behåll containernamnet nomad_admin och nätverksnamnet project-nomad_default. Uppdatera kontrollcentret via ZimaOS; projektets egen uppdateringstjänst ingår inte. Ta bort valfria verktyg i NOMAD innan du avinstallerar paketet, eftersom de körs i separata containrar.
+      el_GR: |-
+        Απαιτεί συσκευή amd64 με τουλάχιστον 4 GB RAM και 10 GB ελεύθερου χώρου για εγκατάσταση. Τα μοντέλα και το περιεχόμενο απαιτούν πρόσθετους πόρους. Πριν από την πρώτη εκκίνηση, ορίστε το URL στη διεύθυνση της συσκευής, επιλέξτε μοναδικό APP_KEY με τουλάχιστον 32 χαρακτήρες και αλλάξτε μαζί τα DB_PASSWORD και MYSQL_PASSWORD, καθώς και το MYSQL_ROOT_PASSWORD. Το NOMAD δεν διαθέτει έλεγχο ταυτότητας και μπορεί να διαχειρίζεται Docker containers: χρησιμοποιήστε το μόνο σε έμπιστο τοπικό δίκτυο. Διατηρήστε το όνομα container nomad_admin και το όνομα δικτύου project-nomad_default. Ενημερώστε το κέντρο ελέγχου μέσω του ZimaOS· το εργαλείο αυτοενημέρωσης του έργου δεν περιλαμβάνεται. Αφαιρέστε τα προαιρετικά εργαλεία από το NOMAD πριν απεγκαταστήσετε το πακέτο, καθώς λειτουργούν σε ξεχωριστά containers.
+      hr_HR: |-
+        Potreban je amd64 uređaj s najmanje 4 GB RAM-a i 10 GB slobodnog prostora za instalaciju. AI modeli i sadržaj zahtijevaju dodatne resurse. Prije prvog pokretanja postavite URL na adresu uređaja, odaberite jedinstveni APP_KEY s najmanje 32 znaka i zajedno promijenite DB_PASSWORD i MYSQL_PASSWORD, kao i MYSQL_ROOT_PASSWORD. NOMAD nema prijavu i može upravljati Docker kontejnerima: koristite ga samo u pouzdanoj lokalnoj mreži. Zadržite naziv kontejnera nomad_admin i naziv mreže project-nomad_default. Ažurirajte upravljački centar kroz ZimaOS; alat za samostalno ažuriranje projekta nije uključen. Uklonite dodatne alate u NOMAD-u prije deinstalacije paketa jer rade kao zasebni kontejneri.
+      pt_PT: |-
+        Requer um dispositivo amd64 com pelo menos 4 GB de RAM e 10 GB livres para a instalação. Os modelos de IA e os conteúdos offline requerem recursos adicionais. Antes do primeiro arranque, defina URL como o endereço do dispositivo, escolha um APP_KEY único com pelo menos 32 caracteres e altere DB_PASSWORD em conjunto com MYSQL_PASSWORD, além de MYSQL_ROOT_PASSWORD. O NOMAD não tem autenticação e pode gerir contentores Docker: utilize-o apenas numa rede local de confiança. Mantenha o nome do contentor nomad_admin e o nome da rede project-nomad_default. Atualize o centro de controlo através do ZimaOS; o atualizador autónomo do projeto não está incluído. Remova as ferramentas opcionais no NOMAD antes de desinstalar este pacote, pois funcionam em contentores separados.
+      pt_BR: |-
+        Requer um dispositivo amd64 com pelo menos 4 GB de RAM e 10 GB livres para instalação. Os modelos de IA e os conteúdos offline exigem recursos adicionais. Antes da primeira inicialização, defina URL com o endereço do dispositivo, escolha um APP_KEY exclusivo com pelo menos 32 caracteres e altere DB_PASSWORD junto com MYSQL_PASSWORD, além de MYSQL_ROOT_PASSWORD. O NOMAD não tem autenticação e pode gerenciar contêineres Docker: use apenas em uma rede local confiável. Mantenha o nome do contêiner nomad_admin e o nome da rede project-nomad_default. Atualize o centro de controle pelo ZimaOS; o atualizador automático do projeto não está incluído. Remova as ferramentas opcionais no NOMAD antes de desinstalar este pacote, pois elas usam contêineres separados.
+      es_ES: |-
+        Requiere un equipo amd64 con al menos 4 GB de RAM y 10 GB libres para la instalación. Los modelos de IA y el contenido sin conexión requieren recursos adicionales. Antes del primer inicio, configura URL con la dirección del equipo, elige un APP_KEY único de al menos 32 caracteres y cambia DB_PASSWORD junto con MYSQL_PASSWORD, además de MYSQL_ROOT_PASSWORD. NOMAD no tiene autenticación y puede gestionar contenedores Docker: úsalo solo en una red local de confianza. Conserva el nombre de contenedor nomad_admin y el nombre de red project-nomad_default. Actualiza el centro de control desde ZimaOS; no se incluye el actualizador autónomo del proyecto. Elimina las herramientas opcionales desde NOMAD antes de desinstalar este paquete, ya que funcionan como contenedores independientes.
+      ru_RU: |-
+        Требуется устройство amd64 с минимум 4 ГБ ОЗУ и 10 ГБ свободного места для установки. Моделям ИИ и офлайн-материалам нужны дополнительные ресурсы. Перед первым запуском задайте адрес устройства в URL, выберите уникальный APP_KEY длиной не менее 32 символов и одновременно измените DB_PASSWORD и MYSQL_PASSWORD, а также MYSQL_ROOT_PASSWORD. В NOMAD нет аутентификации, и он может управлять контейнерами Docker: используйте его только в доверенной локальной сети. Сохраните имя контейнера nomad_admin и имя сети project-nomad_default. Обновляйте центр управления через ZimaOS; механизм самостоятельного обновления проекта не включён. Удалите дополнительные инструменты через NOMAD перед удалением пакета, поскольку они работают в отдельных контейнерах.
+      tr_TR: |-
+        Kurulum için en az 4 GB RAM ve 10 GB boş alanı olan bir amd64 cihaz gerekir. Yapay zekâ modelleri ve çevrimdışı içerikler ek kaynak gerektirir. İlk başlatmadan önce URL değerini cihaz adresine ayarlayın, en az 32 karakterlik benzersiz bir APP_KEY seçin ve DB_PASSWORD ile MYSQL_PASSWORD değerlerini birlikte değiştirin; MYSQL_ROOT_PASSWORD değerini de değiştirin. NOMAD oturum açma doğrulaması içermez ve Docker konteynerlerini yönetebilir: yalnızca güvenilir bir yerel ağda kullanın. nomad_admin konteyner adını ve project-nomad_default ağ adını koruyun. Kontrol merkezini ZimaOS üzerinden güncelleyin; projenin kendi güncelleme aracı pakete dahil değildir. İsteğe bağlı araçlar ayrı konteynerler olarak çalıştığından, paketi kaldırmadan önce bu araçları NOMAD üzerinden kaldırın.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProjectNOMAD/icon.png
+  # Official cover: https://www.projectnomad.us/og-image.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProjectNOMAD/thumbnail.png
+  # Official screenshots from https://www.projectnomad.us/screenshots/:
+  # dashboard.png, content-explorer.png, ai-chat.png, maps.png (in this order).
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProjectNOMAD/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProjectNOMAD/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProjectNOMAD/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ProjectNOMAD/screenshot-4.png
+  scheme: http
+  index: /
+  port_map: "8080"
+  version: "1.35.1"
+  update_at: "2026-10-10"
+  release_notes:
+    en_US: |-
+      1.35.1 (2026-10-05)
+
+      - Restores image attachments for `gemma3` by checking model capabilities when the model list reports no vision support.
+      - Preserves upstream redirects in translated content so book styles and article links work.
+      - Fixes translation model downloads when prerelease models appear, downloads released language models, and documents supported languages.
+      - Updates 11 curated ZIM download links whose upstream files are unavailable.
+
+      [Official release notes](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    en_GB: |-
+      1.35.1 (2026-10-05)
+
+      - Restores image attachments for `gemma3` by checking model capabilities when the model list reports no vision support.
+      - Preserves upstream redirects in translated content so book styles and article links work.
+      - Fixes translation model downloads when prerelease models appear, downloads released language models, and documents supported languages.
+      - Updates 11 curated ZIM download links whose upstream files are unavailable.
+
+      [Official release notes](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    it_IT: |-
+      1.35.1 (2026-10-05)
+
+      - Verifica le capacità del modello quando l’elenco non indica supporto visivo e ripristina gli allegati immagine per `gemma3`.
+      - Mantiene i reindirizzamenti della fonte nei contenuti tradotti, così funzionano gli stili dei libri e i collegamenti agli articoli.
+      - Corregge gli arresti durante il download dei modelli di traduzione causati da versioni preliminari, scarica i modelli linguistici pubblicati e documenta le lingue supportate.
+      - Aggiorna 11 collegamenti di download di file ZIM selezionati i cui file originali non sono più disponibili.
+
+      [Note di rilascio ufficiali](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    nb_NO: |-
+      1.35.1 (2026-10-05)
+
+      - Kontrollerer modellens egenskaper når modellisten ikke oppgir bildestøtte, og gjenoppretter bildevedlegg for `gemma3`.
+      - Bevarer omdirigeringer fra innholdskilden i oversatt innhold, slik at bokformatering og artikkellenker fungerer.
+      - Retter krasj ved nedlasting av oversettelsesmodeller når forhåndsversjoner dukker opp, laster ned publiserte språkmodeller og dokumenterer støttede språk.
+      - Oppdaterer 11 nedlastingslenker for utvalgte ZIM-filer der kildefilene ikke lenger er tilgjengelige.
+
+      [Offisielle versjonsnotater](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    zh_CN: |-
+      1.35.1 (2026-10-05)
+
+      - 当模型列表未声明视觉能力时，检测模型的实际能力，恢复 `gemma3` 的图片附件功能。
+      - 保留翻译内容的上游重定向，使电子书样式和文章链接正常显示与跳转。
+      - 修复遇到预发布翻译模型时下载崩溃的问题，下载已发布的语言模型，并补充支持语言的文档。
+      - 更新 11 个精选 ZIM 资源的下载链接，替换上游已失效的文件地址。
+
+      [官方发布说明](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    zh_TW: |-
+      1.35.1 (2026-10-05)
+
+      - 當模型清單未宣告視覺能力時，檢測模型的實際能力，恢復 `gemma3` 的圖片附件功能。
+      - 保留翻譯內容的上游重新導向，讓電子書樣式和文章連結正常顯示與跳轉。
+      - 修正遇到預發佈翻譯模型時下載崩潰的問題，下載已發佈的語言模型，並補充支援語言的文件。
+      - 更新 11 個精選 ZIM 資源的下載連結，替換上游已失效的檔案位址。
+
+      [官方發佈說明](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    ja_JP: |-
+      1.35.1 (2026-10-05)
+
+      - モデル一覧に画像対応が表示されない場合に実際の能力を確認し、`gemma3` の画像添付を復旧します。
+      - 翻訳コンテンツで配信元のリダイレクトを保持し、電子書籍のスタイルと記事リンクを正しく処理します。
+      - プレリリースの翻訳モデルによるダウンロードのクラッシュを修正し、公開済み言語モデルをダウンロードして、対応言語を文書化します。
+      - 配信元のファイルがなくなった 11 件の厳選 ZIM コンテンツのダウンロードリンクを更新します。
+
+      [公式リリースノート](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    ko_KR: |-
+      1.35.1 (2026-10-05)
+
+      - 모델 목록에 이미지 지원이 표시되지 않을 때 실제 기능을 확인하여 `gemma3`의 이미지 첨부 기능을 복원합니다.
+      - 번역된 콘텐츠에서 원본 서버의 리디렉션을 유지하여 전자책 스타일과 문서 링크가 정상적으로 작동하게 합니다.
+      - 정식 출시 전 번역 모델을 처리할 때 발생하던 비정상 종료를 수정하고, 출시된 언어 모델을 다운로드하며 지원 언어를 문서에 추가합니다.
+      - 원본 파일을 사용할 수 없게 된 추천 ZIM 콘텐츠 11개의 다운로드 링크를 업데이트합니다.
+
+      [공식 릴리스 노트](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    fr_FR: |-
+      1.35.1 (2026-10-05)
+
+      - Vérifie les capacités du modèle lorsque la liste n’indique pas de prise en charge des images et rétablit les pièces jointes pour `gemma3`.
+      - Conserve les redirections de la source des contenus traduits pour préserver les styles des livres et le fonctionnement des liens vers les articles.
+      - Corrige les plantages du téléchargement des modèles de traduction liés aux préversions, télécharge les modèles de langue publiés et documente les langues prises en charge.
+      - Actualise 11 liens de téléchargement de fichiers ZIM sélectionnés dont les fichiers sources ne sont plus disponibles.
+
+      [Notes de version officielles](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    de_DE: |-
+      1.35.1 (2026-10-05)
+
+      - Prüft die Modellfähigkeiten, wenn die Modellliste keine Bildunterstützung meldet, und stellt Bildanhänge für `gemma3` wieder her.
+      - Erhält Weiterleitungen der Inhaltsquelle bei Übersetzungen, damit Buchformatierung und Artikellinks funktionieren.
+      - Behebt Abstürze beim Download von Übersetzungsmodellen durch Vorabversionen, lädt veröffentlichte Sprachmodelle herunter und dokumentiert die unterstützten Sprachen.
+      - Aktualisiert 11 Downloadlinks kuratierter ZIM-Dateien, deren Quelldateien nicht mehr verfügbar sind.
+
+      [Offizielle Versionshinweise](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    sv_SE: |-
+      1.35.1 (2026-10-05)
+
+      - Kontrollerar modellens förmågor när modellistan saknar bildstöd och återställer bildbilagor för `gemma3`.
+      - Bevarar omdirigeringar från innehållskällan i översatt innehåll så att bokstilar och artikellänkar fungerar.
+      - Åtgärdar krascher vid hämtning av översättningsmodeller när förhandsversioner förekommer, hämtar publicerade språkmodeller och dokumenterar språkstödet.
+      - Uppdaterar 11 hämtningslänkar för utvalda ZIM-filer vars källfiler inte längre är tillgängliga.
+
+      [Officiella versionsanteckningar](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    el_GR: |-
+      1.35.1 (2026-10-05)
+
+      - Ελέγχει τις δυνατότητες του μοντέλου όταν η λίστα δεν δηλώνει υποστήριξη εικόνων και επαναφέρει τα συνημμένα εικόνας για το `gemma3`.
+      - Διατηρεί τις ανακατευθύνσεις της πηγής στο μεταφρασμένο περιεχόμενο, ώστε να λειτουργούν η μορφοποίηση των βιβλίων και οι σύνδεσμοι άρθρων.
+      - Διορθώνει καταρρεύσεις κατά τη λήψη μοντέλων μετάφρασης που προκαλούσαν οι προεκδόσεις, κατεβάζει τα δημοσιευμένα γλωσσικά μοντέλα και τεκμηριώνει τις υποστηριζόμενες γλώσσες.
+      - Ενημερώνει 11 συνδέσμους λήψης επιλεγμένων αρχείων ZIM των οποίων τα αρχικά αρχεία δεν είναι πλέον διαθέσιμα.
+
+      [Επίσημες σημειώσεις έκδοσης](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    hr_HR: |-
+      1.35.1 (2026-10-05)
+
+      - Provjerava mogućnosti modela kada popis ne navodi podršku za slike i vraća slikovne privitke za `gemma3`.
+      - Zadržava preusmjeravanja izvora u prevedenom sadržaju kako bi stilovi knjiga i poveznice na članke radili.
+      - Ispravlja rušenja pri preuzimanju modela za prijevod uzrokovana predizdanjima, preuzima objavljene jezične modele i dokumentira podržane jezike.
+      - Ažurira 11 poveznica za preuzimanje odabranih ZIM datoteka čije izvorne datoteke više nisu dostupne.
+
+      [Službene bilješke o izdanju](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    pt_PT: |-
+      1.35.1 (2026-10-05)
+
+      - Verifica as capacidades do modelo quando a lista não indica suporte visual e restaura os anexos de imagem para `gemma3`.
+      - Preserva os redirecionamentos da origem nos conteúdos traduzidos para que funcionem os estilos dos livros e as ligações aos artigos.
+      - Corrige falhas no descarregamento de modelos de tradução causadas por versões preliminares, descarrega os modelos linguísticos publicados e documenta os idiomas suportados.
+      - Atualiza 11 ligações de descarregamento de ficheiros ZIM selecionados cujos ficheiros de origem já não estão disponíveis.
+
+      [Notas de lançamento oficiais](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    pt_BR: |-
+      1.35.1 (2026-10-05)
+
+      - Verifica as capacidades do modelo quando a lista não informa suporte visual e restaura os anexos de imagem para `gemma3`.
+      - Preserva os redirecionamentos da origem nos conteúdos traduzidos para que funcionem os estilos dos livros e os links dos artigos.
+      - Corrige falhas no download de modelos de tradução causadas por versões preliminares, baixa os modelos de idiomas publicados e documenta os idiomas compatíveis.
+      - Atualiza 11 links de download de arquivos ZIM selecionados cujos arquivos de origem não estão mais disponíveis.
+
+      [Notas oficiais da versão](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    es_ES: |-
+      1.35.1 (2026-10-05)
+
+      - Comprueba las capacidades del modelo cuando la lista no indica soporte visual y recupera los archivos adjuntos de imagen para `gemma3`.
+      - Conserva las redirecciones de la fuente en el contenido traducido para que funcionen los estilos de los libros y los enlaces a los artículos.
+      - Corrige los fallos de descarga de modelos de traducción provocados por versiones preliminares, descarga los modelos de idiomas publicados y documenta los idiomas compatibles.
+      - Actualiza 11 enlaces de descarga de archivos ZIM seleccionados cuyos archivos de origen ya no están disponibles.
+
+      [Notas oficiales de la versión](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    ru_RU: |-
+      1.35.1 (2026-10-05)
+
+      - Проверяет возможности модели, если список не сообщает о поддержке изображений, и восстанавливает вложения изображений для `gemma3`.
+      - Сохраняет перенаправления источника в переведённом контенте, чтобы работали стили книг и ссылки на статьи.
+      - Исправляет сбои загрузки моделей перевода из-за предварительных версий, загружает опубликованные языковые модели и документирует поддерживаемые языки.
+      - Обновляет 11 ссылок на отобранные файлы ZIM, исходные файлы которых больше недоступны.
+
+      [Официальные примечания к выпуску](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+    tr_TR: |-
+      1.35.1 (2026-10-05)
+
+      - Model listesi görsel desteği bildirmediğinde modelin yeteneklerini kontrol eder ve `gemma3` için resim eklerini yeniden etkinleştirir.
+      - Çevrilen içerikte kaynak yönlendirmelerini koruyarak kitap biçimlerinin ve makale bağlantılarının çalışmasını sağlar.
+      - Ön sürümlerden kaynaklanan çeviri modeli indirme çökmelerini düzeltir, yayımlanmış dil modellerini indirir ve desteklenen dilleri belgeler.
+      - Kaynak dosyaları artık bulunmayan seçilmiş ZIM dosyalarının 11 indirme bağlantısını günceller.
+
+      [Resmî sürüm notları](https://github.com/Crosstalk-Solutions/project-nomad/releases/tag/v1.35.1)
+  website: https://www.projectnomad.us
+  repo: https://github.com/Crosstalk-Solutions/project-nomad
+  support: https://github.com/Crosstalk-Solutions/project-nomad/issues
+  docs: https://github.com/Crosstalk-Solutions/project-nomad#installation--quickstart
+  store_app_id: project-nomad

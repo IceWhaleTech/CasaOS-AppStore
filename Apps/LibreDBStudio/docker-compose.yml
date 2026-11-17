@@ -1,0 +1,120 @@
+name: libredb-studio
+services:
+  libredb-studio:
+    image: libredb/libredb-studio:1.2.0
+    container_name: libredb-studio
+    restart: unless-stopped
+    ports:
+      - target: 3000
+        published: "3016"
+        protocol: tcp
+    environment:
+      ADMIN_EMAIL: admin@libredb.org
+      ADMIN_PASSWORD: ""
+      JWT_SECRET: ""
+      STORAGE_PROVIDER: sqlite
+      STORAGE_SQLITE_PATH: /app/data/libredb-storage.db
+      AUTH_COOKIE_SECURE: "false"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "require('http').get('http://127.0.0.1:3000/api/db/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    deploy:
+      resources:
+        reservations:
+          memory: 256M
+    network_mode: bridge
+    privileged: false
+    x-casaos:
+      envs:
+        - container: ADMIN_EMAIL
+          description:
+            en_US: Email address for the initial admin account created on first start.
+            zh_CN: 首次启动时创建的初始管理员账户的电子邮件地址。
+        - container: ADMIN_PASSWORD
+          description:
+            en_US: Leave empty and the app generates a strong password on first start and prints it once to the container log. Set your own only if you prefer to choose it. It applies on the first start only. To change the password later, set this to the new value, add ADMIN_PASSWORD_RESET=true, restart, then remove that variable.
+            zh_CN: 留空时，应用会在首次启动时生成强密码并在容器日志中打印一次。仅在希望自行指定时填写。该值仅在首次启动时生效：之后如需更改密码，请将其设为新值并添加 ADMIN_PASSWORD_RESET=true，重启后再删除该变量。
+        - container: JWT_SECRET
+          description:
+            en_US: Leave empty and a strong secret is generated on first start. This value also encrypts saved connection passwords, so never reuse a value published anywhere. If you set your own it must be at least 32 characters, or the container exits at boot.
+            zh_CN: 留空时会在首次启动时生成强密钥。该值同时用于加密已保存的连接密码，因此切勿使用任何公开过的值。如自行设置，长度至少为 32 个字符，否则容器将在启动时退出。
+        - container: STORAGE_PROVIDER
+          description:
+            en_US: Storage backend. Keep as "sqlite" for a self-contained setup.
+            zh_CN: 存储后端。独立部署请保持为 "sqlite"。
+        - container: STORAGE_SQLITE_PATH
+          description:
+            en_US: Path to the SQLite database file inside the persistent data volume.
+            zh_CN: 持久化数据卷内 SQLite 数据库文件的路径。
+        - container: AUTH_COOKIE_SECURE
+          description:
+            en_US: Keep "false" so the auth cookie works over plain HTTP on the LAN, otherwise login fails.
+            zh_CN: 请保持为 "false"，以便身份验证 Cookie 在局域网的普通 HTTP 下正常工作，否则将无法登录。
+      ports:
+        - container: "3000"
+          description:
+            en_US: WebUI HTTP Port
+            zh_CN: WebUI HTTP 端口
+          protocol: tcp
+      volumes:
+        - container: /app/data
+          description:
+            en_US: LibreDB Studio data directory (SQLite database).
+            zh_CN: LibreDB Studio 数据目录（SQLite 数据库）。
+x-casaos:
+  id: org.icewhale.libredbstudio
+  architectures:
+    - amd64
+    - arm64
+  main: libredb-studio
+  author: libredb
+  category: Developer
+  description:
+    en_US: LibreDB Studio is an open-source (MIT), self-hosted SQL IDE. It provides a modern web-based interface to connect to forty-one database engines (PostgreSQL, MySQL, Oracle, Db2, SQL Server, MongoDB, Redis, ClickHouse, Cassandra, Elasticsearch, Prometheus, Apache Kafka, Neo4j, Qdrant, Milvus, InfluxDB, etcd and more), browse schemas, and write and run queries from any browser on your LAN. Some are read-only because their own SQL is. Druid, Elasticsearch and OpenSearch have no `UPDATE` and no `CREATE TABLE` at all. Several more are read-only by construction. Data is stored locally in a SQLite database, so everything stays under your control.
+    zh_CN: LibreDB Studio 是一款开源（MIT）的自托管 SQL IDE。它提供现代化的基于 Web 的界面，支持连接 41 种数据库引擎（PostgreSQL、MySQL、Oracle、Db2、SQL Server、MongoDB、Redis、ClickHouse、Cassandra、Elasticsearch、Prometheus、Apache Kafka、Neo4j、Qdrant、Milvus、InfluxDB、etcd 等），浏览架构，并可通过局域网中的任意浏览器编写和运行查询。其中一部分（如 Druid、Elasticsearch、OpenSearch）为只读，因为它们自身的 SQL 完全没有 `UPDATE`，也没有 `CREATE TABLE`；另有数种出于设计为只读。数据本地存储于 SQLite 数据库中，一切尽在您的掌控之中。
+  developer: libredb
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreDBStudio/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreDBStudio/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreDBStudio/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreDBStudio/screenshot-3.png
+  tagline:
+    en_US: Open-source self-hosted SQL IDE.
+    zh_CN: 开源自托管 SQL IDE。
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/LibreDBStudio/thumbnail.png
+  title:
+    en_US: LibreDB Studio
+    zh_CN: LibreDB Studio
+  index: /
+  scheme: http
+  port_map: "3016"
+  version: "1.2.0"
+  update_at: "2026-11-01"
+  release_notes:
+    en_US: |-
+      - Updates LibreDB Studio to 1.0.0, a major release. Twelve connection types join, taking the count to forty-one engines: BigQuery, MQTT, Firestore, RabbitMQ, Snowflake, OPC UA, Apache Spark, MTConnect, Modbus, Sparkplug B, NETCONF and SNMP.
+      - It carries one security fix: a disconnect request now closes only the caller's own connections (GHSA-78jw-7pvp-64h3), so a server that several accounts share should be upgraded.
+      - Studio can now run under a control plane that decides who may open which database with which credential. It stays off unless an operator sets `GOVERNANCE_SOURCE`, and an install without that variable behaves as 0.18.3 did.
+      - Agent mode now executes statements on MySQL and MariaDB, MongoDB and Kubernetes.
+      - For anyone calling the HTTP API: a refusal for a missing privilege answers 403 instead of 401, and a statement timeout 504 instead of 408.
+    zh_CN: |-
+      - 将 LibreDB Studio 更新至 1.0.0，这是一个大版本。新增十二种连接类型，总数达到四十一种引擎：BigQuery、MQTT、Firestore、RabbitMQ、Snowflake、OPC UA、Apache Spark、MTConnect、Modbus、Sparkplug B、NETCONF 和 SNMP。
+      - 本版本包含一项安全修复：断开连接请求现在只关闭调用者自己的连接（GHSA-78jw-7pvp-64h3），因此多个账号共用的服务器应当升级。
+      - Studio 现在可以运行在一个控制平面之下，由它决定谁可以用哪个凭据打开哪个数据库。除非运维人员设置 `GOVERNANCE_SOURCE`，该功能保持关闭；未设置该变量的安装与 0.18.3 的行为一致。
+      - 代理模式现在可以在 MySQL 和 MariaDB、MongoDB 以及 Kubernetes 上执行语句。
+      - 调用 HTTP API 的一方需注意：权限不足的拒绝现在返回 403 而不是 401，语句超时返回 504 而不是 408。
+  website: https://libredb.org
+  repo: https://github.com/libredb/libredb-studio
+  support: https://github.com/libredb/libredb-studio/issues
+  docs: https://github.com/libredb/libredb-studio/tree/main/docs

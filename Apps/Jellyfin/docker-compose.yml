@@ -12,7 +12,7 @@ services:
       PGID: $PGID
       PUID: $PUID
       TZ: $TZ
-    image: linuxserver/jellyfin:10.11.10
+    image: linuxserver/jellyfin:12.2ubu2604-ls53
     deploy:
       resources:
         reservations:
@@ -101,7 +101,7 @@ x-casaos:
     - amd64
     - arm64
   main: jellyfin
-  author: CasaOS Team
+  author: ZimaOS Team
   category: Media
   description:
     en_US: |
@@ -222,69 +222,54 @@ x-casaos:
     en_US: Jellyfin
   index: /
   port_map: "8097"
-  version: "10.11.10"
-  update_at: "2026-05-24"
+  version: "12.2.0"
+  update_at: "2026-10-09"
   release_notes:
     en_US: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Jellyfin 12.2 is a stable bugfix release.
+      - Includes a Jellyfin Web security fix and improvements to playback, transcoding, library scanning, and database stability.
     en_GB: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Jellyfin 12.2 is a stable bugfix release.
+      - Includes a Jellyfin Web security fix and improvements to playback, transcoding, library scanning, and database stability.
     it_IT: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Jellyfin 12.2 è una versione stabile con correzioni di bug.
+      - Include una correzione di sicurezza per Jellyfin Web e miglioramenti alla riproduzione, alla transcodifica, alla scansione delle librerie e alla stabilità del database.
     nb_NO: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Jellyfin 12.2 er en stabil versjon med feilrettinger.
+      - Inneholder en sikkerhetsretting for Jellyfin Web og forbedringer i avspilling, transkoding, bibliotekskanning og databasestabilitet.
     zh_CN: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Jellyfin 12.2 是稳定的错误修复版本。
+      - 包含 Jellyfin Web 安全修复，并改进播放、转码、媒体库扫描和数据库稳定性。
     ja_JP: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Jellyfin 12.2 はバグ修正を含む安定版です。
+      - Jellyfin Web のセキュリティ修正に加え、再生、トランスコード、ライブラリのスキャン、データベースの安定性を改善しました。
     ko_KR: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Jellyfin 12.2는 버그 수정이 포함된 안정 버전입니다.
+      - Jellyfin Web 보안 수정과 재생, 트랜스코딩, 라이브러리 스캔 및 데이터베이스 안정성 개선이 포함되어 있습니다.
     fr_FR: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Jellyfin 12.2 est une version stable apportant des corrections de bugs.
+      - Elle comprend un correctif de sécurité pour Jellyfin Web et des améliorations de la lecture, du transcodage, de l'analyse des bibliothèques et de la stabilité de la base de données.
     de_DE: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Jellyfin 12.2 ist eine stabile Version mit Fehlerbehebungen.
+      - Enthält eine Sicherheitskorrektur für Jellyfin Web sowie Verbesserungen bei Wiedergabe, Transkodierung, Bibliotheksscans und Datenbankstabilität.
     sv_SE: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Jellyfin 12.2 är en stabil version med buggfixar.
+      - Innehåller en säkerhetsfix för Jellyfin Web och förbättringar av uppspelning, transkodning, biblioteksskanning och databasstabilitet.
     el_GR: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Το Jellyfin 12.2 είναι μια σταθερή έκδοση με διορθώσεις σφαλμάτων.
+      - Περιλαμβάνει μια διόρθωση ασφαλείας για το Jellyfin Web και βελτιώσεις στην αναπαραγωγή, τη μετακωδικοποίηση, τη σάρωση βιβλιοθηκών και τη σταθερότητα της βάσης δεδομένων.
     hr_HR: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Jellyfin 12.2 stabilna je verzija s ispravcima pogrešaka.
+      - Uključuje sigurnosni ispravak za Jellyfin Web i poboljšanja reprodukcije, transkodiranja, skeniranja biblioteka i stabilnosti baze podataka.
     pt_PT: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Jellyfin 12.2 é uma versão estável com correções de erros.
+      - Inclui uma correção de segurança para o Jellyfin Web e melhorias na reprodução, transcodificação, análise das bibliotecas e estabilidade da base de dados.
     ru_RU: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Jellyfin 12.2 — стабильный выпуск с исправлениями ошибок.
+      - Включает исправление безопасности Jellyfin Web и улучшения воспроизведения, транскодирования, сканирования медиатек и стабильности базы данных.
     tr_TR: |-
-      - Jellyfin 10.11.10 is a stable bugfix release.
-      - Fixes security advisories GHSA-f47c-m7gr-q92j, GHSA-jg92-mrxq-vv75, and GHSA-wwwm-px48-fpvq.
-      - Also fixes stale UserData cache and user manager collation issues.
+      - Jellyfin 12.2, hata düzeltmeleri içeren kararlı bir sürümdür.
+      - Jellyfin Web için bir güvenlik düzeltmesi ile oynatma, kod dönüştürme, kitaplık taraması ve veritabanı kararlılığı iyileştirmelerini içerir.
   website: "https://jellyfin.org/"
   repo: "https://github.com/jellyfin/jellyfin"
   support: "https://github.com/jellyfin/jellyfin/issues"
