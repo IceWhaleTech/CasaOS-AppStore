@@ -1,7 +1,7 @@
 name: solidping
 services:
   solidping:
-    image: ghcr.io/fclairamb/solidping:0.36.0
+    image: ghcr.io/fclairamb/solidping:0.51.0
     container_name: solidping
     network_mode: bridge
     restart: unless-stopped
@@ -84,7 +84,7 @@ x-casaos:
   icon: icon.svg
   thumbnail: thumbnail.png
   screenshot_link: [screenshot-1.png, screenshot-2.png, screenshot-3.png]
-  version: "0.36.0"
+  version: "0.51.0"
   update_at: "2026-09-28"
   release_notes:
     en_US: "The dashboard events list now names the private-location agent each connect and disconnect is about, and spells out why it dropped."
