@@ -1,0 +1,167 @@
+name: ph-intercept
+services:
+  ph-intercept:
+    image: m00grin/ph-intercept:1.5.7
+    container_name: ph-intercept
+    restart: unless-stopped
+    network_mode: bridge
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          pids: 20
+        reservations:
+          memory: 64M
+    ports:
+      - target: 4653
+        published: "4653"
+        protocol: tcp
+    environment:
+      PROVIDER: pihole
+      PIHOLE_URL: ""
+      PIHOLE_PASSWORD: ""
+      ADGUARD_URL: ""
+      ADGUARD_USERNAME: ""
+      ADGUARD_PASSWORD: ""
+      TECHNITIUM_URL: ""
+      TECHNITIUM_TOKEN: ""
+      BG_MODE: starfield
+      SKY_PRESET: summer_triangle
+      BG_IMAGE: ""
+      RETURN_URL: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/bg
+        target: /app/static/bg
+        read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    x-casaos:
+      envs:
+        - container: PROVIDER
+          description:
+            en_US: "DNS server to watch: pihole, adguard, or technitium. Fill in only that provider's fields."
+        - container: PIHOLE_URL
+          description:
+            en_US: "Pi-hole v6 API URL, e.g. http://192.168.1.2/api"
+        - container: PIHOLE_PASSWORD
+          description:
+            en_US: "Pi-hole app password (Settings > Web interface / API > Configure app password)"
+        - container: ADGUARD_URL
+          description:
+            en_US: "AdGuard Home control URL, e.g. http://192.168.1.2:3000/control"
+        - container: ADGUARD_USERNAME
+          description:
+            en_US: AdGuard Home username
+        - container: ADGUARD_PASSWORD
+          description:
+            en_US: AdGuard Home password
+        - container: TECHNITIUM_URL
+          description:
+            en_US: "Technitium web console URL, e.g. http://192.168.1.2:5380"
+        - container: TECHNITIUM_TOKEN
+          description:
+            en_US: Technitium API token, created in the Technitium console
+        - container: BG_MODE
+          description:
+            en_US: "Default background: starfield, nebula, outrun, or dark"
+        - container: SKY_PRESET
+          description:
+            en_US: "Starfield sky: summer_triangle, orion, scorpius, or southern_cross"
+        - container: BG_IMAGE
+          description:
+            en_US: "Custom background: an image URL, or /bg/your-file.jpg for a file in the backgrounds folder. Leave blank to disable."
+        - container: RETURN_URL
+          description:
+            en_US: Where pressing ESC takes you, e.g. your dashboard. Leave blank to disable.
+      ports:
+        - container: "4653"
+          description:
+            en_US: WebUI Port
+      volumes:
+        - container: /app/static/bg
+          description:
+            en_US: Backgrounds folder. Put your images here and set BG_IMAGE to /bg/your-file.jpg
+x-casaos:
+  id: io.github.m00grin.phintercept
+  main: ph-intercept
+  index: /
+  port_map: "4653"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ph-intercept/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ph-intercept/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ph-intercept/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ph-intercept/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ph-intercept/screenshot-3.png
+  title:
+    en_US: ph-intercept
+  tagline:
+    en_US: A space battle visualizer for your DNS ad blocker
+  description:
+    en_US: |
+      ph-intercept is a real-time dashboard for Pi-hole v6, AdGuard Home, and Technitium DNS, drawn as a retro arcade game. Every DNS query becomes a ship on screen: allowed queries fly past as friendlies, and blocked ones are shot down by your interceptor.
+
+      **Key Features:**
+      - Live view of every DNS query, streamed from your DNS server's API
+      - HUD with total, blocked, and allowed counts plus your block rate
+      - Pause blocking, with an optional timer, and refresh your blocklists from the HUD
+      - Starfield with real stars and planets, plus nebula, outrun, and dark backgrounds
+      - Your own background image, from a URL or a file in the app's backgrounds folder
+      - Split-screen 2-player mode for watching two DNS servers side by side
+      - Single lightweight container with no database
+
+      **Setup:**
+
+      ph-intercept needs a Pi-hole v6, AdGuard Home, or Technitium DNS server that this device can reach. After installing, open the app's menu (the three dots on its icon), choose Settings (Manage on ZimaOS 1.8), and edit its environment variables:
+
+      1. Set PROVIDER to pihole, adguard, or technitium.
+      2. Fill in only that provider's fields:
+         - Pi-hole: PIHOLE_URL, like http://192.168.1.2/api, and PIHOLE_PASSWORD. Use an app password from Pi-hole's Settings > Web interface / API, not your login password.
+         - AdGuard Home: ADGUARD_URL, like http://192.168.1.2:3000/control, plus ADGUARD_USERNAME and ADGUARD_PASSWORD.
+         - Technitium: TECHNITIUM_URL, like http://192.168.1.2:5380, and TECHNITIUM_TOKEN, an API token from the Technitium console.
+      3. Save. The app restarts with your settings.
+
+      For your own background, put an image in the backgrounds folder and set BG_IMAGE to /bg/your-file.jpg. For 2-player mode and every other option, see the [full settings list](https://github.com/m00grin/ph-intercept#configuration).
+
+      **Learn More:**
+      - [GitHub Repository](https://github.com/m00grin/ph-intercept)
+      - [AdGuard Home setup](https://github.com/m00grin/ph-intercept/blob/main/adguard/README.md)
+      - [Technitium setup](https://github.com/m00grin/ph-intercept/blob/main/technitium/README.md)
+  tips:
+    before_install:
+      en_US: |
+        ph-intercept needs a Pi-hole v6, AdGuard Home, or Technitium DNS server that this device can reach.
+
+        To connect it, open the app's menu (the three dots on its icon), choose Settings (Manage on ZimaOS 1.8), and edit its environment variables:
+
+        1. Set PROVIDER to pihole, adguard, or technitium.
+        2. Fill in only that provider's fields:
+           - Pi-hole: PIHOLE_URL, like http://192.168.1.2/api, and PIHOLE_PASSWORD. Use an app password from Pi-hole's Settings > Web interface / API, not your login password.
+           - AdGuard Home: ADGUARD_URL, like http://192.168.1.2:3000/control, plus ADGUARD_USERNAME and ADGUARD_PASSWORD.
+           - Technitium: TECHNITIUM_URL, like http://192.168.1.2:5380, and TECHNITIUM_TOKEN, an API token from the Technitium console.
+        3. Click Save. The app restarts with your settings.
+
+        Optional: for your own background, put an image in the backgrounds folder (listed under Volumes) and set BG_IMAGE to /bg/your-file.jpg.
+  author: m00grin
+  developer: m00grin
+  category: Networking
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  version: "1.5.7"
+  update_at: "2026-11-18"
+  release_notes:
+    en_US: "Added: READ_ONLY for wall displays and shared pages; HIDE_CLIENT keeps client names out of the browser; HIDE_DOMAIN sends opaque tokens instead of domains; PIHOLE_IGNORE_CLIENTS, ADGUARD_IGNORE_CLIENTS, TECHNITIUM_IGNORE_CLIENTS; New logo and intro. Changed: True black background; Smaller star data; Docs; CI."
+  website: https://hub.docker.com/r/m00grin/ph-intercept
+  repo: https://github.com/m00grin/ph-intercept
+  support: https://github.com/m00grin/ph-intercept/issues
+  docs: https://github.com/m00grin/ph-intercept#readme
