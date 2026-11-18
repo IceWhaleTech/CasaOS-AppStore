@@ -1,7 +1,7 @@
 name: metatana
 services:
   metatana:
-    image: ghcr.io/metatana/metatana-app:2.3.1
+    image: ghcr.io/metatana/metatana-app:2.3.2
     container_name: metatana
     ports:
       - target: 3000
@@ -97,10 +97,10 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "2.3.1"
-  update_at: "2026-11-16"
+  version: "2.3.2"
+  update_at: "2026-11-18"
   release_notes:
-    en_US: Updates MetaTana to version 2.3.1.
+    en_US: Updates MetaTana to version 2.3.2.
   website: https://metatana.com
   docs: https://metatana.com/docs
   support: https://github.com/metatana/support/discussions
