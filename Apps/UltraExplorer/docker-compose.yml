@@ -1,0 +1,94 @@
+name: ultra-explorer
+services:
+  ultra-explorer:
+    image: ghcr.io/sudo-rahman/ultra-explorer:1.5.0
+    container_name: ultra-explorer
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=64m,mode=1777
+    environment:
+      TZ: $TZ
+    network_mode: bridge
+    ports:
+      - target: 7373
+        published: "7373"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        # Fixed folder rather than $AppID: an empty AppID would mount /DATA/AppData itself.
+        source: /DATA/AppData/ultra-explorer/data
+        target: /data
+        bind:
+          create_host_path: true
+      # Only the user folders. Never mount /DATA whole: it holds .casaos/db/user.db.
+      - type: bind
+        source: /DATA/Documents
+        target: /mnt/local/Documents
+      - type: bind
+        source: /DATA/Downloads
+        target: /mnt/local/Downloads
+      - type: bind
+        source: /DATA/Gallery
+        target: /mnt/local/Gallery
+      - type: bind
+        source: /DATA/Media
+        target: /mnt/local/Media
+      - type: bind
+        source: /DATA/Backup
+        target: /mnt/local/Backup
+x-casaos:
+  id: app.ultra-explorer
+  main: ultra-explorer
+  index: /
+  port_map: "7373"
+  scheme: http
+  version: "1.5.0"
+  update_at: "2026-11-18"
+  release_notes:
+    en_US: First version in the ZimaOS App Store. Image previews (Pro), and the administrator password is now created in the browser on first start.
+  architectures:
+    - amd64
+    - arm64
+  category: Productivity
+  author: Rahman Yilmaz
+  developer: Rahman Yilmaz
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UltraExplorer/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UltraExplorer/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UltraExplorer/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UltraExplorer/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UltraExplorer/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UltraExplorer/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UltraExplorer/screenshot-5.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UltraExplorer/screenshot-6.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UltraExplorer/screenshot-7.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UltraExplorer/screenshot-8.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/UltraExplorer/screenshot-9.png
+  title:
+    en_US: Ultra Explorer
+  tagline:
+    en_US: One file manager for your NAS folders and 40+ cloud services
+  description:
+    en_US: |
+      Ultra Explorer is a file manager for the folders of this server and 40+ cloud storages and protocols (Google Drive, OneDrive, Dropbox, S3, Backblaze B2, SFTP, WebDAV and more), built on rclone.
+      Browse, copy and move files between them from a browser or a phone, cloud to NAS or cloud to cloud.
+
+      Free, with no account: unlimited storages, tabs, drag and drop, copy and move with a persistent queue, rclone config import and export.
+      Pro (subscription or Lifetime licence) adds batch rename with Plex and Jellyfin presets, MediaInfo for media files, Space Analysis, search across storages, running synchronizations, and image previews.
+
+      No telemetry; credentials stay in the app's rclone configuration on this server. Ultra Explorer is not open source.
+  tips:
+    before_install:
+      en_US: |
+        Open Ultra Explorer within 15 minutes of installing it and create the administrator password on the page that opens (at least 12 characters). After 15 minutes, restart the app to create it.
+        Your Documents, Downloads, Gallery, Media and Backup folders appear as local folders.
+  website: https://ultra-explorer.app
+  repo: https://github.com/Sudo-Rahman/UltraExplorer-Releases
+  support: https://github.com/Sudo-Rahman/UltraExplorer-Releases/issues
+  docs: https://ultra-explorer.app/docs
