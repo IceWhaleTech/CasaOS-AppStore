@@ -1,7 +1,7 @@
 name: legejo
 services:
   legejo:
-    image: slurvdjur/legejo:1.33.0
+    image: slurvdjur/legejo:1.48.0
     environment:
       LEGEJO_ADMIN_USER: admin
       LEGEJO_ADMIN_PASSWORD: ""
@@ -85,11 +85,11 @@ x-casaos:
   index: /
   port_map: "3610"
   scheme: http
-  version: "1.33.0"
-  update_at: "2026-10-27"
+  version: "1.48.0"
+  update_at: "2026-11-18"
   release_notes:
     en_US: |-
-      - First version in the store, Legejo 1.33.0.
+      - First version in the store, Legejo 1.48.0.
       - 1.33 sets a new instance up in the browser: the first visitor creates the admin account, and mail, the public address and search inside the books are set up on the Admin page.
   website: "https://github.com/jularboolean/legejo"
   repo: "https://github.com/jularboolean/legejo"
