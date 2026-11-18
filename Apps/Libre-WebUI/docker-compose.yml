@@ -1,7 +1,7 @@
 name: libre-webui
 services:
   libre-webui:
-    image: docker.io/librewebui/libre-webui:0.45.1
+    image: docker.io/librewebui/libre-webui:0.45.2
     container_name: libre-webui
     restart: unless-stopped
     ports:
@@ -134,11 +134,11 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "0.45.1"
-  update_at: "2026-11-16"
+  version: "0.45.2"
+  update_at: "2026-11-18"
   release_notes:
-    en_US: "Libre WebUI 0.45.1 keeps decision answer tables intact when a question or option contains a backslash, and shows the Ollama library's categories in the interface language. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.45.1"
-    en_GB: "Libre WebUI 0.45.1 keeps decision answer tables intact when a question or option contains a backslash, and shows the Ollama library's categories in the interface language. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.45.1"
+    en_US: "Libre WebUI 0.45.2 adds Gemini 4 Hydrogen, Carbon, and Argon, fixes Gemini replies in Chat, and adds an Extra high thinking level. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.45.2"
+    en_GB: "Libre WebUI 0.45.2 adds Gemini 4 Hydrogen, Carbon, and Argon, fixes Gemini replies in Chat, and adds an Extra high thinking level. Release notes: https://github.com/libre-webui/libre-webui/releases/tag/v0.45.2"
   website: https://librewebui.org
   repo: https://github.com/libre-webui/libre-webui
   support: https://github.com/libre-webui/libre-webui/issues
