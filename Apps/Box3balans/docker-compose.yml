@@ -1,7 +1,7 @@
 name: box3balans
 services:
   box3balans:
-    image: ghcr.io/zenonymous/box3balans:0.1.52
+    image: ghcr.io/zenonymous/box3balans:0.1.53
     container_name: box3balans
     restart: unless-stopped
     security_opt:
@@ -109,7 +109,7 @@ x-casaos:
     before_install:
       en_US: Don't open Box3balans to the internet; use a VPN such as WireGuard or Tailscale to reach it from outside. Creating your user needs the setup code from the app's log. After the first start, keep a copy of /DATA/AppData/box3balans/data/app-secret and the backup passphrase (Settings → Backups) in your password manager.
       nl_NL: Zet Box3balans niet open naar het internet; gebruik een VPN zoals WireGuard of Tailscale voor toegang van buitenaf. Voor je gebruiker heb je de setupcode uit het log van de app nodig. Bewaar na de eerste start een kopie van /DATA/AppData/box3balans/data/app-secret en de wachtzin voor de back-ups (Instellingen → Back-ups) in je wachtwoordmanager.
-  version: "0.1.52"
+  version: "0.1.53"
   website: "https://box3balans.nl"
   repo: "https://github.com/zenonymous/box3balans"
   support: "https://github.com/zenonymous/box3balans/discussions/categories/q-a"
@@ -125,6 +125,7 @@ x-casaos:
       - Box3balans 0.1.50: the box 3 preview from 2029 follows the Tweede Kamer vote of 12 November: 35.5% on the first €60,000 of taxable income per person and 38.5% above (still to pass the Senate).
       - Box3balans 0.1.51: the box 3 preview from 2029 taxes shares and funds when they are sold, with one average acquisition price per person, instead of on their yearly change in value.
       - Box3balans 0.1.52: the box 3 preview's explanation no longer contradicts itself, and the two year choices on the Income page each have their own name for screen readers.
+      - Box3balans 0.1.53: the box 3 preview says which investment accounts kept as values per year still count with their yearly change in value, and shows €0 capital gain in a year without sales.
     nl_NL: |-
       - Eerste versie in de App Store.
       - Box3balans 0.1.46: box 3 over 2027 rekent met de cijfers van het kabinet van 3 november: een heffingsvrij vermogen van € 60.280 per persoon en 6,37% voor overige bezittingen (nog een voorstel).
@@ -134,3 +135,4 @@ x-casaos:
       - Box3balans 0.1.50: de vooruitblik op box 3 vanaf 2029 volgt de stemming in de Tweede Kamer van 12 november: 35,5% over de eerste € 60.000 belastbaar inkomen per persoon en 38,5% daarboven (de Eerste Kamer moet nog stemmen).
       - Box3balans 0.1.51: de vooruitblik op box 3 vanaf 2029 belast aandelen en fondsen bij verkoop, met één gemiddelde verkrijgingsprijs per persoon, in plaats van op hun jaarlijkse waardeverandering.
       - Box3balans 0.1.52: de uitleg bij de vooruitblik op box 3 spreekt zichzelf niet meer tegen, en de twee jaarkeuzes op de pagina Inkomsten hebben elk een eigen naam voor schermlezers.
+      - Box3balans 0.1.53: de vooruitblik op box 3 noemt de beleggingsrekeningen met waarden per jaar die nog met hun jaarlijkse waardeverandering tellen, en toont € 0 vermogenswinst in een jaar zonder verkopen.
