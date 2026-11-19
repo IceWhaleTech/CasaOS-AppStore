@@ -1,7 +1,7 @@
 name: romarr
 services:
   romarr:
-    image: ghcr.io/blizzhacker/romarr:1.10.0
+    image: ghcr.io/blizzhacker/romarr:1.11.4
     container_name: romarr
     environment:
       PUID: ${PUID:-1000}
@@ -91,13 +91,14 @@ x-casaos:
         There is no default password: the first visit to the web UI sets it, so open ROMarr right
         after installing. Settings such as LIBRARY_PATH are read on first start only; change them in
         the web UI afterwards.
-  version: "1.10.0"
-  update_at: "2026-11-15"
+  version: "1.11.4"
+  update_at: "2026-11-18"
   release_notes:
     en_US: |-
-      - Reports and Help: review a suspicious library file, keep scanner evidence with its SHA-256, quarantine or restore it.
-      - Library audits verify ordinary ZIPs against the ROMs inside; arcade sets keep container verification.
-      - Indexer Retry-After cooldowns, configurable timeouts and responsive tables.
+      - Split RAR releases (.part1.rar, .r00, .001) now import in the Docker image.
+      - An import only counts once the file is really inside the library folder.
+      - Clearer messages when ROMarr will not reuse an existing collection torrent.
+      - Includes the 1.11.3 security fix for the library relay.
   website: https://romarr.app
   repo: https://github.com/BlizzHacker/romarr
   support: https://github.com/BlizzHacker/romarr/issues
