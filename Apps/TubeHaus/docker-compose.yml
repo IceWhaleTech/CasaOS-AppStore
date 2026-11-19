@@ -4,7 +4,7 @@ services:
   # the web app and its router (Caddy)
   web:
     container_name: tubehaus-web
-    image: ghcr.io/biolend83/tubehaus-web:1.6.0
+    image: ghcr.io/biolend83/tubehaus-web:1.6.4
     restart: unless-stopped
     ports:
       - target: 8080
@@ -22,7 +22,7 @@ services:
   # HT_WARP=0: on a home connection YouTube needs no detour, so no extra capabilities.
   tubehaus:
     container_name: tubehaus-server
-    image: ghcr.io/biolend83/tubehaus:1.6.0
+    image: ghcr.io/biolend83/tubehaus:1.6.4
     restart: unless-stopped
     init: true
     environment:
@@ -78,7 +78,7 @@ x-casaos:
   port_map: "8796"
   scheme: http
   index: /
-  version: "1.6.0"
+  version: "1.6.4"
   update_at: "2026-11-12"
   release_notes:
     en_US: First version in the CasaOS App Store.
