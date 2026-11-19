@@ -1,0 +1,105 @@
+name: romarr
+services:
+  romarr:
+    image: ghcr.io/blizzhacker/romarr:1.11.4
+    container_name: romarr
+    environment:
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      TZ: $TZ
+      LIBRARY_PATH: /roms
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    network_mode: bridge
+    ports:
+      - target: 6868
+        published: "6868"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/romarr/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Games
+        target: /roms
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: User ID that owns the files ROMarr writes
+        - container: PGID
+          description:
+            en_US: Group ID that owns the files ROMarr writes
+        - container: TZ
+          description:
+            en_US: Time zone
+        - container: LIBRARY_PATH
+          description:
+            en_US: Where games are filed inside the container (read on first start only)
+      ports:
+        - container: "6868"
+          description:
+            en_US: Web UI
+      volumes:
+        - container: /config
+          description:
+            en_US: Settings, history and the password hash. Back this up.
+        - container: /roms
+          description:
+            en_US: Your game library. Point it at the folder RomM, Gaseous or your emulator frontend scans.
+        - container: /downloads
+          description:
+            en_US: Your download client's completed folder, at the same path the client reports
+x-casaos:
+  id: app.romarr.romarr
+  architectures:
+    - amd64
+    - arm64
+  main: romarr
+  index: /
+  port_map: "6868"
+  scheme: http
+  author: Move Weight
+  developer: Move Weight
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ROMarr/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ROMarr/thumbnail.jpg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ROMarr/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ROMarr/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ROMarr/screenshot-3.png
+  title:
+    en_US: ROMarr
+  tagline:
+    en_US: The *arr for games
+  description:
+    en_US: >-
+      Request a game and ROMarr searches your indexers through Prowlarr, hands the best release
+      to qBittorrent, SABnzbd or NZBGet, verifies what arrived against No-Intro and Redump, and
+      files it into RomM, Gaseous, Retrom or a plain folder tree for ES-DE, Batocera, EmuDeck and
+      RetroArch. Every release score shows its reasoning, so a wrong pick is one click to fix.
+      ROMarr includes no games or BIOS files.
+  tips:
+    before_install:
+      en_US: >-
+        There is no default password: the first visit to the web UI sets it, so open ROMarr right
+        after installing. Settings such as LIBRARY_PATH are read on first start only; change them in
+        the web UI afterwards.
+  version: "1.11.4"
+  update_at: "2026-11-18"
+  release_notes:
+    en_US: |-
+      - Split RAR releases (.part1.rar, .r00, .001) now import in the Docker image.
+      - An import only counts once the file is really inside the library folder.
+      - Clearer messages when ROMarr will not reuse an existing collection torrent.
+      - Includes the 1.11.3 security fix for the library relay.
+  website: https://romarr.app
+  repo: https://github.com/BlizzHacker/romarr
+  support: https://github.com/BlizzHacker/romarr/issues
+  docs: https://github.com/BlizzHacker/romarr/blob/main/docs/GETTING-STARTED.md
