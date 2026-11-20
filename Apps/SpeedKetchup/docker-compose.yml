@@ -1,7 +1,7 @@
 name: speedketchup
 services:
   speedketchup:
-    image: gatispei/speedketchup:0.4.0
+    image: gatispei/speedketchup:0.9.0
     container_name: speedketchup
     network_mode: bridge
     restart: unless-stopped
@@ -116,7 +116,7 @@ x-casaos:
     - arm64
     - arm
     - "386"
-  version: "0.4.0"
+  version: "0.9.0"
   update_at: "2026-10-23"
   release_notes:
     en_US: |-
