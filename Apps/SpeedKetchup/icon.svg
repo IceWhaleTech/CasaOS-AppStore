@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ef4b3f"/>
+      <stop offset="1" stop-color="#b3201c"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- gauge: 270 degree arc open at the bottom -->
+  <path d="M137.2 394.8 A168 168 0 1 1 374.8 394.8" fill="none" stroke="#fff" stroke-width="44" stroke-linecap="round"/>
+  <!-- needle: a ketchup drop pointing to the fast end -->
+  <g transform="translate(256 276) rotate(45)">
+    <path d="M0 -128 Q20 -64 43.5 -15.1 A46 46 0 1 1 -43.5 -15.1 Q-20 -64 0 -128 Z" fill="#fff"/>
+    <circle r="14" fill="#b3201c"/>
+  </g>
+</svg>
