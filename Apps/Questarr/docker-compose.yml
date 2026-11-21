@@ -1,0 +1,92 @@
+name: questarr
+services:
+  questarr:
+    image: ghcr.io/doezer/questarr:v1.6.0
+    container_name: questarr
+    restart: unless-stopped
+    ports:
+      - target: 5000
+        published: "5000"
+        protocol: tcp
+    environment:
+      - PORT=5000
+      - SQLITE_DB_PATH=/app/data/sqlite.db
+      - PUID=1000
+      - PGID=1000
+      - UMASK=022
+    volumes:
+      - type: bind
+        source: /DATA/AppData/questarr
+        target: /app/data
+      - type: bind
+        source: /DATA/Downloads
+        target: /data
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "require('http').get('http://localhost:' + (process.env.PORT || 5000) + '/api/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: User ID owning the files Questarr writes.
+        - container: PGID
+          description:
+            en_US: Group ID owning the files Questarr writes.
+        - container: UMASK
+          description:
+            en_US: File creation mask applied to files Questarr writes.
+      ports:
+        - container: "5000"
+          description:
+            en_US: Questarr web interface.
+      volumes:
+        - container: /app/data
+          description:
+            en_US: Questarr data, including the SQLite database.
+        - container: /data
+          description:
+            en_US: Optional. Mount the same root your download client writes into so Questarr can import completed downloads. Add a matching entry under Settings -> Path Mappings.
+x-casaos:
+  id: com.doezer.questarr
+  main: questarr
+  index: /
+  port_map: "5000"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Questarr/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Questarr/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Questarr/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Questarr/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Questarr/screenshot-3.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Questarr/screenshot-4.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Questarr/screenshot-5.jpg
+  title:
+    en_US: Questarr
+  tagline:
+    en_US: Discover, track and download your video games.
+  description:
+    en_US: Questarr is a video game management application inspired by the *Arr apps (Sonarr, Radarr, Prowlarr). Track your collection, discover new releases through IGDB, RSS and xREL, search your Torznab/Newznab indexers, and send releases straight to your download client. The first account created in the web interface becomes the administrator.
+  tips:
+    before_install:
+      en_US: The default library mount (/DATA/Downloads) should point at the same root your download client writes into. Configure the matching path under Settings -> Path Mappings, or remove the mount if you import manually.
+  author: Doezer
+  developer: Doezer
+  category: Media
+  architectures:
+    - amd64
+    - arm64
+  version: "1.6.0"
+  update_at: "2026-11-02"
+  release_notes:
+    en_US: See https://github.com/Doezer/Questarr/releases/tag/v1.6.0
+  website: https://github.com/Doezer/Questarr
+  repo: https://github.com/Doezer/Questarr
+  support: https://github.com/Doezer/Questarr/issues
+  docs: https://github.com/Doezer/Questarr#readme
