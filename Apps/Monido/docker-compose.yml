@@ -1,7 +1,7 @@
 name: monido
 services:
   monido:
-    image: ghcr.io/stanislav-petryashov/monido:1.3.0
+    image: ghcr.io/stanislav-petryashov/monido:1.15.0
     container_name: monido
     # a root start on purpose: the image hands /DATA/AppData/monido to PUID:PGID and runs the server as them, never as root
     user: "0:0"
@@ -76,11 +76,11 @@ x-casaos:
   index: /
   title:
     en_US: Monido
-  version: "1.3.0"
-  update_at: "2026-11-16"
+  version: "1.15.0"
+  update_at: "2026-11-21"
   release_notes:
     en_US: |-
-      Run as the data folder's owner (PUID/PGID), Claude's connector with the family password, and the advisor over stdio (monido-mcp). Full notes: https://github.com/stanislav-petryashov/monido/releases
+      The family overview shows net worth, asset composition and account trends by owner. Month close groups accounts by owner and can carry balances forward. Full notes: https://github.com/stanislav-petryashov/monido/releases/tag/v1.15.0
   website: "https://monido.dev"
   repo: "https://github.com/stanislav-petryashov/monido"
   support: "https://github.com/stanislav-petryashov/monido/issues"
