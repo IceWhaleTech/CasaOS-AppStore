@@ -1,0 +1,104 @@
+name: coinio
+services:
+  coinio:
+    image: ghcr.io/yakupemreyerli/coinio:0.2.0
+    container_name: coinio
+    restart: unless-stopped
+    network_mode: bridge
+    environment:
+      TZ: $TZ
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/coinio
+        target: /data
+        bind:
+          create_host_path: true
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web interface
+      volumes:
+        - container: /data
+          description:
+            en_US: Database and service logos
+x-casaos:
+  id: io.github.yakupemreyerli.coinio
+  main: coinio
+  index: /
+  port_map: "8080"
+  scheme: http
+  version: "0.2.0"
+  update_at: "2026-11-21"
+  release_notes:
+    en_US: First version in the CasaOS App Store.
+  architectures:
+    - amd64
+    - arm64
+  category: Finance
+  author: YakupEmreYerli
+  developer: YakupEmreYerli
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Coinio/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Coinio/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Coinio/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Coinio/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Coinio/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Coinio/screenshot-4.png
+  title:
+    en_US: Coinio
+  tagline:
+    en_US: Every subscription and bill on one calm page
+    de_DE: Alle Abos und Rechnungen auf einer ruhigen Seite
+    es_ES: Todas tus suscripciones y facturas en una página tranquila
+    fr_FR: Tous vos abonnements et factures sur une seule page
+    ja_JP: すべてのサブスクと請求を、1ページに
+    pt_BR: Todas as assinaturas e contas numa página tranquila
+    tr_TR: Bütün abonelik ve faturaların tek sakin sayfada
+    zh_CN: 所有订阅和账单，一页看清
+  description:
+    en_US: |
+      Coinio keeps every recurring payment on one page: streaming, cloud storage, the gym, rent, the domain you renew once a year.
+      See what is due this week, what is left to pay this month and what the whole year costs, converted to your main currency.
+      Reminders by email, Telegram, Discord, ntfy and more; calendar and reports; 161 built-in services with logos; import from Wallos;
+      a built-in MCP server for AI assistants and an iPhone widget. Eight languages. No telemetry, no paid tier.
+    de_DE: |
+      Coinio sammelt jede wiederkehrende Zahlung auf einer Seite: Streaming, Cloud-Speicher, Fitnessstudio, Miete, die jährliche Domain.
+      Sie sehen, was diese Woche fällig ist, was diesen Monat noch offen ist und was das ganze Jahr kostet, in Ihrer Hauptwährung.
+      Erinnerungen per E-Mail, Telegram, Discord, ntfy und mehr; Kalender und Berichte; Import aus Wallos; MCP-Server für KI-Assistenten.
+    es_ES: |
+      Coinio reúne todos tus pagos recurrentes en una página: streaming, almacenamiento en la nube, el gimnasio, el alquiler, el dominio anual.
+      Ves lo que vence esta semana, lo que queda por pagar este mes y lo que cuesta el año entero, en tu moneda principal.
+      Avisos por correo, Telegram, Discord, ntfy y más; calendario e informes; importación desde Wallos; servidor MCP para asistentes de IA.
+    fr_FR: |
+      Coinio rassemble tous vos paiements récurrents sur une page : streaming, stockage cloud, salle de sport, loyer, le domaine renouvelé chaque année.
+      Vous voyez ce qui tombe cette semaine, ce qu'il reste à payer ce mois-ci et ce que coûte l'année, dans votre devise principale.
+      Rappels par e-mail, Telegram, Discord, ntfy et plus ; calendrier et rapports ; import depuis Wallos ; serveur MCP pour assistants IA.
+    ja_JP: |
+      Coinio は、動画配信、クラウドストレージ、ジム、家賃、年1回のドメイン更新など、定期的な支払いをすべて1ページにまとめます。
+      今週の支払い、今月の残り、1年間の合計がメインの通貨でひと目でわかります。
+      メール・Telegram・Discord・ntfy などでのリマインダー、カレンダーとレポート、Wallos からのインポート、AI アシスタント向け MCP サーバーに対応。
+    pt_BR: |
+      O Coinio reúne todos os pagamentos recorrentes numa página: streaming, armazenamento em nuvem, academia, aluguel, o domínio anual.
+      Você vê o que vence nesta semana, o que falta pagar no mês e quanto custa o ano inteiro, na sua moeda principal.
+      Lembretes por e-mail, Telegram, Discord, ntfy e mais; calendário e relatórios; importação do Wallos; servidor MCP para assistentes de IA.
+    tr_TR: |
+      Coinio bütün düzenli ödemelerini tek sayfada toplar: dizi platformları, bulut depolama, spor salonu, kira, yılda bir yenilenen alan adı.
+      Bu hafta ne ödeneceğini, bu ay ne kaldığını ve bütün yılın neye mal olduğunu kendi para biriminde görürsün.
+      E-posta, Telegram, Discord, ntfy ve daha fazlasıyla hatırlatma; takvim ve raporlar; Wallos'tan aktarma; yapay zekâ asistanları için MCP sunucusu.
+    zh_CN: |
+      Coinio 把所有定期付款放在一页：视频会员、云存储、健身房、房租、每年续费的域名。
+      本周要付什么、本月还剩多少、全年总共多少钱，一目了然，并按你的主货币汇总。
+      支持邮件、Telegram、Discord、ntfy 等提醒，日历与报表，从 Wallos 导入，以及面向 AI 助手的 MCP 服务器。
+  tips:
+    before_install:
+      en_US: |
+        Open the WebUI after the first start and create your account. All data lives in /DATA/AppData/coinio.
+  website: https://getcoinio.me
+  repo: https://github.com/YakupEmreYerli/Coinio
+  support: https://github.com/YakupEmreYerli/Coinio/issues
+  docs: https://docs.getcoinio.me/docs/installation/casaos
