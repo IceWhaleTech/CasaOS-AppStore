@@ -1,7 +1,7 @@
 name: life-console
 services:
   life-console:
-    image: ghcr.io/tj-coding/life-console:0.1.0
+    image: ghcr.io/tj-coding/life-console:0.2.0
     container_name: life-console
     restart: unless-stopped
     depends_on:
@@ -88,10 +88,10 @@ x-casaos:
   index: /
   title:
     en_US: Life Console
-  version: "0.1.0"
-  update_at: "2026-11-13"
+  version: "0.2.0"
+  update_at: "2026-11-22"
   release_notes:
-    en_US: First release in the CasaOS App Store.
+    en_US: "0.2.0: search in the backlog and Todos, draw tasks on the timeline and cut blocks, deadlines at a glance in Plan week, a daily workload capacity and blocked-out times, repeat weekly tasks, and a thank-you note when an issue you reported is fixed."
   website: "https://life-console.dev"
   repo: "https://github.com/TJ-coding/life-console"
   support: "https://github.com/TJ-coding/life-console/issues"
