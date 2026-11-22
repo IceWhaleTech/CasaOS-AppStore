@@ -1,0 +1,85 @@
+name: delta
+services:
+  delta:
+    image: ghcr.io/zeapsu/delta:1.6.0
+    # Starts as root to hand the root-owned AppData folder to the image's
+    # node user, then runs Delta as that user (scripts/start.mjs).
+    user: "0:0"
+    restart: unless-stopped
+    environment:
+      DELTA_ALLOWED_NETWORKS: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,100.64.0.0/10
+      DELTA_UPDATE_CHECK: "off"
+    ports:
+      - target: 3000
+        published: "3740"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      ports:
+        - container: "3000"
+          description:
+            en_US: Web UI
+      volumes:
+        - container: /data
+          description:
+            en_US: Database and backups
+      envs:
+        - container: DELTA_ALLOWED_NETWORKS
+          description:
+            en_US: Networks allowed to use the API. Narrow to your LAN, e.g. 192.168.1.0/24
+  # Plaid refresh + sync every 6 hours and a daily database backup.
+  jobs:
+    image: ghcr.io/zeapsu/delta:1.6.0
+    user: "0:0"
+    restart: unless-stopped
+    network_mode: "service:delta"
+    depends_on: [delta]
+    command: ["node", "scripts/jobs.mjs"]
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+x-casaos:
+  id: io.github.zeapsu.delta
+  main: delta
+  index: /
+  port_map: "3740"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Delta/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Delta/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Delta/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Delta/screenshot-3.png
+  title:
+    en_US: Delta
+  tagline:
+    en_US: Your money, on your machine, readable by your agent.
+  description:
+    en_US: |
+      Delta connects your banks, cards and brokerages through Plaid and shows spending, budgets, recurring charges, investments and net worth. Your data is stored on this server.
+
+      First run: open Delta and follow the checklist. It asks for your own Plaid keys (free for personal use), connects your accounts and pulls your history.
+
+      Delta asks for no login until you set a password in Settings. Keep it on your home network or Tailscale, never port-forwarded.
+
+      **Agents:** Delta serves an MCP server, so the agent you already use can read your finances with its own revocable token.
+
+      - [Website and docs](https://zeapsu.github.io/Delta/)
+      - [GitHub](https://github.com/zeapsu/Delta)
+  tips:
+    before_install:
+      en_US: You need Plaid keys (free for personal use). Delta asks for no login until you set a password in Settings, so keep it off the public internet.
+  author: zeapsu
+  developer: Delta
+  category: Finance
+  architectures:
+    - amd64
+    - arm64
+  version: "1.6.0"
+  website: https://zeapsu.github.io/Delta/
+  repo: https://github.com/zeapsu/Delta
+  support: https://github.com/zeapsu/Delta/issues
+  docs: https://zeapsu.github.io/Delta/docs/home-server
