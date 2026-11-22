@@ -1,7 +1,7 @@
 name: romarr
 services:
   romarr:
-    image: ghcr.io/blizzhacker/romarr:1.11.4
+    image: ghcr.io/blizzhacker/romarr:1.12.0
     container_name: romarr
     environment:
       PUID: ${PUID:-1000}
@@ -91,14 +91,15 @@ x-casaos:
         There is no default password: the first visit to the web UI sets it, so open ROMarr right
         after installing. Settings such as LIBRARY_PATH are read on first start only; change them in
         the web UI afterwards.
-  version: "1.11.4"
-  update_at: "2026-11-18"
+  version: "1.12.0"
+  update_at: "2026-11-22"
   release_notes:
     en_US: |-
-      - Split RAR releases (.part1.rar, .r00, .001) now import in the Docker image.
-      - An import only counts once the file is really inside the library folder.
-      - Clearer messages when ROMarr will not reuse an existing collection torrent.
-      - Includes the 1.11.3 security fix for the library relay.
+      - Hydra Launcher download sources, with console platforms and file-host routing.
+      - The Mister Download Manager plugin, plus Archive.org and four free-content source plugins installed by default.
+      - A built-in chat agent for Ollama, OpenAI-compatible endpoints and Anthropic.
+      - Larger text and buttons, and notices you can dismiss.
+      - Queued ROM Hub downloads are no longer blocklisted as stalled.
   website: https://romarr.app
   repo: https://github.com/BlizzHacker/romarr
   support: https://github.com/BlizzHacker/romarr/issues
