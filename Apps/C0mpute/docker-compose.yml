@@ -1,0 +1,80 @@
+name: c0mpute
+services:
+  c0mpute:
+    image: ghcr.io/profullstack/c0mpute-worker:0.3.103@sha256:6e9443d62ac8721e9f6e41a7d7ab88c25c1da5c2b1ce95f909aeb6ae9e0b8719
+    container_name: c0mpute
+    restart: unless-stopped
+    stop_grace_period: 1m
+    environment:
+      C0MPUTE_UI_BIND: "0.0.0.0:8080"
+    ports:
+      - target: 8080
+        published: "8337"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: C0MPUTE_UI_BIND
+          description:
+            en_US: Address of the status page inside the container
+      ports:
+        - container: "8080"
+          description:
+            en_US: Status page (no login, keep it on your LAN)
+      volumes:
+        - container: /data
+          description:
+            en_US: Node identity keys, config, downloaded runtimes and models, storage shards
+x-casaos:
+  id: com.c0mpute.worker
+  architectures:
+    - amd64
+    - arm64
+  main: c0mpute
+  category: AI
+  developer: Profullstack
+  author: Profullstack
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/C0mpute/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/C0mpute/screenshot-1.png
+  thumbnail: ""
+  scheme: http
+  port_map: "8337"
+  index: /
+  title:
+    en_US: c0mpute
+  tagline:
+    en_US: Run a node on the c0mpute decentralized compute network
+  description:
+    en_US: |
+      c0mpute is an open, decentralized compute network. This app runs a c0mpute worker on your device so it can serve jobs from the network: AI inference on open-weight models (through Infernet), speech, transcoding and storage.
+
+      The worker runs jobs from other people on your hardware, inside this app's container. Paid demand on the network is early: earnings depend on what the network asks for and vary, and estimates are not payouts.
+
+      **Getting started:**
+      - Open the app to see the worker's status, node id and roles.
+      - Set a public nickname to find your node on the board at https://c0mpute.com/nodes.
+      - Add a payout address for inference earnings. Earnings accrue without one; you need it to withdraw.
+
+      The first start downloads speech models and AI runtimes (several GB) before the worker serves. No port forwarding is needed. The status page has no login, so keep port 8337 on your local network.
+
+      **Learn more:**
+      - [c0mpute](https://c0mpute.com)
+      - [Source code (MIT)](https://github.com/profullstack/c0mpute)
+      - [What the worker can touch](https://github.com/profullstack/c0mpute/blob/master/docs/node-safety.md)
+  tips:
+    before_install:
+      en_US: |
+        The worker downloads several GB of models and runtimes on first start and runs jobs from the c0mpute network on this device. Earnings vary and are not guaranteed.
+  version: "0.3.103"
+  update_at: "2026-11-22"
+  release_notes:
+    en_US: |-
+      - First release on the CasaOS App Store.
+  website: "https://c0mpute.com"
+  repo: "https://github.com/profullstack/c0mpute"
+  support: "https://github.com/profullstack/c0mpute/issues"
+  docs: "https://github.com/profullstack/c0mpute/blob/master/docker/worker/README.md"
