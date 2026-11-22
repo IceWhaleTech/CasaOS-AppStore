@@ -1,0 +1,96 @@
+name: pigallery2
+services:
+  pigallery2:
+    image: bpatrik/pigallery2:3.8.0
+    container_name: pigallery2
+    restart: unless-stopped
+    network_mode: bridge
+    environment:
+      NODE_ENV: production
+    ports:
+      - target: 80
+        published: "8480"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /app/data/config
+      - type: bind
+        source: /DATA/AppData/$AppID/db
+        target: /app/data/db
+      - type: bind
+        source: /DATA/AppData/$AppID/tmp
+        target: /app/data/tmp
+      - type: bind
+        source: /DATA/Gallery
+        target: /app/data/images
+        read_only: true
+    x-casaos:
+      ports:
+        - container: "80"
+          description:
+            en_US: WebUI HTTP Port
+      volumes:
+        - container: /app/data/config
+          description:
+            en_US: Settings (config.json) and extensions.
+        - container: /app/data/db
+          description:
+            en_US: Database. It is a cache of your photo folder and is rebuilt when needed; users are kept.
+        - container: /app/data/tmp
+          description:
+            en_US: Thumbnails and converted videos. Regenerated when missing.
+        - container: /app/data/images
+          description:
+            en_US: Your photos and videos, read-only. PiGallery2 shows the subfolders as albums.
+x-casaos:
+  id: io.github.bpatrik.pigallery2
+  main: pigallery2
+  index: /
+  port_map: "8480"
+  scheme: http
+  version: "3.8.0"
+  update_at: "2026-11-18"
+  release_notes:
+    en_US: First version in the ZimaOS App Store.
+  architectures:
+    - amd64
+    - arm64
+  category: Media
+  author: Patrik J. Braun
+  developer: Patrik J. Braun
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PiGallery2/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PiGallery2/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PiGallery2/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PiGallery2/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/PiGallery2/screenshot-3.png
+  title:
+    en_US: PiGallery2
+  tagline:
+    en_US: Fast, directory-first photo gallery for low-resource servers
+  description:
+    en_US: |
+      PiGallery2 is a fast, lightweight photo gallery that shows your existing folder structure as it is.
+      It gets read-only access to your photos, so it's a safe way to browse a library you already keep in folders.
+      It was built to run well on a Raspberry Pi.
+
+      - Browse your folders as albums, with thumbnails generated on the fly
+      - Search by keyword, date, place, person, camera and more, and save searches as albums
+      - Map of your geotagged photos and GPX tracks
+      - Faces from your photo metadata (e.g. tagged in digiKam or Lightroom)
+      - Videos with automatic transcoding, live photos, HEIC and RAW (DNG, ARW)
+      - Share folders with a link, optionally with a password and expiry date
+      - Multiple users, each with their own allow and block lists of folders
+      - Photo frame and slideshow mode
+  tips:
+    before_install:
+      en_US: |
+        PiGallery2 shows the photos in /DATA/Gallery. To use another folder, change the /app/data/images volume before installing.
+        Put some photos into the folder before opening PiGallery2: in version 3.8.0 an empty folder shows an error instead of an empty gallery.
+
+        Log in with user admin and password admin, then change the password in Settings → Users.
+  website: https://bpatrik.github.io/pigallery2/
+  repo: https://github.com/bpatrik/pigallery2
+  docs: https://bpatrik.github.io/pigallery2/
+  support: https://github.com/bpatrik/pigallery2/discussions
