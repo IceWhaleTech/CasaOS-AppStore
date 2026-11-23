@@ -93,7 +93,7 @@ x-casaos:
       - WebDAV per user at `/dav/`, so your phone can back up photos automatically
       - Installable on your phone as an app (PWA)
 
-      **Raspberry Pi 3:** it works, but the Pi 3 has little power, so thumbnails, viewing photos and large uploads will be slow. A Pi 4 or 5 is recommended for daily use.
+      **Recommended: Raspberry Pi 4 or 5.** The Pi 3 works, but with little memory (1 GB) it will be slow with photos, thumbnails and large uploads.
 
       Built with Python (FastAPI + SQLite) and plain JavaScript.
 
@@ -115,7 +115,7 @@ x-casaos:
       - WebDAV por usuario en `/dav/`, para que el móvil suba las fotos solo
       - Se puede instalar en el móvil como app (PWA)
 
-      **Raspberry Pi 3:** funciona, pero la Pi 3 tiene poca potencia, así que las miniaturas, ver fotos y las subidas grandes irán lentas. Para un uso diario cómodo, mejor una Pi 4 o 5.
+      **Recomendado: Raspberry Pi 4 o 5.** La Pi 3 funciona, pero con poca memoria (1 GB) irá lenta con fotos, miniaturas y subidas grandes.
 
       Hecho con Python (FastAPI + SQLite) y JavaScript sin frameworks.
 
@@ -132,7 +132,7 @@ x-casaos:
 
         For automatic photo uploads from your phone, use a WebDAV app (FolderSync, PhotoSync...) with the server `http://<your-device-ip>:8090/dav/` and your DrivePanel username and password.
 
-        On a Raspberry Pi 3 it works, but thumbnails, photos and large uploads will be slow.
+        Recommended: Raspberry Pi 4 or 5. The Pi 3 works, but with little memory (1 GB) it will be slow with photos, thumbnails and large uploads.
 
         DrivePanel uses plain HTTP. Do not open port 8090 on your router: use a VPN or an HTTPS reverse proxy to reach it from outside your home.
       es_ES: |
@@ -142,7 +142,7 @@ x-casaos:
 
         Para que el móvil suba las fotos solo, usa una app de WebDAV (FolderSync, PhotoSync...) con el servidor `http://<IP-de-tu-equipo>:8090/dav/` y tu usuario y contraseña de DrivePanel.
 
-        En una Raspberry Pi 3 funciona, pero las miniaturas, las fotos y las subidas grandes irán lentas.
+        Recomendado: Raspberry Pi 4 o 5. La Pi 3 funciona, pero con poca memoria (1 GB) irá lenta con fotos, miniaturas y subidas grandes.
 
         DrivePanel usa HTTP sin cifrar. No abras el puerto 8090 en el router: para entrar desde fuera de casa usa una VPN o un proxy inverso con HTTPS.
   author: pctecnikk
