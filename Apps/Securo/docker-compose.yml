@@ -1,11 +1,11 @@
 name: securo
 
 # The backend, the Celery worker and the one-shot migration share this
-# environment. Secrets are generated once for this package: Securo keeps its
-# instance key in the database when SECRET_KEY is empty, and the database
-# password below only has to match between these containers.
+# environment. No secret is written here: Securo keeps its instance key in the
+# database when SECRET_KEY is empty, and PostgreSQL accepts connections from
+# this app's own network only (it is never published on a host port).
 x-backend-env: &backend-env
-  DATABASE_URL: postgresql+asyncpg://postgres:8eb639a15a67e076d0d4854b02b8313921086b04ee9fcd63@securo-db:5432/securo
+  DATABASE_URL: postgresql+asyncpg://postgres@securo-db:5432/securo
   SECRET_KEY: ""
   DEBUG: "false"
   FRONTEND_URL: http://localhost:3847
@@ -153,8 +153,10 @@ services:
     image: docker.io/pgvector/pgvector:pg16@sha256:484e838076e04939d27d3e176e91c86eea96236126023be8d3059761122e579f
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 8eb639a15a67e076d0d4854b02b8313921086b04ee9fcd63
       POSTGRES_DB: securo
+      # No password: this database is reachable only from securo_net (no host
+      # port is published), and the app connects to it from that network only.
+      POSTGRES_HOST_AUTH_METHOD: trust
       # Keep PostgreSQL's files in a subfolder of the mount: a host folder that
       # already holds something else (lost+found, for one) stops initdb.
       PGDATA: /var/lib/postgresql/data/pgdata
