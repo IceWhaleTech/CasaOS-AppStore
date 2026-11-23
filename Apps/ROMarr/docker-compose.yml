@@ -1,7 +1,7 @@
 name: romarr
 services:
   romarr:
-    image: ghcr.io/blizzhacker/romarr:1.12.0
+    image: ghcr.io/blizzhacker/romarr:1.13.2
     container_name: romarr
     environment:
       PUID: ${PUID:-1000}
@@ -91,15 +91,15 @@ x-casaos:
         There is no default password: the first visit to the web UI sets it, so open ROMarr right
         after installing. Settings such as LIBRARY_PATH are read on first start only; change them in
         the web UI afterwards.
-  version: "1.12.0"
-  update_at: "2026-11-22"
+  version: "1.13.2"
+  update_at: "2026-11-23"
   release_notes:
     en_US: |-
-      - Hydra Launcher download sources, with console platforms and file-host routing.
-      - The Mister Download Manager plugin, plus Archive.org and four free-content source plugins installed by default.
-      - A built-in chat agent for Ollama, OpenAI-compatible endpoints and Anthropic.
-      - Larger text and buttons, and notices you can dismiss.
-      - Queued ROM Hub downloads are no longer blocklisted as stalled.
+      - Cloud storage: back up, mirror, offload or import library folders with Google Drive, OneDrive, Dropbox, S3 and every other rclone provider.
+      - Rapidgator and 1fichier premium accounts, and MultiUp links split into their mirrors.
+      - Verified imports are identified by their hashes with ScreenScraper and other providers.
+      - The Arcade Punks plugin is preinstalled; member NZB, torrent and file-host links route to the right client.
+      - Collections without a platform no longer finish at 100% having done nothing.
   website: https://romarr.app
   repo: https://github.com/BlizzHacker/romarr
   support: https://github.com/BlizzHacker/romarr/issues
