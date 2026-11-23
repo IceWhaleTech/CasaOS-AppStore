@@ -1,0 +1,303 @@
+name: securo
+
+# The backend, the Celery worker and the one-shot migration share this
+# environment. Secrets are generated once for this package: Securo keeps its
+# instance key in the database when SECRET_KEY is empty, and the database
+# password below only has to match between these containers.
+x-backend-env: &backend-env
+  DATABASE_URL: postgresql+asyncpg://postgres:8eb639a15a67e076d0d4854b02b8313921086b04ee9fcd63@securo-db:5432/securo
+  SECRET_KEY: ""
+  DEBUG: "false"
+  FRONTEND_URL: http://localhost:3847
+  REDIS_URL: redis://securo-redis:6379/0
+  # This app's own nginx is the only proxy in front of the backend, so the
+  # visitor's address is one hop from the right in X-Forwarded-For.
+  TRUSTED_PROXY_HOPS: "1"
+  STORAGE_PROVIDER: local
+  STORAGE_LOCAL_PATH: /app/data/attachments
+  AGENTS_KNOWLEDGE_STORAGE_PATH: /app/data/agent_knowledge
+  TZ: ${TZ:-UTC}
+
+x-backend-base: &backend-base
+  image: ghcr.io/securo-finance/securo-backend:0.21.0@sha256:bc3ebd62ddd725c9a457c53b0973c841457ed24b4a599ece9b56eff3a677b371
+  environment: *backend-env
+  # Every backend process refuses to start until the schema is at head, so no
+  # worker races the migration job.
+  entrypoint: ["sh", "-c", 'alembic current --check-heads && exec "$$@"', "sh"]
+  volumes:
+    - type: bind
+      source: /DATA/AppData/securo/secrets
+      target: /app/secrets
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /DATA/AppData/securo/attachments
+      target: /app/data/attachments
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /DATA/AppData/securo/backups
+      target: /app/data/backups
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /DATA/AppData/securo/agent_knowledge
+      target: /app/data/agent_knowledge
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /DATA/AppData/securo/embedding_models
+      target: /app/data/embedding_models
+      bind:
+        create_host_path: true
+  networks:
+    - securo_net
+  restart: unless-stopped
+
+services:
+  securo-web:
+    container_name: securo-web
+    image: ghcr.io/securo-finance/securo-frontend:0.21.0@sha256:a825f53458f97a4d8802b1e625547b9f851f6e6dfff60bfa6d2a24811c9eba82
+    environment:
+      BACKEND_URL: http://securo-api:8000
+    ports:
+      - target: 8080
+        published: "3847"
+        protocol: tcp
+    depends_on:
+      securo-api:
+        condition: service_healthy
+    networks:
+      - securo_net
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+
+  securo-api:
+    <<: *backend-base
+    container_name: securo-api
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=5)"]
+      interval: 10s
+      timeout: 10s
+      start_period: 60s
+      retries: 12
+    depends_on:
+      securo-db:
+        condition: service_healthy
+      securo-redis:
+        condition: service_healthy
+      securo-migrate:
+        condition: service_completed_successfully
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+
+  securo-worker:
+    <<: *backend-base
+    container_name: securo-worker
+    # Two workers are plenty for bank syncs and report jobs and keep the
+    # memory footprint small (the default is one per CPU).
+    command: celery -A app.worker worker --loglevel=info --concurrency=2
+    depends_on:
+      securo-db:
+        condition: service_healthy
+      securo-redis:
+        condition: service_healthy
+      securo-migrate:
+        condition: service_completed_successfully
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+
+  securo-beat:
+    <<: *backend-base
+    container_name: securo-beat
+    command: celery -A app.worker beat --loglevel=info
+    depends_on:
+      securo-db:
+        condition: service_healthy
+      securo-redis:
+        condition: service_healthy
+      securo-migrate:
+        condition: service_completed_successfully
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+
+  # One-shot migration job. Everything that touches the schema waits for it to
+  # exit 0, so nothing serves a half-migrated database.
+  securo-migrate:
+    <<: *backend-base
+    container_name: securo-migrate
+    restart: "no"
+    entrypoint: ["alembic"]
+    command: upgrade head
+    depends_on:
+      securo-db:
+        condition: service_healthy
+      securo-redis:
+        condition: service_healthy
+
+  securo-db:
+    container_name: securo-db
+    # pgvector's build of PostgreSQL 16: the agents knowledge base needs the
+    # `vector` extension, and it is a drop-in replacement for postgres:16.
+    image: docker.io/pgvector/pgvector:pg16@sha256:484e838076e04939d27d3e176e91c86eea96236126023be8d3059761122e579f
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 8eb639a15a67e076d0d4854b02b8313921086b04ee9fcd63
+      POSTGRES_DB: securo
+      # Keep PostgreSQL's files in a subfolder of the mount: a host folder that
+      # already holds something else (lost+found, for one) stops initdb.
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - type: bind
+        source: /DATA/AppData/securo/postgres
+        target: /var/lib/postgresql/data
+        bind:
+          create_host_path: true
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    networks:
+      - securo_net
+    restart: unless-stopped
+    stop_grace_period: 1m
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+
+  securo-redis:
+    container_name: securo-redis
+    image: docker.io/library/redis:8-alpine@sha256:7958cfbb9d152f87dadfbc89f1b0b15938f0b81ff8982feb327476f4911935c3
+    volumes:
+      - type: bind
+        source: /DATA/AppData/securo/redis
+        target: /data
+        bind:
+          create_host_path: true
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    networks:
+      - securo_net
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+
+networks:
+  securo_net:
+    driver: bridge
+
+x-casaos:
+  id: com.usesecuro.securo
+  main: securo-web
+  index: /
+  port_map: "3847"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Securo/icon.svg
+  screenshot_link:
+    - screenshot-1.png
+  title:
+    en_US: Securo
+    pt_BR: Securo
+  tagline:
+    en_US: Open-source finance for households and small businesses
+    pt_BR: Finanças open source para famílias e pequenos negócios
+  description:
+    en_US: |
+      Securo keeps personal and business money in one place: accounts,
+      transactions, budgets, invoices and reports, on your own hardware.
+
+      **What it does**
+      - **Reconciliation that adds up**: every account, card and wallet has a
+        running balance, and the month's income, expenses and savings rate are
+        computed from the transactions you actually have.
+      - **Bank connections**: Pluggy for Brazil, Enable Banking for Europe and
+        SimpleFIN for the US and Canada, each using credentials you create, so
+        the data stays on your server.
+      - **Your rules**: CSV import for anything else, categories, budgets,
+        recurring transactions and rules that categorize new entries as they
+        arrive.
+      - **Bills and reports**: invoices with attachments, invoices to issue,
+        net worth, cash flow and goals.
+      - **Multi-user**: separate workspaces for the household and the business,
+        with roles for who may edit and who may only read.
+
+      Every number comes from your own database. Run it on a NAS, a mini PC or
+      a home server and reach it from any browser on your network.
+
+      The source code is at
+      [github.com/securo-finance/securo](https://github.com/securo-finance/securo).
+    pt_BR: |
+      O Securo junta o dinheiro pessoal e o da empresa num lugar só: contas,
+      transações, orçamentos, faturas e relatórios, no seu próprio servidor.
+
+      **O que ele faz**
+      - **Conciliação que fecha**: cada conta, cartão e carteira tem saldo
+        corrente, e a receita, a despesa e a taxa de economia do mês saem das
+        transações que você realmente tem.
+      - **Conexão com bancos**: Pluggy no Brasil, Enable Banking na Europa e
+        SimpleFIN nos EUA e no Canadá, cada um com credenciais suas, então os
+        dados ficam no seu servidor.
+      - **Suas regras**: importação de CSV para o resto, categorias,
+        orçamentos, recorrências e regras que categorizam os lançamentos novos.
+      - **Faturas e relatórios**: faturas com anexos, notas a emitir, patrimônio,
+        fluxo de caixa e metas.
+      - **Várias pessoas**: espaços separados para a casa e para a empresa, com
+        papéis para quem edita e quem só consulta.
+
+      Todo número vem do seu banco de dados. Roda num NAS, num mini PC ou num
+      servidor de casa, e é acessado por qualquer navegador da rede.
+
+      O código está em
+      [github.com/securo-finance/securo](https://github.com/securo-finance/securo).
+  tips:
+    before_install:
+      en_US: |
+        Securo starts empty: open it and create the administrator account on
+        the welcome screen. Nothing is pre-created and there is no default
+        password.
+
+        Opening Securo from another machine on the network? Set FRONTEND_URL in
+        this app's compose file to the address you actually use
+        (http://<nas-address>:3847) and recreate the app. Bank OAuth callbacks
+        and password-reset links are built from that address.
+    pt_BR: |
+      O Securo começa vazio: abra e crie a conta de administrador na tela de
+      boas-vindas. Nada vem pronto e não existe senha padrão.
+
+      Vai abrir o Securo por outra máquina da rede? Ajuste FRONTEND_URL na
+      composição do aplicativo para o endereço que você usa de verdade
+      (http://<endereço-do-nas>:3847) e recrie o aplicativo. O retorno do login
+      dos bancos e os links de redefinição de senha saem desse endereço.
+  author: Securo
+  developer: Securo
+  category: Finance
+  architectures:
+    - amd64
+    - arm64
+  version: "0.21.0"
+  update_at: "2026-11-23"
+  release_notes:
+    en_US: First version in the ZimaOS App Store.
+    pt_BR: Primeira versão na loja de aplicativos do ZimaOS.
+  website: https://usesecuro.com
+  repo: https://github.com/securo-finance/securo
+  support: https://github.com/securo-finance/securo/issues
+  docs: https://blog.usesecuro.com
