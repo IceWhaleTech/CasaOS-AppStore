@@ -1,0 +1,151 @@
+name: ph-intercept
+services:
+  ph-intercept:
+    image: m00grin/ph-intercept:1.6.0
+    container_name: ph-intercept
+    restart: unless-stopped
+    network_mode: bridge
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          pids: 20
+        reservations:
+          memory: 64M
+    ports:
+      - target: 4653
+        published: "4653"
+        protocol: tcp
+    environment:
+      BLOCKER_URL: ""
+      BLOCKER_PASSWORD: ""
+      BLOCKER_USERNAME: ""
+      BLOCKER_TOKEN: ""
+      BG_MODE: starfield
+      SKY_PRESET: summer_triangle
+      BG_IMAGE: ""
+      RETURN_URL: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/bg
+        target: /app/static/bg
+        read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    x-casaos:
+      envs:
+        - container: BLOCKER_URL
+          description:
+            en_US: "The address you open in a browser to manage your Pi-hole, AdGuard Home, or Technitium, e.g. http://192.168.1.2"
+        - container: BLOCKER_PASSWORD
+          description:
+            en_US: "Pi-hole: an app password (Settings > Web interface / API > Configure app password). AdGuard Home or Technitium: your login password."
+        - container: BLOCKER_USERNAME
+          description:
+            en_US: AdGuard Home or Technitium login username. Leave blank for Pi-hole.
+        - container: BLOCKER_TOKEN
+          description:
+            en_US: Technitium only, instead of a username and password. An API token from Administration > Sessions > Create Token.
+        - container: BG_MODE
+          description:
+            en_US: "Default background: starfield, nebula, outrun, or dark"
+        - container: SKY_PRESET
+          description:
+            en_US: "Starfield sky: summer_triangle, orion, scorpius, or southern_cross"
+        - container: BG_IMAGE
+          description:
+            en_US: "Custom background: an image URL, or /bg/your-file.jpg for a file in the backgrounds folder. Leave blank to disable."
+        - container: RETURN_URL
+          description:
+            en_US: Where pressing ESC takes you, e.g. your dashboard. Leave blank to disable.
+      ports:
+        - container: "4653"
+          description:
+            en_US: WebUI Port
+      volumes:
+        - container: /app/static/bg
+          description:
+            en_US: Backgrounds folder. Put your images here and set BG_IMAGE to /bg/your-file.jpg
+x-casaos:
+  id: io.github.m00grin.phintercept
+  main: ph-intercept
+  index: /
+  port_map: "4653"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ph-intercept/icon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ph-intercept/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ph-intercept/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ph-intercept/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ph-intercept/screenshot-3.png
+  title:
+    en_US: ph-intercept
+  tagline:
+    en_US: A space battle visualizer for your DNS ad blocker
+  description:
+    en_US: |
+      ph-intercept is a real-time dashboard for Pi-hole v6, AdGuard Home, and Technitium DNS, drawn as a retro arcade game. Every DNS query becomes a ship on screen: allowed queries fly past as friendlies, and blocked ones are shot down by your interceptor.
+
+      **Key Features:**
+      - Live view of every DNS query, streamed from your ad-blocker's API
+      - HUD with total, blocked, and allowed counts plus your block rate
+      - Pause blocking, with an optional timer, and refresh your blocklists from the HUD
+      - Starfield with real stars and planets, plus nebula, outrun, and dark backgrounds
+      - Your own background image, from a URL or a file in the app's backgrounds folder
+      - Split-screen 2-player mode for watching two ad-blockers side by side
+      - Single lightweight container with no database
+
+      **Setup:**
+
+      ph-intercept needs a Pi-hole v6, AdGuard Home, Technitium, or Blocky ad-blocker that this device can reach. After installing, open the app's menu (the three dots on its icon), choose Settings (Manage on ZimaOS 1.8), and edit its environment variables:
+
+      1. Set BLOCKER_URL to the address you open in a browser to manage your ad-blocker, like http://192.168.1.2 for Pi-hole, http://192.168.1.2:3000 for AdGuard Home, or http://192.168.1.2:5380 for Technitium. ph-intercept works out which one it is.
+      2. Add its login:
+         - Pi-hole: BLOCKER_PASSWORD, an app password from Pi-hole's Settings > Web interface / API, not your login password.
+         - AdGuard Home: BLOCKER_USERNAME and BLOCKER_PASSWORD.
+         - Technitium: BLOCKER_TOKEN, an API token from the Technitium console, or BLOCKER_USERNAME and BLOCKER_PASSWORD.
+      3. Save. The app restarts with your settings.
+
+      For your own background, put an image in the backgrounds folder and set BG_IMAGE to /bg/your-file.jpg. For 2-player mode (two ad-blockers side by side, of any kind) and every other option, see the [full settings list](https://github.com/m00grin/ph-intercept#configuration). Blocky needs its query log folder shared with ph-intercept, so set it up with your own compose instead: see [Blocky setup](https://github.com/m00grin/ph-intercept#blocky-setup).
+
+      **Learn More:**
+      - [GitHub Repository](https://github.com/m00grin/ph-intercept)
+      - [AdGuard Home setup](https://github.com/m00grin/ph-intercept/blob/main/adguard/README.md)
+      - [Technitium setup](https://github.com/m00grin/ph-intercept/blob/main/technitium/README.md)
+  tips:
+    before_install:
+      en_US: |
+        ph-intercept needs a Pi-hole v6, AdGuard Home, Technitium, or Blocky ad-blocker that this device can reach.
+
+        To connect it, open the app's menu (the three dots on its icon), choose Settings (Manage on ZimaOS 1.8), and edit its environment variables:
+
+        1. Set BLOCKER_URL to the address you open in a browser to manage your ad-blocker, like http://192.168.1.2 for Pi-hole, http://192.168.1.2:3000 for AdGuard Home, or http://192.168.1.2:5380 for Technitium. ph-intercept works out which one it is.
+        2. Add its login:
+           - Pi-hole: BLOCKER_PASSWORD, an app password from Pi-hole's Settings > Web interface / API, not your login password.
+           - AdGuard Home: BLOCKER_USERNAME and BLOCKER_PASSWORD.
+           - Technitium: BLOCKER_TOKEN, an API token from the Technitium console, or BLOCKER_USERNAME and BLOCKER_PASSWORD.
+        3. Click Save. The app restarts with your settings.
+
+        Optional: for your own background, put an image in the backgrounds folder (listed under Volumes) and set BG_IMAGE to /bg/your-file.jpg.
+  author: m00grin
+  developer: m00grin
+  category: Networking
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  version: "1.6.0"
+  update_at: "2026-11-22"
+  release_notes:
+    en_US: "Added: Blocky support; 2-player with two different ad-blockers; One set of settings for every ad-blocker; Ignore lists for both sides or one; Docker secrets; Startup banner and report; LOG_LEVEL; SBOM; More places to get the image. Changed: Faster, calmer first start; Quieter log; Simpler example composes; Read-only screens hide the list-update arrows; Each ad-blocker's own word for its lists; Technitium's own timed-disable choices; Reproducible image builds; Official ad-blocker icons; Docs. Security: Passwords stay out of URLs and logs; Request size limit; RETURN_URL can't run a script; Limits on replies and connections; Security headers on errors. Fixed: Pi-hole login retries could overload Pi-hole; AdGuard Home and Technitium login retries; Technitium releases before 15; Every open screen added load on the ad-blocker; 2-player wouldn't start with a slow second ad-blocker; First queries missing after an empty query log; A screen that stopped reading kept its connection forever; Some log lines never appeared; Unknown PROVIDER could break the startup report; Blank or misspelled background settings; /bg/ without a background folder; Malformed Technitium replies."
+  website: https://hub.docker.com/r/m00grin/ph-intercept
+  repo: https://github.com/m00grin/ph-intercept
+  support: https://github.com/m00grin/ph-intercept/issues
+  docs: https://github.com/m00grin/ph-intercept#readme
