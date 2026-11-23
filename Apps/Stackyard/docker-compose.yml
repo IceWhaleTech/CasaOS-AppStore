@@ -1,7 +1,7 @@
 name: stackyard
 services:
   stackyard:
-    image: ghcr.io/sandobserver/stackyard:1.21.0
+    image: ghcr.io/sandobserver/stackyard:1.24.0
     container_name: stackyard
     restart: unless-stopped
     init: true
@@ -93,11 +93,11 @@ x-casaos:
   tips:
     before_install:
       en_US: |-
-        Open the app after install and set a dashboard password in Settings, General. Until a password is set, anyone who can reach the dashboard can change it.
+        Open the app after install and set a dashboard password in Settings, General. Stackyard asks for a setup code: open the Stackyard menu on the ZimaOS home screen and choose Logs to find it. Until a password is set, anyone who can reach the dashboard can change it.
       zh_CN: |-
-        安装后打开应用，在“设置”的“通用”中设置仪表板密码。设置密码之前，任何能访问仪表板的人都可以更改它。
-  version: "1.21.0"
-  update_at: "2026-11-01"
+        安装后打开应用，在“设置”的“通用”中设置仪表板密码。Stackyard 会要求输入设置码：在 ZimaOS 主屏幕上打开 Stackyard 的菜单，选择“日志”即可找到。设置密码之前，任何能访问仪表板的人都可以更改它。
+  version: "1.24.0"
+  update_at: "2026-11-23"
   release_notes:
     en_US: First release in the ZimaOS App Store.
     zh_CN: 首次上架 ZimaOS 应用商店。
