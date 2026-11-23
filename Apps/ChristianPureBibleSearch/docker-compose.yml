@@ -1,0 +1,71 @@
+name: christianpure-bible-search
+services:
+  christianpure-bible-search:
+    image: ghcr.io/christianpure/bible-search:0.1.0
+    container_name: christianpure-bible-search
+    restart: unless-stopped
+    environment:
+      STUDY_SOURCE: casaos
+    ports:
+      - target: 8417
+        published: "8417"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    x-casaos:
+      envs:
+        - container: STUDY_SOURCE
+          description:
+            en_US: Leave as it is. It tells Christian Pure which store the app came from when you follow a link to its website.
+      ports:
+        - container: "8417"
+          description:
+            en_US: Web page
+      volumes:
+        - container: /data
+          description:
+            en_US: The search index and the saved prayers
+x-casaos:
+  id: com.christianpure.biblesearch
+  architectures:
+    - amd64
+    - arm64
+  main: christianpure-bible-search
+  category: Productivity
+  developer: Christian Pure
+  author: Christian Pure
+  tagline:
+    en_US: Find what the Bible says about anything, and a prayer to pray
+  description:
+    en_US: |
+      Type a worry, a question or a verse, such as anxiety, a prayer before a meal or Psalm 23. You see the strongest Bible verses on it, a prayer to pray now, and Christian Pure articles to read next.
+
+      - The whole Berean Standard Bible, 6,699 subjects and 340 prayers, searched on your own server
+      - Type a reference such as John 3:16 or Romans 8 to read it, with whole chapters and previous and next
+      - What you type stays on your server, and it works with no internet connection
+      - Once a week it fetches the newest prayers from christianpure.com; those requests carry no search words
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ChristianPureBibleSearch/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ChristianPureBibleSearch/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ChristianPureBibleSearch/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ChristianPureBibleSearch/screenshot-3.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ChristianPureBibleSearch/thumbnail.png
+  tips: {}
+  scheme: http
+  port_map: "8417"
+  index: /
+  title:
+    en_US: Christian Pure Bible Search
+  version: "0.1.0"
+  update_at: "2026-11-23"
+  release_notes:
+    en_US: First release.
+  website: "https://christianpure.com/bible-search-app/?utm_source=casaos&utm_medium=app&utm_campaign=bible-search-app"
+  repo: "https://github.com/christianpure/bible-search"
+  support: "https://github.com/christianpure/bible-search/issues"
