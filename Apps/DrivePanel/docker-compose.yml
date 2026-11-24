@@ -2,7 +2,7 @@ name: drivepanel
 services:
   drivepanel:
     container_name: drivepanel
-    image: ghcr.io/pctecnikk/drivepanel:1.0.1
+    image: ghcr.io/pctecnikk/drivepanel:1.0.9
     network_mode: bridge
     restart: unless-stopped
     deploy:
@@ -80,18 +80,20 @@ x-casaos:
     es_ES: Tu propio Google Drive en casa, ligero y pensado para la Raspberry Pi.
   description:
     en_US: |
-      **DrivePanel** is a lightweight personal cloud drive (about 40 MB of RAM) built for the Raspberry Pi and any small home server. Its interface is in Spanish, with light and dark mode.
+      **DrivePanel** is a lightweight personal cloud drive (about 40 MB of RAM) built for the Raspberry Pi and any small home server. Its interface is in English and Spanish (it follows your browser and can be changed in Settings), with light and dark mode.
 
       **Main features:**
       - My Drive with folders, grid view with thumbnails or list view, search, rename, move and folder properties
       - Upload files and whole folders, with chunked uploads, retries, duplicate warnings and live speed
-      - Photos grouped by month, recent files, viewer for photos, video, PDF and text, and .zip download
+      - Photos grouped by month or by album, recent files, viewer for photos, video, PDF and text, and .zip download
       - Trash with restore, also for files deleted over WebDAV
       - Share with other users or with a public link that can expire
       - Multiple users with admin approval, quotas and profile pictures
       - Activity dashboard: uploads per day, disk usage, file types and live system status
       - WebDAV per user at `/dav/`, so your phone can back up photos automatically
-      - Installable on your phone as an app (PWA)
+      - Disk full warnings (85 % and 95 % by default) in the web, the Android app and, optionally, Telegram
+      - Watch videos and listen to music without downloading them
+      - Installable on your phone as an app (PWA), plus an Android app
 
       **Recommended: Raspberry Pi 4 or 5.** The Pi 3 works, but with little memory (1 GB) it will be slow with photos, thumbnails and large uploads.
 
@@ -102,18 +104,20 @@ x-casaos:
       **Learn more:**
       - [DrivePanel on GitHub](https://github.com/pctecnikk/drivepanel)
     es_ES: |
-      **DrivePanel** es tu propia nube personal, ligera (unos 40 MB de RAM) y pensada para la Raspberry Pi y cualquier servidor casero pequeño. Está en español y tiene modo claro y oscuro.
+      **DrivePanel** es tu propia nube personal, ligera (unos 40 MB de RAM) y pensada para la Raspberry Pi y cualquier servidor casero pequeño. Está en español y en inglés (sale en el idioma del navegador y se cambia en Ajustes) y tiene modo claro y oscuro.
 
       **Qué incluye:**
       - Mi unidad con carpetas, cuadrícula con miniaturas o lista, búsqueda, renombrar, mover y propiedades de carpeta
       - Subida de archivos y carpetas enteras, por trozos con reintentos, aviso de duplicados y velocidad en directo
-      - Fotos agrupadas por meses, recientes, visor de fotos, vídeo, PDF y texto, y descarga en .zip
+      - Fotos por meses o por álbumes, recientes, visor de fotos, vídeo, PDF y texto, y descarga en .zip
       - Papelera con restaurar, también para lo que se borra por WebDAV
       - Compartir con otros usuarios o con un enlace público que puede caducar
       - Varios usuarios con aprobación del administrador, cuotas y foto de perfil
       - Panel de actividad: subidas por día, uso del disco, tipos de archivo y estado del equipo en directo
       - WebDAV por usuario en `/dav/`, para que el móvil suba las fotos solo
-      - Se puede instalar en el móvil como app (PWA)
+      - Aviso de disco lleno (85 % y 95 % por defecto) en la web, en la app de Android y, si quieres, por Telegram
+      - Ver vídeos y escuchar música sin descargarlos
+      - Se puede instalar en el móvil como app (PWA), y hay app para Android
 
       **Recomendado: Raspberry Pi 4 o 5.** La Pi 3 funciona, pero con poca memoria (1 GB) irá lenta con fotos, miniaturas y subidas grandes.
 
@@ -152,11 +156,11 @@ x-casaos:
     - amd64
     - arm64
     - arm
-  version: "1.0.1"
-  update_at: "2026-11-23"
+  version: "1.0.9"
+  update_at: "2026-11-24"
   release_notes:
-    en_US: First release in the CasaOS App Store.
-    es_ES: Primera versión en la tienda de CasaOS.
+    en_US: First release in the CasaOS App Store. DrivePanel 1.0.9, in English and Spanish, with disk full warnings.
+    es_ES: Primera versión en la tienda de CasaOS. DrivePanel 1.0.9, en español e inglés, con aviso de disco lleno.
   website: https://github.com/pctecnikk/drivepanel
   repo: https://github.com/pctecnikk/drivepanel
   support: https://github.com/pctecnikk/drivepanel/issues
