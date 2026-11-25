@@ -1,0 +1,59 @@
+name: zigbee2mqtt
+services:
+  zigbee2mqtt:
+    image: ghcr.io/koenkk/zigbee2mqtt:2.14.3
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    volumes:
+      - /DATA/AppData/$AppID/data:/app/data
+      - /run/udev:/run/udev:ro
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    environment:
+      TZ: ${TZ:-Australia/Brisbane}
+    # Set the adapter's stable /dev/serial/by-id path in configuration.yaml.
+    # Uncomment and edit devices after connecting a supported USB coordinator:
+    # devices:
+    #   - /dev/serial/by-id/usb-ADAPTER_ID:/dev/ttyACM0
+    # Set serial.port in configuration.yaml to /dev/ttyACM0.
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_US: Zigbee2MQTT web interface
+      volumes:
+        - container: /app/data
+          description:
+            en_US: Persistent configuration and data
+x-casaos:
+  id: com.zigbee2mqtt
+  main: zigbee2mqtt
+  index: /
+  port_map: "8080"
+  scheme: http
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Zigbee2MQTT/icon.png
+  title:
+    en_US: Zigbee2MQTT
+  tagline:
+    en_US: Connect Zigbee devices to MQTT
+  description:
+    en_US: Bridge Zigbee devices to MQTT with a supported USB coordinator. Configure the coordinator's stable device path in configuration.yaml before starting. MQTT broker required.
+  author: ZimaOS Community
+  developer: Koenkk
+  category: Home
+  architectures:
+    - amd64
+    - arm64
+  tips:
+    before_install:
+      en_US: |
+        Requires a reachable MQTT broker. Before starting Zigbee2MQTT, connect a supported Zigbee coordinator and add its stable host path (preferably under /dev/serial/by-id/) to the service's devices mapping. Configure the matching container path and adapter in configuration.yaml. USB passthrough is hardware- and host-dependent.
+  version: "2.14.3"
+  update_at: "2026-11-25"
+  release_notes:
+    en_US: "Initial ZimaOS package for Zigbee2MQTT 2.14.3."
+  website: https://www.zigbee2mqtt.io/
+  repo: https://github.com/Koenkk/zigbee2mqtt
+  docs: https://www.zigbee2mqtt.io/guide/installation/02_docker.html
