@@ -1,0 +1,120 @@
+name: nuvirahub
+services:
+  nuvirahub:
+    image: ghcr.io/nuvira-hub/nuvira-server:0.99.1
+    container_name: nuvirahub
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+    ports:
+      # The apps on the computers connect here: UDP, and TCP for networks that
+      # block UDP (WebSocket) and for the update files. The status page too.
+      - target: 21116
+        published: "21116"
+        protocol: udp
+      - target: 21116
+        published: "21116"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    depends_on:
+      nuvirahub-init:
+        condition: service_completed_successfully
+    x-casaos:
+      ports:
+        - container: "21116"
+          description:
+            en_US: Server port for the NuviraHub apps (UDP)
+          protocol: udp
+        - container: "21116"
+          description:
+            en_US: Server port for the NuviraHub apps (TCP) and status page
+      volumes:
+        - container: /data
+          description:
+            en_US: The server's identity (keep a backup), devices and settings
+
+  # The server runs as a non-root user (65532), but Docker creates bind-mounted
+  # folders as root: this one-shot container gives it its data folder.
+  nuvirahub-init:
+    image: alpine:3.22
+    container_name: nuvirahub-init
+    restart: "no"
+    command: ["chown", "-R", "65532:65532", "/data"]
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+
+x-casaos:
+  id: dev.nuvirahub.server
+  main: nuvirahub
+  index: /
+  port_map: "21116"
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+  author: NuviraHub
+  developer: NuviraHub
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NuviraHub/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NuviraHub/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NuviraHub/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/NuviraHub/screenshot-2.png
+  title:
+    en_US: NuviraHub
+  tagline:
+    en_US: Your own server for the NuviraHub remote desktop apps
+    it_IT: Il tuo server per le app di desktop remoto NuviraHub
+    fr_FR: Ton propre serveur pour les applications de bureau à distance NuviraHub
+    de_DE: Dein eigener Server für die NuviraHub-Fernsteuerungs-Apps
+    es_ES: Tu propio servidor para las apps de escritorio remoto NuviraHub
+  description:
+    en_US: |
+      NuviraHub is an open-source remote desktop app for Windows, macOS and Linux. This app runs your own NuviraHub server: the apps on your computers sign in to it to find each other, connect directly when they can, and relay the session through it when they cannot. No account is needed.
+
+      Open the app after installing it: its page shows the address to enter in the NuviraHub apps (Settings, Server), the port to forward on your router to reach your computers from outside your home network, and what to back up.
+
+      The apps for your computers are at https://nuvirahub.dev/en/download/.
+    it_IT: |
+      NuviraHub è un'app open source di desktop remoto per Windows, macOS e Linux. Questa app fa girare il tuo server NuviraHub: le app sui tuoi computer vi si registrano per trovarsi, si collegano direttamente quando possono e, quando non possono, passano la sessione attraverso il server. Non serve nessun account.
+
+      Dopo l'installazione apri l'app: la sua pagina mostra l'indirizzo da inserire nelle app NuviraHub (Impostazioni, Server), la porta da inoltrare sul router per raggiungere i computer da fuori casa e cosa salvare nei backup.
+
+      Le app per i tuoi computer sono su https://nuvirahub.dev/it/download/.
+    fr_FR: |
+      NuviraHub est une application open source de bureau à distance pour Windows, macOS et Linux. Cette application fait tourner ton propre serveur NuviraHub : les applications de tes ordinateurs s'y enregistrent pour se trouver, se connectent directement quand elles le peuvent et, sinon, font passer la session par le serveur. Aucun compte n'est nécessaire.
+
+      Après l'installation, ouvre l'application : sa page indique l'adresse à saisir dans les applications NuviraHub (Paramètres, Serveur), le port à rediriger sur ton routeur pour joindre tes ordinateurs depuis l'extérieur et ce qu'il faut sauvegarder.
+
+      Les applications pour tes ordinateurs sont sur https://nuvirahub.dev/fr/download/.
+    de_DE: |
+      NuviraHub ist eine Open-Source-App für den Fernzugriff auf Windows, macOS und Linux. Diese App betreibt deinen eigenen NuviraHub-Server: Die Apps auf deinen Computern melden sich dort an, um sich zu finden, verbinden sich direkt, wenn es geht, und leiten die Sitzung sonst über den Server. Ein Konto ist nicht nötig.
+
+      Öffne die App nach der Installation: Ihre Seite zeigt die Adresse, die du in den NuviraHub-Apps einträgst (Einstellungen, Server), den Port, den du am Router weiterleitest, um deine Computer von außerhalb zu erreichen, und was du sichern solltest.
+
+      Die Apps für deine Computer gibt es auf https://nuvirahub.dev/de/download/.
+    es_ES: |
+      NuviraHub es una app de escritorio remoto de código abierto para Windows, macOS y Linux. Esta app ejecuta tu propio servidor NuviraHub: las apps de tus ordenadores se registran en él para encontrarse, se conectan directamente cuando pueden y, cuando no, pasan la sesión a través del servidor. No hace falta ninguna cuenta.
+
+      Después de instalarla, abre la app: su página muestra la dirección que hay que poner en las apps NuviraHub (Ajustes, Servidor), el puerto que debes redirigir en el router para llegar a tus ordenadores desde fuera de casa y qué guardar en las copias de seguridad.
+
+      Las apps para tus ordenadores están en https://nuvirahub.dev/es/download/.
+  tips:
+    before_install:
+      en_US: |
+        The server uses port 21116, UDP and TCP. To reach your computers from outside your home network, forward that port on your router. If you publish it on another port, add that port to the address in the apps, for example 192.168.1.10:21200.
+  website: https://nuvirahub.dev
+  repo: https://github.com/nuvira-hub/nuvira
+  docs: https://nuvirahub.dev/en/guide/
+  support: https://github.com/nuvira-hub/nuvira/issues
+  version: "0.99.1"
+  update_at: "2026-11-25"
+  release_notes:
+    en_US: First version in the ZimaOS App Store.
