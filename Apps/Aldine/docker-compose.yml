@@ -13,7 +13,7 @@
 name: aldine
 services:
   app:
-    image: ghcr.io/trahloff/aldine-app:1.23.0
+    image: ghcr.io/trahloff/aldine-app:1.23.1
     container_name: aldine
     ports:
       - target: 3000
@@ -55,7 +55,7 @@ services:
             en_US: The address people open Aldine at, such as https://aldine.example.com. Needed for single sign-on, password-reset email and the Claude connector.
 
   compiler:
-    image: ghcr.io/trahloff/aldine-compiler:1.23.0
+    image: ghcr.io/trahloff/aldine-compiler:1.23.1
     container_name: aldine-compiler
     volumes:
       - type: bind
@@ -157,11 +157,11 @@ x-casaos:
         The compiler image carries TeX Live: about 2.4 GB to download and 5 GB on disk, so the first install takes a while.
 
         Aldine starts without a login: anyone who can reach port 8480 can open and edit every project. To require accounts, set AUTH_ENABLED to 1 in the app's settings and restart it. Anyone who can reach the port can still create an account, so keep it on your own network or behind a reverse proxy.
-  version: "1.23.0"
-  update_at: "2026-11-24"
+  version: "1.23.1"
+  update_at: "2026-11-25"
   release_notes:
     en_US: |-
-      History names the assistant that wrote a change ("ChatGPT (for Ada)") from the client it connected with, and the admin page lists assistant clients and can remove one for every account.
+      Fixes a file being emptied while it is opened (#342): a typeset, commit, file save or Zotero sync that ran in the moment a document was loading stored an empty document over the file and its snapshot. Most exposed are servers with Postgres as the datastore. An emptied file can be restored from History.
   website: https://aldine.dev/
   repo: https://github.com/trahloff/Aldine
   support: https://github.com/trahloff/Aldine/issues
