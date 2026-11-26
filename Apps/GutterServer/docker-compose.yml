@@ -1,7 +1,7 @@
 name: gutter-server
 services:
   gutter-server:
-    image: ghcr.io/rthaines211/gutter-server:0.1.0
+    image: ghcr.io/rthaines211/gutter-server:0.2.0
     container_name: gutter-server
     deploy:
       resources:
@@ -84,7 +84,7 @@ x-casaos:
   scheme: http
   port_map: "8081"
   index: /
-  version: 0.1.0
+  version: 0.2.0
   update_at: "2026-11-26"
   release_notes:
     en_US: First release in the CasaOS app store.
