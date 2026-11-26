@@ -1,0 +1,88 @@
+name: event-preisliste
+services:
+  event-preisliste:
+    image: ghcr.io/thoms263/event-preisliste:0.8.0
+    pull_policy: always
+    container_name: event-preisliste
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=32m
+    pids_limit: 128
+    ports:
+      - target: 8080
+        published: "8090"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    environment:
+      EVENT_DATA_DIR: /data
+      EVENT_PUBLIC_URL: ""
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web interface
+            de_DE: Weboberfläche
+      volumes:
+        - container: /data
+          description:
+            en_US: Events, prices, maps and settings
+            de_DE: Events, Preise, Pläne und Einstellungen
+      envs:
+        - container: EVENT_PUBLIC_URL
+          description:
+            en_US: Optional external HTTPS address used in QR codes
+            de_DE: Optionale externe HTTPS-Adresse für QR-Codes
+x-casaos:
+  id: io.github.thoms263.event-preisliste
+  main: event-preisliste
+  port_map: "8090"
+  index: /
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+  title:
+    en_US: Event Price List
+    de_DE: Event-Preisliste
+  tagline:
+    en_US: QR price lists and interactive maps for events
+    de_DE: QR-Preislisten und interaktive Pläne für Veranstaltungen
+  description:
+    en_US: Create mobile price lists for markets, festivals and club events. Each event has its own QR code, categorized products and an interactive map with stands, entrances, toilets and first aid.
+    de_DE: Erstelle mobile Preislisten für Adventmärkte, Feuerwehrfeste und Vereinsveranstaltungen. Jedes Event erhält einen eigenen QR-Code, kategorisierte Angebote und einen interaktiven Plan mit Ständen, Eingängen, WC und Erster Hilfe.
+  category: Others
+  author: ThomS263
+  developer: ThomS263
+  version: "0.8.0"
+  update_at: "2026-11-26"
+  website: https://github.com/ThomS263/event-preisliste
+  repo: https://github.com/ThomS263/event-preisliste
+  support: https://github.com/ThomS263/event-preisliste/issues
+  docs: https://github.com/ThomS263/event-preisliste/blob/main/INSTALLATION.md
+  icon: https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.0/Apps/EventPreisliste/icon.png
+  thumbnail: https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.0/docs/screenshots/veranstaltungen.png
+  screenshot_link:
+    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.0/docs/screenshots/handy.png
+    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.0/docs/screenshots/staende-handy.png
+    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.0/docs/screenshots/standverwaltung-handy.png
+    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.0/docs/screenshots/verwaltung.png
+    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.0/docs/screenshots/verwaltung-handy.png
+  release_notes:
+    en_US: Scheduled offers, full-screen maps, mobile stall sorting and automatic backups with verified restore.
+    de_DE: Zeitgesteuerte Angebote, Vollbildpläne, mobile Standsortierung und automatische Backups mit geprüfter Wiederherstellung.
+  tips:
+    before_install:
+      en_US: After installation, open the app tile and choose your admin password. Port 8090 avoids conflicts with other apps.
+      de_DE: Öffne nach der Installation die App-Kachel und lege dein Adminpasswort fest. Port 8090 vermeidet Konflikte mit anderen Apps.
