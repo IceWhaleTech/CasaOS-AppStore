@@ -1,0 +1,81 @@
+name: valeria-one
+services:
+  valeria-one:
+    image: ghcr.io/valeriaone/valeria-one:latest
+    container_name: valeria-one
+    network_mode: bridge
+    command: ["sh", "-c", "alembic upgrade head && exec uvicorn valeria_one.api:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips '*'"]
+    ports:
+      - target: 8000
+        published: "8080"
+        protocol: tcp
+    environment:
+      VO_DATABASE_URL: postgresql+psycopg://vo:ChangeThisDbPassword@valeria-one-db:5432/valeria_one
+      VO_SECRET_KEY: ChangeThisToALongRandomSecretAtLeast32Chars
+      VO_SIGNUP: closed
+    depends_on:
+      - valeria-one-db
+    restart: unless-stopped
+    x-casaos:
+      ports:
+        - container: "8000"
+          description:
+            en_US: Web UI
+      envs:
+        - container: VO_SECRET_KEY
+          description:
+            en_US: A long random secret — change this before first use.
+        - container: VO_DATABASE_URL
+          description:
+            en_US: Database URL — the password must match the database service below.
+  valeria-one-jobs:
+    image: ghcr.io/valeriaone/valeria-one:latest
+    container_name: valeria-one-jobs
+    network_mode: bridge
+    command: ["python", "-m", "valeria_one.jobs", "loop"]
+    environment:
+      VO_DATABASE_URL: postgresql+psycopg://vo:ChangeThisDbPassword@valeria-one-db:5432/valeria_one
+    depends_on:
+      - valeria-one
+    restart: unless-stopped
+  valeria-one-db:
+    image: postgres:16
+    container_name: valeria-one-db
+    network_mode: bridge
+    environment:
+      POSTGRES_USER: vo
+      POSTGRES_PASSWORD: ChangeThisDbPassword
+      POSTGRES_DB: valeria_one
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/db
+        target: /var/lib/postgresql/data
+    restart: unless-stopped
+    x-casaos:
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_US: Database storage
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: valeria-one
+  author: valAI
+  developer: valAI
+  category: Productivity
+  description:
+    en_US: Valeria One is a self-hosted business back office in one app — a website with an online store and bookings, a CRM with follow-ups and NPS, invoicing (including Mexican CFDI 4.0), gift cards, and an AI website assistant that streams its answers and can speak. AI, messaging and payments use your own provider accounts, so it runs with no third-party service required. After first start, create your admin from the Server page or the setup link (see the project README). Change VO_SECRET_KEY and the database password before use.
+  tagline:
+    en_US: The open-source back office for any business
+  title:
+    en_US: Valeria One
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ValeriaOne/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ValeriaOne/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ValeriaOne/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ValeriaOne/screenshot-3.png
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/ValeriaOne/thumbnail.png
+  index: /
+  port_map: "8080"
+  version: "0.67.0"
