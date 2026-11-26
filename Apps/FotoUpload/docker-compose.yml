@@ -1,7 +1,7 @@
 name: foto-upload
 services:
   foto-upload:
-    image: ghcr.io/thoms263/foto_upload_offiziel:3.4.0
+    image: ghcr.io/thoms263/foto_upload_offiziel:3.7.0
     deploy:
       resources:
         reservations:
@@ -10,6 +10,17 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETGID
+      - SETUID
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=256m
+    pids_limit: 256
     ports:
       - target: 8080
         published: "8080"
@@ -63,20 +74,20 @@ x-casaos:
   category: Media
   author: ThomS263
   developer: ThomS263
-  version: "3.4.0"
-  update_at: "2026-11-22"
+  version: "3.7.0"
+  update_at: "2026-11-25"
   release_notes:
-    en_US: Adds German and English language switching, optional TOTP two-factor authentication, gallery favorites and comments, improved mobile selection, security hardening and operational health sensors.
-    de_DE: Ergänzt die Umschaltung zwischen Deutsch und Englisch, optionale TOTP-Zwei-Faktor-Anmeldung, Galerie-Favoriten und Kommentare, verbesserte mobile Auswahl, zusätzliche Sicherheitsmaßnahmen und Betriebssensoren.
-  website: https://github.com/ThomS263/foto_upload_offiziel
-  repo: https://github.com/ThomS263/foto_upload_offiziel
-  support: https://github.com/ThomS263/foto_upload_offiziel/issues
-  docs: https://github.com/ThomS263/foto_upload_offiziel/blob/main/INSTALLATION.md
-  icon: https://raw.githubusercontent.com/ThomS263/foto_upload_offiziel/v3.4.0/Apps/FotoUpload/icon.png
-  thumbnail: https://raw.githubusercontent.com/ThomS263/foto_upload_offiziel/v3.4.0/Apps/FotoUpload/thumbnail.png
+    en_US: Adds one-time 2FA recovery codes, global administrator session revocation, per-album storage quotas, tamper-evident audit records and container SBOM/provenance.
+    de_DE: Ergänzt einmalige 2FA-Wiederherstellungscodes, globalen Widerruf von Admin-Sitzungen, Speicherlimits pro Album, manipulations­erkennbare Protokolle sowie Container-SBOM und Provenance.
+  website: https://github.com/ThomS263/foto-upload
+  repo: https://github.com/ThomS263/foto-upload
+  support: https://github.com/ThomS263/foto-upload/issues
+  docs: https://github.com/ThomS263/foto-upload/blob/main/INSTALLATION.md
+  icon: https://raw.githubusercontent.com/ThomS263/foto-upload/v3.7.0/Apps/FotoUpload/icon.png
+  thumbnail: https://raw.githubusercontent.com/ThomS263/foto-upload/v3.7.0/Apps/FotoUpload/thumbnail.png
   screenshot_link:
-    - https://raw.githubusercontent.com/ThomS263/foto_upload_offiziel/v3.4.0/Apps/FotoUpload/screenshot-1.png
-    - https://raw.githubusercontent.com/ThomS263/foto_upload_offiziel/v3.4.0/Apps/FotoUpload/screenshot-2.png
+    - https://raw.githubusercontent.com/ThomS263/foto-upload/v3.7.0/Apps/FotoUpload/screenshot-1.png
+    - https://raw.githubusercontent.com/ThomS263/foto-upload/v3.7.0/Apps/FotoUpload/screenshot-2.png
   tips:
     before_install:
       en_US: Open /admin to create your first album and enter a Funnel URL. The /data container path is already configured and must not be changed. With no initial password configured, read /data/.initial-admin-password in the container.
