@@ -1,0 +1,94 @@
+name: gutter-server
+services:
+  gutter-server:
+    image: ghcr.io/rthaines211/gutter-server:0.1.0
+    container_name: gutter-server
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    network_mode: bridge
+    restart: unless-stopped
+    ports:
+      - target: 8081
+        published: "8081"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /DATA/Media/Comics
+        target: /comics
+        read_only: true
+    environment:
+      TZ: $TZ
+      GUTTER_PASSWORD: ""
+      GUTTER_SCAN_INTERVAL: 30m
+    x-casaos:
+      ports:
+        - container: "8081"
+          description:
+            en_US: Status page, admin console and the API the Gutter app connects to
+      volumes:
+        - container: /data
+          description:
+            en_US: Database, covers, cache and the optional config.yaml
+        - container: /comics
+          description:
+            en_US: Your comics, one folder per series with CBZ/CBR files inside (read-only)
+      envs:
+        - container: TZ
+          description:
+            en_US: Time zone
+        - container: GUTTER_PASSWORD
+          description:
+            en_US: Required. Sign in with any username and this password
+        - container: GUTTER_SCAN_INTERVAL
+          description:
+            en_US: How often to rescan the library (30m, 6h, or off)
+x-casaos:
+  id: app.getgutter.server
+  architectures:
+    - amd64
+    - arm64
+  main: gutter-server
+  category: Media
+  author: Ryan Haines
+  developer: Ryan Haines
+  title:
+    en_US: Gutter Server
+  tagline:
+    en_US: Your comic library, served to the Gutter reader on iPad and iPhone
+  description:
+    en_US: |
+      Gutter Server is a self-hosted comic library server for the Gutter comic reader on iPad and iPhone.
+
+      **What it does:**
+      - Scans a folder of CBZ/CBR comics laid out as one folder per series
+      - Serves pages and covers, and syncs reading progress between devices
+      - Serves an OPDS catalog and KOReader sync
+      - Mounts your library read-only, so it never changes your files
+
+      Open the WebUI to watch the first scan, then add this server's address in the Gutter app.
+  tips:
+    before_install:
+      en_US: |
+        Set **GUTTER_PASSWORD** before you install: the server does not start without one. Put your comics in /DATA/Media/Comics (one folder per series), or change that path.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GutterServer/icon.svg
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GutterServer/screenshot-1.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GutterServer/screenshot-2.jpg
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GutterServer/screenshot-3.jpg
+  thumbnail: ""
+  scheme: http
+  port_map: "8081"
+  index: /
+  version: 0.1.0
+  update_at: "2026-11-26"
+  release_notes:
+    en_US: First release in the CasaOS app store.
+  website: https://getgutter.app
+  repo: https://github.com/rthaines211/gutter-server
+  support: https://github.com/rthaines211/gutter-server/issues
+  docs: https://github.com/rthaines211/gutter-server/blob/main/docs/CONFIG.md
