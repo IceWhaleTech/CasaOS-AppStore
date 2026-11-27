@@ -1,7 +1,7 @@
 name: event-preisliste
 services:
   event-preisliste:
-    image: ghcr.io/thoms263/event-preisliste:0.8.0
+    image: ghcr.io/thoms263/event-preisliste:0.8.1
     pull_policy: always
     container_name: event-preisliste
     restart: unless-stopped
@@ -65,23 +65,23 @@ x-casaos:
   category: Others
   author: ThomS263
   developer: ThomS263
-  version: "0.8.0"
+  version: "0.8.1"
   update_at: "2026-11-26"
   website: https://github.com/ThomS263/event-preisliste
   repo: https://github.com/ThomS263/event-preisliste
   support: https://github.com/ThomS263/event-preisliste/issues
   docs: https://github.com/ThomS263/event-preisliste/blob/main/INSTALLATION.md
-  icon: https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.0/Apps/EventPreisliste/icon.png
-  thumbnail: https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.0/docs/screenshots/veranstaltungen.png
+  icon: https://cdn.jsdelivr.net/gh/ThomS263/event-preisliste@v0.8.1/Apps/EventPreisliste/icon.png
+  thumbnail: https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.1/docs/screenshots/veranstaltungen.png
   screenshot_link:
-    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.0/docs/screenshots/handy.png
-    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.0/docs/screenshots/staende-handy.png
-    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.0/docs/screenshots/standverwaltung-handy.png
-    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.0/docs/screenshots/verwaltung.png
-    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.0/docs/screenshots/verwaltung-handy.png
+    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.1/docs/screenshots/handy.png
+    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.1/docs/screenshots/staende-handy.png
+    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.1/docs/screenshots/standverwaltung-handy.png
+    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.1/docs/screenshots/verwaltung.png
+    - https://raw.githubusercontent.com/ThomS263/event-preisliste/v0.8.1/docs/screenshots/verwaltung-handy.png
   release_notes:
-    en_US: Scheduled offers, full-screen maps, mobile stall sorting and automatic backups with verified restore.
-    de_DE: Zeitgesteuerte Angebote, Vollbildpläne, mobile Standsortierung und automatische Backups mit geprüfter Wiederherstellung.
+    en_US: Reliable CasaOS icon and an always-visible administration login in the page header.
+    de_DE: Zuverlässiges CasaOS-Icon und ein immer sichtbarer Verwaltungszugang im Seitenkopf.
   tips:
     before_install:
       en_US: After installation, open the app tile and choose your admin password. Port 8090 avoids conflicts with other apps.
