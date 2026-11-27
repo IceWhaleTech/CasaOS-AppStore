@@ -1,7 +1,7 @@
 name: romarr
 services:
   romarr:
-    image: ghcr.io/blizzhacker/romarr:1.13.2
+    image: ghcr.io/blizzhacker/romarr:1.14.1
     container_name: romarr
     environment:
       PUID: ${PUID:-1000}
@@ -91,15 +91,15 @@ x-casaos:
         There is no default password: the first visit to the web UI sets it, so open ROMarr right
         after installing. Settings such as LIBRARY_PATH are read on first start only; change them in
         the web UI afterwards.
-  version: "1.13.2"
-  update_at: "2026-11-23"
+  version: "1.14.1"
+  update_at: "2026-11-27"
   release_notes:
     en_US: |-
-      - Cloud storage: back up, mirror, offload or import library folders with Google Drive, OneDrive, Dropbox, S3 and every other rclone provider.
-      - Rapidgator and 1fichier premium accounts, and MultiUp links split into their mirrors.
-      - Verified imports are identified by their hashes with ScreenScraper and other providers.
-      - The Arcade Punks plugin is preinstalled; member NZB, torrent and file-host links route to the right client.
-      - Collections without a platform no longer finish at 100% having done nothing.
+      - Simple/Advanced UX modes, Quick Launch (Cmd+K), wallpapers/textures, and floating AI chat dock.
+      - Collection Preview Plan now matches renamed ROM ZIPs by footer size/CRC without unpacking.
+      - Owned Game Library & Device Libraries in Lists, plus Giveaway Calendar and store reconnect fixes.
+      - FitGirl & DODI Repacks plugin with RSS sync, Switch NSZ/XCZ compression, and Hydra source guide.
+      - Docker FUSE mounts fixed for numeric PUID/PGID runs, plus native NAS packages for Synology, QNAP and Asustor.
   website: https://romarr.app
   repo: https://github.com/BlizzHacker/romarr
   support: https://github.com/BlizzHacker/romarr/issues
