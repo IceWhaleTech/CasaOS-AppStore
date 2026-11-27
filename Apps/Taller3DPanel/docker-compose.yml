@@ -1,0 +1,171 @@
+name: taller3dpanel
+services:
+  taller3dpanel:
+    container_name: taller3dpanel
+    image: ghcr.io/iaonlineapps/taller3dpanel:1.0.16
+    network_mode: bridge
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+        limits:
+          memory: 256M
+    ports:
+      - target: 8095
+        published: "8095"
+        protocol: tcp
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      ALLOW_REGISTER: "1"
+      REQUIRE_EMAIL: "0"
+      TRUST_PROXY: "0"
+      FARM_LAN: "1"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: User ID that owns the stored data.
+            es_ES: ID del usuario dueño de los datos guardados.
+        - container: PGID
+          description:
+            en_US: Group ID that owns the stored data.
+            es_ES: ID del grupo dueño de los datos guardados.
+        - container: TZ
+          description:
+            en_US: Time zone.
+            es_ES: Zona horaria.
+        - container: ALLOW_REGISTER
+          description:
+            en_US: 1 = anyone can request an account (the admin activates it), 0 = only the admin creates accounts.
+            es_ES: 1 = cualquiera puede pedir cuenta (el administrador la activa), 0 = solo el administrador crea cuentas.
+        - container: REQUIRE_EMAIL
+          description:
+            en_US: 1 = ask for an email when creating accounts, 0 = username and password only.
+            es_ES: 1 = pedir email al crear cuentas, 0 = solo usuario y contraseña.
+        - container: TRUST_PROXY
+          description:
+            en_US: 1 = running behind an HTTPS reverse proxy (Nginx, Cloudflare...), 0 = direct access.
+            es_ES: 1 = detrás de un proxy inverso con HTTPS (Nginx, Cloudflare...), 0 = acceso directo.
+        - container: FARM_LAN
+          description:
+            en_US: 1 = connect to Bambu Lab printers in LAN Only mode (printer farm), 0 = disabled.
+            es_ES: 1 = conectar con las impresoras Bambu Lab en modo «Solo LAN» (granja), 0 = desactivado.
+      ports:
+        - container: "8095"
+          description:
+            en_US: Web UI port.
+            es_ES: Puerto de la web.
+      volumes:
+        - container: /data
+          description:
+            en_US: All Taller3D Panel data (database with parts, sales, customers, photos and settings).
+            es_ES: Todos los datos de Taller3D Panel (base de datos con piezas, ventas, clientes, fotos y ajustes).
+
+x-casaos:
+  id: io.github.pctecnikk.taller3dpanel
+  main: taller3dpanel
+  index: /
+  port_map: "8095"
+  scheme: http
+  title:
+    en_US: Taller3D Panel
+    es_ES: Taller3D Panel
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Taller3DPanel/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Taller3DPanel/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Taller3DPanel/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Taller3DPanel/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Taller3DPanel/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Taller3DPanel/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Taller3DPanel/screenshot-5.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Taller3DPanel/screenshot-6.png
+  tagline:
+    en_US: "Run your 3D printing workshop: stock, sales, quotes and your printer farm."
+    es_ES: "Lleva tu taller de impresión 3D: stock, ventas, presupuestos y tu granja de impresoras."
+  description:
+    en_US: |
+      **Taller3D Panel** manages a small **3D printing workshop** (and a computer repair service) on your own server: a Raspberry Pi or any machine with Docker. Its interface is in English and Spanish, with light and dark mode.
+
+      **Main features:**
+      - Dashboard: income, expenses and profit with charts, money owed, best-selling parts and printer usage
+      - Point of sale with QR and barcode scanner (USB, Bluetooth or the phone camera), cash, card, transfer or "pay later"
+      - Numbered tickets and quotes with your logo and company details, ready to print or send by WhatsApp
+      - Parts and stock with photos, categories, QR and barcode labels and a stock movement log
+      - Filament spools with a brand catalogue and adding a spool by reading its QR
+      - Print cost calculator from STL, 3MF or STEP files with your printer profile
+      - Customers, collaborators and expenses
+      - Optional printer farm: a QR per printer, status and queue. Bambu Lab printers in "LAN Only" mode are shown live and can be controlled (pause, resume, stop, light, speed)
+      - Workshop mode for a tablet next to the printers
+      - Users with roles (admin, editor, read only), plus an Android app
+
+      Built with Node.js (built-in SQLite) and plain JavaScript, with no external dependencies.
+
+      **License:** PolyForm Noncommercial 1.0.0. Free for personal, family, school and non-profit use; commercial use (for example in a business) is not allowed.
+
+      Taller3D Panel is not affiliated with or endorsed by Bambu Lab or any other printer or filament brand; their names are only used to describe compatibility.
+
+      **Learn more:**
+      - [Taller3D Panel on GitHub](https://github.com/iaonlineapps/taller3dpanel)
+    es_ES: |
+      **Taller3D Panel** lleva un pequeño **taller de impresión 3D** (y un servicio informático) en tu propio servidor: una Raspberry Pi o cualquier equipo con Docker. Está en español y en inglés, con modo claro y oscuro.
+
+      **Qué incluye:**
+      - Panel: ingresos, gastos y beneficio con gráficas, lo que te deben, piezas más vendidas y uso de cada impresora
+      - Caja con lector de QR y código de barras (USB, Bluetooth o la cámara del móvil), efectivo, tarjeta, transferencia o «a deber»
+      - Tickets numerados y presupuestos con tu logo y los datos de tu empresa, para imprimir o enviar por WhatsApp
+      - Piezas y stock con foto, categorías, etiquetas con QR y código de barras, y registro de movimientos
+      - Bobinas de filamento con catálogo de marcas y alta leyendo el QR de la bobina
+      - Calculadora del coste de cada impresión a partir de un STL, 3MF o STEP con el perfil de tu impresora
+      - Clientes, colaboradores y gastos
+      - Granja de impresoras opcional: QR por impresora, estado y cola. Las Bambu Lab en modo «Solo LAN» se ven en directo y se controlan (pausar, reanudar, parar, luz, velocidad)
+      - Modo taller para una tablet junto a las impresoras
+      - Usuarios con permisos (administrador, editor, solo ver) y app para Android
+
+      Hecho con Node.js (SQLite integrado) y JavaScript sin frameworks, sin dependencias externas.
+
+      **Licencia:** PolyForm Noncommercial 1.0.0. Gratis para uso personal, familiar, en colegios y asociaciones sin ánimo de lucro; no se permite el uso comercial (por ejemplo, en un negocio).
+
+      Taller3D Panel no está afiliado ni patrocinado por Bambu Lab ni por ninguna otra marca de impresoras o filamentos; sus nombres solo se citan para indicar compatibilidad.
+
+      **Más información:**
+      - [Taller3D Panel en GitHub](https://github.com/iaonlineapps/taller3dpanel)
+  tips:
+    before_install:
+      en_US: |
+        ## Getting started
+
+        Open the web UI at `http://<your-device-ip>:8095`. **The first account you create becomes the administrator.** Do it right after installing. Later accounts stay inactive until the admin activates them.
+
+        For the printer farm, set each Bambu Lab printer to **LAN Only + Developer Mode** and add its IP, serial number and access code in the app. See the [farm guide](https://github.com/iaonlineapps/taller3dpanel/blob/main/docs/GRANJA.md).
+
+        Taller3D Panel uses plain HTTP. Do not open port 8095 on your router: use a VPN or an HTTPS reverse proxy to reach it from outside your home.
+      es_ES: |
+        ## Primeros pasos
+
+        Abre la web en `http://<IP-de-tu-equipo>:8095`. **La primera cuenta que crees es la del administrador.** Hazlo nada más instalar. Las siguientes cuentas quedan inactivas hasta que el administrador las activa.
+
+        Para la granja de impresoras, pon cada Bambu Lab en **«Solo LAN» + «Modo desarrollador»** y añade en la app su IP, número de serie y código de acceso. Mira la [guía de la granja](https://github.com/iaonlineapps/taller3dpanel/blob/main/docs/GRANJA.md).
+
+        Taller3D Panel usa HTTP sin cifrar. No abras el puerto 8095 en el router: para entrar desde fuera de casa usa una VPN o un proxy inverso con HTTPS.
+  author: IA Online Apps
+  developer: IA Online Apps
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  version: "1.0.16"
+  update_at: "2026-11-27"
+  release_notes:
+    en_US: First release in the CasaOS App Store. Taller3D Panel 1.0.16, in English and Spanish.
+    es_ES: Primera versión en la tienda de CasaOS. Taller3D Panel 1.0.16, en español e inglés.
+  website: https://github.com/iaonlineapps/taller3dpanel
+  repo: https://github.com/iaonlineapps/taller3dpanel
+  support: https://github.com/iaonlineapps/taller3dpanel/issues
