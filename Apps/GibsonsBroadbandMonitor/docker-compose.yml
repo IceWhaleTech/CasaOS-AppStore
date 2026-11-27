@@ -1,0 +1,74 @@
+name: gibsons-broadband-monitor
+services:
+  gibsons-broadband-monitor:
+    image: ghcr.io/gibbo1973/gibsons-broadband-monitor:v0.4.1
+    restart: unless-stopped
+    ports:
+      - target: 8765
+        published: "8765"
+        protocol: tcp
+    environment:
+      TZ: ${TZ:-Europe/London}
+      SPEED_INTERVAL_MINUTES: "60"
+      PROBE_INTERVAL_SECONDS: "30"
+      DASHBOARD_PASSWORD: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+      - type: bind
+        source: /proc/1/net
+        target: /host/proc/net
+        read_only: true
+        bind:
+          create_host_path: false
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+x-casaos:
+  id: io.github.gibbo1973.gibsons-broadband-monitor
+  main: gibsons-broadband-monitor
+  index: /
+  port_map: "8765"
+  scheme: http
+  icon: https://raw.githubusercontent.com/gibbo1973/gibsons-broadband-monitor/v0.4.1/assets/app-icon.png
+  title:
+    en_US: Gibson's Broadband Monitor
+  tagline:
+    en_US: Broadband speed, reliability and server network usage history.
+  description:
+    en_US: >-
+      Monitor scheduled download, upload and latency tests, connection availability,
+      outage history and traffic on one host interface. Includes historical charts,
+      CSV exports, optional ntfy alerts and 16 interface languages. Measurements and
+      settings stay in a local SQLite database. Host traffic includes local transfers;
+      it is not an ISP billing meter or whole-household traffic measurement.
+  author: gibbo1973
+  developer: gibbo1973
+  category: Networking
+  architectures:
+    - amd64
+    - arm64
+  version: "0.4.1"
+  update_at: "2026-11-27"
+  screenshot_link:
+    - https://raw.githubusercontent.com/gibbo1973/gibsons-broadband-monitor/v0.4.1/Image%2015-11-2026%20at%2017.29.png
+    - https://raw.githubusercontent.com/gibbo1973/gibsons-broadband-monitor/v0.4.1/Image%2015-11-2026%20at%2018.20.png
+  tips:
+    before_install:
+      en_US: >-
+        Linux Docker host required. The read-only /proc/1/net directory mount enables
+        server traffic monitoring. Keep the /data mapping and its contents when
+        updating. Open Settings to configure a dashboard password before remote use.
+        After installation, allow two samples about a minute apart for usage totals.
+  release_notes:
+    en_US: Initial app-store package for v0.4.1, including the corrected read-only network directory mount.
+  website: https://github.com/gibbo1973/gibsons-broadband-monitor
+  repo: https://github.com/gibbo1973/gibsons-broadband-monitor
+  support: https://github.com/gibbo1973/gibsons-broadband-monitor/issues
+  docs: https://github.com/gibbo1973/gibsons-broadband-monitor/blob/main/PLATFORMS.md
