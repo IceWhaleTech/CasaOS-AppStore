@@ -1,0 +1,162 @@
+name: qrpanel
+services:
+  qrpanel:
+    container_name: qrpanel
+    image: ghcr.io/iaonlineapps/qrpanel:1.0.16
+    network_mode: bridge
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+        limits:
+          memory: 256M
+    ports:
+      - target: 8091
+        published: "8091"
+        protocol: tcp
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      ALLOW_REGISTER: "1"
+      PUBLIC_URL: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: User ID that owns the stored data.
+            es_ES: ID del usuario dueño de los datos guardados.
+        - container: PGID
+          description:
+            en_US: Group ID that owns the stored data.
+            es_ES: ID del grupo dueño de los datos guardados.
+        - container: TZ
+          description:
+            en_US: Time zone.
+            es_ES: Zona horaria.
+        - container: ALLOW_REGISTER
+          description:
+            en_US: 1 = anyone can request an account (the admin approves it), 0 = only the admin creates accounts.
+            es_ES: 1 = cualquiera puede pedir cuenta (el administrador la aprueba), 0 = solo el administrador crea cuentas.
+        - container: PUBLIC_URL
+          description:
+            en_US: Public address used inside dynamic QR codes (for example https://qr.example.com). Empty = the address you open it with. It can also be set in Settings.
+            es_ES: Dirección pública que llevan dentro los QR dinámicos (por ejemplo https://qr.midominio.com). Vacío = la dirección con la que entras. También se pone en Ajustes.
+      ports:
+        - container: "8091"
+          description:
+            en_US: Web UI port (also used by dynamic QR codes and shared pages).
+            es_ES: Puerto de la web (también lo usan los QR dinámicos y las páginas compartidas).
+      volumes:
+        - container: /data
+          description:
+            en_US: All QRPanel data (database with QR codes, logos, templates, scans and users).
+            es_ES: Todos los datos de QRPanel (base de datos con los QR, logos, plantillas, lecturas y usuarios).
+
+x-casaos:
+  id: io.github.pctecnikk.qrpanel
+  main: qrpanel
+  index: /
+  port_map: "8091"
+  scheme: http
+  title:
+    en_US: QRPanel
+    es_ES: QRPanel
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/QRPanel/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/QRPanel/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/QRPanel/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/QRPanel/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/QRPanel/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/QRPanel/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/QRPanel/screenshot-5.png
+  tagline:
+    en_US: Your own QR code generator, with dynamic QR codes and stats.
+    es_ES: Tu propio generador de códigos QR, con QR dinámicos y estadísticas.
+  description:
+    en_US: |
+      **QRPanel** is your own QR code generator, running at home or on your server. Make nice QR codes (logo, gradients, frames and text), keep them in your library and, if you want, make them **dynamic**: change where they point without reprinting them and see how many times they are scanned. Free, with no third-party accounts and no "free trial" that stops your codes working. Light (about 55 MB of RAM), in English and Spanish, with light and dark mode.
+
+      **Main features:**
+      - 18 QR types: link, text, Wi-Fi, contact, email, WhatsApp, call, SMS, location, calendar event and a lost pet profile
+      - Mobile pages you can change without reprinting: restaurant menu, reviews, hotel, office reception, shop, event and real estate
+      - Full design control: module shapes, eye frames, solid or gradient colours, logos and frames with text, templates and "Surprise me"
+      - Real readability check with a score from 0 to 100 while you design
+      - Download as PNG, SVG, JPG, WebP or PDF, or share it directly
+      - Dynamic QR codes with short codes, pause, expiry and optional PIN
+      - Stats: scans per day, hour, device, system and browser
+      - Library with search, favourites, folders and ZIP download; batch creation from a list or CSV
+      - Scanner with the camera or from a photo
+      - 3D printing: download the QR as a two-colour 3MF or STL
+      - Multiple users approved by the admin, your own brand, backup and restore, plus an Android app
+
+      Built with Python (FastAPI + SQLite) and plain JavaScript.
+
+      **License:** PolyForm Noncommercial 1.0.0. Free for personal, family, school and non-profit use; commercial use is not allowed.
+
+      "QR Code" is a registered trademark of DENSO WAVE INCORPORATED.
+
+      **Learn more:**
+      - [QRPanel on GitHub](https://github.com/iaonlineapps/qrpanel)
+    es_ES: |
+      **QRPanel** es tu propio generador de códigos QR, en tu casa o en tu servidor. Haces QR bonitos (con logo, degradados, marcos y texto), los guardas en tu biblioteca y, si quieres, los haces **dinámicos**: cambias a dónde llevan sin reimprimirlos y ves cuántas veces los escanean. Gratis, sin cuentas en webs de terceros y sin «pruebas gratuitas» que dejan tus QR sin funcionar. Ligero (unos 55 MB de RAM), en español y en inglés, con modo claro y oscuro.
+
+      **Qué incluye:**
+      - 18 tipos de QR: enlace, texto, WiFi, contacto, email, WhatsApp, llamada, SMS, ubicación, evento de calendario y ficha de mascota perdida
+      - Páginas para el móvil que cambias sin reimprimir: carta de restaurante, reseñas, hotel, recepción de oficina, tienda, evento e inmobiliaria
+      - Diseño a tu gusto: formas de módulo, marcos de los «ojos», colores sólidos o con degradado, logos y marcos con texto, plantillas y «Sorpréndeme»
+      - Comprobación de lectura real con una nota de 0 a 100 mientras diseñas
+      - Descarga en PNG, SVG, JPG, WebP o PDF, o compártelo directamente
+      - QR dinámicos con código corto, pausa, caducidad y PIN opcional
+      - Estadísticas: lecturas por día, hora, dispositivo, sistema y navegador
+      - Biblioteca con búsqueda, favoritos, carpetas y descarga en ZIP; QR por lotes desde una lista o un CSV
+      - Escáner con la cámara o desde una foto
+      - Imprimir en 3D: descarga el QR en 3MF de dos colores o STL
+      - Varios usuarios aprobados por el administrador, tu propia marca, copia de seguridad y app para Android
+
+      Hecho con Python (FastAPI + SQLite) y JavaScript sin frameworks.
+
+      **Licencia:** PolyForm Noncommercial 1.0.0. Gratis para uso personal, familiar, en colegios y asociaciones sin ánimo de lucro; no se permite el uso comercial.
+
+      «QR Code» es una marca registrada de DENSO WAVE INCORPORATED.
+
+      **Más información:**
+      - [QRPanel en GitHub](https://github.com/iaonlineapps/qrpanel)
+  tips:
+    before_install:
+      en_US: |
+        ## Getting started
+
+        Open the web UI at `http://<your-device-ip>:8091` and create your account. **The first user who registers becomes the administrator.** Do it right after installing. Later accounts stay pending until the admin approves them.
+
+        Dynamic QR codes contain the address of your server. If people will scan them outside your home, give QRPanel a public HTTPS address (reverse proxy) and set it in **Settings** before printing them.
+
+        QRPanel uses plain HTTP. Do not open port 8091 on your router: use an HTTPS reverse proxy to reach it from outside your home.
+      es_ES: |
+        ## Primeros pasos
+
+        Abre la web en `http://<IP-de-tu-equipo>:8091` y crea tu cuenta. **El primer usuario que se registra es el administrador.** Hazlo nada más instalar. Las siguientes cuentas quedan pendientes hasta que el administrador las aprueba.
+
+        Los QR dinámicos llevan dentro la dirección de tu servidor. Si los van a escanear fuera de tu casa, dale a QRPanel una dirección pública con HTTPS (proxy inverso) y ponla en **Ajustes** antes de imprimirlos.
+
+        QRPanel usa HTTP sin cifrar. No abras el puerto 8091 en el router: para entrar desde fuera de casa usa un proxy inverso con HTTPS.
+  author: IA Online Apps
+  developer: IA Online Apps
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  version: "1.0.16"
+  update_at: "2026-11-27"
+  release_notes:
+    en_US: First release in the CasaOS App Store. QRPanel 1.0.16, in English and Spanish.
+    es_ES: Primera versión en la tienda de CasaOS. QRPanel 1.0.16, en español e inglés.
+  website: https://github.com/iaonlineapps/qrpanel
+  repo: https://github.com/iaonlineapps/qrpanel
+  support: https://github.com/iaonlineapps/qrpanel/issues
