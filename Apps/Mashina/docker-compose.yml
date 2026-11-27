@@ -1,7 +1,7 @@
 name: mashina
 services:
   mashina:
-    image: ghcr.io/kosavan/mashina:1.13.0
+    image: ghcr.io/kosavan/mashina:1.17.0
     container_name: mashina
     restart: unless-stopped
     init: true
@@ -33,8 +33,8 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.13.0"
-  update_at: "2026-11-23"
+  version: "1.17.0"
+  update_at: "2026-11-27"
   author: kosavan
   developer: MASHINA
   title:
@@ -46,23 +46,19 @@ x-casaos:
   description:
     en_US: |-
       Track service, repairs, mileage, fuel, tires, receipts and spending in a mobile-friendly garage on your own server. Records and files are stored locally. An isolated demo garage lets you try the app with fictional data.
-
-      Vibecoded with love ❤️
     ru_RU: |-
       Ведите историю ТО, ремонтов, пробега, заправок и шин, храните чеки и смотрите расходы в гараже на своём сервере. Записи и файлы хранятся локально. Изолированный демогараж позволяет попробовать приложение на вымышленных данных.
-
-      Vibecoded with love ❤️
   tips:
     before_install:
       en_US: 'On first setup, create your administrator from the host terminal with: docker exec -it mashina /app/.venv/bin/python -m backend.cli create-admin. Use the web UI to export full backups before updating.'
       ru_RU: 'При первой настройке создайте администратора в терминале сервера: docker exec -it mashina /app/.venv/bin/python -m backend.cli create-admin. Перед обновлением выгрузите полный бэкап через веб-интерфейс.'
   release_notes:
-    en_US: Ready-made container images for AMD64 and ARM64, and local date and time for new fill-ups.
-    ru_RU: Готовые образы для AMD64 и ARM64, местная дата и время для новых заправок.
+    en_US: Improved mobile navigation, earlier maintenance reminders, and faster entry of fuel volume, price and total.
+    ru_RU: Улучшена мобильная навигация. Ближайшее ТО видно раньше, а данные заправки вводятся быстрее.
   icon: https://raw.githubusercontent.com/kosavan/mashina/v1.13.0/frontend/public/icon-512.png
   screenshot_link:
     - https://raw.githubusercontent.com/kosavan/mashina/v1.13.0/docs/assets/en/mashina-overview.png
   website: https://kosavan.github.io/mashina/
   repo: https://github.com/kosavan/mashina
   support: https://github.com/kosavan/mashina/issues
-  docs: https://github.com/kosavan/mashina/blob/v1.13.0/docs/container-image.md
+  docs: https://github.com/kosavan/mashina/blob/v1.17.0/docs/container-image.md
