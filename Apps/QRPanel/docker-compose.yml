@@ -2,7 +2,7 @@ name: qrpanel
 services:
   qrpanel:
     container_name: qrpanel
-    image: ghcr.io/pctecnikk/qrpanel:1.0.16
+    image: ghcr.io/iaonlineapps/qrpanel:1.0.16
     network_mode: bridge
     restart: unless-stopped
     deploy:
@@ -102,7 +102,7 @@ x-casaos:
       "QR Code" is a registered trademark of DENSO WAVE INCORPORATED.
 
       **Learn more:**
-      - [QRPanel on GitHub](https://github.com/pctecnikk/qrpanel)
+      - [QRPanel on GitHub](https://github.com/iaonlineapps/qrpanel)
     es_ES: |
       **QRPanel** es tu propio generador de códigos QR, en tu casa o en tu servidor. Haces QR bonitos (con logo, degradados, marcos y texto), los guardas en tu biblioteca y, si quieres, los haces **dinámicos**: cambias a dónde llevan sin reimprimirlos y ves cuántas veces los escanean. Gratis, sin cuentas en webs de terceros y sin «pruebas gratuitas» que dejan tus QR sin funcionar. Ligero (unos 55 MB de RAM), en español y en inglés, con modo claro y oscuro.
 
@@ -126,7 +126,7 @@ x-casaos:
       «QR Code» es una marca registrada de DENSO WAVE INCORPORATED.
 
       **Más información:**
-      - [QRPanel en GitHub](https://github.com/pctecnikk/qrpanel)
+      - [QRPanel en GitHub](https://github.com/iaonlineapps/qrpanel)
   tips:
     before_install:
       en_US: |
@@ -145,8 +145,8 @@ x-casaos:
         Los QR dinámicos llevan dentro la dirección de tu servidor. Si los van a escanear fuera de tu casa, dale a QRPanel una dirección pública con HTTPS (proxy inverso) y ponla en **Ajustes** antes de imprimirlos.
 
         QRPanel usa HTTP sin cifrar. No abras el puerto 8091 en el router: para entrar desde fuera de casa usa un proxy inverso con HTTPS.
-  author: pctecnikk
-  developer: pctecnikk
+  author: IA Online Apps
+  developer: IA Online Apps
   category: Productivity
   architectures:
     - amd64
@@ -157,6 +157,6 @@ x-casaos:
   release_notes:
     en_US: First release in the CasaOS App Store. QRPanel 1.0.16, in English and Spanish.
     es_ES: Primera versión en la tienda de CasaOS. QRPanel 1.0.16, en español e inglés.
-  website: https://github.com/pctecnikk/qrpanel
-  repo: https://github.com/pctecnikk/qrpanel
-  support: https://github.com/pctecnikk/qrpanel/issues
+  website: https://github.com/iaonlineapps/qrpanel
+  repo: https://github.com/iaonlineapps/qrpanel
+  support: https://github.com/iaonlineapps/qrpanel/issues
