@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4f8ff7"/>
+      <stop offset="1" stop-color="#1557c9"/>
+    </linearGradient>
+    <linearGradient id="front" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e3edfd"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- pestaña trasera de la carpeta -->
+  <path d="M104 152c0-15.5 12.5-28 28-28h76c8.5 0 16.5 3.9 21.8 10.5L250 160h130c15.5 0 28 12.5 28 28v40H104z" fill="#bcd4fb"/>
+  <!-- frente de la carpeta -->
+  <rect x="104" y="196" width="304" height="196" rx="28" fill="url(#front)"/>
+  <!-- flecha de subida -->
+  <path d="M256 236l-58 58h38v58h40v-58h38z" fill="#1a73e8"/>
+  <!-- indicador de servidor (punto verde: encendido) -->
+  <circle cx="380" cy="364" r="34" fill="#1557c9"/>
+  <circle cx="380" cy="364" r="22" fill="#34d27b"/>
+</svg>

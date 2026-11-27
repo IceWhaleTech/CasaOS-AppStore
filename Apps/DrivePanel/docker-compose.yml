@@ -1,0 +1,166 @@
+name: drivepanel
+services:
+  drivepanel:
+    container_name: drivepanel
+    image: ghcr.io/iaonlineapps/drivepanel:1.0.9
+    network_mode: bridge
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+        limits:
+          memory: 512M
+    ports:
+      - target: 8090
+        published: "8090"
+        protocol: tcp
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      DEFAULT_QUOTA_GB: "0"
+      ALLOW_REGISTER: "1"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: User ID that owns the stored files.
+            es_ES: ID del usuario dueño de los archivos guardados.
+        - container: PGID
+          description:
+            en_US: Group ID that owns the stored files.
+            es_ES: ID del grupo dueño de los archivos guardados.
+        - container: TZ
+          description:
+            en_US: Time zone.
+            es_ES: Zona horaria.
+        - container: DEFAULT_QUOTA_GB
+          description:
+            en_US: Storage quota in GB for new users (0 = no limit).
+            es_ES: Cuota de espacio en GB para usuarios nuevos (0 = sin límite).
+        - container: ALLOW_REGISTER
+          description:
+            en_US: 1 = anyone can request an account (the admin approves it), 0 = only the admin creates accounts.
+            es_ES: 1 = cualquiera puede pedir cuenta (el administrador la aprueba), 0 = solo el administrador crea cuentas.
+      ports:
+        - container: "8090"
+          description:
+            en_US: Web UI and WebDAV port.
+            es_ES: Puerto de la web y de WebDAV.
+      volumes:
+        - container: /data
+          description:
+            en_US: All DrivePanel data (users' files, database, trash, thumbnails). Point it to a large disk.
+            es_ES: Todos los datos de DrivePanel (archivos de los usuarios, base de datos, papelera, miniaturas). Ponlo en un disco grande.
+
+x-casaos:
+  id: io.github.pctecnikk.drivepanel
+  main: drivepanel
+  index: /
+  port_map: "8090"
+  scheme: http
+  title:
+    en_US: DrivePanel
+    es_ES: DrivePanel
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DrivePanel/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DrivePanel/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DrivePanel/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DrivePanel/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DrivePanel/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DrivePanel/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/DrivePanel/screenshot-5.png
+  tagline:
+    en_US: Your own lightweight Google Drive at home, made for the Raspberry Pi.
+    es_ES: Tu propio Google Drive en casa, ligero y pensado para la Raspberry Pi.
+  description:
+    en_US: |
+      **DrivePanel** is a lightweight personal cloud drive (about 40 MB of RAM) built for the Raspberry Pi and any small home server. Its interface is in English and Spanish (it follows your browser and can be changed in Settings), with light and dark mode.
+
+      **Main features:**
+      - My Drive with folders, grid view with thumbnails or list view, search, rename, move and folder properties
+      - Upload files and whole folders, with chunked uploads, retries, duplicate warnings and live speed
+      - Photos grouped by month or by album, recent files, viewer for photos, video, PDF and text, and .zip download
+      - Trash with restore, also for files deleted over WebDAV
+      - Share with other users or with a public link that can expire
+      - Multiple users with admin approval, quotas and profile pictures
+      - Activity dashboard: uploads per day, disk usage, file types and live system status
+      - WebDAV per user at `/dav/`, so your phone can back up photos automatically
+      - Disk full warnings (85 % and 95 % by default) in the web, the Android app and, optionally, Telegram
+      - Watch videos and listen to music without downloading them
+      - Installable on your phone as an app (PWA), plus an Android app
+
+      **Recommended: Raspberry Pi 4 or 5.** The Pi 3 works, but with little memory (1 GB) it will be slow with photos, thumbnails and large uploads.
+
+      Built with Python (FastAPI + SQLite) and plain JavaScript.
+
+      **License:** PolyForm Noncommercial 1.0.0. Free for personal, family, school and non-profit use; commercial use is not allowed.
+
+      **Learn more:**
+      - [DrivePanel on GitHub](https://github.com/iaonlineapps/drivepanel)
+    es_ES: |
+      **DrivePanel** es tu propia nube personal, ligera (unos 40 MB de RAM) y pensada para la Raspberry Pi y cualquier servidor casero pequeño. Está en español y en inglés (sale en el idioma del navegador y se cambia en Ajustes) y tiene modo claro y oscuro.
+
+      **Qué incluye:**
+      - Mi unidad con carpetas, cuadrícula con miniaturas o lista, búsqueda, renombrar, mover y propiedades de carpeta
+      - Subida de archivos y carpetas enteras, por trozos con reintentos, aviso de duplicados y velocidad en directo
+      - Fotos por meses o por álbumes, recientes, visor de fotos, vídeo, PDF y texto, y descarga en .zip
+      - Papelera con restaurar, también para lo que se borra por WebDAV
+      - Compartir con otros usuarios o con un enlace público que puede caducar
+      - Varios usuarios con aprobación del administrador, cuotas y foto de perfil
+      - Panel de actividad: subidas por día, uso del disco, tipos de archivo y estado del equipo en directo
+      - WebDAV por usuario en `/dav/`, para que el móvil suba las fotos solo
+      - Aviso de disco lleno (85 % y 95 % por defecto) en la web, en la app de Android y, si quieres, por Telegram
+      - Ver vídeos y escuchar música sin descargarlos
+      - Se puede instalar en el móvil como app (PWA), y hay app para Android
+
+      **Recomendado: Raspberry Pi 4 o 5.** La Pi 3 funciona, pero con poca memoria (1 GB) irá lenta con fotos, miniaturas y subidas grandes.
+
+      Hecho con Python (FastAPI + SQLite) y JavaScript sin frameworks.
+
+      **Licencia:** PolyForm Noncommercial 1.0.0. Gratis para uso personal, familiar, en colegios y asociaciones sin ánimo de lucro; no se permite el uso comercial.
+
+      **Más información:**
+      - [DrivePanel en GitHub](https://github.com/iaonlineapps/drivepanel)
+  tips:
+    before_install:
+      en_US: |
+        ## Getting started
+
+        Open the web UI at `http://<your-device-ip>:8090` and click **Register**. **The first user who registers becomes the administrator.** Do it right after installing. Later accounts stay pending until the admin approves them in **Users**.
+
+        For automatic photo uploads from your phone, use a WebDAV app (FolderSync, PhotoSync...) with the server `http://<your-device-ip>:8090/dav/` and your DrivePanel username and password.
+
+        Recommended: Raspberry Pi 4 or 5. The Pi 3 works, but with little memory (1 GB) it will be slow with photos, thumbnails and large uploads.
+
+        DrivePanel uses plain HTTP. Do not open port 8090 on your router: use a VPN or an HTTPS reverse proxy to reach it from outside your home.
+      es_ES: |
+        ## Primeros pasos
+
+        Abre la web en `http://<IP-de-tu-equipo>:8090` y pulsa **Regístrate**. **El primer usuario que se registra es el administrador.** Hazlo nada más instalar. Las siguientes cuentas quedan pendientes hasta que el administrador las aprueba en **Usuarios**.
+
+        Para que el móvil suba las fotos solo, usa una app de WebDAV (FolderSync, PhotoSync...) con el servidor `http://<IP-de-tu-equipo>:8090/dav/` y tu usuario y contraseña de DrivePanel.
+
+        Recomendado: Raspberry Pi 4 o 5. La Pi 3 funciona, pero con poca memoria (1 GB) irá lenta con fotos, miniaturas y subidas grandes.
+
+        DrivePanel usa HTTP sin cifrar. No abras el puerto 8090 en el router: para entrar desde fuera de casa usa una VPN o un proxy inverso con HTTPS.
+  author: IA Online Apps
+  developer: IA Online Apps
+  category: Productivity
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  version: "1.0.9"
+  update_at: "2026-11-24"
+  release_notes:
+    en_US: First release in the CasaOS App Store. DrivePanel 1.0.9, in English and Spanish, with disk full warnings.
+    es_ES: Primera versión en la tienda de CasaOS. DrivePanel 1.0.9, en español e inglés, con aviso de disco lleno.
+  website: https://github.com/iaonlineapps/drivepanel
+  repo: https://github.com/iaonlineapps/drivepanel
+  support: https://github.com/iaonlineapps/drivepanel/issues
