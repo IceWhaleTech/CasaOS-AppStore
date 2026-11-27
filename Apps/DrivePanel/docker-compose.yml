@@ -2,7 +2,7 @@ name: drivepanel
 services:
   drivepanel:
     container_name: drivepanel
-    image: ghcr.io/pctecnikk/drivepanel:1.0.9
+    image: ghcr.io/iaonlineapps/drivepanel:1.0.9
     network_mode: bridge
     restart: unless-stopped
     deploy:
@@ -102,7 +102,7 @@ x-casaos:
       **License:** PolyForm Noncommercial 1.0.0. Free for personal, family, school and non-profit use; commercial use is not allowed.
 
       **Learn more:**
-      - [DrivePanel on GitHub](https://github.com/pctecnikk/drivepanel)
+      - [DrivePanel on GitHub](https://github.com/iaonlineapps/drivepanel)
     es_ES: |
       **DrivePanel** es tu propia nube personal, ligera (unos 40 MB de RAM) y pensada para la Raspberry Pi y cualquier servidor casero pequeño. Está en español y en inglés (sale en el idioma del navegador y se cambia en Ajustes) y tiene modo claro y oscuro.
 
@@ -126,7 +126,7 @@ x-casaos:
       **Licencia:** PolyForm Noncommercial 1.0.0. Gratis para uso personal, familiar, en colegios y asociaciones sin ánimo de lucro; no se permite el uso comercial.
 
       **Más información:**
-      - [DrivePanel en GitHub](https://github.com/pctecnikk/drivepanel)
+      - [DrivePanel en GitHub](https://github.com/iaonlineapps/drivepanel)
   tips:
     before_install:
       en_US: |
@@ -149,8 +149,8 @@ x-casaos:
         Recomendado: Raspberry Pi 4 o 5. La Pi 3 funciona, pero con poca memoria (1 GB) irá lenta con fotos, miniaturas y subidas grandes.
 
         DrivePanel usa HTTP sin cifrar. No abras el puerto 8090 en el router: para entrar desde fuera de casa usa una VPN o un proxy inverso con HTTPS.
-  author: pctecnikk
-  developer: pctecnikk
+  author: IA Online Apps
+  developer: IA Online Apps
   category: Productivity
   architectures:
     - amd64
@@ -161,6 +161,6 @@ x-casaos:
   release_notes:
     en_US: First release in the CasaOS App Store. DrivePanel 1.0.9, in English and Spanish, with disk full warnings.
     es_ES: Primera versión en la tienda de CasaOS. DrivePanel 1.0.9, en español e inglés, con aviso de disco lleno.
-  website: https://github.com/pctecnikk/drivepanel
-  repo: https://github.com/pctecnikk/drivepanel
-  support: https://github.com/pctecnikk/drivepanel/issues
+  website: https://github.com/iaonlineapps/drivepanel
+  repo: https://github.com/iaonlineapps/drivepanel
+  support: https://github.com/iaonlineapps/drivepanel/issues
