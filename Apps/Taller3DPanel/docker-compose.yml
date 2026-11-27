@@ -2,7 +2,7 @@ name: taller3dpanel
 services:
   taller3dpanel:
     container_name: taller3dpanel
-    image: ghcr.io/pctecnikk/taller3dpanel:1.0.16
+    image: ghcr.io/iaonlineapps/taller3dpanel:1.0.16
     network_mode: bridge
     restart: unless-stopped
     deploy:
@@ -112,7 +112,7 @@ x-casaos:
       Taller3D Panel is not affiliated with or endorsed by Bambu Lab or any other printer or filament brand; their names are only used to describe compatibility.
 
       **Learn more:**
-      - [Taller3D Panel on GitHub](https://github.com/pctecnikk/taller3dpanel)
+      - [Taller3D Panel on GitHub](https://github.com/iaonlineapps/taller3dpanel)
     es_ES: |
       **Taller3D Panel** lleva un pequeño **taller de impresión 3D** (y un servicio informático) en tu propio servidor: una Raspberry Pi o cualquier equipo con Docker. Está en español y en inglés, con modo claro y oscuro.
 
@@ -135,7 +135,7 @@ x-casaos:
       Taller3D Panel no está afiliado ni patrocinado por Bambu Lab ni por ninguna otra marca de impresoras o filamentos; sus nombres solo se citan para indicar compatibilidad.
 
       **Más información:**
-      - [Taller3D Panel en GitHub](https://github.com/pctecnikk/taller3dpanel)
+      - [Taller3D Panel en GitHub](https://github.com/iaonlineapps/taller3dpanel)
   tips:
     before_install:
       en_US: |
@@ -143,7 +143,7 @@ x-casaos:
 
         Open the web UI at `http://<your-device-ip>:8095`. **The first account you create becomes the administrator.** Do it right after installing. Later accounts stay inactive until the admin activates them.
 
-        For the printer farm, set each Bambu Lab printer to **LAN Only + Developer Mode** and add its IP, serial number and access code in the app. See the [farm guide](https://github.com/pctecnikk/taller3dpanel/blob/main/docs/GRANJA.md).
+        For the printer farm, set each Bambu Lab printer to **LAN Only + Developer Mode** and add its IP, serial number and access code in the app. See the [farm guide](https://github.com/iaonlineapps/taller3dpanel/blob/main/docs/GRANJA.md).
 
         Taller3D Panel uses plain HTTP. Do not open port 8095 on your router: use a VPN or an HTTPS reverse proxy to reach it from outside your home.
       es_ES: |
@@ -151,11 +151,11 @@ x-casaos:
 
         Abre la web en `http://<IP-de-tu-equipo>:8095`. **La primera cuenta que crees es la del administrador.** Hazlo nada más instalar. Las siguientes cuentas quedan inactivas hasta que el administrador las activa.
 
-        Para la granja de impresoras, pon cada Bambu Lab en **«Solo LAN» + «Modo desarrollador»** y añade en la app su IP, número de serie y código de acceso. Mira la [guía de la granja](https://github.com/pctecnikk/taller3dpanel/blob/main/docs/GRANJA.md).
+        Para la granja de impresoras, pon cada Bambu Lab en **«Solo LAN» + «Modo desarrollador»** y añade en la app su IP, número de serie y código de acceso. Mira la [guía de la granja](https://github.com/iaonlineapps/taller3dpanel/blob/main/docs/GRANJA.md).
 
         Taller3D Panel usa HTTP sin cifrar. No abras el puerto 8095 en el router: para entrar desde fuera de casa usa una VPN o un proxy inverso con HTTPS.
-  author: pctecnikk
-  developer: pctecnikk
+  author: IA Online Apps
+  developer: IA Online Apps
   category: Productivity
   architectures:
     - amd64
@@ -166,6 +166,6 @@ x-casaos:
   release_notes:
     en_US: First release in the CasaOS App Store. Taller3D Panel 1.0.16, in English and Spanish.
     es_ES: Primera versión en la tienda de CasaOS. Taller3D Panel 1.0.16, en español e inglés.
-  website: https://github.com/pctecnikk/taller3dpanel
-  repo: https://github.com/pctecnikk/taller3dpanel
-  support: https://github.com/pctecnikk/taller3dpanel/issues
+  website: https://github.com/iaonlineapps/taller3dpanel
+  repo: https://github.com/iaonlineapps/taller3dpanel
+  support: https://github.com/iaonlineapps/taller3dpanel/issues
