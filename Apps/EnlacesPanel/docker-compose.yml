@@ -1,0 +1,181 @@
+name: enlacespanel
+services:
+  enlacespanel:
+    container_name: enlacespanel
+    image: ghcr.io/pctecnikk/enlacespanel:0.5.2
+    network_mode: bridge
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 64M
+        limits:
+          memory: 256M
+    ports:
+      - target: 8092
+        published: "8092"
+        protocol: tcp
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+      ALLOW_REGISTER: "1"
+      MAX_PAGES: "5"
+      MAX_LINKS: "100"
+      STATS_DAYS: "400"
+      PUBLIC_URL: ""
+      OWNER_NAME: ""
+      CONTACT_EMAIL: ""
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_US: User ID that owns the stored data.
+            es_ES: ID del usuario dueño de los datos guardados.
+        - container: PGID
+          description:
+            en_US: Group ID that owns the stored data.
+            es_ES: ID del grupo dueño de los datos guardados.
+        - container: TZ
+          description:
+            en_US: Time zone.
+            es_ES: Zona horaria.
+        - container: ALLOW_REGISTER
+          description:
+            en_US: 1 = anyone can request an account (the admin approves it), 0 = only the admin creates accounts.
+            es_ES: 1 = cualquiera puede pedir cuenta (el administrador la aprueba), 0 = solo el administrador crea cuentas.
+        - container: MAX_PAGES
+          description:
+            en_US: Maximum number of pages per user.
+            es_ES: Número máximo de páginas por usuario.
+        - container: MAX_LINKS
+          description:
+            en_US: Maximum number of links per page.
+            es_ES: Número máximo de enlaces por página.
+        - container: STATS_DAYS
+          description:
+            en_US: Days of visit and click stats that are kept.
+            es_ES: Días de estadísticas de visitas y clics que se guardan.
+        - container: PUBLIC_URL
+          description:
+            en_US: Public address of the server (for example https://links.example.com). Empty = the address you open it with. It can also be set in Settings.
+            es_ES: Dirección pública del servidor (por ejemplo https://enlaces.midominio.com). Vacío = la dirección con la que entras. También se pone en Ajustes.
+        - container: OWNER_NAME
+          description:
+            en_US: Name of the person responsible for the data, shown in the privacy policy (GDPR).
+            es_ES: Nombre del responsable de los datos, para la política de privacidad (RGPD).
+        - container: CONTACT_EMAIL
+          description:
+            en_US: Contact email shown in the privacy policy (GDPR).
+            es_ES: Correo de contacto para la política de privacidad (RGPD).
+      ports:
+        - container: "8092"
+          description:
+            en_US: Web UI and public pages port.
+            es_ES: Puerto del panel y de las páginas públicas.
+      volumes:
+        - container: /data
+          description:
+            en_US: All EnlacesPanel data (database and profile photos).
+            es_ES: Todos los datos de EnlacesPanel (base de datos y fotos de perfil).
+
+x-casaos:
+  id: io.github.pctecnikk.enlacespanel
+  main: enlacespanel
+  index: /
+  port_map: "8092"
+  scheme: http
+  title:
+    en_US: EnlacesPanel
+    es_ES: EnlacesPanel
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/EnlacesPanel/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/EnlacesPanel/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/EnlacesPanel/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/EnlacesPanel/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/EnlacesPanel/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/EnlacesPanel/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/EnlacesPanel/screenshot-5.png
+  tagline:
+    en_US: Your own "link in bio" page on your own server, free and with no cookies.
+    es_ES: Tu página de enlaces en tu propio servidor, gratis y sin cookies.
+  description:
+    en_US: |
+      **EnlacesPanel** is your own "link in bio" page on your own server, **free and with no fees**. One address to put on Instagram, TikTok or your business card, with all your links inside. Very light (about 50 MB of RAM), in English and Spanish, with light and dark mode and **no cookies or trackers** for the people who visit your page.
+
+      **Main features:**
+      - Your public page at `http://your-server/your-name` with photo, name, bio, social icons and links
+      - Live preview while you edit (phone, tablet or desktop)
+      - Your own domain for the server or for each page
+      - Links with a photo, logo or emoji, section titles, drag to reorder, hide, highlight and schedule
+      - 10 animated themes plus your own colours and 4 button styles
+      - Stats with no cookies: visits and clicks per day and per link
+      - QR code of your page in PNG or SVG
+      - Several pages per user and several users approved by the admin
+      - Ready-made privacy policy (GDPR) and legal notice; export or delete your data
+      - Android app, and on iPhone it can be added to the home screen
+
+      Built with Python (FastAPI + SQLite) and plain JavaScript.
+
+      **License:** PolyForm Noncommercial 1.0.0. Free for personal, family, school and non-profit use; commercial use is not allowed.
+
+      **Learn more:**
+      - [EnlacesPanel on GitHub](https://github.com/pctecnikk/enlacespanel)
+    es_ES: |
+      **EnlacesPanel** es tu página de enlaces («link in bio») en tu propio servidor, **gratis y sin cuotas**. Una sola dirección para poner en Instagram, TikTok o tu tarjeta de visita, con todos tus enlaces dentro. Muy ligero (unos 50 MB de RAM), en español y en inglés, con modo claro y oscuro y **sin cookies ni rastreadores** para quien visita tu página.
+
+      **Qué incluye:**
+      - Tu página pública en `http://tu-servidor/tu-nombre` con foto, nombre, bio, redes sociales y tus enlaces
+      - Vista previa en directo mientras editas (móvil, tablet o PC)
+      - Tu propio dominio para el servidor o para cada página
+      - Enlaces con foto, logo o emoji, títulos de sección, ordenar arrastrando, ocultar, destacar y programar
+      - 10 temas animados, un tema con tus colores y 4 estilos de botón
+      - Estadísticas sin cookies: visitas y clics por día y por enlace
+      - Código QR de tu página en PNG o SVG
+      - Varias páginas por usuario y varios usuarios aprobados por el administrador
+      - Política de privacidad (RGPD) y aviso legal ya hechos; descarga o borra tus datos
+      - App para Android, y en iPhone se puede añadir a la pantalla de inicio
+
+      Hecho con Python (FastAPI + SQLite) y JavaScript sin frameworks.
+
+      **Licencia:** PolyForm Noncommercial 1.0.0. Gratis para uso personal, familiar, en colegios y asociaciones sin ánimo de lucro; no se permite el uso comercial.
+
+      **Más información:**
+      - [EnlacesPanel en GitHub](https://github.com/pctecnikk/enlacespanel)
+  tips:
+    before_install:
+      en_US: |
+        ## Getting started
+
+        Open the panel at `http://<your-device-ip>:8092` and create your account. **The first user who registers becomes the administrator.** Do it right after installing. Later accounts stay pending until the admin approves them.
+
+        To share your page on social networks it needs a public address: put EnlacesPanel behind an HTTPS reverse proxy and set that address in **Settings**. Fill in OWNER_NAME and CONTACT_EMAIL for the privacy policy.
+
+        EnlacesPanel uses plain HTTP. Do not open port 8092 on your router: use an HTTPS reverse proxy to reach it from outside your home.
+      es_ES: |
+        ## Primeros pasos
+
+        Abre el panel en `http://<IP-de-tu-equipo>:8092` y crea tu cuenta. **El primer usuario que se registra es el administrador.** Hazlo nada más instalar. Las siguientes cuentas quedan pendientes hasta que el administrador las aprueba.
+
+        Para compartir tu página en redes necesita una dirección pública: pon EnlacesPanel detrás de un proxy inverso con HTTPS y escribe esa dirección en **Ajustes**. Rellena OWNER_NAME y CONTACT_EMAIL para la política de privacidad.
+
+        EnlacesPanel usa HTTP sin cifrar. No abras el puerto 8092 en el router: para entrar desde fuera de casa usa un proxy inverso con HTTPS.
+  author: pctecnikk
+  developer: pctecnikk
+  category: Social
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  version: "0.5.2"
+  update_at: "2026-11-27"
+  release_notes:
+    en_US: First release in the CasaOS App Store. EnlacesPanel 0.5.2, in English and Spanish.
+    es_ES: Primera versión en la tienda de CasaOS. EnlacesPanel 0.5.2, en español e inglés.
+  website: https://github.com/pctecnikk/enlacespanel
+  repo: https://github.com/pctecnikk/enlacespanel
+  support: https://github.com/pctecnikk/enlacespanel/issues
