@@ -1,0 +1,180 @@
+name: foliowiki
+services:
+  foliowiki:
+    image: ghcr.io/evergreen-it-dev/folio:v0.4.6
+    container_name: foliowiki
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          memory: 512M
+    ports:
+      - target: 4870
+        published: "4870"
+        protocol: tcp
+    # FOLIO_SECRET encrypts saved Git tokens and AI keys and must never change.
+    # It is generated once, on first start, and kept next to the data in
+    # /app/data, so no secret is shipped in this file.
+    command:
+      - sh
+      - -c
+      - |
+        [ -s /app/data/.folio-secret ] || (umask 077; head -c 32 /dev/urandom | od -An -tx1 | tr -d ' \n' > /app/data/.folio-secret)
+        FOLIO_SECRET=`cat /app/data/.folio-secret`
+        export FOLIO_SECRET
+        exec npx tsx server/index.ts
+    environment:
+      NODE_ENV: production
+      PORT: "4870"
+      DATABASE_URL: postgresql://folio:folio-change-me@foliowiki-db:5432/folio
+      REDIS_URL: redis://foliowiki-redis:6379
+      PUBLIC_URL: http://localhost:4870
+      ASSET_BACKEND: local
+      CURSOR_AGENT_WORKSPACE_ROOT: /app/data/assistant/workspaces
+      CURSOR_AGENT_STATE_DIR: /app/data/assistant/state
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /app/data
+    networks:
+      - foliowiki-network
+    depends_on:
+      foliowiki-db:
+        condition: service_healthy
+      foliowiki-redis:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:4870/api/health').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    x-casaos:
+      ports:
+        - container: "4870"
+          description:
+            en_US: WebUI HTTP Port
+      volumes:
+        - container: /app/data
+          description:
+            en_US: Git repositories of the spaces, uploaded files, assistant state and the generated FOLIO_SECRET
+      envs:
+        - container: PUBLIC_URL
+          description:
+            en_US: The exact address you open Folio at, for example http://192.168.1.10:4870. Used in invite and share links. Keep the http:// scheme unless Folio sits behind HTTPS.
+        - container: DATABASE_URL
+          description:
+            en_US: PostgreSQL connection URL. If you change the password here, change POSTGRES_PASSWORD of foliowiki-db too, before the first start.
+        - container: REDIS_URL
+          description:
+            en_US: Redis connection URL
+
+  foliowiki-db:
+    image: postgres:17-alpine
+    container_name: foliowiki-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: folio
+      POSTGRES_PASSWORD: folio-change-me
+      POSTGRES_DB: folio
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/pgdata
+        target: /var/lib/postgresql/data
+    networks:
+      - foliowiki-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U folio -d folio"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    x-casaos:
+      envs:
+        - container: POSTGRES_USER
+          description:
+            en_US: PostgreSQL user
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: PostgreSQL password. The database is reachable only from the Folio container, not from the network.
+        - container: POSTGRES_DB
+          description:
+            en_US: PostgreSQL database name
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_US: PostgreSQL data directory
+
+  # Transient data only (presence, rate limits): persistence is off on purpose.
+  foliowiki-redis:
+    image: redis:7-alpine
+    container_name: foliowiki-redis
+    restart: unless-stopped
+    command: redis-server --save '' --appendonly no
+    networks:
+      - foliowiki-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+networks:
+  foliowiki-network:
+    driver: bridge
+
+x-casaos:
+  id: online.foliowiki.app
+  architectures:
+    - amd64
+    - arm64
+  main: foliowiki
+  category: AI
+  developer: Evergreen
+  author: Evergreen
+  tagline:
+    en_US: Git-native team wiki with a built-in AI assistant
+  description:
+    en_US: |
+      Folio (foliowiki) is a collaborative wiki where every page is a plain Markdown file in a Git repository. People edit the same page together in real time and see each other's cursors. The built-in AI assistant works with your own Claude API key, and an MCP server lets AI agents read and edit the wiki under the same access rights as a person.
+
+      **Key Features:**
+      - Real-time collaborative editing, with offline writing that syncs later
+      - Pages are files in Git: every version has an author and a commit, and can be restored
+      - Data tables, forms, Excalidraw whiteboards and Mermaid diagrams inside pages
+      - Access rights per space and per page, groups, Google sign-in
+      - Built-in AI assistant (bring your own Claude API key) and an MCP server for agents
+      - Share a page as a link, or as raw Markdown for an AI agent
+
+      The first account you create becomes the administrator.
+
+      **Learn More:**
+      - [Folio Website](https://foliowiki.online)
+      - [Folio on GitHub](https://github.com/evergreen-it-dev/folio)
+  tips:
+    before_install:
+      en_US: |
+        Before the first start, set PUBLIC_URL to the address you will open Folio at, for example http://192.168.1.10:4870 (the CasaOS IP and the web UI port). Keep http:// unless Folio is behind an HTTPS proxy; with the default http://localhost:4870 you can still sign in from any address, but invite and share links will point to localhost. Also change POSTGRES_PASSWORD together with the password in DATABASE_URL. The first account you create becomes the administrator. Folio needs about 2 GB of RAM for the whole stack.
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FolioWiki/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FolioWiki/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FolioWiki/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FolioWiki/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FolioWiki/screenshot-3.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FolioWiki/screenshot-4.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/FolioWiki/screenshot-5.png
+  scheme: http
+  port_map: "4870"
+  index: /
+  version: "0.4.6"
+  update_at: "2026-11-27"
+  release_notes:
+    en_US: |-
+      - First release of Folio (foliowiki) in the store, version 0.4.6.
+  website: "https://foliowiki.online"
+  repo: "https://github.com/evergreen-it-dev/folio"
+  support: "https://github.com/evergreen-it-dev/folio/issues"
+  docs: "https://github.com/evergreen-it-dev/folio/blob/main/docs/INSTALL.md"

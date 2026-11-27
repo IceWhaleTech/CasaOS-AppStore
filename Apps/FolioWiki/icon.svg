@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="4 1.5 40 40" fill="none">
+  <!--
+    Folio mark: a closed loop of three arms — one per corner, split at the side
+    midpoints — around a three-spoke core. Flat, container-less, four-colour;
+    with no background plate it reads on both light and dark browser chrome.
+
+    Palette is Slack's: blue #36C5F0, crimson #E01E5A, yellow #ECB22E, green
+    #2EB67D. The green sits in the core on purpose — it is the darkest of the
+    four, and a light hue in the centre washes out against the white gaps at
+    16px. Aubergine #4A154B is deliberately unused: it all but vanishes on
+    dark browser chrome.
+
+    Geometry is an equilateral triangle of circumradius 18.5 centred at
+    (24,24), so the mark is symmetric under 120° rotation. The viewBox crops
+    to the ink and seats the mark slightly high, so the bottom-heavy triangle
+    looks optically centred rather than mathematically centred.
+  -->
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <g stroke-width="6.4">
+      <path d="M18.69 14.7 L20.5 11.56 Q24 5.5 27.5 11.56 L29.31 14.7" stroke="#36C5F0"/>
+      <path d="M34.71 24.05 L36.52 27.19 Q40.02 33.25 33.02 33.25 L29.4 33.25" stroke="#E01E5A"/>
+      <path d="M18.6 33.25 L14.98 33.25 Q7.98 33.25 11.48 27.19 L13.29 24.05" stroke="#ECB22E"/>
+    </g>
+    <path d="M24 17.8 L24 24 L29.37 27.1 M24 24 L18.63 27.1" stroke="#2EB67D" stroke-width="4.9"/>
+  </g>
+</svg>
