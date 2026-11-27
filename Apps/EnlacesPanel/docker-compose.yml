@@ -2,7 +2,7 @@ name: enlacespanel
 services:
   enlacespanel:
     container_name: enlacespanel
-    image: ghcr.io/pctecnikk/enlacespanel:0.5.2
+    image: ghcr.io/iaonlineapps/enlacespanel:0.5.2
     network_mode: bridge
     restart: unless-stopped
     deploy:
@@ -124,7 +124,7 @@ x-casaos:
       **License:** PolyForm Noncommercial 1.0.0. Free for personal, family, school and non-profit use; commercial use is not allowed.
 
       **Learn more:**
-      - [EnlacesPanel on GitHub](https://github.com/pctecnikk/enlacespanel)
+      - [EnlacesPanel on GitHub](https://github.com/iaonlineapps/enlacespanel)
     es_ES: |
       **EnlacesPanel** es tu página de enlaces («link in bio») en tu propio servidor, **gratis y sin cuotas**. Una sola dirección para poner en Instagram, TikTok o tu tarjeta de visita, con todos tus enlaces dentro. Muy ligero (unos 50 MB de RAM), en español y en inglés, con modo claro y oscuro y **sin cookies ni rastreadores** para quien visita tu página.
 
@@ -145,7 +145,7 @@ x-casaos:
       **Licencia:** PolyForm Noncommercial 1.0.0. Gratis para uso personal, familiar, en colegios y asociaciones sin ánimo de lucro; no se permite el uso comercial.
 
       **Más información:**
-      - [EnlacesPanel en GitHub](https://github.com/pctecnikk/enlacespanel)
+      - [EnlacesPanel en GitHub](https://github.com/iaonlineapps/enlacespanel)
   tips:
     before_install:
       en_US: |
@@ -164,8 +164,8 @@ x-casaos:
         Para compartir tu página en redes necesita una dirección pública: pon EnlacesPanel detrás de un proxy inverso con HTTPS y escribe esa dirección en **Ajustes**. Rellena OWNER_NAME y CONTACT_EMAIL para la política de privacidad.
 
         EnlacesPanel usa HTTP sin cifrar. No abras el puerto 8092 en el router: para entrar desde fuera de casa usa un proxy inverso con HTTPS.
-  author: pctecnikk
-  developer: pctecnikk
+  author: IA Online Apps
+  developer: IA Online Apps
   category: Social
   architectures:
     - amd64
@@ -176,6 +176,6 @@ x-casaos:
   release_notes:
     en_US: First release in the CasaOS App Store. EnlacesPanel 0.5.2, in English and Spanish.
     es_ES: Primera versión en la tienda de CasaOS. EnlacesPanel 0.5.2, en español e inglés.
-  website: https://github.com/pctecnikk/enlacespanel
-  repo: https://github.com/pctecnikk/enlacespanel
-  support: https://github.com/pctecnikk/enlacespanel/issues
+  website: https://github.com/iaonlineapps/enlacespanel
+  repo: https://github.com/iaonlineapps/enlacespanel
+  support: https://github.com/iaonlineapps/enlacespanel/issues
