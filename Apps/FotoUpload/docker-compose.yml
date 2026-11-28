@@ -1,7 +1,7 @@
 name: foto-upload
 services:
   foto-upload:
-    image: ghcr.io/thoms263/foto_upload_offiziel:3.7.0
+    image: ghcr.io/thoms263/foto_upload_offiziel:3.8.0
     deploy:
       resources:
         reservations:
@@ -74,20 +74,20 @@ x-casaos:
   category: Media
   author: ThomS263
   developer: ThomS263
-  version: "3.7.0"
-  update_at: "2026-11-25"
+  version: "3.8.0"
+  update_at: "2026-11-28"
   release_notes:
-    en_US: Adds one-time 2FA recovery codes, global administrator session revocation, per-album storage quotas, tamper-evident audit records and container SBOM/provenance.
-    de_DE: Ergänzt einmalige 2FA-Wiederherstellungscodes, globalen Widerruf von Admin-Sitzungen, Speicherlimits pro Album, manipulations­erkennbare Protokolle sowie Container-SBOM und Provenance.
+    en_US: Adds a dedicated read-only monitoring token for secure Home Assistant statistics and events.
+    de_DE: Ergänzt einen eigenen Nur-Lese-Status-Token für sichere Home-Assistant-Statistiken und Ereignisse.
   website: https://github.com/ThomS263/foto-upload
   repo: https://github.com/ThomS263/foto-upload
   support: https://github.com/ThomS263/foto-upload/issues
   docs: https://github.com/ThomS263/foto-upload/blob/main/INSTALLATION.md
-  icon: https://raw.githubusercontent.com/ThomS263/foto-upload/v3.7.0/Apps/FotoUpload/icon.png
-  thumbnail: https://raw.githubusercontent.com/ThomS263/foto-upload/v3.7.0/Apps/FotoUpload/thumbnail.png
+  icon: https://raw.githubusercontent.com/ThomS263/foto-upload/v3.8.0/Apps/FotoUpload/icon.png
+  thumbnail: https://raw.githubusercontent.com/ThomS263/foto-upload/v3.8.0/Apps/FotoUpload/thumbnail.png
   screenshot_link:
-    - https://raw.githubusercontent.com/ThomS263/foto-upload/v3.7.0/Apps/FotoUpload/screenshot-1.png
-    - https://raw.githubusercontent.com/ThomS263/foto-upload/v3.7.0/Apps/FotoUpload/screenshot-2.png
+    - https://raw.githubusercontent.com/ThomS263/foto-upload/v3.8.0/Apps/FotoUpload/screenshot-1.png
+    - https://raw.githubusercontent.com/ThomS263/foto-upload/v3.8.0/Apps/FotoUpload/screenshot-2.png
   tips:
     before_install:
       en_US: Open /admin to create your first album and enter a Funnel URL. The /data container path is already configured and must not be changed. With no initial password configured, read /data/.initial-admin-password in the container.
