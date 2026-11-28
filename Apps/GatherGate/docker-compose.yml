@@ -1,0 +1,82 @@
+name: gathergate
+services:
+  gathergate:
+    image: ghcr.io/faas19/gathergate:1.1.1
+    container_name: gathergate
+    restart: unless-stopped
+    ports:
+      - target: 3080
+        published: "3080"
+        protocol: tcp
+    environment:
+      NODE_ENV: production
+      HOST: "0.0.0.0"
+      PORT: "3080"
+      DATA_DIR: /data
+      BASE_URL: http://casaos.local:3080
+      TRUST_PROXY: "false"
+      MASTER_KEY: ""
+      TZ: $TZ
+    volumes:
+      - type: bind
+        source: /DATA/AppData/gathergate/data
+        target: /data
+        bind:
+          create_host_path: true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:noexec,nosuid,size=64m
+    stop_grace_period: 15s
+
+x-casaos:
+  id: app.gathergate.gathergate
+  main: gathergate
+  index: /
+  port_map: "3080"
+  scheme: http
+  version: "1.1.1"
+  update_at: "2026-11-28"
+  release_notes:
+    en_US: Initial release of GatherGate v1.1.1 in the CasaOS and ZimaOS App Store.
+  architectures:
+    - amd64
+    - arm64
+  category: Productivity
+  author: TensorForge
+  developer: TensorForge
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GatherGate/icon.svg
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GatherGate/thumbnail.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GatherGate/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GatherGate/screenshot-2.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/GatherGate/screenshot-3.png
+  title:
+    en_US: GatherGate
+  tagline:
+    en_US: Self-hosted magic-link client document checklist and encrypted intake vault
+  description:
+    en_US: |
+      GatherGate is an open-source, self-hosted alternative to Content Snare and FileInvite.
+      Collect client documents and validated tax or bank IDs over passwordless magic links
+      with deterministic regional checksums (AU, UK, US, EU), magic-byte file verification,
+      per-record AES-256-GCM encryption at rest, keyboard-first inline review, signed
+      webhooks with retries, and a built-in metadata-only MCP 2.0 server.
+  tips:
+    before_install:
+      en_US: |
+        Set BASE_URL to a reachable origin before sending client checklists (for example
+        http://<device-host>:3080 on LAN, or your public https:// origin behind a trusted
+        reverse proxy). Restrict port 3080 to your proxy before setting TRUST_PROXY=true.
+        If MASTER_KEY is left blank, GatherGate auto-generates a 32-byte key at /data/.master.key.
+  website: https://gathergate.app
+  repo: https://github.com/FAAS19/gathergate
+  support: https://github.com/FAAS19/gathergate/issues
+  docs: https://gathergate.app/docs/deployment/one-click-templates/
