@@ -1,0 +1,94 @@
+name: foto-upload
+services:
+  foto-upload:
+    image: ghcr.io/thoms263/foto_upload_offiziel:3.8.0
+    deploy:
+      resources:
+        reservations:
+          memory: 128M
+    container_name: foto-upload
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETGID
+      - SETUID
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=256m
+    pids_limit: 256
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/data
+        target: /data
+    environment:
+      PHOTO_DATA_DIR: /data
+      PHOTO_PUBLIC_URL: ""
+      PHOTO_ADMIN_PASSWORD: ""
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_US: Web interface
+            de_DE: Weboberfläche
+      volumes:
+        - container: /data
+          description:
+            en_US: Albums, originals and settings
+            de_DE: Alben, Originale und Einstellungen
+      envs:
+        - container: PHOTO_PUBLIC_URL
+          description:
+            en_US: Optional external HTTPS address for QR codes
+            de_DE: Optionale externe HTTPS-Adresse für QR-Codes
+        - container: PHOTO_ADMIN_PASSWORD
+          description:
+            en_US: Initial admin password, generated in /data/.initial-admin-password if empty
+            de_DE: Erstpasswort, bei leerem Wert in /data/.initial-admin-password erzeugt
+x-casaos:
+  id: io.github.thoms263.foto-upload
+  main: foto-upload
+  port_map: "8080"
+  index: /
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+  title:
+    en_US: Foto-Upload
+    de_DE: Foto-Upload
+  tagline:
+    en_US: Private guest albums for photos and videos
+    de_DE: Private Gästealben für Fotos und Videos
+  description:
+    en_US: Collect event and holiday photos on your own server. Guests open password-protected albums by QR code, upload originals from their phones, browse the bilingual gallery and download individual files or ZIP archives. Includes favorites, comments, resumable uploads, backups and optional administrator two-factor authentication.
+    de_DE: Sammle Fotos und Urlaubsvideos auf deinem eigenen Server. Gäste öffnen passwortgeschützte Alben per QR-Code, laden Originale vom Handy hoch, verwenden die deutsch-englische Galerie und laden einzelne Dateien oder ZIP-Archive herunter. Favoriten, Kommentare, fortsetzbare Uploads, Sicherungen und optionale Zwei-Faktor-Anmeldung sind integriert.
+  category: Media
+  author: ThomS263
+  developer: ThomS263
+  version: "3.8.0"
+  update_at: "2026-11-28"
+  release_notes:
+    en_US: Adds a dedicated read-only monitoring token for secure Home Assistant statistics and events.
+    de_DE: Ergänzt einen eigenen Nur-Lese-Status-Token für sichere Home-Assistant-Statistiken und Ereignisse.
+  website: https://github.com/ThomS263/foto-upload
+  repo: https://github.com/ThomS263/foto-upload
+  support: https://github.com/ThomS263/foto-upload/issues
+  docs: https://github.com/ThomS263/foto-upload/blob/main/INSTALLATION.md
+  icon: https://raw.githubusercontent.com/ThomS263/foto-upload/v3.8.0/Apps/FotoUpload/icon.png
+  thumbnail: https://raw.githubusercontent.com/ThomS263/foto-upload/v3.8.0/Apps/FotoUpload/thumbnail.png
+  screenshot_link:
+    - https://raw.githubusercontent.com/ThomS263/foto-upload/v3.8.0/Apps/FotoUpload/screenshot-1.png
+    - https://raw.githubusercontent.com/ThomS263/foto-upload/v3.8.0/Apps/FotoUpload/screenshot-2.png
+  tips:
+    before_install:
+      en_US: Open /admin to create your first album and enter a Funnel URL. The /data container path is already configured and must not be changed. With no initial password configured, read /data/.initial-admin-password in the container.
+      de_DE: Öffne /admin, lege das erste Album an und trage dort bei Bedarf die Funnel-Adresse ein. Der Containerpfad /data ist bereits korrekt und darf unverändert bleiben. Das automatisch erzeugte Erstpasswort steht im Container unter /data/.initial-admin-password.
