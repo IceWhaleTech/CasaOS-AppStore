@@ -1,0 +1,401 @@
+name: silentsuite
+
+# SilentSuite for the CasaOS / ZimaOS app store. This folder is copied verbatim to
+# Apps/SilentSuite/ in IceWhaleTech/CasaOS-AppStore; see self-host/casaos/README.md.
+#
+# ZimaOS interpolates this file twice, so even an escaped dollar sign arrives empty.
+# The file therefore contains no dollar sign except the platform's own AppID variable:
+# the programs below are Python (which needs none) and the router writes its nginx
+# configuration with "@" in place of the dollar sign, translated by tr at start.
+
+services:
+  # Router: one origin for the web app and the sync server. Keeps the external Host,
+  # binary bodies and WebSocket upgrades; adds no authorization headers. Access and
+  # request error logging are off.
+  silentsuite:
+    image: nginxinc/nginx-unprivileged:1.30.6-alpine@sha256:f5116ed4606f3eb015dd4a8e28cb9b351476dc0ad4bc6e9f93b19cec130cdf03
+    container_name: silentsuite
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "39128"
+        protocol: tcp
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        set -eu
+        tr '@' '\044' > /etc/nginx/conf.d/default.conf <<'EOF'
+        map @http_upgrade @connection_upgrade {
+            default upgrade;
+            ''      close;
+        }
+
+        server {
+            listen 8080;
+            server_name _;
+
+            access_log off;
+            error_log /dev/null;
+            client_max_body_size 64m;
+
+            proxy_http_version 1.1;
+            proxy_set_header Host @http_host;
+            proxy_set_header Upgrade @http_upgrade;
+            proxy_set_header Connection @connection_upgrade;
+            proxy_redirect off;
+            proxy_read_timeout 3600s;
+            proxy_send_timeout 3600s;
+
+            # Resolve the upstreams per request through Docker's DNS, so a recreated
+            # server or web container with a new address is found without a router restart.
+            resolver 127.0.0.11 valid=10s ipv6=off;
+            set @server_upstream silentsuite-server:3735;
+            set @web_upstream silentsuite-web:3000;
+
+            location /api/ {
+                proxy_request_buffering off;
+                proxy_buffering off;
+                proxy_pass http://@server_upstream;
+            }
+
+            location / {
+                proxy_pass http://@web_upstream;
+            }
+        }
+        EOF
+        exec nginx -g 'daemon off;'
+    depends_on:
+      silentsuite-web:
+        condition: service_started
+      silentsuite-server:
+        condition: service_healthy
+    networks:
+      - silentsuite
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_US: SilentSuite web app and sync server (put your HTTPS proxy in front of it)
+
+  silentsuite-web:
+    image: ghcr.io/silent-suite/silentsuite-web-selfhost:v0.5.22-beta@sha256:0684fdde0c71e5b849c10f5f4992b307cabf19f311fa865d9cda5939e1bc4cb2
+    container_name: silentsuite-web
+    restart: unless-stopped
+    networks:
+      - silentsuite
+
+  # One-shot, network-less preparation. Runs as root in the server image only to own
+  # SilentSuite's own folders. Generates the three credentials on a fresh install,
+  # refuses to touch anything when an existing database lacks a valid set, and rewrites
+  # the derived files (server config, database password copy, visible password copy).
+  silentsuite-init:
+    image: ghcr.io/silent-suite/silentsuite-server:v0.5.22-beta@sha256:e6db5a437a7c5ec6d64289037ab1dce19616ea5feee9cee068fe91c2a39130a0
+    container_name: silentsuite-init
+    user: "0:0"
+    network_mode: none
+    restart: "no"
+    entrypoint:
+      - python
+      - -I
+      - -c
+      - |
+        import os, pwd, re, secrets, stat, sys
+
+        NAMES = ("owner-password", "registration-signing", "database-password")
+        VALID = re.compile(r"[0-9a-f]{64}\n?")
+        POSTGRES_UID = 70
+
+        def stop(message):
+            print("[init] " + message, file=sys.stderr)
+            sys.exit(1)
+
+        # Root never follows a link inside the mounted folders: every file it reads, writes
+        # or re-owns is opened with O_NOFOLLOW (and O_NONBLOCK, so a FIFO is refused rather than
+        # waited on), and temporary files are created exclusively.
+        def read(name):
+            try:
+                descriptor = os.open("/secrets/" + name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+                with os.fdopen(descriptor, encoding="ascii") as handle:
+                    if not stat.S_ISREG(os.fstat(handle.fileno()).st_mode):
+                        return None
+                    raw = handle.read(200)
+            except (OSError, UnicodeError):
+                return None
+            return raw.rstrip("\n") if VALID.fullmatch(raw) else None
+
+        def fsync_dir(path):
+            descriptor = os.open(path, os.O_RDONLY)
+            try:
+                os.fsync(descriptor)
+            finally:
+                os.close(descriptor)
+
+        def write(path, text, uid, gid, mode):
+            temporary = path + "." + secrets.token_hex(8) + ".tmp"
+            descriptor = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+            try:
+                with os.fdopen(descriptor, "w", encoding="ascii") as handle:
+                    handle.write(text)
+                    handle.flush()
+                    os.fchown(handle.fileno(), uid, gid)
+                    os.fchmod(handle.fileno(), mode)
+                    os.fsync(handle.fileno())
+                os.replace(temporary, path)
+            except BaseException:
+                if os.path.lexists(temporary):
+                    os.unlink(temporary)
+                raise
+            fsync_dir(os.path.dirname(path))
+
+        def own(path, uid, gid, mode, directory=False):
+            flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK | (os.O_DIRECTORY if directory else 0)
+            try:
+                descriptor = os.open(path, flags)
+            except OSError:
+                stop(path + " is not a plain " + ("folder" if directory else "file")
+                     + " (links are refused). Restore the folder from your backup.")
+            try:
+                kind = os.fstat(descriptor).st_mode
+                if not (stat.S_ISDIR(kind) if directory else stat.S_ISREG(kind)):
+                    stop(path + " has an unexpected type.")
+                os.fchown(descriptor, uid, gid)
+                os.fchmod(descriptor, mode)
+            finally:
+                os.close(descriptor)
+
+        os.umask(0o077)
+        account = pwd.getpwnam("etebase")
+        uid, gid = account.pw_uid, account.pw_gid
+
+        # A database exists as soon as PGDATA holds anything, with or without PG_VERSION.
+        # Anything at that path other than a real folder (a file, any link) is refused.
+        if os.path.lexists("/pg/pgdata") and not stat.S_ISDIR(os.lstat("/pg/pgdata").st_mode):
+            stop("postgres/pgdata is not a folder. Nothing was changed.")
+        existing_database = os.path.lexists("/pg/pgdata") and bool(os.listdir("/pg/pgdata"))
+        values = {name: read(name) for name in NAMES}
+
+        if existing_database:
+            invalid = [name for name in NAMES if values[name] is None]
+            if invalid:
+                stop("The database exists but server-secrets/" + ", server-secrets/".join(invalid)
+                     + " is missing or invalid. Restore the folder from your backup. Nothing was changed.")
+            if len(set(values.values())) != len(NAMES):
+                stop("The three credentials in server-secrets/ must all differ. Nothing was changed.")
+        else:
+            kept = [values[name] for name in NAMES if values[name] is not None]
+            if len(set(kept)) != len(kept):
+                stop("The credentials in server-secrets/ must all differ. Nothing was changed.")
+            for name in NAMES:
+                if values[name] is None:
+                    values[name] = secrets.token_hex(32)
+                    write("/secrets/" + name, values[name] + "\n", uid, gid, 0o600)
+            for name in NAMES:
+                if read(name) != values[name]:
+                    stop("server-secrets/" + name + " could not be written.")
+            if len(set(values.values())) != len(NAMES):
+                stop("The generated credentials collided; start the app again.")
+
+        own("/secrets", uid, gid, 0o700, directory=True)
+        for name in NAMES:
+            own("/secrets/" + name, uid, gid, 0o600)
+
+        own("/data", uid, gid, 0o700, directory=True)
+        for path in ("/data/media", "/data/static"):
+            if not os.path.lexists(path):
+                os.mkdir(path, 0o700)
+            own(path, uid, gid, 0o700, directory=True)
+        if os.path.lexists("/data/secret.txt"):
+            own("/data/secret.txt", uid, gid, 0o600)
+
+        write("/config/etebase-server.ini", "\n".join([
+            "[global]",
+            "secret_file = /data/secret.txt",
+            "debug = false",
+            "static_root = /data/static",
+            "media_root = /data/media",
+            "",
+            "[allowed_hosts]",
+            "allowed_host1 = *",
+            "",
+            "[database]",
+            "engine = django.db.backends.postgresql",
+            "name = silentsuite",
+            "user = silentsuite",
+            "password = " + values["database-password"],
+            "host = silentsuite-db",
+            "port = 5432",
+            "",
+        ]), uid, gid, 0o600)
+        own("/config", uid, gid, 0o700, directory=True)
+
+        write("/pgsecret/password", values["database-password"], POSTGRES_UID, POSTGRES_UID, 0o400)
+        own("/pgsecret", POSTGRES_UID, POSTGRES_UID, 0o700, directory=True)
+
+        write("/visible/password.txt", values["owner-password"] + "\n", 0, 0, 0o600)
+        own("/visible", 0, 0, 0o700, directory=True)
+        print("[init] Ready. The installation password is in "
+              "/DATA/AppData/silentsuite/installation-password/password.txt")
+    volumes:
+      - /DATA/AppData/$AppID/server-secrets:/secrets
+      - /DATA/AppData/$AppID/server:/data
+      - /DATA/AppData/$AppID/server-config:/config
+      - /DATA/AppData/$AppID/postgres-secret:/pgsecret
+      - /DATA/AppData/$AppID/installation-password:/visible
+      - /DATA/AppData/$AppID/postgres:/pg:ro
+
+  # Sync server. Checks all three credentials again (a platform "restart" does not rerun
+  # init), exports only the two it needs, then runs the image's lifecycle: collectstatic,
+  # migrations, two-worker uvicorn with access logging off and private file creation.
+  silentsuite-server:
+    image: ghcr.io/silent-suite/silentsuite-server:v0.5.22-beta@sha256:e6db5a437a7c5ec6d64289037ab1dce19616ea5feee9cee068fe91c2a39130a0
+    container_name: silentsuite-server
+    restart: unless-stopped
+    entrypoint:
+      - python
+      - -I
+      - -c
+      - |
+        import os, re, subprocess, sys
+
+        NAMES = ("owner-password", "registration-signing", "database-password")
+        VALID = re.compile(r"[0-9a-f]{64}\n?")
+
+        def stop(message):
+            print("[package-start] " + message + " Not starting.", file=sys.stderr)
+            sys.exit(1)
+
+        values = {}
+        for name in NAMES:
+            try:
+                with open("/run/silentsuite/" + name, encoding="ascii") as handle:
+                    raw = handle.read(200)
+            except (OSError, UnicodeError):
+                raw = ""
+            if not VALID.fullmatch(raw):
+                stop("server-secrets/" + name + " is missing or invalid.")
+            values[name] = raw.rstrip("\n")
+        if len(set(values.values())) != len(NAMES):
+            stop("The three credentials in server-secrets/ must all differ.")
+
+        os.umask(0o077)
+        os.environ["ETEBASE_OWNER_PASSWORD"] = values["owner-password"]
+        os.environ["ETEBASE_REGISTRATION_TOKEN"] = values["registration-signing"]
+        os.chdir("/app")
+        print("[package-start] collecting static assets...", flush=True)
+        subprocess.run(["python", "manage.py", "collectstatic", "--noinput", "--verbosity", "0"], check=True)
+        print("[package-start] applying database migrations...", flush=True)
+        subprocess.run(["python", "manage.py", "migrate", "--noinput"], check=True)
+        print("[package-start] starting uvicorn (access and connection logs disabled)...", flush=True)
+        os.execvp("uvicorn", [
+            "uvicorn", "etebase_server.asgi:application",
+            "--host", "0.0.0.0", "--port", "3735",
+            "--workers", "2", "--proxy-headers", "--no-access-log", "--log-level", "warning",
+            "--forwarded-allow-ips", "127.0.0.1",
+        ])
+    environment:
+      ETEBASE_EASY_CONFIG_PATH: /etc/etebase-server/etebase-server.ini
+      ETEBASE_DISABLE_DJANGO_ADMIN: "true"
+      CORS_ALLOWED_ORIGINS: ""
+      # TLS ends at the user's own reverse proxy; the router reaches the server over
+      # the app network.
+      ETEBASE_SECURE_SSL_REDIRECT: "false"
+    volumes:
+      - /DATA/AppData/$AppID/server:/data
+      - /DATA/AppData/$AppID/server-config:/etc/etebase-server:ro
+      - /DATA/AppData/$AppID/server-secrets:/run/silentsuite:ro
+    depends_on:
+      silentsuite-init:
+        condition: service_completed_successfully
+      silentsuite-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import http.client,sys; c=http.client.HTTPConnection('localhost',3735,timeout=5); c.request('GET','/api/v1/authentication/is_etebase/'); sys.exit(0 if c.getresponse().status<500 else 1)"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+    networks:
+      - silentsuite
+    x-casaos:
+      volumes:
+        - container: /data
+          description:
+            en_US: Encrypted file chunks and the server's own key
+        - container: /run/silentsuite
+          description:
+            en_US: Generated credentials (keep them with your backup)
+
+  silentsuite-db:
+    image: postgres:16.16-alpine@sha256:81e77a4833487b8132fe4b00bedd39dc3f74b8641e387f19312a48f7de218c2e
+    container_name: silentsuite-db
+    restart: unless-stopped
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: silentsuite
+      POSTGRES_USER: silentsuite
+      POSTGRES_PASSWORD_FILE: /run/silentsuite/password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - /DATA/AppData/$AppID/postgres:/var/lib/postgresql/data
+      - /DATA/AppData/$AppID/postgres-secret:/run/silentsuite:ro
+    depends_on:
+      silentsuite-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "silentsuite", "-d", "silentsuite"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - silentsuite
+    x-casaos:
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_US: PostgreSQL database (encrypted account data)
+
+networks:
+  silentsuite:
+    name: silentsuite
+
+x-casaos:
+  id: io.silentsuite.silentsuite
+  main: silentsuite-web
+  index: /
+  port_map: "39128"
+  scheme: http
+  architectures:
+    - amd64
+    - arm64
+  author: SilentSuite
+  developer: SilentSuite
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/SilentSuite/icon.png
+  title:
+    en_US: SilentSuite
+  tagline:
+    en_US: End-to-end encrypted calendar, contacts, tasks and notes
+  description:
+    en_US: |
+      SilentSuite keeps your calendar, contacts, tasks and notes end-to-end encrypted. Your data is encrypted on your device before it reaches this server, so the server only stores encrypted data.
+
+      This app runs the SilentSuite web app and sync server with PostgreSQL. Use it from the browser, the SilentSuite Android app, or the SilentSuite desktop Bridge, which serves your data locally to CalDAV and CardDAV apps such as Thunderbird. The server itself has no CalDAV or CardDAV endpoint.
+
+      This package uses the published SilentSuite 0.5.22-beta images. It has been tested by booting the stack in CI on amd64 and arm64, not yet on a real CasaOS or ZimaOS device, and not yet with the mobile and desktop clients.
+  tips:
+    before_install:
+      en_US: |
+        HTTPS is required. SilentSuite only lets you sign up over HTTPS, and CasaOS and ZimaOS do not add HTTPS to apps. Before you sign up, put SilentSuite behind your own HTTPS reverse proxy or tunnel (for example Nginx Proxy Manager, Caddy, Cloudflare Tunnel or Tailscale Serve) that forwards the Host header and WebSockets to port 39128. Opening the plain http:// address works for looking around, but sign-up will fail there.
+
+        To create your account, open your HTTPS address, choose Sign up and enter the installation password. You find it in the Files app at /DATA/AppData/silentsuite/installation-password/password.txt. Then choose your own account password. It encrypts your data and is never sent to the server, so it cannot be recovered if you lose it.
+
+        Backups: stop SilentSuite in the dashboard first, then copy the contents of /DATA/AppData/silentsuite as root into a new, empty folder, keeping owners and permissions: sudo mkdir NEW-FOLDER && sudo cp -a /DATA/AppData/silentsuite/. NEW-FOLDER/ (mkdir refuses a name that is already taken). The folder holds the database, the encrypted files and the generated credentials; a copy taken while the app runs may not restore. To restore, stop the app, move the existing folder aside, recreate /DATA/AppData/silentsuite with sudo mkdir and copy the backup's contents into it, then start the app. The guide linked under Docs has the exact commands.
+  website: https://silentsuite.io
+  repo: https://github.com/silent-suite/silentsuite
+  docs: https://github.com/silent-suite/silentsuite/blob/main/self-host/casaos/README.md
+  support: https://github.com/silent-suite/silentsuite/issues
+  version: "0.5.22-beta"
+  update_at: "2026-11-25"
+  release_notes:
+    en_US: First version in the app store, with SilentSuite 0.5.22-beta.
