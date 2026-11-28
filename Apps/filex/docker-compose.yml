@@ -1,7 +1,7 @@
 name: filex
 services:
   filex:
-    image: ghcr.io/brf-tech/filex:v0.62.0
+    image: ghcr.io/brf-tech/filex:v0.62.1
     container_name: filex
     restart: unless-stopped
     network_mode: bridge
@@ -97,8 +97,8 @@ x-casaos:
         On the first start filex creates the administrator admin@local with a random password. The password is printed once in the app log and saved in /DATA/AppData/filex/data/.first-run.txt. To choose the first administrator yourself, set FILEX_ADMIN_EMAIL and FILEX_ADMIN_PASSWORD before installing.
 
         The app opens at /admin, where the administrator signs in. Accounts you create for other people sign in at /drive.
-  version: "0.62.0"
-  update_at: "2026-11-27"
+  version: "0.62.1"
+  update_at: "2026-11-28"
   release_notes:
     en_US: First version in the ZimaOS App Store.
   website: https://filex.sh
