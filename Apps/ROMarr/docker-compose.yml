@@ -1,7 +1,7 @@
 name: romarr
 services:
   romarr:
-    image: ghcr.io/blizzhacker/romarr:1.15.0
+    image: ghcr.io/blizzhacker/romarr:1.16.0
     container_name: romarr
     environment:
       PUID: ${PUID:-1000}
@@ -91,7 +91,7 @@ x-casaos:
         There is no default password: the first visit to the web UI sets it, so open ROMarr right
         after installing. Settings such as LIBRARY_PATH are read on first start only; change them in
         the web UI afterwards.
-  version: "1.15.0"
+  version: "1.16.0"
   update_at: "2026-11-27"
   release_notes:
     en_US: |-
