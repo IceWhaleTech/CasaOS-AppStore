@@ -1,7 +1,7 @@
 name: box3balans
 services:
   box3balans:
-    image: ghcr.io/zenonymous/box3balans:0.1.56
+    image: ghcr.io/zenonymous/box3balans:0.1.57
     container_name: box3balans
     restart: unless-stopped
     security_opt:
@@ -109,7 +109,7 @@ x-casaos:
     before_install:
       en_US: Don't open Box3balans to the internet; use a VPN such as WireGuard or Tailscale to reach it from outside. Creating your user needs the setup code from the app's log. After the first start, keep a copy of /DATA/AppData/box3balans/data/app-secret and the backup passphrase (Settings → Backups) in your password manager.
       nl_NL: Zet Box3balans niet open naar het internet; gebruik een VPN zoals WireGuard of Tailscale voor toegang van buitenaf. Voor je gebruiker heb je de setupcode uit het log van de app nodig. Bewaar na de eerste start een kopie van /DATA/AppData/box3balans/data/app-secret en de wachtzin voor de back-ups (Instellingen → Back-ups) in je wachtwoordmanager.
-  version: "0.1.56"
+  version: "0.1.57"
   website: "https://box3balans.nl"
   repo: "https://github.com/zenonymous/box3balans"
   support: "https://github.com/zenonymous/box3balans/discussions/categories/q-a"
@@ -129,6 +129,7 @@ x-casaos:
       - Box3balans 0.1.54: rewards in shares or funds count at their value that day in the 2029 preview, and units without a known value no longer count as bought for €0.
       - Box3balans 0.1.55: a read-only connection with Bitstamp (not yet tested with a real key).
       - Box3balans 0.1.56: box 3 for 2027 exempts green investments up to €200 per person, as the Belastingplan 2026 set, not 2026's €26,715.
+      - Box3balans 0.1.57: a read-only connection with Bybit EU (not yet tested with a real key).
     nl_NL: |-
       - Eerste versie in de App Store.
       - Box3balans 0.1.46: box 3 over 2027 rekent met de cijfers van het kabinet van 3 november: een heffingsvrij vermogen van € 60.280 per persoon en 6,37% voor overige bezittingen (nog een voorstel).
@@ -142,3 +143,4 @@ x-casaos:
       - Box3balans 0.1.54: beloningen in aandelen of fondsen tellen in de vooruitblik voor 2029 tegen hun waarde op die dag, en stukken zonder bekende waarde tellen niet meer als gekocht voor € 0.
       - Box3balans 0.1.55: een koppeling met alleen leesrechten met Bitstamp (nog niet getest met een echte sleutel).
       - Box3balans 0.1.56: box 3 voor 2027 stelt groene beleggingen vrij tot € 200 per persoon, zoals het Belastingplan 2026 vastlegde, niet de € 26.715 van 2026.
+      - Box3balans 0.1.57: een koppeling met alleen leesrechten met Bybit EU (nog niet getest met een echte sleutel).
